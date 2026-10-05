@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 494 · "Lit study on a quiet stage" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 494 · "Lit study on a quiet stage" · www.designlounge.live -->
 
 # Lit study on a quiet stage
 
@@ -6,7 +6,7 @@
 
 The page chrome is HTML and CSS. The model is a Three.js scene. Build it from the scene graph in Implementation notes. The Lounge demo is raw WebGL so it stays one file. Do not rebuild the massing as CSS boxes, and do not put a Three.js script in the demo file.
 
-> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws. The demo's names, prices, and sentences belong to the demo. Write this product's facts in short sentences.
 
 ## What it is
 
@@ -286,4 +286,4 @@ Wrap the azimuth delta to ±180 before writing the bearing. "Home view" when the
 
 ---
 
-*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*
+*From Design Lounge (https://www.designlounge.live). Free to use in your products. Credit line: Designed using Design Lounge.*

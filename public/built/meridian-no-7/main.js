@@ -1,4 +1,4 @@
-/* Meridian No. 7 · Designed using Design Lounge (https://designlounge.vercel.app) */
+/* Meridian No. 7 · Designed using Design Lounge (https://www.designlounge.live) */
 (() => {
   'use strict';
 

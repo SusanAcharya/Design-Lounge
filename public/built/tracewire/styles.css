@@ -1,7 +1,7 @@
-/* Developer Docs · type pairing · Designed using Design Lounge (https://designlounge.vercel.app) */
+/* Developer Docs · type pairing · Designed using Design Lounge (https://www.designlounge.live) */
 @import url("https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap");
 
-/* Night Desk · full palette · Designed using Design Lounge (https://designlounge.vercel.app) */
+/* Night Desk · full palette · Designed using Design Lounge (https://www.designlounge.live) */
 :root {
   --primary: #e0a34b;
   --primary-ink: #141210;
@@ -49,7 +49,7 @@
   --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
-/* Motion tokens · Designed using Design Lounge (https://designlounge.vercel.app) */
+/* Motion tokens · Designed using Design Lounge (https://www.designlounge.live) */
 :root {
   --ease-standard: cubic-bezier(0.2, 0.7, 0.2, 1);
   --ease-expo-out: cubic-bezier(0.16, 1, 0.3, 1);

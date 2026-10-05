@@ -1,4 +1,4 @@
-/* Harbour · example phone bank app · Designed using Design Lounge (https://designlounge.vercel.app) */
+/* Harbour · example phone bank app · Designed using Design Lounge (https://www.designlounge.live) */
 (() => {
   'use strict';
 
@@ -312,7 +312,7 @@
       r.note ? `Note: ${r.note}` : null,
       `Reference: ${r.ref}`,
       '',
-      'Designed using Design Lounge, designlounge.vercel.app'
+      'Designed using Design Lounge, www.designlounge.live'
     ].filter(l => l !== null);
     const blob = new Blob([lines.join('\n')], { type: 'text/plain' });
     const a = document.createElement('a');

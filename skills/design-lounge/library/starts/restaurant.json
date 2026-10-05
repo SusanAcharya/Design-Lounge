@@ -38,7 +38,9 @@
    "pairing": "riso-zine",
    "family": "editorial",
    "hero": "restaurant-menu-page",
-   "effect": "text-marker-highlight-draw"
+   "effect": "text-marker-highlight-draw",
+   "work": "week-schedule",
+   "footer": "footer-giant-wordmark-reveal"
   },
   {
    "id": "market-kitchen",
@@ -48,7 +50,9 @@
    "pairing": "poster-condensed",
    "family": "industrial",
    "hero": "hero-silk-ribbon-ticker",
-   "effect": "kinetic-type-marquee"
+   "effect": "kinetic-type-marquee",
+   "work": "contact-booking-hours",
+   "footer": "footer-centered-colophon"
   },
   {
    "id": "garden-supper",
@@ -58,7 +62,9 @@
    "pairing": "garden-journal",
    "family": "soft",
    "hero": "editorial-landing-hero",
-   "effect": "hero-video-loop"
+   "effect": "hero-video-loop",
+   "work": "gallery-contact-sheet",
+   "footer": "footer-newsletter-split"
   },
   {
    "id": "wine-list",
@@ -68,7 +74,9 @@
    "pairing": "deco-hotel",
    "family": "editorial",
    "hero": "hero-engraved-moonrise-plate",
-   "effect": "page-transition-curtain"
+   "effect": "page-transition-curtain",
+   "work": "card-cafe-menu-board",
+   "footer": "footer-sitemap-columns"
   },
   {
    "id": "night-bar",
@@ -78,7 +86,9 @@
    "pairing": "neon-marquee",
    "family": "glass",
    "hero": "hero-flashlight-reveal",
-   "effect": "split-flap-board"
+   "effect": "split-flap-board",
+   "work": "calendar-week-planner",
+   "footer": "footer-engraved-caravan-strip"
   },
   {
    "id": "corner-cafe",
@@ -88,7 +98,9 @@
    "pairing": "letter-hand",
    "family": "soft",
    "hero": "handwritten-homepage",
-   "effect": "text-annotated-underlines"
+   "effect": "text-annotated-underlines",
+   "work": "masonry-gallery-captions",
+   "footer": "footer-enterprise-sitemap"
   },
   {
    "id": "tasting-menu",
@@ -98,7 +110,9 @@
    "pairing": "cinema",
    "family": "editorial",
    "hero": "hero-chaptered-scenes",
-   "effect": "scroll-velocity-type"
+   "effect": "scroll-velocity-type",
+   "work": "bento-feature-grid",
+   "footer": "footer-giant-wordmark-reveal"
   },
   {
    "id": "tea-house",
@@ -108,7 +122,9 @@
    "pairing": "literary",
    "family": "editorial",
    "hero": "hero-asymmetric-type-lockup",
-   "effect": "text-mask-line-reveal"
+   "effect": "text-mask-line-reveal",
+   "work": "restaurant-menu-page",
+   "footer": "footer-centered-colophon"
   }
  ]
 }

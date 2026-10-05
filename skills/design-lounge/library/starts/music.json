@@ -37,7 +37,9 @@
    "pairing": "y2k-chrome",
    "family": "glass",
    "hero": "hero-editorial-name-rotator",
-   "effect": "kinetic-type-marquee"
+   "effect": "kinetic-type-marquee",
+   "work": "coverflow-strip",
+   "footer": "footer-giant-wordmark-reveal"
   },
   {
    "id": "gig-poster",
@@ -47,7 +49,9 @@
    "pairing": "poster-condensed",
    "family": "sharp",
    "hero": "hero-bauhaus-composition",
-   "effect": "variable-font-proximity"
+   "effect": "variable-font-proximity",
+   "work": "corner-player",
+   "footer": "footer-centered-colophon"
   },
   {
    "id": "observatory",
@@ -57,7 +61,9 @@
    "pairing": "cinema",
    "family": "editorial",
    "hero": "portfolio-motion-showreel",
-   "effect": "webgl-shader-hero"
+   "effect": "webgl-shader-hero",
+   "work": "week-schedule",
+   "footer": "footer-newsletter-split"
   },
   {
    "id": "vinyl-day",
@@ -67,7 +73,9 @@
    "pairing": "maison",
    "family": "editorial",
    "hero": "luxe-product-detail",
-   "effect": "overlap-slider"
+   "effect": "overlap-slider",
+   "work": "card-music-playlist",
+   "footer": "footer-sitemap-columns"
   },
   {
    "id": "tour-dates",
@@ -77,7 +85,9 @@
    "pairing": "newsroom",
    "family": "editorial",
    "hero": "week-schedule",
-   "effect": "split-flap-board"
+   "effect": "split-flap-board",
+   "work": "luxe-product-detail",
+   "footer": "footer-engraved-caravan-strip"
   },
   {
    "id": "bedroom-label",
@@ -87,7 +97,9 @@
    "pairing": "indie-maker",
    "family": "soft",
    "hero": "handwritten-homepage",
-   "effect": "text-annotated-underlines"
+   "effect": "text-annotated-underlines",
+   "work": "paper-article-reader",
+   "footer": "footer-enterprise-sitemap"
   },
   {
    "id": "score-desk",
@@ -97,7 +109,9 @@
    "pairing": "classic-garamond",
    "family": "editorial",
    "hero": "paper-article-reader",
-   "effect": "scroll-reading-progress"
+   "effect": "scroll-reading-progress",
+   "work": "event-ticket-checkout",
+   "footer": "footer-giant-wordmark-reveal"
   },
   {
    "id": "chrome-mixtape",
@@ -107,7 +121,9 @@
    "pairing": "wide-tech",
    "family": "glass",
    "hero": "hero-silk-ribbon-ticker",
-   "effect": "coverflow-strip"
+   "effect": "coverflow-strip",
+   "work": "kinetic-type-marquee",
+   "footer": "footer-centered-colophon"
   }
  ]
 }

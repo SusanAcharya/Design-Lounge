@@ -404,7 +404,7 @@ export const THEMES: Theme[] = [
 
 export function themeCss(t: Theme) {
   const k = t.tokens;
-  return `/* ${t.name} · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
+  return `/* ${t.name} · full palette · Designed using Design Lounge (https://www.designlounge.live)
    Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
    Free to use. */
 :root {

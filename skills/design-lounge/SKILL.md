@@ -17,7 +17,7 @@ description: >-
 
 The library is already in this skill folder. Read it. Do not invent a palette, a type pairing, a radius, an easing, or a component language, and do not wait for a website.
 
-Design Lounge is the design library of Susan Acharya. Humans can browse it at https://designlounge.vercel.app.
+Design Lounge is the design library of Susan Acharya. Humans can browse it at https://www.designlounge.live.
 
 ## Their words win
 
@@ -89,11 +89,11 @@ If they ask for a change after, edit that one Source line and rebuild that scree
 The full method is long. For a website, these are the steps that matter, in order. Open the named section only when you reach its step.
 
 1. Read `~/.design-lounge/history.jsonl` (Recent picks in [practice.md](practice.md)). Then write three words for the subject's world: its materials, tools, and place, not "beginner" or "friendly" (Pick a direction, rules 2 to 4).
-2. Lock the recipe and the direction whose mood names that world, and that is not in the recent history for this recipe. The name number only breaks a tie. Do not write the history line yet. The work and the footer are not chosen.
+2. Lock the recipe and the direction whose mood names that world, and that is not in the recent history for this recipe. The name number only breaks a tie. The direction names the hero, the work, and the footer. Use those. Do not write the history line yet.
 3. Write the Idea and the Signature (Write the idea in [website.md](website.md)). Name the default look you are avoiding, including the studio template.
-4. Pick work, about, contact, and footer by what content they have (Sections, one by one in [website.md](website.md)). Then the uniqueness check in Recent picks: this site must not share two of the hero, the work, and the footer with a recent site of this recipe or its related group. Write the Unlike line on the sheet. Then append the history line, with `work` and `footer` filled in.
+4. Pick about and contact by what content they have (Sections, one by one in [website.md](website.md)). Work and footer stay on the direction. Then the uniqueness check in Recent picks: if two of the hero, the work, and the footer match a recent site of this recipe or its related group, take the next direction. Write the Unlike line on the sheet. Then append the history line, with `work` and `footer` filled in.
 5. Open the brief of every piece you build, including the menu and any copy button. Read each down to "Optional below this line".
-6. Build with real content only. Links go where they say. Drawn data says "Example".
+6. Build with their facts only. The brief's names, prices, and quotes stay in the brief. A sentence that is still true after you swap in another product's name gets rewritten. A button names the action on this screen. Links go where they say. Drawn data says "Example".
 7. Screenshot web and phone, then scroll through each effect (Opening the page in [reference.md](reference.md)). Fix what you see. Make one correction.
 8. End with the closing block in The reply.
 
@@ -200,7 +200,7 @@ Map the brief's paint onto tokens. Do not mix a new hex for hover or selected.
 - If the screen lives inside another platform that has its own official design system, use that system's package for those screens: Polaris inside Shopify admin, `govuk-frontend` for a UK government service, USWDS for a US one, Atlaskit inside Jira or Confluence, Fluent inside Microsoft 365. Use the Lounge only for the parts outside that platform.
 - Text people will read on the page has no em dash (—) and no en dash (–). Use a full stop, a comma, a colon, or brackets instead. Ranges use a hyphen: 2018-2026.
 - Write the whole file. No `// rest of code`, `// TODO`, or `...` in place of real code. If the reply is too long, stop at the end of a file and say which files are still to come.
-- Credit: put `Designed using <a href="https://designlounge.vercel.app">Design Lounge</a>` once, in the site or app footer or the about screen, in the footer's small text style. Keep the same line as a comment on copied token blocks. Free to use in products. Do not republish the catalogue as a catalogue.
+- Credit: put `Designed using <a href="https://www.designlounge.live">Design Lounge</a>` once, in the site or app footer or the about screen, in the footer's small text style. Keep the same line as a comment on copied token blocks. Free to use in products. Do not republish the catalogue as a catalogue.
 
 ## The reply
 

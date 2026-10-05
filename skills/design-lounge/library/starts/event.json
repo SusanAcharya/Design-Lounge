@@ -42,7 +42,9 @@
    "pairing": "poster-condensed",
    "family": "sharp",
    "hero": "hero-bauhaus-composition",
-   "effect": "split-flap-board"
+   "effect": "split-flap-board",
+   "work": "week-schedule",
+   "footer": "footer-centered-colophon"
   },
   {
    "id": "night-marquee",
@@ -52,7 +54,9 @@
    "pairing": "neon-marquee",
    "family": "glass",
    "hero": "hero-flashlight-reveal",
-   "effect": "kinetic-type-marquee"
+   "effect": "kinetic-type-marquee",
+   "work": "event-ticket-checkout",
+   "footer": "footer-newsletter-split"
   },
   {
    "id": "film-week",
@@ -62,7 +66,9 @@
    "pairing": "cinema",
    "family": "editorial",
    "hero": "hero-swiss-grid-wordmark",
-   "effect": "hero-video-loop"
+   "effect": "hero-video-loop",
+   "work": "card-event-ticket-stub",
+   "footer": "footer-sitemap-columns"
   },
   {
    "id": "garden-fete",
@@ -72,7 +78,9 @@
    "pairing": "garden-journal",
    "family": "soft",
    "hero": "editorial-landing-hero",
-   "effect": "parallax-layered-hero"
+   "effect": "parallax-layered-hero",
+   "work": "bento-feature-grid",
+   "footer": "footer-engraved-caravan-strip"
   },
   {
    "id": "ticket-hall",
@@ -82,7 +90,9 @@
    "pairing": "deco-hotel",
    "family": "editorial",
    "hero": "hero-editorial-name-rotator",
-   "effect": "page-transition-curtain"
+   "effect": "page-transition-curtain",
+   "work": "faq-category-accordion",
+   "footer": "footer-enterprise-sitemap"
   },
   {
    "id": "workshop-day",
@@ -92,7 +102,9 @@
    "pairing": "industrial-label",
    "family": "industrial",
    "hero": "week-schedule",
-   "effect": "stacking-cards-scroll"
+   "effect": "stacking-cards-scroll",
+   "work": "stats-count-up-band",
+   "footer": "footer-giant-wordmark-reveal"
   },
   {
    "id": "listening-night",
@@ -102,7 +114,9 @@
    "pairing": "cinema",
    "family": "editorial",
    "hero": "hero-chaptered-scenes",
-   "effect": "coverflow-strip"
+   "effect": "coverflow-strip",
+   "work": "card-holo-foil",
+   "footer": "footer-centered-colophon"
   },
   {
    "id": "school-fair",
@@ -112,7 +126,9 @@
    "pairing": "playground",
    "family": "soft",
    "hero": "bento-feature-grid",
-   "effect": "spring-deck"
+   "effect": "spring-deck",
+   "work": "card-event-countdown",
+   "footer": "footer-newsletter-split"
   }
  ]
 }

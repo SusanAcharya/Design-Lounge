@@ -22,10 +22,10 @@ const piecesDir = path.join(root, 'src/content/pieces');
 const skillLib = path.join(root, 'skills/design-lounge/library');
 const briefsDir = path.join(skillLib, 'briefs');
 const repo = 'https://github.com/SusanAcharya/Design-Lounge';
-const lounge = 'https://designlounge.vercel.app';
+const lounge = 'https://www.designlounge.live';
 const raw = 'https://raw.githubusercontent.com/SusanAcharya/Design-Lounge/main';
 const author = { name: 'Susan Acharya', site: 'https://acharyasusan.com.np' };
-const credit = 'Designed using Design Lounge · https://designlounge.vercel.app';
+const credit = 'Designed using Design Lounge · https://www.designlounge.live';
 
 function parseFrontmatter(rawText) {
   const match = rawText.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/);
@@ -68,7 +68,7 @@ fs.mkdirSync(briefsDir, { recursive: true });
 
 // Briefs ship with the parts every build needs first. The demo's own paint and the long notes go below a marker.
 const OPTIONAL = ['Reference behaviour', 'Tokens', 'Typography', 'Implementation notes'];
-const briefNote = '> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo\'s colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.';
+const briefNote = '> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo\'s colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws. The demo\'s names, prices, and sentences belong to the demo. Write this product\'s facts in short sentences.';
 function reorderBrief(body) {
   const parts = body.split(/\n(?=## )/);
   const title = parts.shift();
@@ -81,8 +81,8 @@ function reorderBrief(body) {
 }
 for (const piece of pieces) {
   const n = String(pieces.indexOf(piece) + 1).padStart(3, '0');
-  const head = `<!-- Design Lounge Nº ${n} · "${piece.data.title}" · designlounge.vercel.app -->\n\n`;
-  const foot = `\n\n---\n\n*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*\n`;
+  const head = `<!-- Design Lounge Nº ${n} · "${piece.data.title}" · www.designlounge.live -->\n\n`;
+  const foot = `\n\n---\n\n*From Design Lounge (https://www.designlounge.live). Free to use in your products. Credit line: Designed using Design Lounge.*\n`;
   fs.writeFileSync(path.join(briefsDir, `${piece.id}.md`), head + reorderBrief(piece.body) + foot);
 }
 

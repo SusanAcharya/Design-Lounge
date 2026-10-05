@@ -1,7 +1,7 @@
-/* Friendly SaaS · type pairing · Designed using Design Lounge (https://designlounge.vercel.app) */
+/* Friendly SaaS · type pairing · Designed using Design Lounge (https://www.designlounge.live) */
 @import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=JetBrains+Mono:wght@400;500;700&display=swap");
 
-/* Harbour Ledger · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
+/* Harbour Ledger · full palette · Designed using Design Lounge (https://www.designlounge.live)
    Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
    Free to use. */
 :root {
@@ -64,7 +64,7 @@
   --bezel: var(--ink);
 }
 
-/* Harbour Night · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
+/* Harbour Night · full palette · Designed using Design Lounge (https://www.designlounge.live)
    The theme's pair, used for the Dark appearance switch in Settings. */
 [data-theme="night"] {
   --primary: #d4b06a;
@@ -116,7 +116,7 @@
   --bezel: var(--surface-3);
 }
 
-/* Friendly SaaS · type pairing · Designed using Design Lounge (https://designlounge.vercel.app) */
+/* Friendly SaaS · type pairing · Designed using Design Lounge (https://www.designlounge.live) */
 :root {
   --font-display: "Plus Jakarta Sans", "Helvetica Neue", Arial, sans-serif;
   --font-text: "Plus Jakarta Sans", "Helvetica Neue", Arial, sans-serif;
@@ -138,7 +138,7 @@ code, kbd, samp, .mono, .num {
   font-weight: 400;
 }
 
-/* Quiet family · Designed using Design Lounge (https://designlounge.vercel.app) */
+/* Quiet family · Designed using Design Lounge (https://www.designlounge.live) */
 :root {
   --radius: 6px;
   --radius-card: 8px;
@@ -148,7 +148,7 @@ code, kbd, samp, .mono, .num {
   --shadow: 0 10px 24px -16px rgba(0,0,0,.18);
 }
 
-/* Motion tokens · Designed using Design Lounge (https://designlounge.vercel.app) */
+/* Motion tokens · Designed using Design Lounge (https://www.designlounge.live) */
 :root {
   --ease-standard: cubic-bezier(0.2, 0.7, 0.2, 1);
   --ease-expo-out: cubic-bezier(0.16, 1, 0.3, 1);

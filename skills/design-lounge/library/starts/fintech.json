@@ -26,7 +26,10 @@
   "stats-count-up-band",
   "testimonials-metric-tabs",
   "faq-category-accordion",
-  "crypto-exchange-trade"
+  "crypto-exchange-trade",
+  "hero-product-window-tilt",
+  "hero-swiss-grid-wordmark",
+  "hero-asymmetric-type-lockup"
  ],
  "directions": [
   {
@@ -37,7 +40,9 @@
    "pairing": "friendly-saas",
    "family": "quiet",
    "hero": "landing-fintech-light",
-   "effect": "staggered-list-reveal"
+   "effect": "staggered-list-reveal",
+   "work": "swiss-grid-pricing",
+   "footer": "footer-giant-wordmark-reveal"
   },
   {
    "id": "lime-card",
@@ -47,7 +52,9 @@
    "pairing": "wide-tech",
    "family": "sharp",
    "hero": "hero-product-window-tilt",
-   "effect": "scroll-velocity-type"
+   "effect": "scroll-velocity-type",
+   "work": "pricing-comparison-sticky",
+   "footer": "footer-centered-colophon"
   },
   {
    "id": "lokta",
@@ -56,8 +63,10 @@
    "theme": "lokta",
    "pairing": "devanagari",
    "family": "quiet",
-   "hero": "landing-fintech-light",
-   "effect": "text-marker-highlight-draw"
+   "hero": "hero-swiss-grid-wordmark",
+   "effect": "text-marker-highlight-draw",
+   "work": "charts-kpi-spark-row",
+   "footer": "footer-newsletter-split"
   },
   {
    "id": "co-op-ledger",
@@ -67,7 +76,9 @@
    "pairing": "slab-ledger",
    "family": "editorial",
    "hero": "hero-asymmetric-type-lockup",
-   "effect": "split-flap-board"
+   "effect": "split-flap-board",
+   "work": "stats-count-up-band",
+   "footer": "footer-sitemap-columns"
   }
  ]
 }

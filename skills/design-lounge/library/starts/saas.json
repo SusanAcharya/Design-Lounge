@@ -30,7 +30,10 @@
   "logos-grid-case-hover",
   "pricing-usage-slider",
   "faq-category-accordion",
-  "footer-sitemap-columns"
+  "footer-sitemap-columns",
+  "hero-ai-prompt-cycle",
+  "hero-live-browser-card",
+  "hero-asymmetric-type-lockup"
  ],
  "directions": [
   {
@@ -41,7 +44,9 @@
    "pairing": "friendly-saas",
    "family": "quiet",
    "hero": "hero-product-window-tilt",
-   "effect": "features-sticky-scroll-steps"
+   "effect": "features-sticky-scroll-steps",
+   "work": "features-tabbed-preview",
+   "footer": "footer-enterprise-sitemap"
   },
   {
    "id": "dev-night",
@@ -51,7 +56,9 @@
    "pairing": "developer-docs",
    "family": "sharp",
    "hero": "landing-devtool-dark",
-   "effect": "webgl-shader-hero"
+   "effect": "webgl-shader-hero",
+   "work": "features-sticky-scroll-steps",
+   "footer": "footer-giant-wordmark-reveal"
   },
   {
    "id": "lime-engine",
@@ -61,7 +68,9 @@
    "pairing": "signal-mono",
    "family": "sharp",
    "hero": "hero-ai-prompt-cycle",
-   "effect": "spotlight-hover-grid"
+   "effect": "spotlight-hover-grid",
+   "work": "bento-feature-grid",
+   "footer": "footer-centered-colophon"
   },
   {
    "id": "butter-tool",
@@ -70,8 +79,10 @@
    "theme": "playroom",
    "pairing": "indie-maker",
    "family": "soft",
-   "hero": "hero-product-window-tilt",
-   "effect": "stacking-cards-scroll"
+   "hero": "hero-live-browser-card",
+   "effect": "stacking-cards-scroll",
+   "work": "features-alternating-rows",
+   "footer": "footer-newsletter-split"
   },
   {
    "id": "printed-saas",
@@ -81,7 +92,9 @@
    "pairing": "neo-grotesk-mono",
    "family": "editorial",
    "hero": "hero-asymmetric-type-lockup",
-   "effect": "text-marker-highlight-draw"
+   "effect": "text-marker-highlight-draw",
+   "work": "stacking-cards-scroll",
+   "footer": "footer-sitemap-columns"
   }
  ]
 }

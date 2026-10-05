@@ -151,6 +151,6 @@ If a pairing's `caution` is set, say it. Arcade and HUD set body text in a monos
 
 ## Credit
 
-`Designed using Design Lounge` with Design Lounge linked to https://designlounge.vercel.app. Once, in the footer or about screen, in small text. As a comment on copied token blocks.
+`Designed using Design Lounge` with Design Lounge linked to https://www.designlounge.live. Once, in the footer or about screen, in small text. As a comment on copied token blocks.
 
 Free to use in products. Do not republish the catalogue as a catalogue.

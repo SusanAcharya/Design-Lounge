@@ -222,7 +222,7 @@ export function kitBrief(input: {
 }): string {
   const { kind, theme, pairing, family, author, credit } = input;
   const pieces = [...new Set([...kind.pieces, ...family.pieces])];
-  return `<!-- Design Lounge kit · designlounge.vercel.app -->
+  return `<!-- Design Lounge kit · www.designlounge.live -->
 
 # Design Lounge kit — ${kind.title}
 

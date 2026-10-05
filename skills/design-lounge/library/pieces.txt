@@ -1,5 +1,5 @@
 # Design Lounge pieces · id | platform | category | title | tags
-# Spec: briefs/<id>.md · Live demo: https://designlounge.vercel.app/demo/<id>.html
+# Spec: briefs/<id>.md · Live demo: https://www.designlounge.live/demo/<id>.html
 # Search this file. Do not read it top to bottom.
 analytics-dashboard-overview | web | dashboard | Analytics dashboard overview | dashboard analytics chart svg table
 avatar-stack-presence | web | micro | Avatar stack with presence | avatars presence collaboration tooltip realtime

@@ -7,7 +7,7 @@ const dropFirstH1 = () => (tree) => {
 };
 
 export default defineConfig({
-  site: 'https://designlounge.vercel.app',
+  site: 'https://www.designlounge.live',
   output: 'static',
   devToolbar: { enabled: false },
   trailingSlash: 'never',

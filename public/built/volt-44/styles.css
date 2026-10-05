@@ -1,4 +1,4 @@
-/* Neon Alley · full palette · Designed using Design Lounge (https://designlounge.vercel.app) */
+/* Neon Alley · full palette · Designed using Design Lounge (https://www.designlounge.live) */
 :root {
   --primary: #ff4fa3;
   --primary-ink: #141210;
@@ -48,14 +48,14 @@
   --positive: var(--success);
 }
 
-/* Wide Tech · type pairing · Designed using Design Lounge (https://designlounge.vercel.app) */
+/* Wide Tech · type pairing · Designed using Design Lounge (https://www.designlounge.live) */
 :root {
   --font-display: "Unbounded", "Helvetica Neue", Arial, sans-serif;
   --font-text: "Onest", "Helvetica Neue", Arial, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
-/* Motion tokens · Designed using Design Lounge (https://designlounge.vercel.app) */
+/* Motion tokens · Designed using Design Lounge (https://www.designlounge.live) */
 :root {
   --ease-standard: cubic-bezier(0.2, 0.7, 0.2, 1);
   --ease-expo-out: cubic-bezier(0.16, 1, 0.3, 1);

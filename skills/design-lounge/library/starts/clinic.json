@@ -34,7 +34,9 @@
    "pairing": "friendly-saas",
    "family": "soft",
    "hero": "clinic-home-booking",
-   "effect": "staggered-list-reveal"
+   "effect": "staggered-list-reveal",
+   "work": "calendar-week-planner",
+   "footer": "footer-sitemap-columns"
   },
   {
    "id": "glacier-physio",
@@ -44,7 +46,9 @@
    "pairing": "geometric-modern",
    "family": "quiet",
    "hero": "calendar-week-planner",
-   "effect": "features-sticky-scroll-steps"
+   "effect": "features-sticky-scroll-steps",
+   "work": "phone-booking-slots",
+   "footer": "footer-engraved-caravan-strip"
   },
   {
    "id": "linen-practice",
@@ -54,7 +58,9 @@
    "pairing": "bookish",
    "family": "soft",
    "hero": "profile-creator-masthead",
-   "effect": "scroll-word-highlight"
+   "effect": "scroll-word-highlight",
+   "work": "faq-category-accordion",
+   "footer": "footer-enterprise-sitemap"
   },
   {
    "id": "after-hours",
@@ -64,7 +70,9 @@
    "pairing": "geometric-modern",
    "family": "glass",
    "hero": "phone-booking-slots",
-   "effect": "ios-large-title-collapse"
+   "effect": "ios-large-title-collapse",
+   "work": "contact-booking-hours",
+   "footer": "footer-giant-wordmark-reveal"
   },
   {
    "id": "vet-barn",
@@ -74,7 +82,9 @@
    "pairing": "industrial-label",
    "family": "industrial",
    "hero": "hero-asymmetric-type-lockup",
-   "effect": "stacking-cards-scroll"
+   "effect": "stacking-cards-scroll",
+   "work": "week-schedule",
+   "footer": "footer-centered-colophon"
   },
   {
    "id": "city-dental",
@@ -84,7 +94,9 @@
    "pairing": "neo-grotesk-mono",
    "family": "sharp",
    "hero": "hero-split-ui-stack",
-   "effect": "spotlight-hover-grid"
+   "effect": "spotlight-hover-grid",
+   "work": "profile-creator-masthead",
+   "footer": "footer-newsletter-split"
   },
   {
    "id": "waiting-room",
@@ -94,7 +106,9 @@
    "pairing": "garden-journal",
    "family": "soft",
    "hero": "editorial-landing-hero",
-   "effect": "text-marker-highlight-draw"
+   "effect": "text-marker-highlight-draw",
+   "work": "tablet-kiosk-checkin",
+   "footer": "footer-sitemap-columns"
   },
   {
    "id": "sports-lab",
@@ -104,7 +118,9 @@
    "pairing": "swiss-precision",
    "family": "quiet",
    "hero": "hero-swiss-grid-wordmark",
-   "effect": "stats-count-up-band"
+   "effect": "stats-count-up-band",
+   "work": "clinic-home-booking",
+   "footer": "footer-engraved-caravan-strip"
   }
  ]
 }

@@ -22,7 +22,10 @@
   "editorial-landing-hero",
   "hero-split-ui-stack",
   "cta-giant-email-band",
-  "stats-count-up-band"
+  "stats-count-up-band",
+  "luxe-product-detail",
+  "hero-swiss-grid-wordmark",
+  "hero-bauhaus-composition"
  ],
  "directions": [
   {
@@ -32,8 +35,10 @@
    "theme": "atelier-noir",
    "pairing": "maison",
    "family": "editorial",
-   "hero": "landing-fashion-atelier",
-   "effect": "scroll-scrub-product-sequence"
+   "hero": "luxe-product-detail",
+   "effect": "scroll-scrub-product-sequence",
+   "work": "features-sticky-scroll-steps",
+   "footer": "footer-newsletter-split"
   },
   {
    "id": "clay-launch",
@@ -43,7 +48,9 @@
    "pairing": "studio-display",
    "family": "soft",
    "hero": "editorial-landing-hero",
-   "effect": "stacking-cards-scroll"
+   "effect": "stacking-cards-scroll",
+   "work": "bento-feature-grid",
+   "footer": "footer-sitemap-columns"
   },
   {
    "id": "grid-launch",
@@ -53,7 +60,9 @@
    "pairing": "swiss-precision",
    "family": "sharp",
    "hero": "hero-swiss-grid-wordmark",
-   "effect": "scroll-velocity-type"
+   "effect": "scroll-velocity-type",
+   "work": "stacking-cards-scroll",
+   "footer": "footer-engraved-caravan-strip"
   },
   {
    "id": "toy-launch",
@@ -63,7 +72,9 @@
    "pairing": "candy-clay",
    "family": "soft",
    "hero": "hero-bauhaus-composition",
-   "effect": "scroll-zoom-portal"
+   "effect": "scroll-zoom-portal",
+   "work": "features-alternating-rows",
+   "footer": "footer-enterprise-sitemap"
   }
  ]
 }

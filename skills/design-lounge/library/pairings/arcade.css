@@ -1,7 +1,7 @@
 /* Arcade · display Silkscreen · text Space Mono · no mono · numbers mono
    Bitmap caps over a mono body. Insert coin.
    Caution: Body text is Space Mono on purpose. Keep it for the game. Do not use this pairing for reports or long prose. */
-/* Arcade · type pairing · Designed using Design Lounge (https://designlounge.vercel.app) */
+/* Arcade · type pairing · Designed using Design Lounge (https://www.designlounge.live) */
 @import url("https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap");
 
 :root {

@@ -28,7 +28,11 @@
   "features-sticky-scroll-steps",
   "profile-creator-masthead",
   "hero-split-ui-stack",
-  "hero-layered-letter-swap"
+  "hero-layered-letter-swap",
+  "bento-feature-grid",
+  "hero-asymmetric-type-lockup",
+  "editorial-landing-hero",
+  "sticky-split-story"
  ],
  "directions": [
   {
@@ -39,7 +43,9 @@
    "pairing": "academic",
    "family": "editorial",
    "hero": "course-landing-curriculum",
-   "effect": "scroll-reading-progress"
+   "effect": "scroll-reading-progress",
+   "work": "outline-fill-topic-list",
+   "footer": "footer-sitemap-columns"
   },
   {
    "id": "bauhaus-campus",
@@ -49,7 +55,9 @@
    "pairing": "bauhaus-school",
    "family": "soft",
    "hero": "school-admissions-home",
-   "effect": "staggered-list-reveal"
+   "effect": "staggered-list-reveal",
+   "work": "accordion-grid-rows",
+   "footer": "footer-engraved-caravan-strip"
   },
   {
    "id": "play-lesson",
@@ -58,8 +66,10 @@
    "theme": "playroom",
    "pairing": "playground",
    "family": "soft",
-   "hero": "course-landing-curriculum",
-   "effect": "spring-deck"
+   "hero": "bento-feature-grid",
+   "effect": "spring-deck",
+   "work": "card-progress-goals",
+   "footer": "footer-enterprise-sitemap"
   },
   {
    "id": "stage-lights",
@@ -69,7 +79,9 @@
    "pairing": "cinema",
    "family": "editorial",
    "hero": "hero-chaptered-scenes",
-   "effect": "scroll-velocity-type"
+   "effect": "scroll-velocity-type",
+   "work": "features-tabbed-preview",
+   "footer": "footer-giant-wordmark-reveal"
   },
   {
    "id": "workshop-bench",
@@ -79,7 +91,9 @@
    "pairing": "industrial-label",
    "family": "industrial",
    "hero": "hero-asymmetric-type-lockup",
-   "effect": "stacking-cards-scroll"
+   "effect": "stacking-cards-scroll",
+   "work": "stacking-cards-scroll",
+   "footer": "footer-centered-colophon"
   },
   {
    "id": "open-studio",
@@ -89,7 +103,9 @@
    "pairing": "letter-hand",
    "family": "soft",
    "hero": "handwritten-homepage",
-   "effect": "text-annotated-underlines"
+   "effect": "text-annotated-underlines",
+   "work": "phone-lesson-quiz",
+   "footer": "footer-newsletter-split"
   },
   {
    "id": "gallery-class",
@@ -99,7 +115,9 @@
    "pairing": "gallery-wall",
    "family": "editorial",
    "hero": "editorial-landing-hero",
-   "effect": "scroll-zoom-portal"
+   "effect": "scroll-zoom-portal",
+   "work": "tablet-cook-mode",
+   "footer": "footer-sitemap-columns"
   },
   {
    "id": "code-dojo",
@@ -109,7 +127,9 @@
    "pairing": "terminal-native",
    "family": "sharp",
    "hero": "hero-split-ui-stack",
-   "effect": "text-scramble-reveal"
+   "effect": "text-scramble-reveal",
+   "work": "sticky-split-story",
+   "footer": "footer-engraved-caravan-strip"
   },
   {
    "id": "language-cafe",
@@ -119,7 +139,9 @@
    "pairing": "literary",
    "family": "editorial",
    "hero": "hero-layered-letter-swap",
-   "effect": "text-mask-line-reveal"
+   "effect": "text-mask-line-reveal",
+   "work": "features-sticky-scroll-steps",
+   "footer": "footer-enterprise-sitemap"
   },
   {
    "id": "field-school",
@@ -128,8 +150,10 @@
    "theme": "loam",
    "pairing": "garden-journal",
    "family": "soft",
-   "hero": "editorial-landing-hero",
-   "effect": "parallax-layered-hero"
+   "hero": "sticky-split-story",
+   "effect": "parallax-layered-hero",
+   "work": "course-landing-curriculum",
+   "footer": "footer-giant-wordmark-reveal"
   }
  ]
 }

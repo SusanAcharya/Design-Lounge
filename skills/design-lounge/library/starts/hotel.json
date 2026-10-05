@@ -39,7 +39,9 @@
    "pairing": "maison",
    "family": "editorial",
    "hero": "landing-fashion-atelier",
-   "effect": "hero-video-loop"
+   "effect": "hero-video-loop",
+   "work": "gallery-photo-album",
+   "footer": "footer-centered-colophon"
   },
   {
    "id": "velvet-bar",
@@ -49,7 +51,9 @@
    "pairing": "deco-hotel",
    "family": "editorial",
    "hero": "hero-editorial-name-rotator",
-   "effect": "page-transition-curtain"
+   "effect": "page-transition-curtain",
+   "work": "contact-booking-hours",
+   "footer": "footer-newsletter-split"
   },
   {
    "id": "marble-stay",
@@ -59,7 +63,9 @@
    "pairing": "monumental",
    "family": "editorial",
    "hero": "editorial-landing-hero",
-   "effect": "overlap-slider"
+   "effect": "overlap-slider",
+   "work": "masonry-gallery-captions",
+   "footer": "footer-sitemap-columns"
   },
   {
    "id": "inn-book",
@@ -69,7 +75,9 @@
    "pairing": "letter-hand",
    "family": "soft",
    "hero": "handwritten-homepage",
-   "effect": "text-annotated-underlines"
+   "effect": "text-annotated-underlines",
+   "work": "week-schedule",
+   "footer": "footer-engraved-caravan-strip"
   },
   {
    "id": "deco-afternoon",
@@ -79,7 +87,9 @@
    "pairing": "literary",
    "family": "editorial",
    "hero": "hero-engraved-moonrise-plate",
-   "effect": "page-transition-tile-wipe"
+   "effect": "page-transition-tile-wipe",
+   "work": "gallery-contact-sheet",
+   "footer": "footer-enterprise-sitemap"
   },
   {
    "id": "coast-house",
@@ -89,7 +99,9 @@
    "pairing": "maison",
    "family": "quiet",
    "hero": "gallery-photo-album",
-   "effect": "parallax-layered-hero"
+   "effect": "parallax-layered-hero",
+   "work": "card-magazine-cover",
+   "footer": "footer-giant-wordmark-reveal"
   },
   {
    "id": "guest-book",
@@ -99,7 +111,9 @@
    "pairing": "classic-garamond",
    "family": "editorial",
    "hero": "paper-article-reader",
-   "effect": "scroll-reading-progress"
+   "effect": "scroll-reading-progress",
+   "work": "contact-split-map-form",
+   "footer": "footer-centered-colophon"
   }
  ]
 }

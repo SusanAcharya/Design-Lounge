@@ -1,4 +1,4 @@
-/* Paper & Ink · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
+/* Paper & Ink · full palette · Designed using Design Lounge (https://www.designlounge.live)
    Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
    Free to use. */
 :root {
@@ -55,7 +55,7 @@
   --positive: var(--success);
 }
 
-/* Brutal Grotesk · type pairing · Designed using Design Lounge (https://designlounge.vercel.app)
+/* Brutal Grotesk · type pairing · Designed using Design Lounge (https://www.designlounge.live)
    Loaded in index.html from the pairing's Google Fonts URL. */
 :root {
   --font-display: "Archivo Black", "Helvetica Neue", Arial, sans-serif;
@@ -69,7 +69,7 @@
   --shadow: none;
 }
 
-/* Motion tokens · Designed using Design Lounge (https://designlounge.vercel.app) */
+/* Motion tokens · Designed using Design Lounge (https://www.designlounge.live) */
 :root {
   --ease-standard: cubic-bezier(0.2, 0.7, 0.2, 1);
   --ease-expo-out: cubic-bezier(0.16, 1, 0.3, 1);

@@ -39,7 +39,9 @@
    "pairing": "newsroom",
    "family": "editorial",
    "hero": "editorial-landing-hero",
-   "effect": "scroll-reading-progress"
+   "effect": "scroll-reading-progress",
+   "work": "paper-article-reader",
+   "footer": "footer-engraved-caravan-strip"
   },
   {
    "id": "archive",
@@ -49,7 +51,9 @@
    "pairing": "classic-garamond",
    "family": "editorial",
    "hero": "hero-asymmetric-type-lockup",
-   "effect": "text-marker-highlight-draw"
+   "effect": "text-marker-highlight-draw",
+   "work": "magazine-editorial-grid",
+   "footer": "footer-enterprise-sitemap"
   },
   {
    "id": "riso-zine",
@@ -59,7 +63,9 @@
    "pairing": "riso-zine",
    "family": "sharp",
    "hero": "hero-bauhaus-composition",
-   "effect": "kinetic-type-marquee"
+   "effect": "kinetic-type-marquee",
+   "work": "card-article-mix",
+   "footer": "footer-giant-wordmark-reveal"
   },
   {
    "id": "late-edition",
@@ -69,7 +75,9 @@
    "pairing": "magazine-contrast",
    "family": "editorial",
    "hero": "book-page-flip",
-   "effect": "text-mask-line-reveal"
+   "effect": "text-mask-line-reveal",
+   "work": "blog-issue-index",
+   "footer": "footer-centered-colophon"
   },
   {
    "id": "sunday-cover",
@@ -79,7 +87,9 @@
    "pairing": "literary",
    "family": "editorial",
    "hero": "card-magazine-cover",
-   "effect": "overlap-slider"
+   "effect": "overlap-slider",
+   "work": "book-page-flip",
+   "footer": "footer-newsletter-split"
   },
   {
    "id": "field-journal",
@@ -89,7 +99,9 @@
    "pairing": "garden-journal",
    "family": "soft",
    "hero": "card-journal-page",
-   "effect": "text-annotated-underlines"
+   "effect": "text-annotated-underlines",
+   "work": "card-magazine-cover",
+   "footer": "footer-sitemap-columns"
   },
   {
    "id": "quarterly",
@@ -99,7 +111,9 @@
    "pairing": "academic",
    "family": "quiet",
    "hero": "magazine-editorial-grid",
-   "effect": "scroll-word-highlight"
+   "effect": "scroll-word-highlight",
+   "work": "card-journal-page",
+   "footer": "footer-engraved-caravan-strip"
   }
  ]
 }

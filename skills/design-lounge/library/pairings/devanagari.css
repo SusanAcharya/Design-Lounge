@@ -1,7 +1,7 @@
 /* Devanagari · display Noto Serif Devanagari · text Mukta · mono IBM Plex Mono · numbers display
    A Nepali display serif for headings and amounts. Mukta for the interface. The currency word and the digits share one face.
    Caution: IBM Plex Mono is for Latin codes only. An amount that contains रु, रू, or Devanagari digits is set entirely in Noto Serif Devanagari or Mukta, digits included. Do not let the currency word fall back to another face. Group Nepal and India digits by lakh: 1,24,000. */
-/* Devanagari · type pairing · Designed using Design Lounge (https://designlounge.vercel.app) */
+/* Devanagari · type pairing · Designed using Design Lounge (https://www.designlounge.live) */
 @import url("https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@400;600;700&family=Mukta:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap");
 
 :root {

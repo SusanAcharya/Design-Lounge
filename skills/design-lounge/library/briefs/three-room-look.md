@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 496 · "Look around a small room" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 496 · "Look around a small room" · www.designlounge.live -->
 
 # Look around a small room
 
@@ -6,7 +6,7 @@
 
 The page chrome is HTML and CSS. The room is a Three.js scene. Build it from the scene graph in Implementation notes. The Lounge demo is raw WebGL so it stays one file. Do not rebuild the room as CSS boxes, and do not put a Three.js script in the demo file.
 
-> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws. The demo's names, prices, and sentences belong to the demo. Write this product's facts in short sentences.
 
 ## What it is
 
@@ -294,4 +294,4 @@ Reset lerps yaw to `0.08` and pitch to `-0.06` by 16% per frame, or assigns them
 
 ---
 
-*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*
+*From Design Lounge (https://www.designlounge.live). Free to use in your products. Credit line: Designed using Design Lounge.*

@@ -1,7 +1,7 @@
-/* Indie Maker · type pairing · Designed using Design Lounge (https://designlounge.vercel.app) */
+/* Indie Maker · type pairing · Designed using Design Lounge (https://www.designlounge.live) */
 @import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&display=swap");
 
-/* Playroom · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
+/* Playroom · full palette · Designed using Design Lounge (https://www.designlounge.live)
    Theme sample radius, shadow and fonts are replaced by the Soft family and the Indie Maker pairing. */
 :root {
   /* Brand */
@@ -71,7 +71,7 @@
   --column: 720px;
 }
 
-/* Motion tokens · Designed using Design Lounge (https://designlounge.vercel.app) */
+/* Motion tokens · Designed using Design Lounge (https://www.designlounge.live) */
 :root {
   --ease-standard: cubic-bezier(0.2, 0.7, 0.2, 1);
   --ease-expo-out: cubic-bezier(0.16, 1, 0.3, 1);

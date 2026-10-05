@@ -28,7 +28,9 @@
   "account-menu-panel",
   "settings-page-sticky-nav",
   "onboarding-workspace-setup",
-  "file-upload-manager"
+  "file-upload-manager",
+  "features-thread-to-issue-board",
+  "table-tasks-inline"
  ],
  "directions": [
   {
@@ -68,7 +70,7 @@
    "theme": "kiln",
    "pairing": "indie-maker",
    "family": "soft",
-   "hero": "kanban-board",
+   "hero": "features-thread-to-issue-board",
    "effect": null
   },
   {
@@ -88,7 +90,7 @@
    "theme": "ice-station",
    "pairing": "academic",
    "family": "quiet",
-   "hero": "dense-data-table",
+   "hero": "table-tasks-inline",
    "effect": null
   }
  ]

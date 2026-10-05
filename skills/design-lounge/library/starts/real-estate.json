@@ -35,7 +35,9 @@
    "pairing": "gallery-wall",
    "family": "editorial",
    "hero": "realestate-listing-detail",
-   "effect": "parallax-layered-hero"
+   "effect": "parallax-layered-hero",
+   "work": "gallery-photo-album",
+   "footer": "footer-newsletter-split"
   },
   {
    "id": "harbour-homes",
@@ -45,7 +47,9 @@
    "pairing": "magazine-contrast",
    "family": "quiet",
    "hero": "editorial-landing-hero",
-   "effect": "scroll-word-highlight"
+   "effect": "scroll-word-highlight",
+   "work": "hero-search-marketplace",
+   "footer": "footer-sitemap-columns"
   },
   {
    "id": "fog-flats",
@@ -55,7 +59,9 @@
    "pairing": "neo-grotesk-mono",
    "family": "sharp",
    "hero": "hero-search-marketplace",
-   "effect": "staggered-list-reveal"
+   "effect": "staggered-list-reveal",
+   "work": "contact-split-map-form",
+   "footer": "footer-engraved-caravan-strip"
   },
   {
    "id": "night-viewing",
@@ -65,7 +71,9 @@
    "pairing": "maison",
    "family": "editorial",
    "hero": "hero-video-loop",
-   "effect": "page-transition-curtain"
+   "effect": "page-transition-curtain",
+   "work": "portfolio-architect-index",
+   "footer": "footer-enterprise-sitemap"
   },
   {
    "id": "plan-room",
@@ -75,7 +83,9 @@
    "pairing": "swiss-precision",
    "family": "sharp",
    "hero": "portfolio-architect-index",
-   "effect": "scroll-split"
+   "effect": "scroll-split",
+   "work": "faq-category-accordion",
+   "footer": "footer-giant-wordmark-reveal"
   },
   {
    "id": "garden-plot",
@@ -85,7 +95,9 @@
    "pairing": "garden-journal",
    "family": "soft",
    "hero": "gallery-photo-album",
-   "effect": "overlap-slider"
+   "effect": "overlap-slider",
+   "work": "masonry-gallery-captions",
+   "footer": "footer-centered-colophon"
   },
   {
    "id": "pin-map",
@@ -95,7 +107,9 @@
    "pairing": "newsroom",
    "family": "editorial",
    "hero": "phone-map-listings",
-   "effect": "text-mask-line-reveal"
+   "effect": "text-mask-line-reveal",
+   "work": "contact-booking-hours",
+   "footer": "footer-newsletter-split"
   },
   {
    "id": "new-block",
@@ -105,7 +119,9 @@
    "pairing": "y2k-chrome",
    "family": "glass",
    "hero": "hero-product-window-tilt",
-   "effect": "scroll-scrub-product-sequence"
+   "effect": "scroll-scrub-product-sequence",
+   "work": "realestate-listing-detail",
+   "footer": "footer-sitemap-columns"
   }
  ]
 }

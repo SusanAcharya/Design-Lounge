@@ -1,4 +1,4 @@
-/* Late Light · Corvus Planetarium. Designed using Design Lounge (https://designlounge.vercel.app) */
+/* Late Light · Corvus Planetarium. Designed using Design Lounge (https://www.designlounge.live) */
 (() => {
   'use strict';
 

@@ -42,7 +42,9 @@
    "pairing": "garden-journal",
    "family": "soft",
    "hero": "editorial-landing-hero",
-   "effect": "hero-video-loop"
+   "effect": "hero-video-loop",
+   "work": "shop-collection",
+   "footer": "footer-enterprise-sitemap"
   },
   {
    "id": "market-zine",
@@ -52,7 +54,9 @@
    "pairing": "riso-zine",
    "family": "sharp",
    "hero": "hero-bauhaus-composition",
-   "effect": "kinetic-type-marquee"
+   "effect": "kinetic-type-marquee",
+   "work": "card-product-quick-add",
+   "footer": "footer-giant-wordmark-reveal"
   },
   {
    "id": "clay-menu",
@@ -62,7 +66,9 @@
    "pairing": "magazine-contrast",
    "family": "editorial",
    "hero": "hero-asymmetric-type-lockup",
-   "effect": "stacking-cards-scroll"
+   "effect": "stacking-cards-scroll",
+   "work": "week-schedule",
+   "footer": "footer-centered-colophon"
   },
   {
    "id": "night-stall",
@@ -72,7 +78,9 @@
    "pairing": "poster-condensed",
    "family": "sharp",
    "hero": "hero-silk-ribbon-ticker",
-   "effect": "split-flap-board"
+   "effect": "split-flap-board",
+   "work": "masonry-gallery-captions",
+   "footer": "footer-newsletter-split"
   },
   {
    "id": "pantry-letter",
@@ -82,7 +90,9 @@
    "pairing": "letter-hand",
    "family": "soft",
    "hero": "handwritten-homepage",
-   "effect": "text-annotated-underlines"
+   "effect": "text-annotated-underlines",
+   "work": "features-alternating-rows",
+   "footer": "footer-sitemap-columns"
   },
   {
    "id": "cold-counter",
@@ -92,7 +102,9 @@
    "pairing": "swiss-precision",
    "family": "quiet",
    "hero": "hero-swiss-grid-wordmark",
-   "effect": null
+   "effect": null,
+   "work": "bento-feature-grid",
+   "footer": "footer-engraved-caravan-strip"
   },
   {
    "id": "larder",
@@ -102,7 +114,9 @@
    "pairing": "atelier",
    "family": "editorial",
    "hero": "luxe-product-detail",
-   "effect": "object-3d-turntable"
+   "effect": "object-3d-turntable",
+   "work": "restaurant-menu-page",
+   "footer": "footer-enterprise-sitemap"
   }
  ]
 }

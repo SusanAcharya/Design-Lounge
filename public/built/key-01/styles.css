@@ -1,7 +1,7 @@
-/* Swiss Precision · type pairing · Designed using Design Lounge (https://designlounge.vercel.app)
+/* Swiss Precision · type pairing · Designed using Design Lounge (https://www.designlounge.live)
    Fonts are loaded in index.html with the same families and weights as the pairing's @import. */
 
-/* Ice Station · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
+/* Ice Station · full palette · Designed using Design Lounge (https://www.designlounge.live)
    Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
    Free to use. */
 :root {
@@ -70,7 +70,7 @@
   --pad: 12px;
   --shadow: none;
 
-  /* Motion tokens · Designed using Design Lounge (https://designlounge.vercel.app) */
+  /* Motion tokens · Designed using Design Lounge (https://www.designlounge.live) */
   --ease-standard: cubic-bezier(0.2, 0.7, 0.2, 1);
   --ease-expo-out: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-expo-in: cubic-bezier(0.7, 0, 0.84, 0);

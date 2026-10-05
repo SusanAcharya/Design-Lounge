@@ -73,14 +73,14 @@ Fails: none
 
 ## Sources
 
-- theme neon-alley — https://designlounge.vercel.app/themes/neon-alley
-- pairing neon-marquee — https://designlounge.vercel.app/type/neon-marquee
+- theme neon-alley — https://www.designlounge.live/themes/neon-alley
+- pairing neon-marquee — https://www.designlounge.live/type/neon-marquee
 - family glass — 16px
-- navbar-floating-pill-shrink — component — https://designlounge.vercel.app/demo/navbar-floating-pill-shrink.html
-- hero-flashlight-reveal — motion — https://designlounge.vercel.app/demo/hero-flashlight-reveal.html
-- scroll-zoom-portal — motion — https://designlounge.vercel.app/demo/scroll-zoom-portal.html
-- week-schedule — layout — https://designlounge.vercel.app/demo/week-schedule.html
-- event-ticket-checkout — component — https://designlounge.vercel.app/demo/event-ticket-checkout.html
-- contact-booking-hours — layout — https://designlounge.vercel.app/demo/contact-booking-hours.html
-- footer-newsletter-split — layout — https://designlounge.vercel.app/demo/footer-newsletter-split.html
-- mobile-web-bottom-nav — component — https://designlounge.vercel.app/demo/mobile-web-bottom-nav.html
+- navbar-floating-pill-shrink — component — https://www.designlounge.live/demo/navbar-floating-pill-shrink.html
+- hero-flashlight-reveal — motion — https://www.designlounge.live/demo/hero-flashlight-reveal.html
+- scroll-zoom-portal — motion — https://www.designlounge.live/demo/scroll-zoom-portal.html
+- week-schedule — layout — https://www.designlounge.live/demo/week-schedule.html
+- event-ticket-checkout — component — https://www.designlounge.live/demo/event-ticket-checkout.html
+- contact-booking-hours — layout — https://www.designlounge.live/demo/contact-booking-hours.html
+- footer-newsletter-split — layout — https://www.designlounge.live/demo/footer-newsletter-split.html
+- mobile-web-bottom-nav — component — https://www.designlounge.live/demo/mobile-web-bottom-nav.html

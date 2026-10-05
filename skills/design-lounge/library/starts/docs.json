@@ -38,7 +38,9 @@
    "pairing": "developer-docs",
    "family": "quiet",
    "hero": "docs-three-column",
-   "effect": null
+   "effect": null,
+   "work": "docs-install-steps",
+   "footer": "footer-giant-wordmark-reveal"
   },
   {
    "id": "phosphor-docs",
@@ -48,7 +50,9 @@
    "pairing": "terminal-native",
    "family": "sharp",
    "hero": "terminal-ui-style",
-   "effect": null
+   "effect": null,
+   "work": "paper-article-reader",
+   "footer": "footer-centered-colophon"
   },
   {
    "id": "paper-docs",
@@ -58,7 +62,9 @@
    "pairing": "academic",
    "family": "editorial",
    "hero": "paper-article-reader",
-   "effect": "scroll-reading-progress"
+   "effect": "scroll-reading-progress",
+   "work": "code-snippet-tabs",
+   "footer": "footer-newsletter-split"
   },
   {
    "id": "hatched-api",
@@ -68,7 +74,9 @@
    "pairing": "signal-mono",
    "family": "sharp",
    "hero": "docs-hatched-gutter-shell",
-   "effect": null
+   "effect": null,
+   "work": "blog-issue-index",
+   "footer": "footer-sitemap-columns"
   },
   {
    "id": "install-first",
@@ -78,7 +86,9 @@
    "pairing": "wide-tech",
    "family": "sharp",
    "hero": "docs-install-steps",
-   "effect": "text-scramble-reveal"
+   "effect": "text-scramble-reveal",
+   "work": "book-page-flip",
+   "footer": "footer-engraved-caravan-strip"
   },
   {
    "id": "civic-manual",
@@ -88,7 +98,9 @@
    "pairing": "red-hat",
    "family": "quiet",
    "hero": "sidebar-docs-toc",
-   "effect": null
+   "effect": null,
+   "work": "search-results-filters",
+   "footer": "footer-enterprise-sitemap"
   },
   {
    "id": "changelog",
@@ -98,7 +110,9 @@
    "pairing": "newsroom",
    "family": "editorial",
    "hero": "blog-issue-index",
-   "effect": null
+   "effect": null,
+   "work": "sidebar-docs-toc",
+   "footer": "footer-giant-wordmark-reveal"
   },
   {
    "id": "research-note",
@@ -108,7 +122,9 @@
    "pairing": "classic-garamond",
    "family": "editorial",
    "hero": "book-page-flip",
-   "effect": "text-marker-highlight-draw"
+   "effect": "text-marker-highlight-draw",
+   "work": "command-palette",
+   "footer": "footer-centered-colophon"
   }
  ]
 }

@@ -21,7 +21,10 @@
   "masonry-gallery-captions",
   "navbar-split-centered-logo",
   "card-product-quick-add",
-  "hamburger-drawer-accordion"
+  "hamburger-drawer-accordion",
+  "hero-flashlight-reveal",
+  "hero-editorial-name-rotator",
+  "editorial-landing-hero"
  ],
  "directions": [
   {
@@ -32,7 +35,9 @@
    "pairing": "maison",
    "family": "editorial",
    "hero": "landing-fashion-atelier",
-   "effect": "text-mask-line-reveal"
+   "effect": "text-mask-line-reveal",
+   "work": "luxe-product-detail",
+   "footer": "footer-centered-colophon"
   },
   {
    "id": "noir-house",
@@ -41,8 +46,10 @@
    "theme": "atelier-noir",
    "pairing": "maison",
    "family": "editorial",
-   "hero": "landing-fashion-atelier",
-   "effect": "page-transition-tile-wipe"
+   "hero": "hero-flashlight-reveal",
+   "effect": "page-transition-tile-wipe",
+   "work": "gallery-contact-sheet",
+   "footer": "footer-newsletter-split"
   },
   {
    "id": "chrome-drop",
@@ -52,7 +59,9 @@
    "pairing": "y2k-chrome",
    "family": "glass",
    "hero": "hero-editorial-name-rotator",
-   "effect": "scroll-scrub-product-sequence"
+   "effect": "scroll-scrub-product-sequence",
+   "work": "masonry-gallery-captions",
+   "footer": "footer-sitemap-columns"
   },
   {
    "id": "blush-letter",
@@ -62,7 +71,9 @@
    "pairing": "lettera",
    "family": "soft",
    "hero": "editorial-landing-hero",
-   "effect": "overlap-slider"
+   "effect": "overlap-slider",
+   "work": "card-product-quick-add",
+   "footer": "footer-engraved-caravan-strip"
   }
  ]
 }

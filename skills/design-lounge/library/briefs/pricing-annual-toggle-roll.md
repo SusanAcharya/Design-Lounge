@@ -1,10 +1,10 @@
-<!-- Design Lounge Nº 092 · "Annual toggle with rolling prices" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 092 · "Annual toggle with rolling prices" · www.designlounge.live -->
 
 # Annual toggle with rolling prices
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
-> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws. The demo's names, prices, and sentences belong to the demo. Write this product's facts in short sentences.
 
 ## What it is
 
@@ -213,4 +213,4 @@ Common mistakes: using `line-height` other than 1 on `.odo` (strips drift off-gr
 
 ---
 
-*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*
+*From Design Lounge (https://www.designlounge.live). Free to use in your products. Credit line: Designed using Design Lounge.*

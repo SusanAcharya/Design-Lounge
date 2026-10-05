@@ -106,7 +106,7 @@ Use the same sections to read a DESIGN.md they bring. It is their system. Follow
 
 ## Pick a direction
 
-Every recipe has three or more `directions`. Each one is a complete look: theme, pairing, family, hero piece, and one effect. Two people who type the same sentence must not get the same site. Two different subjects must not get the same site either: guitar lessons and drawing lessons are both "for beginners", and that is why audience words cannot pick the look.
+Every recipe has three or more `directions`. Each one is a complete look: theme, pairing, family, hero, and one effect. A public site's direction also names `work` and `footer`. Use those. Do not pick the showcase or the footer again. Two people who type the same sentence must not get the same site. Two different subjects must not get the same site either: guitar lessons and drawing lessons are both "for beginners", and that is why audience words cannot pick the look.
 
 Before you choose, read the history (Recent picks, below). Then choose in this order.
 
@@ -114,7 +114,7 @@ Before you choose, read the history (Recent picks, below). Then choose in this o
 2. The subject's world. Write the materials of the thing itself: the instrument, the tool, the room, the place, the craft. Guitar: strings, wood, a stage, a setlist. Drawing: paper, a pencil line, a sketchbook. Code: a terminal, short drills. Lock the direction whose `mood` names that world. A clear dark, Nepali, retro, or AI request also counts here.
 3. Audience words come last, and never alone: beginner, friendly, simple, fun, modern, clean, for everyone, easy. Almost every brief says them. They break a tie between two directions that both fit the subject. They do not pick a direction by themselves. "For kids" is the exception: it is a world.
 4. Read the person. Most messages carry more than they say: a bio, a tagline, project names, their job, their own site or GitHub, the way they write. Write three words that describe that material, in their words where you can. Compare them with each direction's `mood` and lock the closest. Write it on the sheet. For a twelve-seat momo counter whose owner wrote "we fold every momo in front of you, no freezer": `Direction: garden-supper (their words: small, made in front of you, slow; mood: olive, cream, slow food)`. A designer starts from the person, not from a number.
-5. Two or more directions fit equally, or there is truly nothing to read (a bare "make me a portfolio"). Only then use the name number, and only among the directions that fit. Work out the name number: add up the place of each letter of the product or brand name in the alphabet (a = 1, b = 2, … z = 26), ignoring spaces, digits and punctuation. If there is no name, use the first noun in their message. Divide by the number of directions. The remainder picks it, counting the first direction as 0. Write the sum on the sheet, for example `Direction: garden-supper (Tsering = 20+19+5+18+9+14+7 = 92, 92 mod 3 = 2)`. The name number keeps one product consistent and keeps two products apart. It does not know who they are, so it never overrules rules 2 to 4. Counting letters is not enough, because names of the same length would always land together.
+5. Two or more directions fit equally, or there is truly nothing to read (a bare "make me a portfolio"). Only then use the name number, and only among the directions that fit. Work out the name number: add up the place of each letter of the product or brand name in the alphabet (a = 1, b = 2, … z = 26), ignoring spaces, digits and punctuation. If there is no name, use the first noun in their message. Divide by the number of directions. The remainder picks it, counting the first direction as 0. Write the sum on the sheet, for example `Direction: garden-supper (Tsering = 20+19+5+18+9+14+7 = 92, three directions fit, 92 mod 3 = 2)`. The name number keeps one product consistent and keeps two products apart. It does not know who they are, so it never overrules rules 2 to 4. Counting letters is not enough, because names of the same length would always land together.
 
 Do not take the first direction because it is first. Do not mix two directions. If the hero is unset, use the recipe's first piece. If the effect is null, the register stays quiet.
 
@@ -122,13 +122,13 @@ The direction's effect is a starting point. If the Idea already moves in a way t
 
 ### Recent picks
 
-A person who builds two sites close together should not get the same page twice. The parts people notice are the hero, the work (the projects, the menu, the list), and the footer. The colours can sit in one family. Those three parts are what make a site look copied.
+A person who builds two sites close together should not get the same page twice. The parts people notice are the hero, the work (the projects, the menu, the list), and the footer. On a public site those three are already on the direction. The colours can sit in one family. Those three parts are what make a site look copied.
 
 Keep a short history on their machine.
 
 - Before you lock: read `~/.design-lounge/history.jsonl` if it exists. Use the last 24 lines.
 - Same recipe: do not lock a direction, a hero, or an effect that appears in those lines for this recipe. Choose the next direction that fits the subject. Write it on the sheet: `Recent: education/play-lesson used on 4 Oct for First Fret, so not again`.
-- Related recipes sit in one group. A new site is too close to a recent one when two of these three match: hero, work, footer. One match is fine. Two means it reads as the same site. Check every recent line in this recipe, and every recent line in the group.
+- Related recipes sit in one group. Compare this direction's hero, `work`, and `footer` with every recent line in this recipe and in the group. One match is fine. Two means it reads as the same site. Take the next direction that fits the subject. That direction brings a different hero, work, and footer. Do not swap the footer by hand.
   - Showing work: portfolio, portfolio-builder, personal-site, agency
   - A place: restaurant, food, hotel, wellness, gym, clinic
   - Selling: marketing-site, saas, landing, commerce, fashion, fintech
@@ -145,13 +145,13 @@ Keep a short history on their machine.
 
 Write the check on the sheet before you build. One line is enough when nothing is close: `Unlike recent education and culture sites: hero, work, and footer are all different.` When something matches, name it: `Unlike First Fret: hero differs, work differs, footer matches. One match, so it stands.`
 
-If a footer change still leaves two matches, change the work. If it still matches, pick another direction. There are six footers. If all six are already in this recipe's recent lines, use the oldest and write `Footer: footer-centered-colophon, the oldest of six, the others are recent.`
+There are six footers, so a footer will repeat before the heroes do. A repeated footer is allowed when the hero and the work both differ. If every remaining direction still shares two of the three, use the oldest footer and write `Footer: <id>, the oldest of six, the others are recent.`
 
 If you cannot write to the home folder, say so in the reply, and keep going. Still run the check against the lines you could read.
 
 The direction is the start, not the end. The Idea, the copy, the projects, and the order of the sections still come from this product.
 
-On a website, work, about, contact, and footer are picked next, in Sections, one by one in [website.md](website.md). Then the check above. Then the history line. A web app or a tool has no marketing footer. `work` is the primary surface. `footer` is the account or settings piece, or `none`.
+On a website, about and contact are picked next, in Sections, one by one in [website.md](website.md). Work and footer stay on the direction. Then the check above. Then the history line. A web app or a tool has no marketing footer. `work` is the primary surface. `footer` is the account or settings piece, or `none`.
 
 ## Match the world
 
@@ -160,7 +160,7 @@ A hundred products look like one product when every pass locks the first palette
 Choose in this order.
 
 1. They named a theme, a pairing, or a family. Lock what they named. Choose the rest by the rules below.
-2. A recipe in `starts` matches the product. The full list is the Kind map in [reference.md](reference.md). Say which recipe, then pick one direction, as Pick a direction says. These are the pairs people mix up. One person's money is `personal`, not `dashboard` and not `bank`. A Nepali finance app is `personal`: Lokta and the Devanagari pairing. A photographer is `portfolio`. A person who ships software is `portfolio-builder`. A menu people visit is `restaurant`. A shop that ships is `food`. A retreat is `wellness`. A clinic people book is `clinic`. The marketing page of a tool is `saas`. The tool they log into is `web-app`. Staff ops is `dashboard`. A shop in a browser is `commerce`. A shop on a phone is `shop-app`. The direction locks the theme, pairing, family, hero, and effect. The recipe's `pieces` are still the screens to open.
+2. A recipe in `starts` matches the product. The full list is the Kind map in [reference.md](reference.md). Say which recipe, then pick one direction, as Pick a direction says. These are the pairs people mix up. One person's money is `personal`, not `dashboard` and not `bank`. A Nepali finance app is `personal`: Lokta and the Devanagari pairing. A photographer is `portfolio`. A person who ships software is `portfolio-builder`. A menu people visit is `restaurant`. A shop that ships is `food`. A retreat is `wellness`. A clinic people book is `clinic`. The marketing page of a tool is `saas`. The tool they log into is `web-app`. Staff ops is `dashboard`. A shop in a browser is `commerce`. A shop on a phone is `shop-app`. The direction locks the theme, pairing, family, hero, work, footer, and effect. The recipe's `pieces` are still the screens to open.
 3. No recipe matches. Stay inside that kind's `palettes`, `pairings`, and `families`. Read `bestFor`, `mood`, and `tags` on each theme. Lock the theme whose `bestFor` names this world. A clinic is Alpine Clinic. A payroll run is Harbour Ledger, because the job is paying people. Fog City is the first palette on kind `product` and is the wrong lock for both.
 4. Lock a pairing from that kind's list whose `bestFor` is the same world. Payroll on kind `product` takes Friendly SaaS, which lists fintech. A paper takes Newsroom. A clay shop whose recipe is commerce takes Atelier.
 5. Lock the family for how the product is used. Editorial for a page people read. Industrial for a yard or a field tool. Sharp for a dense platform. Quiet for a product that has to last. Soft for a friendly consumer app. Glass only when the direction names it.

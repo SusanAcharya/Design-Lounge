@@ -11,6 +11,10 @@ export interface Direction {
   family: string;
   /** The piece that sets the first screen. Unset: the recipe's first piece. */
   hero?: string;
+  /** The projects, the menu, the list. Set on a public site so two directions do not share a showcase. */
+  work?: string;
+  /** The footer piece. Set on a public site. A tool leaves this unset. */
+  footer?: string;
   /** The one signature motion. Null on a daily tool: the register stays quiet. */
   effect: string | null;
 }
@@ -44,7 +48,7 @@ const DIRECTIONS: Record<string, Direction[]> = {
     ['calm-cobalt', 'Calm cobalt', 'Trustworthy, clear, enterprise-friendly', 'fog-city', 'friendly-saas', 'quiet', 'hero-product-window-tilt', 'features-sticky-scroll-steps'],
     ['dev-night', 'Dev night', 'Technical, dark, for developers', 'night-desk', 'developer-docs', 'sharp', 'landing-devtool-dark', 'webgl-shader-hero'],
     ['lime-engine', 'Lime engine', 'AI, infrastructure, fast and expensive', 'circuit', 'signal-mono', 'sharp', 'hero-ai-prompt-cycle', 'spotlight-hover-grid'],
-    ['butter-tool', 'Butter tool', 'Playful, consumer, small teams', 'playroom', 'indie-maker', 'soft', 'hero-product-window-tilt', 'stacking-cards-scroll'],
+    ['butter-tool', 'Butter tool', 'Playful, consumer, small teams', 'playroom', 'indie-maker', 'soft', 'hero-live-browser-card', 'stacking-cards-scroll'],
     ['printed-saas', 'Printed SaaS', 'Editorial, opinionated, founder-led', 'paper-ink', 'neo-grotesk-mono', 'editorial', 'hero-asymmetric-type-lockup', 'text-marker-highlight-draw'],
   ]),
   portfolio: d([
@@ -69,12 +73,12 @@ const DIRECTIONS: Record<string, Direction[]> = {
   fintech: d([
     ['harbour', 'Harbour', 'Trust, cream and navy, a bank you can call', 'harbour-ledger', 'friendly-saas', 'quiet', 'landing-fintech-light', 'staggered-list-reveal'],
     ['lime-card', 'Lime card', 'A card for young people, dark and fast', 'circuit', 'wide-tech', 'sharp', 'hero-product-window-tilt', 'scroll-velocity-type'],
-    ['lokta', 'Lokta', 'Nepali money, crimson on lokta paper', 'lokta', 'devanagari', 'quiet', 'landing-fintech-light', 'text-marker-highlight-draw'],
+    ['lokta', 'Lokta', 'Nepali money, crimson on lokta paper', 'lokta', 'devanagari', 'quiet', 'hero-swiss-grid-wordmark', 'text-marker-highlight-draw'],
     ['co-op-ledger', 'Co-op ledger', 'Old-fashioned trust, stamped paper', 'archive', 'slab-ledger', 'editorial', 'hero-asymmetric-type-lockup', 'split-flap-board'],
   ]),
   fashion: d([
     ['washed-linen', 'Washed linen', 'Soft, natural, slow fashion', 'linen-shop', 'maison', 'editorial', 'landing-fashion-atelier', 'text-mask-line-reveal'],
-    ['noir-house', 'Noir house', 'Luxury, black, a fragrance or a house', 'atelier-noir', 'maison', 'editorial', 'landing-fashion-atelier', 'page-transition-tile-wipe'],
+    ['noir-house', 'Noir house', 'Luxury, black, a fragrance or a house', 'atelier-noir', 'maison', 'editorial', 'hero-flashlight-reveal', 'page-transition-tile-wipe'],
     ['chrome-drop', 'Chrome drop', 'Streetwear, a drop, Y2K', 'y2k-chrome', 'y2k-chrome', 'glass', 'hero-editorial-name-rotator', 'scroll-scrub-product-sequence'],
     ['blush-letter', 'Blush letter', 'Romantic, bright, bridal or beauty', 'sakura-desk', 'lettera', 'soft', 'editorial-landing-hero', 'overlap-slider'],
   ]),
@@ -171,7 +175,7 @@ const DIRECTIONS: Record<string, Direction[]> = {
     ['kids-hall', 'Kids hall', 'A bright room, shapes, a thing to touch', 'playroom', 'playground', 'soft', 'hero-layered-letter-swap', 'spring-deck'],
   ]),
   landing: d([
-    ['noir-launch', 'Noir launch', 'Luxury, dark, one product', 'atelier-noir', 'maison', 'editorial', 'landing-fashion-atelier', 'scroll-scrub-product-sequence'],
+    ['noir-launch', 'Noir launch', 'Luxury, dark, one product', 'atelier-noir', 'maison', 'editorial', 'luxe-product-detail', 'scroll-scrub-product-sequence'],
     ['clay-launch', 'Clay launch', 'Warm, crafted, a maker', 'kiln', 'studio-display', 'soft', 'editorial-landing-hero', 'stacking-cards-scroll'],
     ['grid-launch', 'Grid launch', 'Precise, cool, a hardware launch', 'ice-station', 'swiss-precision', 'sharp', 'hero-swiss-grid-wordmark', 'scroll-velocity-type'],
     ['toy-launch', 'Toy launch', 'Playful, butter and coral', 'playroom', 'candy-clay', 'soft', 'hero-bauhaus-composition', 'scroll-zoom-portal'],
@@ -188,9 +192,9 @@ const DIRECTIONS: Record<string, Direction[]> = {
     ['cobalt-app', 'Cobalt app', 'A calm tool people keep open, a sidebar and the work', 'fog-city', 'friendly-saas', 'quiet', 'sidebar-workspace-switcher', null],
     ['night-console', 'Night console', 'A dark desk, the command palette is the front door', 'night-desk', 'developer-docs', 'sharp', 'command-palette', null],
     ['paper-notes', 'Paper notes', 'Writing first, warm paper, the page is the product', 'paper-ink', 'bookish', 'editorial', 'tablet-notes-three-pane', 'scroll-reading-progress'],
-    ['kanban-room', 'Kanban room', 'A small team, clay, the work is cards on a wall', 'kiln', 'indie-maker', 'soft', 'kanban-board', null],
+    ['kanban-room', 'Kanban room', 'A small team, clay, the work is cards on a wall', 'kiln', 'indie-maker', 'soft', 'features-thread-to-issue-board', null],
     ['chat-work', 'Chat work', 'The product is a conversation with the work, lime on charcoal', 'circuit', 'signal-mono', 'sharp', 'ai-chat-workspace', null],
-    ['records', 'Records', 'A public tool, pale and plain, one table people finish', 'ice-station', 'academic', 'quiet', 'dense-data-table', null],
+    ['records', 'Records', 'A public tool, pale and plain, one table people finish', 'ice-station', 'academic', 'quiet', 'table-tasks-inline', null],
   ]),
   'design-system': d([
     ['paper-system', 'Paper system', 'Editorial, warm', 'paper-ink', 'the-lounge', 'editorial', undefined, null],
@@ -200,8 +204,8 @@ const DIRECTIONS: Record<string, Direction[]> = {
   commerce: d([
     ['clay-shop', 'Clay shop', 'Handmade, warm, a studio shop', 'kiln', 'atelier', 'soft', 'shop-collection', 'staggered-list-reveal'],
     ['linen-boutique', 'Linen boutique', 'Soft luxury, fashion and home', 'linen-shop', 'maison', 'editorial', 'luxe-product-detail', 'overlap-slider'],
-    ['market-stall', 'Market stall', 'Loud, local, groceries and merch', 'market-stall', 'riso-zine', 'sharp', 'shop-collection', 'kinetic-type-marquee'],
-    ['noir-counter', 'Noir counter', 'Watches, fragrance, a dark counter', 'atelier-noir', 'gallery-wall', 'editorial', 'luxe-product-detail', 'object-3d-turntable'],
+    ['market-stall', 'Market stall', 'Loud, local, groceries and merch', 'market-stall', 'riso-zine', 'sharp', 'hero-bauhaus-composition', 'kinetic-type-marquee'],
+    ['noir-counter', 'Noir counter', 'Watches, fragrance, a dark counter', 'atelier-noir', 'gallery-wall', 'editorial', 'hero-product-window-tilt', 'object-3d-turntable'],
   ]),
   'mobile-app': d([
     ['mint-app', 'Mint app', 'Calm and clinical, a warm home you tap through', 'alpine-clinic', 'geometric-modern', 'soft', 'm3-expressive-home', 'm3-container-transform'],
@@ -324,14 +328,14 @@ const DIRECTIONS: Record<string, Direction[]> = {
   education: d([
     ['lecture-hall', 'Lecture hall', 'Academic, calm, one green', 'paper-ink', 'academic', 'editorial', 'course-landing-curriculum', 'scroll-reading-progress'],
     ['bauhaus-campus', 'Bauhaus campus', 'Cream, navy, shapes, a school', 'archive', 'bauhaus-school', 'soft', 'school-admissions-home', 'staggered-list-reveal'],
-    ['play-lesson', 'Play lesson', 'Kids and first-timers, butter and coral, bouncy', 'playroom', 'playground', 'soft', 'course-landing-curriculum', 'spring-deck'],
+    ['play-lesson', 'Play lesson', 'Kids and first-timers, butter and coral, bouncy', 'playroom', 'playground', 'soft', 'bento-feature-grid', 'spring-deck'],
     ['stage-lights', 'Stage lights', 'Music lessons, a dark stage, warm spotlights, a setlist', 'velvet-club', 'cinema', 'editorial', 'hero-chaptered-scenes', 'scroll-velocity-type'],
     ['workshop-bench', 'Workshop bench', 'Hands and tools: wood, strings, clay, a build you finish', 'oxide', 'industrial-label', 'industrial', 'hero-asymmetric-type-lockup', 'stacking-cards-scroll'],
     ['open-studio', 'Open studio', 'Drawing and sketching, paper, a pencil line, a hand', 'inkwell', 'letter-hand', 'soft', 'handwritten-homepage', 'text-annotated-underlines'],
     ['gallery-class', 'Gallery class', 'Painting and colour, white walls, a framed piece', 'marble-hall', 'gallery-wall', 'editorial', 'editorial-landing-hero', 'scroll-zoom-portal'],
     ['code-dojo', 'Code dojo', 'Coding and tech, a terminal, short drills', 'night-desk', 'terminal-native', 'sharp', 'hero-split-ui-stack', 'text-scramble-reveal'],
     ['language-cafe', 'Language cafe', 'Languages and words, two scripts, a cafe table', 'sakura-desk', 'literary', 'editorial', 'hero-layered-letter-swap', 'text-mask-line-reveal'],
-    ['field-school', 'Field school', 'Outdoors, cooking, gardening, slow and practical', 'loam', 'garden-journal', 'soft', 'editorial-landing-hero', 'parallax-layered-hero'],
+    ['field-school', 'Field school', 'Outdoors, cooking, gardening, slow and practical', 'loam', 'garden-journal', 'soft', 'sticky-split-story', 'parallax-layered-hero'],
   ]),
   jobs: d([
     ['swiss-board', 'Swiss board', 'A board you scan, white and one green, search first', 'fog-city', 'swiss-precision', 'quiet', 'job-board-search', null],
@@ -925,7 +929,80 @@ const BASE: Omit<Start, 'directions'>[] = [
   },
 ];
 
-export const STARTS: Start[] = BASE.map((s) => ({ ...s, directions: DIRECTIONS[s.id] ?? [] }));
+const FOOTERS = [
+  'footer-centered-colophon',
+  'footer-newsletter-split',
+  'footer-sitemap-columns',
+  'footer-engraved-caravan-strip',
+  'footer-enterprise-sitemap',
+  'footer-giant-wordmark-reveal',
+];
+
+/** The showcase for a public site. The direction picks one, so the agent does not choose it again. */
+const SHOW: Record<string, string[]> = {
+  'marketing-site': ['features-alternating-rows', 'features-tabbed-preview', 'bento-feature-grid', 'features-vertical-label-columns', 'stacking-cards-scroll', 'features-sticky-scroll-steps'],
+  saas: ['features-tabbed-preview', 'features-sticky-scroll-steps', 'bento-feature-grid', 'features-alternating-rows', 'stacking-cards-scroll'],
+  portfolio: ['portfolio-case-study-long', 'stacking-cards-scroll', 'case-file-horizontal-scroll', 'gallery-wall-frames', 'card-article-mix', 'masonry-gallery-captions', 'gallery-contact-sheet', 'gallery-photo-album'],
+  'portfolio-builder': ['portfolio-case-study-long', 'bento-feature-grid', 'stacking-cards-scroll', 'features-tabbed-preview', 'features-alternating-rows', 'card-article-mix', 'hero-live-browser-card'],
+  fintech: ['swiss-grid-pricing', 'pricing-comparison-sticky', 'charts-kpi-spark-row', 'stats-count-up-band', 'features-alternating-rows'],
+  fashion: ['luxe-product-detail', 'gallery-contact-sheet', 'masonry-gallery-captions', 'card-product-quick-add', 'shop-product'],
+  food: ['shop-collection', 'card-product-quick-add', 'week-schedule', 'masonry-gallery-captions', 'features-alternating-rows', 'bento-feature-grid', 'restaurant-menu-page'],
+  wellness: ['contact-booking-hours', 'calendar-week-planner', 'week-schedule', 'features-tabbed-preview', 'bento-feature-grid', 'calendar-month', 'sticky-split-story', 'faq-category-accordion'],
+  hotel: ['gallery-photo-album', 'contact-booking-hours', 'masonry-gallery-captions', 'week-schedule', 'gallery-contact-sheet', 'card-magazine-cover', 'contact-split-map-form'],
+  agency: ['landing-agency-case-wall', 'portfolio-case-study-long', 'case-file-horizontal-scroll', 'logos-grid-case-hover', 'team-hover-portrait-grid'],
+  editorial: ['paper-article-reader', 'magazine-editorial-grid', 'card-article-mix', 'blog-issue-index', 'book-page-flip', 'card-journal-page', 'card-magazine-cover'],
+  docs: ['docs-install-steps', 'paper-article-reader', 'code-snippet-tabs', 'blog-issue-index', 'book-page-flip', 'search-results-filters', 'sidebar-docs-toc', 'command-palette'],
+  music: ['coverflow-strip', 'corner-player', 'week-schedule', 'card-music-playlist', 'luxe-product-detail', 'paper-article-reader', 'event-ticket-checkout', 'kinetic-type-marquee'],
+  'personal-site': ['blog-issue-index', 'paper-article-reader', 'card-article-mix', 'card-journal-page', 'profile-editorial-staff', 'profile-creator-masthead'],
+  event: ['week-schedule', 'event-ticket-checkout', 'card-event-ticket-stub', 'bento-feature-grid', 'faq-category-accordion', 'stats-count-up-band', 'card-holo-foil', 'card-event-countdown'],
+  museum: ['gallery-museum-placard', 'gallery-film-strip', 'gallery-contact-sheet', 'paper-article-reader', 'masonry-gallery-captions', 'gallery-photo-album', 'card-article-mix', 'gallery-wall-frames', 'pan-canvas'],
+  landing: ['features-sticky-scroll-steps', 'bento-feature-grid', 'stacking-cards-scroll', 'features-alternating-rows', 'stats-count-up-band'],
+  'real-estate': ['realestate-listing-detail', 'gallery-photo-album', 'hero-search-marketplace', 'contact-split-map-form', 'portfolio-architect-index', 'faq-category-accordion', 'masonry-gallery-captions', 'contact-booking-hours'],
+  restaurant: ['restaurant-menu-page', 'week-schedule', 'contact-booking-hours', 'gallery-contact-sheet', 'card-cafe-menu-board', 'calendar-week-planner', 'masonry-gallery-captions', 'bento-feature-grid'],
+  education: ['course-landing-curriculum', 'outline-fill-topic-list', 'accordion-grid-rows', 'card-progress-goals', 'features-tabbed-preview', 'stacking-cards-scroll', 'phone-lesson-quiz', 'tablet-cook-mode', 'sticky-split-story', 'features-sticky-scroll-steps'],
+  jobs: ['job-board-search', 'careers-role-list', 'week-schedule', 'team-hover-portrait-grid', 'people-role-list', 'faq-category-accordion', 'contact-project-brief-steps', 'search-results-filters'],
+  nonprofit: ['donation-page-impact', 'sticky-split-story', 'paper-article-reader', 'stats-count-up-band', 'testimonials-masonry-wall', 'newsletter-fold-inline', 'newsletter-close-band', 'people-role-list'],
+  clinic: ['clinic-home-booking', 'calendar-week-planner', 'phone-booking-slots', 'faq-category-accordion', 'contact-booking-hours', 'week-schedule', 'profile-creator-masthead', 'tablet-kiosk-checkin'],
+  gym: ['gym-membership-home', 'week-schedule', 'pricing-annual-toggle-roll', 'phone-booking-slots', 'bento-feature-grid', 'calendar-week-planner', 'phone-workout-timer', 'landing-wellness-retreat'],
+  professional: ['law-firm-home', 'people-role-list', 'paper-article-reader', 'card-article-mix', 'profile-creator-masthead', 'architecture-studio-index', 'contact-project-brief-steps', 'stats-count-up-band'],
+  commerce: ['shop-collection', 'shop-product', 'luxe-product-detail', 'card-product-quick-add', 'week-schedule', 'faq-category-accordion'],
+  notebook: ['handwritten-letter', 'card-journal-page', 'card-sticky-notepad', 'graph-paper-homepage', 'paper-article-reader'],
+};
+
+function withShowcase(id: string, dirs: Direction[]): Direction[] {
+  const works = SHOW[id];
+  if (!works) return dirs;
+  const used = new Set<string>();
+  const usedWork = new Set<string>();
+  const offset = [...id].reduce((n, c) => n + c.charCodeAt(0), 0);
+  return dirs.map((dir, i) => {
+    let work = works[i % works.length];
+    for (let n = 0; n < works.length; n++) {
+      const candidate = works[(i + n) % works.length];
+      if (candidate !== dir.hero && !usedWork.has(candidate)) {
+        work = candidate;
+        break;
+      }
+    }
+    if (work === dir.hero) work = works[(i + 1) % works.length];
+    let footer = FOOTERS[(i + offset) % FOOTERS.length];
+    for (let n = 0; n < FOOTERS.length && used.has(`${work}|${footer}`); n++) {
+      footer = FOOTERS[(i + offset + n + 1) % FOOTERS.length];
+    }
+    usedWork.add(work);
+    used.add(`${work}|${footer}`);
+    return { ...dir, work, footer };
+  });
+}
+
+export const STARTS: Start[] = BASE.map((s) => {
+  const directions = withShowcase(s.id, DIRECTIONS[s.id] ?? []);
+  const pieces = [...s.pieces];
+  for (const dir of directions) {
+    if (dir.hero && !pieces.includes(dir.hero)) pieces.push(dir.hero);
+  }
+  return { ...s, directions, pieces };
+});
 
 export const MAP = [
   { href: '/kit', kicker: 'Kit', title: 'Compose', blurb: 'Pick a kind, a palette, a pairing, a family. Get a brief.' },

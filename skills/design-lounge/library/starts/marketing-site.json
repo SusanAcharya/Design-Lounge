@@ -34,7 +34,10 @@
   "stats-count-up-band",
   "cta-giant-email-band",
   "footer-sitemap-columns",
-  "error-404-editorial"
+  "error-404-editorial",
+  "hero-swiss-grid-wordmark",
+  "hero-bauhaus-composition",
+  "editorial-landing-hero"
  ],
  "directions": [
   {
@@ -45,7 +48,9 @@
    "pairing": "the-lounge",
    "family": "editorial",
    "hero": "hero-asymmetric-type-lockup",
-   "effect": "text-mask-line-reveal"
+   "effect": "text-mask-line-reveal",
+   "work": "features-alternating-rows",
+   "footer": "footer-enterprise-sitemap"
   },
   {
    "id": "swiss-office",
@@ -55,7 +60,9 @@
    "pairing": "swiss-precision",
    "family": "sharp",
    "hero": "hero-swiss-grid-wordmark",
-   "effect": "scroll-velocity-type"
+   "effect": "scroll-velocity-type",
+   "work": "features-tabbed-preview",
+   "footer": "footer-giant-wordmark-reveal"
   },
   {
    "id": "loud-poster",
@@ -65,7 +72,9 @@
    "pairing": "brutal-grotesk",
    "family": "sharp",
    "hero": "hero-bauhaus-composition",
-   "effect": "kinetic-type-marquee"
+   "effect": "kinetic-type-marquee",
+   "work": "bento-feature-grid",
+   "footer": "footer-centered-colophon"
   },
   {
    "id": "warm-studio",
@@ -75,7 +84,9 @@
    "pairing": "studio-display",
    "family": "soft",
    "hero": "editorial-landing-hero",
-   "effect": "scroll-word-highlight"
+   "effect": "scroll-word-highlight",
+   "work": "features-vertical-label-columns",
+   "footer": "footer-newsletter-split"
   }
  ]
 }

@@ -31,7 +31,9 @@
    "pairing": "letter-hand",
    "family": "soft",
    "hero": "handwritten-homepage",
-   "effect": "text-annotated-underlines"
+   "effect": "text-annotated-underlines",
+   "work": "handwritten-letter",
+   "footer": "footer-newsletter-split"
   },
   {
    "id": "lamp-desk",
@@ -41,7 +43,9 @@
    "pairing": "letter-hand",
    "family": "editorial",
    "hero": "handwritten-letter",
-   "effect": "text-marker-highlight-draw"
+   "effect": "text-marker-highlight-draw",
+   "work": "card-journal-page",
+   "footer": "footer-sitemap-columns"
   },
   {
    "id": "margin",
@@ -51,7 +55,9 @@
    "pairing": "handwritten-notes",
    "family": "editorial",
    "hero": "graph-paper-homepage",
-   "effect": "text-annotated-underlines"
+   "effect": "text-annotated-underlines",
+   "work": "card-sticky-notepad",
+   "footer": "footer-engraved-caravan-strip"
   }
  ]
 }

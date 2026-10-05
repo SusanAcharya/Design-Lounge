@@ -1,7 +1,7 @@
-/* Maison · type pairing · Designed using Design Lounge (https://designlounge.vercel.app) */
+/* Maison · type pairing · Designed using Design Lounge (https://www.designlounge.live) */
 @import url("https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,700;1,400&family=Tenor+Sans&display=swap");
 
-/* Courtroom · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
+/* Courtroom · full palette · Designed using Design Lounge (https://www.designlounge.live)
    Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
    Free to use. */
 :root {
@@ -65,7 +65,7 @@
   --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
-/* Motion tokens · Designed using Design Lounge (https://designlounge.vercel.app) */
+/* Motion tokens · Designed using Design Lounge (https://www.designlounge.live) */
 :root {
   --ease-standard: cubic-bezier(0.2, 0.7, 0.2, 1);
   --ease-expo-out: cubic-bezier(0.16, 1, 0.3, 1);

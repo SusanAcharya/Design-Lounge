@@ -1,6 +1,6 @@
 # Design Lounge
 
-A design library by [Susan Acharya](https://acharyasusan.com.np). Browse it at [designlounge.vercel.app](https://designlounge.vercel.app), or install it as a skill and let an agent design from it.
+A design library by [Susan Acharya](https://acharyasusan.com.np). Browse it at [www.designlounge.live](https://www.designlounge.live), or install it as a skill and let an agent design from it.
 
 Free to use in products. Keep the credit. Do not republish the catalogue as a catalogue.
 

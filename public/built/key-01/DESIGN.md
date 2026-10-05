@@ -78,14 +78,14 @@ Fails: none
 
 ## Sources
 
-- theme ice-station — https://designlounge.vercel.app/themes/ice-station
-- pairing swiss-precision — https://designlounge.vercel.app/type/swiss-precision
+- theme ice-station — https://www.designlounge.live/themes/ice-station
+- pairing swiss-precision — https://www.designlounge.live/type/swiss-precision
 - family sharp — radius 0
-- hero-swiss-grid-wordmark — layout — https://designlounge.vercel.app/demo/hero-swiss-grid-wordmark.html
-- button-3d-press — component — https://designlounge.vercel.app/demo/button-3d-press.html
-- features-sticky-scroll-steps — layout — https://designlounge.vercel.app/demo/features-sticky-scroll-steps.html
-- scroll-velocity-type — motion — https://designlounge.vercel.app/demo/scroll-velocity-type.html
-- property-list — component — https://designlounge.vercel.app/demo/property-list.html
-- contact-conversational-form — layout — https://designlounge.vercel.app/demo/contact-conversational-form.html
-- hamburger-circle-reveal — motion — https://designlounge.vercel.app/demo/hamburger-circle-reveal.html
-- footer-centered-colophon — layout — https://designlounge.vercel.app/demo/footer-centered-colophon.html
+- hero-swiss-grid-wordmark — layout — https://www.designlounge.live/demo/hero-swiss-grid-wordmark.html
+- button-3d-press — component — https://www.designlounge.live/demo/button-3d-press.html
+- features-sticky-scroll-steps — layout — https://www.designlounge.live/demo/features-sticky-scroll-steps.html
+- scroll-velocity-type — motion — https://www.designlounge.live/demo/scroll-velocity-type.html
+- property-list — component — https://www.designlounge.live/demo/property-list.html
+- contact-conversational-form — layout — https://www.designlounge.live/demo/contact-conversational-form.html
+- hamburger-circle-reveal — motion — https://www.designlounge.live/demo/hamburger-circle-reveal.html
+- footer-centered-colophon — layout — https://www.designlounge.live/demo/footer-centered-colophon.html

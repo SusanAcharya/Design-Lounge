@@ -1,7 +1,7 @@
 import type { APIRoute } from 'astro';
 
 export const GET: APIRoute = ({ site }) => {
-  const base = (site?.toString() || 'https://designlounge.vercel.app').replace(/\/$/, '');
+  const base = (site?.toString() || 'https://www.designlounge.live').replace(/\/$/, '');
   const body = `User-agent: *
 Allow: /
 

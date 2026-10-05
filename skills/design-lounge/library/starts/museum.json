@@ -35,7 +35,9 @@
    "pairing": "the-lounge",
    "family": "editorial",
    "hero": "editorial-landing-hero",
-   "effect": "pan-canvas"
+   "effect": "pan-canvas",
+   "work": "gallery-museum-placard",
+   "footer": "footer-sitemap-columns"
   },
   {
    "id": "archive-room",
@@ -45,7 +47,9 @@
    "pairing": "monumental",
    "family": "editorial",
    "hero": "hero-asymmetric-type-lockup",
-   "effect": "text-mask-line-reveal"
+   "effect": "text-mask-line-reveal",
+   "work": "gallery-film-strip",
+   "footer": "footer-engraved-caravan-strip"
   },
   {
    "id": "night-gallery",
@@ -55,7 +59,9 @@
    "pairing": "bauhaus-school",
    "family": "sharp",
    "hero": "hero-bauhaus-composition",
-   "effect": "scroll-zoom-portal"
+   "effect": "scroll-zoom-portal",
+   "work": "gallery-contact-sheet",
+   "footer": "footer-enterprise-sitemap"
   },
   {
    "id": "placard-wall",
@@ -65,7 +71,9 @@
    "pairing": "monumental",
    "family": "editorial",
    "hero": "gallery-museum-placard",
-   "effect": "scroll-word-highlight"
+   "effect": "scroll-word-highlight",
+   "work": "paper-article-reader",
+   "footer": "footer-giant-wordmark-reveal"
   },
   {
    "id": "contact-study",
@@ -75,7 +83,9 @@
    "pairing": "newsroom",
    "family": "editorial",
    "hero": "gallery-contact-sheet",
-   "effect": "grow-grid"
+   "effect": "grow-grid",
+   "work": "masonry-gallery-captions",
+   "footer": "footer-centered-colophon"
   },
   {
    "id": "film-room",
@@ -85,7 +95,9 @@
    "pairing": "cinema",
    "family": "editorial",
    "hero": "gallery-film-strip",
-   "effect": "hero-video-loop"
+   "effect": "hero-video-loop",
+   "work": "gallery-photo-album",
+   "footer": "footer-newsletter-split"
   },
   {
    "id": "reading-room",
@@ -95,7 +107,9 @@
    "pairing": "classic-garamond",
    "family": "editorial",
    "hero": "paper-article-reader",
-   "effect": "scroll-reading-progress"
+   "effect": "scroll-reading-progress",
+   "work": "card-article-mix",
+   "footer": "footer-sitemap-columns"
   },
   {
    "id": "courtyard",
@@ -105,7 +119,9 @@
    "pairing": "garden-journal",
    "family": "soft",
    "hero": "hero-engraved-moonrise-plate",
-   "effect": "parallax-layered-hero"
+   "effect": "parallax-layered-hero",
+   "work": "gallery-wall-frames",
+   "footer": "footer-engraved-caravan-strip"
   },
   {
    "id": "kids-hall",
@@ -115,7 +131,9 @@
    "pairing": "playground",
    "family": "soft",
    "hero": "hero-layered-letter-swap",
-   "effect": "spring-deck"
+   "effect": "spring-deck",
+   "work": "pan-canvas",
+   "footer": "footer-enterprise-sitemap"
   }
  ]
 }

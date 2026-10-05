@@ -1,6 +1,6 @@
 # Aadhi Raat — system sheet
 
-Designed using Design Lounge (https://designlounge.vercel.app).
+Designed using Design Lounge (https://www.designlounge.live).
 
 ```
 Product: Aadhi Raat, a Kathmandu record label that only releases music recorded after midnight (Nepal time)
@@ -54,15 +54,15 @@ The prompt said "go wild, I want it to feel like an Awwwards site of the day". D
 
 ## Sources
 
-- theme observatory — https://designlounge.vercel.app/themes/observatory
-- pairing cinema — https://designlounge.vercel.app/type/cinema
+- theme observatory — https://www.designlounge.live/themes/observatory
+- pairing cinema — https://www.designlounge.live/type/cinema
 - family editorial — 2px
-- webgl-shader-hero — motion — https://designlounge.vercel.app/demo/webgl-shader-hero.html
-- portfolio-motion-showreel — layout — https://designlounge.vercel.app/demo/portfolio-motion-showreel.html
-- stacking-cards-scroll — motion — https://designlounge.vercel.app/demo/stacking-cards-scroll.html
-- sticky-split-story — layout — https://designlounge.vercel.app/demo/sticky-split-story.html
-- contact-project-brief-steps — component — https://designlounge.vercel.app/demo/contact-project-brief-steps.html
-- footer-engraved-caravan-strip — layout — https://designlounge.vercel.app/demo/footer-engraved-caravan-strip.html
-- corner-player — component — https://designlounge.vercel.app/demo/corner-player.html
-- navbar-vertical-rail — layout — https://designlounge.vercel.app/demo/navbar-vertical-rail.html
-- hamburger-circle-reveal — motion — https://designlounge.vercel.app/demo/hamburger-circle-reveal.html
+- webgl-shader-hero — motion — https://www.designlounge.live/demo/webgl-shader-hero.html
+- portfolio-motion-showreel — layout — https://www.designlounge.live/demo/portfolio-motion-showreel.html
+- stacking-cards-scroll — motion — https://www.designlounge.live/demo/stacking-cards-scroll.html
+- sticky-split-story — layout — https://www.designlounge.live/demo/sticky-split-story.html
+- contact-project-brief-steps — component — https://www.designlounge.live/demo/contact-project-brief-steps.html
+- footer-engraved-caravan-strip — layout — https://www.designlounge.live/demo/footer-engraved-caravan-strip.html
+- corner-player — component — https://www.designlounge.live/demo/corner-player.html
+- navbar-vertical-rail — layout — https://www.designlounge.live/demo/navbar-vertical-rail.html
+- hamburger-circle-reveal — motion — https://www.designlounge.live/demo/hamburger-circle-reveal.html

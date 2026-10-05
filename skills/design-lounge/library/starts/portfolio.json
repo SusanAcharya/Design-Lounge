@@ -23,7 +23,11 @@
   "profile-creator-masthead",
   "navbar-vertical-rail",
   "hamburger-circle-reveal",
-  "architecture-studio-index"
+  "architecture-studio-index",
+  "brutalist-studio-home",
+  "gallery-contact-sheet",
+  "masonry-gallery-captions",
+  "gallery-wall-frames"
  ],
  "directions": [
   {
@@ -34,7 +38,9 @@
    "pairing": "gallery-wall",
    "family": "editorial",
    "hero": "portfolio-index-hover-preview",
-   "effect": "hover-image-trail"
+   "effect": "hover-image-trail",
+   "work": "portfolio-case-study-long",
+   "footer": "footer-centered-colophon"
   },
   {
    "id": "stone-architect",
@@ -44,7 +50,9 @@
    "pairing": "swiss-precision",
    "family": "sharp",
    "hero": "portfolio-architect-index",
-   "effect": "scroll-split"
+   "effect": "scroll-split",
+   "work": "stacking-cards-scroll",
+   "footer": "footer-newsletter-split"
   },
   {
    "id": "brutal-studio",
@@ -54,7 +62,9 @@
    "pairing": "brutal-grotesk",
    "family": "sharp",
    "hero": "brutalist-studio-home",
-   "effect": "text-mask-scroll-reveal"
+   "effect": "text-mask-scroll-reveal",
+   "work": "case-file-horizontal-scroll",
+   "footer": "footer-sitemap-columns"
   },
   {
    "id": "linen-series",
@@ -64,7 +74,9 @@
    "pairing": "maison",
    "family": "editorial",
    "hero": "portfolio-photographer-horizontal",
-   "effect": "text-mask-line-reveal"
+   "effect": "text-mask-line-reveal",
+   "work": "gallery-wall-frames",
+   "footer": "footer-engraved-caravan-strip"
   },
   {
    "id": "reel-night",
@@ -74,7 +86,9 @@
    "pairing": "cinema",
    "family": "editorial",
    "hero": "portfolio-motion-showreel",
-   "effect": "page-transition-curtain"
+   "effect": "page-transition-curtain",
+   "work": "card-article-mix",
+   "footer": "footer-enterprise-sitemap"
   },
   {
    "id": "darkroom-sheet",
@@ -84,7 +98,9 @@
    "pairing": "newsroom",
    "family": "editorial",
    "hero": "gallery-contact-sheet",
-   "effect": "grow-grid"
+   "effect": "grow-grid",
+   "work": "masonry-gallery-captions",
+   "footer": "footer-giant-wordmark-reveal"
   },
   {
    "id": "riso-wall",
@@ -94,7 +110,9 @@
    "pairing": "riso-zine",
    "family": "sharp",
    "hero": "masonry-gallery-captions",
-   "effect": "kinetic-type-marquee"
+   "effect": "kinetic-type-marquee",
+   "work": "gallery-contact-sheet",
+   "footer": "footer-centered-colophon"
   },
   {
    "id": "maker-wall",
@@ -104,7 +122,9 @@
    "pairing": "industrial-label",
    "family": "industrial",
    "hero": "gallery-wall-frames",
-   "effect": "object-3d-turntable"
+   "effect": "object-3d-turntable",
+   "work": "gallery-photo-album",
+   "footer": "footer-newsletter-split"
   }
  ]
 }

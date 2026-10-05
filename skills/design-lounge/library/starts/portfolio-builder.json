@@ -25,7 +25,12 @@
   "hamburger-circle-reveal",
   "card-article-mix",
   "contact-project-brief-steps",
-  "error-404-editorial"
+  "error-404-editorial",
+  "hero-swiss-grid-wordmark",
+  "hero-flashlight-reveal",
+  "hero-editorial-name-rotator",
+  "hero-live-browser-card",
+  "app-icon-shelf-gallery"
  ],
  "directions": [
   {
@@ -36,7 +41,9 @@
    "pairing": "indie-maker",
    "family": "soft",
    "hero": "hero-product-window-tilt",
-   "effect": "stacking-cards-scroll"
+   "effect": "stacking-cards-scroll",
+   "work": "portfolio-case-study-long",
+   "footer": "footer-sitemap-columns"
   },
   {
    "id": "cobalt-desk",
@@ -46,7 +53,9 @@
    "pairing": "neo-grotesk-mono",
    "family": "sharp",
    "hero": "hero-swiss-grid-wordmark",
-   "effect": "features-sticky-scroll-steps"
+   "effect": "features-sticky-scroll-steps",
+   "work": "bento-feature-grid",
+   "footer": "footer-engraved-caravan-strip"
   },
   {
    "id": "night-terminal",
@@ -56,7 +65,9 @@
    "pairing": "terminal-native",
    "family": "editorial",
    "hero": "hero-flashlight-reveal",
-   "effect": "text-scramble-reveal"
+   "effect": "text-scramble-reveal",
+   "work": "stacking-cards-scroll",
+   "footer": "footer-enterprise-sitemap"
   },
   {
    "id": "sakura-notes",
@@ -66,7 +77,9 @@
    "pairing": "studio-display",
    "family": "soft",
    "hero": "hero-editorial-name-rotator",
-   "effect": "scroll-word-highlight"
+   "effect": "scroll-word-highlight",
+   "work": "features-tabbed-preview",
+   "footer": "footer-giant-wordmark-reveal"
   },
   {
    "id": "paper-ledger",
@@ -76,7 +89,9 @@
    "pairing": "academic",
    "family": "editorial",
    "hero": "portfolio-case-study-long",
-   "effect": "scroll-reading-progress"
+   "effect": "scroll-reading-progress",
+   "work": "features-alternating-rows",
+   "footer": "footer-centered-colophon"
   },
   {
    "id": "lime-lab",
@@ -86,7 +101,9 @@
    "pairing": "signal-mono",
    "family": "sharp",
    "hero": "hero-live-browser-card",
-   "effect": "spotlight-hover-grid"
+   "effect": "spotlight-hover-grid",
+   "work": "card-article-mix",
+   "footer": "footer-newsletter-split"
   },
   {
    "id": "toy-shelf",
@@ -96,7 +113,9 @@
    "pairing": "indie-maker",
    "family": "soft",
    "hero": "app-icon-shelf-gallery",
-   "effect": "spring-deck"
+   "effect": "spring-deck",
+   "work": "hero-live-browser-card",
+   "footer": "footer-sitemap-columns"
   }
  ]
 }

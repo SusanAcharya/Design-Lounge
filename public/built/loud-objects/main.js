@@ -1,4 +1,4 @@
-/* Loud Objects · Designed using Design Lounge (https://designlounge.vercel.app) */
+/* Loud Objects · Designed using Design Lounge (https://www.designlounge.live) */
 (() => {
   'use strict';
 

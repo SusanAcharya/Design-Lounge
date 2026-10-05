@@ -1,4 +1,4 @@
-/* Pocketplan · Designed using Design Lounge (https://designlounge.vercel.app) */
+/* Pocketplan · Designed using Design Lounge (https://www.designlounge.live) */
 (() => {
   'use strict';
 

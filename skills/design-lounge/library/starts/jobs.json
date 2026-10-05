@@ -35,7 +35,9 @@
    "pairing": "swiss-precision",
    "family": "quiet",
    "hero": "job-board-search",
-   "effect": null
+   "effect": null,
+   "work": "careers-role-list",
+   "footer": "footer-enterprise-sitemap"
   },
   {
    "id": "night-roles",
@@ -45,7 +47,9 @@
    "pairing": "developer-docs",
    "family": "sharp",
    "hero": "hero-split-ui-stack",
-   "effect": "text-scramble-reveal"
+   "effect": "text-scramble-reveal",
+   "work": "week-schedule",
+   "footer": "footer-giant-wordmark-reveal"
   },
   {
    "id": "press-hiring",
@@ -55,7 +59,9 @@
    "pairing": "newsroom",
    "family": "editorial",
    "hero": "careers-role-list",
-   "effect": "text-mask-line-reveal"
+   "effect": "text-mask-line-reveal",
+   "work": "team-hover-portrait-grid",
+   "footer": "footer-centered-colophon"
   },
   {
    "id": "studio-roles",
@@ -65,7 +71,9 @@
    "pairing": "indie-maker",
    "family": "soft",
    "hero": "team-hover-portrait-grid",
-   "effect": "scroll-word-highlight"
+   "effect": "scroll-word-highlight",
+   "work": "people-role-list",
+   "footer": "footer-newsletter-split"
   },
   {
    "id": "yard-shifts",
@@ -75,7 +83,9 @@
    "pairing": "industrial-label",
    "family": "industrial",
    "hero": "week-schedule",
-   "effect": "split-flap-board"
+   "effect": "split-flap-board",
+   "work": "faq-category-accordion",
+   "footer": "footer-sitemap-columns"
   },
   {
    "id": "civic-posts",
@@ -85,7 +95,9 @@
    "pairing": "academic",
    "family": "quiet",
    "hero": "hero-swiss-grid-wordmark",
-   "effect": null
+   "effect": null,
+   "work": "contact-project-brief-steps",
+   "footer": "footer-engraved-caravan-strip"
   },
   {
    "id": "poster-call",
@@ -95,7 +107,9 @@
    "pairing": "poster-condensed",
    "family": "sharp",
    "hero": "hero-bauhaus-composition",
-   "effect": "kinetic-type-marquee"
+   "effect": "kinetic-type-marquee",
+   "work": "search-results-filters",
+   "footer": "footer-enterprise-sitemap"
   },
   {
    "id": "quiet-practice",
@@ -105,7 +119,9 @@
    "pairing": "classic-garamond",
    "family": "editorial",
    "hero": "law-firm-home",
-   "effect": "scroll-reading-progress"
+   "effect": "scroll-reading-progress",
+   "work": "job-board-search",
+   "footer": "footer-giant-wordmark-reveal"
   }
  ]
 }

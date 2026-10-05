@@ -19,7 +19,7 @@ interface Props {
 }
 const { title, description = `Design Lounge is a free UI design skill for AI coding agents, with hundreds of design ideas: website sections, app screens, palettes, font pairings, icons and motion.`, ogImage, bodyClass, rail = true, noindex = false, crumbs, faq } = Astro.props;
 const fullTitle = Astro.props.fullTitle ?? (title ? `${title} · Design Lounge` : `Design Lounge`);
-const origin = (Astro.site ?? new URL('https://designlounge.vercel.app')).toString().replace(/\/$/, '');
+const origin = (Astro.site ?? new URL('https://www.designlounge.live')).toString().replace(/\/$/, '');
 const path = Astro.url.pathname.replace(/\/index(\.html)?$/, '').replace(/\.html$/, '').replace(/\/$/, '') || '/';
 const canonical = path === '/' ? `${origin}/` : `${origin}${path}`;
 const json = (o: unknown) => JSON.stringify(o).replace(/</g, '\\u003c');
@@ -66,8 +66,7 @@ const count = (await getPieces()).length;
   <meta property="og:image" content={ogImage ?? `${origin}/og/home.jpg`} />
   <meta name="twitter:title" content={fullTitle} />
   <meta name="twitter:description" content={description} />
-  <meta name="theme-color" content="#fafaf9" media="(prefers-color-scheme: light)" />
-  <meta name="theme-color" content="#0c0c0e" media="(prefers-color-scheme: dark)" />
+  <meta name="theme-color" content="#fafaf9" />
   <link rel="icon" href="/favicon.ico" sizes="32x32" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <link rel="icon" href="/favicon-96.png" type="image/png" sizes="96x96" />
@@ -81,7 +80,7 @@ const count = (await getPieces()).length;
     (function () {
       try {
         var t = localStorage.getItem('dl-theme');
-        if (t !== 'day' && t !== 'night') t = matchMedia('(prefers-color-scheme: dark)').matches ? 'night' : 'day';
+        if (t !== 'day' && t !== 'night') t = 'day';
         document.documentElement.setAttribute('data-theme', t);
       } catch (e) { document.documentElement.setAttribute('data-theme', 'day'); }
     })();

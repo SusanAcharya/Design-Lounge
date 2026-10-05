@@ -10,7 +10,7 @@ import { KINDS, FAMILIES } from '../../data/kit';
 import { SOURCES, studyPiece } from '../../data/website-list';
 
 export const GET: APIRoute = async ({ site }) => {
-  const base = (site?.toString() || 'https://designlounge.vercel.app').replace(/\/$/, '');
+  const base = (site?.toString() || 'https://www.designlounge.live').replace(/\/$/, '');
   const pieces = await getPieces();
   const nums = numberMap(pieces);
   const body = {
