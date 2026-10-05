@@ -19,13 +19,20 @@
   "corner-player",
   "coverflow-strip",
   "logos-mono-marquee",
-  "event-ticket-checkout"
+  "event-ticket-checkout",
+  "hero-editorial-name-rotator",
+  "hero-bauhaus-composition",
+  "luxe-product-detail",
+  "week-schedule",
+  "handwritten-homepage",
+  "paper-article-reader",
+  "hero-silk-ribbon-ticker"
  ],
  "directions": [
   {
    "id": "neon-tube",
    "name": "Neon tube",
-   "mood": "Night, magenta and cyan",
+   "mood": "A wet street, magenta and cyan, the name in lights",
    "theme": "neon-alley",
    "pairing": "y2k-chrome",
    "family": "glass",
@@ -35,7 +42,7 @@
   {
    "id": "gig-poster",
    "name": "Gig poster",
-   "mood": "Loud, condensed, a tour",
+   "mood": "A tour, condensed type, one loud poster",
    "theme": "festival",
    "pairing": "poster-condensed",
    "family": "sharp",
@@ -45,12 +52,62 @@
   {
    "id": "observatory",
    "name": "Observatory",
-   "mood": "Ambient, navy and gold, a record label",
+   "mood": "A record label, navy and gold, the reel first",
    "theme": "observatory",
    "pairing": "cinema",
    "family": "editorial",
    "hero": "portfolio-motion-showreel",
    "effect": "webgl-shader-hero"
+  },
+  {
+   "id": "vinyl-day",
+   "name": "Vinyl day",
+   "mood": "Linen, one record, the sleeve is the page",
+   "theme": "linen-shop",
+   "pairing": "maison",
+   "family": "editorial",
+   "hero": "luxe-product-detail",
+   "effect": "overlap-slider"
+  },
+  {
+   "id": "tour-dates",
+   "name": "Tour dates",
+   "mood": "A run of dates, the board of where they play",
+   "theme": "press-room",
+   "pairing": "newsroom",
+   "family": "editorial",
+   "hero": "week-schedule",
+   "effect": "split-flap-board"
+  },
+  {
+   "id": "bedroom-label",
+   "name": "Bedroom label",
+   "mood": "A small label, a letter, blush paper",
+   "theme": "sakura-desk",
+   "pairing": "indie-maker",
+   "family": "soft",
+   "hero": "handwritten-homepage",
+   "effect": "text-annotated-underlines"
+  },
+  {
+   "id": "score-desk",
+   "name": "Score desk",
+   "mood": "A composer, warm paper, the work is something you read",
+   "theme": "paper-ink",
+   "pairing": "classic-garamond",
+   "family": "editorial",
+   "hero": "paper-article-reader",
+   "effect": "scroll-reading-progress"
+  },
+  {
+   "id": "chrome-mixtape",
+   "name": "Chrome mixtape",
+   "mood": "Ice silver, a drop, covers you can flip",
+   "theme": "y2k-chrome",
+   "pairing": "wide-tech",
+   "family": "glass",
+   "hero": "hero-silk-ribbon-ticker",
+   "effect": "coverflow-strip"
   }
  ]
 }

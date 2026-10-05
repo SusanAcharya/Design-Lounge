@@ -18,13 +18,20 @@
   "people-role-list",
   "stats-count-up-band",
   "contact-project-brief-steps",
-  "card-article-mix"
+  "card-article-mix",
+  "hero-asymmetric-type-lockup",
+  "hero-swiss-grid-wordmark",
+  "paper-article-reader",
+  "profile-creator-masthead",
+  "hero-split-ui-stack",
+  "editorial-landing-hero",
+  "architecture-studio-index"
  ],
  "directions": [
   {
    "id": "courtroom",
    "name": "Courtroom",
-   "mood": "Green leather, cream, serious",
+   "mood": "Green leather, one serious sentence, a practice",
    "theme": "courtroom",
    "pairing": "maison",
    "family": "editorial",
@@ -34,22 +41,72 @@
   {
    "id": "ivory-counsel",
    "name": "Ivory counsel",
-   "mood": "Ivory, navy, oxblood, quiet money",
+   "mood": "White stone, a quiet opinion, the sentence is the page",
    "theme": "marble-hall",
    "pairing": "lettera",
    "family": "editorial",
-   "hero": "law-firm-home",
+   "hero": "hero-asymmetric-type-lockup",
    "effect": "text-mask-line-reveal"
   },
   {
    "id": "harbour-advisors",
    "name": "Harbour advisors",
-   "mood": "Navy and brass, an accounting or consulting firm",
+   "mood": "Navy and brass, a ledger, the figures first",
    "theme": "harbour-ledger",
    "pairing": "slab-ledger",
    "family": "quiet",
-   "hero": "law-firm-home",
+   "hero": "hero-swiss-grid-wordmark",
    "effect": "stats-count-up-band"
+  },
+  {
+   "id": "chambers",
+   "name": "Chambers",
+   "mood": "After hours, a written opinion you sit with",
+   "theme": "chambers",
+   "pairing": "classic-garamond",
+   "family": "editorial",
+   "hero": "paper-article-reader",
+   "effect": "scroll-reading-progress"
+  },
+  {
+   "id": "studio-counsel",
+   "name": "Studio counsel",
+   "mood": "One advisor, clay and cream, a person not a tower",
+   "theme": "kiln",
+   "pairing": "bookish",
+   "family": "soft",
+   "hero": "profile-creator-masthead",
+   "effect": "text-marker-highlight-draw"
+  },
+  {
+   "id": "glass-office",
+   "name": "Glass office",
+   "mood": "A method in steps, cool gray, a modern consultancy",
+   "theme": "fog-city",
+   "pairing": "neo-grotesk-mono",
+   "family": "sharp",
+   "hero": "hero-split-ui-stack",
+   "effect": "features-sticky-scroll-steps"
+  },
+  {
+   "id": "press-brief",
+   "name": "Press brief",
+   "mood": "A firm that publishes, newsprint, the argument first",
+   "theme": "press-room",
+   "pairing": "newsroom",
+   "family": "editorial",
+   "hero": "editorial-landing-hero",
+   "effect": "text-rise-underline-whisper"
+  },
+  {
+   "id": "survey-desk",
+   "name": "Survey desk",
+   "mood": "Engineers and surveyors, drawings on the wall",
+   "theme": "oxide",
+   "pairing": "industrial-label",
+   "family": "industrial",
+   "hero": "architecture-studio-index",
+   "effect": "scroll-split"
   }
  ]
 }

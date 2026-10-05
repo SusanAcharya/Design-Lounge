@@ -18,13 +18,19 @@
   "careers-role-list",
   "search-results-filters",
   "file-upload-manager",
-  "phone-search-results"
+  "phone-search-results",
+  "hero-split-ui-stack",
+  "team-hover-portrait-grid",
+  "week-schedule",
+  "hero-swiss-grid-wordmark",
+  "hero-bauhaus-composition",
+  "law-firm-home"
  ],
  "directions": [
   {
    "id": "swiss-board",
    "name": "Swiss board",
-   "mood": "White, black, one green, fast to scan",
+   "mood": "A board you scan, white and one green, search first",
    "theme": "fog-city",
    "pairing": "swiss-precision",
    "family": "quiet",
@@ -34,22 +40,72 @@
   {
    "id": "night-roles",
    "name": "Night roles",
-   "mood": "Dark, technical, for engineers",
+   "mood": "Engineering roles, a dark desk, the stack beside the list",
    "theme": "night-desk",
    "pairing": "developer-docs",
    "family": "sharp",
-   "hero": "job-board-search",
+   "hero": "hero-split-ui-stack",
    "effect": "text-scramble-reveal"
   },
   {
    "id": "press-hiring",
    "name": "Press hiring",
-   "mood": "Newsprint and one red",
+   "mood": "A newspaper of open roles, one red, read down the page",
    "theme": "press-room",
    "pairing": "newsroom",
    "family": "editorial",
    "hero": "careers-role-list",
    "effect": "text-mask-line-reveal"
+  },
+  {
+   "id": "studio-roles",
+   "name": "Studio roles",
+   "mood": "A small studio, the people on the wall, warm clay",
+   "theme": "kiln",
+   "pairing": "indie-maker",
+   "family": "soft",
+   "hero": "team-hover-portrait-grid",
+   "effect": "scroll-word-highlight"
+  },
+  {
+   "id": "yard-shifts",
+   "name": "Yard shifts",
+   "mood": "Shifts on a board, safety orange, what is on this week",
+   "theme": "cinder",
+   "pairing": "industrial-label",
+   "family": "industrial",
+   "hero": "week-schedule",
+   "effect": "split-flap-board"
+  },
+  {
+   "id": "civic-posts",
+   "name": "Civic posts",
+   "mood": "A city hiring page, stone and a brass line, quiet",
+   "theme": "marble-hall",
+   "pairing": "academic",
+   "family": "quiet",
+   "hero": "hero-swiss-grid-wordmark",
+   "effect": null
+  },
+  {
+   "id": "poster-call",
+   "name": "Poster call",
+   "mood": "A campaign hire, a loud poster, one role",
+   "theme": "festival",
+   "pairing": "poster-condensed",
+   "family": "sharp",
+   "hero": "hero-bauhaus-composition",
+   "effect": "kinetic-type-marquee"
+  },
+  {
+   "id": "quiet-practice",
+   "name": "Quiet practice",
+   "mood": "A firm hiring, the practice first, then the seat",
+   "theme": "courtroom",
+   "pairing": "classic-garamond",
+   "family": "editorial",
+   "hero": "law-firm-home",
+   "effect": "scroll-reading-progress"
   }
  ]
 }

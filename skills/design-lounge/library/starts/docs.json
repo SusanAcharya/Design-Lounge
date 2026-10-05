@@ -21,35 +21,94 @@
   "tree-nav",
   "sidebar-docs-toc",
   "navbar-hide-on-scroll",
-  "faq-category-accordion"
+  "faq-category-accordion",
+  "terminal-ui-style",
+  "paper-article-reader",
+  "docs-hatched-gutter-shell",
+  "docs-install-steps",
+  "blog-issue-index",
+  "book-page-flip"
  ],
  "directions": [
   {
    "id": "cobalt-docs",
    "name": "Cobalt docs",
-   "mood": "Clear, civic, the default reader",
+   "mood": "A clear reader, three columns, civic gray",
    "theme": "fog-city",
    "pairing": "developer-docs",
    "family": "quiet",
+   "hero": "docs-three-column",
    "effect": null
   },
   {
    "id": "phosphor-docs",
    "name": "Phosphor docs",
-   "mood": "Dark, terminal, a CLI",
+   "mood": "A terminal, phosphor on soot, a CLI",
    "theme": "signal-green",
    "pairing": "terminal-native",
    "family": "sharp",
+   "hero": "terminal-ui-style",
    "effect": null
   },
   {
    "id": "paper-docs",
    "name": "Paper docs",
-   "mood": "Long reads, a research tool",
+   "mood": "A long page, warm paper, research you read",
    "theme": "paper-ink",
    "pairing": "academic",
    "family": "editorial",
+   "hero": "paper-article-reader",
+   "effect": "scroll-reading-progress"
+  },
+  {
+   "id": "hatched-api",
+   "name": "Hatched API",
+   "mood": "A dark reference, hatched gutters, an API you keep open",
+   "theme": "night-desk",
+   "pairing": "signal-mono",
+   "family": "sharp",
+   "hero": "docs-hatched-gutter-shell",
    "effect": null
+  },
+  {
+   "id": "install-first",
+   "name": "Install first",
+   "mood": "The first screen is the install, lime on charcoal",
+   "theme": "circuit",
+   "pairing": "wide-tech",
+   "family": "sharp",
+   "hero": "docs-install-steps",
+   "effect": "text-scramble-reveal"
+  },
+  {
+   "id": "civic-manual",
+   "name": "Civic manual",
+   "mood": "A public guide, pale and severe, the contents on the left",
+   "theme": "ice-station",
+   "pairing": "red-hat",
+   "family": "quiet",
+   "hero": "sidebar-docs-toc",
+   "effect": null
+  },
+  {
+   "id": "changelog",
+   "name": "Changelog",
+   "mood": "Shipped notes, newsprint, an issue at a time",
+   "theme": "press-room",
+   "pairing": "newsroom",
+   "family": "editorial",
+   "hero": "blog-issue-index",
+   "effect": null
+  },
+  {
+   "id": "research-note",
+   "name": "Research note",
+   "mood": "A paper you turn, manila, the source in the margin",
+   "theme": "archive",
+   "pairing": "classic-garamond",
+   "family": "editorial",
+   "hero": "book-page-flip",
+   "effect": "text-marker-highlight-draw"
   }
  ]
 }

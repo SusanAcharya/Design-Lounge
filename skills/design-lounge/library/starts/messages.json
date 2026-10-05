@@ -25,13 +25,15 @@
   "phone-notification-settings",
   "m3-list-detail",
   "phone-composer",
-  "phone-skeleton-list"
+  "phone-skeleton-list",
+  "phone-feed-posts",
+  "handheld-talk-player"
  ],
  "directions": [
   {
    "id": "cobalt-inbox",
    "name": "Cobalt inbox",
-   "mood": "Clear, work mail",
+   "mood": "Work mail, a list you can swipe",
    "theme": "fog-city",
    "pairing": "geometric-modern",
    "family": "quiet",
@@ -41,7 +43,7 @@
   {
    "id": "night-chat",
    "name": "Night chat",
-   "mood": "Dark, glass, a private chat",
+   "mood": "A private thread, dark glass, one conversation",
    "theme": "night-desk",
    "pairing": "signal-mono",
    "family": "glass",
@@ -51,12 +53,42 @@
   {
    "id": "sakura-letters",
    "name": "Sakura letters",
-   "mood": "Soft, personal, friends",
+   "mood": "Friends, blush paper, you are writing",
    "theme": "sakura-desk",
    "pairing": "indie-maker",
    "family": "soft",
-   "hero": "mobile-inbox-list",
+   "hero": "phone-composer",
    "effect": "shared-element-expand"
+  },
+  {
+   "id": "desk-mail",
+   "name": "Desk mail",
+   "mood": "Android work mail, a row that becomes the letter",
+   "theme": "fog-night",
+   "pairing": "developer-docs",
+   "family": "sharp",
+   "hero": "m3-list-detail",
+   "effect": "staggered-list-reveal"
+  },
+  {
+   "id": "broadcast",
+   "name": "Broadcast",
+   "mood": "A newsroom thread, posts and replies",
+   "theme": "press-room",
+   "pairing": "newsroom",
+   "family": "editorial",
+   "hero": "phone-feed-posts",
+   "effect": "ios-large-title-collapse"
+  },
+  {
+   "id": "voice-notes",
+   "name": "Voice notes",
+   "mood": "A talk you hold, clay, the recording is the message",
+   "theme": "kiln",
+   "pairing": "bookish",
+   "family": "soft",
+   "hero": "handheld-talk-player",
+   "effect": null
   }
  ]
 }

@@ -23,13 +23,17 @@
   "phone-video-player",
   "phone-search-results",
   "phone-subscription-manage",
-  "m3-modal-bottom-sheet"
+  "m3-modal-bottom-sheet",
+  "coverflow-strip",
+  "luxe-product-detail",
+  "widget-now-playing",
+  "handheld-talk-player"
  ],
  "directions": [
   {
    "id": "neon-player",
    "name": "Neon player",
-   "mood": "Night, magenta, glass",
+   "mood": "Night, magenta, the song fills the glass",
    "theme": "neon-alley",
    "pairing": "y2k-chrome",
    "family": "glass",
@@ -39,7 +43,7 @@
   {
    "id": "festival-player",
    "name": "Festival player",
-   "mood": "Loud, expressive, Android",
+   "mood": "Loud, expressive, Android, the player takes the screen",
    "theme": "festival",
    "pairing": "variable-expressive",
    "family": "soft",
@@ -49,12 +53,42 @@
   {
    "id": "observatory-player",
    "name": "Observatory player",
-   "mood": "Ambient, navy and gold",
+   "mood": "Ambient, navy and gold, covers in a row",
    "theme": "observatory",
    "pairing": "cinema",
    "family": "glass",
-   "hero": "ios-now-playing",
-   "effect": "coverflow-strip"
+   "hero": "coverflow-strip",
+   "effect": "overlap-slider"
+  },
+  {
+   "id": "vinyl-hand",
+   "name": "Vinyl hand",
+   "mood": "Linen, one record, the sleeve",
+   "theme": "linen-shop",
+   "pairing": "maison",
+   "family": "editorial",
+   "hero": "luxe-product-detail",
+   "effect": "object-3d-turntable"
+  },
+  {
+   "id": "bedroom",
+   "name": "Bedroom",
+   "mood": "A lamp, a small player, night writing",
+   "theme": "sakura-night",
+   "pairing": "indie-maker",
+   "family": "soft",
+   "hero": "widget-now-playing",
+   "effect": "text-marker-highlight-draw"
+  },
+  {
+   "id": "podcast-walk",
+   "name": "Podcast walk",
+   "mood": "A talk in the hand, ice, a long episode",
+   "theme": "ice-station",
+   "pairing": "academic",
+   "family": "quiet",
+   "hero": "handheld-talk-player",
+   "effect": "ios-large-title-collapse"
   }
  ]
 }

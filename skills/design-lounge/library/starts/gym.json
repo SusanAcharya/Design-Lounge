@@ -18,13 +18,20 @@
   "mobile-web-bottom-nav",
   "phone-workout-timer",
   "pricing-annual-toggle-roll",
-  "phone-booking-slots"
+  "phone-booking-slots",
+  "hero-flashlight-reveal",
+  "hero-asymmetric-type-lockup",
+  "landing-wellness-retreat",
+  "week-schedule",
+  "hero-bauhaus-composition",
+  "hero-swiss-grid-wordmark",
+  "bento-feature-grid"
  ],
  "directions": [
   {
    "id": "blood-orange",
    "name": "Blood orange",
-   "mood": "Black, loud, a fight gym",
+   "mood": "A fight gym, black and safety orange, a poster",
    "theme": "cinder",
    "pairing": "poster-condensed",
    "family": "industrial",
@@ -34,22 +41,72 @@
   {
    "id": "volt-studio",
    "name": "Volt studio",
-   "mood": "Dark, neon, a spin or HIIT studio",
+   "mood": "A dark room, neon, a spin or HIIT hour",
    "theme": "neon-alley",
    "pairing": "wide-tech",
    "family": "sharp",
-   "hero": "gym-membership-home",
+   "hero": "hero-flashlight-reveal",
    "effect": "preloader-counter-intro"
   },
   {
    "id": "oxide-yard",
    "name": "Oxide yard",
-   "mood": "Rust, bone, a strength barn",
+   "mood": "A strength barn, rust and bone, the bar on the wall",
    "theme": "oxide",
    "pairing": "industrial-label",
    "family": "industrial",
-   "hero": "gym-membership-home",
+   "hero": "hero-asymmetric-type-lockup",
    "effect": "scroll-velocity-type"
+  },
+  {
+   "id": "dawn-mat",
+   "name": "Dawn mat",
+   "mood": "Yoga at dawn, linen and sage, the week of classes",
+   "theme": "linen-shop",
+   "pairing": "garden-journal",
+   "family": "soft",
+   "hero": "landing-wellness-retreat",
+   "effect": "parallax-layered-hero"
+  },
+  {
+   "id": "class-board",
+   "name": "Class board",
+   "mood": "The timetable is the site, newsprint, what is on tonight",
+   "theme": "press-room",
+   "pairing": "newsroom",
+   "family": "editorial",
+   "hero": "week-schedule",
+   "effect": "split-flap-board"
+  },
+  {
+   "id": "fight-night",
+   "name": "Fight night",
+   "mood": "Floodlights, a club card, condensed type that moves",
+   "theme": "night-shift",
+   "pairing": "poster-condensed",
+   "family": "industrial",
+   "hero": "hero-bauhaus-composition",
+   "effect": "variable-font-proximity"
+  },
+  {
+   "id": "pool-lane",
+   "name": "Pool lane",
+   "mood": "A lane, pale water, quiet numbers, laps",
+   "theme": "glacier",
+   "pairing": "swiss-precision",
+   "family": "quiet",
+   "hero": "hero-swiss-grid-wordmark",
+   "effect": "scroll-reading-progress"
+  },
+  {
+   "id": "kids-class",
+   "name": "Kids class",
+   "mood": "A bright hall, butter and coral, small goals",
+   "theme": "playroom",
+   "pairing": "playground",
+   "family": "soft",
+   "hero": "bento-feature-grid",
+   "effect": "spring-deck"
   }
  ]
 }

@@ -29,28 +29,81 @@
   {
    "id": "press-tablet",
    "name": "Press tablet",
-   "mood": "Reading, newsprint",
+   "mood": "Reading, newsprint, two columns",
    "theme": "press-room",
    "pairing": "newsroom",
    "family": "editorial",
+   "hero": "tablet-two-column-reader",
    "effect": null
   },
   {
    "id": "cobalt-tablet",
    "name": "Cobalt tablet",
-   "mood": "Neutral, work",
+   "mood": "Work mail, a list and the letter beside it",
    "theme": "fog-city",
    "pairing": "geometric-modern",
    "family": "quiet",
+   "hero": "tablet-split-view-mail",
    "effect": null
   },
   {
    "id": "night-tablet",
    "name": "Night tablet",
-   "mood": "Dark, technical",
+   "mood": "A dark ops grid, numbers you live in",
    "theme": "night-desk",
    "pairing": "developer-docs",
    "family": "sharp",
+   "hero": "tablet-dashboard-grid",
+   "effect": null
+  },
+  {
+   "id": "kitchen",
+   "name": "Kitchen",
+   "mood": "A recipe in two hands, clay, the step is huge",
+   "theme": "kiln",
+   "pairing": "garden-journal",
+   "family": "soft",
+   "hero": "tablet-cook-mode",
+   "effect": null
+  },
+  {
+   "id": "counter",
+   "name": "Counter",
+   "mood": "A stall, the register, turmeric and tomato",
+   "theme": "market-stall",
+   "pairing": "poster-condensed",
+   "family": "industrial",
+   "hero": "tablet-pos-register",
+   "effect": null
+  },
+  {
+   "id": "studio-tools",
+   "name": "Studio tools",
+   "mood": "A drawing desk, linen, tools that float",
+   "theme": "linen-shop",
+   "pairing": "atelier",
+   "family": "editorial",
+   "hero": "tablet-floating-tool-palette",
+   "effect": null
+  },
+  {
+   "id": "notes",
+   "name": "Notes",
+   "mood": "A notebook in three panes, warm paper",
+   "theme": "paper-ink",
+   "pairing": "bookish",
+   "family": "quiet",
+   "hero": "tablet-notes-three-pane",
+   "effect": "scroll-reading-progress"
+  },
+  {
+   "id": "lobby",
+   "name": "Lobby",
+   "mood": "A stone desk, check in, a name and a time",
+   "theme": "marble-hall",
+   "pairing": "maison",
+   "family": "editorial",
+   "hero": "tablet-kiosk-checkin",
    "effect": null
   }
  ]

@@ -18,13 +18,19 @@
   "gallery-contact-sheet",
   "pan-canvas",
   "editorial-landing-hero",
-  "paper-article-reader"
+  "paper-article-reader",
+  "hero-asymmetric-type-lockup",
+  "hero-bauhaus-composition",
+  "gallery-museum-placard",
+  "gallery-film-strip",
+  "hero-engraved-moonrise-plate",
+  "hero-layered-letter-swap"
  ],
  "directions": [
   {
    "id": "marble-hall",
    "name": "Marble hall",
-   "mood": "White stone, a brass plaque",
+   "mood": "White stone, a brass plaque, the hall",
    "theme": "marble-hall",
    "pairing": "the-lounge",
    "family": "editorial",
@@ -34,7 +40,7 @@
   {
    "id": "archive-room",
    "name": "Archive room",
-   "mood": "Heritage, Cinzel, a collection",
+   "mood": "Heritage, a collection, the long note",
    "theme": "archive",
    "pairing": "monumental",
    "family": "editorial",
@@ -50,6 +56,66 @@
    "family": "sharp",
    "hero": "hero-bauhaus-composition",
    "effect": "scroll-zoom-portal"
+  },
+  {
+   "id": "placard-wall",
+   "name": "Placard wall",
+   "mood": "After closing, dark stone, a work and its plaque",
+   "theme": "basalt-hall",
+   "pairing": "monumental",
+   "family": "editorial",
+   "hero": "gallery-museum-placard",
+   "effect": "scroll-word-highlight"
+  },
+  {
+   "id": "contact-study",
+   "name": "Contact study",
+   "mood": "Many frames, newsprint, a sheet you scan",
+   "theme": "press-room",
+   "pairing": "newsroom",
+   "family": "editorial",
+   "hero": "gallery-contact-sheet",
+   "effect": "grow-grid"
+  },
+  {
+   "id": "film-room",
+   "name": "Film room",
+   "mood": "A dark gallery, a strip of film, one loop",
+   "theme": "night-desk",
+   "pairing": "cinema",
+   "family": "editorial",
+   "hero": "gallery-film-strip",
+   "effect": "hero-video-loop"
+  },
+  {
+   "id": "reading-room",
+   "name": "Reading room",
+   "mood": "A library room, manila, a long note beside the object",
+   "theme": "reading-room",
+   "pairing": "classic-garamond",
+   "family": "editorial",
+   "hero": "paper-article-reader",
+   "effect": "scroll-reading-progress"
+  },
+  {
+   "id": "courtyard",
+   "name": "Courtyard",
+   "mood": "A garden court, olive and cream, you move through it",
+   "theme": "loam",
+   "pairing": "garden-journal",
+   "family": "soft",
+   "hero": "hero-engraved-moonrise-plate",
+   "effect": "parallax-layered-hero"
+  },
+  {
+   "id": "kids-hall",
+   "name": "Kids hall",
+   "mood": "A bright room, shapes, a thing to touch",
+   "theme": "playroom",
+   "pairing": "playground",
+   "family": "soft",
+   "hero": "hero-layered-letter-swap",
+   "effect": "spring-deck"
   }
  ]
 }

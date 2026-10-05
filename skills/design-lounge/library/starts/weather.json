@@ -19,13 +19,17 @@
   "phone-tab-plain",
   "ios-pull-to-refresh",
   "phone-permission-prompt",
-  "phone-map-listings"
+  "phone-map-listings",
+  "hero-engraved-moonrise-plate",
+  "week-schedule",
+  "mobile-run-detail",
+  "bento-feature-grid"
  ],
  "directions": [
   {
    "id": "ice-glass",
    "name": "Ice glass",
-   "mood": "Pale, northern, glass",
+   "mood": "Pale northern air, the next hours under your thumb",
    "theme": "ice-station",
    "pairing": "geometric-modern",
    "family": "glass",
@@ -35,22 +39,52 @@
   {
    "id": "night-sky",
    "name": "Night sky",
-   "mood": "Navy and star gold",
+   "mood": "Navy and star gold, the sky is the screen",
    "theme": "observatory",
    "pairing": "wide-tech",
    "family": "glass",
-   "hero": "ios-weather-hourly-scrub",
-   "effect": "ios-pull-to-refresh"
+   "hero": "hero-engraved-moonrise-plate",
+   "effect": "webgl-shader-hero"
   },
   {
    "id": "garden-forecast",
    "name": "Garden forecast",
-   "mood": "Soft, for growers",
+   "mood": "A grower, soft green, the week of weather",
    "theme": "greenhouse",
    "pairing": "garden-journal",
    "family": "soft",
-   "hero": "ios-weather-hourly-scrub",
+   "hero": "week-schedule",
    "effect": "staggered-list-reveal"
+  },
+  {
+   "id": "marine-glass",
+   "name": "Marine glass",
+   "mood": "A coast, cockpit teal, the map of the water",
+   "theme": "hud-teal",
+   "pairing": "hud",
+   "family": "sharp",
+   "hero": "phone-map-listings",
+   "effect": null
+  },
+  {
+   "id": "storm-yard",
+   "name": "Storm yard",
+   "mood": "A crew outdoors, floodlights, the next hour of the job",
+   "theme": "night-shift",
+   "pairing": "industrial-label",
+   "family": "industrial",
+   "hero": "mobile-run-detail",
+   "effect": "ios-pull-to-refresh"
+  },
+  {
+   "id": "classroom-sky",
+   "name": "Classroom sky",
+   "mood": "Kids, butter walls, the sky as a bright shape",
+   "theme": "playroom",
+   "pairing": "playground",
+   "family": "soft",
+   "hero": "bento-feature-grid",
+   "effect": "spring-deck"
   }
  ]
 }

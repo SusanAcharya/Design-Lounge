@@ -27,13 +27,16 @@
   "phone-subscription-manage",
   "phone-notification-settings",
   "phone-rating-prompt",
-  "phone-app-lock"
+  "phone-app-lock",
+  "mobile-run-detail",
+  "card-progress-goals",
+  "phone-calendar-agenda"
  ],
  "directions": [
   {
    "id": "mint-rings",
    "name": "Mint rings",
-   "mood": "Clinic calm, rings",
+   "mood": "Clinic calm, the rings, a day in the body",
    "theme": "alpine-clinic",
    "pairing": "geometric-modern",
    "family": "soft",
@@ -43,7 +46,7 @@
   {
    "id": "glacier-run",
    "name": "Glacier run",
-   "mood": "Quiet, a run log",
+   "mood": "A quiet run, one outing, the map of it",
    "theme": "glacier",
    "pairing": "academic",
    "family": "quiet",
@@ -53,12 +56,42 @@
   {
    "id": "greenhouse-habit",
    "name": "Greenhouse habit",
-   "mood": "Friendly, soft green, habits",
+   "mood": "Soft green, a habit you keep, small goals",
    "theme": "greenhouse",
    "pairing": "playground",
    "family": "soft",
-   "hero": "ios-health-activity-rings",
+   "hero": "card-progress-goals",
    "effect": "shared-element-expand"
+  },
+  {
+   "id": "book-clinic",
+   "name": "Book clinic",
+   "mood": "A city clinic, the next free chair",
+   "theme": "fog-city",
+   "pairing": "friendly-saas",
+   "family": "quiet",
+   "hero": "phone-booking-slots",
+   "effect": null
+  },
+  {
+   "id": "night-session",
+   "name": "Night session",
+   "mood": "Training after dark, the timer big enough to see",
+   "theme": "alpine-night",
+   "pairing": "geometric-modern",
+   "family": "glass",
+   "hero": "phone-workout-timer",
+   "effect": "m3-container-transform"
+  },
+  {
+   "id": "week-body",
+   "name": "Week body",
+   "mood": "A pale week, what the body did each day",
+   "theme": "ice-station",
+   "pairing": "swiss-precision",
+   "family": "quiet",
+   "hero": "phone-calendar-agenda",
+   "effect": "ios-pull-to-refresh"
   }
  ]
 }

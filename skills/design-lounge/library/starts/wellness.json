@@ -23,13 +23,20 @@
   "testimonials-masonry-wall",
   "faq-category-accordion",
   "tablet-kiosk-checkin",
-  "calendar-week-planner"
+  "calendar-week-planner",
+  "editorial-landing-hero",
+  "features-tabbed-preview",
+  "hero-engraved-moonrise-plate",
+  "week-schedule",
+  "hero-asymmetric-type-lockup",
+  "hero-chaptered-scenes",
+  "bento-feature-grid"
  ],
  "directions": [
   {
    "id": "mint-air",
    "name": "Mint air",
-   "mood": "Clinical calm, mint and teal",
+   "mood": "A retreat, mint and teal, dates you can book",
    "theme": "alpine-clinic",
    "pairing": "garden-journal",
    "family": "soft",
@@ -39,22 +46,72 @@
   {
    "id": "glacier",
    "name": "Glacier",
-   "mood": "Quiet, almost white, a retreat",
+   "mood": "Almost white, a quiet stay, the sentence carries it",
    "theme": "glacier",
    "pairing": "academic",
    "family": "quiet",
    "hero": "editorial-landing-hero",
-   "effect": "parallax-layered-hero"
+   "effect": "scroll-word-highlight"
   },
   {
    "id": "greenhouse",
    "name": "Greenhouse",
-   "mood": "Growing, soft green, habits and yoga",
+   "mood": "Habits, soft green, a thing you log",
    "theme": "greenhouse",
    "pairing": "indie-maker",
    "family": "soft",
-   "hero": "landing-wellness-retreat",
+   "hero": "features-tabbed-preview",
    "effect": "stacking-cards-scroll"
+  },
+  {
+   "id": "night-bath",
+   "name": "Night bath",
+   "mood": "A bathhouse after dark, engraved type, warm water",
+   "theme": "alpine-night",
+   "pairing": "literary",
+   "family": "editorial",
+   "hero": "hero-engraved-moonrise-plate",
+   "effect": "hero-video-loop"
+  },
+  {
+   "id": "studio-mat",
+   "name": "Studio mat",
+   "mood": "A class studio, linen, the week of sessions",
+   "theme": "linen-shop",
+   "pairing": "bookish",
+   "family": "soft",
+   "hero": "week-schedule",
+   "effect": "text-mask-line-reveal"
+  },
+  {
+   "id": "trail-day",
+   "name": "Trail day",
+   "mood": "A walk outside, rust and bone, the path is the page",
+   "theme": "oxide",
+   "pairing": "industrial-label",
+   "family": "industrial",
+   "hero": "hero-asymmetric-type-lockup",
+   "effect": "scroll-velocity-type"
+  },
+  {
+   "id": "sound-room",
+   "name": "Sound room",
+   "mood": "A dark room, navy and gold, chapters of quiet",
+   "theme": "observatory",
+   "pairing": "cinema",
+   "family": "glass",
+   "hero": "hero-chaptered-scenes",
+   "effect": "webgl-shader-hero"
+  },
+  {
+   "id": "small-movers",
+   "name": "Small movers",
+   "mood": "Kids moving, butter walls, a bright hall",
+   "theme": "playroom",
+   "pairing": "playground",
+   "family": "soft",
+   "hero": "bento-feature-grid",
+   "effect": "spring-deck"
   }
  ]
 }

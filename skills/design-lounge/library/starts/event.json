@@ -24,13 +24,20 @@
   "mobile-web-bottom-nav",
   "stats-count-up-band",
   "faq-category-accordion",
-  "event-ticket-checkout"
+  "event-ticket-checkout",
+  "hero-bauhaus-composition",
+  "hero-flashlight-reveal",
+  "hero-swiss-grid-wordmark",
+  "editorial-landing-hero",
+  "hero-editorial-name-rotator",
+  "hero-chaptered-scenes",
+  "bento-feature-grid"
  ],
  "directions": [
   {
    "id": "festival",
    "name": "Festival",
-   "mood": "Fluoro pink, a drum, a weekend",
+   "mood": "Fluoro pink, a drum, a weekend on a poster",
    "theme": "festival",
    "pairing": "poster-condensed",
    "family": "sharp",
@@ -40,7 +47,7 @@
   {
    "id": "night-marquee",
    "name": "Night marquee",
-   "mood": "Neon, a club night",
+   "mood": "A club night, neon, the sign in the dark",
    "theme": "neon-alley",
    "pairing": "neon-marquee",
    "family": "glass",
@@ -50,12 +57,62 @@
   {
    "id": "film-week",
    "name": "Film week",
-   "mood": "Cinema, newsprint red, a programme",
+   "mood": "A programme, newsprint and one red, the film",
    "theme": "press-room",
    "pairing": "cinema",
    "family": "editorial",
    "hero": "hero-swiss-grid-wordmark",
    "effect": "hero-video-loop"
+  },
+  {
+   "id": "garden-fete",
+   "name": "Garden fete",
+   "mood": "A day outside, olive and cream, the field is the room",
+   "theme": "loam",
+   "pairing": "garden-journal",
+   "family": "soft",
+   "hero": "editorial-landing-hero",
+   "effect": "parallax-layered-hero"
+  },
+  {
+   "id": "ticket-hall",
+   "name": "Ticket hall",
+   "mood": "A formal night, burgundy and gold, the name on the door",
+   "theme": "velvet-club",
+   "pairing": "deco-hotel",
+   "family": "editorial",
+   "hero": "hero-editorial-name-rotator",
+   "effect": "page-transition-curtain"
+  },
+  {
+   "id": "workshop-day",
+   "name": "Workshop day",
+   "mood": "A day of sessions, clay, one thing then the next",
+   "theme": "kiln",
+   "pairing": "industrial-label",
+   "family": "industrial",
+   "hero": "week-schedule",
+   "effect": "stacking-cards-scroll"
+  },
+  {
+   "id": "listening-night",
+   "name": "Listening night",
+   "mood": "A dark room, chapters, records in a row",
+   "theme": "observatory",
+   "pairing": "cinema",
+   "family": "editorial",
+   "hero": "hero-chaptered-scenes",
+   "effect": "coverflow-strip"
+  },
+  {
+   "id": "school-fair",
+   "name": "School fair",
+   "mood": "A bright weekend, butter and coral, many small stalls",
+   "theme": "playroom",
+   "pairing": "playground",
+   "family": "soft",
+   "hero": "bento-feature-grid",
+   "effect": "spring-deck"
   }
  ]
 }

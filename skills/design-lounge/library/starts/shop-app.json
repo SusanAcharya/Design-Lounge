@@ -27,13 +27,15 @@
   "m3-modal-bottom-sheet",
   "phone-cart",
   "phone-checkout",
-  "phone-orders"
+  "phone-orders",
+  "shop-collection",
+  "luxe-product-detail"
  ],
  "directions": [
   {
    "id": "clay-bag",
    "name": "Clay bag",
-   "mood": "Handmade, warm",
+   "mood": "Handmade, warm, the shelf you filter",
    "theme": "kiln",
    "pairing": "atelier",
    "family": "soft",
@@ -43,22 +45,52 @@
   {
    "id": "linen-bag",
    "name": "Linen bag",
-   "mood": "Soft luxury",
+   "mood": "Soft luxury, one piece, then the bag",
    "theme": "linen-shop",
    "pairing": "maison",
    "family": "editorial",
-   "hero": "mobile-filter-chips-list",
+   "hero": "phone-product-detail",
    "effect": "ios-bottom-sheet-detents"
   },
   {
    "id": "candy-bag",
    "name": "Candy bag",
-   "mood": "Playful, loud, snacks and toys",
+   "mood": "Snacks and toys, loud, the whole stall",
    "theme": "market-stall",
    "pairing": "candy-clay",
    "family": "soft",
-   "hero": "mobile-filter-chips-list",
+   "hero": "shop-collection",
+   "effect": "spring-deck"
+  },
+  {
+   "id": "night-counter",
+   "name": "Night counter",
+   "mood": "A dark counter, one object you can turn",
+   "theme": "atelier-noir",
+   "pairing": "gallery-wall",
+   "family": "editorial",
+   "hero": "luxe-product-detail",
+   "effect": "object-3d-turntable"
+  },
+  {
+   "id": "market-run",
+   "name": "Market run",
+   "mood": "A loud stall, the bag is already open",
+   "theme": "night-market",
+   "pairing": "riso-zine",
+   "family": "sharp",
+   "hero": "phone-cart",
    "effect": "staggered-list-reveal"
+  },
+  {
+   "id": "past-orders",
+   "name": "Past orders",
+   "mood": "Stamped paper, what you bought, a quiet list",
+   "theme": "archive",
+   "pairing": "slab-ledger",
+   "family": "quiet",
+   "hero": "phone-orders",
+   "effect": null
   }
  ]
 }

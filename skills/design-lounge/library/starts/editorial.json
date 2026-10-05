@@ -23,13 +23,18 @@
   "text-scramble-reveal",
   "hero-editorial-name-rotator",
   "pwa-offline-library",
-  "error-404-editorial"
+  "error-404-editorial",
+  "book-page-flip",
+  "card-magazine-cover",
+  "card-journal-page",
+  "hero-asymmetric-type-lockup",
+  "hero-bauhaus-composition"
  ],
  "directions": [
   {
    "id": "press-room",
    "name": "Press room",
-   "mood": "Newsprint and one red",
+   "mood": "Newsprint and one red, the late story",
    "theme": "press-room",
    "pairing": "newsroom",
    "family": "editorial",
@@ -39,7 +44,7 @@
   {
    "id": "archive",
    "name": "Archive",
-   "mood": "Literary, manila and Garamond",
+   "mood": "Manila and Garamond, a piece you sit with",
    "theme": "archive",
    "pairing": "classic-garamond",
    "family": "editorial",
@@ -49,12 +54,52 @@
   {
    "id": "riso-zine",
    "name": "Riso zine",
-   "mood": "Indie, two inks, loud",
+   "mood": "Two inks, a loud issue, photocopied",
    "theme": "festival",
    "pairing": "riso-zine",
    "family": "sharp",
    "hero": "hero-bauhaus-composition",
    "effect": "kinetic-type-marquee"
+  },
+  {
+   "id": "late-edition",
+   "name": "Late edition",
+   "mood": "Press black, the same red, a page you turn",
+   "theme": "night-edition",
+   "pairing": "magazine-contrast",
+   "family": "editorial",
+   "hero": "book-page-flip",
+   "effect": "text-mask-line-reveal"
+  },
+  {
+   "id": "sunday-cover",
+   "name": "Sunday cover",
+   "mood": "One issue, blush paper, the cover is the page",
+   "theme": "sakura-desk",
+   "pairing": "literary",
+   "family": "editorial",
+   "hero": "card-magazine-cover",
+   "effect": "overlap-slider"
+  },
+  {
+   "id": "field-journal",
+   "name": "Field journal",
+   "mood": "Olive paper, notes from outside, a hand in the margin",
+   "theme": "loam",
+   "pairing": "garden-journal",
+   "family": "soft",
+   "hero": "card-journal-page",
+   "effect": "text-annotated-underlines"
+  },
+  {
+   "id": "quarterly",
+   "name": "Quarterly",
+   "mood": "A strict grid, one essay, the measure is the design",
+   "theme": "fog-city",
+   "pairing": "academic",
+   "family": "quiet",
+   "hero": "magazine-editorial-grid",
+   "effect": "scroll-word-highlight"
   }
  ]
 }

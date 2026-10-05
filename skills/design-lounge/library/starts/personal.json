@@ -23,13 +23,15 @@
   "mobile-list-empty",
   "mobile-load-failed",
   "phone-wallet-cards",
-  "phone-calendar-agenda"
+  "phone-calendar-agenda",
+  "table-transactions-ledger",
+  "chart-bar-week"
  ],
  "directions": [
   {
    "id": "lokta-day",
    "name": "Lokta day",
-   "mood": "Nepali, crimson on lokta paper",
+   "mood": "Nepali, crimson on lokta, what went out today",
    "theme": "lokta",
    "pairing": "devanagari",
    "family": "quiet",
@@ -39,22 +41,52 @@
   {
    "id": "lokta-night",
    "name": "Lokta night",
-   "mood": "Nepali, after dark",
+   "mood": "The same book after dark, cards in the hand",
    "theme": "lokta-night",
    "pairing": "devanagari",
    "family": "quiet",
-   "hero": "spend-list",
+   "hero": "phone-wallet-cards",
    "effect": "ios-pull-to-refresh"
   },
   {
    "id": "garden-ledger",
    "name": "Garden ledger",
-   "mood": "Soft, olive, a household",
+   "mood": "A household, olive, where the money went",
    "theme": "loam",
    "pairing": "garden-journal",
    "family": "soft",
-   "hero": "spend-list",
-   "effect": "staggered-list-reveal"
+   "hero": "chart-rank-spend",
+   "effect": "ios-large-title-collapse"
+  },
+  {
+   "id": "receipt-desk",
+   "name": "Receipt desk",
+   "mood": "Stamped paper, every line, a quiet book",
+   "theme": "archive",
+   "pairing": "slab-ledger",
+   "family": "editorial",
+   "hero": "table-transactions-ledger",
+   "effect": null
+  },
+  {
+   "id": "budget-night",
+   "name": "Budget night",
+   "mood": "Navy after dark, the meter, what is left",
+   "theme": "harbour-night",
+   "pairing": "friendly-saas",
+   "family": "glass",
+   "hero": "budget-meter",
+   "effect": "shared-element-expand"
+  },
+  {
+   "id": "week-money",
+   "name": "Week money",
+   "mood": "A cool week, the days and what they cost",
+   "theme": "fog-city",
+   "pairing": "swiss-precision",
+   "family": "quiet",
+   "hero": "chart-bar-week",
+   "effect": null
   }
  ]
 }

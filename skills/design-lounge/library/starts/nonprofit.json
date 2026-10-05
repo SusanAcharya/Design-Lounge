@@ -18,13 +18,20 @@
   "stats-count-up-band",
   "scroll-word-highlight",
   "testimonials-masonry-wall",
-  "newsletter-fold-inline"
+  "newsletter-fold-inline",
+  "sticky-split-story",
+  "hero-asymmetric-type-lockup",
+  "editorial-landing-hero",
+  "paper-article-reader",
+  "hero-bauhaus-composition",
+  "hero-engraved-moonrise-plate",
+  "hero-swiss-grid-wordmark"
  ],
  "directions": [
   {
    "id": "warm-lunch",
    "name": "Warm lunch",
-   "mood": "Terracotta, cream, a real cause",
+   "mood": "A kitchen, terracotta, what one amount buys",
    "theme": "kiln",
    "pairing": "garden-journal",
    "family": "soft",
@@ -34,22 +41,72 @@
   {
    "id": "greenhouse-fund",
    "name": "Greenhouse fund",
-   "mood": "Leaf green, soft, hopeful",
+   "mood": "A garden growing, the story beside the picture",
    "theme": "greenhouse",
    "pairing": "the-lounge",
    "family": "soft",
-   "hero": "donation-page-impact",
+   "hero": "sticky-split-story",
    "effect": "parallax-layered-hero"
   },
   {
    "id": "lokta-seva",
    "name": "Lokta seva",
-   "mood": "Nepali paper, crimson, community",
+   "mood": "Lokta paper, crimson, a community letter",
    "theme": "lokta",
    "pairing": "devanagari",
    "family": "editorial",
-   "hero": "donation-page-impact",
+   "hero": "hero-asymmetric-type-lockup",
    "effect": "text-marker-highlight-draw"
+  },
+  {
+   "id": "night-letter",
+   "name": "Night letter",
+   "mood": "A long letter after dark, one cause, no countdown",
+   "theme": "night-desk",
+   "pairing": "classic-garamond",
+   "family": "editorial",
+   "hero": "editorial-landing-hero",
+   "effect": "text-mask-line-reveal"
+  },
+  {
+   "id": "field-report",
+   "name": "Field report",
+   "mood": "A report you read, olive paper, the work in the field",
+   "theme": "loam",
+   "pairing": "academic",
+   "family": "quiet",
+   "hero": "paper-article-reader",
+   "effect": "scroll-reading-progress"
+  },
+  {
+   "id": "march",
+   "name": "March",
+   "mood": "A poster, two inks, a day people show up",
+   "theme": "festival",
+   "pairing": "brutal-grotesk",
+   "family": "sharp",
+   "hero": "hero-bauhaus-composition",
+   "effect": "kinetic-type-marquee"
+  },
+  {
+   "id": "marble-trust",
+   "name": "Marble trust",
+   "mood": "A foundation, a brass plaque, the number on the wall",
+   "theme": "marble-hall",
+   "pairing": "monumental",
+   "family": "editorial",
+   "hero": "hero-engraved-moonrise-plate",
+   "effect": "stats-count-up-band"
+  },
+  {
+   "id": "mutual-aid",
+   "name": "Mutual aid",
+   "mood": "A board of what is needed this week, stamped paper",
+   "theme": "archive",
+   "pairing": "slab-ledger",
+   "family": "editorial",
+   "hero": "hero-swiss-grid-wordmark",
+   "effect": "split-flap-board"
   }
  ]
 }

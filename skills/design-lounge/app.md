@@ -16,7 +16,7 @@ Good: "The home is today's three deliveries, and the next stop is already open."
 
 Not an idea: "Clean and modern." "A sleek dashboard." "Intuitive and premium."
 
-The idea picks the primary screen. The tabs are the real sections of that product, three to five. Write `Avoiding:` with the default you did not use.
+The idea picks the primary screen. That screen is the direction's hero. A second bank, shop, inbox, or forecast should not open on the same hero as the last one. Recent picks are in [practice.md](practice.md). The tabs are the real sections of that product, three to five. Write `Avoiding:` with the default you did not use.
 
 One thing on that primary screen is made only for this product: a control, a layout, or a piece of type. That is the Signature. A new palette is not a signature.
 

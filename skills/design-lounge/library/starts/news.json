@@ -26,13 +26,18 @@
   "phone-search-results",
   "phone-subscription-manage",
   "m3-top-app-bar-scroll",
-  "phone-skeleton-list"
+  "phone-skeleton-list",
+  "paper-article-reader",
+  "book-page-flip",
+  "card-journal-page",
+  "phone-feed-posts",
+  "card-magazine-cover"
  ],
  "directions": [
   {
    "id": "press-room",
    "name": "Press room",
-   "mood": "Newsprint and one red",
+   "mood": "Newsprint and one red, the issue in the hand",
    "theme": "press-room",
    "pairing": "newsroom",
    "family": "editorial",
@@ -42,22 +47,52 @@
   {
    "id": "archive-reader",
    "name": "Archive reader",
-   "mood": "Literary, long reads",
+   "mood": "A long read, manila, you sit with the piece",
    "theme": "archive",
    "pairing": "classic-garamond",
    "family": "editorial",
-   "hero": "pwa-news-reader",
+   "hero": "paper-article-reader",
    "effect": "ios-pull-to-refresh"
   },
   {
    "id": "night-edition",
    "name": "Night edition",
-   "mood": "Dark, a late edition",
-   "theme": "night-desk",
+   "mood": "The late edition, press black, a page you turn",
+   "theme": "night-edition",
    "pairing": "magazine-contrast",
    "family": "editorial",
-   "hero": "pwa-news-reader",
+   "hero": "book-page-flip",
    "effect": "staggered-list-reveal"
+  },
+  {
+   "id": "field-notes",
+   "name": "Field notes",
+   "mood": "A notebook, olive, one page from outside",
+   "theme": "loam",
+   "pairing": "garden-journal",
+   "family": "soft",
+   "hero": "card-journal-page",
+   "effect": "text-marker-highlight-draw"
+  },
+  {
+   "id": "live-desk",
+   "name": "Live desk",
+   "mood": "A city desk, the feed, what just happened",
+   "theme": "fog-city",
+   "pairing": "swiss-precision",
+   "family": "sharp",
+   "hero": "phone-feed-posts",
+   "effect": "shared-element-expand"
+  },
+  {
+   "id": "sunday-issue",
+   "name": "Sunday issue",
+   "mood": "A magazine cover, blush, one issue",
+   "theme": "sakura-desk",
+   "pairing": "literary",
+   "family": "editorial",
+   "hero": "card-magazine-cover",
+   "effect": "text-mask-line-reveal"
   }
  ]
 }

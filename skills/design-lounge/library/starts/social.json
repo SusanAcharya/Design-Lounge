@@ -29,13 +29,14 @@
   "phone-privacy-data",
   "phone-delete-account",
   "phone-composer",
-  "phone-photo-viewer"
+  "phone-photo-viewer",
+  "coverflow-strip"
  ],
  "directions": [
   {
    "id": "playroom",
    "name": "Playroom",
-   "mood": "Friendly, coral, everyone",
+   "mood": "Friends, coral, a story you hold",
    "theme": "playroom",
    "pairing": "geometric-modern",
    "family": "soft",
@@ -45,22 +46,52 @@
   {
    "id": "neon-feed",
    "name": "Neon feed",
-   "mood": "Night, glass, creators",
+   "mood": "Night, glass, the posts",
    "theme": "neon-alley",
    "pairing": "indie-maker",
    "family": "glass",
-   "hero": "mobile-story-viewer",
+   "hero": "phone-feed-posts",
    "effect": "shared-element-expand"
   },
   {
    "id": "sketchbook",
    "name": "Sketchbook",
-   "mood": "Handwritten, small groups",
+   "mood": "A small group, photos full screen, notes in a hand",
    "theme": "sakura-desk",
    "pairing": "handwritten-notes",
    "family": "soft",
+   "hero": "phone-photo-viewer",
+   "effect": "text-annotated-underlines"
+  },
+  {
+   "id": "town-square",
+   "name": "Town square",
+   "mood": "A neighbourhood, clay, the replies are the place",
+   "theme": "kiln",
+   "pairing": "garden-journal",
+   "family": "soft",
+   "hero": "phone-comments-sheet",
+   "effect": "ios-pull-to-refresh"
+  },
+  {
+   "id": "desk-club",
+   "name": "Desk club",
+   "mood": "A calm club, cool gray, the home is the people",
+   "theme": "fog-city",
+   "pairing": "geometric-modern",
+   "family": "quiet",
    "hero": "m3-expressive-home",
-   "effect": "optimistic-like-button"
+   "effect": "m3-container-transform"
+  },
+  {
+   "id": "night-photos",
+   "name": "Night photos",
+   "mood": "A dark room of pictures, navy, you move through them",
+   "theme": "observatory",
+   "pairing": "cinema",
+   "family": "glass",
+   "hero": "coverflow-strip",
+   "effect": "page-transition-curtain"
   }
  ]
 }

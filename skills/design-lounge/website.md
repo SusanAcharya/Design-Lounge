@@ -123,6 +123,28 @@ The lists, for a course or lessons site. `course-landing-curriculum` is one opti
 
 Two lesson sites on different subjects should not share a lesson-list piece and an effect. Check Recent picks in [practice.md](practice.md).
 
+The lists, for a place people visit. A restaurant, a clinic, a gym, a hotel. The direction's hero is the first screen. Pick the other sections from here.
+
+- The offer: `restaurant-menu-page`, `week-schedule`, `gym-membership-home`, `clinic-home-booking`, `pricing-annual-toggle-roll`.
+- A time: `contact-booking-hours`, `calendar-week-planner`, `phone-booking-slots`, `calendar-month`.
+- The room: `gallery-contact-sheet`, `masonry-gallery-captions`, `contact-split-map-form`.
+- Footer: the website footer list above.
+
+The lists, for a cause, a firm, a listing, or a job board.
+
+- The story: `sticky-split-story`, `editorial-landing-hero`, `paper-article-reader`, `profile-creator-masthead`.
+- The ask or the list: `donation-page-impact`, `job-board-search`, `careers-role-list`, `realestate-listing-detail`, `hero-search-marketplace`, `law-firm-home`.
+- Proof: `stats-count-up-band`, `testimonials-masonry-wall`, `people-role-list`, `team-hover-portrait-grid`.
+- A private next step: `contact-project-brief-steps`, `contact-booking-hours`, `contact-split-map-form`.
+
+The lists, for docs. The direction's hero is the shell.
+
+- The shell: `docs-three-column`, `docs-hatched-gutter-shell`, `sidebar-docs-toc`, `terminal-ui-style`.
+- One page: `docs-install-steps`, `paper-article-reader`, `code-snippet-tabs`, `blog-issue-index`, `book-page-flip`.
+- Find it: `search-results-filters`, `command-palette`, `tree-nav`.
+
+Two sites of the same kind should not share a first-screen piece and an effect. Check Recent picks in [practice.md](practice.md).
+
 Open the brief for every section you build. A phone menu, a copy-email button, or a drawer is a piece too: `hamburger-circle-reveal`, `contact-giant-email-copy`, `button-copy-share`. If you build a part without opening its brief, say so in the reply.
 
 ## Register

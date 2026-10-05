@@ -21,13 +21,20 @@
   "masonry-gallery-captions",
   "navbar-split-centered-logo",
   "hamburger-drawer-accordion",
-  "hero-search-marketplace"
+  "hero-search-marketplace",
+  "landing-fashion-atelier",
+  "hero-editorial-name-rotator",
+  "editorial-landing-hero",
+  "handwritten-homepage",
+  "hero-engraved-moonrise-plate",
+  "gallery-photo-album",
+  "paper-article-reader"
  ],
  "directions": [
   {
    "id": "noir-maison",
    "name": "Noir maison",
-   "mood": "Black, bone, a city hotel",
+   "mood": "Bone type on black, a city hotel, the room at night",
    "theme": "atelier-noir",
    "pairing": "maison",
    "family": "editorial",
@@ -37,7 +44,7 @@
   {
    "id": "velvet-bar",
    "name": "Velvet bar",
-   "mood": "Burgundy, gold, a house with a bar",
+   "mood": "Burgundy and gold, a house with a bar",
    "theme": "velvet-club",
    "pairing": "deco-hotel",
    "family": "editorial",
@@ -47,12 +54,52 @@
   {
    "id": "marble-stay",
    "name": "Marble stay",
-   "mood": "Stone, heritage, a grand hotel",
+   "mood": "White stone, a grand hotel, the hall first",
    "theme": "marble-hall",
    "pairing": "monumental",
    "family": "editorial",
    "hero": "editorial-landing-hero",
    "effect": "overlap-slider"
+  },
+  {
+   "id": "inn-book",
+   "name": "Inn book",
+   "mood": "A small inn, a letter, the room written by hand",
+   "theme": "inkwell",
+   "pairing": "letter-hand",
+   "family": "soft",
+   "hero": "handwritten-homepage",
+   "effect": "text-annotated-underlines"
+  },
+  {
+   "id": "deco-afternoon",
+   "name": "Deco afternoon",
+   "mood": "Rose plaster, a gold rail, the afternoon sitting",
+   "theme": "matinee",
+   "pairing": "literary",
+   "family": "editorial",
+   "hero": "hero-engraved-moonrise-plate",
+   "effect": "page-transition-tile-wipe"
+  },
+  {
+   "id": "coast-house",
+   "name": "Coast house",
+   "mood": "Pale air, a house by the water, rooms you turn",
+   "theme": "glacier",
+   "pairing": "maison",
+   "family": "quiet",
+   "hero": "gallery-photo-album",
+   "effect": "parallax-layered-hero"
+  },
+  {
+   "id": "guest-book",
+   "name": "Guest book",
+   "mood": "Manila and a stamp, who stayed, a long quiet note",
+   "theme": "archive",
+   "pairing": "classic-garamond",
+   "family": "editorial",
+   "hero": "paper-article-reader",
+   "effect": "scroll-reading-progress"
   }
  ]
 }

@@ -106,7 +106,7 @@ Use the same sections to read a DESIGN.md they bring. It is their system. Follow
 
 ## Pick a direction
 
-Every recipe has three to ten `directions`. Each one is a complete look: theme, pairing, family, hero piece, and one effect. Two people who type the same sentence must not get the same site. Two different subjects must not get the same site either: guitar lessons and drawing lessons are both "for beginners", and that is why audience words cannot pick the look.
+Every recipe has three or more `directions`. Each one is a complete look: theme, pairing, family, hero piece, and one effect. Two people who type the same sentence must not get the same site. Two different subjects must not get the same site either: guitar lessons and drawing lessons are both "for beginners", and that is why audience words cannot pick the look.
 
 Before you choose, read the history (Recent picks, below). Then choose in this order.
 

@@ -47,13 +47,16 @@
   "phone-skeleton-list",
   "m3-dialog",
   "m3-snackbar",
-  "m3-search-results"
+  "m3-search-results",
+  "bento-feature-grid",
+  "ai-chat-workspace",
+  "pwa-app-shell"
  ],
  "directions": [
   {
    "id": "mint-app",
    "name": "Mint app",
-   "mood": "Calm, clinical, trustworthy",
+   "mood": "Calm and clinical, a warm home you tap through",
    "theme": "alpine-clinic",
    "pairing": "geometric-modern",
    "family": "soft",
@@ -63,7 +66,7 @@
   {
    "id": "cobalt-glass",
    "name": "Cobalt glass",
-   "mood": "iOS native, glass bars",
+   "mood": "iOS, glass bars, a shell you live in",
    "theme": "fog-city",
    "pairing": "friendly-saas",
    "family": "glass",
@@ -73,12 +76,42 @@
   {
    "id": "toy-app",
    "name": "Toy app",
-   "mood": "Playful, consumer, butter and coral",
+   "mood": "Butter and coral, many small things on one shelf",
    "theme": "playroom",
    "pairing": "candy-clay",
    "family": "soft",
-   "hero": "m3-expressive-home",
-   "effect": "shared-element-expand"
+   "hero": "bento-feature-grid",
+   "effect": "spring-deck"
+  },
+  {
+   "id": "night-tool",
+   "name": "Night tool",
+   "mood": "A desk after dark, a conversation with the work",
+   "theme": "night-desk",
+   "pairing": "signal-mono",
+   "family": "sharp",
+   "hero": "ai-chat-workspace",
+   "effect": "text-scramble-reveal"
+  },
+  {
+   "id": "paper-days",
+   "name": "Paper days",
+   "mood": "A paper week, the agenda, warm and quiet",
+   "theme": "paper-ink",
+   "pairing": "the-lounge",
+   "family": "editorial",
+   "hero": "phone-calendar-agenda",
+   "effect": "text-marker-highlight-draw"
+  },
+  {
+   "id": "yard-hand",
+   "name": "Yard hand",
+   "mood": "A job in the hand, concrete and orange, the next stop",
+   "theme": "cinder",
+   "pairing": "industrial-label",
+   "family": "industrial",
+   "hero": "mobile-run-detail",
+   "effect": null
   }
  ]
 }

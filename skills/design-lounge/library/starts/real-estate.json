@@ -19,13 +19,18 @@
   "phone-map-listings",
   "contact-split-map-form",
   "faq-category-accordion",
-  "navbar-split-centered-logo"
+  "navbar-split-centered-logo",
+  "editorial-landing-hero",
+  "hero-video-loop",
+  "portfolio-architect-index",
+  "gallery-photo-album",
+  "hero-product-window-tilt"
  ],
  "directions": [
   {
    "id": "stone-listing",
    "name": "Stone listing",
-   "mood": "Quiet, architectural, high price",
+   "mood": "One house, white stone, the plan and the price",
    "theme": "marble-hall",
    "pairing": "gallery-wall",
    "family": "editorial",
@@ -35,22 +40,72 @@
   {
    "id": "harbour-homes",
    "name": "Harbour homes",
-   "mood": "Navy, brass, a trusted agent",
+   "mood": "A trusted agent, navy and brass, the story of the street",
    "theme": "harbour-ledger",
    "pairing": "magazine-contrast",
    "family": "quiet",
-   "hero": "realestate-listing-detail",
+   "hero": "editorial-landing-hero",
    "effect": "scroll-word-highlight"
   },
   {
    "id": "fog-flats",
    "name": "Fog flats",
-   "mood": "Cool, plain, city rentals",
+   "mood": "City rentals, cool and plain, search first",
    "theme": "fog-city",
    "pairing": "neo-grotesk-mono",
    "family": "sharp",
    "hero": "hero-search-marketplace",
    "effect": "staggered-list-reveal"
+  },
+  {
+   "id": "night-viewing",
+   "name": "Night viewing",
+   "mood": "A house after dark, one film of the rooms",
+   "theme": "basalt-hall",
+   "pairing": "maison",
+   "family": "editorial",
+   "hero": "hero-video-loop",
+   "effect": "page-transition-curtain"
+  },
+  {
+   "id": "plan-room",
+   "name": "Plan room",
+   "mood": "The drawing is the listing, a strict grid",
+   "theme": "ice-station",
+   "pairing": "swiss-precision",
+   "family": "sharp",
+   "hero": "portfolio-architect-index",
+   "effect": "scroll-split"
+  },
+  {
+   "id": "garden-plot",
+   "name": "Garden plot",
+   "mood": "A house and its land, olive and cream, rooms you turn",
+   "theme": "loam",
+   "pairing": "garden-journal",
+   "family": "soft",
+   "hero": "gallery-photo-album",
+   "effect": "overlap-slider"
+  },
+  {
+   "id": "pin-map",
+   "name": "Pin map",
+   "mood": "A map of prices, the sheet under the pin",
+   "theme": "press-room",
+   "pairing": "newsroom",
+   "family": "editorial",
+   "hero": "phone-map-listings",
+   "effect": "text-mask-line-reveal"
+  },
+  {
+   "id": "new-block",
+   "name": "New block",
+   "mood": "One new building, a window you can tilt, the unit",
+   "theme": "y2k-chrome",
+   "pairing": "y2k-chrome",
+   "family": "glass",
+   "hero": "hero-product-window-tilt",
+   "effect": "scroll-scrub-product-sequence"
   }
  ]
 }

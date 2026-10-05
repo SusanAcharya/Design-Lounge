@@ -18,13 +18,18 @@
   "calendar-week-planner",
   "phone-booking-slots",
   "faq-category-accordion",
-  "tablet-kiosk-checkin"
+  "tablet-kiosk-checkin",
+  "profile-creator-masthead",
+  "hero-asymmetric-type-lockup",
+  "hero-split-ui-stack",
+  "editorial-landing-hero",
+  "hero-swiss-grid-wordmark"
  ],
  "directions": [
   {
    "id": "aqua-care",
    "name": "Aqua care",
-   "mood": "Calm, clear, trusted",
+   "mood": "A dental chair, mint air, the next free slot",
    "theme": "alpine-clinic",
    "pairing": "friendly-saas",
    "family": "soft",
@@ -34,22 +39,72 @@
   {
    "id": "glacier-physio",
    "name": "Glacier physio",
-   "mood": "Pale, precise, sports care",
+   "mood": "A treatment week, pale and precise, sports care",
    "theme": "glacier",
    "pairing": "geometric-modern",
    "family": "quiet",
-   "hero": "clinic-home-booking",
+   "hero": "calendar-week-planner",
    "effect": "features-sticky-scroll-steps"
   },
   {
    "id": "linen-practice",
    "name": "Linen practice",
-   "mood": "Warm, small, a family doctor",
+   "mood": "A small room, one doctor, warm and slow",
    "theme": "linen-shop",
    "pairing": "bookish",
    "family": "soft",
-   "hero": "clinic-home-booking",
+   "hero": "profile-creator-masthead",
    "effect": "scroll-word-highlight"
+  },
+  {
+   "id": "after-hours",
+   "name": "After hours",
+   "mood": "The clinic at night, book a slot on the phone",
+   "theme": "alpine-night",
+   "pairing": "geometric-modern",
+   "family": "glass",
+   "hero": "phone-booking-slots",
+   "effect": "ios-large-title-collapse"
+  },
+  {
+   "id": "vet-barn",
+   "name": "Vet barn",
+   "mood": "A shed clinic, rust and bone, animals one by one",
+   "theme": "oxide",
+   "pairing": "industrial-label",
+   "family": "industrial",
+   "hero": "hero-asymmetric-type-lockup",
+   "effect": "stacking-cards-scroll"
+  },
+  {
+   "id": "city-dental",
+   "name": "City dental",
+   "mood": "A cool office, the next chair, a grid of slots",
+   "theme": "fog-city",
+   "pairing": "neo-grotesk-mono",
+   "family": "sharp",
+   "hero": "hero-split-ui-stack",
+   "effect": "spotlight-hover-grid"
+  },
+  {
+   "id": "waiting-room",
+   "name": "Waiting room",
+   "mood": "A family practice, clay and cream, the people you see",
+   "theme": "kiln",
+   "pairing": "garden-journal",
+   "family": "soft",
+   "hero": "editorial-landing-hero",
+   "effect": "text-marker-highlight-draw"
+  },
+  {
+   "id": "sports-lab",
+   "name": "Sports lab",
+   "mood": "Ice and numbers, a lab, what the body measured",
+   "theme": "ice-station",
+   "pairing": "swiss-precision",
+   "family": "quiet",
+   "hero": "hero-swiss-grid-wordmark",
+   "effect": "stats-count-up-band"
   }
  ]
 }

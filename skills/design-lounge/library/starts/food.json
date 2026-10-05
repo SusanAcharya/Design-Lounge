@@ -24,13 +24,20 @@
   "navbar-split-centered-logo",
   "testimonials-masonry-wall",
   "tablet-pos-register",
-  "tablet-cook-mode"
+  "tablet-cook-mode",
+  "editorial-landing-hero",
+  "hero-bauhaus-composition",
+  "hero-asymmetric-type-lockup",
+  "hero-silk-ribbon-ticker",
+  "handwritten-homepage",
+  "hero-swiss-grid-wordmark",
+  "luxe-product-detail"
  ],
  "directions": [
   {
    "id": "garden-table",
    "name": "Garden table",
-   "mood": "Seasonal, olive and cream, a farm kitchen",
+   "mood": "A farm kitchen, olive and cream, the season on the table",
    "theme": "loam",
    "pairing": "garden-journal",
    "family": "soft",
@@ -40,7 +47,7 @@
   {
    "id": "market-zine",
    "name": "Market zine",
-   "mood": "Street food, loud, turmeric and tomato",
+   "mood": "A stall, turmeric and tomato, a loud printed list",
    "theme": "market-stall",
    "pairing": "riso-zine",
    "family": "sharp",
@@ -50,12 +57,52 @@
   {
    "id": "clay-menu",
    "name": "Clay menu",
-   "mood": "A restaurant with a point of view",
+   "mood": "A kitchen with a point of view, clay and sand",
    "theme": "kiln",
    "pairing": "magazine-contrast",
    "family": "editorial",
    "hero": "hero-asymmetric-type-lockup",
    "effect": "stacking-cards-scroll"
+  },
+  {
+   "id": "night-stall",
+   "name": "Night stall",
+   "mood": "The market after sunset, bulbs, what is left",
+   "theme": "night-market",
+   "pairing": "poster-condensed",
+   "family": "sharp",
+   "hero": "hero-silk-ribbon-ticker",
+   "effect": "split-flap-board"
+  },
+  {
+   "id": "pantry-letter",
+   "name": "Pantry letter",
+   "mood": "A small producer, a list in a hand, come by Thursday",
+   "theme": "inkwell",
+   "pairing": "letter-hand",
+   "family": "soft",
+   "hero": "handwritten-homepage",
+   "effect": "text-annotated-underlines"
+  },
+  {
+   "id": "cold-counter",
+   "name": "Cold counter",
+   "mood": "A precise grocer, ice and a grid, weights and prices",
+   "theme": "ice-station",
+   "pairing": "swiss-precision",
+   "family": "quiet",
+   "hero": "hero-swiss-grid-wordmark",
+   "effect": null
+  },
+  {
+   "id": "larder",
+   "name": "Larder",
+   "mood": "A dark pantry, one jar you can turn",
+   "theme": "copper-works",
+   "pairing": "atelier",
+   "family": "editorial",
+   "hero": "luxe-product-detail",
+   "effect": "object-3d-turntable"
   }
  ]
 }

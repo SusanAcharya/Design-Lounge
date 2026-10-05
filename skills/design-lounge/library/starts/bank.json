@@ -29,13 +29,16 @@
   "phone-privacy-data",
   "phone-account-edit",
   "phone-code-entry",
-  "phone-app-lock"
+  "phone-app-lock",
+  "crypto-exchange-trade",
+  "table-transactions-ledger",
+  "spend-list"
  ],
  "directions": [
   {
    "id": "harbour-bank",
    "name": "Harbour bank",
-   "mood": "Navy and brass, a real bank",
+   "mood": "Navy and brass, the balance first",
    "theme": "harbour-ledger",
    "pairing": "friendly-saas",
    "family": "quiet",
@@ -45,22 +48,52 @@
   {
    "id": "harbour-night",
    "name": "Harbour night",
-   "mood": "The same bank after dark, glass bars",
+   "mood": "The same bank after dark, the cards",
    "theme": "harbour-night",
    "pairing": "friendly-saas",
    "family": "glass",
-   "hero": "ios-fintech-home",
+   "hero": "phone-wallet-cards",
    "effect": "shared-element-expand"
   },
   {
    "id": "lime-bank",
    "name": "Lime bank",
-   "mood": "A young card, lime on charcoal",
+   "mood": "A young card, lime on charcoal, the trade",
    "theme": "circuit",
    "pairing": "wide-tech",
    "family": "sharp",
-   "hero": "ios-fintech-home",
+   "hero": "crypto-exchange-trade",
    "effect": "staggered-list-reveal"
+  },
+  {
+   "id": "passbook",
+   "name": "Passbook",
+   "mood": "An old book of lines, stamped paper, every transfer",
+   "theme": "archive",
+   "pairing": "slab-ledger",
+   "family": "editorial",
+   "hero": "table-transactions-ledger",
+   "effect": null
+  },
+  {
+   "id": "village-bank",
+   "name": "Village bank",
+   "mood": "A Nepali counter, lokta and crimson, the household number",
+   "theme": "lokta",
+   "pairing": "devanagari",
+   "family": "quiet",
+   "hero": "spend-list",
+   "effect": "text-marker-highlight-draw"
+  },
+  {
+   "id": "pay-code",
+   "name": "Pay code",
+   "mood": "A cool city bank, pay by a code on the glass",
+   "theme": "fog-city",
+   "pairing": "geometric-modern",
+   "family": "glass",
+   "hero": "phone-qr-scanner",
+   "effect": "ios-large-title-collapse"
   }
  ]
 }

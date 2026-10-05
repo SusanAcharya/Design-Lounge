@@ -20,13 +20,20 @@
   "mobile-web-bottom-nav",
   "hero-video-loop",
   "testimonials-masonry-wall",
-  "tablet-pos-register"
+  "tablet-pos-register",
+  "hero-silk-ribbon-ticker",
+  "editorial-landing-hero",
+  "hero-engraved-moonrise-plate",
+  "hero-flashlight-reveal",
+  "handwritten-homepage",
+  "hero-chaptered-scenes",
+  "hero-asymmetric-type-lockup"
  ],
  "directions": [
   {
    "id": "bistro-riso",
    "name": "Bistro riso",
-   "mood": "Printed menu, oxblood, a corner bistro",
+   "mood": "A printed menu, oxblood, a corner bistro",
    "theme": "velvet-club",
    "pairing": "riso-zine",
    "family": "editorial",
@@ -36,22 +43,72 @@
   {
    "id": "market-kitchen",
    "name": "Market kitchen",
-   "mood": "Turmeric, tomato, loud and busy",
+   "mood": "A stall window, turmeric and tomato, what is left today",
    "theme": "market-stall",
    "pairing": "poster-condensed",
    "family": "industrial",
-   "hero": "restaurant-menu-page",
+   "hero": "hero-silk-ribbon-ticker",
    "effect": "kinetic-type-marquee"
   },
   {
    "id": "garden-supper",
    "name": "Garden supper",
-   "mood": "Olive, cream, slow food",
+   "mood": "A table outside, olive and cream, the garden is the room",
    "theme": "loam",
    "pairing": "garden-journal",
    "family": "soft",
-   "hero": "restaurant-menu-page",
+   "hero": "editorial-landing-hero",
    "effect": "hero-video-loop"
+  },
+  {
+   "id": "wine-list",
+   "name": "Wine list",
+   "mood": "A bar in the afternoon, burgundy plaster, bottles by the glass",
+   "theme": "matinee",
+   "pairing": "deco-hotel",
+   "family": "editorial",
+   "hero": "hero-engraved-moonrise-plate",
+   "effect": "page-transition-curtain"
+  },
+  {
+   "id": "night-bar",
+   "name": "Night bar",
+   "mood": "After dark, a neon sign, the board of what is pouring",
+   "theme": "neon-alley",
+   "pairing": "neon-marquee",
+   "family": "glass",
+   "hero": "hero-flashlight-reveal",
+   "effect": "split-flap-board"
+  },
+  {
+   "id": "corner-cafe",
+   "name": "Corner cafe",
+   "mood": "A short menu in a hand, one room, come by on Thursday",
+   "theme": "inkwell",
+   "pairing": "letter-hand",
+   "family": "soft",
+   "hero": "handwritten-homepage",
+   "effect": "text-annotated-underlines"
+  },
+  {
+   "id": "tasting-menu",
+   "name": "Tasting menu",
+   "mood": "A dark room, courses as scenes, the film of the meal",
+   "theme": "atelier-noir",
+   "pairing": "cinema",
+   "family": "editorial",
+   "hero": "hero-chaptered-scenes",
+   "effect": "scroll-velocity-type"
+  },
+  {
+   "id": "tea-house",
+   "name": "Tea house",
+   "mood": "A quiet table, blush paper, a short list and a long pour",
+   "theme": "sakura-desk",
+   "pairing": "literary",
+   "family": "editorial",
+   "hero": "hero-asymmetric-type-lockup",
+   "effect": "text-mask-line-reveal"
   }
  ]
 }

@@ -25,34 +25,70 @@
   "pwa-outbox-sync",
   "phone-map-listings",
   "phone-qr-scanner",
-  "phone-calendar-agenda"
+  "phone-calendar-agenda",
+  "game-hud",
+  "week-schedule",
+  "tablet-kiosk-checkin"
  ],
  "directions": [
   {
    "id": "yard",
    "name": "Yard",
-   "mood": "Safety orange on concrete",
+   "mood": "Safety orange, today's run, the next stop already open",
    "theme": "cinder",
    "pairing": "swiss-precision",
    "family": "industrial",
+   "hero": "mobile-run-detail",
    "effect": null
   },
   {
    "id": "shed",
    "name": "Shed",
-   "mood": "Rust and olive, outdoor work",
+   "mood": "Rust and olive, a code on a box, outdoor work",
    "theme": "oxide",
    "pairing": "industrial-label",
    "family": "industrial",
+   "hero": "phone-qr-scanner",
    "effect": null
   },
   {
    "id": "cockpit",
    "name": "Cockpit",
-   "mood": "Dark, teal, night shifts",
+   "mood": "Night shift, teal glass, a live status",
    "theme": "hud-teal",
    "pairing": "hud",
    "family": "sharp",
+   "hero": "game-hud",
+   "effect": null
+  },
+  {
+   "id": "night-bay",
+   "name": "Night bay",
+   "mood": "Floodlights, the week's bays, what loads when",
+   "theme": "night-shift",
+   "pairing": "poster-condensed",
+   "family": "industrial",
+   "hero": "week-schedule",
+   "effect": "split-flap-board"
+  },
+  {
+   "id": "route-map",
+   "name": "Route map",
+   "mood": "A city route, cool gray, the pins",
+   "theme": "fog-city",
+   "pairing": "swiss-precision",
+   "family": "quiet",
+   "hero": "phone-map-listings",
+   "effect": "ios-pull-to-refresh"
+  },
+  {
+   "id": "gate",
+   "name": "Gate",
+   "mood": "A check-in desk, stamped paper, names and times",
+   "theme": "archive",
+   "pairing": "slab-ledger",
+   "family": "editorial",
+   "hero": "tablet-kiosk-checkin",
    "effect": null
   }
  ]
