@@ -177,10 +177,20 @@ const DIRECTIONS: Record<string, Direction[]> = {
     ['toy-launch', 'Toy launch', 'Playful, butter and coral', 'playroom', 'candy-clay', 'soft', 'hero-bauhaus-composition', 'scroll-zoom-portal'],
   ]),
   dashboard: d([
-    ['harbour-desk', 'Harbour desk', 'Finance ops, navy and brass', 'harbour-ledger', 'swiss-precision', 'sharp', undefined, null],
-    ['night-ops', 'Night ops', 'Dark, engineers, long shifts', 'night-desk', 'developer-docs', 'sharp', undefined, null],
-    ['yard', 'Yard', 'Logistics, safety orange, concrete', 'cinder', 'industrial-label', 'industrial', undefined, null],
-    ['civic', 'Civic', 'Calm cobalt, an admin that lasts', 'fog-city', 'red-hat', 'quiet', undefined, null],
+    ['harbour-desk', 'Harbour desk', 'Finance ops, navy and brass, the numbers first', 'harbour-ledger', 'swiss-precision', 'sharp', 'analytics-dashboard-overview', null],
+    ['night-ops', 'Night ops', 'Engineers, a dark desk, the log of what changed', 'night-desk', 'developer-docs', 'sharp', 'audit-activity-log', null],
+    ['yard', 'Yard', 'Logistics, safety orange, the jobs on a board', 'cinder', 'industrial-label', 'industrial', 'kanban-board', null],
+    ['civic', 'Civic', 'An admin that lasts, cool gray, the records', 'fog-city', 'red-hat', 'quiet', 'dense-data-table', null],
+    ['paper-office', 'Paper office', 'A quiet office, warm paper, the people and their roles', 'paper-ink', 'academic', 'editorial', 'people-role-list', null],
+    ['signal-ops', 'Signal ops', 'A terminal, phosphor on soot, the log is the screen', 'signal-green', 'terminal-native', 'sharp', 'card-terminal-log', null],
+  ]),
+  'web-app': d([
+    ['cobalt-app', 'Cobalt app', 'A calm tool people keep open, a sidebar and the work', 'fog-city', 'friendly-saas', 'quiet', 'sidebar-workspace-switcher', null],
+    ['night-console', 'Night console', 'A dark desk, the command palette is the front door', 'night-desk', 'developer-docs', 'sharp', 'command-palette', null],
+    ['paper-notes', 'Paper notes', 'Writing first, warm paper, the page is the product', 'paper-ink', 'bookish', 'editorial', 'tablet-notes-three-pane', 'scroll-reading-progress'],
+    ['kanban-room', 'Kanban room', 'A small team, clay, the work is cards on a wall', 'kiln', 'indie-maker', 'soft', 'kanban-board', null],
+    ['chat-work', 'Chat work', 'The product is a conversation with the work, lime on charcoal', 'circuit', 'signal-mono', 'sharp', 'ai-chat-workspace', null],
+    ['records', 'Records', 'A public tool, pale and plain, one table people finish', 'ice-station', 'academic', 'quiet', 'dense-data-table', null],
   ]),
   'design-system': d([
     ['paper-system', 'Paper system', 'Editorial, warm', 'paper-ink', 'the-lounge', 'editorial', undefined, null],
@@ -392,7 +402,7 @@ export const SURFACES: { id: Surface; title: string; blurb: string }[] = [
 ];
 
 const ORDER = [
-  'marketing-site', 'saas', 'portfolio', 'portfolio-builder', 'commerce', 'fintech', 'fashion', 'food', 'wellness', 'hotel', 'agency', 'editorial', 'docs', 'music', 'personal-site', 'event', 'museum', 'landing', 'real-estate', 'restaurant', 'education', 'jobs', 'nonprofit', 'clinic', 'gym', 'professional', 'dashboard', 'design-system',
+  'marketing-site', 'saas', 'web-app', 'portfolio', 'portfolio-builder', 'commerce', 'fintech', 'fashion', 'food', 'wellness', 'hotel', 'agency', 'editorial', 'docs', 'music', 'personal-site', 'event', 'museum', 'landing', 'real-estate', 'restaurant', 'education', 'jobs', 'nonprofit', 'clinic', 'gym', 'professional', 'game', 'notebook', 'dashboard', 'design-system',
   'mobile-app', 'personal', 'bank', 'health', 'messages', 'music-app', 'news', 'shop-app', 'social', 'weather', 'field', 'tablet',
 ];
 
@@ -703,7 +713,20 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'swiss-precision',
     shelf: 'dashboards-and-data',
     categories: ['dashboard', 'data', 'charts', 'navigation'],
-    pieces: ['analytics-dashboard-overview', 'dense-data-table', 'charts-kpi-spark-row', 'chart-bar-week', 'chart-line-range', 'chart-rank-spend', 'kpi-delta', 'collapsing-sidebar-rail', 'audit-activity-log', 'upload-file-queue', 'account-menu-panel', 'record-detail-header', 'people-role-list', 'billing-plan-summary', 'list-empty-plain', 'load-failed-retry', 'saved-banner', 'kanban-board', 'sidebar-workspace-switcher', 'ai-chat-workspace', 'settings-team-members', 'file-upload-manager', 'calendar-week-planner', 'onboarding-workspace-setup', 'crypto-exchange-trade'],
+    pieces: ['analytics-dashboard-overview', 'dense-data-table', 'charts-kpi-spark-row', 'chart-bar-week', 'chart-line-range', 'chart-rank-spend', 'kpi-delta', 'collapsing-sidebar-rail', 'audit-activity-log', 'upload-file-queue', 'account-menu-panel', 'record-detail-header', 'people-role-list', 'billing-plan-summary', 'list-empty-plain', 'load-failed-retry', 'saved-banner', 'kanban-board', 'sidebar-workspace-switcher', 'ai-chat-workspace', 'settings-team-members', 'file-upload-manager', 'calendar-week-planner', 'onboarding-workspace-setup', 'crypto-exchange-trade', 'card-terminal-log'],
+  },
+  {
+    id: 'web-app',
+    surface: 'web',
+    title: 'A web app',
+    kicker: 'Product',
+    blurb: 'The product people log into. A sidebar, the work, an empty state, the account.',
+    when: 'The app itself, in a browser. Not the marketing site (that is saas) and not a staff dashboard.',
+    theme: 'fog-city',
+    pairing: 'friendly-saas',
+    shelf: 'dashboards-and-data',
+    categories: ['navigation', 'dashboard', 'settings', 'utility'],
+    pieces: ['sidebar-workspace-switcher', 'collapsing-sidebar-rail', 'command-palette', 'kanban-board', 'ai-chat-workspace', 'tablet-notes-three-pane', 'dense-data-table', 'list-empty-plain', 'load-failed-retry', 'saved-banner', 'account-menu-panel', 'settings-page-sticky-nav', 'onboarding-workspace-setup', 'file-upload-manager'],
   },
   {
     id: 'commerce',

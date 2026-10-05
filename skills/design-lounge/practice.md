@@ -134,6 +134,7 @@ Keep a short history on their machine.
   - Selling: marketing-site, saas, landing, commerce, fashion, fintech
   - Culture: editorial, museum, music, event, education
   - A service: professional, nonprofit, real-estate, jobs
+  - The tool: web-app, dashboard
 - A line with no `work` or `footer` still blocks its hero and its effect. Its work and footer are unknown, so do not treat them as free.
 - Repeat a pick only when they asked ("same look as my guitar site"), or when this is a new page of a product already in the history. Then it should match.
 - After the sections are chosen and the check passes, append one line. Create the folder and file if they are missing.
@@ -150,7 +151,7 @@ If you cannot write to the home folder, say so in the reply, and keep going. Sti
 
 The direction is the start, not the end. The Idea, the copy, the projects, and the order of the sections still come from this product.
 
-On a website, work, about, contact, and footer are picked next, in Sections, one by one in [website.md](website.md). Then the check above. Then the history line.
+On a website, work, about, contact, and footer are picked next, in Sections, one by one in [website.md](website.md). Then the check above. Then the history line. A web app or a tool has no marketing footer. `work` is the primary surface. `footer` is the account or settings piece, or `none`.
 
 ## Match the world
 
@@ -159,7 +160,7 @@ A hundred products look like one product when every pass locks the first palette
 Choose in this order.
 
 1. They named a theme, a pairing, or a family. Lock what they named. Choose the rest by the rules below.
-2. A recipe in `starts` matches the product. The names are in reference.md: a yard desk is `dashboard`, a clay shop is `commerce`, a SaaS page is `saas`, a showreel is `portfolio`, a developer, product manager, product designer, or founder is `portfolio-builder`, a phone shop is `shop-app`. A restaurant is `restaurant`, a clinic is `clinic`, a gym is `gym`, a listing is `real-estate`, a course or school is `education`, a job board is `jobs`, a charity is `nonprofit`, and a law or consulting firm is `professional`. The full list is the Kind map in reference.md. A magazine is `editorial`. A phone app with no named world is `mobile-app`. A tablet is `tablet`. One person's money is `personal`, not `dashboard` and not `bank`. A Nepali finance app is `personal`: Lokta and the Devanagari pairing. Say which recipe. Then pick one of its `directions`, as Pick a direction says. The direction locks the theme, pairing, family, hero, and effect. The recipe's `pieces` are still the screens to open.
+2. A recipe in `starts` matches the product. The full list is the Kind map in [reference.md](reference.md). Say which recipe, then pick one direction, as Pick a direction says. These are the pairs people mix up. One person's money is `personal`, not `dashboard` and not `bank`. A Nepali finance app is `personal`: Lokta and the Devanagari pairing. A photographer is `portfolio`. A person who ships software is `portfolio-builder`. A menu people visit is `restaurant`. A shop that ships is `food`. A retreat is `wellness`. A clinic people book is `clinic`. The marketing page of a tool is `saas`. The tool they log into is `web-app`. Staff ops is `dashboard`. A shop in a browser is `commerce`. A shop on a phone is `shop-app`. The direction locks the theme, pairing, family, hero, and effect. The recipe's `pieces` are still the screens to open.
 3. No recipe matches. Stay inside that kind's `palettes`, `pairings`, and `families`. Read `bestFor`, `mood`, and `tags` on each theme. Lock the theme whose `bestFor` names this world. A clinic is Alpine Clinic. A payroll run is Harbour Ledger, because the job is paying people. Fog City is the first palette on kind `product` and is the wrong lock for both.
 4. Lock a pairing from that kind's list whose `bestFor` is the same world. Payroll on kind `product` takes Friendly SaaS, which lists fintech. A paper takes Newsroom. A clay shop whose recipe is commerce takes Atelier.
 5. Lock the family for how the product is used. Editorial for a page people read. Industrial for a yard or a field tool. Sharp for a dense platform. Quiet for a product that has to last. Soft for a friendly consumer app. Glass only when the direction names it.

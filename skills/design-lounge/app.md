@@ -70,5 +70,8 @@ A pass that only ships a hero, a landing, or a dashboard home is unfinished. Cov
 - Platform: shell, a table or a board, one record, and the account menu. Add people and billing when the product has staff or a plan.
 - Shop: a collection, one product, the cart, and checkout. Take them from the commerce recipe.
 - Tablet: a split or a sidebar, one primary pane, and one detail. Take them from the tablet recipe.
+- Web app: a sidebar or a top bar, the primary work surface, an empty state, and account or settings. Take them from `web-app`. Not a marketing hero.
+- Desktop window: the same set as the web app or the dashboard. No phone tab bar.
+- PWA: the set for its job, plus `pwa-install-sheet`, `pwa-connectivity-banner`, and `pwa-update-toast`. The rest is in [native.md](native.md).
 
 If they asked for one component, build that component inside the locked system. Say that the rest of the set is still open. Do not invent a second palette to fill the gaps.

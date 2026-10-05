@@ -1,0 +1,95 @@
+{
+ "id": "web-app",
+ "surface": "web",
+ "title": "A web app",
+ "kicker": "Product",
+ "blurb": "The product people log into. A sidebar, the work, an empty state, the account.",
+ "when": "The app itself, in a browser. Not the marketing site (that is saas) and not a staff dashboard.",
+ "theme": "fog-city",
+ "pairing": "friendly-saas",
+ "shelf": "dashboards-and-data",
+ "categories": [
+  "navigation",
+  "dashboard",
+  "settings",
+  "utility"
+ ],
+ "pieces": [
+  "sidebar-workspace-switcher",
+  "collapsing-sidebar-rail",
+  "command-palette",
+  "kanban-board",
+  "ai-chat-workspace",
+  "tablet-notes-three-pane",
+  "dense-data-table",
+  "list-empty-plain",
+  "load-failed-retry",
+  "saved-banner",
+  "account-menu-panel",
+  "settings-page-sticky-nav",
+  "onboarding-workspace-setup",
+  "file-upload-manager"
+ ],
+ "directions": [
+  {
+   "id": "cobalt-app",
+   "name": "Cobalt app",
+   "mood": "A calm tool people keep open, a sidebar and the work",
+   "theme": "fog-city",
+   "pairing": "friendly-saas",
+   "family": "quiet",
+   "hero": "sidebar-workspace-switcher",
+   "effect": null
+  },
+  {
+   "id": "night-console",
+   "name": "Night console",
+   "mood": "A dark desk, the command palette is the front door",
+   "theme": "night-desk",
+   "pairing": "developer-docs",
+   "family": "sharp",
+   "hero": "command-palette",
+   "effect": null
+  },
+  {
+   "id": "paper-notes",
+   "name": "Paper notes",
+   "mood": "Writing first, warm paper, the page is the product",
+   "theme": "paper-ink",
+   "pairing": "bookish",
+   "family": "editorial",
+   "hero": "tablet-notes-three-pane",
+   "effect": "scroll-reading-progress"
+  },
+  {
+   "id": "kanban-room",
+   "name": "Kanban room",
+   "mood": "A small team, clay, the work is cards on a wall",
+   "theme": "kiln",
+   "pairing": "indie-maker",
+   "family": "soft",
+   "hero": "kanban-board",
+   "effect": null
+  },
+  {
+   "id": "chat-work",
+   "name": "Chat work",
+   "mood": "The product is a conversation with the work, lime on charcoal",
+   "theme": "circuit",
+   "pairing": "signal-mono",
+   "family": "sharp",
+   "hero": "ai-chat-workspace",
+   "effect": null
+  },
+  {
+   "id": "records",
+   "name": "Records",
+   "mood": "A public tool, pale and plain, one table people finish",
+   "theme": "ice-station",
+   "pairing": "academic",
+   "family": "quiet",
+   "hero": "dense-data-table",
+   "effect": null
+  }
+ ]
+}

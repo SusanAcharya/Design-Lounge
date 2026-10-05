@@ -39,43 +39,68 @@
   "file-upload-manager",
   "calendar-week-planner",
   "onboarding-workspace-setup",
-  "crypto-exchange-trade"
+  "crypto-exchange-trade",
+  "card-terminal-log"
  ],
  "directions": [
   {
    "id": "harbour-desk",
    "name": "Harbour desk",
-   "mood": "Finance ops, navy and brass",
+   "mood": "Finance ops, navy and brass, the numbers first",
    "theme": "harbour-ledger",
    "pairing": "swiss-precision",
    "family": "sharp",
+   "hero": "analytics-dashboard-overview",
    "effect": null
   },
   {
    "id": "night-ops",
    "name": "Night ops",
-   "mood": "Dark, engineers, long shifts",
+   "mood": "Engineers, a dark desk, the log of what changed",
    "theme": "night-desk",
    "pairing": "developer-docs",
    "family": "sharp",
+   "hero": "audit-activity-log",
    "effect": null
   },
   {
    "id": "yard",
    "name": "Yard",
-   "mood": "Logistics, safety orange, concrete",
+   "mood": "Logistics, safety orange, the jobs on a board",
    "theme": "cinder",
    "pairing": "industrial-label",
    "family": "industrial",
+   "hero": "kanban-board",
    "effect": null
   },
   {
    "id": "civic",
    "name": "Civic",
-   "mood": "Calm cobalt, an admin that lasts",
+   "mood": "An admin that lasts, cool gray, the records",
    "theme": "fog-city",
    "pairing": "red-hat",
    "family": "quiet",
+   "hero": "dense-data-table",
+   "effect": null
+  },
+  {
+   "id": "paper-office",
+   "name": "Paper office",
+   "mood": "A quiet office, warm paper, the people and their roles",
+   "theme": "paper-ink",
+   "pairing": "academic",
+   "family": "editorial",
+   "hero": "people-role-list",
+   "effect": null
+  },
+  {
+   "id": "signal-ops",
+   "name": "Signal ops",
+   "mood": "A terminal, phosphor on soot, the log is the screen",
+   "theme": "signal-green",
+   "pairing": "terminal-native",
+   "family": "sharp",
+   "hero": "card-terminal-log",
    "effect": null
   }
  ]

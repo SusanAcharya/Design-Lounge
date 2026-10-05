@@ -4,8 +4,9 @@ description: >-
   Designs product UI from Design Lounge by Susan Acharya — palettes, type
   pairings, component families, icons, motion, and piece briefs. Use when the
   user asks for a design, design system, UI, look and feel, palette, colors,
-  fonts, landing page, marketing site, dashboard, admin, mobile app, shop,
-  editorial, React Native, Flutter, SwiftUI, Compose, or PWA apps, or to
+  fonts, landing page, marketing site, web app, dashboard, admin, desktop
+  app, mobile app, shop, editorial, React Native, Flutter, SwiftUI, Compose,
+  or PWA apps, or to
   make an interface look finished. Also covers what the
   taste-skill pack does: anti-slop pages, minimal, brutalist and high-end
   looks, redesigns, image-first mockups, logos and brand kits. Also use when
@@ -52,7 +53,12 @@ If the open project is the Design Lounge repo itself (`src/demos` and `src/conte
 | Three.js, a 3D scene, an orbit, a scroll-driven world | Kit flow, recipe `game`, direction Orbit. The Lounge demo is raw WebGL. Build the product in Three.js from the brief. |
 | A handwritten or hand-lettered site | Kit flow, recipe `notebook` |
 | A brand kit, identity, logo system, or brand board | Kit flow, then Brand board in [taste.md](taste.md) |
-| A React Native, Expo, Flutter, SwiftUI, or Compose app, or a PWA | Kit flow, then [native.md](native.md) for tokens, fonts, platform rules, and simulator screenshots |
+| The product people use in a browser, logged in | Kit flow, then the app short path, recipe `web-app`. The public homepage is `saas`, a separate pass |
+| Staff admin, ops, a dashboard | Kit flow, then the app short path, recipe `dashboard` |
+| A phone app, and they named no world | Kit flow, then the app short path, recipe `mobile-app` |
+| A PWA | The recipe for the job (a shop, a news app, a web app), then PWAs in [native.md](native.md). Not automatically `mobile-app` |
+| React Native, Expo, Flutter, SwiftUI, or Compose | Kit flow, then the app short path and [native.md](native.md) |
+| A desktop app, Electron, Tauri, a Mac window | The app short path. `web-app`, or `dashboard` when it is staff ops. No phone tab bar |
 | "Show me first", a concept, or mockup images, and you can make images | Kit flow, then Image first in [taste.md](taste.md) before code |
 | One screen, section, or component | Piece flow, inside the locked kit if one exists |
 | Only a palette, font, icon, or motion | Library flow |
@@ -95,11 +101,11 @@ The rules are the floor, not the design. Passing all of them makes a page correc
 
 ## An app, the short path
 
-The full method is long. For a phone app, a PWA, or a native app, these are the steps. Open the named section only when you reach its step. A website still uses the path above.
+The full method is long. For a phone app, a web app, a desktop window, or a native app, these are the steps. Open the named section only when you reach its step. A public website still uses the path above. A PWA uses the recipe for its job, then PWAs in [native.md](native.md).
 
 1. Read `~/.design-lounge/history.jsonl`. Write three words for the subject's world. Lock the app recipe and a direction whose mood names it (bank, health, messages, music, news, shop, social, weather, or the general mobile app), not one used recently for this recipe. The name number only breaks a tie. Append the pick.
 2. Write the Idea (The one screen in [app.md](app.md)). Name the real tabs, three to five. Do not copy Home, Search, Activity, Profile unless those are the product's sections.
-3. Pick the platform once. iOS uses the `phone-` and `ios-` pieces. Android, or a Material family, uses the `m3-` piece when one exists for that job. One tab bar.
+3. Pick the platform once. iOS uses the `phone-` and `ios-` pieces. Android, or a Material family, uses the `m3-` piece when one exists for that job. One tab bar. A web app or a desktop window has no phone tab bar: the shell is `sidebar-workspace-switcher` or `collapsing-sidebar-rail`.
 4. Build the minimum set before you stop: the shell, the primary list, one detail, the empty state, the failed load, and settings or account. Open each brief down to "Optional below this line".
 5. Accounts add sign-in and delete-account. A price adds the paywall or the subscription screen, with real dates. A rating uses `phone-rating-prompt`, after a success, never on first launch.
 6. Restyle every piece onto the locked theme and pairing. The demo's colours and fonts do not come along.

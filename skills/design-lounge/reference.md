@@ -58,7 +58,9 @@ Read this only when you need a path or a kind map. The procedure is in SKILL.md.
 | Handwritten, hand-lettered, a letter, a notebook site | `website` | Also recipe `notebook`. Letter Hand for the whole site. Handwritten Notes only when the notes are the handwritten part. |
 | Museum, gallery, a collection | `website` | Also recipe `museum` |
 | One landing page, and they did not name the world | `website` | Also recipe `landing`. If they named fashion, wellness, fintech, or a tool, use that recipe instead. A tilt or a sticky scroll is one piece from Register. |
-| Phone app, iOS, Android, PWA, and they did not name the world | `product` | Also recipe `mobile-app`. Prefer `platform` `mobile-app` pieces. |
+| Phone app, iOS, Android, and they did not name the world | `product` | Also recipe `mobile-app`. Prefer `platform` `mobile-app` pieces. A PWA is not this row. |
+| The product people use in a browser, logged in. Not the marketing page. Not staff ops | `product` | Also recipe `web-app`. The public homepage, if they also want one, is `saas`. |
+| A desktop app, Electron, Tauri, a Mac window | `product` | `web-app`, or `dashboard` when it is staff ops. No phone tab bar. The window chrome is the operating system. |
 | Health, fitness, a clinic app | `product` | Also recipe `health` |
 | Messages, mail, chat | `product` | Also recipe `messages` |
 | Music app, now playing | `product` | Also recipe `music-app` |
@@ -69,7 +71,23 @@ Read this only when you need a path or a kind map. The procedure is in SKILL.md.
 | Field tool, ops on a phone | `platform` | Also recipe `field` |
 | Shop, checkout, in a browser | `product` | Also recipe `commerce`. Order is collection, product, cart, checkout, then `order-confirmed`. |
 | Tablet, iPad, landscape | `product` | Also recipe `tablet`. Do not stretch a phone screen to 1180px. |
-| Design system only, no screen yet | `product` | Also recipe `design-system`. The controls are `text-field`, `textarea-field`, `password-field`, `radio-group`, `checkbox-group`, `slider-field`, `select-field`, `combobox`, `token-field`, `otp-code`, `rating-score`, `calendar-month`, `time-field`, `switch-row`, `button-roles`, `breadcrumb`, `tree-nav`, `pagination`, `filter-toolbar`, `qty-stepper`, `progress-bar`, `property-list`, `content-card`, `status-badge`, `inline-alert`, `tooltip`, `popover-panel`, `consent-bar`, `prompt-composer`, `split-button`, `drag-to-confirm`, `dial-knob`, `undo-toast`, `code-snippet-tabs`, `selection-bar`, `shortcut-sheet`, `inline-edit`, `minute-wheel`, `stretch-switch`, `gooey-nav`, `edge-light-button`, `shred-button`, `receipt-slip`, `focus-dim`, `node-graph`, `cited-answer`, `analog-stick`, `chip-bucket`, `press-well`, `curve-drawer`. |
+| Design system only, no screen yet | `product` | Also recipe `design-system`. Search `pieces.txt` for `inputs`, `buttons`, `navigation`, and `overlays`. Do not read that file top to bottom. |
+
+## Platforms
+
+The kind map names the product. This names the machine. Read one row, then the file it points at. Do not read every platform file.
+
+| Machine | What to do |
+| --- | --- |
+| A public website | The website short path in SKILL.md, and the recipe from the kind map. |
+| A web app, logged in, in a browser | The app short path, recipe `web-app`. Shell is a sidebar. |
+| Staff admin | The app short path, recipe `dashboard`. |
+| A phone | The app short path and the phone recipe (`bank`, `health`, `shop-app`, or `mobile-app` when they named no world). |
+| A PWA | The recipe for the job, then PWAs in [native.md](native.md). Add the manifest, the install sheet, offline, and the update toast. Do not switch the recipe to `mobile-app` just because it installs. |
+| React Native, Expo, Flutter, SwiftUI, Compose | The app short path, then [native.md](native.md). Translate the brief. Do not ship the HTML demo in a WebView. |
+| A tablet | Recipe `tablet`. Do not stretch a phone screen. |
+| A desktop window | `web-app` or `dashboard`. No phone tab bar. |
+| Email, a watch, a TV, a car screen | No recipe. Say so. An email is not a page. A watch is one phone screen and nothing else. A TV is the tablet recipe, with no hover. |
 
 ## Sources
 
