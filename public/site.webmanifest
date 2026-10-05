@@ -4,8 +4,8 @@
   "description": "A UI design skill and design ideas for AI agents, by Susan Acharya.",
   "start_url": "/",
   "display": "browser",
-  "background_color": "#171512",
-  "theme_color": "#171512",
+  "background_color": "#18181b",
+  "theme_color": "#fafaf9",
   "icons": [
     { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
     { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" },

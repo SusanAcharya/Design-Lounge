@@ -4,7 +4,7 @@ import Catalog from '../components/Catalog.astro';
 import { getPieces } from '../lib/pieces';
 const pieces = await getPieces();
 ---
-<Base title="Browse the library" description="Every piece in the Lounge: screens, components, animations, layouts, patterns and styles for web, mobile, tablet, app and PWA." rail={false}>
+<Base title="Browse the library" description="Search the Design Lounge library. Filter every screen, component, animation and pattern by word, at /browse?q= followed by what you are looking for." rail={false}>
   <header class="bh wrap">
     <h1 class="display h3">Library</h1>
     <p class="muted">{pieces.length} live pieces. Narrow by type, platform, section or style, then open one to see it live and copy its brief.</p>

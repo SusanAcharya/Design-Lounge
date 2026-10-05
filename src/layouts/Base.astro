@@ -26,7 +26,27 @@ const json = (o: unknown) => JSON.stringify(o).replace(/</g, '\\u003c');
 const person = { '@type': 'Person', name: AUTHOR.name, url: AUTHOR.site, jobTitle: AUTHOR.role, sameAs: AUTHOR.links.map((l) => l.href) };
 const graph: Record<string, unknown>[] = [
   path === '/'
-    ? { '@type': 'WebSite', '@id': `${origin}/#website`, name: 'Design Lounge', alternateName: ['DesignLounge', 'Design Lounge by Susan Acharya'], url: `${origin}/`, description, inLanguage: 'en', author: person, publisher: person }
+    ? {
+        '@type': 'WebSite',
+        '@id': `${origin}/#website`,
+        name: 'Design Lounge',
+        alternateName: ['DesignLounge', 'Design Lounge by Susan Acharya', 'UI design skill for AI agents'],
+        url: `${origin}/`,
+        description,
+        inLanguage: 'en',
+        author: person,
+        publisher: {
+          '@type': 'Organization',
+          name: 'Design Lounge',
+          url: `${origin}/`,
+          logo: { '@type': 'ImageObject', url: `${origin}/logo.png`, width: 1024, height: 1024 },
+        },
+        potentialAction: {
+          '@type': 'SearchAction',
+          target: { '@type': 'EntryPoint', urlTemplate: `${origin}/browse?q={search_term_string}` },
+          'query-input': 'required name=search_term_string',
+        },
+      }
     : { '@type': 'WebPage', name: fullTitle, url: canonical, description, isPartOf: { '@type': 'WebSite', name: 'Design Lounge', url: `${origin}/` }, author: person },
 ];
 if (crumbs?.length) graph.push({
@@ -67,10 +87,10 @@ const count = (await getPieces()).length;
   <meta name="twitter:title" content={fullTitle} />
   <meta name="twitter:description" content={description} />
   <meta name="theme-color" content="#fafaf9" />
-  <link rel="icon" href="/favicon.ico" sizes="32x32" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <link rel="icon" href="/favicon-96.png" type="image/png" sizes="96x96" />
   <link rel="icon" href="/favicon-48.png" type="image/png" sizes="48x48" />
+  <link rel="icon" href="/favicon.ico" sizes="32x32" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <link rel="manifest" href="/site.webmanifest" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
