@@ -82,8 +82,8 @@ If they ask for a change after, edit that one Source line and rebuild that scree
 
 The full method is long. For a website, these are the steps that matter, in order. Open the named section only when you reach its step.
 
-1. Read the person: their words, bio, projects, own site. Write three words for them (Pick a direction, rule 3, in [practice.md](practice.md)).
-2. Lock the recipe and the direction whose mood matches those words. The name number only breaks a tie.
+1. Read `~/.design-lounge/history.jsonl` (Recent picks in [practice.md](practice.md)). Then write three words for the subject's world: its materials, tools, and place, not "beginner" or "friendly" (Pick a direction, rules 2 to 4).
+2. Lock the recipe and the direction whose mood names that world, and that is not in the recent history for this recipe. The name number only breaks a tie. Append the pick to the history.
 3. Write the Idea and the Signature (Write the idea in [website.md](website.md)). Name the default look you are avoiding, including the studio template.
 4. Pick work, about, contact, and footer by what content they have (Sections, one by one in [website.md](website.md)).
 5. Open the brief of every piece you build, including the menu and any copy button. Read each down to "Optional below this line".
@@ -97,7 +97,7 @@ The rules are the floor, not the design. Passing all of them makes a page correc
 
 The full method is long. For a phone app, a PWA, or a native app, these are the steps. Open the named section only when you reach its step. A website still uses the path above.
 
-1. Read the person. Write three words. Lock the app recipe whose mood matches (bank, health, messages, music, news, shop, social, weather, or the general mobile app). The name number only breaks a tie.
+1. Read `~/.design-lounge/history.jsonl`. Write three words for the subject's world. Lock the app recipe and a direction whose mood names it (bank, health, messages, music, news, shop, social, weather, or the general mobile app), not one used recently for this recipe. The name number only breaks a tie. Append the pick.
 2. Write the Idea (The one screen in [app.md](app.md)). Name the real tabs, three to five. Do not copy Home, Search, Activity, Profile unless those are the product's sections.
 3. Pick the platform once. iOS uses the `phone-` and `ios-` pieces. Android, or a Material family, uses the `m3-` piece when one exists for that job. One tab bar.
 4. Build the minimum set before you stop: the shell, the primary list, one detail, the empty state, the failed load, and settings or account. Open each brief down to "Optional below this line".
@@ -108,7 +108,7 @@ The full method is long. For a phone app, a PWA, or a native app, these are the 
 
 ## Kit flow
 
-1. Pick a kind (`website`, `product`, `platform`, `personal`) with the kind map in [reference.md](reference.md). Then take the matching recipe from `starts` in `library/map.json`, open `library/starts/<id>.json`, and lock one of its `directions` (Pick a direction in [practice.md](practice.md)). The same sentence from two people must not give the same site. Do not lock the first palette, pairing, or family because it is first.
+1. Pick a kind (`website`, `product`, `platform`, `personal`) with the kind map in [reference.md](reference.md). Then take the matching recipe from `starts` in `library/map.json`, open `library/starts/<id>.json`, and lock one of its `directions` (Pick a direction in [practice.md](practice.md)), after checking Recent picks there. The same sentence from two people must not give the same site, and two subjects in one recipe must not either. Do not lock the first palette, pairing, or family because it is first.
 2. For a website, read Stand out in [website.md](website.md) first: name the default look you are avoiding, write the Idea in one picture sentence, show the work as pictures, never invent clients. For an app, read The one screen in [app.md](app.md) and follow An app, the short path.
 3. Write the four lines from Decide the screen: who it is for, the one decision, the first thing they see, and the next action.
 4. The locked system is `library/themes/<id>.css`, `library/pairings/<id>.css`, and the family's `rules`, `radius`, `button`, and `density`. Match those numbers.

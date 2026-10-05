@@ -67,6 +67,36 @@
    "family": "soft",
    "hero": "hero-editorial-name-rotator",
    "effect": "scroll-word-highlight"
+  },
+  {
+   "id": "paper-ledger",
+   "name": "Paper ledger",
+   "mood": "Product manager, writing first, decisions as documents",
+   "theme": "archive",
+   "pairing": "academic",
+   "family": "editorial",
+   "hero": "portfolio-case-study-long",
+   "effect": "scroll-reading-progress"
+  },
+  {
+   "id": "lime-lab",
+   "name": "Lime lab",
+   "mood": "AI or infra engineer, fast, lime on black, live demos",
+   "theme": "circuit",
+   "pairing": "signal-mono",
+   "family": "sharp",
+   "hero": "hero-live-browser-card",
+   "effect": "spotlight-hover-grid"
+  },
+  {
+   "id": "toy-shelf",
+   "name": "Toy shelf",
+   "mood": "Indie maker, many small apps, a shelf you can tap",
+   "theme": "playroom",
+   "pairing": "indie-maker",
+   "family": "soft",
+   "hero": "app-icon-shelf-gallery",
+   "effect": "spring-deck"
   }
  ]
 }

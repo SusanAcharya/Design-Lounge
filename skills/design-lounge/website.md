@@ -113,6 +113,16 @@ The lists, for a website:
 - Contact: `contact-giant-email-copy`, `contact-project-brief-steps`, `profile-contact-card`, `cta-giant-email-band`, `contact-conversational-form`. A place people visit: `contact-split-map-form` or `contact-booking-hours`.
 - Footer: `footer-giant-wordmark-reveal`, `footer-centered-colophon`, `footer-newsletter-split`, `footer-engraved-caravan-strip`. A product with many pages: `footer-sitemap-columns` or `footer-enterprise-sitemap`.
 
+The lists, for a course or lessons site. `course-landing-curriculum` is one option for the lesson list, not the whole site.
+
+- Lesson list: `course-landing-curriculum`, `outline-fill-topic-list`, `accordion-grid-rows`, `card-progress-goals`, `features-tabbed-preview`, `stacking-cards-scroll`.
+- One lesson: `tablet-cook-mode` (step by step, hands busy), `features-sticky-scroll-steps`, `paper-article-reader` (a lesson you read), `phone-lesson-quiz` (a check at the end).
+- The teacher: `profile-creator-masthead`, `sticky-split-story`, `profile-editorial-staff`, `text-rise-underline-whisper`.
+- Practice: the product's own tool comes first (a tuner, a canvas, a code box). Timers are `widget-pomodoro` and `widget-stopwatch-laps`.
+- Footer: the website footer list above.
+
+Two lesson sites on different subjects should not share a lesson-list piece and an effect. Check Recent picks in [practice.md](practice.md).
+
 Open the brief for every section you build. A phone menu, a copy-email button, or a drawer is a piece too: `hamburger-circle-reveal`, `contact-giant-email-copy`, `button-copy-share`. If you build a part without opening its brief, say so in the reply.
 
 ## Register

@@ -54,6 +54,36 @@
    "family": "quiet",
    "hero": "editorial-landing-hero",
    "effect": "scroll-reading-progress"
+  },
+  {
+   "id": "inkwell-letter",
+   "name": "Inkwell letter",
+   "mood": "The whole site is a letter in their hand",
+   "theme": "inkwell",
+   "pairing": "letter-hand",
+   "family": "soft",
+   "hero": "handwritten-homepage",
+   "effect": "text-annotated-underlines"
+  },
+  {
+   "id": "night-reader",
+   "name": "Night reader",
+   "mood": "A late writer, warm dark, long reads",
+   "theme": "reading-room",
+   "pairing": "classic-garamond",
+   "family": "editorial",
+   "hero": "paper-article-reader",
+   "effect": "text-rise-underline-whisper"
+  },
+  {
+   "id": "poster-self",
+   "name": "Poster self",
+   "mood": "Loud, a person as a gig poster",
+   "theme": "festival-night",
+   "pairing": "poster-condensed",
+   "family": "sharp",
+   "hero": "hero-silk-ribbon-ticker",
+   "effect": "kinetic-type-marquee"
   }
  ]
 }

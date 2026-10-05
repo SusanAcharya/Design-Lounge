@@ -19,7 +19,16 @@
   "faq-category-accordion",
   "pricing-annual-toggle-roll",
   "testimonials-metric-tabs",
-  "phone-lesson-quiz"
+  "phone-lesson-quiz",
+  "hero-chaptered-scenes",
+  "handwritten-homepage",
+  "spring-deck",
+  "tablet-cook-mode",
+  "card-progress-goals",
+  "features-sticky-scroll-steps",
+  "profile-creator-masthead",
+  "hero-split-ui-stack",
+  "hero-layered-letter-swap"
  ],
  "directions": [
   {
@@ -45,12 +54,82 @@
   {
    "id": "play-lesson",
    "name": "Play lesson",
-   "mood": "Bright, friendly, for learners",
+   "mood": "Kids and first-timers, butter and coral, bouncy",
    "theme": "playroom",
    "pairing": "playground",
    "family": "soft",
    "hero": "course-landing-curriculum",
    "effect": "spring-deck"
+  },
+  {
+   "id": "stage-lights",
+   "name": "Stage lights",
+   "mood": "Music lessons, a dark stage, warm spotlights, a setlist",
+   "theme": "velvet-club",
+   "pairing": "cinema",
+   "family": "editorial",
+   "hero": "hero-chaptered-scenes",
+   "effect": "scroll-velocity-type"
+  },
+  {
+   "id": "workshop-bench",
+   "name": "Workshop bench",
+   "mood": "Hands and tools: wood, strings, clay, a build you finish",
+   "theme": "oxide",
+   "pairing": "industrial-label",
+   "family": "industrial",
+   "hero": "hero-asymmetric-type-lockup",
+   "effect": "stacking-cards-scroll"
+  },
+  {
+   "id": "open-studio",
+   "name": "Open studio",
+   "mood": "Drawing and sketching, paper, a pencil line, a hand",
+   "theme": "inkwell",
+   "pairing": "letter-hand",
+   "family": "soft",
+   "hero": "handwritten-homepage",
+   "effect": "text-annotated-underlines"
+  },
+  {
+   "id": "gallery-class",
+   "name": "Gallery class",
+   "mood": "Painting and colour, white walls, a framed piece",
+   "theme": "marble-hall",
+   "pairing": "gallery-wall",
+   "family": "editorial",
+   "hero": "editorial-landing-hero",
+   "effect": "scroll-zoom-portal"
+  },
+  {
+   "id": "code-dojo",
+   "name": "Code dojo",
+   "mood": "Coding and tech, a terminal, short drills",
+   "theme": "night-desk",
+   "pairing": "terminal-native",
+   "family": "sharp",
+   "hero": "hero-split-ui-stack",
+   "effect": "text-scramble-reveal"
+  },
+  {
+   "id": "language-cafe",
+   "name": "Language cafe",
+   "mood": "Languages and words, two scripts, a cafe table",
+   "theme": "sakura-desk",
+   "pairing": "literary",
+   "family": "editorial",
+   "hero": "hero-layered-letter-swap",
+   "effect": "text-mask-line-reveal"
+  },
+  {
+   "id": "field-school",
+   "name": "Field school",
+   "mood": "Outdoors, cooking, gardening, slow and practical",
+   "theme": "loam",
+   "pairing": "garden-journal",
+   "family": "soft",
+   "hero": "editorial-landing-hero",
+   "effect": "parallax-layered-hero"
   }
  ]
 }

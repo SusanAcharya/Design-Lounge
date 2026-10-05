@@ -65,6 +65,46 @@
    "family": "editorial",
    "hero": "portfolio-photographer-horizontal",
    "effect": "text-mask-line-reveal"
+  },
+  {
+   "id": "reel-night",
+   "name": "Reel night",
+   "mood": "Motion and film, a dark room, the reel plays first",
+   "theme": "observatory",
+   "pairing": "cinema",
+   "family": "editorial",
+   "hero": "portfolio-motion-showreel",
+   "effect": "page-transition-curtain"
+  },
+  {
+   "id": "darkroom-sheet",
+   "name": "Darkroom sheet",
+   "mood": "A photographer who shoots many frames, a contact sheet",
+   "theme": "press-room",
+   "pairing": "newsroom",
+   "family": "editorial",
+   "hero": "gallery-contact-sheet",
+   "effect": "grow-grid"
+  },
+  {
+   "id": "riso-wall",
+   "name": "Riso wall",
+   "mood": "Illustrator, two inks, printed and loud",
+   "theme": "festival",
+   "pairing": "riso-zine",
+   "family": "sharp",
+   "hero": "masonry-gallery-captions",
+   "effect": "kinetic-type-marquee"
+  },
+  {
+   "id": "maker-wall",
+   "name": "Maker wall",
+   "mood": "Objects and craft, a workshop wall, things you can turn",
+   "theme": "oxide",
+   "pairing": "industrial-label",
+   "family": "industrial",
+   "hero": "gallery-wall-frames",
+   "effect": "object-3d-turntable"
   }
  ]
 }

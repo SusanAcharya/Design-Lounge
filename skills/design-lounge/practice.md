@@ -106,14 +106,34 @@ Use the same sections to read a DESIGN.md they bring. It is their system. Follow
 
 ## Pick a direction
 
-Every recipe has three to five `directions`. Each one is a complete look: theme, pairing, family, hero piece, and one effect. Two people who type the same sentence must not get the same site. Choose in this order.
+Every recipe has three to ten `directions`. Each one is a complete look: theme, pairing, family, hero piece, and one effect. Two people who type the same sentence must not get the same site. Two different subjects must not get the same site either: guitar lessons and drawing lessons are both "for beginners", and that is why audience words cannot pick the look.
+
+Before you choose, read the history (Recent picks, below). Then choose in this order.
 
 1. They named a theme, a pairing, a colour, or a site they like. Lock the direction closest to it, then swap in what they named.
-2. Their words carry a mood, an audience, or a world: dark, light, playful, calm, luxury, technical, for developers, for kids, loud, Nepali, retro, AI. Lock the direction whose `mood` says it.
-3. Read the person. Most messages carry more than they say: a bio, a tagline, project names, their job, their own site or GitHub, the way they write. Write three words that describe that material, in their words where you can. Compare them with each direction's `mood` and lock the closest. Write it on the sheet. For a twelve-seat momo counter whose owner wrote "we fold every momo in front of you, no freezer": `Direction: garden-supper (their words: small, made in front of you, slow; mood: olive, cream, slow food)`. A designer starts from the person, not from a number.
-4. Two or more directions fit equally, or there is truly nothing to read (a bare "make me a portfolio"). Only then use the name number, and only among the directions that fit. Work out the name number: add up the place of each letter of the product or brand name in the alphabet (a = 1, b = 2, … z = 26), ignoring spaces, digits and punctuation. If there is no name, use the first noun in their message. Divide by the number of directions. The remainder picks it, counting the first direction as 0. Write the sum on the sheet, for example `Direction: garden-supper (Tsering = 20+19+5+18+9+14+7 = 92, 92 mod 3 = 2)`. The name number keeps one product consistent and keeps two products apart. It does not know who they are, so it never overrules rule 3. Counting letters is not enough, because names of the same length would always land together.
+2. The subject's world. Write the materials of the thing itself: the instrument, the tool, the room, the place, the craft. Guitar: strings, wood, a stage, a setlist. Drawing: paper, a pencil line, a sketchbook. Code: a terminal, short drills. Lock the direction whose `mood` names that world. A clear dark, Nepali, retro, or AI request also counts here.
+3. Audience words come last, and never alone: beginner, friendly, simple, fun, modern, clean, for everyone, easy. Almost every brief says them. They break a tie between two directions that both fit the subject. They do not pick a direction by themselves. "For kids" is the exception: it is a world.
+4. Read the person. Most messages carry more than they say: a bio, a tagline, project names, their job, their own site or GitHub, the way they write. Write three words that describe that material, in their words where you can. Compare them with each direction's `mood` and lock the closest. Write it on the sheet. For a twelve-seat momo counter whose owner wrote "we fold every momo in front of you, no freezer": `Direction: garden-supper (their words: small, made in front of you, slow; mood: olive, cream, slow food)`. A designer starts from the person, not from a number.
+5. Two or more directions fit equally, or there is truly nothing to read (a bare "make me a portfolio"). Only then use the name number, and only among the directions that fit. Work out the name number: add up the place of each letter of the product or brand name in the alphabet (a = 1, b = 2, … z = 26), ignoring spaces, digits and punctuation. If there is no name, use the first noun in their message. Divide by the number of directions. The remainder picks it, counting the first direction as 0. Write the sum on the sheet, for example `Direction: garden-supper (Tsering = 20+19+5+18+9+14+7 = 92, 92 mod 3 = 2)`. The name number keeps one product consistent and keeps two products apart. It does not know who they are, so it never overrules rules 2 to 4. Counting letters is not enough, because names of the same length would always land together.
 
 Do not take the first direction because it is first. Do not mix two directions. If the hero is unset, use the recipe's first piece. If the effect is null, the register stays quiet.
+
+The direction's effect is a starting point. If the Idea already moves in a way that belongs to the subject (strings that shiver, a canvas that paints itself), that motion is the lead effect. Take the direction's effect only if it does a different job, and never two effects that both animate the hero.
+
+### Recent picks
+
+A person who builds two sites in one week should not get the same site twice. Keep a short history on their machine.
+
+- Before you lock: read `~/.design-lounge/history.jsonl` if it exists. Look at the last eight lines.
+- If a line has the same recipe, do not lock the same direction again. Also do not reuse its hero piece or its effect. Choose the next direction that fits the subject. Write it on the sheet: `Recent: education/play-lesson used on 4 Oct for First Fret, so not again`.
+- Repeat a pick only when they asked for it ("same look as my guitar site"), or when the project is a new page of a product already in the history. Then it is the same product, and it should match.
+- After you lock: append one line, then create the folder and file if they are missing.
+
+```
+{"date":"2026-10-05","product":"Happy Easel","folder":"painting-lesson","recipe":"education","direction":"gallery-class","theme":"marble-hall","pairing":"gallery-wall","hero":"editorial-landing-hero","effect":"scroll-zoom-portal"}
+```
+
+If you cannot write to the home folder, say so in the reply, and keep going.
 
 The direction is the start, not the end. The Idea, the copy, the projects, and the order of the sections still come from this product.
 
