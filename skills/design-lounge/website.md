@@ -101,14 +101,14 @@ The direction picks the hero and one effect. It does not pick the other sections
 
 1. If their words point at one option ("a big email to copy", "a timeline of my work"), take it.
 2. Fit the content you have. Work: three projects of different kinds suit cards or a horizontal rail, one product with steps suits a sticky scroll, many small things suit a bento. About: a long story suits a sticky split, a short belief suits a word highlight. Contact: a freelancer who takes briefs suits the brief steps, someone who just wants mail suits the giant email. Drop every option the content does not fit.
-3. Several still fit. Use the name number from the direction, plus the section's step: work +1, about +2, contact +3, footer +4. Count only the options still in the running after step 2, in the order the list gives them. Divide by that count. The remainder picks one, counting from 0. Write it on the sheet: `Footer: 3 left, 92 + 4 = 96, 96 mod 3 = 0, so the first of the three`.
+3. Several still fit. Use the name number from the direction, plus the section's step: work +1, about +2, contact +3, footer +4. Count only the options still in the running after step 2, in the order the list gives them. Divide by that count. The remainder picks one, counting from 0. Write it on the sheet: `Footer: 3 left, 92 + 4 = 96, 96 mod 3 = 0, so the first of the three`. Then the uniqueness check in Recent picks ([practice.md](practice.md)). Drop a work or footer option that would share two of hero, work, and footer with a recent site of this recipe or its related group. If that empties the list, take the option used least recently and say so.
 4. Skip an option that clashes with the locked family, or that needs something they don't have, such as real photos. Move to the next one, and say why.
 5. Never use the same piece for two sections.
 6. Only the lead effect moves as its brief says. Every other section piece is built in its still form: its layout, its states, and the sheet's entry fade, with no scroll story of its own. A word highlight in about plus stacking cards in work plus a giant email reveal is three effects. Add a second moving section only when the dials or their words allow it (More than one effect, below).
 
 The lists, for a website:
 
-- Work (builders, products, case studies): `features-sticky-scroll-steps`, `stacking-cards-scroll`, `bento-feature-grid`, `case-file-horizontal-scroll`, `process-step-dossier`, `scroll-lens-card-ticker`, `features-tabbed-preview`. With real images: `portfolio-index-hover-preview`, `landing-agency-case-wall`, `gallery-film-strip`.
+- Work (builders, products, case studies): `features-sticky-scroll-steps`, `stacking-cards-scroll`, `bento-feature-grid`, `case-file-horizontal-scroll`, `process-step-dossier`, `scroll-lens-card-ticker`, `features-tabbed-preview`, `features-alternating-rows`, `features-vertical-label-columns`, `portfolio-case-study-long`, `card-article-mix`. With real images: `portfolio-index-hover-preview`, `portfolio-photographer-horizontal`, `portfolio-motion-showreel`, `landing-agency-case-wall`, `gallery-film-strip`, `gallery-contact-sheet`, `gallery-wall-frames`, `gallery-photo-album`, `masonry-gallery-captions`.
 - About: `profile-creator-masthead`, `sticky-split-story`, `profile-editorial-staff`, `text-rise-underline-whisper`, `scroll-word-highlight`. A team of three or more: `team-hover-portrait-grid`.
 - Contact: `contact-giant-email-copy`, `contact-project-brief-steps`, `profile-contact-card`, `cta-giant-email-band`, `contact-conversational-form`. A place people visit: `contact-split-map-form` or `contact-booking-hours`.
 - Footer: `footer-giant-wordmark-reveal`, `footer-centered-colophon`, `footer-newsletter-split`, `footer-engraved-caravan-strip`. A product with many pages: `footer-sitemap-columns` or `footer-enterprise-sitemap`.
@@ -121,7 +121,7 @@ The lists, for a course or lessons site. `course-landing-curriculum` is one opti
 - Practice: the product's own tool comes first (a tuner, a canvas, a code box). Timers are `widget-pomodoro` and `widget-stopwatch-laps`.
 - Footer: the website footer list above.
 
-Two lesson sites on different subjects should not share a lesson-list piece and an effect. Check Recent picks in [practice.md](practice.md).
+A lesson list is the work. It goes through the same uniqueness check as any other work piece.
 
 The lists, for a place people visit. A restaurant, a clinic, a gym, a hotel. The direction's hero is the first screen. Pick the other sections from here.
 
@@ -143,7 +143,7 @@ The lists, for docs. The direction's hero is the shell.
 - One page: `docs-install-steps`, `paper-article-reader`, `code-snippet-tabs`, `blog-issue-index`, `book-page-flip`.
 - Find it: `search-results-filters`, `command-palette`, `tree-nav`.
 
-Two sites of the same kind should not share a first-screen piece and an effect. Check Recent picks in [practice.md](practice.md).
+The hero, the work, and the footer then go through the uniqueness check in Recent picks. Same kind, and the related group, must not share two of those three.
 
 Open the brief for every section you build. A phone menu, a copy-email button, or a drawer is a piece too: `hamburger-circle-reveal`, `contact-giant-email-copy`, `button-copy-share`. If you build a part without opening its brief, say so in the reply.
 

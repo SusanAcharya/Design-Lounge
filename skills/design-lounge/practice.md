@@ -122,22 +122,35 @@ The direction's effect is a starting point. If the Idea already moves in a way t
 
 ### Recent picks
 
-A person who builds two sites in one week should not get the same site twice. Keep a short history on their machine.
+A person who builds two sites close together should not get the same page twice. The parts people notice are the hero, the work (the projects, the menu, the list), and the footer. The colours can sit in one family. Those three parts are what make a site look copied.
 
-- Before you lock: read `~/.design-lounge/history.jsonl` if it exists. Look at the last eight lines.
-- If a line has the same recipe, do not lock the same direction again. Also do not reuse its hero piece or its effect. Choose the next direction that fits the subject. Write it on the sheet: `Recent: education/play-lesson used on 4 Oct for First Fret, so not again`.
-- Repeat a pick only when they asked for it ("same look as my guitar site"), or when the project is a new page of a product already in the history. Then it is the same product, and it should match.
-- After you lock: append one line, then create the folder and file if they are missing.
+Keep a short history on their machine.
+
+- Before you lock: read `~/.design-lounge/history.jsonl` if it exists. Use the last 24 lines.
+- Same recipe: do not lock a direction, a hero, or an effect that appears in those lines for this recipe. Choose the next direction that fits the subject. Write it on the sheet: `Recent: education/play-lesson used on 4 Oct for First Fret, so not again`.
+- Related recipes sit in one group. A new site is too close to a recent one when two of these three match: hero, work, footer. One match is fine. Two means it reads as the same site. Check every recent line in this recipe, and every recent line in the group.
+  - Showing work: portfolio, portfolio-builder, personal-site, agency
+  - A place: restaurant, food, hotel, wellness, gym, clinic
+  - Selling: marketing-site, saas, landing, commerce, fashion, fintech
+  - Culture: editorial, museum, music, event, education
+  - A service: professional, nonprofit, real-estate, jobs
+- A line with no `work` or `footer` still blocks its hero and its effect. Its work and footer are unknown, so do not treat them as free.
+- Repeat a pick only when they asked ("same look as my guitar site"), or when this is a new page of a product already in the history. Then it should match.
+- After the sections are chosen and the check passes, append one line. Create the folder and file if they are missing.
 
 ```
-{"date":"2026-10-05","product":"Happy Easel","folder":"painting-lesson","recipe":"education","direction":"gallery-class","theme":"marble-hall","pairing":"gallery-wall","hero":"editorial-landing-hero","effect":"scroll-zoom-portal"}
+{"date":"2026-10-05","product":"Happy Easel","folder":"painting-lesson","recipe":"education","direction":"gallery-class","theme":"marble-hall","pairing":"gallery-wall","hero":"editorial-landing-hero","work":"stacking-cards-scroll","footer":"footer-centered-colophon","effect":"scroll-zoom-portal"}
 ```
 
-If you cannot write to the home folder, say so in the reply, and keep going.
+Write the check on the sheet before you build. One line is enough when nothing is close: `Unlike recent education and culture sites: hero, work, and footer are all different.` When something matches, name it: `Unlike First Fret: hero differs, work differs, footer matches. One match, so it stands.`
+
+If a footer change still leaves two matches, change the work. If it still matches, pick another direction. There are six footers. If all six are already in this recipe's recent lines, use the oldest and write `Footer: footer-centered-colophon, the oldest of six, the others are recent.`
+
+If you cannot write to the home folder, say so in the reply, and keep going. Still run the check against the lines you could read.
 
 The direction is the start, not the end. The Idea, the copy, the projects, and the order of the sections still come from this product.
 
-On a website, work, about, contact, and footer are picked next, in Sections, one by one in [website.md](website.md).
+On a website, work, about, contact, and footer are picked next, in Sections, one by one in [website.md](website.md). Then the check above. Then the history line.
 
 ## Match the world
 
