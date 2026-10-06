@@ -33,7 +33,7 @@ const previewMotion = byId.get('webgl-shader-hero') ?? newest.find((p) => p.data
 const componentCats = (['navigation', 'buttons', 'inputs', 'cards', 'overlays', 'charts', 'pickers', 'feedback'] as const).filter((c) => catCount(c) > 0);
 const dialectNames = all
   .filter((p) => p.data.type === 'style')
-  .map((p) => p.data.title.replace(/ design language kit$/i, '').replace(/ design style$/i, '').replace(/ style sheet$/i, '').replace(/ style$/i, ''))
+  .map((p) => p.data.title.replace(/ design language kit$/i, '').replace(/ design style$/i, '').replace(/ style sheet$/i, '').replace(/ style$/i, '').replace(/ kit$/i, ''))
   .sort((a, b) => a.localeCompare(b));
 const system = [
   { n: PAIRINGS.length, label: 'Type pairings', href: '/type' },
@@ -287,7 +287,7 @@ const faq = [
   .faq-item p { padding: 0 0 20px; max-width: 62ch; color: var(--ink-2); font-size: 16px; line-height: 1.6; }
   .bio { display: flex; flex-direction: column; gap: 12px; padding-block: clamp(48px, 6vw, 88px); border-top: 1px solid var(--line); }
   .bio .h3 a { color: var(--ink); }
-  .bio .h3 a:hover { color: var(--accent); }
+  .bio .h3 a:hover { color: var(--accent-text); }
   .bio-text { max-width: 60ch; color: var(--ink-2); font-size: 17px; line-height: 1.6; }
   .bio-text a { text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--ink-3); }
   .bio-links { display: flex; flex-wrap: wrap; gap: 8px 20px; font-size: 14px; }
@@ -302,13 +302,13 @@ const faq = [
   .hero .lede { max-width: 42ch; }
   .hero-cta { display: flex; flex-direction: column; align-items: flex-start; gap: 16px; margin-top: 6px; }
   .textlink { font-size: 15px; font-weight: 500; color: var(--ink); border-bottom: 1px solid var(--line-2); padding-bottom: 2px; transition: color var(--t-fast), border-color var(--t-fast); }
-  .textlink:hover { color: var(--accent); border-color: var(--accent); }
+  .textlink:hover { color: var(--accent-text); border-color: var(--accent); }
   .textlink span { display: inline-block; transition: transform var(--t-med) var(--ease-out); }
   .textlink:hover span { transform: translateX(3px); }
 
   .cmd { display: flex; align-items: center; gap: 10px; width: 100%; max-width: 520px; min-width: 0; padding: 7px 7px 7px 16px; border: 1px solid var(--line-2); border-radius: 12px; background: var(--paper); box-shadow: 0 1px 2px rgba(24, 24, 27, .04); }
   .cmd code { flex: 1; min-width: 0; overflow-x: auto; white-space: nowrap; font-family: var(--mono); font-size: 14px; color: var(--ink); scrollbar-width: none; }
-  .cmd .prompt { color: var(--accent); font-size: 14px; }
+  .cmd .prompt { color: var(--accent-text); font-size: 14px; }
   .cmd .copy { flex: none; height: 38px; padding: 0 16px; border-radius: 8px; font-size: 14px; font-weight: 500; background: var(--ink); color: var(--paper); transition: opacity var(--t-fast), transform var(--t-fast); }
   .cmd .copy:hover { opacity: .86; }
   .cmd .copy:active { transform: scale(.97); }
@@ -348,7 +348,7 @@ const faq = [
   .c-screens .cell-stage { min-height: 300px; }
   .c-motion { grid-column: 4; grid-row: 1; }
   .c-components { grid-column: 4; grid-row: 2; background: var(--accent-soft); border-color: transparent; }
-  .c-components .cell-n { color: var(--accent); }
+  .c-components .cell-n { color: var(--accent-text); }
   .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; }
   .tags li { font-size: 12.5px; padding: 4px 10px; border-radius: 999px; background: color-mix(in srgb, var(--paper) 70%, transparent); color: var(--ink-2); }
   .c-styles { grid-column: 1 / 3; grid-row: 3; flex-direction: row; align-items: flex-end; justify-content: space-between; gap: 24px; }
@@ -360,7 +360,7 @@ const faq = [
   .c-more a:hover { background: var(--paper-2); }
   .c-system { grid-column: 4; grid-row: 3; background: var(--ink); color: var(--paper); border-color: var(--ink); }
   .c-system .cell-h { font-size: 16px; }
-  .c-system .cell-h a:hover { color: var(--accent); }
+  .c-system .cell-h a:hover { color: var(--accent-on-ink); }
   .sys { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 16px; margin-top: auto; }
   .sys a { display: flex; flex-direction: column; gap: 2px; font-size: 13px; color: color-mix(in srgb, var(--paper) 70%, transparent); transition: color var(--t-fast); }
   .sys a:hover { color: var(--paper); }
@@ -379,7 +379,7 @@ const faq = [
   .agent-stage :global(lounge-frame) { position: absolute; inset: 22px; }
   .agent-cap { display: flex; justify-content: space-between; gap: 12px; font-size: 13.5px; color: var(--ink-2); }
   .agent-cap a { color: var(--ink); font-weight: 500; }
-  .agent-cap a:hover { color: var(--accent); }
+  .agent-cap a:hover { color: var(--accent-text); }
 
   /* examples */
   .built { padding-block: clamp(64px, 8vw, 120px); border-top: 1px solid var(--line); }
@@ -408,7 +408,7 @@ const faq = [
   .fgroup b { font-size: 16px; font-weight: 600; letter-spacing: -0.015em; }
   .fgroup span { color: var(--ink-2); font-size: 14.5px; line-height: 1.5; }
   .fgroup li > :is(a, button) b::after { content: " →"; color: var(--ink-3); transition: color var(--t-fast); }
-  .fgroup li > :is(a, button):hover b::after { color: var(--accent); }
+  .fgroup li > :is(a, button):hover b::after { color: var(--accent-text); }
 
   .feats + :global(.sc) { border-top: 1px solid var(--line); padding-block: clamp(64px, 8vw, 120px); }
 

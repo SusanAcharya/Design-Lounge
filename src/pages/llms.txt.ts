@@ -86,7 +86,7 @@ export const GET: APIRoute = async ({ site }) => {
     }),
     ``,
     `## Categories`,
-    ...Object.entries(CATEGORY_META).map(([k, v]) => `- ${v.label} (/c/${k}): ${v.blurb}`),
+    ...Object.entries(CATEGORY_META).map(([k, v]) => `- ${v.label} (/sections/${k}): ${v.blurb}`),
     ``,
     `## Rooms`,
     ...Object.entries(TYPE_META).map(([k, v]) => `- ${v.label} (/rooms/${k}): ${v.blurb}`),

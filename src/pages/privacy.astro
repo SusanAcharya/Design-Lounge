@@ -1,0 +1,22 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import { AUTHOR } from '../lib/pieces';
+---
+<Base title="Privacy" description="Design Lounge runs no analytics and sets no cookies. The only thing it keeps is your day or night choice, in your own browser." crumbs={[{ name: 'Privacy', href: '/privacy' }]}>
+  <PageHead eyebrow="Privacy" title="Privacy" />
+  <div class="wrap about">
+    <p class="lead">The library is free to read, and nothing tracks you while you read it.</p>
+    <p>There is no analytics script, no cookie, and no session recording. Copying a brief, a prompt, or an install command stays on your machine.</p>
+    <p>If you switch between day and night, that choice is saved in your browser's local storage so the next page opens the same way. It never leaves your device. The host, Vercel, keeps the usual server logs for running the site.</p>
+    <p>Questions go to <a href={`mailto:${AUTHOR.email}`}>{AUTHOR.email}</a>.</p>
+  </div>
+</Base>
+
+<style>
+  .about { display: flex; flex-direction: column; gap: 16px; margin-top: 32px; margin-bottom: clamp(48px, 8vw, 96px); }
+  .about > * { max-width: 640px; }
+  .about p { color: var(--ink-2); font-size: 17px; line-height: 1.65; }
+  .about .lead { color: var(--ink); font-size: 20px; }
+  .about p a { color: var(--ink); border-bottom: 1px solid var(--line-2); }
+</style>

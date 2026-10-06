@@ -32,7 +32,7 @@ Or point an agent at this repo: [github.com/SusanAcharya/Design-Lounge](https://
 
 ## What’s in it
 
-- **Pieces** — heroes, footers, landings, portfolios, dashboards, phone screens, motion. By name at `/c`, by problem at `/collections`, the whole floor at `/browse`.
+- **Pieces** — heroes, footers, landings, portfolios, dashboards, phone screens, motion. By name at `/sections`, by problem at `/collections`, the whole floor at `/browse`.
 - **System** — type pairings, full colour roles (primary, secondary, tertiary, feedback, surfaces), Lounge Icons, motion recipes.
 - **Kit** — `/kit`. Choose a website, a product, or a platform. Pick a palette, a pairing, and a component family. A website frame and a phone both update. The last step is a brief.
 - **Start** — `/start`. Eight recipes (marketing site, portfolio, landing, app, design system, dashboard, shop, editorial) that already name a theme, a pairing, and the pieces to open.

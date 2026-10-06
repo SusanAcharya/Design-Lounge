@@ -1,9 +1,9 @@
 ---
-const path = Astro.url.pathname;
+const path = Astro.url.pathname.replace(/\.html$/, '').replace(/\/(index)?$/, '') || '/';
 const nav = [
   { href: '/start', label: 'Start', match: /^\/(start|kit)/ },
   { href: '/browse', label: 'Browse', match: /^\/(browse|p\/|rooms|platforms|styles|collections)/ },
-  { href: '/c', label: 'Sections', match: /^\/c(\/|$)/ },
+  { href: '/sections', label: 'Sections', match: /^\/sections(\/|$)/ },
   { href: '/system', label: 'System', match: /^\/(system|type|themes|icons|motion)/ },
   { href: '/examples', label: 'Examples', match: /^\/examples/ },
 ];
@@ -54,7 +54,7 @@ const extra = [
   .hdr { position: sticky; top: 0; z-index: 50; background: color-mix(in srgb, var(--paper) 86%, transparent); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid var(--line); }
   .bar { height: var(--header-h); display: flex; align-items: center; gap: 28px; }
   .wordmark { display: flex; align-items: baseline; gap: 10px; }
-  .lamp { align-self: center; color: var(--accent); transition: transform var(--t-med) var(--ease); }
+  .lamp { align-self: center; color: var(--accent-text); transition: transform var(--t-med) var(--ease); }
   .wordmark:hover .lamp { transform: rotate(-8deg); }
   .wm { white-space: nowrap; font-family: var(--display); font-size: 18px; font-weight: 600; letter-spacing: -0.03em; }
   .wm i { font-style: normal; color: var(--ink-3); }
@@ -85,6 +85,6 @@ const extra = [
     .mobile-nav:not([hidden]) { display: flex; flex-direction: column; padding: 8px var(--gutter) 16px; border-top: 1px solid var(--line); }
     .mobile-nav a { padding: 12px 0; font-family: var(--display); font-size: 22px; font-weight: 550; letter-spacing: -0.025em; border-bottom: 1px solid var(--line); }
     .mobile-nav a:last-child { border-bottom: 0; }
-    .mobile-nav a[aria-current="page"] { color: var(--accent); }
+    .mobile-nav a[aria-current="page"] { color: var(--accent-text); }
   }
 </style>

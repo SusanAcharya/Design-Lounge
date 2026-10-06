@@ -19,7 +19,9 @@ const items = slugs
   .map(({ slug, label }) => {
     const p = all.find((x) => x.id === slug);
     if (!p) return null;
-    const thumb = existsSync(new URL(`../../public/thumbs/${slug}.webp`, import.meta.url)) ? `/thumbs/${slug}.webp` : '';
+    const thumbWebp = new URL(`../../public/thumbs/${slug}.webp`, import.meta.url);
+    const thumbJpg = new URL(`../../public/thumbs/${slug}.jpg`, import.meta.url);
+    const thumb = existsSync(thumbWebp) ? `/thumbs/${slug}.webp` : existsSync(thumbJpg) ? `/thumbs/${slug}.jpg` : '';
     return { slug, label, title: p.data.title, summary: p.data.summary, platform: p.data.platform, n: nums.get(slug) ?? '000', thumb };
   })
   .filter((x): x is NonNullable<typeof x> => !!x);
@@ -142,7 +144,6 @@ const prompt = (title: string, slug: string) => `Use the Design Lounge skill. Bu
       const label = copyBtn.querySelector('[data-label]')!;
       copyBtn.setAttribute('data-done', '');
       label.textContent = 'Copied';
-      (window as Window & { posthog?: { capture: (event: string, props?: Record<string, string>) => void } }).posthog?.capture('copied', { what: 'prompt' });
       setTimeout(() => { copyBtn.removeAttribute('data-done'); label.textContent = 'Copy prompt'; }, 1600);
     });
   });
@@ -177,7 +178,7 @@ const prompt = (title: string, slug: string) => `Use the Design Lounge skill. Bu
   }
   .sc-list [role="tab"]:hover { color: var(--ink); }
   .sc-list [role="tab"][aria-selected="true"] { color: var(--ink); padding-left: 8px; }
-  .sc-list [role="tab"][aria-selected="true"] .num { color: var(--accent); }
+  .sc-list [role="tab"][aria-selected="true"] .num { color: var(--accent-text); }
   .sc-list [role="tab"][aria-selected="true"]::after { transform: scale(1); }
   .sc-list [role="tab"]:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
 
@@ -188,9 +189,9 @@ const prompt = (title: string, slug: string) => `Use the Design Lounge skill. Bu
   .sc.swap .sc-meta > :is(.sc-title, .sc-sum, .sc-pn) { animation: sc-in var(--t-slow) var(--ease-out); }
   @keyframes sc-in { from { opacity: 0; transform: translateY(6px); } }
   .sc-acts { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 10px; margin-top: 8px; }
-  .sc-acts [data-done] { border-color: var(--accent); color: var(--accent); }
+  .sc-acts [data-done] { border-color: var(--accent-text); color: var(--accent-text); }
   .sc-more { margin-left: auto; font-size: 14px; font-weight: 500; color: var(--ink); border-bottom: 1px solid var(--ink-3); padding-bottom: 2px; transition: color var(--t-fast), border-color var(--t-fast); }
-  .sc-more:hover { color: var(--accent); border-color: var(--accent); }
+  .sc-more:hover { color: var(--accent-text); border-color: var(--accent-text); }
 
   .sc-stage-wrap { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
   .sc-stage {
@@ -238,7 +239,7 @@ const prompt = (title: string, slug: string) => `Use the Design Lounge skill. Bu
     }
     .sc-list [role="tab"]::after { display: none; }
     .sc-list [role="tab"][aria-selected="true"] { padding-left: 12px; background: var(--ink); color: var(--paper); border-color: var(--ink); }
-    .sc-list [role="tab"][aria-selected="true"] .num { color: var(--accent); }
+    .sc-list [role="tab"][aria-selected="true"] .num { color: var(--accent-on-ink); }
     .sc-phone .sc-stage { height: 70vh; min-height: 520px; }
     .sc-phone .sc-stage :global(lounge-frame) { inset: 32px 12px 14px; }
     .sc-web .sc-stage :global(lounge-frame), .sc-tablet .sc-stage :global(lounge-frame) { inset: 24px 10px 10px; }

@@ -39,7 +39,7 @@ import { TYPE_META, PLATFORM_META, SECTION_NAV, CATEGORY_META } from '../lib/pie
   let items = null, results = [], active = 0;
 
   const statics = [
-    ...sections.map((s) => ({ kind: 'Section', title: s.label, sub: s.blurb, href: '/c/' + s.id, hay: `${s.label} ${s.id} ${s.blurb}`.toLowerCase() })),
+    ...sections.map((s) => ({ kind: 'Section', title: s.label, sub: s.blurb, href: '/sections/' + s.id, hay: `${s.label} ${s.id} ${s.blurb}`.toLowerCase() })),
     ...rooms.map((r) => ({ kind: 'Room', title: r.label, href: '/rooms/' + r.k, hay: r.label.toLowerCase() })),
     ...platforms.map((p) => ({ kind: 'Platform', title: p.label, href: '/platforms/' + p.k, hay: p.label.toLowerCase() })),
     { kind: 'Go', title: 'Browse everything', href: '/browse', hay: 'browse all' },
@@ -50,7 +50,7 @@ import { TYPE_META, PLATFORM_META, SECTION_NAV, CATEGORY_META } from '../lib/pie
     { kind: 'Go', title: 'The system', href: '/system', hay: 'system type themes icons motion grammar' },
     { kind: 'Go', title: 'Compose a kit', href: '/kit', hay: 'kit compose palette font components start product' },
     { kind: 'Go', title: 'Start recipes', href: '/start', hay: 'start product recipe design system marketing portfolio app' },
-    { kind: 'Go', title: 'Index by name', href: '/c', hay: 'index hero footer portfolio landing' },
+    { kind: 'Go', title: 'Index by name', href: '/sections', hay: 'index hero footer portfolio landing' },
     { kind: 'Go', title: 'Shelves', href: '/collections', hay: 'collections shelves' },
     { kind: 'Go', title: 'For AI agents', href: '/agents', hay: 'agents llms brief prompt skill' },
     { kind: 'Go', title: 'Guide: using briefs with an agent', href: '/guide', hay: 'guide how to agent prompt' },

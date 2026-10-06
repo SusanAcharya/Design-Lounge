@@ -25,6 +25,8 @@
   --line: #e4e4e7;
   --line-2: #d1d1d6;
   --accent: #d4541a;
+  --accent-text: #9a3412;
+  --accent-on-ink: #f09462;
   --accent-ink: #fffaf6;
   --accent-soft: #fbe6da;
   --selection: #f8d5c1;
@@ -59,6 +61,8 @@
   --line: #26262b;
   --line-2: #36363c;
   --accent: #ec7a45;
+  --accent-text: #f09462;
+  --accent-on-ink: #9a3412;
   --accent-ink: #1a0b03;
   --accent-soft: #3a1d10;
   --selection: #5a2a14;
@@ -192,14 +196,28 @@ a.chip:hover, button.chip:hover { border-color: var(--ink); color: var(--ink); }
 
 /* list mode */
 .grid.list { display: flex; flex-direction: column; gap: 0; border-top: 1px solid var(--line); }
-.grid.list .card { flex-direction: row; align-items: center; gap: 24px; padding: 14px 0; border-bottom: 1px solid var(--line); }
-.grid.list .card .stage { width: 160px; aspect-ratio: 4 / 3; flex: none; border-radius: 6px; }
+.grid.list .card { flex-direction: row; align-items: center; gap: 20px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+.grid.list .card .stage { width: 144px; aspect-ratio: 16 / 10; flex: none; border-radius: var(--r); }
 .grid.list .card .stage lounge-frame { inset: 6px; }
-.grid.list .card .body { display: grid; grid-template-columns: 56px 1.2fr 2fr auto; align-items: center; gap: 24px; flex: 1; min-width: 0; }
-.grid.list .card .title { font-size: 19px; }
-.grid.list .card .summary { -webkit-line-clamp: 1; }
+.grid.list .card .body {
+  display: grid; flex: 1; min-width: 0; align-items: center; gap: 4px 24px;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  grid-template-areas: "title meta copy" "summary meta copy";
+}
+.grid.list .card .title { grid-area: title; font-size: 17px; min-width: 0; }
+.grid.list .card .summary { grid-area: summary; -webkit-line-clamp: 1; max-width: 72ch; }
+.grid.list .card .meta { grid-area: meta; flex-direction: column; align-items: flex-end; gap: 2px; white-space: nowrap; }
+.grid.list .card .meta .swatches { display: none; }
+.grid.list .card .brief-copy { grid-area: copy; align-self: center; margin: 0; }
 .grid.list .card:hover .stage { transform: none; box-shadow: none; }
-@media (max-width: 760px) { .grid.list .card .body { grid-template-columns: 1fr; gap: 4px; } .grid.list .card .stage { width: 110px; } .grid.list .card .n, .grid.list .card .foot { display: none; } }
+@media (max-width: 760px) {
+  .grid.list .card { align-items: flex-start; gap: 14px; }
+  .grid.list .card .stage { width: 104px; }
+  .grid.list .card .body { grid-template-columns: minmax(0, 1fr); grid-template-areas: "meta" "title" "summary" "copy"; }
+  .grid.list .card .meta { flex-direction: row; align-items: baseline; gap: 8px; }
+  .grid.list .card .brief-copy { justify-self: start; margin-top: 4px; }
+  .grid.list .card .foot { display: none; }
+}
 
 /* ---------- device frames ---------- */
 lounge-frame {
@@ -337,9 +355,14 @@ lounge-frame.loaded .lf-poster-img { opacity: 0; }
 .prose hr { margin: 2em 0; }
 .prose .contains-task-list { list-style: none; padding-left: 0; }
 
-/* shiki dual theme */
+/* shiki dual theme. A few github-light foregrounds miss 4.5:1 on the page, so those hues are darkened. */
 .astro-code, .astro-code span { color: var(--shiki-light, inherit); background-color: transparent !important; }
 :root[data-theme="night"] .astro-code, :root[data-theme="night"] .astro-code span { color: var(--shiki-dark, inherit); }
+.astro-code span[style*="#E36209"] { --shiki-light: #9a3b08 !important; }
+.astro-code span[style*="#D73A49"] { --shiki-light: #b42336 !important; }
+.astro-code span[style*="#22863A"] { --shiki-light: #116329 !important; }
+.astro-code span[style*="#6A737D"] { --shiki-light: #57606a !important; }
+.astro-code span[style*="#B08800"] { --shiki-light: #7a5b00 !important; }
 
 /* ---------- misc ---------- */
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }

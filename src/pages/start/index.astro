@@ -58,7 +58,7 @@ const shelf = (id: string) => COLLECTIONS.find((c) => c.slug === id);
               )}
               <div>
                 <dt>Index</dt>
-                <dd class="cats">{s.categories.map((c) => <a class="chip" href={`/c/${c}`}>{CATEGORY_META[c as keyof typeof CATEGORY_META]?.label ?? c}</a>)}</dd>
+                <dd class="cats">{s.categories.map((c) => <a class="chip" href={`/sections/${c}`}>{CATEGORY_META[c as keyof typeof CATEGORY_META]?.label ?? c}</a>)}</dd>
               </div>
             </dl>
             <div class="pieces">
@@ -93,7 +93,7 @@ const shelf = (id: string) => COLLECTIONS.find((c) => c.slug === id);
 <style>
   .kit-jump { margin: 20px auto 0; font-size: 15px; color: var(--ink-3); }
   .kit-jump a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
-  .kit-jump a:hover { color: var(--accent); }
+  .kit-jump a:hover { color: var(--accent-text); }
   .page { margin-top: 40px; display: flex; flex-direction: column; gap: 64px; }
   .group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 8px; }
   .group .h2 { font-size: clamp(32px, 3vw, 48px); }

@@ -174,14 +174,14 @@ const groups = CATEGORY_GROUPS.map((g) => ({
   .chev { flex: none; color: var(--ink-3); transition: transform var(--t-fast) var(--ease); }
   .ds-cat[open] > summary .chev { transform: rotate(90deg); }
   .lbl { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .cnt { font-family: var(--mono); font-size: 10.5px; color: var(--ink-3); }
+  .cnt { font-family: var(--mono); font-size: 12px; color: var(--ink-2); }
   .ds-cat ul { margin: 2px 0 8px 5px; border-left: 1px solid var(--line); }
   .ds-cat li a { position: relative; display: flex; align-items: center; gap: 8px; padding: 5px 8px 5px 13px; margin-left: -1px; border-left: 1px solid transparent; font-size: 13px; line-height: 1.35; color: var(--ink-2); border-radius: 0 var(--r) var(--r) 0; transition: color var(--t-fast), background-color var(--t-fast), border-color var(--t-fast); }
   .ds-cat li a:hover { color: var(--ink); border-left-color: var(--ink-3); }
   .ds-cat li a[aria-current="page"] { color: var(--ink); background: var(--paper-2); border-left: 2px solid var(--accent); padding-left: 12px; font-weight: 500; }
   .ds-cat li a:focus-visible { outline-offset: -2px; }
   .t { flex: 1; min-width: 0; }
-  .new { flex: none; font-family: var(--mono); font-size: 9px; letter-spacing: .1em; text-transform: uppercase; line-height: 1; padding: 2px 4px; border-radius: 3px; color: var(--accent); border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent); }
+  .new { flex: none; font-family: var(--mono); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; line-height: 1; padding: 2px 4px; border-radius: 3px; color: var(--accent-text); border: 1px solid color-mix(in srgb, var(--accent-text) 35%, transparent); }
   .ds-empty { padding: 16px 0; }
   .ds-scrim { position: fixed; inset: 0; z-index: 90; background: color-mix(in srgb, var(--ink) 34%, transparent); backdrop-filter: blur(2px); animation: ds-fade var(--t-med) var(--ease); }
   .ds-scrim[hidden] { display: none; }

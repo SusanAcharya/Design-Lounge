@@ -3,13 +3,13 @@ import { getPieces, CATEGORY_META, SECTION_NAV } from '../lib/pieces';
 
 const all = await getPieces();
 const live = SECTION_NAV.filter((s) => all.some((p) => p.data.category === s.id));
-const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const path = Astro.url.pathname.replace(/\.html$/, '').replace(/\/(index)?$/, '') || '/';
 ---
 <nav class="rail" aria-label="Sections">
   <div class="wrap rail-row">
     <a class="chip" href="/" aria-current={path === '/' ? 'page' : undefined}>Home</a>
     {live.map((s) => (
-      <a class="chip" href={`/c/${s.id}`} aria-current={path === `/c/${s.id}` ? 'page' : undefined} title={CATEGORY_META[s.id].blurb}>{s.label}</a>
+      <a class="chip" href={`/sections/${s.id}`} aria-current={path === `/sections/${s.id}` ? 'page' : undefined} title={CATEGORY_META[s.id].blurb}>{s.label}</a>
     ))}
     <a class="chip" href="/random" aria-current={path === '/random' ? 'page' : undefined}>Surprise</a>
   </div>

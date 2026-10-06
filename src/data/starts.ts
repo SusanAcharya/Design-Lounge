@@ -1007,6 +1007,6 @@ export const STARTS: Start[] = BASE.map((s) => {
 export const MAP = [
   { href: '/kit', kicker: 'Kit', title: 'Compose', blurb: 'Pick a kind, a palette, a pairing, a family. Get a brief.' },
   { href: '/system', kicker: 'System', title: 'Ingredients', blurb: 'Type, themes, icons, motion. Pick these first.' },
-  { href: '/c', kicker: 'Index', title: 'By name', blurb: 'Hero, footer, portfolio, loader — what a designer would call it.' },
+  { href: '/sections', kicker: 'Index', title: 'By name', blurb: 'Hero, footer, portfolio, loader — what a designer would call it.' },
   { href: '/collections', kicker: 'Shelves', title: 'By problem', blurb: 'Curated reading lists: navigation, first impressions, languages.' },
 ] as const;

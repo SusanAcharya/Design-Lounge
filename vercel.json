@@ -1,6 +1,10 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
+  "redirects": [
+    { "source": "/c", "destination": "/sections", "permanent": true },
+    { "source": "/c/:category", "destination": "/sections/:category", "permanent": true }
+  ],
   "headers": [
     { "source": "/demo/(.*)", "headers": [{ "key": "X-Robots-Tag", "value": "noindex, follow" }] },
     { "source": "/built/(.*)", "headers": [{ "key": "X-Robots-Tag", "value": "noindex, follow" }] },

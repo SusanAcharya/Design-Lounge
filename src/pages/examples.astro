@@ -115,7 +115,7 @@ const installCmd = 'npx skills add SusanAcharya/Design-Lounge';
   .faint { color: var(--ink-3); }
 
   .prompt { font-family: var(--mono); font-size: 14px; line-height: 1.55; color: var(--ink); padding: 12px 14px; background: var(--paper-2); border: 1px solid var(--line); border-radius: var(--r); text-wrap: pretty; }
-  .prompt .mono { color: var(--accent); margin-right: 4px; }
+  .prompt .mono { color: var(--accent-text); margin-right: 4px; }
   .prompt.small { font-size: 12.5px; padding: 10px 12px; color: var(--ink-2); }
 
   .given { align-self: flex-start; font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); padding: 3px 8px; border: 1px solid var(--line-2); border-radius: 999px; }
@@ -133,14 +133,14 @@ const installCmd = 'npx skills add SusanAcharya/Design-Lounge';
   .f-desk :global(lounge-frame) { position: absolute; inset: 18px; }
   .f-phone :global(lounge-frame) { position: absolute; inset: 14px 10px; }
   .info { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
-  .info .h3 a:hover { color: var(--accent); }
+  .info .h3 a:hover { color: var(--accent-text); }
   .what { color: var(--ink-2); font-size: 16px; line-height: 1.55; text-wrap: pretty; }
   .picks { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 20px; padding-top: 6px; }
   .picks div:last-child { grid-column: 1 / -1; }
   dt { font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 4px; }
   dd { margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; font-size: 14.5px; }
   dd a { text-decoration: underline; text-underline-offset: 3px; }
-  dd a:hover { color: var(--accent); }
+  dd a:hover { color: var(--accent-text); }
   .acts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
 
   /* range grid */
@@ -152,17 +152,17 @@ const installCmd = 'npx skills add SusanAcharya/Design-Lounge';
   .body { display: flex; flex-direction: column; gap: 10px; padding: 18px 18px 20px; flex: 1; }
   .row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
   .name { font-size: 20px; font-weight: 600; letter-spacing: -0.025em; }
-  .name a:hover { color: var(--accent); }
+  .name a:hover { color: var(--accent-text); }
   .body .what { font-size: 14.5px; }
   .meta { margin-top: auto; display: flex; flex-wrap: wrap; gap: 4px 12px; font-size: 13px; color: var(--ink-3); }
   .meta a { color: var(--ink-2); border-bottom: 1px solid var(--line-2); }
-  .meta a:hover { color: var(--accent); border-color: var(--accent); }
+  .meta a:hover { color: var(--accent-text); border-color: var(--accent-text); }
 
   /* close */
   .close { display: flex; flex-direction: column; align-items: center; gap: 18px; text-align: center; margin-top: clamp(64px, 8vw, 120px); padding-block: clamp(64px, 8vw, 120px); border-top: 1px solid var(--line); }
   .cmd { display: flex; align-items: center; gap: 10px; width: 100%; max-width: 520px; min-width: 0; padding: 7px 7px 7px 16px; border: 1px solid var(--line-2); border-radius: 12px; background: var(--paper); }
   .cmd code { flex: 1; min-width: 0; overflow-x: auto; white-space: nowrap; font-family: var(--mono); font-size: 14px; text-align: left; scrollbar-width: none; }
-  .cmd .acc { color: var(--accent); }
+  .cmd .acc { color: var(--accent-text); }
   .cmd .copy { flex: none; height: 38px; padding: 0 16px; border-radius: 8px; font-size: 14px; font-weight: 500; background: var(--ink); color: var(--paper); }
   .cmd .copy[data-done] { background: var(--accent); color: var(--accent-ink); }
 

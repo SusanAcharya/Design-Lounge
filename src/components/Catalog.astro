@@ -1,6 +1,7 @@
 ---
 /* Filterable, sortable catalogue. The page draws one screen of poster cards; the rest stay in JSON until asked for. */
 import { existsSync } from 'node:fs';
+import PieceCard from './PieceCard.astro';
 import { PLATFORM_META, TYPE_META, STYLE_META, CATEGORY_META, CATEGORY_GROUPS, numberMap, type Piece, type Category } from '../lib/pieces';
 
 interface Props {
@@ -9,8 +10,9 @@ interface Props {
   lock?: { platform?: string; type?: string; style?: string }; // filters fixed by the page (hidden from UI)
   showFilters?: boolean;
   sidebar?: boolean;        // full library navigation in a left rail instead of the Filter panel
+  seed?: 'page' | 'all';    // cards in the HTML before JavaScript runs
 }
-const { pieces, all, lock = {}, showFilters = true, sidebar = false } = Astro.props;
+const { pieces, all, lock = {}, showFilters = true, sidebar = false, seed = 'page' } = Astro.props;
 const nums = numberMap(all);
 const list = [...pieces].reverse(); // newest first
 const count = (k: 'platform' | 'type', v: string) => pieces.filter((p) => p.data[k] === v).length;
@@ -51,6 +53,7 @@ const rows = list.map((p) => {
   };
 });
 const catalogJson = JSON.stringify(rows).replace(/</g, '\\u003c');
+const seedPieces = seed === 'all' ? list : list.slice(0, 40);
 const WAYS_IN = [
   { href: '/start', label: 'Start from a product' },
   { href: '/collections', label: 'Shelves' },
@@ -203,7 +206,9 @@ const WAYS_IN = [
       )}
     </div>
   )}
-  <div class="grid" data-grid></div>
+  <div class="grid" data-grid>
+    {seedPieces.map((p, i) => <PieceCard piece={p} n={nums.get(p.id) || '000'} index={i} priority={i === 0} />)}
+  </div>
   <p class="more-row"><button type="button" class="btn" data-page hidden>Show more</button></p>
   <p class="none" data-none hidden>No pieces match those filters. <button type="button" class="linkish" data-clear>Clear them</button> and try again.</p>
   <script type="application/json" data-catalog-json set:html={catalogJson}></script>
@@ -252,11 +257,13 @@ const WAYS_IN = [
       const el = document.createElement('article');
       el.className = 'card';
       el.style.setProperty('--d', `${Math.min(i, 12) * 30}ms`);
+      const eager = i === 0 ? ' loading="eager" fetchpriority="high"' : ' loading="lazy"';
       const plate = p.poster
-        ? `<img src="${p.poster}" alt="" width="640" height="480" loading="lazy" decoding="async">`
+        ? `<img src="${p.poster}" alt="" width="640" height="480"${eager} decoding="async">`
         : `<span class="swatch" aria-hidden="true">${p.palette.map((c) => `<i style="background:${c}"></i>`).join('')}</span>`;
-      el.innerHTML = `<div class="stage"><div class="plate"${p.poster ? '' : ` style="background:${p.palette[0] || ''}"`}>${plate}</div><a class="cover" href="/p/${p.id}" tabindex="-1" aria-label="Open ${p.title.replace(/"/g, '&quot;')}"></a></div><div class="body"><div class="meta"><span class="n num">Nº ${p.n}</span><span class="n">${p.typeLabel} · ${p.platformLabel}</span></div><h3 class="title"><a href="/p/${p.id}"></a></h3><button class="brief-copy" type="button" data-copy-brief-url="/p/${p.id}.md" data-done-label="Copied">Copy brief</button></div>`;
+      el.innerHTML = `<div class="stage"><div class="plate"${p.poster ? '' : ` style="background:${p.palette[0] || ''}"`}>${plate}</div><a class="cover" href="/p/${p.id}" tabindex="-1" aria-label="Open ${p.title.replace(/"/g, '&quot;')}"></a></div><div class="body"><div class="meta"><span class="n num">Nº ${p.n}</span><span class="n">${p.typeLabel} · ${p.platformLabel}</span></div><h3 class="title"><a href="/p/${p.id}"></a></h3><p class="summary"></p><button class="brief-copy" type="button" data-copy-brief-url="/p/${p.id}.md" data-done-label="Copied">Copy brief</button></div>`;
       el.querySelector('.title a')!.textContent = p.title;
+      el.querySelector('.summary')!.textContent = p.summary;
       return el;
     }
     function apply(push = true) {
@@ -356,14 +363,14 @@ const WAYS_IN = [
   .vbtn { width: 40px; height: 38px; display: grid; place-items: center; color: var(--ink-3); }
   .vbtn svg { stroke: currentColor; fill: none; stroke-width: 1.75; }
   .vbtn[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
-  .chip .cnt { opacity: .55; margin-left: 2px; }
+  .chip .cnt { color: var(--ink-2); font-size: 12px; margin-left: 2px; }
   .clear { font-size: 13px; text-decoration: underline; text-underline-offset: 3px; color: var(--ink-2); }
   .clear:hover { color: var(--ink); }
 
   /* sidebar mode */
   .has-side { display: grid; grid-template-columns: 236px minmax(0, 1fr); gap: clamp(24px, 3vw, 48px); align-items: start; }
   .cat-main { min-width: 0; }
-  .has-side .filters { position: sticky; top: var(--header-h); z-index: 3; padding-top: 14px; background: color-mix(in srgb, var(--paper) 92%, transparent); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+  .has-side .filters { position: sticky; top: var(--header-h); z-index: 6; padding-top: 14px; background: color-mix(in srgb, var(--paper) 92%, transparent); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
   .side-toggle, .side-done { display: none; }
   .side { position: sticky; top: calc(var(--header-h) + 14px); max-height: calc(100dvh - var(--header-h) - 28px); overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: var(--line-2) transparent; padding-bottom: 24px; }
   .side-inner { display: flex; flex-direction: column; gap: 4px; }

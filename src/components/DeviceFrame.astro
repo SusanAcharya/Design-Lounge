@@ -29,7 +29,9 @@ const hasWeb = frame === 'web';
 const hasPhone = frame === 'phone' || switchable;
 const hasTablet = frame === 'tablet' || switchable;
 const hasUrlbar = platform === 'mobile-web' || switchable;
-const poster = Astro.props.poster ?? (existsSync(new URL(`../../public/thumbs/${slug}.webp`, import.meta.url)) ? `/thumbs/${slug}.webp` : null);
+const thumbWebp = new URL(`../../public/thumbs/${slug}.webp`, import.meta.url);
+const thumbJpg = new URL(`../../public/thumbs/${slug}.jpg`, import.meta.url);
+const poster = Astro.props.poster ?? (existsSync(thumbWebp) ? `/thumbs/${slug}.webp` : existsSync(thumbJpg) ? `/thumbs/${slug}.jpg` : '');
 ---
 <lounge-frame
   class:list={['lf', `lf-${frame}`, `lf-${platform}`, { interactive }, cls]}
@@ -107,7 +109,7 @@ const poster = Astro.props.poster ?? (existsSync(new URL(`../../public/thumbs/${
       </>
     )}
     <i class="lf-glass" aria-hidden="true"></i>
-    {poster && <img class="lf-poster-img" src={poster} alt="" aria-hidden="true" loading={eager ? "eager" : "lazy"} decoding="async" />}
+    {poster && <img class="lf-poster-img" src={poster} alt="" aria-hidden="true" loading={eager ? "eager" : "lazy"} fetchpriority={eager ? "high" : undefined} decoding="async" />}
     <iframe title={`Live preview: ${title}`} sandbox="allow-scripts allow-downloads" loading={eager ? 'eager' : 'lazy'} tabindex={interactive ? undefined : -1} inert={interactive ? undefined : true}></iframe>
   </div>
 </lounge-frame>

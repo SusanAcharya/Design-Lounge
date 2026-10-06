@@ -52,7 +52,7 @@ const isWeb = pm.frame === 'web';
 const og = existsSync(new URL(`../../../public/og/${piece.id}.jpg`, import.meta.url)) ? new URL(`/og/${piece.id}.jpg`, Astro.site).toString() : undefined;
 const json = (s: string) => JSON.stringify(s).replace(/</g, '\\u003c');
 ---
-<Base title={`${d.title} · ${CATEGORY_META[d.category].label}`} description={d.summary} ogImage={og} crumbs={[{ name: 'Floor', href: '/browse' }, { name: TYPE_META[d.type].label, href: `/rooms/${d.type}` }, { name: CATEGORY_META[d.category].label, href: `/c/${d.category}` }, { name: d.title, href: `/p/${piece.id}` }]}>
+<Base title={`${d.title} · ${CATEGORY_META[d.category].label}`} description={d.summary} ogImage={og} crumbs={[{ name: 'Floor', href: '/browse' }, { name: TYPE_META[d.type].label, href: `/rooms/${d.type}` }, { name: CATEGORY_META[d.category].label, href: `/sections/${d.category}` }, { name: d.title, href: `/p/${piece.id}` }]}>
   <div class="docs wrap" data-docs>
     <DocsSidebar pieces={all} current={piece.id} />
 
@@ -63,7 +63,7 @@ const json = (s: string) => JSON.stringify(s).replace(/</g, '\\u003c');
             <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h10M4 18h16"/></svg><span>All pieces</span>
           </button>
           <nav class="crumbs mono" aria-label="Breadcrumb">
-            <a href="/browse">Floor</a><span aria-hidden="true">/</span><a href={`/rooms/${d.type}`}>{TYPE_META[d.type].label}</a><span aria-hidden="true">/</span><a href={`/c/${d.category}`}>{CATEGORY_META[d.category].label}</a>
+            <a href="/browse">Floor</a><span aria-hidden="true">/</span><a href={`/rooms/${d.type}`}>{TYPE_META[d.type].label}</a><span aria-hidden="true">/</span><a href={`/sections/${d.category}`}>{CATEGORY_META[d.category].label}</a>
           </nav>
           <div class="pnav">
             <a class="pn-link" href={`/p/${prev.id}`} data-prev title={prev.data.title} aria-label={`Previous: ${prev.data.title}`}><kbd>[</kbd><span>prev</span></a>
@@ -76,7 +76,7 @@ const json = (s: string) => JSON.stringify(s).replace(/</g, '\\u003c');
         <div class="facts reveal" style="--d:120ms">
           <a class="chip" href={`/platforms/${d.platform}`}><span class="dot"></span>{pm.label}</a>
           <a class="chip" href={`/rooms/${d.type}`}>{TYPE_META[d.type].singular}</a>
-          <a class="chip" href={`/c/${d.category}`}>{CATEGORY_META[d.category].label}</a>
+          <a class="chip" href={`/sections/${d.category}`}>{CATEGORY_META[d.category].label}</a>
           {d.styles.map((s) => <a class="chip" href={`/styles/${s}`}>{STYLE_META[s].label}</a>)}
         </div>
       </header>
@@ -144,7 +144,7 @@ const json = (s: string) => JSON.stringify(s).replace(/</g, '\\u003c');
       <section class="related" aria-labelledby="h-similar">
         <div class="section-head">
           <div><h2 class="display h3" id="h-similar">Similar</h2></div>
-          <a class="more" href={`/c/${d.category}`}>All {CATEGORY_META[d.category].label.toLowerCase()} →</a>
+          <a class="more" href={`/sections/${d.category}`}>All {CATEGORY_META[d.category].label.toLowerCase()} →</a>
         </div>
         <div class="grid">
           {related.map((p, i) => <PieceCard piece={p!} n={nums.get(p!.id) || '000'} index={i} />)}
@@ -210,12 +210,12 @@ const json = (s: string) => JSON.stringify(s).replace(/</g, '\\u003c');
   .allbtn { display: none; }
   .crumbs { display: flex; gap: 8px; flex-wrap: wrap; color: var(--ink-3); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; min-width: 0; }
   .crumbs a:hover { color: var(--ink); }
-  .crumbs span { opacity: .6; }
+  .crumbs span { color: var(--ink-3); }
   .pnav { margin-left: auto; display: flex; align-items: center; gap: 4px; flex: none; }
   .pn-link { font-family: var(--mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-2); display: inline-flex; gap: 6px; align-items: center; padding: 4px 6px; border-radius: var(--r); }
   .pn-link:hover { color: var(--ink); background: var(--paper-2); }
   .nmark { margin-top: 18px; font-size: 11px; letter-spacing: .1em; }
-  .nmark span { opacity: .7; }
+  .nmark span { color: var(--ink-3); }
   .title { font-size: clamp(34px, 4vw, 56px); }
   .summary { font-size: 17px; line-height: 1.5; color: var(--ink-2); max-width: 62ch; text-wrap: pretty; }
   .facts { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }

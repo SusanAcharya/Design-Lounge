@@ -9,12 +9,12 @@ export const GET: APIRoute = async ({ site }) => {
   const base = (site?.toString() || 'https://www.designlounge.live').replace(/\/$/, '');
   const pieces = await getPieces();
   const urls = [
-    '/', '/browse', '/collections', '/guide', '/about', '/sources', '/rooms', '/platforms', '/styles',
-    '/type', '/themes', '/icons', '/motion', '/agents', '/c', '/system', '/start', '/kit', '/examples',
+    '/', '/browse', '/collections', '/guide', '/about', '/privacy', '/sources', '/rooms', '/platforms', '/styles',
+    '/type', '/themes', '/icons', '/motion', '/agents', '/sections', '/system', '/start', '/kit', '/examples',
     ...Object.keys(TYPE_META).map((k) => `/rooms/${k}`),
     ...Object.keys(PLATFORM_META).map((k) => `/platforms/${k}`),
     ...Object.keys(STYLE_META).map((k) => `/styles/${k}`),
-    ...Object.keys(CATEGORY_META).map((k) => `/c/${k}`),
+    ...Object.keys(CATEGORY_META).map((k) => `/sections/${k}`),
     ...COLLECTIONS.map((c) => `/collections/${c.slug}`),
     ...PAIRINGS.map((p) => `/type/${p.id}`),
     ...THEMES.map((t) => `/themes/${t.id}`),
