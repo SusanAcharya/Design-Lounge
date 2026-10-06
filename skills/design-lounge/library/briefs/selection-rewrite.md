@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 530 · "Rewrite the selected sentence" · www.designlounge.live -->
+<!-- Design Lounge Nº 528 · "Rewrite the selected sentence" · www.designlounge.live -->
 
 # Rewrite the selected sentence
 

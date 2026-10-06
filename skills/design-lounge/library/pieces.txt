@@ -528,7 +528,7 @@ agent-approval-card | web | cards | Agent approval card | agent approval confirm
 agent-tool-chip | web | feedback | Agent tool chip | agent tool chip
 prompt-source-model | web | inputs | Ask with a source and a model | prompt source model
 card-confidence-pick | web | cards | Confidence and one other option | agent suggestion confidence
+selection-rewrite | web | reading | Rewrite the selected sentence | agent selection rewrite
 moonlit-ridge-hero | web | hero | Moonlit ridge hero | hero night canvas clock countdown audio
 playable-product-hero | web | hero | Playable product hero | hero product interactive sound launch music
-selection-rewrite | web | reading | Rewrite the selected sentence | agent selection rewrite
 scroll-space-voyage | web | scroll | Scroll-driven space voyage | scroll canvas space journey hud livestream

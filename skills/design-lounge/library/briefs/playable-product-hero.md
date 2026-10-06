@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 529 · "Playable product hero" · www.designlounge.live -->
+<!-- Design Lounge Nº 530 · "Playable product hero" · www.designlounge.live -->
 
 # Playable product hero
 

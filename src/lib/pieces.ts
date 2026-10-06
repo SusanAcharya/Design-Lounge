@@ -1,4 +1,5 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
+import NUMBERS_JSON from '../data/numbers.json';
 
 export type Piece = CollectionEntry<'pieces'>;
 export type Platform = Piece['data']['platform'];
@@ -189,15 +190,16 @@ export const CATEGORY_META: Record<Category, { label: string; blurb: string }> =
 export const MOTION_LABEL = { none: 'Static', subtle: 'Subtle motion', rich: 'Rich motion' } as const;
 export const DIFFICULTY_LABEL = { 1: 'Quick build', 2: 'One session', 3: 'Multi-step' } as const;
 
+const NUMBERS: Record<string, number> = NUMBERS_JSON;
 let cache: Piece[] | null = null;
 
-/** All pieces that have a demo, in catalogue order (oldest first, then title) with a stable index number. */
+/** All pieces that have a demo, in catalogue order: by public number, then oldest first and title for any not numbered yet. */
 export async function getPieces(): Promise<Piece[]> {
   if (cache?.length) return cache;
   const all = await getCollection('pieces');
   const next = all
     .filter((p) => demoSource(p.id))
-    .sort((a, b) => a.data.published.getTime() - b.data.published.getTime() || a.data.title.localeCompare(b.data.title));
+    .sort((a, b) => (NUMBERS[a.id] ?? Infinity) - (NUMBERS[b.id] ?? Infinity) || a.data.published.getTime() - b.data.published.getTime() || a.data.title.localeCompare(b.data.title));
   if (next.length) cache = next;
   return next;
 }
@@ -208,14 +210,15 @@ export async function getPiecesNewest(): Promise<Piece[]> {
 }
 
 export async function pieceNumber(slug: string): Promise<string> {
-  const list = await getPieces();
-  const i = list.findIndex((p) => p.id === slug);
-  return String(i + 1).padStart(3, '0');
+  return numberMap(await getPieces()).get(slug) ?? '';
 }
 
+/** Public numbers come from src/data/numbers.json, so adding a piece never renumbers an old one.
+ *  A piece missing from it gets the next free number here, and scripts/check-build.mjs fails the build until it is added. */
 export function numberMap(list: Piece[]): Map<string, string> {
   const m = new Map<string, string>();
-  list.forEach((p, i) => m.set(p.id, String(i + 1).padStart(3, '0')));
+  let next = Math.max(0, ...Object.values(NUMBERS));
+  for (const p of list) m.set(p.id, String(NUMBERS[p.id] ?? ++next).padStart(3, '0'));
   return m;
 }
 

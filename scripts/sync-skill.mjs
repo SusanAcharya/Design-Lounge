@@ -19,6 +19,7 @@ import { sourcesFrom, studyPiece } from '../src/data/sources.ts';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const piecesDir = path.join(root, 'src/content/pieces');
+const NUMBERS = JSON.parse(fs.readFileSync(path.join(root, 'src/data/numbers.json'), 'utf8'));
 const skillLib = path.join(root, 'skills/design-lounge/library');
 const briefsDir = path.join(skillLib, 'briefs');
 const repo = 'https://github.com/SusanAcharya/Design-Lounge';
@@ -58,7 +59,10 @@ const pieces = fs
     const parsed = parseFrontmatter(fs.readFileSync(path.join(piecesDir, name), 'utf8'));
     return { id, ...parsed };
   })
-  .sort((a, b) => String(a.data.published).localeCompare(String(b.data.published)) || String(a.data.title).localeCompare(String(b.data.title)));
+  .sort((a, b) => (NUMBERS[a.id] ?? Infinity) - (NUMBERS[b.id] ?? Infinity) || String(a.data.published).localeCompare(String(b.data.published)) || String(a.data.title).localeCompare(String(b.data.title)));
+// Same public numbers as the site (src/lib/pieces.ts numberMap).
+let lastNumber = Math.max(0, ...Object.values(NUMBERS));
+const numberOf = new Map(pieces.map((p) => [p.id, String(NUMBERS[p.id] ?? ++lastNumber).padStart(3, '0')]));
 
 const siteSources = sourcesFrom(fs.readFileSync(path.join(root, 'websites.txt'), 'utf8'));
 const sourceOf = new Map(pieces.map((piece) => [piece.id, studyPiece(piece, siteSources)]));
@@ -80,7 +84,7 @@ function reorderBrief(body) {
   return out.join('\n\n');
 }
 for (const piece of pieces) {
-  const n = String(pieces.indexOf(piece) + 1).padStart(3, '0');
+  const n = numberOf.get(piece.id);
   const head = `<!-- Design Lounge Nº ${n} · "${piece.data.title}" · www.designlounge.live -->\n\n`;
   const foot = `\n\n---\n\n*From Design Lounge (https://www.designlounge.live). Free to use in your products. Credit line: Designed using Design Lounge.*\n`;
   fs.writeFileSync(path.join(briefsDir, `${piece.id}.md`), head + reorderBrief(piece.body) + foot);
@@ -177,9 +181,9 @@ const index = {
     durations: DURATIONS,
     recipes: RECIPES,
   },
-  pieces: pieces.map((p, i) => ({
+  pieces: pieces.map((p) => ({
     id: p.id,
-    n: String(i + 1).padStart(3, '0'),
+    n: numberOf.get(p.id),
     title: p.data.title,
     summary: p.data.summary,
     platform: p.data.platform,

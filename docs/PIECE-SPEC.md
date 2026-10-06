@@ -9,6 +9,8 @@ src/content/pieces/<slug>.md    the brief (frontmatter + agent-ready markdown)
 
 `<slug>` is lowercase kebab-case, unique, descriptive. Examples: `collapsing-sidebar-rail`, `ios-glass-tab-bar`, `skeleton-to-content-swap`.
 
+A new piece also takes the next free public number: add `"<slug>": <n>` to the end of `src/data/numbers.json`. Never change or reuse an existing number. `pnpm build` fails and names the number to add if you forget.
+
 ---
 
 ## 1. The demo (`src/demos/<slug>.html`)
