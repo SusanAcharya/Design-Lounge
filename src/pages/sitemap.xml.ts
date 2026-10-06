@@ -3,14 +3,16 @@ import { getPieces, TYPE_META, PLATFORM_META, STYLE_META, CATEGORY_META } from '
 import { COLLECTIONS } from '../data/collections';
 import { PAIRINGS } from '../data/type';
 import { THEMES } from '../data/themes';
-import { EXAMPLES } from '../data/examples';
+import { EXAMPLES, PAIRS } from '../data/examples';
 
 export const GET: APIRoute = async ({ site }) => {
   const base = (site?.toString() || 'https://www.designlounge.live').replace(/\/$/, '');
   const pieces = await getPieces();
   const urls = [
     '/', '/browse', '/collections', '/guide', '/about', '/privacy', '/sources', '/rooms', '/platforms', '/styles',
-    '/type', '/themes', '/icons', '/motion', '/agents', '/sections', '/system', '/start', '/kit', '/examples', '/examples/compare',
+    '/type', '/themes', '/icons', '/motion', '/agents', '/sections', '/system', '/start', '/kit', '/examples',
+    // The compare page stays out of search until it has a pair to show.
+    ...(PAIRS.length ? ['/examples/compare'] : []),
     ...Object.keys(TYPE_META).map((k) => `/rooms/${k}`),
     ...Object.keys(PLATFORM_META).map((k) => `/platforms/${k}`),
     ...Object.keys(STYLE_META).map((k) => `/styles/${k}`),

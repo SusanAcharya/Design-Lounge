@@ -12,7 +12,7 @@ const pairing = (id: string) => PAIRINGS.find((p) => p.id === id);
 const pairs = PAIRS.map((p) => ({ ...p, sides: [byId.get(p.a), byId.get(p.b)].filter((e): e is Example => Boolean(e)) })).filter((p) => p.sides.length === 2);
 const installCmd = 'npx skills add SusanAcharya/Design-Lounge';
 ---
-<Base rail={false} title="Same product, different style" description={`The same prompt built twice with the Design Lounge skill, on two different directions: ${pairs.map((p) => p.title).join(', ')}.`} crumbs={[{ name: 'Examples', href: '/examples' }, { name: 'Compare', href: '/examples/compare' }]}>
+<Base rail={false} noindex={pairs.length === 0} title="Same product, different style" description={`The same prompt built twice with the Design Lounge skill, on two different directions: ${pairs.map((p) => p.title).join(', ')}.`} crumbs={[{ name: 'Examples', href: '/examples' }, { name: 'Compare', href: '/examples/compare' }]}>
   <PageHead eyebrow="Examples" title="Same product, <i>different style.</i>" count={pairs.length} countLabel="products" blurb="Both by Design Lounge. Each product was built twice from the same prompt, word for word. The second build was told the product already had a site. One look is a centrepiece made only for that world, the other is built straight from the library. Scroll inside either one." />
 
   {pairs.map((p, i) => (
