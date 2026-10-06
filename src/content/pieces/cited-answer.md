@@ -172,7 +172,7 @@ Clear aria-pressed on the other chip first.
 6. Build step: The heading and the paragraph do not change.
 7. Build step: There is no motion.
 
-- Keep this measurement while rebuilding: Card 680px, padding 32px, radius 2px.
+- Keep this measurement while rebuilding: Card 680px, padding 32px, radius 2px unless the family sets one.
 - Keep this measurement while rebuilding: Heading 28px, margin-bottom 12px.
 - Keep this measurement while rebuilding: Chip height 36px, gap 8px, margin-top 20px.
 - Keep this measurement while rebuilding: Quote min-height 44px, margin-top 14px.

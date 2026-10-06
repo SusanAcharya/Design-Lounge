@@ -19,7 +19,7 @@ The aim is one product that feels designed: same palette, type, icons, radius, s
 1. Write the four lines in Decide the screen. If you cannot name the decision, you are not ready to pick a hero. For a website, also read Stand out in [website.md](website.md) and write the Idea. For an app, read The one screen in [app.md](app.md) and write the Idea.
 2. Decide new kit or adopt. Adopt when they already have tokens, a DESIGN.md, or styled screens, unless they asked for a new look.
 3. Match the world, then choose the pieces. Read Match the world. Search before you invent: settings, billing, search, upload, audit, account menu, inbox, table, dialog, toast, form, select, record, people, detail, chart, line, kpi, empty, error, collection, cart, agent, approval, source, rewrite. On a phone, search for the phone empty and the phone failed load before you reuse the web ones. On a tablet, use the tablet recipe. Do not stretch a phone screen to 1180px. If `pieces.txt` has no piece, say so, and build only from this sheet and from [components.md](components.md). Do not import another library's look.
-4. Say the pick with links at the top of your reply, then build. Follow Say the pick in [SKILL.md](SKILL.md). Ask first only when two worlds fit and would lock different themes, or when they asked to choose.
+4. Say the pick with links at the top of your reply, then build. Follow Say the pick in [SKILL.md](SKILL.md). Ask first only as When to ask in [SKILL.md](SKILL.md) allows.
 5. When the system is locked, write the sheet below. If the project has no DESIGN.md, add it. If one exists and you are adopting it, do not overwrite it. If one exists from an earlier Lounge pass, update Sources when they change a screen. Do not start a second file.
 6. Build the shell first (nav, tab bar, or frame), then the primary screen, then the rest of the minimum set below. A product is not done after the first screen.
 7. Open every finished screen and run Look. Fix what fails, and open it again. When the fails are none, run One correction. Then run the finish checklist. In the reply, list only what failed and what you changed, plus the look notes. Do not paste every line that passed. Do not call the UI done from the source.
@@ -230,7 +230,15 @@ The four lines decide a screen. They do not decide the product. People name a pr
 - What it does. The job, in their words when they gave any. If they only named the type, infer the job and say what you assumed.
 - Scope. This pass: one screen, the public site, or the app's minimum set. A refine of a screen that already exists is that screen. It is not a new product and not a reskin.
 
-If two recipes both fit and they would lock different themes, ask once which world it is, then stop. A staff dashboard and a personal ledger are that case. A shop and a portfolio are that case. Do not send a list of questions. Do not invent a research study.
+### When recipes overlap
+
+Several recipes can fit one sentence. Settle it in this order before you think about asking.
+
+1. A page kind they named wins. "A landing page" is `landing`, unless it is for fashion, wellness, fintech, or a tool, which have their own recipes (the kind map in [reference.md](reference.md)). "A shop" or "an online store" is `commerce`. "A menu" or "book a table" is `restaurant`. "A website" or "a homepage" names no kind, so go on to 2.
+2. The first screen's job. One offer and one action (pre-order, join the list, subscribe) is `landing`. Things to buy and ship is `commerce`. What is for sale today and the hours, to order or collect, is `food`. Today's hours, the menu with prices, and a table, for people who sit down, is `restaurant`. A company that needs several pages to explain itself is `marketing-site`, or `saas` when it sells software.
+3. The business picks the direction inside that recipe, not the recipe. "A landing page for a coffee roaster" is `landing`, with a warm, made-by-hand direction such as `clay-launch`. The same roaster's café would be `restaurant`, and its bean shop `commerce`.
+
+If two recipes are still left and they would lock different themes, ask once which world it is (When to ask in [SKILL.md](SKILL.md)), then stop. A staff dashboard and a personal ledger are that case. A shop and a portfolio are that case. Do not send a list of questions. Do not invent a research study.
 
 One thing you will not build. Name the screen a template would add, and why it does not serve the job.
 

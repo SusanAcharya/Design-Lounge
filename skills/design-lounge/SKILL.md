@@ -37,7 +37,7 @@ A short request ("make a cool scrolling space website") and a good brief give ve
 
 Everything you need is next to this file. Read only what the job needs.
 
-1. `library/map.json` — read this first. Kinds, families, the recipe list with each direction's mood, every theme and pairing by mood, and the motion tokens. About 35 KB.
+1. `library/map.json` — read this first. Kinds, families, the recipe list with each direction's mood, every theme and pairing by mood, and the motion tokens. About 56 KB.
 2. Then open only what you lock: `library/starts/<id>.json` for the recipe, `library/themes/<id>.css`, `library/pairings/<id>.css`.
 3. `library/pieces.txt` — one line per piece. Search it (grep for a category, platform, or tag). Do not read it top to bottom.
 4. `library/briefs/<id>.md` — the spec for one piece. Open only the pieces you will build.
@@ -59,7 +59,7 @@ If the open project is the Design Lounge repo itself (`src/demos` and `src/conte
 | A redesign of a site that already exists | Adopt flow, with the audit |
 | "Make it look like Stripe" (or Linear, Apple, Notion, any named brand) | Brand flow |
 | A new product, site, app, or design system | Kit flow |
-| Spectacle: "go wild", "Awwwards", "unforgettable", "make it an experience", "let people play with it", or a show, a launch, or a label whose subject is a world | Kit flow, then Show mode in [website.md](website.md). Free colour and type, unless they named a theme, colour, or brand |
+| Spectacle: an ambition word ("go wild", "Awwwards", "site of the day", "unforgettable", "award-level", "make it an experience"), or a verb that makes the page the experience ("let people play with it", "you scroll and you travel") | Kit flow, then Show mode in [website.md](website.md). Free colour and type, unless they named a theme, colour, or brand. Without one of these, it is Kit mode, even for a show, a launch, or a world you could draw |
 | Two looks for one product, or "show me options" built out | Kit flow twice, on two directions that differ in theme, pairing, and hero. When the subject has a world, one is Show mode, Free, and the other is locked to the library |
 | A style by name: minimal, brutalist, Swiss, terminal, high-end, agency, luxury, handwritten, pixel, arcade | Kit flow, with Named looks in [taste.md](taste.md) |
 | A game site, a web game, a lobby, a scoreboard | Kit flow, recipe `game`, then Games and Three.js in [taste.md](taste.md) |
@@ -77,7 +77,7 @@ If the open project is the Design Lounge repo itself (`src/demos` and `src/conte
 | Only a palette, font, icon, or motion | Library flow |
 | "Make it look good" with no kind | Kit flow. Infer the kind, the job, and the register. Say what you assumed. |
 
-If they have not named a stack, use what the project already uses. In an empty folder, ask once, or default to plain HTML + CSS + a little JS when they said to just build. The briefs are stack-agnostic. You translate.
+If they have not named a stack, use what the project already uses. In an empty folder, follow When to ask, below. The briefs are stack-agnostic. You translate.
 
 ## Say the pick, then build
 
@@ -90,10 +90,21 @@ Choose, say it, and build in the same turn. Put this at the top of the reply, us
 
 Write the same links into `DESIGN.md` as Sources, so a later message can say "change the table" and you know which demo it came from.
 
-Ask before building only when:
+### When to ask
 
-- two recipes fit and would lock different worlds, such as a staff dashboard versus a personal ledger. Ask which one, in one question, then stop.
-- they asked to see options or to choose. Then name three palettes and two pairings with links, names and moods only.
+This is the only rule about asking. Every other file, brief, and template follows it.
+
+If they said "just build it", "go", "decide", or "don't ask", never ask. Use the project's stack, or plain HTML + CSS + a little JS in an empty folder. Settle the recipe with When recipes overlap in [practice.md](practice.md). On a redesign, keep the brand. Then build.
+
+Otherwise, ask before building only when one of these is true, all in one message, once, then stop:
+
+- The folder is empty and they named no stack. Ask which stack, and say you will use plain HTML + CSS + a little JS if they have no preference.
+- Two recipes are still left after When recipes overlap in [practice.md](practice.md), and they would lock different worlds, such as a staff dashboard versus a personal ledger. Ask which one.
+- They asked to see options or to choose. Name three palettes and two pairings with links, names and moods only.
+- It is a redesign and you cannot tell whether to keep the brand (Adopt flow, below).
+- It is a portfolio and they gave no work (Real content only in [website.md](website.md)).
+
+Everything else, decide and say what you assumed.
 
 If they ask for a change after, edit that one Source line and rebuild that screen on the same sheet. Do not open a second palette.
 
@@ -149,7 +160,7 @@ Use this when a design system is already in the project.
 2. Take structure, states, motion, and hit targets from the piece briefs. Name the demos you take structure from.
 3. Restyle onto a Lounge kit only when they asked for a new look. A refine that asks for scroll, hover, or a cursor keeps their colours and adds effect pieces from Register in [website.md](website.md).
 
-For a redesign, first decide which kind it is: keep the brand, or start the look again. If you can't tell, ask once. Then follow Redesign in [practice.md](practice.md). Look at the site before you change it. Never change the URLs, the nav labels, the form field names, the logo, or the legal text unless they asked.
+For a redesign, first decide which kind it is: keep the brand, or start the look again. If you can't tell, follow When to ask above. Then follow Redesign in [practice.md](practice.md). Look at the site before you change it. Never change the URLs, the nav labels, the form field names, the logo, or the legal text unless they asked.
 
 ## Brand flow
 

@@ -53,7 +53,7 @@ User: "A site for an aquarium's after-hours opening. You scroll and you sink to 
 
 User: "make a cool scrolling space website"
 
-1. Write the brief first. The full one is the example in `brief.md`. "Cool" alone would mean ambition `finished`, but "scrolling space" is a world you travel through, so ambition `spectacle` and Mode `Show, Free`.
+1. Write the brief first. The full one is the example in `brief.md`. "Cool" alone would mean ambition `finished`, but "scrolling space" makes the scroll the journey, a verb about the page, so ambition `spectacle` and Mode `Show, Free`.
 2. No name and no owner, so the product gets a working name marked "(working name, replace)", and Missing lists who it is for. No invented planetarium, no fake dates.
 3. Then follow the brief exactly as in They asked for spectacle. The reply names the working name and every Missing line.
 

@@ -17,7 +17,7 @@ related: [pricing-annual-toggle-roll, phone-tab-plain, ios-onboarding-carousel, 
 
 # Phone paywall with two plans
 
-> **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, map colours onto the kit tokens. Keep the 2px radii. This is the editorial family, not glass.
+> **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, map colours onto the kit tokens. The 2px radii are the editorial family's, not glass. With another family locked, use its radius.
 
 ## What it is
 

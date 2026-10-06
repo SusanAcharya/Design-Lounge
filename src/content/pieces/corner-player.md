@@ -173,7 +173,7 @@ Do not point the player at a network video.
 - Keep this measurement while rebuilding: Corner 220×124, inset 28px. Open 640×360.
 - Keep this measurement while rebuilding: Grow 360ms. Bar 8s, height 4px.
 - Keep this measurement while rebuilding: Buttons 36px. Page title 40px.
-- Keep this measurement while rebuilding: Player radius 8px.
+- Keep this measurement while rebuilding: Player radius 8px, unless the family sets one.
 - Keep this measurement while rebuilding: Mark #d7b15e.
 
 - While rebuilding, remember: Do not autoplay.

@@ -2,9 +2,9 @@
 
 # Cited answer
 
-> **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
+> **Build brief for a coding agent.** Rebuild this piece in the reader's stack. Use the stack already chosen for this build (When to ask in SKILL.md). Match the numbers below; don't "improve" them.
 
-> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws. A Show mode centrepiece keeps its live readouts. The demo's names, prices, and sentences belong to the demo. Write this product's facts in short sentences.
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours, fonts, and corner radius. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws. A Show mode centrepiece keeps its live readouts. The demo's names, prices, and sentences belong to the demo. Write this product's facts in short sentences.
 
 ## What it is
 
@@ -125,7 +125,7 @@ quote
 6. Build step: The heading and the paragraph do not change.
 7. Build step: There is no motion.
 
-- Keep this measurement while rebuilding: Card 680px, padding 32px, radius 2px.
+- Keep this measurement while rebuilding: Card 680px, padding 32px, radius 2px unless the family sets one.
 - Keep this measurement while rebuilding: Heading 28px, margin-bottom 12px.
 - Keep this measurement while rebuilding: Chip height 36px, gap 8px, margin-top 20px.
 - Keep this measurement while rebuilding: Quote min-height 44px, margin-top 14px.

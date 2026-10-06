@@ -36,7 +36,7 @@ Read this only when you need a path or a kind map. The procedure is in SKILL.md.
 | Portfolio of a visual designer, photographer, architect, or studio; a showreel | `website` | Also recipe `portfolio`. Scroll, hover, or a cursor is one piece from Register in [website.md](website.md), not a second theme. |
 | Personal site, a journal, not a showreel | `website` | Also recipe `personal-site` |
 | Fashion, a lookbook, a luxury good | `website` | Also recipe `fashion` |
-| Food, a local shop that sells or ships | `website` | Also recipe `food` |
+| Food, a local shop that sells or ships, and they did not ask for a landing page | `website` | Also recipe `food` |
 | Restaurant, cafe, bar, a menu people come in for | `website` | Also recipe `restaurant` |
 | Wellness, a retreat, a class | `website` | Also recipe `wellness` |
 | Clinic, dentist, physio, vet, a doctor people book | `website` | Also recipe `clinic`. The phone app is `health`. |
@@ -57,7 +57,7 @@ Read this only when you need a path or a kind map. The procedure is in SKILL.md.
 | Three.js, WebGL, a 3D scene, a model you orbit | `website` | Also recipe `game`, direction Orbit. The demo is raw WebGL. The brief says how to build it in Three.js. |
 | Handwritten, hand-lettered, a letter, a notebook site | `website` | Also recipe `notebook`. Letter Hand for the whole site. Handwritten Notes only when the notes are the handwritten part. |
 | Museum, gallery, a collection | `website` | Also recipe `museum` |
-| One landing page, and they did not name the world | `website` | Also recipe `landing`. If they named fashion, wellness, fintech, or a tool, use that recipe instead. A tilt or a sticky scroll is one piece from Register. |
+| One landing page | `website` | Also recipe `landing`. If they named fashion, wellness, fintech, or a tool, use that recipe instead. Any other business, a coffee roaster included, stays `landing` (When recipes overlap in [practice.md](practice.md)). A tilt or a sticky scroll is one piece from Register. |
 | Phone app, iOS, Android, and they did not name the world | `product` | Also recipe `mobile-app`. Prefer `platform` `mobile-app` pieces. A PWA is not this row. |
 | The product people use in a browser, logged in. Not the marketing page. Not staff ops | `product` | Also recipe `web-app`. The public homepage, if they also want one, is `saas`. |
 | A desktop app, Electron, Tauri, a Mac window | `product` | `web-app`, or `dashboard` when it is staff ops. No phone tab bar. The window chrome is the operating system. |

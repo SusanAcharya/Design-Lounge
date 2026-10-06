@@ -168,8 +168,8 @@ The button background covers the middle so only the edge shows.
 6. Build step: Reduced motion sets animation none on the ring.
 7. Build step: The ring does not cover the label. The button is position relative.
 
-- Keep this measurement while rebuilding: Button height 52px, padding 0 22px, radius 2px.
-- Keep this measurement while rebuilding: Ring inset -2px, radius 4px, spin 2.8s.
+- Keep this measurement while rebuilding: Button height 52px, padding 0 22px, radius 2px unless the family sets one.
+- Keep this measurement while rebuilding: Ring inset -2px, radius 2px more than the button's, spin 2.8s.
 - Keep this measurement while rebuilding: Status top 72px, 14px, colour #a39b90.
 - Keep this measurement while rebuilding: Focus offset 6px.
 - Keep this measurement while rebuilding: Fill #1c1b19. Gold #d7b15e.

@@ -2,9 +2,9 @@
 
 # Edge light button
 
-> **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
+> **Build brief for a coding agent.** Rebuild this piece in the reader's stack. Use the stack already chosen for this build (When to ask in SKILL.md). Match the numbers below; don't "improve" them.
 
-> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws. A Show mode centrepiece keeps its live readouts. The demo's names, prices, and sentences belong to the demo. Write this product's facts in short sentences.
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours, fonts, and corner radius. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws. A Show mode centrepiece keeps its live readouts. The demo's names, prices, and sentences belong to the demo. Write this product's facts in short sentences.
 
 ## What it is
 
@@ -122,8 +122,8 @@ status under the button
 6. Build step: Reduced motion sets animation none on the ring.
 7. Build step: The ring does not cover the label. The button is position relative.
 
-- Keep this measurement while rebuilding: Button height 52px, padding 0 22px, radius 2px.
-- Keep this measurement while rebuilding: Ring inset -2px, radius 4px, spin 2.8s.
+- Keep this measurement while rebuilding: Button height 52px, padding 0 22px, radius 2px unless the family sets one.
+- Keep this measurement while rebuilding: Ring inset -2px, radius 2px more than the button's, spin 2.8s.
 - Keep this measurement while rebuilding: Status top 72px, 14px, colour #a39b90.
 - Keep this measurement while rebuilding: Focus offset 6px.
 - Keep this measurement while rebuilding: Fill #1c1b19. Gold #d7b15e.

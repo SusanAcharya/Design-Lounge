@@ -97,7 +97,7 @@ If you remember nothing, or the answer is yes, it fails. Change the idea or the 
 
 ## Show mode
 
-Use this when they ask for spectacle: "go wild", "Awwwards", "site of the day", "unforgettable", "make it an experience", "let people play with it". Also use it for a show, a launch, a label, or an event whose subject is a world you can draw: space, a city at night, the sea, a mountain, an instrument, a machine. Write the `Show:` line on the sheet.
+Use this only when their words ask for spectacle: an ambition word ("go wild", "Awwwards", "site of the day", "unforgettable", "award-level", "make it an experience"), or a verb that makes the page itself the experience ("let people play with it", "you scroll and you travel", "type on it"). With neither, it is Kit mode. "A site" never triggers Show mode, and neither does a world you could draw (space, a city at night, the sea, a mountain, an instrument, a machine) or the kind of job (a show, a launch, a label, an event) on its own. Those fill the World line and pick the direction inside Kit. Write the `Show:` line on the sheet.
 
 A strong agent with no library builds something memorable here, because it starts from the subject, picks colour and type for that world, and spends all its effort on one thing. Show mode does the same, then adds what the library is good at: finished sections, real states, accessibility, and a page that holds together on a phone.
 
@@ -118,7 +118,7 @@ The library's themes and pairings are made for products people use every day. A 
 1. Colour from the light. Start from the light source and the material of the world: sodium amber on Himalayan indigo, the sun on the limb of the Earth, bone keycaps under a desk lamp. Write five to seven colours.
 2. Write them as the theme's roles: `--bg`, `--surface`, `--surface-2`, `--line`, `--ink`, `--ink-2`, `--ink-3`, `--primary`, `--primary-ink`, `--primary-soft`, `--link`, plus up to four `--scene-*` for the sky and the glow. Every brief and the role table in SKILL.md still map onto them. Body text meets 4.5:1 on `--bg`, large type 3:1.
 3. Type for the subject, not the trend. Two families at most, plus one script face when the world needs it, all in one Google Fonts link. Say in one line why each face fits this world.
-4. Do not repeat yourself. Read the Free lines in the history: do not reuse the display face of the last three Free sites, or the same `--bg` and `--primary` pair. Avoid the faces every agent reaches for as the display face unless the subject asks for one by name: Instrument Serif, Playfair Display, Fraunces, Space Grotesk, Syne, Inter.
+4. Do not repeat yourself. Read the Free lines in the history: do not reuse the display face of the last three Free sites, or the same `--bg` and `--primary` pair. When you pick a display face yourself, avoid the faces every agent reaches for unless the subject asks for one by name: Instrument Serif, Playfair Display, Fraunces, Space Grotesk, Syne, Inter. The list is for faces you choose on your own. A library pairing keeps its faces, whether the mode locks it or you take it under rule 5: Night Show, AI Editorial, and Gallery Wall set Instrument Serif, and that is allowed.
 5. The library is still a good place to look. Taking a theme or a pairing is fine when you chose it for this world. Write `Free: took <id>, because ...`.
 6. Everything else holds: The rendering bar, What Show mode relaxes, the Look fails in [practice.md](practice.md), real content, states, accessibility, the history check on the hero, work, and footer, and the credit.
 7. On the sheet, under the Show line: `Palette:` with each colour and its job, and `Type:` with each face and its reason. Put both in `DESIGN.md` so a later page reuses them. A later page of the same product never picks again.
@@ -217,7 +217,7 @@ A portfolio, a launch, a product page, or a refine they described as motion is i
 - An outdoor, travel, or place brand: `parallax-layered-hero` or `scroll-zoom-portal`.
 - A studio or agency that wants the site to feel made: `smooth-scroll-inertia`, `page-transition-tile-wipe`, `preloader-counter-intro`, or `text-mask-scroll-reveal`. A preloader never runs longer than the real load.
 - A tech, science, or cold brand that wants depth: `webgl-shader-hero`. A hotel, film, or food brand that wants footage: `hero-video-loop`.
-- A show, a launch, or a science night that is a journey: `scroll-space-voyage`. A label, venue, or hotel tied to a city and an hour: `moonlit-ridge-hero`. A product people can use on the page: `playable-product-hero`. These are Show mode centrepieces.
+- A show, a launch, or a science night that is a journey: `scroll-space-voyage`. A label, venue, or hotel tied to a city and an hour: `moonlit-ridge-hero`. A product people can use on the page: `playable-product-hero`. Use these only once Show mode is on; they never turn it on.
 - An about or manifesto block: `scroll-word-highlight`.
 - A headline that moves: `kinetic-type-marquee` or `variable-font-proximity`.
 - A phone: `ios-pull-to-refresh`, `shared-element-expand`, or `m3-container-transform`. Not a web cursor. A phone web story: `mobile-scroll-story`.

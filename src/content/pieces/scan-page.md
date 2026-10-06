@@ -173,7 +173,7 @@ The timeout matches the 1.1s travel.
 6. Build step: Reduced motion skips the beam animation and writes the status immediately.
 7. Build step: The note text never leaves the sheet.
 
-- Keep this measurement while rebuilding: Sheet 420×260, padding 28px, radius 2px.
+- Keep this measurement while rebuilding: Sheet 420×260, padding 28px, radius 2px unless the family sets one.
 - Keep this measurement while rebuilding: Beam height 8px. Travel 1.1s.
 - Keep this measurement while rebuilding: Button height 44px, margin-top 16px.
 - Keep this measurement while rebuilding: Status 14px, min-height 22px, margin-top 12px.

@@ -171,7 +171,7 @@ Set aria-pressed false on all buttons first.
 7. Build step: There is no transition.
 
 - Keep this measurement while rebuilding: Grid 640px, gap 12px, two columns.
-- Keep this measurement while rebuilding: Card min-height 140px, padding 20px, radius 2px.
+- Keep this measurement while rebuilding: Card min-height 140px, padding 20px, radius 2px unless the family sets one.
 - Keep this measurement while rebuilding: Name 20px, margin-bottom 6px. Line 14px.
 - Keep this measurement while rebuilding: Dim opacity .35. Pressed opacity 1.
 - Keep this measurement while rebuilding: Focus offset 3px.

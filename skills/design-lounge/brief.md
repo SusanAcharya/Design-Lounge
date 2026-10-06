@@ -42,7 +42,7 @@ Hard limits:
 - Works at 1280x800 and on a 390x844 phone.
 - prefers-reduced-motion stills every effect. Sound never autoplays and has an off control.
 
-Decide everything yourself. Do not ask. Work in one pass and aim for your best possible work: a page someone still remembers after five seconds, that could not be anyone else's.
+<Only when they said "just build it", "go", "decide", or "don't ask": Decide everything yourself. Do not ask.> Work in one pass and aim for your best possible work: a page someone still remembers after five seconds, that could not be anyone else's.
 
 Done means: <the sections or screens>, opened in a browser at both sizes, fixed, and the closing block written.
 ```
@@ -52,13 +52,14 @@ Done means: <the sections or screens>, opened in a browser at both sizes, fixed,
 | Their words | What goes in the brief |
 | --- | --- |
 | "cool", "nice", "modern", "clean", "simple" | Ambition `finished`. These words never pick the look or the mode. |
-| "go wild", "unforgettable", "Awwwards", "an experience", "let people play with it" | Ambition `spectacle`. Mode `Show, Free`. |
-| A world you could draw: space, the sea, a city at night, a mountain, an instrument, a machine | The World line, and a reason for Show mode when the job is a site, a show, a launch, or a label. |
-| A verb about the page: "you scroll and you travel", "type on it", "watch it fold" | The one thing. Keep their verb. |
+| An ambition word: "go wild", "unforgettable", "Awwwards", "site of the day", "award-level", "an experience" | Ambition `spectacle`. Mode `Show, Free`. |
+| None of the ambition words, and no verb that makes the page the experience | Mode `Kit`, whatever the subject. |
+| A world you could draw: space, the sea, a city at night, a mountain, an instrument, a machine | The World line. On its own it never picks Show mode, and neither does "a site", "a show", "a launch", or "a label". |
+| A verb that makes the page the experience: "you scroll and you travel", "let people play with it", "type on it", "watch it fold" | The one thing. Keep their verb. Ambition `spectacle`, Mode `Show, Free`. |
 | A place, or an hour | The World line, and a live readout candidate (the local time, a countdown). |
 | Facts: hours, prices, names, links | The Product line, word for word. |
 | A theme, colour, brand, or "use the Lounge look" | Mode stays locked to what they named. Never Free. |
-| "Just build it", "go" | Keep the line "Decide everything yourself. Do not ask." |
+| "Just build it", "go", "decide", "don't ask" | Keep the line "Decide everything yourself. Do not ask." Without these words, delete that line. Any question was asked before the brief, as When to ask in [SKILL.md](SKILL.md) says. |
 
 Mode `Free` is only for spectacle on a website (Show mode in [website.md](website.md)). A product, a tool, an app, or a dashboard is `Kit`, locked to the library.
 
@@ -76,7 +77,7 @@ Product: Outward (working name, replace), a page you scroll to travel from Earth
 For: someone curious, on a laptop or a phone, who wants to feel the distance in ten seconds.
 World: night sky, distance, old light
 The one thing: the page is the voyage. Each scroll moves the camera further out, and a readout counts the distance and how old the light is.
-Ambition: spectacle, because "scrolling space" is a world you travel through and "cool" asks for it to land.
+Ambition: spectacle, because "scrolling space" makes the scroll the journey. "Cool" alone would be finished.
 Mode: Show, Free
 Stack: plain index.html + styles.css + main.js that works when opened directly
 Missing: who it is for (a planetarium, a school, a personal project), real facts beyond public astronomy. Chapters use public figures only, and the footer has no invented organisation.
@@ -87,7 +88,7 @@ Hard limits:
 - Works at 1280x800 and on a 390x844 phone.
 - prefers-reduced-motion stills every effect. Sound never autoplays and has an off control.
 
-Decide everything yourself. Do not ask. Work in one pass and aim for your best possible work: a page someone still remembers after five seconds, that could not be anyone else's.
+Work in one pass and aim for your best possible work: a page someone still remembers after five seconds, that could not be anyone else's.
 
 Done means: the voyage hero with five or six chapters, one still section on what you passed, and the footer, opened in a browser at both sizes, fixed, and the closing block written.
 ```

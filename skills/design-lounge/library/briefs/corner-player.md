@@ -2,9 +2,9 @@
 
 # Corner player
 
-> **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
+> **Build brief for a coding agent.** Rebuild this piece in the reader's stack. Use the stack already chosen for this build (When to ask in SKILL.md). Match the numbers below; don't "improve" them.
 
-> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws. A Show mode centrepiece keeps its live readouts. The demo's names, prices, and sentences belong to the demo. Write this product's facts in short sentences.
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours, fonts, and corner radius. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws. A Show mode centrepiece keeps its live readouts. The demo's names, prices, and sentences belong to the demo. Write this product's facts in short sentences.
 
 ## What it is
 
@@ -126,7 +126,7 @@ fixed player, corner
 - Keep this measurement while rebuilding: Corner 220×124, inset 28px. Open 640×360.
 - Keep this measurement while rebuilding: Grow 360ms. Bar 8s, height 4px.
 - Keep this measurement while rebuilding: Buttons 36px. Page title 40px.
-- Keep this measurement while rebuilding: Player radius 8px.
+- Keep this measurement while rebuilding: Player radius 8px, unless the family sets one.
 - Keep this measurement while rebuilding: Mark #d7b15e.
 
 - While rebuilding, remember: Do not autoplay.
