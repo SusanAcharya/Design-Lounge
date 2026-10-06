@@ -1,0 +1,70 @@
+<!-- Design Lounge piece: agent-approval-card · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Silt — Send the lock notice</title>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,600&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f3efe6;--surface:#fffcf7;--ink:#241c16;--ink-2:#5c5348;--line:#e4dcd0;
+  --yes:#1f4d3a;--yes-ink:#f3efe6;--no:#fff;--mark:#9c2f24;--soft:#e7f0ea;
+  --serif:"Newsreader",Georgia,serif;--sans:"Outfit",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.45 var(--sans);display:grid;place-items:center;-webkit-font-smoothing:antialiased}
+:focus-visible{outline:2px solid var(--yes);outline-offset:3px}
+.card{width:520px;background:var(--surface);border:1px solid var(--line);border-radius:2px;padding:28px 28px 24px}
+.eye{margin:0;font:600 12px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--mark)}
+h1{margin:12px 0 0;font:600 32px/1.08 var(--serif);letter-spacing:-.02em}
+.ask{margin:14px 0 0;max-width:42ch;color:var(--ink-2);font-size:16px}
+.acts{display:flex;gap:8px;margin-top:22px}
+button{height:44px;padding:0 16px;border-radius:2px;font:600 14px var(--sans);cursor:pointer}
+.no{background:var(--no);border:1px solid var(--ink);color:var(--ink)}
+.yes{margin-left:auto;background:var(--yes);border:0;color:var(--yes-ink)}
+button:disabled{cursor:default;opacity:.45}
+.status{margin:16px 0 0;min-height:22px;font-size:14px;color:var(--yes)}
+.again{margin-top:8px;height:32px;padding:0;border:0;background:transparent;color:var(--ink-2);font-weight:500;text-decoration:underline;text-underline-offset:3px}
+.again[hidden]{display:none}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<article class="card">
+  <p class="eye" id="eye">Waiting</p>
+  <h1>Send the lock notice?</h1>
+  <p class="ask">Twelve loads are still at Gate 4. Sending tells the lock keeper to hold them until 06:00.</p>
+  <div class="acts">
+    <button class="no" type="button" id="no">No, keep the draft</button>
+    <button class="yes" type="button" id="yes">Yes, send it</button>
+  </div>
+  <p class="status" id="status" role="status"></p>
+  <button class="again" type="button" id="again" hidden>Decide again</button>
+</article>
+<script>
+const eye = document.getElementById('eye');
+const yes = document.getElementById('yes');
+const no = document.getElementById('no');
+const status = document.getElementById('status');
+const again = document.getElementById('again');
+function choose(sent){
+  yes.disabled = true;
+  no.disabled = true;
+  eye.textContent = sent ? 'Sent' : 'Kept';
+  status.textContent = sent ? 'Sent to the lock keeper.' : 'Kept as a draft. Nothing was sent.';
+  again.hidden = false;
+}
+yes.addEventListener('click', () => choose(true));
+no.addEventListener('click', () => choose(false));
+again.addEventListener('click', () => {
+  yes.disabled = false;
+  no.disabled = false;
+  eye.textContent = 'Waiting';
+  status.textContent = '';
+  again.hidden = true;
+});
+</script>
+</body>
+</html>

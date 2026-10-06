@@ -1,0 +1,86 @@
+<!-- Design Lounge piece: selection-rewrite · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Rowan — Almanac</title>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,500;0,6..72,600;1,6..72,500&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4f0e6;--surface:#fffdf8;--ink:#2a241c;--ink-2:#5e564c;--line:#e4d8c8;
+  --mark:#f3d7a1;--accent:#6b3a2a;--accent-ink:#f4f0e6;
+  --serif:"Newsreader",Georgia,serif;--sans:"Outfit",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.45 var(--sans);display:grid;place-items:center;-webkit-font-smoothing:antialiased}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+article{width:640px;background:var(--surface);border:1px solid var(--line);padding:36px 40px 28px}
+.kicker{margin:0;font:600 12px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+h1{margin:12px 0 0;font:600 40px/1.05 var(--serif);letter-spacing:-.02em}
+.note{margin:18px 0 0;font:500 22px/1.45 var(--serif)}
+.line{display:inline;margin:0;padding:1px 3px;border:0;background:transparent;color:inherit;font:inherit;text-align:left;cursor:pointer;border-radius:2px}
+.line[aria-pressed="true"]{background:var(--mark)}
+.bar{display:flex;align-items:center;gap:12px;margin-top:22px;min-height:40px}
+.act{height:40px;padding:0 14px;border:0;border-radius:2px;background:var(--accent);color:var(--accent-ink);font:600 14px var(--sans);cursor:pointer}
+.act[hidden]{display:none}
+.status{font-size:14px;color:var(--ink-2)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<article>
+  <p class="kicker">Rowan · Almanac</p>
+  <h1>The south bed</h1>
+  <p class="note" id="note" role="group" aria-label="Sentences"></p>
+  <div class="bar">
+    <button class="act" type="button" id="act">Shorter</button>
+    <span class="status" id="status" role="status"></span>
+  </div>
+</article>
+<script>
+const pairs = [
+  ['The south bed still holds water after Tuesday\u2019s rain.', 'The south bed is still wet.'],
+  ['Leave it until Friday before you turn the soil.', 'Wait until Friday to turn it.'],
+  ['The beans can wait in the tray until the bed dries.', 'Leave the beans in the tray.']
+];
+const short = [false, false, false];
+let current = 0;
+const note = document.getElementById('note');
+const act = document.getElementById('act');
+const status = document.getElementById('status');
+function paint(focusLine){
+  note.replaceChildren();
+  pairs.forEach((pair, i) => {
+    if (i) note.append(' ');
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'line';
+    b.dataset.i = String(i);
+    b.setAttribute('aria-pressed', i === current ? 'true' : 'false');
+    b.textContent = pair[short[i] ? 1 : 0];
+    note.append(b);
+  });
+  const on = current >= 0;
+  act.hidden = !on;
+  act.textContent = on && short[current] ? 'Restore' : 'Shorter';
+  if (focusLine) note.querySelector('[aria-pressed="true"]')?.focus();
+}
+note.addEventListener('click', (e) => {
+  const b = e.target.closest('.line');
+  if (!b) return;
+  current = Number(b.dataset.i);
+  status.textContent = '';
+  paint(true);
+});
+act.addEventListener('click', () => {
+  if (current < 0) return;
+  short[current] = !short[current];
+  status.textContent = short[current] ? 'Rewrote that sentence.' : 'Restored that sentence.';
+  paint();
+});
+paint();
+</script>
+</body>
+</html>

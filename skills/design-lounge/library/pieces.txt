@@ -521,3 +521,11 @@ three-scroll-world | web | scroll | Scroll past three path models | scroll webgl
 chart-scrub-readout | web | charts | Scrub a firing curve | charts line scrub dashboard
 phone-skeleton-list | mobile-app | loaders | Skeleton list swap | skeleton loading list phone replay
 phone-forgot-password | mobile-app | auth | Solander password reset | auth password email phone ios
+field-label-morph | web | inputs | Label that rises in the field | form label input focus
+chart-share-bar | web | charts | One bar split into shares | charts share dashboard total
+toolbar-selection-swap | web | data | Toolbar that swaps with the selection | table selection toolbar bulk
+agent-approval-card | web | cards | Agent approval card | agent approval confirm
+agent-tool-chip | web | feedback | Agent tool chip | agent tool chip
+prompt-source-model | web | inputs | Ask with a source and a model | prompt source model
+card-confidence-pick | web | cards | Confidence and one other option | agent suggestion confidence
+selection-rewrite | web | reading | Rewrite the selected sentence | agent selection rewrite

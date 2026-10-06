@@ -43,7 +43,7 @@ const poster = Astro.props.poster ?? (existsSync(new URL(`../../public/thumbs/${
   data-native={nativeView}
   data-views={views}
 >
-  <div class="lf-poster" aria-hidden="true">loading piece</div>
+    <div class="lf-poster" aria-hidden="true"></div>
   <div class="lf-device">
     {hasWeb && (
       <div class="lf-chrome" data-for="web" aria-hidden="true">
@@ -60,7 +60,7 @@ const poster = Astro.props.poster ?? (existsSync(new URL(`../../public/thumbs/${
           </span>
           <span class="lf-url">
             <svg viewBox="0 0 16 16" class="lock"><rect x="3.5" y="7" width="9" height="6.5" rx="1.5"/><path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2"/></svg>
-            <span class="host">lounge.design/</span><span class="path">{path}</span>
+            <span class="host">designlounge.live/</span><span class="path">{path}</span>
           </span>
           <span class="lf-tools">
             <svg viewBox="0 0 16 16"><path d="M8 2v8M5 5l3-3 3 3"/><path d="M4 9v4h8V9"/></svg>
@@ -84,7 +84,7 @@ const poster = Astro.props.poster ?? (existsSync(new URL(`../../public/thumbs/${
         </div>
         <div class="lf-island" data-for="phone" aria-hidden="true"></div>
         {hasUrlbar && (
-          <div class="lf-urlbar" data-for="phone" aria-hidden="true"><div class="field"><svg viewBox="0 0 16 16"><rect x="3.5" y="7" width="9" height="6.5" rx="1.5"/><path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2"/></svg><span><b>lounge.design</b>/{path}</span></div></div>
+          <div class="lf-urlbar" data-for="phone" aria-hidden="true"><div class="field"><svg viewBox="0 0 16 16"><rect x="3.5" y="7" width="9" height="6.5" rx="1.5"/><path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2"/></svg><span><b>designlounge.live</b>/{path}</span></div></div>
         )}
         <div class="lf-home" data-for="phone" aria-hidden="true"></div>
       </>
@@ -97,7 +97,7 @@ const poster = Astro.props.poster ?? (existsSync(new URL(`../../public/thumbs/${
             <div class="sb"><span>9:41 Tue 29 Sep</span><span>100%</span></div>
             <div class="row">
               <span class="side"><i></i><i></i></span>
-              <span class="pill"><svg viewBox="0 0 16 16"><rect x="3.5" y="7" width="9" height="6.5" rx="1.5"/><path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2"/></svg>lounge.design</span>
+              <span class="pill"><svg viewBox="0 0 16 16"><rect x="3.5" y="7" width="9" height="6.5" rx="1.5"/><path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2"/></svg>designlounge.live</span>
               <span class="side r"><i></i><i></i></span>
             </div>
           </div>

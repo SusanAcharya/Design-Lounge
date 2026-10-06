@@ -3,7 +3,7 @@ import Base from '../layouts/Base.astro';
 import DeviceFrame from '../components/DeviceFrame.astro';
 import Showcase from '../components/Showcase.astro';
 import AgentTerminal from '../components/AgentTerminal.astro';
-import { getPieces, CATEGORY_META, STYLE_META } from '../lib/pieces';
+import { getPieces, CATEGORY_META } from '../lib/pieces';
 import { PAIRINGS } from '../data/type';
 import { THEMES } from '../data/themes';
 import { ICONS } from '../data/icons';
@@ -31,7 +31,10 @@ const previewSection = byId.get('hero-search-marketplace') ?? newest.find((p) =>
 const previewScreen = byId.get('phone-wallet-cards') ?? newest.find((p) => p.data.platform === 'mobile-app');
 const previewMotion = byId.get('webgl-shader-hero') ?? newest.find((p) => p.data.type === 'animation');
 const componentCats = (['navigation', 'buttons', 'inputs', 'cards', 'overlays', 'charts', 'pickers', 'feedback'] as const).filter((c) => catCount(c) > 0);
-const styleNames = Object.values(STYLE_META).slice(0, 10).map((s) => s.label);
+const dialectNames = all
+  .filter((p) => p.data.type === 'style')
+  .map((p) => p.data.title.replace(/ design language kit$/i, '').replace(/ design style$/i, '').replace(/ style sheet$/i, '').replace(/ style$/i, ''))
+  .sort((a, b) => a.localeCompare(b));
 const system = [
   { n: PAIRINGS.length, label: 'Type pairings', href: '/type' },
   { n: THEMES.length, label: 'Themes', href: '/themes' },
@@ -125,8 +128,8 @@ const faq = [
           <h3 class="cell-h">Design languages</h3>
           <p>Whole visual dialects shown as a kit.</p>
         </div>
-        <ul class="style-words" aria-label="Some of the styles">
-          {styleNames.map((s) => <li>{s}</li>)}
+        <ul class="style-words" aria-label="Design languages">
+          {dialectNames.map((s) => <li>{s}</li>)}
         </ul>
       </a>
       <div class="cell c-more">
@@ -253,7 +256,7 @@ const faq = [
   <section class="bio wrap" aria-labelledby="bio-h">
     <p class="eyebrow">Made by</p>
     <h2 class="display h3" id="bio-h"><a href="/about">{AUTHOR.name}</a></h2>
-    <p class="bio-text">{AUTHOR.role} in {AUTHOR.city}, Nepal. She builds products end to end and made Design Lounge so AI agents stop shipping the same generic page. Every piece, theme and brief here is hers.</p>
+    <p class="bio-text">{AUTHOR.role} in {AUTHOR.city}, Nepal. He builds products end to end and made Design Lounge so AI agents stop shipping the same generic page. Every piece is an original build with an invented brand. Many study the craft of public sites, credited on the <a href="/sources">Sources</a> page.</p>
     <p class="bio-links">
       <a href="/about">About the Lounge</a>
       {AUTHOR.links.map((l) => <a href={l.href} target="_blank" rel="noopener me">{l.label} ↗</a>)}
@@ -286,6 +289,7 @@ const faq = [
   .bio .h3 a { color: var(--ink); }
   .bio .h3 a:hover { color: var(--accent); }
   .bio-text { max-width: 60ch; color: var(--ink-2); font-size: 17px; line-height: 1.6; }
+  .bio-text a { text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--ink-3); }
   .bio-links { display: flex; flex-wrap: wrap; gap: 8px 20px; font-size: 14px; }
   .bio-links a { color: var(--ink-2); border-bottom: 1px solid var(--line-2); }
   .bio-links a:hover { color: var(--ink); }

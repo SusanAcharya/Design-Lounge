@@ -19,6 +19,7 @@ export const GET: APIRoute = async () => {
       type: p.data.type,
       styles: p.data.styles,
       tags: p.data.tags,
+      category: p.data.category,
     })),
     ...PAIRINGS.map((p) => ({
       id: 'type-' + p.id,

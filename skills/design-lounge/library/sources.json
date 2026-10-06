@@ -48,7 +48,8 @@
         "m3-dialog",
         "phone-checkout",
         "phone-orders",
-        "phone-cart"
+        "phone-cart",
+        "chart-share-bar"
       ]
     },
     {
@@ -170,7 +171,8 @@
         "newsletter-close-band",
         "pwa-offline-library",
         "handwritten-letter",
-        "phone-privacy-data"
+        "phone-privacy-data",
+        "selection-rewrite"
       ]
     },
     {
@@ -372,7 +374,8 @@
         "game-hud",
         "phone-large-text-layout",
         "handwritten-style",
-        "m3-search-results"
+        "m3-search-results",
+        "field-label-morph"
       ]
     },
     {
@@ -529,7 +532,8 @@
         "phone-feed-posts",
         "spring-deck",
         "card-stamped-document",
-        "game-playfield"
+        "game-playfield",
+        "agent-approval-card"
       ]
     },
     {
@@ -644,7 +648,8 @@
         "social-contribution-graph",
         "spend-list",
         "features-vertical-label-columns",
-        "phone-subscription-manage"
+        "phone-subscription-manage",
+        "prompt-source-model"
       ]
     },
     {
@@ -761,7 +766,9 @@
         "m3-snackbar",
         "phone-rating-prompt",
         "game-leaderboard",
-        "phone-skeleton-list"
+        "phone-skeleton-list",
+        "toolbar-selection-swap",
+        "agent-tool-chip"
       ]
     },
     {
@@ -802,7 +809,8 @@
         "widget-now-playing",
         "week-schedule",
         "game-lobby",
-        "three-orbit-object"
+        "three-orbit-object",
+        "card-confidence-pick"
       ]
     }
   ]

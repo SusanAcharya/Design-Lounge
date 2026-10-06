@@ -1,0 +1,95 @@
+<!-- Design Lounge piece: chart-share-bar · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>One bar split into shares</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f4ef;--card:#fff;--ink:#161513;--muted:#6b645c;--line:#e6e1d8;
+  --a:#1f4d3a;--b:#3d6b56;--c:#8a7355;--d:#d4c4a8;
+  --sans:"IBM Plex Sans",system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,monospace;
+  --ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:14px/1.4 var(--sans);display:grid;place-items:center;-webkit-font-smoothing:antialiased}
+.card{width:760px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:28px 32px 24px}
+.kicker{margin:0;font:500 12px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h1{margin:6px 0 0;font:600 28px/1.1 var(--sans);letter-spacing:-.02em}
+.readout{margin:14px 0 18px;font:500 18px var(--mono);min-height:24px}
+.track{display:flex;align-items:flex-end;gap:3px;height:56px}
+.seg{flex:1 1 auto;height:32px;border:0;padding:0;border-radius:6px;cursor:pointer;transition:height 240ms var(--ease)}
+.seg[aria-pressed="true"]{height:48px}
+.seg:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+.seg[data-i="0"]{background:var(--a)}
+.seg[data-i="1"]{background:var(--b)}
+.seg[data-i="2"]{background:var(--c)}
+.seg[data-i="3"]{background:var(--d)}
+.legend{list-style:none;margin:18px 0 0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.legend button{display:flex;align-items:center;gap:10px;width:100%;height:44px;padding:0 12px;border-radius:10px;border:1px solid transparent;background:transparent;font:14px var(--sans);color:var(--ink);cursor:pointer;text-align:left}
+.legend button[aria-pressed="true"]{border-color:var(--line);background:#fbfaf7}
+.legend button:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.sw{width:12px;height:12px;border-radius:3px;flex:none}
+.legend b{margin-left:auto;font:500 13px var(--mono);font-weight:500}
+@media (prefers-reduced-motion:reduce){.seg{transition:none}}
+</style>
+</head>
+<body>
+<section class="card" aria-labelledby="t">
+  <p class="kicker">Yard · October</p>
+  <h1 id="t">Where the $10,000 went</h1>
+  <p class="readout" id="read" role="status">Rent · $4,200 · 42%</p>
+  <div class="track" id="track">
+    <button class="seg" type="button" data-i="0" style="flex-grow:42" aria-pressed="true" aria-label="Rent, 42 percent"></button>
+    <button class="seg" type="button" data-i="1" style="flex-grow:28" aria-pressed="false" aria-label="Wages, 28 percent"></button>
+    <button class="seg" type="button" data-i="2" style="flex-grow:18" aria-pressed="false" aria-label="Stock, 18 percent"></button>
+    <button class="seg" type="button" data-i="3" style="flex-grow:12" aria-pressed="false" aria-label="Power, 12 percent"></button>
+  </div>
+  <ul class="legend" id="legend">
+    <li><button type="button" data-i="0" aria-pressed="true"><i class="sw" style="background:#1f4d3a"></i>Rent<b>42%</b></button></li>
+    <li><button type="button" data-i="1" aria-pressed="false"><i class="sw" style="background:#3d6b56"></i>Wages<b>28%</b></button></li>
+    <li><button type="button" data-i="2" aria-pressed="false"><i class="sw" style="background:#8a7355"></i>Stock<b>18%</b></button></li>
+    <li><button type="button" data-i="3" aria-pressed="false"><i class="sw" style="background:#d4c4a8"></i>Power<b>12%</b></button></li>
+  </ul>
+</section>
+<script>
+const parts = [
+  {name:'Rent', money:'$4,200', pct:'42%'},
+  {name:'Wages', money:'$2,800', pct:'28%'},
+  {name:'Stock', money:'$1,800', pct:'18%'},
+  {name:'Power', money:'$1,200', pct:'12%'}
+];
+const segs = [...document.querySelectorAll('.seg')];
+const rows = [...document.querySelectorAll('.legend button')];
+const read = document.getElementById('read');
+function select(i){
+  segs.forEach((s,n) => s.setAttribute('aria-pressed', n === i ? 'true' : 'false'));
+  rows.forEach((s,n) => s.setAttribute('aria-pressed', n === i ? 'true' : 'false'));
+  const p = parts[i];
+  read.textContent = p.name + ' · ' + p.money + ' · ' + p.pct;
+}
+document.getElementById('track').addEventListener('click', (e) => {
+  const b = e.target.closest('.seg');
+  if (b) select(Number(b.dataset.i));
+});
+document.getElementById('legend').addEventListener('click', (e) => {
+  const b = e.target.closest('button');
+  if (b) select(Number(b.dataset.i));
+});
+rows.forEach(b => {
+  b.addEventListener('keydown', (e) => {
+    if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft' && e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
+    e.preventDefault();
+    const i = Number(b.dataset.i);
+    const next = (e.key === 'ArrowRight' || e.key === 'ArrowDown') ? (i + 1) % 4 : (i + 3) % 4;
+    select(next);
+    rows[next].focus();
+  });
+});
+</script>
+</body>
+</html>

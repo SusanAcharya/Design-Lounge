@@ -1,0 +1,112 @@
+<!-- Design Lounge piece: toolbar-selection-swap · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Toolbar that swaps with the selection</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#e7ece9;--card:#f7f8f6;--ink:#17211c;--muted:#5e6b64;--line:#d5ddd8;--green:#1f4d3a;--green-ink:#f3f7f4;--lock:#8a4b32;
+  --sans:"IBM Plex Sans",system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,monospace;
+  --ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:14px/1.4 var(--sans);display:grid;place-items:center;-webkit-font-smoothing:antialiased}
+.sheet{width:880px;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.bar{display:flex;align-items:center;gap:10px;min-height:64px;padding:12px 16px;border-bottom:1px solid var(--line)}
+.title{font-weight:600;font-size:15px;margin-right:auto}
+.count{font:500 12px var(--mono);color:var(--muted);margin-right:8px}
+.actions{display:flex;gap:8px;min-height:40px;align-items:center}
+button.act{height:40px;padding:0 14px;border-radius:8px;border:1px solid var(--line);background:#fff;font:500 13px var(--sans);color:var(--ink);cursor:pointer}
+button.act.primary{background:var(--green);color:var(--green-ink);border-color:var(--green)}
+button.act:hover{border-color:var(--ink)}
+button.act:focus-visible{outline:2px solid var(--green);outline-offset:2px}
+button.act[hidden]{display:none}
+table{width:100%;border-collapse:collapse}
+th{text-align:left;font:500 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:10px 16px;border-bottom:1px solid var(--line)}
+td{padding:0 16px;height:52px;border-bottom:1px solid var(--line);vertical-align:middle}
+tr:last-child td{border-bottom:0}
+tr.locked .name{color:var(--lock)}
+.lock{font:500 11px var(--mono);color:var(--lock);margin-left:8px}
+input[type="checkbox"]{width:18px;height:18px;accent-color:var(--green)}
+.foot{min-height:36px;padding:8px 16px 12px;font:12px var(--mono);color:var(--muted)}
+@media (prefers-reduced-motion:reduce){button.act{transition:none}}
+</style>
+</head>
+<body>
+<section class="sheet" aria-labelledby="h">
+  <div class="bar">
+    <h1 class="title" id="h">Drawings</h1>
+    <span class="count" id="count">2 selected</span>
+    <div class="actions" role="toolbar" aria-label="Selection actions">
+      <button class="act" type="button" id="filter" hidden>Filter</button>
+      <button class="act" type="button" id="open" hidden>Open</button>
+      <button class="act" type="button" id="rename" hidden>Rename</button>
+      <button class="act primary" type="button" id="merge">Merge</button>
+      <button class="act" type="button" id="download">Download</button>
+    </div>
+  </div>
+  <table>
+    <thead>
+      <tr><th style="width:48px"><span class="sr" style="position:absolute;left:-999px">Select</span></th><th>Drawing</th><th>Sheet</th><th>State</th></tr>
+    </thead>
+    <tbody id="rows">
+      <tr><td><input type="checkbox" aria-label="Select Plan, ground floor"></td><td class="name">Plan, ground floor</td><td>A-01</td><td>Open</td></tr>
+      <tr><td><input type="checkbox" checked aria-label="Select Section A-A"></td><td class="name">Section A-A</td><td>A-14</td><td>Open</td></tr>
+      <tr class="locked"><td><input type="checkbox" data-locked="1" aria-label="Select Detail, stair"></td><td class="name">Detail, stair<span class="lock">Locked</span></td><td>A-22</td><td>Issued</td></tr>
+      <tr><td><input type="checkbox" checked aria-label="Select Elevation, street"></td><td class="name">Elevation, street</td><td>A-30</td><td>Open</td></tr>
+      <tr><td><input type="checkbox" aria-label="Select Roof plan"></td><td class="name">Roof plan</td><td>A-41</td><td>Open</td></tr>
+    </tbody>
+  </table>
+  <p class="foot" id="foot" role="status">Two open sheets can merge.</p>
+</section>
+<script>
+const boxes = [...document.querySelectorAll('tbody input')];
+const els = {
+  count: document.getElementById('count'),
+  filter: document.getElementById('filter'),
+  open: document.getElementById('open'),
+  rename: document.getElementById('rename'),
+  merge: document.getElementById('merge'),
+  download: document.getElementById('download'),
+  foot: document.getElementById('foot')
+};
+function show(map){
+  Object.entries(map).forEach(([k,v]) => { els[k].hidden = !v; });
+}
+function sync(){
+  const on = boxes.filter(b => b.checked);
+  const n = on.length;
+  const locked = on.some(b => b.dataset.locked === '1');
+  els.count.textContent = n === 0 ? 'None selected' : n === 1 ? '1 selected' : n + ' selected';
+  if (n === 0){
+    show({filter:true, open:false, rename:false, merge:false, download:false});
+    els.foot.textContent = 'Select a drawing.';
+  } else if (locked){
+    show({filter:false, open:false, rename:false, merge:false, download:true});
+    els.foot.textContent = 'A locked sheet can only be downloaded.';
+  } else if (n === 1){
+    show({filter:false, open:true, rename:true, merge:false, download:true});
+    els.foot.textContent = 'One sheet: open it, rename it, or download it.';
+  } else {
+    show({filter:false, open:false, rename:false, merge:true, download:true});
+    els.foot.textContent = 'Two open sheets can merge.';
+  }
+}
+boxes.forEach(b => b.addEventListener('change', sync));
+document.querySelector('.actions').addEventListener('click', (e) => {
+  const btn = e.target.closest('button');
+  if (!btn || btn.hidden) return;
+  const n = boxes.filter(b => b.checked).length;
+  const label = btn.textContent;
+  if (label === 'Filter') els.foot.textContent = 'Filter stays on the page. Nothing is selected.';
+  else els.foot.textContent = label + ' · ' + (n === 1 ? '1 drawing' : n + ' drawings') + '.';
+});
+sync();
+</script>
+</body>
+</html>

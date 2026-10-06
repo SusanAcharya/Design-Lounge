@@ -44,11 +44,30 @@ async function randomPiece() {
 }
 document.querySelectorAll('[data-random]').forEach((a) => a.addEventListener('click', (e) => { e.preventDefault(); randomPiece(); }));
 
+const INSTALL_COPY = new Set(['#hero-cmd', '#close-cmd', '#ag-cmd', '#ex-cmd', '#ui-install-src']);
+
+function noteCopy(btn: HTMLElement) {
+  const ph = (window as Window & { posthog?: { capture: (event: string, props?: Record<string, string>) => void } }).posthog;
+  if (!ph?.capture) return;
+  const sel = btn.dataset.copy || '';
+  const briefUrl = btn.dataset.copyBriefUrl || '';
+  let what = '';
+  let piece = '';
+  if (btn.hasAttribute('data-copy-brief') || briefUrl) {
+    what = 'brief';
+    piece = briefUrl.match(/\/p\/([^/]+)\.md$/)?.[1] || location.pathname.match(/^\/p\/([^/]+)/)?.[1] || '';
+  } else if (sel === '#ui-prompt') what = 'prompt';
+  else if (INSTALL_COPY.has(sel)) what = 'install';
+  if (!what) return;
+  ph.capture('copied', piece ? { what, piece } : { what });
+}
+
 // Copy buttons: data-copy="#id" copies that element's JSON/text payload
 async function copyText(text: string, btn: HTMLElement) {
   try { await navigator.clipboard.writeText(text); } catch {
     const ta = document.createElement('textarea'); ta.value = text; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove();
   }
+  noteCopy(btn);
   const label = btn.querySelector('[data-label]') || btn;
   const orig = label.textContent;
   btn.setAttribute('data-done', '');

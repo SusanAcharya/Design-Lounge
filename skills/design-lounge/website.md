@@ -173,6 +173,7 @@ A website always takes one effect piece, even when they did not name one. Pick t
 One effect is the default, not a ceiling. When they ask for more motion, or name two effects, build them. Keep it one design:
 
 - One lead effect, the one that carries the Idea. It gets the first screen or the biggest section.
+- When motion is 8 or more, the supporting piece is the one Dials names in [practice.md](practice.md). Do not search the motion catalogue for a second effect.
 - Supporting effects each own one section. Two effects never run in the same viewport at once.
 - Every effect uses the sheet's easing and durations, so they move like one hand made them. Translate each piece's motion table onto the sheet, not the other way round.
 - No more than three effects on a page unless they asked for more. A blob, a tilt, a marquee, and a stack fighting on one screen is four designs.

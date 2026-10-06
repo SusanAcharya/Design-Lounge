@@ -1,0 +1,131 @@
+<!-- Design Lounge piece: prompt-source-model · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Quire — Ask</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,560&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4f1ea;--surface:#fffdf8;--ink:#1a1814;--ink-2:#5c564c;--line:#e3dcd0;--line-2:#cfc6b6;
+  --ink-blue:#1e3a5f;--soft:#e7eef6;--chip:#fff;
+  --serif:"Fraunces",Georgia,serif;--sans:"Public Sans",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.45 var(--sans);display:grid;place-items:center;-webkit-font-smoothing:antialiased}
+:focus-visible{outline:2px solid var(--ink-blue);outline-offset:3px}
+form{width:680px;background:var(--surface);border:1px solid var(--line);border-radius:2px;padding:20px}
+label{display:block;font:500 13px var(--sans);margin-bottom:8px}
+textarea{width:100%;min-height:96px;resize:vertical;border:1px solid var(--line-2);border-radius:2px;padding:12px;font:16px/1.45 var(--sans);color:var(--ink);background:var(--surface)}
+textarea:focus{border-color:var(--ink-blue);outline:none}
+.sources{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:12px;position:relative}
+.src{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 8px 0 12px;border-radius:999px;background:var(--soft);border:1px solid var(--ink-blue);color:var(--ink-blue);font:500 13px var(--sans)}
+.src button{display:grid;place-items:center;width:22px;height:22px;padding:0;border:0;border-radius:50%;background:transparent;color:var(--ink-blue);cursor:pointer}
+.add,.model{height:32px;padding:0 12px;border-radius:999px;border:1px solid var(--line-2);background:var(--chip);font:500 13px var(--sans);color:var(--ink);cursor:pointer}
+.menu{position:absolute;top:36px;left:0;z-index:2;min-width:180px;padding:6px;background:var(--surface);border:1px solid var(--line-2);border-radius:2px}
+.menu[hidden]{display:none}
+.menu button{display:block;width:100%;height:36px;text-align:left;padding:0 10px;border:0;background:transparent;font:500 14px var(--sans);cursor:pointer}
+.menu button:hover{background:var(--soft)}
+.row{display:flex;align-items:center;gap:8px;margin-top:12px}
+.model[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.send{margin-left:auto;height:40px;padding:0 16px;border:0;border-radius:2px;background:var(--ink-blue);color:#f4f1ea;font:600 14px var(--sans);cursor:pointer}
+.send:disabled{background:#e7e2d8;color:var(--ink-2);cursor:default}
+.out{margin:14px 0 0;min-height:22px;font-size:14px;color:var(--ink-2)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<form id="ask">
+  <label for="q">Ask</label>
+  <textarea id="q" maxlength="240" placeholder="Which line should lead the Thursday note?"></textarea>
+  <div class="sources" id="sources">
+    <span class="src" data-name="Style sheet">Style sheet <button type="button" aria-label="Remove Style sheet"><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2"/></svg></button></span>
+    <button class="add" type="button" id="add" aria-expanded="false" aria-controls="menu">Add source</button>
+    <div class="menu" id="menu" hidden role="listbox" aria-label="Sources">
+      <button type="button" role="option" data-name="House rules">House rules</button>
+      <button type="button" role="option" data-name="Night book">Night book</button>
+    </div>
+  </div>
+  <div class="row">
+    <button class="model" type="button" id="model" aria-pressed="false">Quill</button>
+    <button class="send" type="submit" disabled>Send</button>
+  </div>
+  <p class="out" id="out" role="status"></p>
+</form>
+<script>
+const q = document.getElementById('q');
+const send = document.querySelector('.send');
+const out = document.getElementById('out');
+const add = document.getElementById('add');
+const menu = document.getElementById('menu');
+const sources = document.getElementById('sources');
+const model = document.getElementById('model');
+const pool = [...menu.querySelectorAll('[data-name]')].map((b) => b.dataset.name);
+function attached(){ return [...sources.querySelectorAll('.src')].map((s) => s.dataset.name); }
+function sync(){
+  const empty = q.value.trim().length === 0;
+  send.disabled = empty;
+  if (empty) out.textContent = '';
+  add.hidden = pool.length === 0;
+}
+q.addEventListener('input', sync);
+add.addEventListener('click', () => {
+  const open = menu.hidden;
+  menu.hidden = !open;
+  add.setAttribute('aria-expanded', open ? 'true' : 'false');
+});
+menu.addEventListener('click', (e) => {
+  const opt = e.target.closest('[data-name]');
+  if (!opt) return;
+  const name = opt.dataset.name;
+  pool.splice(pool.indexOf(name), 1);
+  opt.remove();
+  const chip = document.createElement('span');
+  chip.className = 'src';
+  chip.dataset.name = name;
+  chip.append(name + ' ');
+  const x = document.createElement('button');
+  x.type = 'button';
+  x.setAttribute('aria-label', 'Remove ' + name);
+  x.innerHTML = '<svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2"/></svg>';
+  chip.append(x);
+  sources.insertBefore(chip, add);
+  menu.hidden = true;
+  add.setAttribute('aria-expanded', 'false');
+  if (!pool.length) menu.hidden = true;
+  out.textContent = '';
+  sync();
+});
+sources.addEventListener('click', (e) => {
+  const x = e.target.closest('.src button');
+  if (!x) return;
+  const chip = x.closest('.src');
+  const name = chip.dataset.name;
+  chip.remove();
+  pool.push(name);
+  const opt = document.createElement('button');
+  opt.type = 'button';
+  opt.role = 'option';
+  opt.dataset.name = name;
+  opt.textContent = name;
+  menu.append(opt);
+  add.hidden = false;
+  out.textContent = '';
+});
+model.addEventListener('click', () => {
+  const small = model.getAttribute('aria-pressed') === 'true';
+  model.setAttribute('aria-pressed', small ? 'false' : 'true');
+  model.textContent = small ? 'Quill' : 'Quill small';
+  out.textContent = '';
+});
+document.getElementById('ask').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const names = attached();
+  const via = names.length ? names.join(', ') : 'no source';
+  out.textContent = 'Asked ' + model.textContent + ' · ' + via + ' · ' + q.value.trim().length + ' characters';
+});
+</script>
+</body>
+</html>

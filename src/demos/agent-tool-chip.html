@@ -1,0 +1,74 @@
+<!-- Design Lounge piece: agent-tool-chip · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Pylon — Tool chips</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#e7ece9;--surface:#f7f8f6;--ink:#17211c;--ink-2:#4e5b54;--line:#d3dbd6;
+  --run:#8a4b32;--done:#1f4d3a;--soft:#e7f2ec;--chip:#fff;
+  --sans:"IBM Plex Sans",system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.45 var(--sans);display:grid;place-items:center;-webkit-font-smoothing:antialiased}
+:focus-visible{outline:2px solid var(--done);outline-offset:3px}
+.sheet{width:720px;background:var(--surface);border:1px solid var(--line);border-radius:2px;padding:24px}
+h1{margin:0;font:600 22px/1.2 var(--sans)}
+.lede{margin:6px 0 18px;color:var(--ink-2);font-size:14px}
+.row{display:flex;flex-wrap:wrap;gap:8px}
+.chip{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 12px;border:1px solid var(--line);border-radius:999px;background:var(--chip);color:var(--ink);font:500 13px var(--sans);cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--soft);border-color:var(--done);color:var(--done)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--done);flex:none}
+.dot.run{background:var(--run);animation:pulse 1.4s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.35}}
+.panel{margin-top:14px;padding-top:14px;border-top:1px solid var(--line);min-height:48px}
+.tool{margin:0;font:500 13px var(--mono);color:var(--done)}
+.result{margin:6px 0 0;font-size:15px}
+@media (prefers-reduced-motion:reduce){.dot.run{animation:none}}
+</style>
+</head>
+<body>
+<section class="sheet">
+  <h1>While you were out</h1>
+  <p class="lede">A read still running, a file edited, a rule checked.</p>
+  <div class="row" role="group" aria-label="Tool calls">
+    <button class="chip" type="button" aria-pressed="false" data-i="0"><span class="dot run" aria-hidden="true"></span>Reading the 14:00 log</button>
+    <button class="chip" type="button" aria-pressed="true" data-i="1"><span class="dot" aria-hidden="true"></span>Edited outage.md</button>
+    <button class="chip" type="button" aria-pressed="false" data-i="2"><span class="dot" aria-hidden="true"></span>Checked the hold rule</button>
+  </div>
+  <div class="panel">
+    <p class="tool" id="tool">notes.edit</p>
+    <p class="result" id="result" role="status">Changed the 14:00 line from clear to hold.</p>
+  </div>
+</section>
+<script>
+const items = [
+  { tool: 'logs.read', result: 'Still reading. Nothing is written yet.' },
+  { tool: 'notes.edit', result: 'Changed the 14:00 line from clear to hold.' },
+  { tool: 'rules.hold', result: 'Older than six hours. A person must sign.' }
+];
+const chips = [...document.querySelectorAll('.chip')];
+const tool = document.getElementById('tool');
+const result = document.getElementById('result');
+chips.forEach((chip) => {
+  chip.addEventListener('click', () => {
+    const on = chip.getAttribute('aria-pressed') === 'true';
+    chips.forEach((c) => c.setAttribute('aria-pressed', 'false'));
+    if (on) {
+      tool.textContent = '';
+      result.textContent = '';
+      return;
+    }
+    chip.setAttribute('aria-pressed', 'true');
+    const item = items[Number(chip.dataset.i)];
+    tool.textContent = item.tool;
+    result.textContent = item.result;
+  });
+});
+</script>
+</body>
+</html>

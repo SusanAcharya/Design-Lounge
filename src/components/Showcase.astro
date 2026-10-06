@@ -108,7 +108,7 @@ const prompt = (title: string, slug: string) => `Use the Design Lounge skill. Bu
 
       frame.querySelectorAll('.lf-url .path').forEach((e) => { e.textContent = slug; });
       frame.querySelectorAll('.lf-tab .t').forEach((e) => { e.textContent = title; });
-      frame.querySelectorAll('.lf-chrome > .url').forEach((e) => { e.textContent = `lounge.design/${slug}`; });
+      frame.querySelectorAll('.lf-chrome > .url').forEach((e) => { e.textContent = `designlounge.live/${slug}`; });
       const iframe = frame.querySelector('iframe');
       iframe?.setAttribute('title', `Live preview: ${title}`);
       const img = frame.querySelector<HTMLImageElement>('.lf-poster-img');
@@ -142,6 +142,7 @@ const prompt = (title: string, slug: string) => `Use the Design Lounge skill. Bu
       const label = copyBtn.querySelector('[data-label]')!;
       copyBtn.setAttribute('data-done', '');
       label.textContent = 'Copied';
+      (window as Window & { posthog?: { capture: (event: string, props?: Record<string, string>) => void } }).posthog?.capture('copied', { what: 'prompt' });
       setTimeout(() => { copyBtn.removeAttribute('data-done'); label.textContent = 'Copy prompt'; }, 1600);
     });
   });

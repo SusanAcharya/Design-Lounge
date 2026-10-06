@@ -1,6 +1,6 @@
 ---
-/* Filterable, sortable catalogue of pieces. All pieces render; filtering happens client-side so URLs are shareable. */
-import PieceCard from './PieceCard.astro';
+/* Filterable, sortable catalogue. The page draws one screen of poster cards; the rest stay in JSON until asked for. */
+import { existsSync } from 'node:fs';
 import { PLATFORM_META, TYPE_META, STYLE_META, CATEGORY_META, CATEGORY_GROUPS, numberMap, type Piece, type Category } from '../lib/pieces';
 
 interface Props {
@@ -29,6 +29,28 @@ const SHORT: Partial<Record<Category, string>> = {
 };
 const MOTION_OPTS = [{ v: 'none', label: 'Static' }, { v: 'subtle', label: 'Subtle' }, { v: 'rich', label: 'Rich' }];
 const motionCount = (m: string) => pieces.filter((p) => p.data.motion === m).length;
+const rows = list.map((p) => {
+  const webp = new URL(`../../public/thumbs/${p.id}.webp`, import.meta.url);
+  const jpg = new URL(`../../public/thumbs/${p.id}.jpg`, import.meta.url);
+  return {
+    id: p.id,
+    n: nums.get(p.id) || '000',
+    title: p.data.title,
+    summary: p.data.summary,
+    platform: p.data.platform,
+    platformLabel: PLATFORM_META[p.data.platform].label,
+    type: p.data.type,
+    typeLabel: TYPE_META[p.data.type].singular,
+    category: p.data.category,
+    styles: p.data.styles.join(' '),
+    motion: p.data.motion,
+    difficulty: String(p.data.difficulty),
+    tags: p.data.tags.join(' '),
+    palette: p.data.palette.slice(0, 4),
+    poster: existsSync(webp) ? `/thumbs/${p.id}.webp` : existsSync(jpg) ? `/thumbs/${p.id}.jpg` : '',
+  };
+});
+const catalogJson = JSON.stringify(rows).replace(/</g, '\\u003c');
 const WAYS_IN = [
   { href: '/start', label: 'Start from a product' },
   { href: '/collections', label: 'Shelves' },
@@ -181,17 +203,21 @@ const WAYS_IN = [
       )}
     </div>
   )}
-  <div class="grid" data-grid>
-    {list.map((p, i) => <PieceCard piece={p} n={nums.get(p.id) || '000'} index={i} />)}
-  </div>
+  <div class="grid" data-grid></div>
+  <p class="more-row"><button type="button" class="btn" data-page hidden>Show more</button></p>
   <p class="none" data-none hidden>No pieces match those filters. <button type="button" class="linkish" data-clear>Clear them</button> and try again.</p>
+  <script type="application/json" data-catalog-json set:html={catalogJson}></script>
   </div>
 </section>
 
 <script>
   document.querySelectorAll<HTMLElement>('[data-catalog]').forEach((root) => {
     const grid = root.querySelector<HTMLElement>('[data-grid]')!;
-    const cards = [...grid.querySelectorAll<HTMLElement>('.card')];
+    const raw = root.querySelector<HTMLScriptElement>('[data-catalog-json]')?.textContent || '[]';
+    const rows = JSON.parse(raw) as Array<Record<string, string> & { palette: string[]; poster: string }>;
+    const pageBtn = root.querySelector<HTMLButtonElement>('[data-page]');
+    let page = 1;
+    const PAGE = 40;
     const chips = [...root.querySelectorAll<HTMLButtonElement>('button[data-f][data-v]')];
     const allBtn = root.querySelector<HTMLButtonElement>('[data-all]');
     const sideToggles = root.querySelectorAll<HTMLButtonElement>('[data-side-toggle]');
@@ -210,36 +236,48 @@ const WAYS_IN = [
     if (sort && sp.get('sort')) sort.value = sp.get('sort')!;
     let view = sp.get('view') || (localStorage.getItem('dl-view') ?? 'grid');
 
+    function matches(p: (typeof rows)[number], words: string[]) {
+      if (state.type.size && !state.type.has(p.type)) return false;
+      if (state.platform.size && !state.platform.has(p.platform)) return false;
+      if (state.category.size && !state.category.has(p.category)) return false;
+      if (state.motion.size && !state.motion.has(p.motion)) return false;
+      if (state.style.size && ![...state.style].some((s) => p.styles.split(' ').includes(s))) return false;
+      if (words.length) {
+        const hay = `${p.title} ${p.tags} ${p.styles} ${p.type} ${p.category.replace('-', ' ')} ${p.platform} ${p.summary}`.toLowerCase();
+        if (!words.every((w) => hay.includes(w))) return false;
+      }
+      return true;
+    }
+    function cardEl(p: (typeof rows)[number], i: number) {
+      const el = document.createElement('article');
+      el.className = 'card';
+      el.style.setProperty('--d', `${Math.min(i, 12) * 30}ms`);
+      const plate = p.poster
+        ? `<img src="${p.poster}" alt="" width="640" height="480" loading="lazy" decoding="async">`
+        : `<span class="swatch" aria-hidden="true">${p.palette.map((c) => `<i style="background:${c}"></i>`).join('')}</span>`;
+      el.innerHTML = `<div class="stage"><div class="plate"${p.poster ? '' : ` style="background:${p.palette[0] || ''}"`}>${plate}</div><a class="cover" href="/p/${p.id}" tabindex="-1" aria-label="Open ${p.title.replace(/"/g, '&quot;')}"></a></div><div class="body"><div class="meta"><span class="n num">Nº ${p.n}</span><span class="n">${p.typeLabel} · ${p.platformLabel}</span></div><h3 class="title"><a href="/p/${p.id}"></a></h3><button class="brief-copy" type="button" data-copy-brief-url="/p/${p.id}.md" data-done-label="Copied">Copy brief</button></div>`;
+      el.querySelector('.title a')!.textContent = p.title;
+      return el;
+    }
     function apply(push = true) {
       const words = (q?.value || '').toLowerCase().split(/\s+/).filter(Boolean);
-      let shown = 0;
-      for (const c of cards) {
-        const d = c.dataset;
-        let ok = true;
-        if (state.type.size && !state.type.has(d.type!)) ok = false;
-        if (ok && state.platform.size && !state.platform.has(d.platform!)) ok = false;
-        if (ok && state.category.size && !state.category.has(d.category!)) ok = false;
-        if (ok && state.motion.size && !state.motion.has(d.motion!)) ok = false;
-        if (ok && state.style.size && ![...state.style].some((s) => d.styles!.split(' ').includes(s))) ok = false;
-        if (ok && words.length) { const hay = `${d.title} ${d.tags} ${d.styles} ${d.type} ${d.category?.replace('-', ' ')} ${d.platform} ${c.querySelector('.summary')?.textContent?.toLowerCase()}`; ok = words.every((w) => hay.includes(w)); }
-        c.hidden = !ok; if (ok) shown++;
-      }
-      // sort
       const mode = sort?.value || 'new';
-      const sorted = [...cards].sort((a, b) => {
-        if (mode === 'az') return a.dataset.title!.localeCompare(b.dataset.title!);
-        if (mode === 'difficulty') return Number(a.dataset.difficulty) - Number(b.dataset.difficulty) || a.dataset.title!.localeCompare(b.dataset.title!);
-        const cmp = a.dataset.n!.localeCompare(b.dataset.n!);
+      const matched = rows.filter((p) => matches(p, words)).sort((a, b) => {
+        if (mode === 'az') return a.title.localeCompare(b.title);
+        if (mode === 'difficulty') return Number(a.difficulty) - Number(b.difficulty) || a.title.localeCompare(b.title);
+        const cmp = a.n.localeCompare(b.n);
         return mode === 'old' ? cmp : -cmp;
       });
-      sorted.forEach((c, i) => { grid.appendChild(c); c.style.setProperty('--d', `${Math.min(i, 12) * 30}ms`); });
+      const shown = matched.slice(0, page * PAGE);
+      grid.replaceChildren(...shown.map(cardEl));
+      if (pageBtn) { pageBtn.hidden = shown.length >= matched.length; pageBtn.textContent = `Show more · ${matched.length - shown.length} left`; }
       chips.forEach((ch) => ch.setAttribute('aria-pressed', String(state[ch.dataset.f!].has(ch.dataset.v!))));
       const active = Object.values(state).some((s) => s.size) || words.length;
-      if (status) status.textContent = `${shown} of ${cards.length}`;
+      if (status) status.textContent = shown.length === matched.length ? `${matched.length}` : `${shown.length} of ${matched.length}`;
       clears.forEach((b) => (b.hidden = !active));
       allBtn?.setAttribute('aria-pressed', String(!active));
       chips.forEach((ch) => { if (ch.getAttribute('aria-pressed') === 'true') ch.closest('details')?.setAttribute('open', ''); });
-      if (none) none.hidden = shown > 0;
+      if (none) none.hidden = matched.length > 0;
       grid.classList.toggle('list', view === 'list');
       views.forEach((v) => v.setAttribute('aria-pressed', String(v.dataset.view === view)));
       if (push) {
@@ -262,14 +300,16 @@ const WAYS_IN = [
         b.type = 'button';
         b.className = 'chip on';
         b.textContent = ((ch.classList.contains('sitem') ? ch.querySelector('span')?.textContent : ch.textContent) || '').trim();
-        b.addEventListener('click', () => { state[ch.dataset.f!].delete(ch.dataset.v!); apply(); });
+        b.addEventListener('click', () => { state[ch.dataset.f!].delete(ch.dataset.v!); page = 1; apply(); });
         picks.appendChild(b);
       }
     }
-    chips.forEach((ch) => ch.addEventListener('click', () => { const s = state[ch.dataset.f!]; s.has(ch.dataset.v!) ? s.delete(ch.dataset.v!) : s.add(ch.dataset.v!); apply(); }));
-    q?.addEventListener('input', () => apply());
-    sort?.addEventListener('change', () => apply());
-    const clearAll = () => { Object.values(state).forEach((s) => s.clear()); if (q) q.value = ''; apply(); };
+    chips.forEach((ch) => ch.addEventListener('click', () => { const s = state[ch.dataset.f!]; s.has(ch.dataset.v!) ? s.delete(ch.dataset.v!) : s.add(ch.dataset.v!); page = 1; apply(); }));
+    let queryTimer = 0;
+    q?.addEventListener('input', () => { window.clearTimeout(queryTimer); queryTimer = window.setTimeout(() => { page = 1; apply(); }, 150); });
+    sort?.addEventListener('change', () => { page = 1; apply(); });
+    pageBtn?.addEventListener('click', () => { page += 1; apply(); });
+    const clearAll = () => { Object.values(state).forEach((s) => s.clear()); if (q) q.value = ''; page = 1; apply(); };
     clears.forEach((b) => b.addEventListener('click', clearAll));
     allBtn?.addEventListener('click', clearAll);
     sideToggles.forEach((t) => t.addEventListener('click', () => {
@@ -353,6 +393,9 @@ const WAYS_IN = [
     .side-toggle { display: inline-flex; }
     .has-side .filters { position: static; backdrop-filter: none; }
   }
+  .more-row { display: flex; justify-content: center; padding: 28px 0 8px; }
+  .more-row .btn { height: 44px; padding: 0 18px; }
+  .more-row .btn[hidden] { display: none; }
   .none { padding: 48px 0; color: var(--ink-2); text-align: center; }
   .linkish { text-decoration: underline; text-underline-offset: 3px; }
   @media (max-width: 640px) { .frow .eyebrow { width: 100%; } .frow-top .eyebrow { width: auto; } .frow-top .q { flex-basis: 100%; max-width: none; } .fgroup select { width: 150px; } }

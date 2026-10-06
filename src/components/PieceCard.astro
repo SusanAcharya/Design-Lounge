@@ -1,10 +1,14 @@
 ---
-import DeviceFrame from './DeviceFrame.astro';
+import { existsSync } from 'node:fs';
 import { PLATFORM_META, TYPE_META, pieceUrl, briefUrl, type Piece } from '../lib/pieces';
 
 interface Props { piece: Piece; n: string; index?: number; }
 const { piece, n, index = 0 } = Astro.props;
 const d = piece.data;
+const thumbWebp = new URL(`../../public/thumbs/${piece.id}.webp`, import.meta.url);
+const thumbJpg = new URL(`../../public/thumbs/${piece.id}.jpg`, import.meta.url);
+const poster = existsSync(thumbWebp) ? `/thumbs/${piece.id}.webp` : existsSync(thumbJpg) ? `/thumbs/${piece.id}.jpg` : '';
+const plate = d.palette.slice(0, 4);
 ---
 <article
   class="card reveal"
@@ -22,7 +26,11 @@ const d = piece.data;
   style={`--d:${Math.min(index, 12) * 40}ms`}
 >
   <div class="stage">
-    <DeviceFrame slug={piece.id} platform={d.platform} title={d.title} />
+    <div class="plate" style={poster ? undefined : `background:${plate[0] ?? 'var(--paper-3)'}`}>
+      {poster
+        ? <img src={poster} alt="" width="640" height="480" loading="lazy" decoding="async" />
+        : <span class="swatch" aria-hidden="true">{plate.map((c) => <i style={`background:${c}`}></i>)}</span>}
+    </div>
     <a class="cover" href={pieceUrl(piece.id)} aria-label={`Open ${d.title}`} tabindex="-1"></a>
   </div>
   <div class="body">

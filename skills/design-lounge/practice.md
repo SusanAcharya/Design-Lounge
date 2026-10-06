@@ -18,7 +18,7 @@ The aim is one product that feels designed: same palette, type, icons, radius, s
 
 1. Write the four lines in Decide the screen. If you cannot name the decision, you are not ready to pick a hero. For a website, also read Stand out in [website.md](website.md) and write the Idea. For an app, read The one screen in [app.md](app.md) and write the Idea.
 2. Decide new kit or adopt. Adopt when they already have tokens, a DESIGN.md, or styled screens, unless they asked for a new look.
-3. Match the world, then choose the pieces. Read Match the world. Search before you invent: settings, billing, search, upload, audit, account menu, inbox, table, dialog, toast, form, select, record, people, detail, chart, line, kpi, empty, error, collection, cart. On a phone, search for the phone empty and the phone failed load before you reuse the web ones. On a tablet, use the tablet recipe. Do not stretch a phone screen to 1180px. If `pieces.txt` has no piece, say so, and build only from this sheet and from [components.md](components.md). Do not import another library's look.
+3. Match the world, then choose the pieces. Read Match the world. Search before you invent: settings, billing, search, upload, audit, account menu, inbox, table, dialog, toast, form, select, record, people, detail, chart, line, kpi, empty, error, collection, cart, agent, approval, source, rewrite. On a phone, search for the phone empty and the phone failed load before you reuse the web ones. On a tablet, use the tablet recipe. Do not stretch a phone screen to 1180px. If `pieces.txt` has no piece, say so, and build only from this sheet and from [components.md](components.md). Do not import another library's look.
 4. Say the pick with links at the top of your reply, then build. Follow Say the pick in [SKILL.md](SKILL.md). Ask first only when two worlds fit and would lock different themes, or when they asked to choose.
 5. When the system is locked, write the sheet below. If the project has no DESIGN.md, add it. If one exists and you are adopting it, do not overwrite it. If one exists from an earlier Lounge pass, update Sources when they change a screen. Do not start a second file.
 6. Build the shell first (nav, tab bar, or frame), then the primary screen, then the rest of the minimum set below. A product is not done after the first screen.
@@ -75,16 +75,35 @@ Three numbers from 1 to 10 that say how far to push. Set them from their words, 
 
 | They said | Variance | Motion | Density |
 | --- | --- | --- | --- |
+| Simple, professional, plain, quiet | 4 | 3 | 4 |
 | Calm, clean, minimal, editorial, "like Linear" | 5 | 3 | 3 |
 | Premium, luxury, "like Apple" | 7 | 6 | 3 |
-| Playful, wild, experimental, agency, Awwwards | 9 | 9 | 3 |
+| Fun, playful, cool, wild, experimental, agency, Awwwards | 9 | 9 | 3 |
 | A landing page or portfolio, nothing more | 8 | 7 | 4 |
 | A daily tool, admin, dashboard | 3 | 2 | 7 |
 | Government, health, money, anything where trust comes first | 3 | 2 | 5 |
 
 - Variance: 1 is centred and even. 10 is off-grid, with sizes that clash on purpose. Above 6, no two sections share a shape.
-- Motion: 1 to 3 is Register quiet (Register is in [website.md](website.md)). 4 to 7 is one lead effect. 8 to 10 is a lead plus supporting effects, each in its own section.
+- Motion: 1 to 3 is Register quiet (Register is in [website.md](website.md)). 4 to 7 is one lead effect, and a form on that page uses `field-label-morph`. 8 to 10 is that lead plus one supporting piece from the list below.
 - Density: 1 to 3 is air, 4 to 6 is regular, 7 to 10 is dense. It sets the Density line.
+
+Fun, cool, simple, and professional set this table. They do not pick a direction. Unique, bold, and "make it stand out" are the Signature in [website.md](website.md). They do not raise these numbers.
+
+A dashboard, a clinic, a ledger, or a trust-row product stays on its row. If they also say fun, raise motion by two from that row and stop. Do not give that product the pieces in the motion 8 list.
+
+### Pieces the numbers name
+
+Use one only when a section you are already building has that job. Do not add a section to make room for it. Open its brief.
+
+- Motion 4 to 7, and the page has a form: `field-label-morph`. Motion 1 to 3 keeps a plain field.
+- Motion 8 to 10, a grid of work: `grow-grid`.
+- Motion 8 to 10, a list of steps, talks, or projects: `stacking-cards-scroll`.
+- Motion 8 to 10, a row of cards: `hover-tilt-cards`. A quote: `card-pull-quote`.
+- If two of those sections exist, the name number picks which one moves. The other stays still.
+- Recipe `dashboard` or `web-app`, a table with checks: `toolbar-selection-swap`. The verbs change with the count. `selection-bar` is the bar whose verbs do not change.
+- Recipe `dashboard`, one total split into parts: `chart-share-bar`. A ranking of the same numbers is `chart-rank-spend`. Do not draw a donut.
+- Variance 7 or more, and the work is a screen you are reviewing: `shot-callout-pins`. Software shown in a window, on `portfolio-builder`: `mockup-laptop-browser`. Photographs keep the direction's work.
+- The product is a conversation with an agent, and the screen already has that job. `prompt-composer` is the ask box with a tone. `prompt-source-model` attaches a source and names the model. `agent-step-trace` is the list of steps you open. `agent-tool-chip` is one tool call or one file edit, as a chip. `agent-approval-card` waits for a yes before the agent continues. `card-confidence-pick` is one suggestion, a confidence, and one other option. `selection-rewrite` is a sentence the person marks and sends back shorter. `cited-answer` is the sourced paragraph. `ai-chat-workspace` is the whole screen. Do not put all of them on one screen.
 
 When they ask for "more" or "calmer", move a dial two steps and rebuild. Do not swap the theme.
 
@@ -112,7 +131,7 @@ Before you choose, read the history (Recent picks, below). Then choose in this o
 
 1. They named a theme, a pairing, a colour, or a site they like. Lock the direction closest to it, then swap in what they named.
 2. The subject's world. Write the materials of the thing itself: the instrument, the tool, the room, the place, the craft. Guitar: strings, wood, a stage, a setlist. Drawing: paper, a pencil line, a sketchbook. Code: a terminal, short drills. Lock the direction whose `mood` names that world. A clear dark, Nepali, retro, or AI request also counts here.
-3. Audience words come last, and never alone: beginner, friendly, simple, fun, modern, clean, for everyone, easy. Almost every brief says them. They break a tie between two directions that both fit the subject. They do not pick a direction by themselves. "For kids" is the exception: it is a world.
+3. Audience words come last, and never alone: beginner, friendly, simple, fun, modern, clean, for everyone, easy. Almost every brief says them. They break a tie between two directions that both fit the subject. They do not pick a direction by themselves. Fun, cool, simple, and professional set the dials above. "For kids" is the exception: it is a world.
 4. Read the person. Most messages carry more than they say: a bio, a tagline, project names, their job, their own site or GitHub, the way they write. Write three words that describe that material, in their words where you can. Compare them with each direction's `mood` and lock the closest. Write it on the sheet. For a twelve-seat momo counter whose owner wrote "we fold every momo in front of you, no freezer": `Direction: garden-supper (their words: small, made in front of you, slow; mood: olive, cream, slow food)`. A designer starts from the person, not from a number.
 5. Two or more directions fit equally, or there is truly nothing to read (a bare "make me a portfolio"). Only then use the name number, and only among the directions that fit. Work out the name number: add up the place of each letter of the product or brand name in the alphabet (a = 1, b = 2, … z = 26), ignoring spaces, digits and punctuation. If there is no name, use the first noun in their message. Divide by the number of directions. The remainder picks it, counting the first direction as 0. Write the sum on the sheet, for example `Direction: garden-supper (Tsering = 20+19+5+18+9+14+7 = 92, three directions fit, 92 mod 3 = 2)`. The name number keeps one product consistent and keeps two products apart. It does not know who they are, so it never overrules rules 2 to 4. Counting letters is not enough, because names of the same length would always land together.
 

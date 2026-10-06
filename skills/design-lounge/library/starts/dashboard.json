@@ -17,10 +17,12 @@
  "pieces": [
   "analytics-dashboard-overview",
   "dense-data-table",
+  "toolbar-selection-swap",
   "charts-kpi-spark-row",
   "chart-bar-week",
   "chart-line-range",
   "chart-rank-spend",
+  "chart-share-bar",
   "kpi-delta",
   "collapsing-sidebar-rail",
   "audit-activity-log",

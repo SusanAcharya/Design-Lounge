@@ -31,6 +31,7 @@ On Android, or when the family is Material, use the `m3-` piece when one is name
 - First run: `ios-onboarding-carousel`, then `phone-permission-prompt` before any system prompt. Never on launch.
 - The list: the piece that matches the content (inbox, feed, spend, search, map). First load is `phone-skeleton-list`, not a spinner. Empty is `mobile-list-empty`. A failed load is `mobile-load-failed`. Pull to refresh is `ios-pull-to-refresh`.
 - Writing something new: `phone-composer`. Photos full screen: `phone-photo-viewer`.
+- A conversation with the work: `ai-chat-workspace` is the screen. The ask box with a tone is `prompt-composer`. An ask box that attaches a source and names the model is `prompt-source-model`. A step you open is `agent-step-trace`. A tool call or a file edit as a chip is `agent-tool-chip`. A yes before it continues is `agent-approval-card`. One suggestion with a confidence and one other option is `card-confidence-pick`. A sentence marked and sent back shorter is `selection-rewrite`. A sourced paragraph is `cited-answer`. Use the one the screen already needs. Do not stack them to look more like an agent.
 - A shop on a phone: `phone-product-detail`, `phone-cart`, `phone-checkout`, then `phone-orders` for history and `phone-order-tracking` for one on its way.
 - On Android, a confirm is `m3-dialog`, an undo is `m3-snackbar`, and search is `m3-search-results`.
 - The detail: the piece for that content. On Android, a row that grows into the screen is `m3-list-detail`. On iOS, a large title that collapses is `ios-large-title-collapse`.

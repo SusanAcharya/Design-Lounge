@@ -717,7 +717,7 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'swiss-precision',
     shelf: 'dashboards-and-data',
     categories: ['dashboard', 'data', 'charts', 'navigation'],
-    pieces: ['analytics-dashboard-overview', 'dense-data-table', 'charts-kpi-spark-row', 'chart-bar-week', 'chart-line-range', 'chart-rank-spend', 'kpi-delta', 'collapsing-sidebar-rail', 'audit-activity-log', 'upload-file-queue', 'account-menu-panel', 'record-detail-header', 'people-role-list', 'billing-plan-summary', 'list-empty-plain', 'load-failed-retry', 'saved-banner', 'kanban-board', 'sidebar-workspace-switcher', 'ai-chat-workspace', 'settings-team-members', 'file-upload-manager', 'calendar-week-planner', 'onboarding-workspace-setup', 'crypto-exchange-trade', 'card-terminal-log'],
+    pieces: ['analytics-dashboard-overview', 'dense-data-table', 'toolbar-selection-swap', 'charts-kpi-spark-row', 'chart-bar-week', 'chart-line-range', 'chart-rank-spend', 'chart-share-bar', 'kpi-delta', 'collapsing-sidebar-rail', 'audit-activity-log', 'upload-file-queue', 'account-menu-panel', 'record-detail-header', 'people-role-list', 'billing-plan-summary', 'list-empty-plain', 'load-failed-retry', 'saved-banner', 'kanban-board', 'sidebar-workspace-switcher', 'ai-chat-workspace', 'settings-team-members', 'file-upload-manager', 'calendar-week-planner', 'onboarding-workspace-setup', 'crypto-exchange-trade', 'card-terminal-log'],
   },
   {
     id: 'web-app',
@@ -730,7 +730,7 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'friendly-saas',
     shelf: 'dashboards-and-data',
     categories: ['navigation', 'dashboard', 'settings', 'utility'],
-    pieces: ['sidebar-workspace-switcher', 'collapsing-sidebar-rail', 'command-palette', 'kanban-board', 'ai-chat-workspace', 'tablet-notes-three-pane', 'dense-data-table', 'list-empty-plain', 'load-failed-retry', 'saved-banner', 'account-menu-panel', 'settings-page-sticky-nav', 'onboarding-workspace-setup', 'file-upload-manager'],
+    pieces: ['sidebar-workspace-switcher', 'collapsing-sidebar-rail', 'command-palette', 'kanban-board', 'ai-chat-workspace', 'prompt-source-model', 'agent-approval-card', 'agent-tool-chip', 'card-confidence-pick', 'selection-rewrite', 'tablet-notes-three-pane', 'dense-data-table', 'toolbar-selection-swap', 'list-empty-plain', 'load-failed-retry', 'saved-banner', 'account-menu-panel', 'settings-page-sticky-nav', 'onboarding-workspace-setup', 'file-upload-manager'],
   },
   {
     id: 'commerce',

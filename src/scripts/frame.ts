@@ -42,8 +42,11 @@ class LoungeFrame extends HTMLElement {
     this.iframe.addEventListener('load', () => { if (this.iframe.getAttribute('src')) setTimeout(() => this.classList.add('loaded'), 250); });
     if (this.dataset.lazy === 'true' && 'IntersectionObserver' in window) {
       this.io = new IntersectionObserver((entries) => {
-        for (const e of entries) if (e.isIntersecting) this.load();
-      }, { rootMargin: '400px 0px' });
+        for (const e of entries) {
+          if (e.isIntersecting) this.load();
+          else if (!this.classList.contains('interactive')) this.unload();
+        }
+      }, { rootMargin: '200px 0px' });
       this.io.observe(this);
     } else {
       this.load();
