@@ -249,7 +249,8 @@ stage.addEventListener('pointerup',release);stage.addEventListener('pointercance
 let lock=null;
 async function wake(on){
   $('#wake').setAttribute('aria-pressed',on);$('#wake span').textContent=on?'Screen stays on':'Screen may sleep';
-  try{if(on&&navigator.wakeLock)lock=await navigator.wakeLock.request('screen');else if(lock){lock.release();lock=null}}catch(_){}
+  const allowed=(document.permissionsPolicy||document.featurePolicy)?.allowsFeature?.('screen-wake-lock')!==false;
+  try{if(on&&navigator.wakeLock&&allowed)lock=await navigator.wakeLock.request('screen');else if(lock){lock.release();lock=null}}catch(_){}
 }
 $('#wake').onclick=()=>wake($('#wake').getAttribute('aria-pressed')!=='true');
 const ann=document.createElement('div');ann.id='ann';ann.setAttribute('aria-live','assertive');ann.style.cssText='position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)';document.body.append(ann);

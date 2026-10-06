@@ -13,10 +13,30 @@ const GEO: Record<string, Geo> = {
 const VIEWS: View[] = ['auto', 'desktop', 'tablet', 'phone'];
 const TINY = 0.3;
 const reduced = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
-// Demos start only after the page itself has loaded and gone idle; the poster covers the wait.
+// Demos start after the page's first paint, a short beat and an idle moment; the poster covers the wait.
+// `load` fires long before first paint on a slow phone, and each demo pulls its own fonts, so waiting for
+// `load` alone let four iframes and their font requests compete with the page's own first paint.
+// Any scroll, tap or key press starts them at once, since the reader is already moving.
+const PAINT_BEAT = 1200;
+const INPUT = ['scroll', 'wheel', 'touchstart', 'pointerdown', 'keydown'] as const;
 const pageReady = new Promise<void>((res) => {
-  const idle = () => ('requestIdleCallback' in window ? requestIdleCallback(() => res(), { timeout: 2500 }) : setTimeout(res, 300));
-  if (document.readyState === 'complete') idle(); else addEventListener('load', idle, { once: true });
+  let started = false;
+  const start = () => {
+    if (started) return;
+    started = true;
+    for (const t of INPUT) removeEventListener(t, start, true);
+    res();
+  };
+  for (const t of INPUT) addEventListener(t, start, { capture: true, passive: true, once: true });
+  const idle = () => ('requestIdleCallback' in window ? requestIdleCallback(start, { timeout: 2500 }) : setTimeout(start, 300));
+  const painted = () => setTimeout(idle, PAINT_BEAT);
+  if ('PerformanceObserver' in window && PerformanceObserver.supportedEntryTypes?.includes('paint')) {
+    const po = new PerformanceObserver((list) => {
+      if (list.getEntriesByName('first-contentful-paint').length) { po.disconnect(); painted(); }
+    });
+    po.observe({ type: 'paint', buffered: true });
+  } else if (document.readyState === 'complete') painted();
+  else addEventListener('load', painted, { once: true });
 });
 
 class LoungeFrame extends HTMLElement {
