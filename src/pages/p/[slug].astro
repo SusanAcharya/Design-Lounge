@@ -66,8 +66,8 @@ const json = (s: string) => JSON.stringify(s).replace(/</g, '\\u003c');
             <a href="/browse">Floor</a><span aria-hidden="true">/</span><a href={`/rooms/${d.type}`}>{TYPE_META[d.type].label}</a><span aria-hidden="true">/</span><a href={`/sections/${d.category}`}>{CATEGORY_META[d.category].label}</a>
           </nav>
           <div class="pnav">
-            <a class="pn-link" href={`/p/${prev.id}`} data-prev title={prev.data.title} aria-label={`Previous: ${prev.data.title}`}><kbd>[</kbd><span>prev</span></a>
-            <a class="pn-link" href={`/p/${next.id}`} data-next title={next.data.title} aria-label={`Next: ${next.data.title}`}><span>next</span><kbd>]</kbd></a>
+            <a class="pn-link" href={`/p/${prev.id}`} data-prev title={prev.data.title} aria-label={`Prev: ${prev.data.title}`}><kbd aria-hidden="true">[</kbd><span>prev</span></a>
+            <a class="pn-link" href={`/p/${next.id}`} data-next title={next.data.title} aria-label={`Next: ${next.data.title}`}><span>next</span><kbd aria-hidden="true">]</kbd></a>
           </div>
         </div>
         <p class="mono faint num nmark">Nº {n} <span>of {String(all.length).padStart(3, '0')}</span></p>

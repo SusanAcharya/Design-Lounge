@@ -69,17 +69,20 @@ const faq = [
     </div>
     <div class="hero-wall" aria-label="Featured pieces">
       {heroWeb && (
-        <a class="wall-item web" href={`/p/${heroWeb.id}`} aria-label={heroWeb.data.title}>
+        <a class="wall-item web" href={`/p/${heroWeb.id}`}>
+          <span class="sr-only">{heroWeb.data.title}</span>
           <DeviceFrame slug={heroWeb.id} platform={heroWeb.data.platform} title={heroWeb.data.title} eager />
         </a>
       )}
       {heroPhone && (
-        <a class="wall-item phone" href={`/p/${heroPhone.id}`} aria-label={heroPhone.data.title}>
+        <a class="wall-item phone" href={`/p/${heroPhone.id}`}>
+          <span class="sr-only">{heroPhone.data.title}</span>
           <DeviceFrame slug={heroPhone.id} platform={heroPhone.data.platform} title={heroPhone.data.title} eager />
         </a>
       )}
       {heroTablet && (
-        <a class="wall-item tablet" href={`/p/${heroTablet.id}`} aria-label={heroTablet.data.title}>
+        <a class="wall-item tablet" href={`/p/${heroTablet.id}`}>
+          <span class="sr-only">{heroTablet.data.title}</span>
           <DeviceFrame slug={heroTablet.id} platform={heroTablet.data.platform} title={heroTablet.data.title} />
         </a>
       )}
