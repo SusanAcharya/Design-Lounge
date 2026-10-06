@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Late Light · the planetarium's late-night show</title>
+  <meta name="description" content="Late Light is the planetarium's show for after dark. Lie back under the dome and travel past the Moon and Saturn to the far side of the Milky Way.">
+  <meta name="theme-color" content="#0b1220">
+  <meta property="og:title" content="Late Light · the planetarium's late-night show">
+  <meta property="og:description" content="Lights down. Look up. Scroll from your seat to the edge of the Milky Way.">
+  <meta property="og:image" content="og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="favicon.ico" sizes="32x32">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip" href="#tickets">Skip the journey</a>
+
+  <header class="top" id="top-bar">
+    <a class="mark" href="#dome" aria-label="Late Light, back to the dome">LATE LIGHT<span class="mark-star" aria-hidden="true"></span></a>
+    <nav class="top-nav" aria-label="Primary">
+      <a href="#dome" class="hide-sm">The show</a>
+      <a href="#tickets" class="hide-sm">Tickets</a>
+      <a href="#visit">Visit</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="journey" id="journey" aria-label="The show">
+      <div class="stage">
+        <div class="sky" aria-hidden="true">
+          <canvas id="sky"></canvas>
+          <div class="mask"></div>
+        </div>
+        <p class="gl-error" id="gl-error" hidden>The sky could not start in this browser. The chapters still scroll.</p>
+
+        <nav class="index" aria-label="Chapters">
+          <button class="chap" type="button" data-jump="dome" aria-current="true">
+            <span class="n num">01</span><span class="l">The dome</span>
+            <svg class="arr" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>
+            <span class="bar" aria-hidden="true"></span>
+          </button>
+          <button class="chap" type="button" data-jump="moon">
+            <span class="n num">02</span><span class="l">The Moon</span>
+            <svg class="arr" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>
+            <span class="bar" aria-hidden="true"></span>
+          </button>
+          <button class="chap" type="button" data-jump="saturn">
+            <span class="n num">03</span><span class="l">Saturn</span>
+            <svg class="arr" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>
+            <span class="bar" aria-hidden="true"></span>
+          </button>
+          <button class="chap" type="button" data-jump="galaxy">
+            <span class="n num">04</span><span class="l">The Milky Way</span>
+            <svg class="arr" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>
+            <span class="bar" aria-hidden="true"></span>
+          </button>
+        </nav>
+
+        <div class="strip" aria-hidden="true">
+          <p class="readout"><span class="num" id="dist">0 m</span> <span class="from">from your seat</span></p>
+          <p class="pair"><span class="num" id="pair-n">01</span><span class="rule"></span><span id="pair-l">Seat to ceiling</span></p>
+        </div>
+      </div>
+
+      <div class="chapters">
+        <article class="chapter" id="dome" aria-labelledby="h-dome">
+          <div class="copy hero-copy">
+            <p class="kicker rise">The planetarium's late-night show</p>
+            <h1 id="h-dome" class="rise"><span>Lights down.</span><span class="gold">Look up.</span></h1>
+            <p class="lede rise">Late Light is the planetarium's show for after dark. You lie back under the dome, the room goes black, and the sky carries you out past the Moon and Saturn until the whole Milky Way fits on the ceiling.</p>
+            <div class="actions rise">
+              <a class="btn btn-primary" href="#visit">Book a seat
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </a>
+              <a class="ghost" href="#moon" data-jump-link="moon">Leave the room
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <article class="chapter" id="moon" aria-labelledby="h-moon">
+          <div class="copy">
+            <h2 id="h-moon">The Moon</h2>
+            <p class="deck">The nearest thing up there, and still more than a light-second away.</p>
+            <p>The first scroll lifts you through the open crown of the dome. A few seconds later you are beside the Moon, close enough to see the line where its day stops and its night begins.</p>
+            <p class="fact"><span class="num">384,400 km</span> from your seat. Its light reaches you in 1.3 seconds.</p>
+          </div>
+        </article>
+
+        <article class="chapter" id="saturn" aria-labelledby="h-saturn">
+          <div class="copy">
+            <h2 id="h-saturn">Saturn</h2>
+            <p class="deck">Rings 270,000 km across, and in most places only tens of metres thick.</p>
+            <p>Sunlight takes about eighty minutes to get this far. Slow down here and you can watch the planet throw its own shadow across the rings.</p>
+            <p class="fact">About <span class="num">1.4 billion km</span> from your seat. A day here lasts 10 hours 33 minutes.</p>
+          </div>
+        </article>
+
+        <article class="chapter" id="galaxy" aria-labelledby="h-galaxy">
+          <div class="copy">
+            <h2 id="h-galaxy">The Milky Way</h2>
+            <p class="deck">A hundred billion suns or more. The gold mark is your seat.</p>
+            <p>Then the dome pulls all the way back. The galaxy flattens into one spiral about 100,000 light-years across, and the small gold mark halfway out along an arm is the Sun, the Earth, the planetarium and the reclined seat you are lying in.</p>
+            <p class="fact">About <span class="num">26,000</span> light-years from the centre. Then the house lights come up.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="tickets" id="tickets" aria-labelledby="h-tickets">
+      <div class="wrap">
+        <div class="t-copy">
+          <p class="eyebrow">Example tickets</p>
+          <h2 id="h-tickets">Keep the stub.</h2>
+          <div class="tier" id="tier" aria-live="polite">
+            <p class="tier-line" id="tier-line">One seat</p>
+            <p class="tier-price" id="tier-price">A reclined seat for one night</p>
+            <ul class="perks" id="perks">
+              <li>A reclined seat facing the centre of the dome</li>
+              <li>Doors at 22:15, lights down at 22:30</li>
+              <li>Stay after for questions with the astronomer on duty</li>
+            </ul>
+          </div>
+          <p class="hint">Move over the ticket to tilt it. With the keyboard, <kbd>←</kbd> <kbd>→</kbd> <kbd>↑</kbd> <kbd>↓</kbd> tilt and <kbd>Esc</kbd> levels it.</p>
+        </div>
+
+        <div class="t-stage" id="t-stage">
+          <div class="slot" data-slot="0" data-tier="seat">
+            <div class="float">
+              <div class="pass pass-seat" tabindex="0">
+                <div class="p-top"><span class="p-brand">Late Light</span><span class="p-badge">Seat</span></div>
+                <div class="p-mid">
+                  <svg class="emblem" viewBox="0 0 52 52" aria-hidden="true"><path d="M6 38a20 20 0 0 1 40 0"/><path d="M6 38h40"/><path d="M16 38a10 10 0 0 1 20 0"/><path d="M26 10v4M24 12h4"/><circle cx="38" cy="18" r="1.2"/><circle cx="14" cy="20" r="1"/></svg>
+                  <div><p class="p-date">Friday 23 October</p><p class="p-time">Lights down <span class="num">22:30</span></p></div>
+                </div>
+                <div class="p-foot">
+                  <div class="p-lines"><span>Row F · Seat 14</span><span>Doors <span class="num">22:15</span></span></div>
+                  <div class="p-code"><span class="barcode"></span><span class="num">LL-1023-F14</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="slot" data-slot="1" data-tier="pair">
+            <div class="float">
+              <div class="pass pass-pair" tabindex="0">
+                <div class="p-top"><span class="p-brand">Late Light</span><span class="p-badge">Pair</span></div>
+                <div class="p-mid">
+                  <svg class="emblem" viewBox="0 0 52 52" aria-hidden="true"><circle cx="26" cy="26" r="9"/><ellipse cx="26" cy="26" rx="20" ry="6" transform="rotate(-18 26 26)"/></svg>
+                  <div><p class="p-date">Saturday 24 October</p><p class="p-time">Lights down <span class="num">22:30</span></p></div>
+                </div>
+                <div class="p-foot">
+                  <div class="p-lines"><span>Row D · Seats 8 and 9</span><span>Doors <span class="num">22:15</span></span></div>
+                  <div class="p-code"><span class="barcode"></span><span class="num">LL-1024-D08</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="slot" data-slot="2" data-tier="member">
+            <div class="float">
+              <div class="pass pass-member" tabindex="0">
+                <div class="p-top"><span class="p-brand">Late Light</span><span class="p-badge">Member</span></div>
+                <div class="p-mid">
+                  <svg class="emblem" viewBox="0 0 52 52" aria-hidden="true"><path d="M8 30c6-10 30-10 36 0"/><path d="M12 34c5-6 23-6 28 0"/><circle cx="26" cy="26" r="2.4"/><path d="M26 8v5M26 39v5"/></svg>
+                  <div><p class="p-date">Every late show</p><p class="p-time">For twelve months</p></div>
+                </div>
+                <div class="p-foot">
+                  <div class="p-lines"><span>Any free seat</span><span>Doors <span class="num">22:15</span></span></div>
+                  <div class="p-code"><span class="barcode"></span><span class="num">LL-MEM-0412</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="visit" id="visit" aria-labelledby="h-visit">
+      <div class="v-left">
+        <p class="v-kicker">House lights up</p>
+        <h2 id="h-visit" class="v-big"><span>Friday and</span><span>Saturday nights</span></h2>
+        <p class="v-hint">Doors open fifteen minutes before lights down. Once the dome is dark, latecomers wait for the next chapter break, so the dark stays dark for everyone.</p>
+        <button class="btn btn-ink" type="button" id="open-book">Book a seat
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+      <div class="v-right" aria-labelledby="hours-h">
+        <h3 id="hours-h">Late shows this week</h3>
+        <table class="hours">
+          <thead><tr><th scope="col">Night</th><th scope="col">Lights down</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Monday</th><td class="off">No late show</td></tr>
+            <tr><th scope="row">Tuesday</th><td class="off">No late show</td></tr>
+            <tr><th scope="row">Wednesday</th><td class="off">No late show</td></tr>
+            <tr><th scope="row">Thursday</th><td class="off">No late show</td></tr>
+            <tr><th scope="row">Friday</th><td class="num">22:30</td></tr>
+            <tr><th scope="row">Saturday</th><td class="num">22:30 and 23:45</td></tr>
+            <tr><th scope="row">Sunday</th><td class="off">No late show</td></tr>
+          </tbody>
+        </table>
+        <p class="tz">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v6l4 2"/></svg>
+          Times are local to the planetarium. Example programme.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="colophon">
+    <span class="c-rule" aria-hidden="true"></span>
+    <p class="c-mark">Late Light</p>
+    <p class="c-issue">The planetarium's late show</p>
+    <ul class="c-links">
+      <li><a href="#dome">The show</a></li>
+      <li><a href="#tickets">Tickets</a></li>
+      <li><a href="#visit">Visit</a></li>
+    </ul>
+    <p class="c-place">Under the dome, after dark</p>
+    <button class="c-top" type="button" id="to-top">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg>
+      <span>Back to top</span>
+    </button>
+    <p class="credit">Designed using <a href="https://www.designlounge.live">Design Lounge</a></p>
+  </footer>
+
+  <dialog id="book" aria-labelledby="book-h">
+    <form class="dlg" method="dialog" id="book-form">
+      <div class="dlg-head">
+        <h2 id="book-h">Book a seat</h2>
+        <button class="icon-btn" type="button" id="book-x" aria-label="Close">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+      </div>
+      <p class="dlg-help">Pick a night and how many seats. The box office replies by email.</p>
+      <div class="fields">
+        <label>Name<input name="name" autocomplete="name" required></label>
+        <label>Email<input name="email" type="email" autocomplete="email" required></label>
+        <label>Night
+          <select name="night">
+            <option>Friday, lights down 22:30</option>
+            <option>Saturday, lights down 22:30</option>
+            <option>Saturday, lights down 23:45</option>
+          </select>
+        </label>
+        <label>Seats
+          <select name="seats">
+            <option>1</option><option selected>2</option><option>3</option><option>4</option>
+          </select>
+        </label>
+      </div>
+      <p class="done" role="status" id="book-done"></p>
+      <div class="acts">
+        <button class="btn" type="button" id="book-cancel">Cancel</button>
+        <button class="btn btn-primary" type="submit">Ask for seats</button>
+      </div>
+    </form>
+  </dialog>
+
+  <p class="sr-only" aria-live="polite" id="live"></p>
+
+  <script src="main.js"></script>
+</body>
+</html>
