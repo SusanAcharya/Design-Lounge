@@ -4,6 +4,7 @@
 //   CHANGED=a,b BASE=... node scripts/posters.mjs                (these, plus any without a poster; used by CI)
 // <slug>.webp is the whole screen at its own aspect, 640px wide (phones 390), used by cards and device frames.
 // When a piece fills under a quarter of the screen, <slug>-card.webp is a 640x480 crop around it for the card.
+// public/thumbs/cards.json lists the pieces that have one; scripts/check-build.mjs fails the build if a listed crop is missing.
 import { chromium } from 'playwright';
 import { readdir, readFile, writeFile, unlink } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
@@ -78,6 +79,7 @@ const encode = (png, ow, crop) => encoder.evaluate(async ({ data, ow, crop, SPAR
 
 let n = 0;
 const sparse = [];
+const dropped = [];
 const queue = [...slugs];
 async function worker() {
   const ctx = await browser.newContext({ deviceScaleFactor: 2 });
@@ -108,7 +110,7 @@ async function worker() {
       } else if (r.card) {
         await writeFile(card, Buffer.from(r.card, 'base64'));
         sparse.push(slug);
-      } else if (existsSync(card)) await unlink(card);
+      } else if (existsSync(card)) { await unlink(card); dropped.push(slug); }
       if (existsSync(path.join(thumbs, slug + '.jpg'))) await unlink(path.join(thumbs, slug + '.jpg'));
       n++;
       if (n % 40 === 0) console.log(n, '/', slugs.length);
@@ -120,5 +122,11 @@ async function worker() {
 }
 await Promise.all(Array.from({ length: 4 }, worker));
 await browser.close();
+// The build checks this list, so a crop that goes missing fails the build instead of falling back.
+const manifest = path.join(thumbs, 'cards.json');
+const cards = new Set(JSON.parse(await readFile(manifest, 'utf8').catch(() => '[]')));
+for (const s of sparse) cards.add(s);
+for (const s of dropped) cards.delete(s);
+await writeFile(manifest, JSON.stringify([...cards].sort(), null, 2) + '\n');
 console.log('wrote', n, 'posters,', sparse.length, 'with a zoomed card crop');
 console.log(sparse.join(' '));
