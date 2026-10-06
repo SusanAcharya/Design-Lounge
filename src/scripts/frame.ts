@@ -16,19 +16,21 @@ const reduced = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
 // Demos start after the page's first paint, a short beat and an idle moment; the poster covers the wait.
 // `load` fires long before first paint on a slow phone, and each demo pulls its own fonts, so waiting for
 // `load` alone let four iframes and their font requests compete with the page's own first paint.
-// Any scroll, tap or key press starts them at once, since the reader is already moving.
+// Any scroll of the page, tap or key press starts them at once, since the reader is already moving.
+// Only the page's own scroll counts: the piece rail scrolls itself to the current piece on load,
+// and that element scroll reaches this capture listener before first paint.
 const PAINT_BEAT = 1200;
 const INPUT = ['scroll', 'wheel', 'touchstart', 'pointerdown', 'keydown'] as const;
 const pageReady = new Promise<void>((res) => {
   let started = false;
-  const start = () => {
-    if (started) return;
+  const start = (e?: Event) => {
+    if (started || (e?.type === 'scroll' && e.target !== document && e.target !== window)) return;
     started = true;
     for (const t of INPUT) removeEventListener(t, start, true);
     res();
   };
-  for (const t of INPUT) addEventListener(t, start, { capture: true, passive: true, once: true });
-  const idle = () => ('requestIdleCallback' in window ? requestIdleCallback(start, { timeout: 2500 }) : setTimeout(start, 300));
+  for (const t of INPUT) addEventListener(t, start, { capture: true, passive: true });
+  const idle = () => ('requestIdleCallback' in window ? requestIdleCallback(() => start(), { timeout: 2500 }) : setTimeout(() => start(), 300));
   const painted = () => setTimeout(idle, PAINT_BEAT);
   if ('PerformanceObserver' in window && PerformanceObserver.supportedEntryTypes?.includes('paint')) {
     const po = new PerformanceObserver((list) => {
