@@ -36,6 +36,27 @@ User: "Outdoor gear site, light and airy. I want parallax and lots of motion."
 2. Lead effect: `parallax-layered-hero` on the first screen. Supporting effects, one per section: `text-mask-scroll-reveal` on the story, `stacking-cards-scroll` on the products. All on the sheet's easing. Reduced motion stills all three.
 3. Write one line in `DESIGN.md`: "Three effects instead of one, because they asked for lots of motion."
 
+## They asked for spectacle
+
+User: "A site for an aquarium's after-hours opening. You scroll and you sink to the bottom of the sea. Make it unforgettable."
+
+0. Write the brief (`brief.md`). Product: the aquarium's after-hours opening. World: deep water, pressure, light that fades. The one thing: you scroll and you sink, their verb kept. Ambition: spectacle, because "unforgettable". Mode: Show, Free, because they named no theme or colour.
+1. Recipe `event`. Their words are a journey and "unforgettable", so Show mode in `website.md`. Write `Show: yes, Free` on the sheet.
+2. Lock the direction whose mood is a journey you scroll through: Deep field (Lit family). Its Deep Field theme and Night Show pairing are now candidates. If the direction is in recent history, take the next that fits, and claim it at once.
+3. Free colour and type. The light is the sun from above, fading as you sink, so the palette is surface teal going to near-black, and one warm colour for the creatures' own light. Written as `--bg`, `--ink`, `--primary` and three `--scene-*`. Type: a display face that is not in the last three Free lines of the history, and a mono for the readouts. Write both on the sheet, each with its reason.
+4. Idea as a thing you travel through: "Every scroll is ten more metres down, and the light goes with it." Centrepiece: `scroll-space-voyage`, re-skinned from space to depth: the surface glare instead of the limb of the Earth, then the twilight zone, the lantern fish, the trench. Light: the sun from above, fading.
+5. Build the centrepiece first. Hold it to The rendering bar: three layers of depth, light shafts with additive glow, drifting particles, grain, the title huge with one word in the scene's light, three live readouts (depth, pressure, light left). Look at it, improve it twice.
+6. Then two supporting sections from the lists, built still: the evenings and tickets (`contact-booking-hours`), and the footer. Not a card that fights the water.
+7. The same request from a second person, or a second look for the same opening, lands on another direction, with different colours, faces, and centrepiece. Asked for two looks, one is Free and one is locked to a direction's own theme and pairing. Both are Design Lounge.
+
+## A short request
+
+User: "make a cool scrolling space website"
+
+1. Write the brief first. The full one is the example in `brief.md`. "Cool" alone would mean ambition `finished`, but "scrolling space" is a world you travel through, so ambition `spectacle` and Mode `Show, Free`.
+2. No name and no owner, so the product gets a working name marked "(working name, replace)", and Missing lists who it is for. No invented planetarium, no fake dates.
+3. Then follow the brief exactly as in They asked for spectacle. The reply names the working name and every Missing line.
+
 ## An ops home, they said go
 
 User: "Yard desk. Staff open it every morning. Just build it."

@@ -113,7 +113,7 @@ const prompt = (title: string, slug: string) => `Use the Design Lounge skill. Bu
       iframe?.setAttribute('title', `Live preview: ${title}`);
       const img = frame.querySelector<HTMLImageElement>('.lf-poster-img');
       if (img) { if (thumb) { img.src = thumb; img.hidden = false; } else img.hidden = true; }
-      frame.dataset.src = `/demo/${slug}.html`;
+      frame.dataset.src = import.meta.env.DEV ? `/demo/${slug}.html` : `/demo/${slug}`;
       if (frame.reload) frame.reload();
       else if (iframe) iframe.src = frame.dataset.src;
     }

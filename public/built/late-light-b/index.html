@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Late Light · a late-night show under the planetarium dome</title>
+<meta name="description" content="Late Light is a late-night planetarium show. Scroll and you leave your seat: past the Sun, the nearest star and the middle of the Milky Way, out to Andromeda.">
+<meta name="theme-color" content="#0b1220">
+<meta property="og:title" content="Late Light">
+<meta property="og:description" content="A late-night show under the planetarium dome. Scroll and you travel out to Andromeda.">
+<meta property="og:image" content="share.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/built/late-light-b/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/built/late-light-b/favicon.ico" sizes="32x32">
+<link rel="apple-touch-icon" href="/built/late-light-b/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=DM+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/built/late-light-b/styles.css">
+<script>if (matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('still');</script>
+</head>
+<body>
+<a class="skip" href="#scenes">Skip the journey</a>
+
+<header class="nav">
+  <nav aria-label="Main" class="nav-in">
+    <a class="logo" href="#top" aria-label="Late Light, back to the start">
+      <span class="marks" aria-hidden="true"><i class="m-disc"></i><i class="m-sq"></i><i class="m-tri"></i></span>
+      <span class="word">Late Light</span>
+    </a>
+    <ul class="links">
+      <li><a href="#journey">Journey</a></li>
+      <li><a href="#scenes">Eight lights</a></li>
+      <li><a href="#visit">Visit</a></li>
+    </ul>
+    <a class="btn nav-visit" href="#visit">Visit</a>
+  </nav>
+</header>
+
+<main id="top">
+  <section class="pin" id="journey" aria-label="The journey">
+    <div class="stage" id="stage">
+
+      <!-- Scene 0 · the dome -->
+      <div class="layer" data-ground="bg" style="--ground: var(--bg)">
+        <div class="frame hero">
+          <div class="copy">
+            <h1 class="hero-h"><span>Late</span> <span class="voice">Light</span></h1>
+            <p class="lede">A late-night show under the planetarium dome. Scroll, and you leave your seat: past the Sun, the nearest star and the middle of the Milky Way, out to Andromeda.</p>
+            <div class="ctas">
+              <button class="btn btn-primary" type="button" data-open-seat>Hold a seat <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+              <a class="tlink" href="#visit">See the nights</a>
+            </div>
+          </div>
+          <div class="side">
+            <button class="poster" id="poster" type="button" aria-label="Rearrange the sky" aria-describedby="cap">
+              <span class="poster-in" id="posterIn">
+                <span class="shape c" data-k="c" style="--i:0"></span>
+                <span class="shape t" data-k="t" style="--i:1"></span>
+                <span class="shape s" data-k="s" style="--i:2"></span>
+                <span class="shape h" data-k="h" style="--i:3"></span>
+                <span class="shape r" data-k="r" style="--i:4" data-portal></span>
+                <span class="shape b" data-k="b" style="--i:5"></span>
+                <span class="shape d" data-k="d" style="--i:6"></span>
+              </span>
+              <span class="hint">Tap to recompose</span>
+            </button>
+            <div class="caption">
+              <p id="cap" aria-live="polite"><span class="num" id="capN">I / III</span> <b id="capT">Moonrise</b> <span id="capD">The Moon clears the dome.</span></p>
+              <div class="nums" role="group" aria-label="Choose a sky">
+                <button type="button" aria-pressed="true" data-c="0">I</button>
+                <button type="button" aria-pressed="false" data-c="1">II</button>
+                <button type="button" aria-pressed="false" data-c="2">III</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scene 1 · the Sun -->
+      <div class="layer scene s-sun" style="--ground: var(--primary); --sink: var(--primary-ink)">
+        <div class="frame">
+          <div class="art">
+            <svg viewBox="0 0 600 600" aria-hidden="true">
+              <defs>
+                <radialGradient id="sunHalo"><stop offset="0" stop-color="#fff4d8" stop-opacity=".95"/><stop offset=".42" stop-color="#fff4d8" stop-opacity=".38"/><stop offset="1" stop-color="#fff4d8" stop-opacity="0"/></radialGradient>
+                <radialGradient id="sunBody" cx=".4" cy=".38" r=".66"><stop offset="0" stop-color="#fffdf6"/><stop offset=".62" stop-color="#fff4d8"/><stop offset="1" stop-color="#f1cf7c"/></radialGradient>
+                <radialGradient id="litLeft" cx=".18" cy=".42" r=".95"><stop offset="0" stop-color="#fff4d8" stop-opacity=".55"/><stop offset=".5" stop-color="#fff4d8" stop-opacity="0"/></radialGradient>
+              </defs>
+              <g fill="none" stroke="#141210" stroke-width="2" opacity=".5">
+                <circle cx="150" cy="330" r="210"/><circle cx="150" cy="330" r="285"/><circle cx="150" cy="330" r="365"/><circle cx="150" cy="330" r="452"/>
+              </g>
+              <rect x="0" y="326" width="600" height="9" fill="#141210" opacity=".85"/>
+              <circle cx="150" cy="330" r="270" fill="url(#sunHalo)"/>
+              <circle cx="150" cy="330" r="128" fill="url(#sunBody)"/>
+              <circle cx="332" cy="225" r="8" fill="#141210"/>
+              <g><circle cx="413" cy="426" r="14" fill="#3e392a"/><circle cx="413" cy="426" r="14" fill="url(#litLeft)"/></g>
+              <g><circle cx="502" cy="255" r="16" fill="#1f3e3f"/><circle cx="502" cy="255" r="16" fill="url(#litLeft)"/><circle cx="530" cy="240" r="4" fill="#141210"/></g>
+              <g transform="rotate(-18 520 500)"><ellipse cx="520" cy="500" rx="52" ry="12" fill="none" stroke="#141210" stroke-width="5"/><circle cx="520" cy="500" r="27" fill="#6a5a9a"/><circle cx="520" cy="500" r="27" fill="url(#litLeft)"/><path d="M468 500 A52 12 0 0 0 572 500" fill="none" stroke="#141210" stroke-width="5"/></g>
+            </svg>
+            <span class="portal" data-portal style="left:66%; top:4%; width:21%"></span>
+          </div>
+          <div class="scopy">
+            <p class="kick">The Sun</p>
+            <h2>Eight minutes old.</h2>
+            <p>Sunlight takes 8 min 19 s to cross 149.6 million km. You just did it in one scroll.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scene 2 · Proxima Centauri -->
+      <div class="layer scene s-star" style="--ground: var(--tertiary); --sink: var(--tertiary-ink)">
+        <div class="frame">
+          <div class="art">
+            <svg viewBox="0 0 600 600" aria-hidden="true">
+              <defs>
+                <radialGradient id="aHalo"><stop offset="0" stop-color="#fff4d8" stop-opacity=".85"/><stop offset=".4" stop-color="#fff4d8" stop-opacity=".3"/><stop offset="1" stop-color="#fff4d8" stop-opacity="0"/></radialGradient>
+                <radialGradient id="aBody" cx=".4" cy=".36" r=".68"><stop offset="0" stop-color="#fffdf6"/><stop offset=".7" stop-color="#fff4d8"/><stop offset="1" stop-color="#f0d08a"/></radialGradient>
+                <radialGradient id="bBody" cx=".36" cy=".34" r=".7"><stop offset="0" stop-color="#ffe9c2"/><stop offset="1" stop-color="#e0b44a"/></radialGradient>
+                <radialGradient id="pHalo"><stop offset="0" stop-color="#ff8a5c" stop-opacity=".9"/><stop offset="1" stop-color="#ff8a5c" stop-opacity="0"/></radialGradient>
+              </defs>
+              <circle cx="300" cy="320" r="252" fill="none" stroke="#fffdf8" stroke-width="2" opacity=".28"/>
+              <rect x="512" y="0" width="10" height="600" fill="#141210" opacity=".55"/>
+              <polygon points="40,600 250,170 460,600" fill="#22233d" opacity=".55"/>
+              <g style="mix-blend-mode:screen">
+                <circle cx="250" cy="290" r="235" fill="url(#aHalo)"/>
+                <circle cx="402" cy="392" r="150" fill="url(#aHalo)" opacity=".7"/>
+              </g>
+              <circle cx="250" cy="290" r="112" fill="url(#aBody)"/>
+              <circle cx="402" cy="392" r="64" fill="url(#bBody)" style="mix-blend-mode:screen"/>
+              <circle cx="96" cy="520" r="46" fill="url(#pHalo)"/>
+              <circle cx="96" cy="520" r="9" fill="#ff8a5c"/>
+              <circle cx="96" cy="520" r="22" fill="none" stroke="#fffdf8" stroke-width="1.5" opacity=".7"/>
+            </svg>
+            <span class="portal" data-portal style="left:3%; top:5%; width:19%"></span>
+          </div>
+          <div class="scopy">
+            <p class="kick">Proxima Centauri</p>
+            <h2>4.24 years of light.</h2>
+            <p>The nearest star after the Sun is a small red one, too faint for your eyes. The light you would see from it set out 4.24 years ago.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scene 3 · the Milky Way -->
+      <div class="layer scene s-galaxy" style="--ground: var(--secondary); --sink: var(--secondary-ink)">
+        <div class="frame">
+          <div class="art">
+            <svg viewBox="0 0 600 600" aria-hidden="true">
+              <defs>
+                <radialGradient id="core"><stop offset="0" stop-color="#fffdf6" stop-opacity="1"/><stop offset=".35" stop-color="#fff4d8" stop-opacity=".6"/><stop offset="1" stop-color="#fff4d8" stop-opacity="0"/></radialGradient>
+                <linearGradient id="litTop" x1="0" y1="0" x2=".6" y2="1"><stop offset="0" stop-color="#fffdf8" stop-opacity=".22"/><stop offset=".55" stop-color="#fffdf8" stop-opacity="0"/></linearGradient>
+              </defs>
+              <path d="M60 300 A240 240 0 0 1 540 300 Z" fill="#0b1220"/>
+              <path d="M60 300 A240 240 0 0 1 540 300 Z" fill="url(#litTop)"/>
+              <path d="M180 300 A180 180 0 0 0 540 300 Z" fill="#6a5a9a"/>
+              <path d="M180 300 A135 135 0 0 1 450 300 Z" fill="#e0b44a"/>
+              <path d="M248 300 A101 101 0 0 0 450 300 Z" fill="#0b1220"/>
+              <path d="M248 300 A76 76 0 0 1 400 300 Z" fill="#6a5a9a"/>
+              <path d="M286 300 A57 57 0 0 0 400 300 Z" fill="#e0b44a"/>
+              <circle cx="345" cy="300" r="120" fill="url(#core)"/>
+              <rect x="40" y="548" width="520" height="10" fill="#0b1220"/>
+              <circle cx="128" cy="300" r="7" fill="#fff4d8"/>
+              <circle cx="128" cy="300" r="20" fill="none" stroke="#fff4d8" stroke-width="2"/>
+            </svg>
+            <span class="portal" data-portal style="left:74%; top:6%; width:19%"></span>
+          </div>
+          <div class="scopy">
+            <p class="kick">The Milky Way</p>
+            <h2>26,000 years to the middle.</h2>
+            <p>Our galaxy is about 100,000 light years across. The Sun is the small ring on the left, in a quiet arm, a long way from the bright centre.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scene 4 · Andromeda -->
+      <div class="layer scene s-andromeda" style="--ground: var(--bg); --sink: var(--ink)">
+        <div class="frame">
+          <div class="art">
+            <svg viewBox="0 0 600 600" aria-hidden="true">
+              <defs>
+                <radialGradient id="mHalo"><stop offset="0" stop-color="#6a5a9a" stop-opacity=".95"/><stop offset=".6" stop-color="#6a5a9a" stop-opacity=".35"/><stop offset="1" stop-color="#6a5a9a" stop-opacity="0"/></radialGradient>
+                <radialGradient id="mCore"><stop offset="0" stop-color="#fffdf6"/><stop offset=".4" stop-color="#fff4d8" stop-opacity=".8"/><stop offset="1" stop-color="#e0b44a" stop-opacity="0"/></radialGradient>
+              </defs>
+              <circle cx="300" cy="300" r="272" fill="none" stroke="#6e7888" stroke-width="1.5" opacity=".7"/>
+              <rect x="0" y="470" width="600" height="8" fill="#243044"/>
+              <g transform="rotate(-32 300 300)" style="mix-blend-mode:screen">
+                <ellipse cx="300" cy="300" rx="300" ry="118" fill="url(#mHalo)"/>
+                <ellipse cx="300" cy="300" rx="232" ry="70" fill="#6a5a9a" opacity=".55"/>
+                <ellipse cx="300" cy="300" rx="232" ry="70" fill="none" stroke="#9aacc4" stroke-width="1.5" opacity=".5"/>
+                <ellipse cx="300" cy="300" rx="150" ry="42" fill="#e0b44a" opacity=".55"/>
+                <ellipse cx="300" cy="300" rx="120" ry="60" fill="url(#mCore)"/>
+              </g>
+              <circle cx="376" cy="238" r="7" fill="#e8eef8"/>
+              <circle cx="186" cy="404" r="16" fill="url(#mCore)" opacity=".7"/>
+              <circle cx="186" cy="404" r="6" fill="#e8eef8"/>
+            </svg>
+          </div>
+          <div class="scopy">
+            <p class="kick">Andromeda</p>
+            <h2>The oldest light your eyes can find.</h2>
+            <p>2.5 million light years away. On a dark night it is the farthest thing most people can see without a telescope. The show takes you there on the dome.</p>
+          </div>
+        </div>
+      </div>
+
+      <canvas class="stars" id="stars" aria-hidden="true"></canvas>
+
+      <div class="hud" aria-hidden="true">
+        <div class="hud-bar"><i id="hudBar"></i></div>
+        <div class="hud-in">
+          <div class="ro"><span class="lab">From your seat</span><span class="val num" id="roDist">0 km</span></div>
+          <div class="ro"><span class="lab">Light-time</span><span class="val num" id="roTime">0 s</span></div>
+          <div class="ro ro-pass"><span class="lab">Passing</span><span class="val" id="roPass">The dome</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sheet-sec" id="scenes" aria-labelledby="sheet-h">
+    <div class="wrap sheet-grid">
+      <div class="sheet-left">
+        <h2 id="sheet-h" class="title">Eight lights on the way out</h2>
+        <p class="sheet-lede">Each one, and how long its light travels before it reaches you.</p>
+        <div class="sheet" role="group" aria-label="Choose a light">
+          <button class="plate p-moon" type="button" aria-pressed="true" aria-label="The Moon" data-p="0"><i></i></button>
+          <button class="plate p-sun" type="button" aria-pressed="false" aria-label="The Sun" data-p="1"><i></i></button>
+          <button class="plate p-saturn" type="button" aria-pressed="false" aria-label="Saturn" data-p="2"><i></i><b></b></button>
+          <button class="plate p-proxima" type="button" aria-pressed="false" aria-label="Proxima Centauri" data-p="3"><i></i></button>
+          <button class="plate p-sirius" type="button" aria-pressed="false" aria-label="Sirius" data-p="4"><i></i></button>
+          <button class="plate p-pleiades" type="button" aria-pressed="false" aria-label="The Pleiades" data-p="5"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></button>
+          <button class="plate p-centre" type="button" aria-pressed="false" aria-label="The galactic centre" data-p="6"><i></i><b></b></button>
+          <button class="plate p-andromeda" type="button" aria-pressed="false" aria-label="Andromeda" data-p="7"><i></i></button>
+        </div>
+      </div>
+      <div class="sheet-cap" aria-live="polite">
+        <p class="cap-name" id="pName">The Moon</p>
+        <dl class="cap-facts">
+          <div><dt>Distance</dt><dd class="num" id="pDist">384,400 km</dd></div>
+          <div><dt>Its light is</dt><dd class="num" id="pAge">1.3 seconds old</dd></div>
+        </dl>
+        <p class="cap-line" id="pLine">The closest thing in the night sky. Moonlight is a little over one second old when it reaches you.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="visit" id="visit" aria-labelledby="visit-h">
+    <div class="wrap visit-grid">
+      <div class="visit-left">
+        <h2 id="visit-h">Under the dome, after dark.</h2>
+        <p class="visit-hint">The show plays on the planetarium dome, late at night. Ask for a seat and the box office writes back with the night and the time.</p>
+        <button class="btn btn-ink" type="button" id="seatBtn" data-open-seat>Hold a seat <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+      </div>
+      <div class="visit-right">
+        <h3 id="nights-h">Nights this week</h3>
+        <table aria-labelledby="nights-h">
+          <thead><tr><th scope="col">Night</th><th scope="col">Shows</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Monday</th><td class="off">No show</td></tr>
+            <tr><th scope="row">Tuesday</th><td class="off">No show</td></tr>
+            <tr><th scope="row">Wednesday</th><td class="num">22:00</td></tr>
+            <tr><th scope="row">Thursday</th><td class="num">22:00</td></tr>
+            <tr><th scope="row">Friday</th><td class="num">22:00 and 23:30</td></tr>
+            <tr><th scope="row">Saturday</th><td class="num">22:00 and 23:30</td></tr>
+            <tr><th scope="row">Sunday</th><td class="num">21:30</td></tr>
+          </tbody>
+        </table>
+        <p class="tz"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> Example schedule. Times are local to the planetarium.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="colophon" aria-label="Site footer">
+  <span class="rule" aria-hidden="true"></span>
+  <p class="mark">Late <span>Light</span></p>
+  <p class="issue">A late-night planetarium show</p>
+  <ul class="flinks">
+    <li><a href="#journey">Journey</a></li>
+    <li><a href="#scenes">Eight lights</a></li>
+    <li><a href="#visit">Visit</a></li>
+  </ul>
+  <p class="credit">Designed using <a href="https://www.designlounge.live">Design Lounge</a></p>
+  <button class="top" type="button" id="topBtn"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg><span>Back to top</span></button>
+</footer>
+
+<dialog id="seat" aria-labelledby="seat-h">
+  <form class="dlg" id="seatForm" method="dialog" novalidate>
+    <div class="dlg-head">
+      <h2 id="seat-h">Hold a seat</h2>
+      <button class="x" type="button" value="cancel" aria-label="Close" data-close><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <p class="dlg-help">Tell the box office which night you want. They reply by email.</p>
+    <div class="fields">
+      <div class="field"><label for="f-name">Name</label><input id="f-name" name="name" autocomplete="name" required></div>
+      <div class="field"><label for="f-mail">Email</label><input id="f-mail" name="email" type="email" autocomplete="email" required><span class="error" id="mailErr" hidden>Add an email so they can reply.</span></div>
+      <div class="row2">
+        <div class="field"><label for="f-night">Night</label>
+          <select id="f-night" name="night"><option>Wednesday</option><option>Thursday</option><option selected>Friday</option><option>Saturday</option><option>Sunday</option></select></div>
+        <div class="field"><label for="f-seats">Seats</label><input id="f-seats" name="seats" type="number" min="1" max="8" value="2" inputmode="numeric"></div>
+      </div>
+    </div>
+    <p class="done" id="done" role="status" hidden></p>
+    <div class="acts">
+      <button class="btn" type="button" data-close>Cancel</button>
+      <button class="btn btn-primary" type="submit">Ask for seats</button>
+    </div>
+  </form>
+</dialog>
+
+<div class="grain" aria-hidden="true"></div>
+<script src="/built/late-light-b/main.js"></script>
+</body>
+</html>

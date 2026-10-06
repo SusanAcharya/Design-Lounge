@@ -28,7 +28,8 @@
   "handwritten-homepage",
   "hero-engraved-moonrise-plate",
   "gallery-photo-album",
-  "paper-article-reader"
+  "paper-article-reader",
+  "moonlit-ridge-hero"
  ],
  "directions": [
   {
@@ -114,6 +115,18 @@
    "effect": "scroll-reading-progress",
    "work": "contact-split-map-form",
    "footer": "footer-centered-colophon"
+  },
+  {
+   "id": "night-arrival",
+   "name": "Night arrival",
+   "mood": "You arrive after dark, the hills under a moon, the local time and the hour the bar closes",
+   "theme": "sodium-night",
+   "pairing": "night-show",
+   "family": "lit",
+   "hero": "moonlit-ridge-hero",
+   "effect": "moonlit-ridge-hero",
+   "work": "gallery-photo-album",
+   "footer": "footer-newsletter-split"
   }
  ]
 }

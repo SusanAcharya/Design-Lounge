@@ -24,7 +24,8 @@
   "gallery-museum-placard",
   "gallery-film-strip",
   "hero-engraved-moonrise-plate",
-  "hero-layered-letter-swap"
+  "hero-layered-letter-swap",
+  "scroll-space-voyage"
  ],
  "directions": [
   {
@@ -134,6 +135,18 @@
    "effect": "spring-deck",
    "work": "pan-canvas",
    "footer": "footer-enterprise-sitemap"
+  },
+  {
+   "id": "star-dome",
+   "name": "Star dome",
+   "mood": "A science night or a launch, the scroll flies you out from the ground",
+   "theme": "deep-field",
+   "pairing": "night-show",
+   "family": "lit",
+   "hero": "scroll-space-voyage",
+   "effect": "scroll-space-voyage",
+   "work": "gallery-museum-placard",
+   "footer": "footer-giant-wordmark-reveal"
   }
  ]
 }

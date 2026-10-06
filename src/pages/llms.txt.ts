@@ -82,7 +82,7 @@ export const GET: APIRoute = async ({ site }) => {
     `## Pieces (${pieces.length})`,
     ...pieces.map((p) => {
       const d = p.data;
-      return `- [${d.title}](${base}/p/${p.id}) (${p.id}) — ${d.summary} platform:${d.platform} type:${d.type} category:${d.category} styles:${d.styles.join(',')} motion:${d.motion} source:${studyPiece(p, SOURCES).source.id} brief:${base}/p/${p.id}.md demo:${base}/demo/${p.id}.html`;
+      return `- [${d.title}](${base}/p/${p.id}) (${p.id}) — ${d.summary} platform:${d.platform} type:${d.type} category:${d.category} styles:${d.styles.join(',')} motion:${d.motion} source:${studyPiece(p, SOURCES).source.id} brief:${base}/p/${p.id}.md demo:${base}/demo/${p.id}`;
     }),
     ``,
     `## Categories`,

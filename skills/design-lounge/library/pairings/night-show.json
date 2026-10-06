@@ -1,0 +1,32 @@
+{
+ "id": "night-show",
+ "name": "Night Show",
+ "display": {
+  "family": "Instrument Serif",
+  "weight": 400,
+  "italic": false,
+  "upper": false,
+  "trackingEm": -0.035,
+  "google": "Instrument+Serif:ital@0;1",
+  "lineHeight": 1
+ },
+ "text": {
+  "family": "Inter Tight",
+  "weight": 400,
+  "italic": false,
+  "upper": false,
+  "trackingEm": 0,
+  "google": "Inter+Tight:wght@300;400;500;600",
+  "lineHeight": 1.55
+ },
+ "mono": {
+  "family": "JetBrains Mono",
+  "weight": 400,
+  "italic": false,
+  "upper": false,
+  "trackingEm": 0,
+  "google": "JetBrains+Mono:wght@300;400;500"
+ },
+ "numbers": "mono",
+ "caution": ""
+}

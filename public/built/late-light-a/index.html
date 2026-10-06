@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Late Light, a planetarium's late-night show</title>
+<meta name="description" content="A planetarium's late-night show. Lean back and scroll: the dome goes dark and you travel out past the Moon, Saturn, the Pleiades, the Orion Nebula and Andromeda.">
+<meta name="theme-color" content="#07050b">
+<meta property="og:title" content="Late Light">
+<meta property="og:description" content="A planetarium's late-night show. Scroll, and the light you see gets older.">
+<meta property="og:image" content="og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<link rel="icon" href="/built/late-light-a/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/built/late-light-a/favicon.ico" sizes="32x32">
+<link rel="apple-touch-icon" href="/built/late-light-a/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:ital,wght@0,400;0,500;0,700;1,400&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/built/late-light-a/styles.css">
+</head>
+<body>
+<canvas id="space" aria-hidden="true"></canvas>
+<div class="fx house" aria-hidden="true"></div>
+<div class="fx vignette" aria-hidden="true"></div>
+<div class="fx grain" aria-hidden="true"></div>
+
+<header class="hud top">
+  <a class="mark" href="#top" aria-label="Late Light, back to your seat">
+    <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><circle cx="12" cy="12" r="10.2" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".55"/><path d="M5 15.5a7.4 7.4 0 0 1 14 0" fill="none" stroke="currentColor" stroke-width="1.2"/><circle cx="12" cy="9" r="1.6" fill="var(--primary)"/></svg>
+    <span>Late Light</span>
+  </a>
+  <a class="toplink" href="#wall">The plates</a>
+</header>
+
+<nav class="rail" aria-label="Chapters"><ol></ol></nav>
+<p class="sr" aria-live="polite"></p>
+
+<aside class="hud bot" aria-label="Voyage readouts">
+  <div class="ro"><span>Distance</span><b data-ro="km">0 km</b></div>
+  <div class="ro ro-travel"><span>Light travel time</span><b data-ro="lt">0 s</b></div>
+  <div class="ro ro-left"><span>The light left</span><b data-ro="left">just now</b></div>
+</aside>
+
+<main id="top">
+  <section class="ch hero" data-label="Your seat" data-km="0" aria-labelledby="h-hero">
+    <div class="in">
+      <p class="kicker">A planetarium's late-night show</p>
+      <h1 id="h-hero" class="title"><span class="w1">Late</span> <span class="w2">Light</span></h1>
+      <p class="lede">The house lights go down. Lean back and scroll: every turn of the wheel carries you further out, and the light reaching your seat gets older.</p>
+    </div>
+  </section>
+
+  <section class="ch" data-label="Moon" data-km="384400" data-obj="moon" data-side="right" aria-labelledby="h-moon" id="moon" style="--accent:#e9e2d6">
+    <div class="in">
+      <div class="copy">
+        <p class="meta">384,400 km away</p>
+        <h2 id="h-moon">The Moon. Its light is <em>a second late.</em></h2>
+        <p class="body">Sunlight bounces off the Moon and reaches your seat 1.3 seconds later. So even the closest thing in the sky is already the past.</p>
+        <dl class="facts">
+          <div><dt>Light travel</dt><dd>1.3 s</dd></div>
+          <div><dt>Lit by</dt><dd>the Sun</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="ch" data-label="Saturn" data-km="1400000000" data-obj="saturn" data-side="left" aria-labelledby="h-saturn" id="saturn" style="--accent:#f2cf94">
+    <div class="in">
+      <div class="copy">
+        <p class="meta">About 1.4 billion km away</p>
+        <h2 id="h-saturn">Saturn, as it looked <em>an hour and a quarter ago.</em></h2>
+        <p class="body">The main rings span about 280,000 km and are mostly water ice. The distance changes as we both orbit the Sun, so the delay does too.</p>
+        <dl class="facts">
+          <div><dt>Light travel</dt><dd>about 78 min</dd></div>
+          <div><dt>Rings</dt><dd>mostly ice</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="ch" data-label="Pleiades" data-km="4200500000000000" data-obj="pleiades" data-side="right" aria-labelledby="h-pleiades" id="pleiades" style="--accent:#a9c6ff">
+    <div class="in">
+      <div class="copy">
+        <p class="meta">444 light-years away</p>
+        <h2 id="h-pleiades">The Pleiades. This light set off <em>in 1582.</em></h2>
+        <p class="body">Seven stars to the eye, more than a thousand in the cluster. The blue haze is a cloud of dust they happen to be passing through, lit by them.</p>
+        <dl class="facts">
+          <div><dt>Light travel</dt><dd>444 years</dd></div>
+          <div><dt>Find it in</dt><dd>Taurus</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="ch" data-label="Orion Nebula" data-km="12715000000000000" data-obj="orion" data-side="left" aria-labelledby="h-orion" id="orion" style="--accent:#ff8aa0">
+    <div class="in">
+      <div class="copy">
+        <p class="meta">1,344 light-years away</p>
+        <h2 id="h-orion">The Orion Nebula, glowing <em>since the year 682.</em></h2>
+        <p class="body">A cloud of hydrogen where stars are being born. Four young stars at its heart, the Trapezium, light the gas from inside. You can find it by eye, just below Orion's belt.</p>
+        <dl class="facts">
+          <div><dt>Light travel</dt><dd>1,344 years</dd></div>
+          <div><dt>Glows</dt><dd>hydrogen red</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="ch last" data-label="Andromeda" data-km="23650000000000000000" data-obj="andromeda" data-side="right" aria-labelledby="h-andromeda" id="andromeda" style="--accent:#ffd2a8">
+    <div class="in">
+      <div class="copy">
+        <p class="meta">2.5 million light-years away</p>
+        <h2 id="h-andromeda">Andromeda. This light is <em>older than our species.</em></h2>
+        <p class="body">The farthest thing most people can see without a telescope: about a trillion stars, heading our way. Behind it, galaxies all the way back.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="#wall">See what you passed</a>
+          <button class="btn" type="button" data-to-top>
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg>
+            Back to your seat
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<section class="wall-room" id="wall" aria-labelledby="h-wall">
+  <header class="wall-head">
+    <div>
+      <p class="kicker">On the way out</p>
+      <h2 id="h-wall">What you passed, <em>on the wall.</em></h2>
+    </div>
+    <p class="hint">Select a plate to read its label.</p>
+  </header>
+
+  <div class="wall" aria-label="Plates">
+    <div class="work" data-i="0">
+      <button class="art" type="button" data-plate="saturn" data-frame="brass" aria-label="Saturn, light from about 78 minutes ago. View with label">
+        <span class="lamp" aria-hidden="true"></span>
+        <span class="frame"><span class="cv"></span></span>
+      </button>
+      <div class="placard">
+        <p class="pa">Saturn</p>
+        <p class="pm">Planet, sixth from the Sun</p>
+        <p class="pt">Light from about 78 minutes ago</p>
+        <p class="pm">1.4 billion km</p>
+        <p class="pm">A small telescope shows the rings</p>
+      </div>
+    </div>
+    <div class="work" data-i="1">
+      <button class="art" type="button" data-plate="pleiades" data-frame="mat" aria-label="The Pleiades, light that left in 1582. View with label">
+        <span class="lamp" aria-hidden="true"></span>
+        <span class="frame"><span class="cv"></span></span>
+      </button>
+      <div class="placard">
+        <p class="pa">The Pleiades</p>
+        <p class="pm">Open star cluster, M45</p>
+        <p class="pt">Light that left in 1582</p>
+        <p class="pm">444 light-years</p>
+        <p class="pm">Seen by eye</p>
+      </div>
+    </div>
+    <div class="work" data-i="2">
+      <button class="art" type="button" data-plate="orion" data-frame="float" aria-label="The Orion Nebula, light that left in 682. View with label">
+        <span class="lamp" aria-hidden="true"></span>
+        <span class="frame"><span class="cv"></span></span>
+      </button>
+      <div class="placard">
+        <p class="pa">The Orion Nebula</p>
+        <p class="pm">Star-forming nebula, M42</p>
+        <p class="pt">Light that left in 682</p>
+        <p class="pm">1,344 light-years</p>
+        <p class="pm">Seen by eye, as a smudge</p>
+      </div>
+    </div>
+    <div class="work" data-i="3">
+      <button class="art" type="button" data-plate="andromeda" data-frame="brass" aria-label="Andromeda, light from 2.5 million years ago. View with label">
+        <span class="lamp" aria-hidden="true"></span>
+        <span class="frame"><span class="cv"></span></span>
+      </button>
+      <div class="placard">
+        <p class="pa">Andromeda</p>
+        <p class="pm">Spiral galaxy, M31</p>
+        <p class="pt">Light from 2.5 million years ago</p>
+        <p class="pm">2.5 million light-years</p>
+        <p class="pm">Seen by eye, from a dark site</p>
+      </div>
+    </div>
+  </div>
+  <div class="bench" aria-hidden="true"></div>
+  <div class="floor" aria-hidden="true"></div>
+</section>
+
+<div class="detail" role="dialog" aria-modal="true" aria-labelledby="pd-title" aria-hidden="true" hidden>
+  <div class="stagebig"><div class="big"><span class="frame"><span class="cv"></span></span></div></div>
+  <aside class="panel">
+    <p class="pd-a"></p>
+    <p class="pd-m"></p>
+    <h2 id="pd-title"></h2>
+    <dl class="pd-dl"></dl>
+    <p class="pd-note"></p>
+    <div class="pd-nav">
+      <span class="pd-count"></span>
+      <button class="circ" type="button" data-step="-1" aria-label="Previous plate"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
+      <button class="circ" type="button" data-step="1" aria-label="Next plate"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
+    </div>
+  </aside>
+  <button class="close" type="button" aria-label="Close"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+</div>
+
+<footer class="foot" aria-label="Site footer">
+  <div class="ftop">
+    <div>
+      <p class="kicker">Tonight's Moon</p>
+      <p class="moonline"><svg class="phase" viewBox="0 0 40 40" width="40" height="40" aria-hidden="true"><circle cx="20" cy="20" r="18" fill="#2a2230"/><path class="lit" fill="#f0e8e2" d=""/></svg><span data-moon>Working out the phase</span></p>
+    </div>
+    <div class="clock" aria-label="Your local time">
+      <p class="t"><span data-hm>00:00</span><span class="s" data-s>:00</span></p>
+      <p class="z"><i class="dot" aria-hidden="true"></i><span data-zone>Your time</span></p>
+    </div>
+  </div>
+  <nav class="cols" aria-label="Sitemap">
+    <div>
+      <h3>The voyage</h3>
+      <ul>
+        <li><a href="#moon">The Moon</a></li>
+        <li><a href="#saturn">Saturn</a></li>
+        <li><a href="#pleiades">The Pleiades</a></li>
+        <li><a href="#orion">The Orion Nebula</a></li>
+        <li><a href="#andromeda">Andromeda</a></li>
+      </ul>
+    </div>
+    <div>
+      <h3>The plates</h3>
+      <ul>
+        <li><a href="#wall" data-open="0">Saturn</a></li>
+        <li><a href="#wall" data-open="1">The Pleiades</a></li>
+        <li><a href="#wall" data-open="2">The Orion Nebula</a></li>
+        <li><a href="#wall" data-open="3">Andromeda</a></li>
+      </ul>
+    </div>
+    <div>
+      <h3>Visit</h3>
+      <ul class="slots">
+        <li class="slot">Show times</li>
+        <li class="slot">Address</li>
+        <li class="slot">Tickets link</li>
+      </ul>
+    </div>
+    <p class="note">Late Light is a planetarium's late-night show. Distances and light times on this page are rounded public figures.</p>
+  </nav>
+  <div class="legal">
+    <span>Designed using <a href="https://www.designlounge.live">Design Lounge</a></span>
+    <span class="sp"></span>
+    <button class="replay" type="button">Replay the rise</button>
+  </div>
+  <div class="word" aria-hidden="true"></div>
+</footer>
+
+<script src="/built/late-light-a/main.js"></script>
+</body>
+</html>

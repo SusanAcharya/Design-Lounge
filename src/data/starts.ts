@@ -109,6 +109,7 @@ const DIRECTIONS: Record<string, Direction[]> = {
     ['deco-afternoon', 'Deco afternoon', 'Rose plaster, a gold rail, the afternoon sitting', 'matinee', 'literary', 'editorial', 'hero-engraved-moonrise-plate', 'page-transition-tile-wipe'],
     ['coast-house', 'Coast house', 'Pale air, a house by the water, rooms you turn', 'glacier', 'maison', 'quiet', 'gallery-photo-album', 'parallax-layered-hero'],
     ['guest-book', 'Guest book', 'Manila and a stamp, who stayed, a long quiet note', 'archive', 'classic-garamond', 'editorial', 'paper-article-reader', 'scroll-reading-progress'],
+    ['night-arrival', 'Night arrival', 'You arrive after dark, the hills under a moon, the local time and the hour the bar closes', 'sodium-night', 'night-show', 'lit', 'moonlit-ridge-hero', 'moonlit-ridge-hero'],
   ]),
   agency: d([
     ['night-wall', 'Night wall', 'Dark, confident, a case wall', 'night-desk', 'brutal-grotesk', 'sharp', 'landing-agency-case-wall', 'smooth-scroll-inertia'],
@@ -144,6 +145,8 @@ const DIRECTIONS: Record<string, Direction[]> = {
     ['bedroom-label', 'Bedroom label', 'A small label, a letter, blush paper', 'sakura-desk', 'indie-maker', 'soft', 'handwritten-homepage', 'text-annotated-underlines'],
     ['score-desk', 'Score desk', 'A composer, warm paper, the work is something you read', 'paper-ink', 'classic-garamond', 'editorial', 'paper-article-reader', 'scroll-reading-progress'],
     ['chrome-mixtape', 'Chrome mixtape', 'Ice silver, a drop, covers you can flip', 'y2k-chrome', 'wide-tech', 'glass', 'hero-silk-ribbon-ticker', 'coverflow-strip'],
+    ['after-midnight', 'After midnight', 'A label or a venue tied to one city and one hour, lamp light on indigo, a sound you can play', 'sodium-night', 'ai-editorial', 'lit', 'moonlit-ridge-hero', 'moonlit-ridge-hero'],
+    ['first-bell', 'First bell', 'The same city at dawn, lime-wash and marigold, releases as a lit list', 'temple-dawn', 'night-show', 'editorial', 'hero-asymmetric-type-lockup', 'text-mask-line-reveal'],
   ]),
   'personal-site': d([
     ['sakura-essay', 'Sakura essay', 'A writer, blush paper', 'sakura-desk', 'the-lounge', 'editorial', 'hero-editorial-name-rotator', 'scroll-word-highlight'],
@@ -162,6 +165,8 @@ const DIRECTIONS: Record<string, Direction[]> = {
     ['workshop-day', 'Workshop day', 'A day of sessions, clay, one thing then the next', 'kiln', 'industrial-label', 'industrial', 'week-schedule', 'stacking-cards-scroll'],
     ['listening-night', 'Listening night', 'A dark room, chapters, records in a row', 'observatory', 'cinema', 'editorial', 'hero-chaptered-scenes', 'coverflow-strip'],
     ['school-fair', 'School fair', 'A bright weekend, butter and coral, many small stalls', 'playroom', 'playground', 'soft', 'bento-feature-grid', 'spring-deck'],
+    ['deep-field', 'Deep field', 'A show you travel through, the scroll is the journey, starlight and amber on black', 'deep-field', 'night-show', 'lit', 'scroll-space-voyage', 'scroll-space-voyage'],
+    ['place-and-hour', 'Place and hour', 'A night tied to one city and one hour, the sky drawn live, the clock counting down', 'sodium-night', 'night-show', 'lit', 'moonlit-ridge-hero', 'moonlit-ridge-hero'],
   ]),
   museum: d([
     ['marble-hall', 'Marble hall', 'White stone, a brass plaque, the hall', 'marble-hall', 'the-lounge', 'editorial', 'editorial-landing-hero', 'pan-canvas'],
@@ -173,12 +178,16 @@ const DIRECTIONS: Record<string, Direction[]> = {
     ['reading-room', 'Reading room', 'A library room, manila, a long note beside the object', 'reading-room', 'classic-garamond', 'editorial', 'paper-article-reader', 'scroll-reading-progress'],
     ['courtyard', 'Courtyard', 'A garden court, olive and cream, you move through it', 'loam', 'garden-journal', 'soft', 'hero-engraved-moonrise-plate', 'parallax-layered-hero'],
     ['kids-hall', 'Kids hall', 'A bright room, shapes, a thing to touch', 'playroom', 'playground', 'soft', 'hero-layered-letter-swap', 'spring-deck'],
+    ['star-dome', 'Star dome', 'A science night or a launch, the scroll flies you out from the ground', 'deep-field', 'night-show', 'lit', 'scroll-space-voyage', 'scroll-space-voyage'],
   ]),
   landing: d([
     ['noir-launch', 'Noir launch', 'Luxury, dark, one product', 'atelier-noir', 'maison', 'editorial', 'luxe-product-detail', 'scroll-scrub-product-sequence'],
     ['clay-launch', 'Clay launch', 'Warm, crafted, a maker', 'kiln', 'studio-display', 'soft', 'editorial-landing-hero', 'stacking-cards-scroll'],
     ['grid-launch', 'Grid launch', 'Precise, cool, a hardware launch', 'ice-station', 'swiss-precision', 'sharp', 'hero-swiss-grid-wordmark', 'scroll-velocity-type'],
     ['toy-launch', 'Toy launch', 'Playful, butter and coral', 'playroom', 'candy-clay', 'soft', 'hero-bauhaus-composition', 'scroll-zoom-portal'],
+    ['playable', 'Playable', 'A product you can touch on the page, bone and signal orange, it makes a sound', 'bone-signal', 'machined', 'lit', 'playable-product-hero', 'playable-product-hero'],
+    ['bench-at-night', 'Bench at night', 'The same object in the dark, graphite and one lit orange, specs read like an engraving', 'graphite-signal', 'machined', 'sharp', 'object-3d-turntable', 'scroll-scrub-product-sequence'],
+    ['deep-launch', 'Deep launch', 'A launch as a voyage, starlight on black, you scroll from the ground to the product', 'deep-field', 'night-show', 'lit', 'scroll-space-voyage', 'scroll-space-voyage'],
   ]),
   dashboard: d([
     ['harbour-desk', 'Harbour desk', 'Finance ops, navy and brass, the numbers first', 'harbour-ledger', 'swiss-precision', 'sharp', 'analytics-dashboard-overview', null],

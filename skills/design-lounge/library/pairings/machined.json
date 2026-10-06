@@ -1,0 +1,32 @@
+{
+ "id": "machined",
+ "name": "Machined",
+ "display": {
+  "family": "Archivo",
+  "weight": 900,
+  "italic": false,
+  "upper": true,
+  "trackingEm": -0.02,
+  "google": "Archivo:wdth,wght@62..125,400..900",
+  "lineHeight": 1
+ },
+ "text": {
+  "family": "Archivo",
+  "weight": 400,
+  "italic": false,
+  "upper": false,
+  "trackingEm": 0,
+  "google": "Archivo:wdth,wght@62..125,400..900",
+  "lineHeight": 1.55
+ },
+ "mono": {
+  "family": "IBM Plex Mono",
+  "weight": 400,
+  "italic": false,
+  "upper": false,
+  "trackingEm": 0,
+  "google": "IBM+Plex+Mono:wght@400;500;600"
+ },
+ "numbers": "mono",
+ "caution": "Set the display at font-stretch 125% (wdth 125). At normal width Archivo looks like any grotesk."
+}

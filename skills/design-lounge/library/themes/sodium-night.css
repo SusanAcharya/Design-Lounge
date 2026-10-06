@@ -1,0 +1,66 @@
+/* Sodium Night · dark · pair: temple-dawn
+   A city after midnight. Indigo sky, bone type, sodium-lamp amber and one sindoor red.
+   Best for: Labels, Venues, Late shows */
+/* Colour only. Fonts come from the locked pairing file. Radius and shadow come from the locked family. */
+/* Sodium Night · full palette · Designed using Design Lounge (https://www.designlounge.live)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #ffb04a;
+  --primary-ink: #141210;
+  --primary-soft: #42301b;
+  --secondary: #e8442e;
+  --secondary-ink: #141210;
+  --secondary-soft: #3c1614;
+  --tertiary: #7c86de;
+  --tertiary-ink: #141210;
+  --tertiary-soft: #22253e;
+
+  /* Surface */
+  --bg: #06070c;
+  --surface: #0c0f1f;
+  --surface-2: #161b36;
+  --surface-3: #2b2f46;
+  --ink: #ece6d6;
+  --ink-2: #b6af9e;
+  --ink-3: #8f8a7b;
+  --line: #20264a;
+  --line-strong: #6e6f7f;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #7fcf9a;
+  --success-ink: #141210;
+  --success-soft: #23372e;
+  --success-on-soft: #7fcf9a;
+  --warning: #ffb04a;
+  --warning-ink: #141210;
+  --warning-soft: #42301b;
+  --warning-on-soft: #ffb04a;
+  --danger: #ff6a55;
+  --danger-ink: #141210;
+  --danger-soft: #421f1e;
+  --danger-on-soft: #ff6a55;
+  --info: #7c86de;
+  --info-ink: #141210;
+  --info-soft: #22253e;
+  --info-on-soft: #7c86de;
+
+  /* Chrome */
+  --focus: #ffb04a;
+  --link: #ffb04a;
+  --overlay: #070605;
+  --inverse: #ece6d6;
+  --inverse-ink: #06070c;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+
+}

@@ -1,0 +1,455 @@
+<!-- Design Lounge piece: moonlit-ridge-hero · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Le Dernier Feu, dinner after the last lift above Chamonix</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#06070c;--indigo:#18234a;--bone:#ece6d6;--bone-dim:rgba(236,230,214,.62);
+  --line:rgba(236,230,214,.16);--amber:#ffb04a;--flame:#e8442e;
+  --serif:"Instrument Serif","Times New Roman",serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --pad:clamp(20px,4.4vw,56px);
+  --ease:cubic-bezier(.16,1,.3,1);--std:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+html{color-scheme:dark;scrollbar-width:thin;scrollbar-color:#18234a var(--ink)}
+body{background:var(--ink);color:var(--bone);font:400 13px/1.6 var(--mono);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--amber);outline-offset:3px;border-radius:4px}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+.hero{position:relative;height:100vh;min-height:560px;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:0 var(--pad) 34px;isolation:isolate}
+#sky{position:absolute;inset:0;width:100%;height:100%;z-index:-2}
+.grain{position:absolute;inset:0;z-index:-1;opacity:.045;pointer-events:none}
+.hero::after{content:"";position:absolute;inset:auto 0 0;height:30%;z-index:-1;background:linear-gradient(transparent,rgba(6,7,12,.72));pointer-events:none}
+
+.top{position:absolute;top:0;left:var(--pad);right:var(--pad);height:76px;display:flex;align-items:center;justify-content:space-between;font-size:11px;letter-spacing:.14em;text-transform:uppercase}
+.mark{display:flex;align-items:center;gap:10px}
+.mark span{font:400 22px/1 var(--serif);letter-spacing:0;text-transform:none}
+.mark svg{transition:transform .8s var(--ease)}
+.mark:hover svg{transform:translateY(-3px) scale(1.08)}
+.top nav{display:flex;gap:32px}
+.top nav a{position:relative;padding:6px 0;color:var(--bone-dim);transition:color .2s var(--std)}
+.top nav a::after{content:"";position:absolute;left:0;right:0;bottom:2px;height:1px;background:var(--amber);transform:scaleX(0);transform-origin:left;transition:transform .32s var(--ease)}
+.top nav a:hover{color:var(--bone)}
+.top nav a:hover::after{transform:scaleX(1)}
+.clock{display:flex;align-items:center;gap:8px;margin:0;font-variant-numeric:tabular-nums}
+.clock time{color:var(--bone);letter-spacing:.08em}
+.dot{width:7px;height:7px;border-radius:50%;background:rgba(236,230,214,.4)}
+.live .dot,.status.open .lamp{background:var(--flame);animation:pulse 1.6s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(232,68,46,.7)}100%{box-shadow:0 0 0 10px rgba(232,68,46,0)}}
+
+.meta{position:absolute;top:96px;display:flex;flex-direction:column;gap:3px;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--bone-dim);font-variant-numeric:tabular-nums}
+.meta.tl{left:var(--pad)}
+.meta.tr{right:var(--pad);text-align:right}
+
+.title{position:relative;margin:0 0 30px;font:400 clamp(88px,15.5vw,232px)/.82 var(--serif);letter-spacing:-.04em;pointer-events:none}
+.title .ln{display:block}
+.title .l2{margin-top:-.2em;padding-left:24vw;position:relative}
+.w{display:inline-block;overflow:hidden;vertical-align:top;padding:0 .04em .1em 0}
+.l2 .w{padding-right:.12em}
+.title em{color:var(--amber)}
+.gl{display:inline-block;filter:drop-shadow(0 0 34px rgba(255,176,74,.32))}
+.ch{display:inline-block;transform:translateY(105%);animation:rise 1.1s var(--ease) forwards}
+@keyframes rise{to{transform:none}}
+.fr{position:absolute;left:0;top:1.75em;width:20vw;font:italic 400 .16em/1.1 var(--serif);letter-spacing:0;color:var(--bone);opacity:0;animation:fade 1.2s .8s var(--std) forwards}
+.fr small{display:block;margin-top:.8em;font:400 10.5px/1.6 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--bone-dim)}
+@keyframes fade{to{opacity:.9}}
+
+.foot{display:flex;justify-content:space-between;align-items:flex-end;gap:24px}
+.sub{max-width:420px;margin:0;font-size:13.5px;line-height:1.65;color:var(--bone-dim);text-shadow:0 1px 14px rgba(6,7,12,.95)}
+.sub em{font:italic 400 1.4em/1 var(--serif);color:var(--bone)}
+.ctl{display:flex;gap:12px;align-items:center}
+.status,.play{border:1px solid var(--line);border-radius:999px;background:rgba(6,7,12,.5);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.status{display:flex;gap:14px;align-items:center;padding:13px 22px 13px 16px;font-variant-numeric:tabular-nums}
+.status strong{display:block;font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase}
+.status small{display:block;font-size:12px;color:var(--bone-dim)}
+.status.open strong{color:var(--flame)}
+.lamp{width:11px;height:11px;border-radius:50%;background:#3a3f5c;flex:none}
+.play{display:flex;align-items:center;gap:10px;height:56px;padding:0 20px 0 8px;color:var(--bone);font:600 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;cursor:pointer;transition:border-color .2s var(--std),background .2s var(--std)}
+.play i{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:var(--bone);color:var(--ink);transition:background .2s var(--std),transform .24s var(--ease)}
+.play:hover{border-color:rgba(255,176,74,.6)}
+.play:hover i{background:var(--amber)}
+.play:active i{transform:scale(.94)}
+.play .stop{display:none}
+.play[aria-pressed=true]{border-color:var(--amber);background:rgba(255,176,74,.1)}
+.play[aria-pressed=true] i{background:var(--amber)}
+.play[aria-pressed=true] .go{display:none}
+.play[aria-pressed=true] .stop{display:block}
+
+.next{padding:84px var(--pad) 96px;border-top:1px solid var(--line);background:linear-gradient(var(--ink),#0b1020)}
+.next p{margin:0 0 18px;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--bone-dim)}
+.next p b{color:var(--amber);font-weight:400;margin-right:12px}
+.next h2{margin:0;max-width:980px;font:400 clamp(34px,4.4vw,58px)/1.04 var(--serif);letter-spacing:-.02em}
+.next h2 em{color:var(--amber)}
+
+@media (max-width:900px){.top nav{display:none}.fr{display:none}.title .l2{padding-left:10vw}.foot{flex-direction:column;align-items:flex-start}}
+@media (max-width:640px){.meta.tr{display:none}.ctl{flex-wrap:wrap}.title{font-size:clamp(60px,20vw,120px)}}
+@media (prefers-reduced-motion:reduce){.ch,.fr{animation:none;transform:none;opacity:.9}.ch{opacity:1}.live .dot,.status.open .lamp{animation:none}*{transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<section class="hero" id="top">
+  <canvas id="sky" aria-hidden="true"></canvas>
+  <div class="grain" id="grain" aria-hidden="true"></div>
+  <header class="top">
+    <a class="mark" href="#top"><svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path d="M12 2.5c.6 3.2 4.8 5.6 4.8 10.2A4.8 4.8 0 0 1 12 17.5a4.8 4.8 0 0 1-4.8-4.8c0-2.2 1.2-3.6 2.3-4.8.2 1.6.9 2.6 1.9 3.1-.3-3 .2-6 .6-8.5zM5 20.5h14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Le Dernier Feu</span></a>
+    <nav><a href="#rule">The Rule</a><a href="#rule">Menu</a><a href="#rule">The Walk</a><a href="#rule">Book</a></nav>
+    <p class="clock" id="clock"><span class="dot"></span><span>Chamonix</span> <time id="clk">18:17:20</time></p>
+  </header>
+  <div class="meta tl"><span>45.9052° N</span><span>6.8915° E</span><span>Alt. 2,412 m</span></div>
+  <div class="meta tr"><span>Mountain hut</span><span>Last lift 16:45</span><span>24 covers</span></div>
+
+  <h1 class="title">
+    <span class="vh">Le Dernier Feu</span>
+    <span class="ln l1" aria-hidden="true"><span class="w" data-split>Le Dernier</span></span>
+    <span class="ln l2" aria-hidden="true"><span class="fr" lang="fr">Refuge,<br>2412 m<small>Dinner after the last lift</small></span><span class="gl"><em class="w" data-split>Feu</em></span></span>
+  </h1>
+
+  <div class="foot">
+    <p class="sub">A mountain hut above Chamonix that serves dinner only after the last lift closes. One stove, one long table, <em>by firelight</em>. Walk up, or stay up.</p>
+    <div class="ctl">
+      <button class="play" id="play" type="button" aria-pressed="false"><i aria-hidden="true"><svg class="go" width="14" height="14" viewBox="0 0 14 14"><path d="M3.5 1.8v10.4L12 7z" fill="currentColor"/></svg><svg class="stop" width="12" height="12" viewBox="0 0 12 12"><rect x="1" y="1" width="10" height="10" rx="1.5" fill="currentColor"/></svg></i><span id="playT">Hear the fire</span></button>
+      <div class="status" id="status" role="timer" aria-atomic="true"><span class="lamp" aria-hidden="true"></span><div><strong id="stT">Kitchen opens at 19:30</strong><small id="stS">in 01:12:40</small></div></div>
+    </div>
+  </div>
+</section>
+<section class="next" id="rule">
+  <p><b>01</b>The Rule</p>
+  <h2>The stove is lit when the last cabin leaves the valley. Dinner is for whoever is still on the mountain, <em>served until 22:00.</em></h2>
+</section>
+
+<script>
+(() => {
+  const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const $ = (s) => document.querySelector(s);
+
+  /* title split */
+  let n = 0;
+  document.querySelectorAll('[data-split]').forEach((el) => {
+    el.innerHTML = [...el.textContent].map((c) => `<span class="ch" style="animation-delay:${n++ * 60 + 80}ms">${c === ' ' ? '&nbsp;' : c}</span>`).join('');
+  });
+
+  /* clock + countdown, Europe/Paris */
+  const TZ = 'Europe/Paris', OPEN = 19 * 3600 + 30 * 60, CLOSE = 22 * 3600;
+  const fmt = new Intl.DateTimeFormat('en-GB', { timeZone: TZ, hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23' });
+  const pad = (v) => String(v).padStart(2, '0');
+  const hms = (s) => `${pad(Math.floor(s / 3600))}:${pad(Math.floor(s / 60) % 60)}:${pad(s % 60)}`;
+  function nowIn() {
+    const p = Object.fromEntries(fmt.formatToParts(new Date()).map((v) => [v.type, v.value]));
+    return { h: +p.hour % 24, m: +p.minute, s: +p.second };
+  }
+  const clk = $('#clk'), clock = $('#clock'), st = $('#status'), stT = $('#stT'), stS = $('#stS');
+  function tick() {
+    const { h, m, s } = nowIn(), sec = h * 3600 + m * 60 + s, open = sec >= OPEN && sec < CLOSE;
+    clk.textContent = `${pad(h)}:${pad(m)}:${pad(s)}`;
+    clk.dateTime = clk.textContent;
+    clock.classList.toggle('live', open);
+    st.classList.toggle('open', open);
+    if (open) {
+      stT.textContent = 'Kitchen open';
+      stS.textContent = 'Last plates 22:00';
+    } else {
+      stT.textContent = 'Kitchen opens at 19:30';
+      stS.textContent = `in ${hms((OPEN - sec + 86400) % 86400)}`;
+    }
+  }
+  tick();
+  setTimeout(() => { tick(); setInterval(tick, 1000); }, 1000 - (Date.now() % 1000));
+
+  /* grain, generated once */
+  (() => {
+    const g = document.createElement('canvas'); g.width = g.height = 160;
+    const c = g.getContext('2d'), d = c.createImageData(160, 160);
+    for (let i = 0; i < d.data.length; i += 4) { const v = Math.random() * 255; d.data[i] = d.data[i + 1] = d.data[i + 2] = v; d.data[i + 3] = 255; }
+    c.putImageData(d, 0, 0);
+    $('#grain').style.backgroundImage = `url(${g.toDataURL()})`;
+  })();
+
+  /* sky */
+  const cv = $('#sky'), x = cv.getContext('2d'), hero = $('.hero');
+  const rng = (s) => () => ((s = (s * 1664525 + 1013904223) >>> 0) / 4294967296);
+  let W, H, DPR, stars, ridges, lamps, embers, moon, spark, ember, hut;
+  const ptr = { x: .5, y: .5, tx: .5, ty: .5 };
+
+  function ridge(seed, base, amp, rough, sharp) {
+    const R = rng(seed), n = 129, p = new Array(n).fill(0);
+    p[0] = R(); p[n - 1] = R();
+    for (let step = n - 1, sc = 1; step > 1; step /= 2, sc *= rough)
+      for (let k = step / 2; k < n; k += step) p[k] = (p[k - step / 2] + p[k + step / 2]) / 2 + (R() - .5) * sc;
+    const lo = Math.min(...p), hi = Math.max(...p);
+    return p.map((v) => base - Math.pow((v - lo) / (hi - lo), sharp) * amp);
+  }
+  function sprite(r, rgb, core) {
+    const c = document.createElement('canvas'); c.width = c.height = r * 2;
+    const g = c.getContext('2d'), gr = g.createRadialGradient(r, r, 0, r, r, r);
+    gr.addColorStop(0, `rgba(${rgb},1)`); gr.addColorStop(core, `rgba(${rgb},.35)`); gr.addColorStop(1, `rgba(${rgb},0)`);
+    g.fillStyle = gr; g.fillRect(0, 0, r * 2, r * 2); return c;
+  }
+  const rx = (k) => -60 + k / 128 * (W + 120);
+
+  function build() {
+    DPR = Math.min(devicePixelRatio || 1, 2);
+    W = cv.clientWidth; H = cv.clientHeight;
+    cv.width = W * DPR; cv.height = H * DPR;
+    x.setTransform(DPR, 0, 0, DPR, 0, 0);
+    const R = rng(42);
+    stars = [];
+    for (let i = 0, c = Math.round(W * H / 2600); i < c; i++)
+      stars.push({ x: R() * W, y: Math.pow(R(), 1.5) * H * .7, r: R() * R() * 1.7 + .35, p: R() * 6.3, s: .4 + R() * 1.8, a: .35 + R() * .65 });
+    for (let i = 0; i < 260; i++) {
+      const t = R(), off = (R() + R() + R() - 1.5) * H * .07;
+      stars.push({ x: W * (.02 + t * .62) + off * .5, y: H * (-.02 + t * .6) - off, r: R() * .8 + .3, p: R() * 6.3, s: .3 + R(), a: .25 + R() * .4 });
+    }
+    const A = H * Math.min(1, .55 + W / H * .4);
+    ridges = [
+      { p: ridge(11, H * .64, A * .36, .7, 1.6), par: 8, base: .64, amp: A * .36, snow: 1 },
+      { p: ridge(23, H * .72, A * .17, .64, 1.35), par: 18, fill: '#141b3c', base: .72, amp: A * .17, snow: .4 },
+      { p: ridge(37, H * .81, H * .09, .55, 1.1), par: 32, fill: '#0b0f24', base: .81, amp: H * .09 },
+      { p: ridge(53, H * .9, H * .05, .46, 1), par: 54, fill: '#06070d', base: .9, amp: H * .05 }
+    ];
+    const L = rng(99);
+    lamps = [];
+    for (let i = 0, c = Math.round(W / 5); i < c; i++) {
+      const lay = L() < .22 ? 2 : 3, rp = ridges[lay].p, lx = L() * W;
+      const top = rp[Math.min(128, Math.round((lx + 60) / (W + 120) * 128))] + 6;
+      const ly = top + Math.pow(L(), lay === 2 ? 2.2 : .8) * (lay === 2 ? H * .05 : H - top);
+      lamps.push({ x: lx, y: ly, lay, r: L() * 1.1 + .4, f: L() * 9, warm: L() < .82 });
+    }
+    const hk = Math.round((W * .63 + 60) / (W + 120) * 128);
+    hut = { k: hk, x: rx(hk), y: Math.min(ridges[2].p[hk - 1], ridges[2].p[hk], ridges[2].p[hk + 1]) + 1, s: Math.max(.8, Math.min(1.4, H / 800)) };
+    embers = [];
+    for (let i = 0; i < 30; i++) embers.push({ p: L() * 9, T: 3 + L() * 4, rise: H * (.16 + L() * .24), w: 20 + L() * 90, ax: 6 + L() * 16, q: L() * 6.3, sz: 6 + L() * 10 });
+    const mr = Math.max(26, Math.min(W, H) * .052);
+    moon = document.createElement('canvas'); moon.width = moon.height = Math.ceil(mr * 2.4 * DPR);
+    const m = moon.getContext('2d'), c = mr * 1.2;
+    m.scale(DPR, DPR);
+    const mg = m.createRadialGradient(c - mr * .5, c + mr * .2, mr * .1, c, c, mr);
+    mg.addColorStop(0, '#fff8e6'); mg.addColorStop(1, '#e6d8b4');
+    m.fillStyle = mg; m.beginPath(); m.arc(c, c, mr, 0, 7); m.fill();
+    m.globalCompositeOperation = 'destination-out';
+    m.beginPath(); m.arc(c + mr * .46, c - mr * .24, mr * .9, 0, 7); m.fill();
+    moon.r = mr; moon.c = c;
+    spark = sprite(10, '236,230,214', .18);
+    ember = sprite(16, '255,176,74', .14);
+  }
+
+  /* lit faces: segments whose slope turns toward the moon catch snow light, the rest fall into shade */
+  function facets(rg, ox, oy, mcx) {
+    const p = rg.p, dx = (W + 120) / 128, b = H * rg.base;
+    for (let i = 0; i < 128; i++) {
+      const x0 = rx(i) + ox, x1 = x0 + dx, alt = (b - Math.min(p[i], p[i + 1])) / rg.amp;
+      if (alt < .28) continue;
+      const f = (p[i + 1] - p[i]) / dx * Math.sign(mcx - x0 - dx / 2);
+      if (Math.abs(f) < .04) continue;
+      const hi = Math.min(1, (alt - .28) * 2.4), d = 3 + Math.min(1, Math.abs(f)) * rg.amp * .16 * alt;
+      const y0 = Math.min(p[i], p[i + 1]) + oy, g = x.createLinearGradient(0, y0, 0, y0 + d * 1.3);
+      const c = f > 0 ? '238,240,255' : '5,8,26';
+      g.addColorStop(0, `rgba(${c},1)`); g.addColorStop(1, `rgba(${c},0)`);
+      x.globalAlpha = Math.min(1, Math.abs(f) * 1.5) * hi * (f > 0 ? rg.snow * .9 : .45);
+      x.fillStyle = g; x.beginPath();
+      x.moveTo(x0, p[i] + oy); x.lineTo(x1 + .6, p[i + 1] + oy); x.lineTo(x1 + .6, p[i + 1] + oy + d); x.lineTo(x0, p[i] + oy + d * .7);
+      x.fill();
+    }
+    x.globalAlpha = 1;
+  }
+
+  let wave = null, an = null;
+  function draw(t) {
+    ptr.x += (ptr.tx - ptr.x) * .05; ptr.y += (ptr.ty - ptr.y) * .05;
+    const mx = ptr.x - .5, my = ptr.y - .5, sy = Math.min(scrollY, H);
+
+    const sk = x.createLinearGradient(0, 0, 0, H);
+    sk.addColorStop(0, '#03050a'); sk.addColorStop(.38, '#0a1022'); sk.addColorStop(.66, '#18234a'); sk.addColorStop(1, '#24305e');
+    x.fillStyle = sk; x.fillRect(0, 0, W, H);
+
+    x.globalCompositeOperation = 'lighter';
+    const band = x.createLinearGradient(W * .05, 0, W * .5, H * .7);
+    band.addColorStop(0, 'rgba(120,135,210,0)'); band.addColorStop(.5, 'rgba(120,135,210,.05)'); band.addColorStop(1, 'rgba(120,135,210,0)');
+    x.fillStyle = band; x.fillRect(0, 0, W, H * .7);
+    for (const s of stars) {
+      const a = s.a * (RM ? .8 : .55 + .45 * Math.sin(t * .001 * s.s + s.p));
+      const px = s.x - mx * 5, py = s.y - my * 4 + sy * .08;
+      x.globalAlpha = a; x.fillStyle = '#ece6d6';
+      x.fillRect(px, py, s.r, s.r);
+      if (s.r > 1.4) { x.globalAlpha = a * .5; x.drawImage(spark, px - 9, py - 9, 20, 20); }
+    }
+
+    const mr = moon.r, mcx = W * .76 - mx * 16, mcy = H * .19 - my * 10 + sy * .22;
+    const hx = mcx - mr * .35, hy = mcy + mr * .15;
+    const halo = (r0, r1, a) => {
+      const g = x.createRadialGradient(hx, hy, r0, hx, hy, r1);
+      g.addColorStop(0, `rgba(255,222,176,${a})`); g.addColorStop(.4, `rgba(255,210,160,${a * .32})`); g.addColorStop(1, 'rgba(255,210,160,0)');
+      x.globalAlpha = 1; x.fillStyle = g; x.fillRect(hx - r1, hy - r1, r1 * 2, r1 * 2);
+    };
+    halo(mr * .6, mr * 9, .16); halo(mr * .6, mr * 3, .2); halo(mr * .7, mr * 1.6, .26);
+    x.globalCompositeOperation = 'source-over';
+    x.globalAlpha = .55; x.fillStyle = '#0e1430'; x.beginPath(); x.arc(mcx, mcy, mr * .99, 0, 7); x.fill();
+    x.globalAlpha = .06; x.fillStyle = '#c8cdeb'; x.fill();
+    x.globalAlpha = 1;
+    x.drawImage(moon, mcx - moon.c, mcy - moon.c, moon.c * 2, moon.c * 2);
+
+    x.globalCompositeOperation = 'lighter';
+    const cg = x.createRadialGradient(W * .5, H * .95, 0, W * .5, H * .95, W * .6);
+    cg.addColorStop(0, 'rgba(255,150,70,.11)'); cg.addColorStop(1, 'rgba(255,150,70,0)');
+    x.fillStyle = cg; x.fillRect(0, 0, W, H);
+    x.globalCompositeOperation = 'source-over';
+
+    let hc = null;
+    ridges.forEach((rg, i) => {
+      const ox = -mx * rg.par, oy = -my * rg.par * .35 + sy * (.04 + i * .07);
+      x.beginPath(); x.moveTo(-80, H + 20);
+      for (let k = 0; k < 129; k++) x.lineTo(rx(k) + ox, rg.p[k] + oy);
+      x.lineTo(W + 80, H + 20); x.closePath();
+      if (i === 0) {
+        const top = Math.min(...rg.p) + oy, g = x.createLinearGradient(0, top, 0, top + H * .4);
+        g.addColorStop(0, '#59628f'); g.addColorStop(.12, '#2e366b'); g.addColorStop(.4, '#1b2250'); g.addColorStop(1, '#151b42');
+        x.fillStyle = g; x.fill();
+        x.save(); x.clip();
+        const mw = x.createRadialGradient(mcx, mcy, 0, mcx, mcy, W * .45);
+        mw.addColorStop(0, 'rgba(255,228,190,.2)'); mw.addColorStop(1, 'rgba(255,228,190,0)');
+        x.fillStyle = mw; x.fillRect(0, 0, W, H); x.restore();
+      } else { x.fillStyle = rg.fill; x.fill(); }
+      if (rg.snow) facets(rg, ox, oy, mcx);
+      const nx = ridges[i + 1];
+      if (nx) {
+        const y0 = H * nx.base - H * .2 + oy, y1 = H * nx.base + oy;
+        const mist = x.createLinearGradient(0, y0, 0, y1);
+        mist.addColorStop(0, 'rgba(90,105,160,0)'); mist.addColorStop(1, `rgba(90,105,160,${.3 - i * .07})`);
+        x.fillStyle = mist; x.fillRect(0, y0, W, y1 - y0 + 2);
+      }
+      if (i === 2 || i === 3) lights(t, i, ox, oy);
+      if (i === 2) hc = cabin(t, rg, ox, oy);
+    });
+
+    x.globalCompositeOperation = 'lighter';
+    if (!RM && hc) for (const e of embers) {
+      const life = ((t * .001 + e.p) % e.T) / e.T, a = Math.pow(Math.sin(Math.PI * life), 2) * (1 - life * .5);
+      if (a < .02) continue;
+      const ex = hc.x + Math.sin(life * 5 + e.q) * e.ax * life + life * e.w - mx * 30;
+      const ey = hc.y - life * e.rise, sz = e.sz * (1 - life * .6);
+      x.globalAlpha = a * .9; x.drawImage(ember, ex - sz / 2, ey - sz / 2, sz, sz);
+      x.globalAlpha = a; x.fillStyle = '#ffe2a8'; x.fillRect(ex - .7, ey - .7, 1.4, 1.4);
+    }
+    x.globalAlpha = 1; x.globalCompositeOperation = 'source-over';
+
+    const by = H * .868 - my * 8 + sy * .3;
+    x.beginPath();
+    const live = an && wave;
+    if (live) an.getByteTimeDomainData(wave);
+    for (let px = 0; px <= W; px += 3) {
+      const v = live ? Math.max(-40, Math.min(40, (wave[Math.floor(px / W * wave.length)] / 128 - 1) * 140))
+        : Math.sin(px * .02 + t * .002) * Math.sin(px * .003 - t * .0007) * 5 * (1 + Math.max(0, 1 - Math.abs(px / W - ptr.x) * 4) * 2.5);
+      px ? x.lineTo(px, by + v) : x.moveTo(px, by + v);
+    }
+    x.strokeStyle = 'rgba(255,176,74,.8)'; x.lineWidth = 1.2;
+    x.shadowColor = 'rgba(255,176,74,.9)'; x.shadowBlur = 8;
+    x.stroke(); x.shadowBlur = 0;
+  }
+
+  function cabin(t, rg, ox, oy) {
+    const s = hut.s, cx = hut.x + ox, by = hut.y + oy;
+    x.fillStyle = rg.fill; x.beginPath();
+    x.moveTo(cx - 10 * s, by + 4); x.lineTo(cx - 10 * s, by - 7 * s); x.lineTo(cx - 13 * s, by - 7 * s); x.lineTo(cx, by - 17 * s);
+    x.lineTo(cx + 13 * s, by - 7 * s); x.lineTo(cx + 10 * s, by - 7 * s); x.lineTo(cx + 10 * s, by + 4); x.fill();
+    x.fillRect(cx + 4 * s, by - 18 * s, 3 * s, 6 * s);
+    const fl = RM ? .9 : .78 + .22 * Math.sin(t * .011) * Math.sin(t * .0037 + 1);
+    x.globalCompositeOperation = 'lighter';
+    x.globalAlpha = .5 * fl; x.drawImage(ember, cx - 30 * s, by - 34 * s, 60 * s, 60 * s);
+    x.globalAlpha = fl; x.fillStyle = '#ffc56e';
+    x.fillRect(cx - 6.5 * s, by - 5 * s, 3.4 * s, 3.6 * s); x.fillRect(cx + 2.5 * s, by - 5 * s, 3.4 * s, 3.6 * s);
+    x.globalAlpha = 1; x.globalCompositeOperation = 'source-over';
+    return { x: cx + 5.5 * s, y: by - 19 * s };
+  }
+
+  function lights(t, lay, ox, oy) {
+    x.globalCompositeOperation = 'lighter';
+    for (const l of lamps) {
+      if (l.lay !== lay) continue;
+      const fl = RM ? .8 : .62 + .38 * Math.sin(t * .003 + l.f * 5) * Math.sin(t * .0017 + l.f);
+      const lx = l.x + ox * 1.1, ly = l.y + oy, k = lay === 2 ? .55 : 1;
+      x.globalAlpha = Math.max(.15, fl) * k;
+      x.fillStyle = l.warm ? '#ffb04a' : '#dfe8ff';
+      x.beginPath(); x.arc(lx, ly, l.r, 0, 7); x.fill();
+      if (l.r > 1.05 && l.warm) { x.globalAlpha = fl * .32 * k; x.drawImage(ember, lx - l.r * 6, ly - l.r * 6, l.r * 12, l.r * 12); }
+    }
+    x.globalAlpha = 1; x.globalCompositeOperation = 'source-over';
+  }
+
+  let raf = 0, running = false;
+  const loop = (t) => { draw(t); raf = requestAnimationFrame(loop); };
+  function start() { if (!running) { running = true; raf = requestAnimationFrame(loop); } }
+  function stop() { running = false; cancelAnimationFrame(raf); }
+  function paint() { build(); draw(performance.now()); }
+  paint();
+  let rs; addEventListener('resize', () => { clearTimeout(rs); rs = setTimeout(paint, 120); });
+  if (!RM) {
+    start();
+    hero.addEventListener('pointermove', (e) => { ptr.tx = e.clientX / innerWidth; ptr.ty = e.clientY / innerHeight; }, { passive: true });
+    new IntersectionObserver(([e]) => (e.isIntersecting ? start() : stop())).observe(hero);
+  }
+  if (document.fonts) document.fonts.ready.then(() => draw(performance.now()));
+
+  /* fire and wind: filtered noise, built on first click, never before */
+  const btn = $('#play'), btnT = $('#playT');
+  let ac, out, buf, timer, token = 0;
+  function noise(dest, type, f, q, g) {
+    const s = ac.createBufferSource(), fl = ac.createBiquadFilter(), gn = ac.createGain();
+    s.buffer = buf; s.loop = true; fl.type = type; fl.frequency.value = f; fl.Q.value = q; gn.gain.value = g;
+    s.connect(fl); fl.connect(gn); gn.connect(dest); s.start(0, Math.random() * 2);
+    return { fl, gn };
+  }
+  function buildAudio() {
+    ac = new (window.AudioContext || window.webkitAudioContext)();
+    out = ac.createGain(); out.gain.value = 0;
+    an = ac.createAnalyser(); an.fftSize = 1024; wave = new Uint8Array(an.fftSize);
+    out.connect(an); an.connect(ac.destination);
+    buf = ac.createBuffer(1, ac.sampleRate * 2, ac.sampleRate);
+    const d = buf.getChannelData(0);
+    for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+    const wind = noise(out, 'bandpass', 420, .9, .07);
+    [[.09, wind.fl.frequency, 260], [.13, wind.gn.gain, .04]].forEach(([f, param, depth]) => {
+      const o = ac.createOscillator(), g = ac.createGain();
+      o.frequency.value = f; g.gain.value = depth; o.connect(g); g.connect(param); o.start();
+    });
+    noise(out, 'lowpass', 240, .7, .16);
+  }
+  function crackle() {
+    for (let i = 0, c = Math.floor(Math.random() * 4); i < c; i++) {
+      const t = ac.currentTime + .02 + Math.random() * .18, big = Math.random() < .12;
+      const s = ac.createBufferSource(), hp = ac.createBiquadFilter(), g = ac.createGain();
+      s.buffer = buf; hp.type = big ? 'bandpass' : 'highpass'; hp.frequency.value = big ? 700 : 1800 + Math.random() * 3000;
+      g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(big ? .5 : .08 + Math.random() * .2, t + .002);
+      g.gain.exponentialRampToValueAtTime(.0001, t + (big ? .09 : .01 + Math.random() * .04));
+      s.connect(hp); hp.connect(g); g.connect(out); s.start(t, Math.random() * 1.9, .12);
+    }
+  }
+  btn.addEventListener('click', () => {
+    const on = btn.getAttribute('aria-pressed') !== 'true';
+    btn.setAttribute('aria-pressed', on);
+    btnT.textContent = on ? 'Sound off' : 'Hear the fire';
+    if (!ac) buildAudio();
+    const now = ac.currentTime, my = ++token;
+    out.gain.cancelScheduledValues(now); out.gain.setValueAtTime(out.gain.value, now);
+    if (on) {
+      ac.resume();
+      out.gain.linearRampToValueAtTime(.6, now + 2.5);
+      clearInterval(timer); timer = setInterval(crackle, 200);
+      if (RM) start();
+    } else {
+      out.gain.linearRampToValueAtTime(0, now + .8);
+      clearInterval(timer);
+      setTimeout(() => { if (my === token) { ac.suspend(); if (RM) { stop(); draw(performance.now()); } } }, 900);
+    }
+  });
+})();
+</script>
+</body>
+</html>

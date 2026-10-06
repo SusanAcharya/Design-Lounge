@@ -1,0 +1,66 @@
+# Shoots a card poster for every new piece and re-shoots any piece whose demo changed,
+# then commits the WebP files back to main. Vercel's build has no browser, so this runs here.
+name: Posters
+
+on:
+  push:
+    branches: [main]
+    paths: ['src/demos/**', 'src/content/pieces/**']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: posters
+  cancel-in-progress: false
+
+jobs:
+  posters:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.16.0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm exec playwright install --with-deps chromium
+
+      - name: Find changed demos
+        id: changed
+        run: |
+          before="${{ github.event.before }}"
+          if [ -n "$before" ] && git cat-file -e "$before" 2>/dev/null; then
+            list=$(git diff --name-only "$before" "${{ github.sha }}" -- 'src/demos/*.html' | xargs -r -n1 basename | sed 's/\.html$//' | paste -sd, -)
+          fi
+          echo "list=${list:-}" >> "$GITHUB_OUTPUT"
+
+      - run: pnpm build
+
+      - name: Shoot posters
+        env:
+          CHANGED: ${{ steps.changed.outputs.list }}
+          BASE: http://127.0.0.1:4335
+        run: |
+          pnpm exec astro preview --host 127.0.0.1 --port 4335 &
+          npx --yes wait-on -t 60000 http-get://127.0.0.1:4335/
+          node scripts/posters.mjs
+
+      - name: Commit posters
+        run: |
+          git add public/thumbs
+          if git diff --cached --quiet; then echo "No poster changes."; exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898341+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Shoot posters for new and changed pieces."
+          git pull --rebase origin main
+          git push origin HEAD:main

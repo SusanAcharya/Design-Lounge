@@ -71,7 +71,7 @@ export const GET: APIRoute = async ({ site }) => {
       fonts: p.data.fonts,
       url: `${base}/p/${p.id}`,
       brief: `${base}/p/${p.id}.md`,
-      demo: `${base}/demo/${p.id}.html`,
+      demo: `${base}/demo/${p.id}`,
       source: studyPiece(p, SOURCES).source.id,
     })),
     pairings: PAIRINGS.map((p) => ({ id: p.id, name: p.name, url: `${base}/type/${p.id}`, display: p.display.family, text: p.text.family, tags: p.tags })),

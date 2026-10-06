@@ -1,0 +1,27 @@
+/* Machined · display Archivo · text Archivo · mono IBM Plex Mono · numbers mono
+   An expanded grotesk at full width and weight, with a plain mono for specs. Engraved on the case.
+   Caution: Set the display at font-stretch 125% (wdth 125). At normal width Archivo looks like any grotesk. */
+/* Machined · type pairing · Designed using Design Lounge (https://www.designlounge.live) */
+@import url("https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500;600&display=swap");
+
+:root {
+  --font-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --font-text: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+h1, h2, h3, .display {
+  font-family: var(--font-display);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+body {
+  font-family: var(--font-text);
+  font-weight: 400;
+  line-height: 1.55;
+}
+code, kbd, samp, .mono, .num {
+  font-family: var(--font-mono);
+  font-weight: 400;
+}

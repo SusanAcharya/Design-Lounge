@@ -10,7 +10,7 @@ import { ICONS } from '../data/icons';
 import { RECIPES } from '../data/motion';
 import { STARTS } from '../data/starts';
 import { AUTHOR } from '../lib/pieces';
-import { EXAMPLES, exampleUrl } from '../data/examples';
+import { EXAMPLES, PAIRS, SOLO, exampleUrl } from '../data/examples';
 
 const all = await getPieces();
 const newest = [...all].reverse();
@@ -41,17 +41,19 @@ const system = [
   { n: ICONS.length, label: 'Icons', href: '/icons' },
   { n: RECIPES.length, label: 'Motion recipes', href: '/motion' },
 ];
+const pair = PAIRS[0];
+const pairSides = pair ? [pair.a, pair.b].map((id) => EXAMPLES.find((e) => e.id === id)).filter((e) => e !== undefined) : [];
 const installCmd = 'npx skills add SusanAcharya/Design-Lounge';
 const faq = [
   { q: 'What is Design Lounge?', a: `Design Lounge is a free UI design skill for AI coding agents, plus a library of ${all.length} design ideas: website sections, app screens, components and motion. Each one has a live demo and a written brief that an agent can build from.` },
-  { q: 'How do I add the UI design skill to my agent?', a: `Run ${installCmd} in your project. It works with Cursor, Claude Code, Codex and other agents that read skills. Then ask for what you are making, such as a portfolio, a shop or a dashboard.` },
-  { q: 'What does the skill do differently?', a: `It stops the agent from inventing a look. The agent picks a real theme, a font pairing, a radius and motion from the library, builds the screens from piece briefs, then opens the page and checks it for the usual signs of AI-made design.` },
+  { q: 'How do I add the UI design skill to my agent?', a: `Run ${installCmd} in your project (it needs Node 22.20 or newer). It works with Cursor, Claude Code, Codex and other agents that read skills. Then ask for what you are making, such as a portfolio, a shop or a dashboard.` },
+  { q: 'What does the skill do differently?', a: `For a product, it stops the agent from inventing a generic look: it picks a real theme, a font pairing, a radius and motion from the library, builds the screens from piece briefs, then opens the page and checks it for the usual signs of AI-made design. When you ask for spectacle, it builds one centrepiece made for your subject, with real light and depth, and holds the rest of the page to the same craft.` },
   { q: 'Is it free to use in my products?', a: 'Yes. The pieces, themes, type pairings and icons are free to use in your own products and client work. A small credit line is appreciated. Please do not republish the library itself as a library.' },
   { q: 'Where do the design ideas come from?', a: `Every piece is an original design with an invented brand. Some study the craft of public sites, such as Stripe or Linear, and those are listed on the Sources page. No piece copies another site's text, images or logo.` },
   { q: 'Who made Design Lounge?', a: `${AUTHOR.name}, a ${AUTHOR.role.toLowerCase()} based in ${AUTHOR.city}, Nepal.` },
 ];
 ---
-<Base rail={false} fullTitle="Design Lounge: a UI design skill and design ideas for AI agents" description={`Design Lounge is a free UI design skill for AI coding agents in Cursor, Claude Code and Codex, with ${all.length} design ideas you can see live: website sections, app screens, palettes, font pairings, icons and motion.`} faq={faq}>
+<Base rail={false} fullTitle="Design Lounge: a UI design skill and design ideas for AI agents" description={`A free UI design skill for Cursor, Claude Code and Codex, with ${all.length} live design ideas: sections, app screens, palettes, font pairings and motion.`} faq={faq}>
   <section class="hero wrap">
     <div class="hero-text">
       <h1 class="display h1 reveal">Give your AI agent <i>design taste.</i></h1>
@@ -65,7 +67,7 @@ const faq = [
         <a class="textlink" href="/browse">Browse the library <span aria-hidden="true">→</span></a>
       </div>
     </div>
-    <div class="hero-wall reveal" style="--d:120ms" aria-label="Featured pieces">
+    <div class="hero-wall" aria-label="Featured pieces">
       {heroWeb && (
         <a class="wall-item web" href={`/p/${heroWeb.id}`} aria-label={heroWeb.data.title}>
           <DeviceFrame slug={heroWeb.id} platform={heroWeb.data.platform} title={heroWeb.data.title} eager />
@@ -178,7 +180,7 @@ const faq = [
       <a class="textlink" href="/examples">All {EXAMPLES.length} sites <span aria-hidden="true">→</span></a>
     </header>
     <ol class="built-row">
-      {EXAMPLES.filter((e) => !e.phone).slice(0, 3).map((e) => (
+      {SOLO.filter((e) => !e.phone).slice(0, 3).map((e) => (
         <li>
           <a href={exampleUrl(e)} class="built-card">
             <img src={`/built/${e.id}/cover.jpg`} alt={`${e.title}, built by an agent with the skill`} width="1280" height="800" loading="lazy" />
@@ -188,6 +190,30 @@ const faq = [
       ))}
     </ol>
   </section>
+
+  {pair && pairSides.length === 2 && (
+    <section class="pairs wrap" aria-labelledby="pairs-h">
+      <header class="built-head">
+        <div>
+          <p class="eyebrow">Range</p>
+          <h2 class="display h2" id="pairs-h">Same product, <i>different style.</i></h2>
+          <p class="lede">Both by Design Lounge. One prompt, built twice, on two directions.</p>
+        </div>
+        <a class="textlink" href="/examples/compare">Compare all {PAIRS.length} <span aria-hidden="true">→</span></a>
+      </header>
+      <p class="pair-prompt"><span class="mono" aria-hidden="true">&gt;</span> {pair.prompt}</p>
+      <ol class="pair-row">
+        {pairSides.map((e, j) => (
+          <li>
+            <a href={exampleUrl(e)} class="built-card">
+              <img src={`/built/${e.id}/cover.jpg`} alt={`${pair.title}, style ${j === 0 ? 'A' : 'B'}`} width="1280" height="800" loading="lazy" />
+              <span class="built-cap"><b>Style {j === 0 ? 'A' : 'B'}</b><span>{e.what}</span></span>
+            </a>
+          </li>
+        ))}
+      </ol>
+    </section>
+  )}
 
   <section class="feats wrap" aria-labelledby="feats-h">
     <header class="feats-head">
@@ -265,6 +291,7 @@ const faq = [
       <code id="close-cmd">{installCmd}</code>
       <button class="copy" type="button" data-copy="#close-cmd"><span data-label>Copy</span></button>
     </span>
+    <p class="cmd-note">Needs Node 22.20 or newer.</p>
     <a class="textlink" href="/browse">Browse the library <span aria-hidden="true">→</span></a>
   </section>
 </Base>
@@ -387,6 +414,11 @@ const faq = [
   .built-cap { display: flex; flex-direction: column; gap: 4px; padding: 14px 16px 16px; }
   .built-cap b { font-size: 16px; font-weight: 600; letter-spacing: -0.015em; }
   .built-cap span { font-family: var(--mono); font-size: 12px; line-height: 1.5; color: var(--ink-3); }
+  .pairs { padding-block: clamp(64px, 8vw, 120px); border-top: 1px solid var(--line); }
+  .pairs .lede { margin-top: 10px; }
+  .pair-prompt { max-width: 72ch; margin-bottom: 16px; font-family: var(--mono); font-size: 14px; line-height: 1.55; padding: 12px 14px; background: var(--paper-2); border: 1px solid var(--line); border-radius: var(--r); }
+  .pair-prompt .mono { color: var(--accent-text); margin-right: 4px; }
+  .pair-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
 
   /* features */
   .feats { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); gap: clamp(32px, 6vw, 96px); padding-block: clamp(64px, 8vw, 120px); border-top: 1px solid var(--line); }
@@ -411,6 +443,7 @@ const faq = [
   .close { display: flex; flex-direction: column; align-items: center; gap: 22px; text-align: center; padding-block: clamp(72px, 9vw, 140px); border-top: 1px solid var(--line); }
   .close .h2 { max-width: 18ch; }
   .close .cmd { margin-top: 6px; }
+  .close .cmd-note { margin-top: -10px; font-size: 13px; color: var(--ink-3); }
 
   @media (max-width: 1100px) {
     .bento { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: none; }
@@ -430,7 +463,7 @@ const faq = [
     .c-screens { grid-row: auto; }
     .c-styles { flex-direction: column; align-items: flex-start; }
     .style-words { justify-content: flex-start; max-width: none; }
-    .steps, .fgroup ul, .built-row { grid-template-columns: minmax(0, 1fr); }
+    .steps, .fgroup ul, .built-row, .pair-row { grid-template-columns: minmax(0, 1fr); }
     .built-head { flex-direction: column; align-items: flex-start; }
     .agent-cap { flex-direction: column; gap: 4px; }
     .cmd code { font-size: 13px; white-space: normal; overflow-wrap: anywhere; line-height: 1.45; }

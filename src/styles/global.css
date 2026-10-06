@@ -278,7 +278,7 @@ lounge-frame[data-frame="web"] .lf-device { --sy: 78px; --sw: 1280px; --sh: 800p
 .lf-url .lock { width: 12px; height: 12px; margin-right: 7px; color: var(--lf-dim); }
 .lf-url .host { color: var(--lf-dim); }
 .lf-tools { justify-self: end; display: flex; align-items: center; gap: 16px; color: var(--lf-dim); }
-.lf-tools .me { width: 22px; height: 22px; border-radius: 50%; background: var(--ink); color: var(--paper); font: 600 8.5px/22px var(--mono); text-align: center; }
+.lf-tools .me { width: 22px; height: 22px; border-radius: 50%; background: var(--ink); color: var(--paper); font: 600 12px/22px var(--mono); text-align: center; }
 
 /* phone: graphite titanium, 390 x 844 screen */
 lounge-frame[data-frame="phone"] .lf-device {
@@ -302,7 +302,7 @@ lounge-frame[data-platform="web"][data-frame="phone"] .lf-sb-phone { mix-blend-m
 .lf-urlbar .field { width: 300px; height: 36px; border-radius: 12px; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,.12); display: flex; align-items: center; justify-content: center; gap: 6px; font: 13px/1 var(--sans); color: #333; }
 .lf-urlbar .field svg { width: 12px; height: 12px; fill: none; stroke: #777; stroke-width: 1.6; }
 .lf-urlbar .field b { font-weight: 500; }
-.lf-pwa .lf-pill { position: absolute; left: 50%; top: 66px; transform: translateX(-50%); z-index: 3; font: 500 10px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: #fff; background: rgba(0,0,0,.55); backdrop-filter: blur(6px); padding: 5px 9px; border-radius: 999px; pointer-events: none; opacity: .0; }
+.lf-pwa .lf-pill { position: absolute; left: 50%; top: 66px; transform: translateX(-50%); z-index: 3; font: 500 12px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: #fff; background: rgba(0,0,0,.55); backdrop-filter: blur(6px); padding: 5px 9px; border-radius: 999px; pointer-events: none; opacity: .0; }
 
 /* tablet: thin even bezel, 1180 x 820 landscape or 820 x 1180 portrait */
 lounge-frame[data-frame="tablet"] .lf-device {
@@ -313,7 +313,7 @@ lounge-frame[data-frame="tablet"] .lf-device {
 }
 lounge-frame[data-frame="tablet"][data-orient="portrait"] .lf-device { --sy: 78px; --sw: 820px; --sh: 1180px; --sr: 0 0 12px 12px; width: 856px; height: 1276px; }
 lounge-frame[data-frame="tablet"][data-orient="portrait"] .lf-glass { top: 18px; height: 1240px; border-radius: 12px; }
-.lf-ipadbar { position: absolute; left: 18px; top: 18px; width: 820px; height: 60px; border-radius: 12px 12px 0 0; background: var(--lf-bar); border-bottom: 1px solid var(--lf-hair); color: var(--lf-text); font: 600 11px/1 -apple-system, "Inter", var(--sans); }
+.lf-ipadbar { position: absolute; left: 18px; top: 18px; width: 820px; height: 60px; border-radius: 12px 12px 0 0; background: var(--lf-bar); border-bottom: 1px solid var(--lf-hair); color: var(--lf-text); font: 600 12px/1 -apple-system, "Inter", var(--sans); }
 .lf-ipadbar .sb { height: 22px; display: flex; align-items: flex-end; justify-content: space-between; padding: 0 22px; }
 .lf-ipadbar .row { height: 38px; display: grid; grid-template-columns: 1fr 380px 1fr; align-items: center; padding: 0 18px; }
 .lf-ipadbar .side { display: flex; gap: 14px; }

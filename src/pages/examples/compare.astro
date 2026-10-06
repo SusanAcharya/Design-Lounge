@@ -1,0 +1,99 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHead from '../../components/PageHead.astro';
+import DeviceFrame from '../../components/DeviceFrame.astro';
+import { EXAMPLES, PAIRS, builtUrl, exampleUrl, type Example } from '../../data/examples';
+import { THEMES } from '../../data/themes';
+import { PAIRINGS } from '../../data/type';
+
+const byId = new Map(EXAMPLES.map((e) => [e.id, e]));
+const theme = (id: string) => THEMES.find((t) => t.id === id);
+const pairing = (id: string) => PAIRINGS.find((p) => p.id === id);
+const pairs = PAIRS.map((p) => ({ ...p, sides: [byId.get(p.a), byId.get(p.b)].filter((e): e is Example => Boolean(e)) })).filter((p) => p.sides.length === 2);
+const installCmd = 'npx skills add SusanAcharya/Design-Lounge';
+---
+<Base rail={false} title="Same product, different style" description={`The same prompt built twice with the Design Lounge skill, on two different directions: ${pairs.map((p) => p.title).join(', ')}.`} crumbs={[{ name: 'Examples', href: '/examples' }, { name: 'Compare', href: '/examples/compare' }]}>
+  <PageHead eyebrow="Examples" title="Same product, <i>different style.</i>" count={pairs.length} countLabel="products" blurb="Both by Design Lounge. Each product was built twice from the same prompt, word for word. The second build was told the product already had a site. One look is a centrepiece made only for that world, the other is built straight from the library. Scroll inside either one." />
+
+  {pairs.map((p, i) => (
+    <section class="wrap pair" aria-labelledby={`pair-${p.id}`}>
+      <header class="pair-head">
+        <h2 class="display h3" id={`pair-${p.id}`}>{p.title}</h2>
+        <p class="prompt"><span class="mono" aria-hidden="true">&gt;</span> {p.prompt}</p>
+        <p class="made mono">{p.made}</p>
+      </header>
+      <div class="sides">
+        {p.sides.map((e, j) => {
+          const t = theme(e.theme);
+          const f = pairing(e.pairing);
+          return (
+            <figure class="side">
+              <div class="stage">
+                <DeviceFrame slug={e.id} platform="web" title={e.title} src={builtUrl(e)} poster={`/built/${e.id}/cover.jpg`} path={`examples/${e.id}`} interactive eager={i === 0} />
+              </div>
+              <figcaption>
+                <p class="label mono">Style {j === 0 ? 'A' : 'B'}</p>
+                <p class="what">{e.what}</p>
+                <p class="meta">
+                  {t && <a href={`/themes/${t.id}`}>{t.name}<span class="sw" aria-hidden="true"><i style={`background:${t.tokens.bg}`}></i><i style={`background:${t.tokens.ink}`}></i><i style={`background:${t.tokens.primary}`}></i></span></a>}
+                  {f && <a href={`/type/${f.id}`}>{f.name}</a>}
+                  {e.free && <span class="own">Own colour<span class="sw" aria-hidden="true">{e.free.colours.map((c) => <i style={`background:${c}`}></i>)}</span></span>}
+                  {e.free && <span class="own">{e.free.fonts.join(' + ')}</span>}
+                  <a href={exampleUrl(e)}>How it was made</a>
+                  <a href={builtUrl(e)} target="_blank" rel="noopener">Full size <span aria-hidden="true">↗</span></a>
+                </p>
+              </figcaption>
+            </figure>
+          );
+        })}
+      </div>
+    </section>
+  ))}
+
+  <section class="close wrap" aria-labelledby="close-h">
+    <h2 class="display h2" id="close-h">Ask twice. Get two sites.</h2>
+    <p class="lede">Install the skill, then ask for the thing you are making. Ask for two looks and it builds both.</p>
+    <span class="cmd">
+      <span class="mono acc" aria-hidden="true">$</span>
+      <code id="cmp-cmd">{installCmd}</code>
+      <button class="copy" type="button" data-copy="#cmp-cmd"><span data-label>Copy</span></button>
+    </span>
+    <p class="note">Needs Node 22.20 or newer.</p>
+  </section>
+</Base>
+
+<style>
+  .pair { padding-block: clamp(48px, 6vw, 88px) 0; }
+  .pair-head { display: flex; flex-direction: column; gap: 12px; max-width: 72ch; margin-bottom: clamp(20px, 3vw, 32px); }
+  .prompt { font-family: var(--mono); font-size: 14px; line-height: 1.55; color: var(--ink); padding: 12px 14px; background: var(--paper-2); border: 1px solid var(--line); border-radius: var(--r); text-wrap: pretty; }
+  .prompt .mono { color: var(--accent-text); margin-right: 4px; }
+  .made { font-size: 12px; color: var(--ink-3); }
+  .sides { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(16px, 2vw, 28px); }
+  .side { display: flex; flex-direction: column; gap: 14px; margin: 0; min-width: 0; }
+  .stage { position: relative; aspect-ratio: 16 / 11; border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--paper-2) radial-gradient(var(--line-2) 1px, transparent 1.2px) center / 16px 16px; }
+  .stage :global(lounge-frame) { position: absolute; inset: 14px; }
+  .label { font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); }
+  .what { color: var(--ink-2); font-size: 15.5px; line-height: 1.55; text-wrap: pretty; }
+  .meta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; font-size: 13.5px; }
+  .meta a { display: inline-flex; align-items: center; gap: 6px; color: var(--ink-2); border-bottom: 1px solid var(--line-2); }
+  .meta a:hover { color: var(--accent-text); border-color: var(--accent-text); }
+  .own { display: inline-flex; align-items: center; gap: 6px; color: var(--ink-2); }
+  .sw { display: inline-flex; }
+  .sw i { width: 12px; height: 12px; border-radius: 50%; border: 1px solid var(--line-2); }
+  .sw i + i { margin-left: -4px; }
+
+  .close { display: flex; flex-direction: column; align-items: center; gap: 18px; text-align: center; margin-top: clamp(64px, 8vw, 120px); padding-block: clamp(64px, 8vw, 120px); border-top: 1px solid var(--line); }
+  .cmd { display: flex; align-items: center; gap: 10px; width: 100%; max-width: 520px; min-width: 0; padding: 7px 7px 7px 16px; border: 1px solid var(--line-2); border-radius: 12px; background: var(--paper); }
+  .cmd code { flex: 1; min-width: 0; overflow-x: auto; white-space: nowrap; font-family: var(--mono); font-size: 14px; text-align: left; scrollbar-width: none; }
+  .cmd .acc { color: var(--accent-text); }
+  .cmd .copy { flex: none; height: 38px; padding: 0 16px; border-radius: 8px; font-size: 14px; font-weight: 500; background: var(--ink); color: var(--paper); }
+  .cmd .copy[data-done] { background: var(--accent); color: var(--accent-ink); }
+  .note { margin-top: -6px; font-size: 13px; color: var(--ink-3); }
+
+  @media (max-width: 900px) {
+    .sides { grid-template-columns: minmax(0, 1fr); }
+  }
+  @media (max-width: 640px) {
+    .cmd code { font-size: 13px; white-space: normal; overflow-wrap: anywhere; }
+  }
+</style>

@@ -211,6 +211,17 @@ export const PAIRINGS: Pairing[] = [
     display: { family: 'Sora', spec: 'Sora:wght@400;600;800', weight: 600, tracking: '-0.035em', fallback: sans },
     text: { family: 'Sora', spec: 'Sora:wght@400;600;800', weight: 400, fallback: sans },
     headline: 'Your next appointment', body: 'Dr. Pradhan, Thursday 10:30. Bring your last two reports. Parking is free for the first hour.', label: 'Clinic app', bg: '#edf6f2', ink: '#11302a', accent: '#10a37f' },
+  { id: 'night-show', name: 'Night Show', mood: 'A film-title serif set huge, one word in italic, over a light grotesk and a mono for the readouts.', bestFor: ['Shows', 'Launches', 'Labels'], tags: ['editorial', 'cinematic'],
+    display: { family: 'Instrument Serif', spec: 'Instrument+Serif:ital@0;1', weight: 400, tracking: '-0.035em', fallback: serif },
+    text: { family: 'Inter Tight', spec: 'Inter+Tight:wght@300;400;500;600', weight: 400, fallback: sans },
+    mono: { family: 'JetBrains Mono', spec: 'JetBrains+Mono:wght@300;400;500', weight: 400, fallback: mono },
+    headline: 'Go for apogee', body: 'Four crew, nine minutes to orbit, three days to the far side of the Moon. Watch it from the pad.', label: 'T minus 00:42:10', bg: '#04050a', ink: '#f1e8d6', accent: '#ffb35e' },
+  { id: 'machined', name: 'Machined', mood: 'An expanded grotesk at full width and weight, with a plain mono for specs. Engraved on the case.', bestFor: ['Hardware', 'Instruments', 'Launches'], tags: ['industrial', 'product'],
+    display: { family: 'Archivo', spec: 'Archivo:wdth,wght@62..125,400..900', weight: 900, tracking: '-0.02em', upper: true, fallback: sans },
+    text: { family: 'Archivo', spec: 'Archivo:wdth,wght@62..125,400..900', weight: 400, fallback: sans },
+    mono: { family: 'IBM Plex Mono', spec: 'IBM+Plex+Mono:wght@400;500;600', weight: 400, fallback: mono },
+    caution: 'Set the display at font-stretch 125% (wdth 125). At normal width Archivo looks like any grotesk.',
+    headline: 'TU-16', body: 'Sixteen pads, one battery, no screen to get lost in. Tap a pattern and it loops.', label: 'Edition 01 · 800 units', bg: '#ece8df', ink: '#141414', accent: '#ff4f1a' },
 ];
 
 export function fontHref(specs: string[]) {

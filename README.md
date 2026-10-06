@@ -6,7 +6,7 @@ Free to use in products. Keep the credit. Do not republish the catalogue as a ca
 
 ## Install the skill
 
-Run this in the project you want designed. It works in Cursor, Claude, Codex, and the other agents the installer lists. The skill arrives with the catalogue: palettes, type pairings, icons, motion, and every piece brief.
+Run this in the project you want designed. The installer needs Node 22.20 or newer. It works in Cursor, Claude, Codex, and the other agents the installer lists. The skill arrives with the catalogue: palettes, type pairings, icons, motion, and every piece brief.
 
 ```bash
 npx skills add SusanAcharya/Design-Lounge

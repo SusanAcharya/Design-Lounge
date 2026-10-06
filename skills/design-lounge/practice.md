@@ -38,6 +38,7 @@ Idea: <one picture sentence. A website: the page, from website.md. An app: the o
 Signature: <the one element made only for this product>
 Avoiding: <the default look this could have become>
 Register: quiet | <one piece id>
+Show: no | yes · centrepiece <piece id or "built for this"> · light <the one light source> · scene <--scene-* tokens and why, or none>
 Dials: variance <1-10> · motion <1-10> · density <1-10>
 Kind: website | product | platform
 Mode: new kit | adopt existing
@@ -156,10 +157,17 @@ Keep a short history on their machine.
   - The tool: web-app, dashboard
 - A line with no `work` or `footer` still blocks its hero and its effect. Its work and footer are unknown, so do not treat them as free.
 - Repeat a pick only when they asked ("same look as my guitar site"), or when this is a new page of a product already in the history. Then it should match.
-- After the sections are chosen and the check passes, append one line. Create the folder and file if they are missing.
+- Claim first. Right after you lock the direction, append a line with `"status":"claimed"` and the recipe, direction, theme, pairing, and hero. Then read the file again. If another product claimed the same recipe and direction in the last hour, yours loses: take the next direction that fits and claim that. Agents running at the same time read the same history, and without the claim they all pick the same thing. Treat a claimed line exactly like a finished one.
+- After the sections are chosen and the check passes, append the finished line. Create the folder and file if they are missing.
 
 ```
 {"date":"2026-10-05","product":"Happy Easel","folder":"painting-lesson","recipe":"education","direction":"gallery-class","theme":"marble-hall","pairing":"gallery-wall","hero":"editorial-landing-hero","work":"stacking-cards-scroll","footer":"footer-centered-colophon","effect":"scroll-zoom-portal"}
+```
+
+A Free build (Show mode in [website.md](website.md)) writes `"mode":"free"`, `"theme":"free"`, `"pairing":"free"`, the faces in `"fonts"`, and `"colours"` as `[bg, primary]`. The next Free build reads those and does not reuse the display face of the last three, or the same pair:
+
+```
+{"date":"2026-10-06","product":"Low Tide","folder":"low-tide","recipe":"event","direction":"deep-field","mode":"free","theme":"free","pairing":"free","fonts":["Bodoni Moda","IBM Plex Mono"],"colours":["#05060b","#ffb04a"],"hero":"scroll-space-voyage","work":"contact-booking-hours","footer":"footer-centered-colophon","effect":null}
 ```
 
 Write the check on the sheet before you build. One line is enough when nothing is close: `Unlike recent education and culture sites: hero, work, and footer are all different.` When something matches, name it: `Unlike First Fret: hero differs, work differs, footer matches. One match, so it stands.`
@@ -373,9 +381,10 @@ Fix every fail. Open the screen again. A fail that is still visible means the pa
 
 These are fails. They are the tells of a page that was generated and not designed.
 
-- A gradient, a glow, or a mesh you added. The locked effect piece may use one. Every other region stays the theme's flat `--bg`.
+- A gradient, a glow, or a mesh you added. The locked effect piece and a Show mode centrepiece may use them. Every other region stays the theme's flat `--bg`.
 - Glass, blur, or a floating card on every region.
-- Gradient text. A second accent used as decoration. The accent is the action and the live state.
+- Gradient text, except the one word that changes voice in Show mode. A second accent used as decoration. The accent is the action and the live state.
+- In Show mode: a centrepiece drawn in flat fills, with no light source, no depth, and nothing you can do to it. That is a diagram, not a scene. Hold it to The rendering bar in [website.md](website.md).
 - An emoji used as an icon. Icons are Lounge Icons.
 - A radius that is not the family's. Every corner on a large radius when the family is sharp, editorial, or industrial.
 - Three identical cards — icon, title, one sentence — standing in for the product. A feature row is allowed when a named piece is that row and the copy is about this product.

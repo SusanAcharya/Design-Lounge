@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>KEY-01 · a mechanical keyboard you can type on, right here</title>
+  <meta name="description" content="KEY-01 is a mechanical keyboard. Type on it on this page: every key sinks and makes a switch sound.">
+  <meta name="theme-color" content="#101716">
+  <meta property="og:title" content="KEY-01">
+  <meta property="og:description" content="A mechanical keyboard you can type on, right on the page.">
+  <meta property="og:image" content="og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="/built/key-01-a/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/built/key-01-a/favicon.ico" sizes="32x32">
+  <link rel="apple-touch-icon" href="/built/key-01-a/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Michroma&display=swap">
+  <link rel="stylesheet" href="/built/key-01-a/styles.css">
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+
+  <main class="page">
+    <section class="hero" id="play" aria-labelledby="t">
+      <header class="bar">
+        <a class="brand" href="#play" aria-label="KEY-01, top of the page">KEY<span class="brand-cap" aria-hidden="true"></span>01</a>
+        <button class="pill snd" id="snd" type="button" aria-pressed="true">
+          <svg class="ic ic-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 10v4h4l5 4V6l-5 4H5z"/><path d="M16 9.5a3.5 3.5 0 010 5"/><path d="M18.5 7a7 7 0 010 10"/></svg>
+          <svg class="ic ic-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 10v4h4l5 4V6l-5 4H5z"/><path d="M17 10l4 4M21 10l-4 4"/></svg>
+          <span class="snd-l">Sound on</span>
+        </button>
+      </header>
+
+      <div class="head">
+        <h1 id="t" class="mark">KEY&#8209;<span class="lit">01</span></h1>
+        <div class="side">
+          <p class="lede">Type on your keyboard, or tap the keys.</p>
+          <div class="seg" role="radiogroup" aria-label="Switch sound" data-group="hero">
+            <button type="button" role="radio" aria-checked="true" tabindex="0" data-sw="linear">Linear</button>
+            <button type="button" role="radio" aria-checked="false" tabindex="-1" data-sw="tactile">Tactile</button>
+            <button type="button" role="radio" aria-checked="false" tabindex="-1" data-sw="clicky">Clicky</button>
+          </div>
+          <dl class="reads" aria-label="Live readouts">
+            <div><dt>Last key</dt><dd id="r-last">None yet</dd></div>
+            <div><dt>Strokes</dt><dd id="r-n" class="num">0</dd></div>
+            <div><dt>Words per min</dt><dd id="r-wpm" class="num">0</dd></div>
+          </dl>
+        </div>
+      </div>
+
+      <label class="proof" for="typer">
+        <span class="proof-text" id="proof"><span class="ph">Start typing. Your words land here.</span></span><span class="caret" aria-hidden="true"></span>
+        <input id="typer" class="typer" type="text" value=" " autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="done" aria-label="Type on KEY-01">
+      </label>
+
+      <div class="stage">
+        <div class="board" id="board" data-sw="linear">
+          <div class="mat" aria-hidden="true"></div>
+          <div class="case">
+            <span class="engrave" aria-hidden="true">KEY-01</span>
+            <div class="plate" id="keys" role="group" tabindex="0"
+                 aria-label="KEY-01, 68 keys. Type on your own keyboard and the matching key presses, or tap and slide across the keys."
+                 aria-describedby="hint"></div>
+          </div>
+        </div>
+      </div>
+
+      <p class="hint" id="hint"><span>Every sound is synthesised in your browser.</span> <span class="hint-desk">Esc clears the line.</span><span class="hint-phone">Tap the line above to type with your phone's keyboard.</span></p>
+    </section>
+
+    <section class="cut" id="switch" aria-labelledby="cut-h">
+      <div class="cut-scene">
+        <svg id="cut-key" class="cut-svg" viewBox="0 0 420 480" role="slider" tabindex="0"
+             aria-label="Key depth. Drag the keycap down, or use the arrow keys."
+             aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-valuetext="Resting, not registered">
+          <defs>
+            <radialGradient id="g-lamp" cx="0.12" cy="0.02" r="0.9">
+              <stop offset="0" stop-color="#ffd9a8" stop-opacity=".30"/>
+              <stop offset=".45" stop-color="#ffae5c" stop-opacity=".08"/>
+              <stop offset="1" stop-color="#101716" stop-opacity="0"/>
+            </radialGradient>
+            <linearGradient id="g-cap" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#fffaf0"/>
+              <stop offset=".45" stop-color="#ebe4d6"/>
+              <stop offset="1" stop-color="#b3aa99"/>
+            </linearGradient>
+            <linearGradient id="g-capwall" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#d8cfbf"/>
+              <stop offset="1" stop-color="#9c937f"/>
+            </linearGradient>
+            <linearGradient id="g-stem" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#ff9b78"/>
+              <stop offset=".5" stop-color="#ff6a3d"/>
+              <stop offset="1" stop-color="#b4421f"/>
+            </linearGradient>
+            <linearGradient id="g-house" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#4a5150"/>
+              <stop offset="1" stop-color="#1e2322"/>
+            </linearGradient>
+            <linearGradient id="g-top" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#f1eadf" stop-opacity=".30"/>
+              <stop offset="1" stop-color="#f1eadf" stop-opacity=".06"/>
+            </linearGradient>
+            <linearGradient id="g-steel" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#c9c6bf"/>
+              <stop offset="1" stop-color="#6f6c66"/>
+            </linearGradient>
+            <linearGradient id="g-leaf" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#ffd9a8"/>
+              <stop offset="1" stop-color="#a7773f"/>
+            </linearGradient>
+            <filter id="f-blur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="8"/></filter>
+            <filter id="f-spark" x="-200%" y="-200%" width="500%" height="500%"><feGaussianBlur stdDeviation="5"/></filter>
+          </defs>
+          <rect width="420" height="480" fill="#0d1413"/>
+          <rect width="420" height="480" fill="url(#g-lamp)"/>
+
+          <!-- board -->
+          <rect x="24" y="424" width="372" height="24" rx="3" fill="#18231f"/>
+          <rect x="24" y="424" width="372" height="2" fill="#2f4038"/>
+          <path d="M60 438h90M270 438h90M180 444h60" stroke="#6b5534" stroke-width="2" stroke-linecap="round"/>
+          <!-- plate -->
+          <rect x="20" y="300" width="380" height="10" fill="url(#g-steel)"/>
+          <rect x="20" y="300" width="380" height="1.5" fill="#f1eadf" opacity=".6"/>
+          <!-- housing bottom -->
+          <path d="M112 306h196l-10 118H122z" fill="url(#g-house)"/>
+          <path d="M112 306h2l10 118h-2z" fill="#f1eadf" opacity=".22"/>
+
+          <!-- contacts -->
+          <g id="cut-leaves">
+            <rect x="276" y="330" width="5" height="90" rx="1" fill="url(#g-leaf)"/>
+            <path id="cut-leaf" d="M262 420 L262 340" stroke="url(#g-leaf)" stroke-width="5" stroke-linecap="round" fill="none"/>
+            <circle id="cut-spark" cx="270" cy="342" r="9" fill="#ffd9a8" filter="url(#f-spark)" opacity="0"/>
+          </g>
+
+          <!-- spring -->
+          <path id="cut-spring" d="" stroke="url(#g-steel)" stroke-width="4" fill="none" stroke-linejoin="round"/>
+
+          <!-- moving part: stem, jacket, cap -->
+          <g id="cut-move">
+            <ellipse cx="214" cy="232" rx="120" ry="10" fill="#000" opacity=".45" filter="url(#f-blur)"/>
+            <g id="cut-stem">
+              <rect x="192" y="150" width="36" height="200" rx="3" fill="url(#g-stem)"/>
+              <rect x="192" y="150" width="3" height="200" fill="#ffd9a8" opacity=".55"/>
+              <path id="cut-leg" d="M228 250h14v34l-14 12z" fill="#ff6a3d"/>
+              <path id="cut-bump" d="M192 262l-10 8 10 8z" fill="#ff8a63"/>
+            </g>
+            <g id="cut-jacket">
+              <rect x="182" y="272" width="56" height="16" rx="3" fill="#3a6f8f"/>
+              <rect x="182" y="272" width="56" height="2" fill="#bcd9ea" opacity=".7"/>
+            </g>
+            <g id="cut-cap">
+              <path d="M84 150 L336 150 L320 82 Q210 72 100 82 Z" fill="url(#g-capwall)"/>
+              <path d="M100 82 Q210 72 320 82 L316 92 Q210 84 104 92 Z" fill="url(#g-cap)"/>
+              <path d="M100 82 Q210 72 320 82" stroke="#fffaf0" stroke-width="1.5" fill="none" opacity=".9"/>
+              <path d="M84 150 L100 82" stroke="#fffaf0" stroke-width="2" opacity=".55"/>
+              <path d="M320 82 L336 150" stroke="#5f584b" stroke-width="2" opacity=".6"/>
+              <rect x="84" y="148" width="252" height="4" fill="#7c7364"/>
+            </g>
+          </g>
+
+          <!-- housing top (in front of the stem, smoked) -->
+          <path d="M98 232h224l-8 68H106z" fill="url(#g-top)" stroke="#f1eadf" stroke-opacity=".35"/>
+          <path d="M100 233h220" stroke="#ffd9a8" stroke-opacity=".6"/>
+        </svg>
+      </div>
+
+      <div class="cut-copy">
+        <h2 id="cut-h" class="h2">Press one key, slowly.</h2>
+        <p class="body">This is a key cut open down the middle. Drag the cap down and watch the stem push the spring, then close the two contacts that tell the computer you pressed it.</p>
+        <div class="seg" role="radiogroup" aria-label="Switch kind" data-group="cut">
+          <button type="button" role="radio" aria-checked="true" tabindex="0" data-sw="linear">Linear</button>
+          <button type="button" role="radio" aria-checked="false" tabindex="-1" data-sw="tactile">Tactile</button>
+          <button type="button" role="radio" aria-checked="false" tabindex="-1" data-sw="clicky">Clicky</button>
+        </div>
+        <p class="body sw-copy" id="sw-copy">Straight down, with no bump and no click. What you hear is the cap meeting the bottom.</p>
+        <dl class="reads cut-reads" aria-hidden="true">
+          <div><dt>Depth</dt><dd id="c-depth" class="num">0%</dd></div>
+          <div><dt>Contacts</dt><dd id="c-state">Open</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="band" id="session" aria-labelledby="band-h">
+      <div class="band-in">
+        <div class="band-head">
+          <h2 id="band-h" class="h2">Your session, counted.</h2>
+          <div class="band-side">
+            <p class="body" id="band-note">Every number here comes from the keys you pressed on this page.</p>
+            <div class="band-acts">
+              <button type="button" class="pill pill-dark" id="replay-count">Count again</button>
+              <a class="pill pill-dark" id="band-back" href="#play">Back to the keyboard</a>
+            </div>
+          </div>
+        </div>
+        <ul class="stats">
+          <li class="stat" style="--d:0ms">
+            <span class="s-label">Keystrokes</span>
+            <p class="fig"><span class="sr" id="s-n-sr">0 keystrokes</span><span aria-hidden="true"><span class="cnt" id="s-n" data-to="0" data-dec="0">0</span></span></p>
+            <p class="s-desc">Every press, letters and the rest.</p>
+            <svg class="spark" viewBox="0 0 200 40" aria-hidden="true"><path class="ln" id="sp-n" pathLength="1" d="M0 38H200"/><circle class="dot" id="sp-n-dot" cx="200" cy="38" r="3.5"/></svg>
+          </li>
+          <li class="stat" style="--d:90ms">
+            <span class="s-label">Best speed</span>
+            <p class="fig"><span class="sr" id="s-w-sr">0 words per minute</span><span aria-hidden="true"><span class="cnt" id="s-w" data-to="0" data-dec="0">0</span><small>wpm</small></span></p>
+            <p class="s-desc">Your fastest ten seconds, at five keys a word.</p>
+            <svg class="spark" viewBox="0 0 200 40" aria-hidden="true"><path class="ln" id="sp-w" pathLength="1" d="M0 38H200"/><circle class="dot" id="sp-w-dot" cx="200" cy="38" r="3.5"/></svg>
+          </li>
+          <li class="stat" style="--d:180ms">
+            <span class="s-label">Most pressed</span>
+            <p class="fig"><span class="sr" id="s-m-sr">None yet</span><span aria-hidden="true" id="s-m">None</span></p>
+            <p class="s-desc" id="s-m-desc">Your favourite key shows here.</p>
+            <svg class="spark" id="sp-m" viewBox="0 0 200 40" aria-hidden="true"></svg>
+          </li>
+          <li class="stat" style="--d:270ms">
+            <span class="s-label">Keys untouched</span>
+            <p class="fig"><span class="sr" id="s-u-sr">68 of 68 keys untouched</span><span aria-hidden="true"><span class="cnt" id="s-u" data-to="68" data-dec="0">68</span><small>of 68</small></span></p>
+            <p class="s-desc">The keys you found are filled in.</p>
+            <svg class="spark map" id="sp-u" viewBox="0 0 200 64" aria-hidden="true"></svg>
+          </li>
+        </ul>
+        <p class="band-foot">Counted in this tab only. Nothing is saved or sent anywhere.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot" id="foot" aria-label="Site footer">
+    <div class="foot-top">
+      <div>
+        <h2 class="h2 foot-h">Not out yet.</h2>
+        <p class="body">The price, the switches and the ship date for KEY-01 have not been announced.</p>
+      </div>
+      <a class="btn-primary" href="#play" id="foot-back">
+        Back to the keyboard
+        <span class="btn-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6"/></svg></span>
+      </a>
+    </div>
+    <div class="legal">
+      <p>Designed using <a href="https://www.designlounge.live">Design Lounge</a></p>
+      <p class="legal-mid">No audio files and no images: the keyboard, the switch and every sound are drawn and made in your browser.</p>
+      <button type="button" class="pill" id="replay-rise">Raise the keys again</button>
+    </div>
+    <div class="word" id="word" aria-hidden="true">
+      <span class="fk" style="--i:0" data-code="KeyK"><span class="fk-cap"><span class="fk-top">K</span></span></span>
+      <span class="fk" style="--i:1" data-code="KeyE"><span class="fk-cap"><span class="fk-top">E</span></span></span>
+      <span class="fk" style="--i:2" data-code="KeyY"><span class="fk-cap"><span class="fk-top">Y</span></span></span>
+      <span class="fk acc" style="--i:3" data-code="Minus"><span class="fk-cap"><span class="fk-top">-</span></span></span>
+      <span class="fk" style="--i:4" data-code="Digit0"><span class="fk-cap"><span class="fk-top">0</span></span></span>
+      <span class="fk" style="--i:5" data-code="Digit1"><span class="fk-cap"><span class="fk-top">1</span></span></span>
+    </div>
+  </footer>
+
+  <script src="/built/key-01-a/main.js"></script>
+</body>
+</html>

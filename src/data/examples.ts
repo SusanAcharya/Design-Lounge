@@ -22,6 +22,8 @@ export interface Example {
   family: string;
   effects: string[];
   phone?: boolean;
+  /** Show mode, Free: colour and type chosen for this world instead of a library theme and pairing. */
+  free?: { colours: string[]; fonts: string[]; why: string };
 }
 
 export const builtUrl = (e: Example) => `/built/${e.id}/index.html`;
@@ -200,4 +202,112 @@ export const EXAMPLES: Example[] = [
     effects: ['ios-pull-to-refresh', 'shared-element-expand'],
     phone: true,
   },
+  {
+    id: 'late-light-a',
+    slug: 'pair-late-light-a',
+    title: 'Late Light',
+    what: 'You start in your seat under red dome lamps and scroll out past the Moon, Saturn and the Pleiades to Andromeda. A readout says when the light you are seeing set off.',
+    mode: 'one-shot',
+    prompt: "A site for a planetarium's late-night show. You scroll and you travel through space. Make it unforgettable.",
+    recipe: 'museum',
+    direction: 'star-dome',
+    theme: 'free',
+    pairing: 'free',
+    family: 'lit',
+    effects: ['scroll-space-voyage', 'gallery-museum-placard', 'footer-giant-wordmark-reveal'],
+    free: { colours: ['#07050b', '#f0e8e2', '#ff4b3e'], fonts: ['IM Fell English', 'Atkinson Hyperlegible Next'], why: 'The red of the lamps that keep your eyes used to the dark, and an inky letterpress serif for old light.' },
+  },
+  {
+    id: 'late-light-b',
+    slug: 'pair-late-light-b',
+    title: 'Late Light',
+    what: 'A lit Bauhaus sky poster. Scroll through its ring and fly into the next scale of space, four times over, while the real distance from your seat counts up.',
+    mode: 'one-shot',
+    prompt: "A site for a planetarium's late-night show. You scroll and you travel through space. Make it unforgettable.",
+    recipe: 'museum',
+    direction: 'night-gallery',
+    theme: 'observatory',
+    pairing: 'bauhaus-school',
+    family: 'sharp',
+    effects: ['hero-bauhaus-composition', 'scroll-zoom-portal', 'gallery-contact-sheet', 'contact-booking-hours'],
+  },
+  {
+    id: 'aadhi-raat-a',
+    slug: 'pair-aadhi-raat-a',
+    title: 'Aadhi Raat Records',
+    what: 'The Kathmandu valley drawn live under tonight\'s real moon, on Nepal time, with a countdown to midnight there and a drone you can play.',
+    mode: 'one-shot',
+    prompt: 'Make a website for a record label that only releases music recorded after midnight in Kathmandu. Go wild, I want it to feel like an Awwwards site of the day.',
+    recipe: 'music',
+    direction: 'after-midnight',
+    theme: 'free',
+    pairing: 'free',
+    family: 'lit',
+    effects: ['moonlit-ridge-hero', 'coverflow-strip', 'scroll-word-highlight', 'footer-newsletter-split'],
+    free: { colours: ['#090c22', '#e9e5f4', '#ff5e2b'], fonts: ['Rozha One', 'Martian Mono'], why: 'The red recording lamp on blue-black, and one poster face that sets the name in Latin and Devanagari.' },
+  },
+  {
+    id: 'aadhi-raat-b',
+    slug: 'pair-aadhi-raat-b',
+    title: 'Aadhi Raat Records',
+    what: 'The same city at dawn. A marigold sleeve slides out its record, and a night ruler pins each take at the minute its tape rolled.',
+    mode: 'one-shot',
+    prompt: 'Make a website for a record label that only releases music recorded after midnight in Kathmandu. Go wild, I want it to feel like an Awwwards site of the day.',
+    recipe: 'music',
+    direction: 'first-bell',
+    theme: 'temple-dawn',
+    pairing: 'night-show',
+    family: 'editorial',
+    effects: ['hero-asymmetric-type-lockup', 'text-mask-line-reveal', 'stacking-cards-scroll', 'corner-player'],
+  },
+  {
+    id: 'key-01-a',
+    slug: 'pair-key-01-a',
+    title: 'KEY-01',
+    what: 'A lamp-lit keyboard on a felt mat. Type and the keys sink, click in the switch you pick, and count your own session.',
+    mode: 'one-shot',
+    prompt: 'Build a launch page for a mechanical keyboard called KEY-01. I want people to be able to actually play with it on the page.',
+    recipe: 'landing',
+    direction: 'playable',
+    theme: 'free',
+    pairing: 'free',
+    family: 'lit',
+    effects: ['playable-product-hero', 'stats-count-up-band', 'footer-giant-wordmark-reveal', 'button-3d-press'],
+    free: { colours: ['#101716', '#f1eadf', '#ff6a3d'], fonts: ['Michroma', 'IBM Plex Sans'], why: 'One warm desk lamp on a felt mat at night, and the squared lettering of engraved keycap legends.' },
+  },
+  {
+    id: 'key-01-b',
+    slug: 'pair-key-01-b',
+    title: 'KEY-01',
+    what: 'The keyboard as a technical drawing on the page grid. Every key works, and the last six you press take over the giant name.',
+    mode: 'one-shot',
+    prompt: 'Build a launch page for a mechanical keyboard called KEY-01. I want people to be able to actually play with it on the page.',
+    recipe: 'landing',
+    direction: 'grid-launch',
+    theme: 'ice-station',
+    pairing: 'swiss-precision',
+    family: 'sharp',
+    effects: ['hero-swiss-grid-wordmark', 'stacking-cards-scroll', 'scroll-velocity-type', 'cta-giant-email-band'],
+  },
 ];
+
+/** Two builds of one product from the same prompt, each on its own direction. Shown on /examples/compare. */
+export interface Pair {
+  id: string;
+  title: string;
+  prompt: string;
+  /** Example ids. Builds live in public/built/<id>/ like any example. */
+  a: string;
+  b: string;
+  /** The model and date the builds were made with. */
+  made: string;
+}
+
+export const PAIRS: Pair[] = [
+  { id: 'late-light', title: 'Late Light', prompt: "A site for a planetarium's late-night show. You scroll and you travel through space. Make it unforgettable.", a: 'late-light-a', b: 'late-light-b', made: 'One shot each, by a coding agent with the skill, 6 October 2026. The second build was told the product already had a site and to make a different look.' },
+  { id: 'aadhi-raat', title: 'Aadhi Raat Records', prompt: 'Make a website for a record label that only releases music recorded after midnight in Kathmandu. Go wild, I want it to feel like an Awwwards site of the day.', a: 'aadhi-raat-a', b: 'aadhi-raat-b', made: 'One shot each, by a coding agent with the skill, 6 October 2026. The second build was told the product already had a site and to make a different look.' },
+  { id: 'key-01', title: 'KEY-01', prompt: 'Build a launch page for a mechanical keyboard called KEY-01. I want people to be able to actually play with it on the page.', a: 'key-01-a', b: 'key-01-b', made: 'One shot each, by a coding agent with the skill, 6 October 2026. The second build was told the product already had a site and to make a different look.' },
+];
+
+/** Pair builds have their own page. The main list skips them. */
+export const SOLO = EXAMPLES.filter((e) => !PAIRS.some((p) => p.a === e.id || p.b === e.id));

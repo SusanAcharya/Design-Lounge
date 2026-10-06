@@ -1,0 +1,66 @@
+/* Graphite Signal · dark · pair: bone-signal
+   The bench with the lights off. Graphite case, warm grey caps, the orange still lit.
+   Best for: Hardware, Instruments, Launches */
+/* Colour only. Fonts come from the locked pairing file. Radius and shadow come from the locked family. */
+/* Graphite Signal · full palette · Designed using Design Lounge (https://www.designlounge.live)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #ff5a26;
+  --primary-ink: #141210;
+  --primary-soft: #4c2518;
+  --secondary: #d9d3c6;
+  --secondary-ink: #141210;
+  --secondary-soft: #43423f;
+  --tertiary: #7fb0cf;
+  --tertiary-ink: #141210;
+  --tertiary-soft: #2e3941;
+
+  /* Surface */
+  --bg: #141414;
+  --surface: #1d1c1b;
+  --surface-2: #282725;
+  --surface-3: #3c3a38;
+  --ink: #ece8df;
+  --ink-2: #b5afa3;
+  --ink-3: #938e84;
+  --line: #33312e;
+  --line-strong: #797771;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #7fcf9a;
+  --success-ink: #141210;
+  --success-soft: #2e4134;
+  --success-on-soft: #7fcf9a;
+  --warning: #f0a63a;
+  --warning-ink: #141210;
+  --warning-soft: #49371d;
+  --warning-on-soft: #f0a63a;
+  --danger: #ff6a55;
+  --danger-ink: #141210;
+  --danger-soft: #4c2924;
+  --danger-on-soft: #ff6a55;
+  --info: #7fb0cf;
+  --info-ink: #141210;
+  --info-soft: #2e3941;
+  --info-on-soft: #7fb0cf;
+
+  /* Chrome */
+  --focus: #ff5a26;
+  --link: #ff5a26;
+  --overlay: #070605;
+  --inverse: #ece8df;
+  --inverse-ink: #141414;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+
+}

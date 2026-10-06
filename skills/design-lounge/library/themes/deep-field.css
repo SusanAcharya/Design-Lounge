@@ -1,0 +1,66 @@
+/* Deep Field · dark · pair: first-light
+   Space at night. Near-black, starlight cream, an amber-to-rose light with ice blue.
+   Best for: Shows, Launches, Science nights */
+/* Colour only. Fonts come from the locked pairing file. Radius and shadow come from the locked family. */
+/* Deep Field · full palette · Designed using Design Lounge (https://www.designlounge.live)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #ffb35e;
+  --primary-ink: #141210;
+  --primary-soft: #402f1e;
+  --secondary: #e2568d;
+  --secondary-ink: #141210;
+  --secondary-soft: #391829;
+  --tertiary: #9edcff;
+  --tertiary-ink: #141210;
+  --tertiary-soft: #293945;
+
+  /* Surface */
+  --bg: #04050a;
+  --surface: #0b0d16;
+  --surface-2: #141726;
+  --surface-3: #2a2c38;
+  --ink: #f1e8d6;
+  --ink-2: #bdb5a5;
+  --ink-3: #837d70;
+  --line: #1f2233;
+  --line-strong: #6f6d71;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #6fd3a0;
+  --success-ink: #141210;
+  --success-soft: #1e362e;
+  --success-on-soft: #6fd3a0;
+  --warning: #ffb35e;
+  --warning-ink: #141210;
+  --warning-soft: #402f1e;
+  --warning-on-soft: #ffb35e;
+  --danger: #ff6b6b;
+  --danger-ink: #141210;
+  --danger-soft: #401d21;
+  --danger-on-soft: #ff6b6b;
+  --info: #9edcff;
+  --info-ink: #141210;
+  --info-soft: #293945;
+  --info-on-soft: #9edcff;
+
+  /* Chrome */
+  --focus: #ffb35e;
+  --link: #ffb35e;
+  --overlay: #070605;
+  --inverse: #f1e8d6;
+  --inverse-ink: #04050a;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+
+}

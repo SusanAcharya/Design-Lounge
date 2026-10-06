@@ -1,0 +1,66 @@
+/* Temple Dawn · light · pair: sodium-night
+   The same city at the first bell. Lime-washed walls, indigo ink, marigold and sindoor.
+   Best for: Labels, Venues, Late shows */
+/* Colour only. Fonts come from the locked pairing file. Radius and shadow come from the locked family. */
+/* Temple Dawn · full palette · Designed using Design Lounge (https://www.designlounge.live)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #b8560f;
+  --primary-ink: #fffdf8;
+  --primary-soft: #ebd7c3;
+  --secondary: #b8321f;
+  --secondary-ink: #fffdf8;
+  --secondary-soft: #ebd2c5;
+  --tertiary: #2b3480;
+  --tertiary-ink: #fffdf8;
+  --tertiary-soft: #d7d2d3;
+
+  /* Surface */
+  --bg: #f3ece0;
+  --surface: #fbf6ec;
+  --surface-2: #e8dfcf;
+  --surface-3: #dcd3c5;
+  --ink: #1a1730;
+  --ink-2: #47435e;
+  --ink-3: #6c6880;
+  --line: #d9cfbd;
+  --line-strong: #908987;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #2f7a52;
+  --success-ink: #fffdf8;
+  --success-soft: #d8dccc;
+  --success-on-soft: #296b48;
+  --warning: #a86410;
+  --warning-ink: #fffdf8;
+  --warning-soft: #e9d9c3;
+  --warning-on-soft: #824d0c;
+  --danger: #b8321f;
+  --danger-ink: #fffdf8;
+  --danger-soft: #ebd2c5;
+  --danger-on-soft: #a22c1b;
+  --info: #2b3480;
+  --info-ink: #fffdf8;
+  --info-soft: #d7d2d3;
+  --info-on-soft: #2b3480;
+
+  /* Chrome */
+  --focus: #b8560f;
+  --link: #a64d0e;
+  --overlay: #141210;
+  --inverse: #1a1730;
+  --inverse-ink: #f3ece0;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+
+}

@@ -68,7 +68,7 @@ fs.mkdirSync(briefsDir, { recursive: true });
 
 // Briefs ship with the parts every build needs first. The demo's own paint and the long notes go below a marker.
 const OPTIONAL = ['Reference behaviour', 'Tokens', 'Typography', 'Implementation notes'];
-const briefNote = '> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo\'s colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws. The demo\'s names, prices, and sentences belong to the demo. Write this product\'s facts in short sentences.';
+const briefNote = '> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo\'s colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws. A Show mode centrepiece keeps its live readouts. The demo\'s names, prices, and sentences belong to the demo. Write this product\'s facts in short sentences.';
 function reorderBrief(body) {
   const parts = body.split(/\n(?=## )/);
   const title = parts.shift();

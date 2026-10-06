@@ -1,0 +1,66 @@
+/* Bone Signal · light · pair: graphite-signal
+   A machined object on a bench. Bone, charcoal, cream caps, one signal orange.
+   Best for: Hardware, Instruments, Launches */
+/* Colour only. Fonts come from the locked pairing file. Radius and shadow come from the locked family. */
+/* Bone Signal · full palette · Designed using Design Lounge (https://www.designlounge.live)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #ff4f1a;
+  --primary-ink: #141210;
+  --primary-soft: #efd3c3;
+  --secondary: #2a2925;
+  --secondary-ink: #fffdf8;
+  --secondary-soft: #d1cdc5;
+  --tertiary: #3b6e8f;
+  --tertiary-ink: #fffdf8;
+  --tertiary-soft: #d3d7d4;
+
+  /* Surface */
+  --bg: #ece8df;
+  --surface: #f6f3ec;
+  --surface-2: #e3ded2;
+  --surface-3: #d7d2c7;
+  --ink: #141414;
+  --ink-2: #4c4841;
+  --ink-3: #6a655b;
+  --line: #ccc5b6;
+  --line-strong: #868278;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #2f7a52;
+  --success-ink: #fffdf8;
+  --success-soft: #d2d9cb;
+  --success-on-soft: #245e3f;
+  --warning: #b6761c;
+  --warning-ink: #141210;
+  --warning-soft: #e4d6c1;
+  --warning-on-soft: #7c5113;
+  --danger: #c4301a;
+  --danger-ink: #fffdf8;
+  --danger-soft: #e6cec3;
+  --danger-on-soft: #ac2a17;
+  --info: #3b6e8f;
+  --info-ink: #fffdf8;
+  --info-soft: #d3d7d4;
+  --info-on-soft: #34617e;
+
+  /* Chrome */
+  --focus: #ff4f1a;
+  --link: #ba3a13;
+  --overlay: #141210;
+  --inverse: #141414;
+  --inverse-ink: #ece8df;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+
+}

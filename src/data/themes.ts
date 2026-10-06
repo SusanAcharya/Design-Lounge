@@ -400,6 +400,24 @@ export const THEMES: Theme[] = [
   { id: 'ticket-booth', name: 'Ticket Booth', mood: 'The arcade in daylight. Cream tickets, a red stamp, green ink.', bestFor: ['Casual games', 'Family arcades', 'Scoreboards'], tags: ['pixel', 'retro', 'light'],
     tokens: paint({ bg: '#f3efe4', surface: '#fffdf6', surface2: '#e7e0d0', ink: '#16181e', ink2: '#3c4250', ink3: '#6c6458', line: '#d9d0bc', primary: '#c45c12', secondary: '#0d7a45', tertiary: '#1d4e89', success: '#0d7a45', warning: '#a16207', danger: '#b42323', info: '#1d4e89' }),
     display: 'Silkscreen', text: 'Space Mono', radius: '0px', shadow: 'none', specimen: 'Two credits' },
+  { id: 'deep-field', name: 'Deep Field', mood: 'Space at night. Near-black, starlight cream, an amber-to-rose light with ice blue.', bestFor: ['Shows', 'Launches', 'Science nights'], tags: ['dark', 'cinematic', 'cool'],
+    tokens: paint({ bg: '#04050a', surface: '#0b0d16', surface2: '#141726', ink: '#f1e8d6', ink2: '#bdb5a5', ink3: '#837d70', line: '#1f2233', primary: '#ffb35e', secondary: '#e2568d', tertiary: '#9edcff', success: '#6fd3a0', warning: '#ffb35e', danger: '#ff6b6b', info: '#9edcff' }),
+    display: 'Instrument Serif', text: 'Inter Tight', radius: '999px', shadow: '0 30px 80px -30px rgba(0,0,0,.8)', specimen: 'Nine minutes to orbit' },
+  { id: 'first-light', name: 'First Light', mood: 'Deep field at dawn. Warm paper sky, ink, a sunrise orange and a rose.', bestFor: ['Shows', 'Launches', 'Science nights'], tags: ['light', 'cinematic', 'warm'],
+    tokens: paint({ bg: '#f6f1e8', surface: '#fffaf2', surface2: '#ece4d6', ink: '#14121a', ink2: '#4f4a57', ink3: '#6f6977', line: '#ddd3c4', primary: '#c2511f', secondary: '#b8336a', tertiary: '#2f6f9f', success: '#2f7a52', warning: '#a86410', danger: '#b42d2d', info: '#2f6f9f' }),
+    display: 'Instrument Serif', text: 'Inter Tight', radius: '999px', shadow: '0 24px 60px -30px rgba(20,18,26,.25)', specimen: 'The sky before the sun' },
+  { id: 'sodium-night', name: 'Sodium Night', mood: 'A city after midnight. Indigo sky, bone type, sodium-lamp amber and one sindoor red.', bestFor: ['Labels', 'Venues', 'Late shows'], tags: ['dark', 'cinematic', 'warm'],
+    tokens: paint({ bg: '#06070c', surface: '#0c0f1f', surface2: '#161b36', ink: '#ece6d6', ink2: '#b6af9e', ink3: '#7f7a6b', line: '#20264a', primary: '#ffb04a', secondary: '#e8442e', tertiary: '#7c86de', success: '#7fcf9a', warning: '#ffb04a', danger: '#ff6a55', info: '#7c86de' }),
+    display: 'Instrument Serif', text: 'JetBrains Mono', radius: '999px', shadow: '0 30px 80px -30px rgba(0,0,0,.8)', specimen: 'Open after the last bus' },
+  { id: 'temple-dawn', name: 'Temple Dawn', mood: 'The same city at the first bell. Lime-washed walls, indigo ink, marigold and sindoor.', bestFor: ['Labels', 'Venues', 'Late shows'], tags: ['light', 'warm', 'editorial'],
+    tokens: paint({ bg: '#f3ece0', surface: '#fbf6ec', surface2: '#e8dfcf', ink: '#1a1730', ink2: '#47435e', ink3: '#6c6880', line: '#d9cfbd', primary: '#b8560f', secondary: '#b8321f', tertiary: '#2b3480', success: '#2f7a52', warning: '#a86410', danger: '#b8321f', info: '#2b3480' }),
+    display: 'Instrument Serif', text: 'JetBrains Mono', radius: '999px', shadow: '0 24px 60px -30px rgba(26,23,48,.25)', specimen: 'After the first bell' },
+  { id: 'bone-signal', name: 'Bone Signal', mood: 'A machined object on a bench. Bone, charcoal, cream caps, one signal orange.', bestFor: ['Hardware', 'Instruments', 'Launches'], tags: ['light', 'industrial', 'warm'],
+    tokens: paint({ bg: '#ece8df', surface: '#f6f3ec', surface2: '#e3ded2', ink: '#141414', ink2: '#4c4841', ink3: '#6a655b', line: '#ccc5b6', primary: '#ff4f1a', secondary: '#2a2925', tertiary: '#3b6e8f', success: '#2f7a52', warning: '#b06a08', danger: '#c4301a', info: '#3b6e8f' }),
+    display: 'Archivo', text: 'IBM Plex Mono', radius: '10px', shadow: '0 2px 0 #c7c0b1, 0 14px 30px -14px rgba(20,20,20,.35)', specimen: 'Tap to begin' },
+  { id: 'graphite-signal', name: 'Graphite Signal', mood: 'The bench with the lights off. Graphite case, warm grey caps, the orange still lit.', bestFor: ['Hardware', 'Instruments', 'Launches'], tags: ['dark', 'industrial', 'warm'],
+    tokens: paint({ bg: '#141414', surface: '#1d1c1b', surface2: '#282725', ink: '#ece8df', ink2: '#b5afa3', ink3: '#837e74', line: '#33312e', primary: '#ff5a26', secondary: '#d9d3c6', tertiary: '#7fb0cf', success: '#7fcf9a', warning: '#f0a63a', danger: '#ff6a55', info: '#7fb0cf' }),
+    display: 'Archivo', text: 'IBM Plex Mono', radius: '10px', shadow: '0 2px 0 #0a0a0a, 0 14px 30px -14px rgba(0,0,0,.7)', specimen: 'Tap to begin' },
 ];
 
 export function themeCss(t: Theme) {
@@ -535,6 +553,12 @@ export const THEME_PAIRS: Record<string, { mode: 'light' | 'dark'; pair: string 
   'lamp-desk': { mode: 'dark', pair: 'inkwell' },
   'coin-op': { mode: 'dark', pair: 'ticket-booth' },
   'ticket-booth': { mode: 'light', pair: 'coin-op' },
+  'deep-field': { mode: 'dark', pair: 'first-light' },
+  'first-light': { mode: 'light', pair: 'deep-field' },
+  'sodium-night': { mode: 'dark', pair: 'temple-dawn' },
+  'temple-dawn': { mode: 'light', pair: 'sodium-night' },
+  'bone-signal': { mode: 'light', pair: 'graphite-signal' },
+  'graphite-signal': { mode: 'dark', pair: 'bone-signal' },
 };
 
 export function themeById(id: string) {
@@ -584,6 +608,9 @@ const FAMILY_SPEC: Record<string, string> = {
   'Rubik': 'Rubik:wght@400;600;800',
   'Noto Serif Devanagari': 'Noto+Serif+Devanagari:wght@400;600;700',
   'Mukta': 'Mukta:wght@400;500;600;700',
+  'Inter Tight': 'Inter+Tight:wght@300;400;500;600',
+  'Archivo': 'Archivo:wdth,wght@62..125,400..900',
+  'IBM Plex Mono': 'IBM+Plex+Mono:wght@400;500;600',
 };
 
 export function themeFontHref(t: Theme) {

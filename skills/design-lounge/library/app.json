@@ -78,6 +78,19 @@
     "Mono for numbers. Tabular nums. No ornament.",
     "Status colour is reserved for live state, never decoration."
    ]
+  },
+  {
+   "id": "lit",
+   "radius": 999,
+   "button": "outline",
+   "density": "air",
+   "shadow": "0 30px 80px -30px rgba(0,0,0,.6)",
+   "rules": [
+    "The drawn scene or object gets light: layered radial gradients, glow, a highlight edge, a cast shadow, grain. Flat fills only on the interface.",
+    "Controls are 999px pills with a 1px line at 12-20% ink. One filled primary.",
+    "The display face runs huge (10-16vw) with one word in italic or in the light colour.",
+    "Small mono readouts are allowed when they are live and belong to the idea: a clock, a distance, a countdown. Never more than four on screen."
+   ]
   }
  ],
  "density": {

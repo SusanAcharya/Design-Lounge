@@ -407,7 +407,8 @@
         "split-flap-board",
         "switch-row",
         "trail-type",
-        "label-roll-button"
+        "label-roll-button",
+        "playable-product-hero"
       ]
     },
     {
@@ -557,7 +558,9 @@
         "restaurant-menu-page",
         "smooth-scroll-inertia",
         "text-mask-scroll-reveal",
-        "game-title-screen"
+        "game-title-screen",
+        "moonlit-ridge-hero",
+        "scroll-space-voyage"
       ]
     },
     {

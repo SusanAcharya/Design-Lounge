@@ -1,0 +1,66 @@
+/* First Light · light · pair: deep-field
+   Deep field at dawn. Warm paper sky, ink, a sunrise orange and a rose.
+   Best for: Shows, Launches, Science nights */
+/* Colour only. Fonts come from the locked pairing file. Radius and shadow come from the locked family. */
+/* First Light · full palette · Designed using Design Lounge (https://www.designlounge.live)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #c2511f;
+  --primary-ink: #fffdf8;
+  --primary-soft: #efdbcc;
+  --secondary: #b8336a;
+  --secondary-ink: #fffdf8;
+  --secondary-soft: #edd6d6;
+  --tertiary: #2f6f9f;
+  --tertiary-ink: #fffdf8;
+  --tertiary-soft: #dadfde;
+
+  /* Surface */
+  --bg: #f6f1e8;
+  --surface: #fffaf2;
+  --surface-2: #ece4d6;
+  --surface-3: #dfd7cb;
+  --ink: #14121a;
+  --ink-2: #4f4a57;
+  --ink-3: #6f6977;
+  --line: #ddd3c4;
+  --line-strong: #918a83;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #2f7a52;
+  --success-ink: #fffdf8;
+  --success-soft: #dae0d3;
+  --success-on-soft: #296b48;
+  --warning: #a86410;
+  --warning-ink: #fffdf8;
+  --warning-soft: #ebddca;
+  --warning-on-soft: #824d0c;
+  --danger: #b42d2d;
+  --danger-ink: #fffdf8;
+  --danger-soft: #edd6ce;
+  --danger-on-soft: #b42d2d;
+  --info: #2f6f9f;
+  --info-ink: #fffdf8;
+  --info-soft: #dadfde;
+  --info-on-soft: #29628c;
+
+  /* Chrome */
+  --focus: #c2511f;
+  --link: #af491c;
+  --overlay: #141210;
+  --inverse: #14121a;
+  --inverse-ink: #f6f1e8;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+
+}

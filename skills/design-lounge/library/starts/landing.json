@@ -25,7 +25,10 @@
   "stats-count-up-band",
   "luxe-product-detail",
   "hero-swiss-grid-wordmark",
-  "hero-bauhaus-composition"
+  "hero-bauhaus-composition",
+  "playable-product-hero",
+  "object-3d-turntable",
+  "scroll-space-voyage"
  ],
  "directions": [
   {
@@ -75,6 +78,42 @@
    "effect": "scroll-zoom-portal",
    "work": "features-alternating-rows",
    "footer": "footer-enterprise-sitemap"
+  },
+  {
+   "id": "playable",
+   "name": "Playable",
+   "mood": "A product you can touch on the page, bone and signal orange, it makes a sound",
+   "theme": "bone-signal",
+   "pairing": "machined",
+   "family": "lit",
+   "hero": "playable-product-hero",
+   "effect": "playable-product-hero",
+   "work": "stats-count-up-band",
+   "footer": "footer-giant-wordmark-reveal"
+  },
+  {
+   "id": "bench-at-night",
+   "name": "Bench at night",
+   "mood": "The same object in the dark, graphite and one lit orange, specs read like an engraving",
+   "theme": "graphite-signal",
+   "pairing": "machined",
+   "family": "sharp",
+   "hero": "object-3d-turntable",
+   "effect": "scroll-scrub-product-sequence",
+   "work": "features-sticky-scroll-steps",
+   "footer": "footer-centered-colophon"
+  },
+  {
+   "id": "deep-launch",
+   "name": "Deep launch",
+   "mood": "A launch as a voyage, starlight on black, you scroll from the ground to the product",
+   "theme": "deep-field",
+   "pairing": "night-show",
+   "family": "lit",
+   "hero": "scroll-space-voyage",
+   "effect": "scroll-space-voyage",
+   "work": "bento-feature-grid",
+   "footer": "footer-newsletter-split"
   }
  ]
 }

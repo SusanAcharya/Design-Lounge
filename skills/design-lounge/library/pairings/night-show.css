@@ -1,0 +1,25 @@
+/* Night Show · display Instrument Serif · text Inter Tight · mono JetBrains Mono · numbers mono
+   A film-title serif set huge, one word in italic, over a light grotesk and a mono for the readouts. */
+/* Night Show · type pairing · Designed using Design Lounge (https://www.designlounge.live) */
+@import url("https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap");
+
+:root {
+  --font-display: "Instrument Serif", Georgia, "Times New Roman", serif;
+  --font-text: "Inter Tight", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+h1, h2, h3, .display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: -0.035em;
+  line-height: 1;
+}
+body {
+  font-family: var(--font-text);
+  font-weight: 400;
+  line-height: 1.55;
+}
+code, kbd, samp, .mono, .num {
+  font-family: var(--font-mono);
+  font-weight: 400;
+}

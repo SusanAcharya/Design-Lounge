@@ -7,7 +7,7 @@ Read this after [practice.md](practice.md) when the job is a website: a portfoli
 Some rules pull against each other. Settle them in this order, top wins.
 
 1. Their words.
-2. The Idea and the Signature.
+2. The Idea and the Signature. In Show mode, the centrepiece and What Show mode relaxes.
 3. The Look fails in [practice.md](practice.md), the three-label limit, and the studio template limit.
 4. A Named look in [taste.md](taste.md), then the locked family.
 5. The piece brief.
@@ -69,7 +69,7 @@ Then make one signature: one element built only for this site, from the Idea, th
 
 - Body text on a website is 17 to 19px, in `--ink` or `--ink-2`. Never `--ink-3` for a sentence.
 - Small tracked labels: three per view at most. A page where half the text is 11px grey looks unfinished. The labels a piece's brief draws count too. If the hero piece already has three, add none of your own. If a brief draws more than three, cut its labels down to three. The limit wins over the brief.
-- No facts strip, clock, timeline, status dot, or filter chips unless they asked. Each one is a small region that does not serve the four lines.
+- No facts strip, clock, timeline, status dot, or filter chips unless they asked. Each one is a small region that does not serve the four lines. Show mode's live readouts are the exception, when they belong to the Idea.
 
 ### Motion you can see
 
@@ -94,6 +94,61 @@ Could this be anyone's site: yes | no
 ```
 
 If you remember nothing, or the answer is yes, it fails. Change the idea or the hero. Rewording the copy is not a fix.
+
+## Show mode
+
+Use this when they ask for spectacle: "go wild", "Awwwards", "site of the day", "unforgettable", "make it an experience", "let people play with it". Also use it for a show, a launch, a label, or an event whose subject is a world you can draw: space, a city at night, the sea, a mountain, an instrument, a machine. Write the `Show:` line on the sheet.
+
+A strong agent with no library builds something memorable here, because it starts from the subject, picks colour and type for that world, and spends all its effort on one thing. Show mode does the same, then adds what the library is good at: finished sections, real states, accessibility, and a page that holds together on a phone.
+
+Show mode is Free by default: you choose the colour and type (Free colour and type, below). It stays locked to the direction's theme and pairing when they named a theme, a colour, a pairing, or a brand, when the project already has a design system, or when they asked for the Lounge look. Write the mode on the sheet: `Show: yes, Free` or `Show: yes, locked (they named Deep Field)`.
+
+### The centrepiece
+
+1. Write the Idea as a thing you can touch or travel through, not a layout. "You scroll and the camera leaves the ground." "The label's city, live, at the hour the tape rolls." "The keyboard is on the page. Type on it."
+2. Search for a show piece that already does it: `scroll-space-voyage` (a journey you scroll), `moonlit-ridge-hero` (a place at an hour), `playable-product-hero` (an object you use), `three-scroll-world`, `three-orbit-object`, `object-3d-turntable`, `scroll-scrub-product-sequence`, `webgl-shader-hero`, `game-playfield`. Open its brief. Re-skin it for this subject. If none fits, build the centrepiece yourself from the Idea and say so.
+3. The centrepiece gets the first screen and most of your time. Build it first, look at it, and improve it twice before you build anything else.
+4. The direction still locks the family. In Free, its theme and pairing become candidates. In locked Show, it locks them too. Its hero, work, and footer become candidates. Keep the work and the footer unless they fight the Idea. A ticket card does not suit a night dive. A schedule does not suit a shop. Pick a better one from the section lists below and write why.
+5. Fewer, bigger parts: the centrepiece, two or three supporting sections, and the footer. Each supporting section is a finished piece, built still, in the page's system: the locked theme and pairing, or the Free colour and type.
+
+### Free colour and type
+
+The library's themes and pairings are made for products people use every day. A show, a launch, or a label whose subject is a world needs the colour of that world's light and a face that sounds like it. Here you choose them, and the library holds the craft.
+
+1. Colour from the light. Start from the light source and the material of the world: sodium amber on Himalayan indigo, the sun on the limb of the Earth, bone keycaps under a desk lamp. Write five to seven colours.
+2. Write them as the theme's roles: `--bg`, `--surface`, `--surface-2`, `--line`, `--ink`, `--ink-2`, `--ink-3`, `--primary`, `--primary-ink`, `--primary-soft`, `--link`, plus up to four `--scene-*` for the sky and the glow. Every brief and the role table in SKILL.md still map onto them. Body text meets 4.5:1 on `--bg`, large type 3:1.
+3. Type for the subject, not the trend. Two families at most, plus one script face when the world needs it, all in one Google Fonts link. Say in one line why each face fits this world.
+4. Do not repeat yourself. Read the Free lines in the history: do not reuse the display face of the last three Free sites, or the same `--bg` and `--primary` pair. Avoid the faces every agent reaches for as the display face unless the subject asks for one by name: Instrument Serif, Playfair Display, Fraunces, Space Grotesk, Syne, Inter.
+5. The library is still a good place to look. Taking a theme or a pairing is fine when you chose it for this world. Write `Free: took <id>, because ...`.
+6. Everything else holds: The rendering bar, What Show mode relaxes, the Look fails in [practice.md](practice.md), real content, states, accessibility, the history check on the hero, work, and footer, and the credit.
+7. On the sheet, under the Show line: `Palette:` with each colour and its job, and `Type:` with each face and its reason. Put both in `DESIGN.md` so a later page reuses them. A later page of the same product never picks again.
+
+### The rendering bar
+
+A centrepiece drawn with flat fills looks like a diagram. These are what make it look made.
+
+- One light source, named on the sheet: the moon, a sodium lamp, the sun on the limb of the Earth, a desk lamp. Highlights face it. Shadows fall away from it.
+- Depth in three or more layers. Far layers are lighter, bluer, and lower in contrast. Near layers are sharp and move more.
+- Light is drawn with layered radial gradients, additive glow (`globalCompositeOperation = 'lighter'` on canvas, or `mix-blend-mode: screen`), a soft halo, and a highlight edge on objects. Add grain at 3 to 6 percent opacity over the scene.
+- Objects have material: a top face, a side wall, a highlight, a cast shadow, and travel when pressed.
+- Type sets the scale. The display face runs at 10 to 16vw. One word changes voice: italic, or set in the scene's light colour. That one word may carry a gradient of the scene's light.
+- Live readouts that belong to the Idea: the local time of the place, a countdown to the hour, the distance travelled, the key last pressed. Two to four at most, in the mono, and each one is real and changes. A readout that only decorates is a fail.
+- Sound when the subject is sound: a synthesised drone, a switch click, a note. Never autoplay. It starts on a click and has a visible off control.
+
+### What Show mode relaxes
+
+Only inside the centrepiece, and only these. Everything else in Look in [practice.md](practice.md) still holds, including on the supporting sections.
+
+- Gradients, glows, and halos are allowed in the scene. Not on cards, buttons, or section backgrounds.
+- Gradient text is allowed on the one word that changes voice.
+- The live readouts above are allowed, and they count instead of the three-label limit, up to four.
+- A scene palette, in locked Show: when the locked theme has no colour for the world's light, add up to four `--scene-*` tokens (sky stops, glow, highlight). The interface still uses the theme's roles. Write the scene tokens on the sheet with one reason each.
+- One extra display face when the world needs a script, in locked Show: a Devanagari face for a Nepali name, for example. Write why. Free already counts the script face in its type.
+- The family's radius and shadow govern the interface. Drawn objects keep their own corners and shadows.
+
+### Two looks for one product
+
+When they want options, or two variants of one product, build both. Lock two directions that differ in theme, pairing, and hero. Make one of them Show mode, Free, when the subject has a world, and the other a composed site locked to the direction's own theme, pairing, and pieces. That shows the whole range: one look made only for this world, one that is pure Lounge. Write a brief and a sheet for each. Claim both in the history before you start, so they never collide. Both credit Design Lounge.
 
 ## Sections, one by one
 
@@ -162,6 +217,7 @@ A portfolio, a launch, a product page, or a refine they described as motion is i
 - An outdoor, travel, or place brand: `parallax-layered-hero` or `scroll-zoom-portal`.
 - A studio or agency that wants the site to feel made: `smooth-scroll-inertia`, `page-transition-tile-wipe`, `preloader-counter-intro`, or `text-mask-scroll-reveal`. A preloader never runs longer than the real load.
 - A tech, science, or cold brand that wants depth: `webgl-shader-hero`. A hotel, film, or food brand that wants footage: `hero-video-loop`.
+- A show, a launch, or a science night that is a journey: `scroll-space-voyage`. A label, venue, or hotel tied to a city and an hour: `moonlit-ridge-hero`. A product people can use on the page: `playable-product-hero`. These are Show mode centrepieces.
 - An about or manifesto block: `scroll-word-highlight`.
 - A headline that moves: `kinetic-type-marquee` or `variable-font-proximity`.
 - A phone: `ios-pull-to-refresh`, `shared-element-expand`, or `m3-container-transform`. Not a web cursor. A phone web story: `mobile-scroll-story`.

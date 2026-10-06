@@ -1,6 +1,7 @@
 // Card posters, written straight to WebP. Run against a site that serves /demo:
 //   BASE=http://localhost:4330 node scripts/posters.mjs          (only pieces without a poster)
 //   ALL=1 BASE=http://localhost:4330 node scripts/posters.mjs    (every piece)
+//   CHANGED=a,b BASE=... node scripts/posters.mjs                (these, plus any without a poster; used by CI)
 // <slug>.webp is the whole screen at its own aspect, 640px wide (phones 390), used by cards and device frames.
 // When a piece fills under a quarter of the screen, <slug>-card.webp is a 640x480 crop around it for the card.
 import { chromium } from 'playwright';
@@ -13,14 +14,24 @@ const thumbs = path.join(root, 'public/thumbs');
 const base = process.env.BASE || 'http://localhost:4330';
 const all = process.env.ALL === '1';
 const only = process.env.ONLY ? new Set(process.env.ONLY.split(',')) : null;
+const changed = new Set((process.env.CHANGED || '').split(',').filter(Boolean));
 const PHONE = new Set(['mobile-web', 'mobile-app', 'pwa']);
 const SIZES = { web: [1280, 800], 'mobile-web': [390, 844], 'mobile-app': [390, 844], pwa: [390, 844], tablet: [1180, 820] };
 const SPARSE = 0.25;
+// Pieces whose 1280px layout pushes content to the edges, or leaves a centred piece tiny. Their card is
+// shot again at a smaller 4:3 viewport, so the layout closes up and nothing is cropped off the side.
+const CARD_VIEW = {
+  'curve-drawer': [880, 660], 'newsletter-close-band': [760, 570], 'corner-player': [640, 480],
+  'terminal-404': [760, 570, 4200], 'coverflow-strip': [880, 660], 'lens-bento': [800, 600],
+  'multi-step-form-stepper': [880, 660], 'empty-state-line-illustration': [800, 600],
+};
+// Pieces whose entry animation runs longer than the default wait.
+const WAIT = { 'moonlit-ridge-hero': 3200, 'scroll-space-voyage': 2400 };
 
 const slugs = (await readdir(path.join(root, 'src/demos')))
   .filter((f) => f.endsWith('.html'))
   .map((f) => f.replace(/\.html$/, ''))
-  .filter((s) => (only ? only.has(s) : all || !existsSync(path.join(thumbs, s + '.webp'))));
+  .filter((s) => (only ? only.has(s) : all || changed.has(s) || !existsSync(path.join(thumbs, s + '.webp'))));
 console.log(slugs.length, 'posters to write');
 
 const browser = await chromium.launch();
@@ -79,13 +90,22 @@ async function worker() {
     try {
       await page.setViewportSize({ width: vw, height: vh });
       await page.goto(`${base}/demo/${slug}.html`, { waitUntil: 'networkidle', timeout: 20000 });
-      await page.waitForTimeout(1400);
+      await page.waitForTimeout(CARD_VIEW[slug]?.[2] || WAIT[slug] || 1400);
       await page.evaluate(() => document.querySelector('lounge-signature')?.remove());
       const phone = PHONE.has(platform);
       const r = await encode(await page.screenshot({ type: 'png' }), phone ? 390 : 640, !phone);
       await writeFile(path.join(thumbs, slug + '.webp'), Buffer.from(r.full, 'base64'));
       const card = path.join(thumbs, slug + '-card.webp');
-      if (r.card) {
+      const view = CARD_VIEW[slug];
+      if (view) {
+        await page.setViewportSize({ width: view[0], height: view[1] });
+        await page.goto(`${base}/demo/${slug}.html`, { waitUntil: 'networkidle', timeout: 20000 });
+        await page.waitForTimeout(view[2] || 1400);
+        await page.evaluate(() => document.querySelector('lounge-signature')?.remove());
+        const c = await encode(await page.screenshot({ type: 'png' }), 640, false);
+        await writeFile(card, Buffer.from(c.full, 'base64'));
+        sparse.push(slug);
+      } else if (r.card) {
         await writeFile(card, Buffer.from(r.card, 'base64'));
         sparse.push(slug);
       } else if (existsSync(card)) await unlink(card);

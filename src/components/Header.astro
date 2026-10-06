@@ -1,7 +1,7 @@
 ---
 const path = Astro.url.pathname.replace(/\.html$/, '').replace(/\/(index)?$/, '') || '/';
 const nav = [
-  { href: '/start', label: 'Start', match: /^\/(start|kit)/ },
+  { href: '/start', label: 'Start', hint: ' from a product', match: /^\/(start|kit)/ },
   { href: '/browse', label: 'Browse', match: /^\/(browse|p\/|rooms|platforms|styles|collections)/ },
   { href: '/sections', label: 'Sections', match: /^\/sections(\/|$)/ },
   { href: '/system', label: 'System', match: /^\/(system|type|themes|icons|motion)/ },
@@ -26,7 +26,7 @@ const extra = [
     </a>
     <nav class="nav" aria-label="Primary">
       {nav.map((n) => (
-        <a href={n.href} aria-current={n.match.test(path) ? 'page' : undefined}>{n.label}</a>
+        <a href={n.href} aria-current={n.match.test(path) ? 'page' : undefined}>{n.label}{'hint' in n && <span class="sr-only">{n.hint}</span>}</a>
       ))}
     </nav>
     <div class="tools">
@@ -45,7 +45,7 @@ const extra = [
     </div>
   </div>
   <div class="mobile-nav" id="mobile-nav" hidden>
-    {nav.map((n) => <a href={n.href} aria-current={n.match.test(path) ? 'page' : undefined}>{n.label}</a>)}
+    {nav.map((n) => <a href={n.href} aria-current={n.match.test(path) ? 'page' : undefined}>{n.label}{'hint' in n && <span class="sr-only">{n.hint}</span>}</a>)}
     {extra.map((n) => <a href={n.href}>{n.label}</a>)}
   </div>
 </header>

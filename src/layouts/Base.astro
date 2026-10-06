@@ -17,7 +17,15 @@ interface Props {
   crumbs?: { name: string; href: string }[];
   faq?: { q: string; a: string }[];
 }
-const { title, description = `Design Lounge is a free UI design skill for AI coding agents, with hundreds of design ideas: website sections, app screens, palettes, font pairings, icons and motion.`, ogImage, bodyClass, rail = true, noindex = false, crumbs, faq } = Astro.props;
+const { title, description = `A free UI design skill for AI coding agents, with hundreds of live design ideas: sections, app screens, palettes, font pairings and motion.`, ogImage, bodyClass, rail = true, noindex = false, crumbs, faq } = Astro.props;
+// Search results show about 155 characters: keep whole sentences that fit, else cut at a word.
+const clip = (s: string, max = 158) => {
+  if (s.length <= max) return s;
+  const head = s.slice(0, max);
+  const stop = Math.max(head.lastIndexOf('. '), head.lastIndexOf('? '), head.lastIndexOf('! '));
+  return stop > 80 ? head.slice(0, stop + 1) : head.slice(0, head.lastIndexOf(' ')).replace(/[,;:]$/, '') + '…';
+};
+const metaDescription = clip(description);
 const fullTitle = Astro.props.fullTitle ?? (title ? `${title} · Design Lounge` : `Design Lounge`);
 const origin = (Astro.site ?? new URL('https://www.designlounge.live')).toString().replace(/\/$/, '');
 const path = Astro.url.pathname.replace(/\/index(\.html)?$/, '').replace(/\.html$/, '').replace(/\/$/, '') || '/';
@@ -67,7 +75,7 @@ const count = (await getPieces()).length;
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="google-site-verification" content="dwb4XIYW4cSUSfS1zsKO5kKDHF7T0Na4AsGfq9nLZLg" />
   <title>{fullTitle}</title>
-  <meta name="description" content={description} />
+  <meta name="description" content={metaDescription} />
   <link rel="canonical" href={canonical} />
   {noindex && <meta name="robots" content="noindex, follow" />}
   <meta name="author" content={AUTHOR.name} />
@@ -81,7 +89,7 @@ const count = (await getPieces()).length;
   <script type="application/ld+json" set:html={ld}></script>
   <meta property="og:url" content={canonical} />
   <meta property="og:title" content={fullTitle} />
-  <meta property="og:description" content={description} />
+  <meta property="og:description" content={metaDescription} />
   <meta property="og:type" content={path === '/' ? 'website' : 'article'} />
   <meta property="og:image" content={ogImage ?? `${origin}/og/home.jpg`} />
   <meta property="og:image:width" content="1200" />
@@ -89,7 +97,7 @@ const count = (await getPieces()).length;
   <meta property="og:image:alt" content={ogImage ? fullTitle : `Design Lounge, ${count} design ideas`} />
   <meta name="twitter:image" content={ogImage ?? `${origin}/og/home.jpg`} />
   <meta name="twitter:title" content={fullTitle} />
-  <meta name="twitter:description" content={description} />
+  <meta name="twitter:description" content={metaDescription} />
   <meta name="theme-color" content="#fafaf9" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <link rel="icon" href="/favicon-96.png" type="image/png" sizes="96x96" />

@@ -13,6 +13,11 @@ const GEO: Record<string, Geo> = {
 const VIEWS: View[] = ['auto', 'desktop', 'tablet', 'phone'];
 const TINY = 0.3;
 const reduced = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+// Demos start only after the page itself has loaded and gone idle; the poster covers the wait.
+const pageReady = new Promise<void>((res) => {
+  const idle = () => ('requestIdleCallback' in window ? requestIdleCallback(() => res(), { timeout: 2500 }) : setTimeout(res, 300));
+  if (document.readyState === 'complete') idle(); else addEventListener('load', idle, { once: true });
+});
 
 class LoungeFrame extends HTMLElement {
   static observedAttributes = ['data-view'];
@@ -27,6 +32,7 @@ class LoungeFrame extends HTMLElement {
   raf = 0;
   anim = 0;
   ready = false;
+  wanted = false;
 
   get views(): View[] { return (this.dataset.views || this.dataset.native || 'desktop').split(',').map((v) => v.trim()) as View[]; }
   get nativeView(): View { return (this.dataset.native as View) || ({ web: 'desktop', phone: 'phone', tablet: 'tablet' } as const)[(this.dataset.frame as Frame) || 'web']; }
@@ -122,8 +128,14 @@ class LoungeFrame extends HTMLElement {
     this.classList.toggle('lf-tiny', fit < TINY);
     this.classList.add('lf-ready');
   }
-  load() { if (!this.iframe.getAttribute('src')) this.iframe.src = this.dataset.src || ''; }
-  unload() { if (this.iframe.getAttribute('src')) { this.iframe.removeAttribute('src'); this.classList.remove('loaded'); } }
+  load() {
+    this.wanted = true;
+    pageReady.then(() => { if (this.wanted && !this.iframe.getAttribute('src')) this.iframe.src = this.dataset.src || ''; });
+  }
+  unload() {
+    this.wanted = false;
+    if (this.iframe.getAttribute('src')) { this.iframe.removeAttribute('src'); this.classList.remove('loaded'); }
+  }
   reload() { this.classList.remove('loaded'); this.iframe.src = (this.dataset.src || '') + '?r=' + Date.now(); }
 }
 if (!customElements.get('lounge-frame')) customElements.define('lounge-frame', LoungeFrame);

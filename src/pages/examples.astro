@@ -2,7 +2,7 @@
 import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
 import DeviceFrame from '../components/DeviceFrame.astro';
-import { EXAMPLES, builtUrl, exampleUrl, type Example } from '../data/examples';
+import { EXAMPLES, PAIRS, SOLO, builtUrl, exampleUrl, type Example } from '../data/examples';
 import { THEMES } from '../data/themes';
 import { PAIRINGS } from '../data/type';
 import { familyById } from '../data/kit';
@@ -12,8 +12,8 @@ const all = await getPieces();
 const titles = new Map(all.map((p) => [p.id, p.data.title]));
 const theme = (id: string) => THEMES.find((t) => t.id === id);
 const pairing = (id: string) => PAIRINGS.find((p) => p.id === id);
-const featured = EXAMPLES.filter((e) => e.featured);
-const range = EXAMPLES.filter((e) => !e.featured);
+const featured = SOLO.filter((e) => e.featured);
+const range = SOLO.filter((e) => !e.featured);
 const given = (e: Example) => (e.mode === 'one-shot' ? 'One sentence, nothing else' : 'Prompt plus one direction');
 const cover = (e: Example) => `/built/${e.id}/cover.jpg`;
 const phoneShot = (e: Example) => `/built/${e.id}/phone.jpg`;
@@ -22,11 +22,20 @@ const installCmd = 'npx skills add SusanAcharya/Design-Lounge';
 <Base rail={false} title="Examples" description={`Sites an AI agent built in one pass with the Design Lounge skill: ${EXAMPLES.map((e) => e.title).join(', ')}. Each one runs live in the browser.`} crumbs={[{ name: 'Examples', href: '/examples' }]}>
   <PageHead eyebrow="Examples" title="Built from <i>one prompt.</i>" count={EXAMPLES.length} countLabel="sites" blurb="Every site here was built by an agent with the skill installed, in one pass. No designer touched the pixels. They run live below: scroll inside them, then open one." />
 
+  {PAIRS.length > 0 && (
+    <section class="wrap block" aria-labelledby="pair-h">
+      <a class="pair-link" href="/examples/compare">
+        <span class="display h3" id="pair-h">Same product, different style.</span>
+        <span class="muted">{PAIRS.length} products, each built twice from one prompt. Both by Design Lounge. <span aria-hidden="true">→</span></span>
+      </a>
+    </section>
+  )}
+
   {featured.length > 0 && (
     <section class="wrap block" aria-labelledby="os-h">
       <header class="block-head">
         <h2 class="display h3" id="os-h">Start with these {featured.length}.</h2>
-        <p class="muted">Each one is marked with what its agent was given. <em>One sentence</em> means the prompt you see, word for word: the agent chose the recipe, the palette, the type and the effects on its own. <em>Plus one direction</em> means it also got a named direction from <a href="/start">Start</a>.</p>
+        <p class="muted">Each one is marked with what its agent was given. <em>One sentence</em> means the prompt you see, word for word: the agent chose the recipe, the palette, the type and the effects on its own. <em>Plus one direction</em> means it also got a named direction from <a href="/start">the Start recipes</a>.</p>
       </header>
       <ol class="features">
         {featured.map((e, i) => {
@@ -34,7 +43,7 @@ const installCmd = 'npx skills add SusanAcharya/Design-Lounge';
           const p = pairing(e.pairing);
           const f = familyById(e.family);
           return (
-            <li class="feature reveal" style={`--d:${i * 60}ms`}>
+            <li class:list={["feature", { reveal: i > 0 }]} style={`--d:${i * 60}ms`}>
               <div class="f-stage">
                 <div class="f-desk"><DeviceFrame slug={e.id} platform="web" title={e.title} src={builtUrl(e)} poster={cover(e)} path={`examples/${e.id}`} interactive eager={i === 0} /></div>
                 <div class="f-phone"><DeviceFrame slug={e.id} platform="web" only="phone" title={e.title} src={builtUrl(e)} poster={phoneShot(e)} path={`examples/${e.id}`} interactive /></div>
@@ -65,7 +74,7 @@ const installCmd = 'npx skills add SusanAcharya/Design-Lounge';
   <section class="wrap block" aria-labelledby="range-h">
     <header class="block-head">
       <h2 class="display h3" id="range-h">One skill, {range.length} different worlds.</h2>
-      <p class="muted">A range test, each built in one pass. Most agents got a short brief and one direction from <a href="/start">Start</a>; the ones marked <em>one sentence</em> got only the prompt.</p>
+      <p class="muted">A range test, each built in one pass. Most agents got a short brief and one direction from <a href="/start">the Start recipes</a>; the ones marked <em>one sentence</em> got only the prompt.</p>
     </header>
     <ol class="grid">
       {range.map((e, i) => {
@@ -120,6 +129,9 @@ const installCmd = 'npx skills add SusanAcharya/Design-Lounge';
 
   .given { align-self: flex-start; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); padding: 3px 8px; border: 1px solid var(--line-2); border-radius: 999px; }
   .muted em { font-style: normal; color: var(--ink); }
+  .pair-link { display: flex; flex-direction: column; gap: 8px; padding: clamp(20px, 3vw, 32px); border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--paper-2); transition: border-color var(--t-med) var(--ease); }
+  .pair-link:hover { border-color: var(--line-2); }
+  .pair-link:hover .h3 { color: var(--accent-text); }
 
   .sw { display: inline-flex; }
   .sw i { width: 14px; height: 14px; border-radius: 50%; border: 1px solid var(--line-2); }

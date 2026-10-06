@@ -83,9 +83,17 @@ const pad = (k: number) => String(k).padStart(2, '0');
     <section class="sec" id="system" aria-labelledby="h-system">
       <div class="sec-head">
         <h2 class="sec-title" id="h-system">What the agent locked</h2>
-        <span class="mono faint">All from the library</span>
+        <span class="mono faint">{ex.free ? 'Colour and type chosen for this world' : 'All from the library'}</span>
       </div>
       <div class="locks">
+        {ex.free && (
+          <div class="lock">
+            <span class="eyebrow">Own colour and type</span>
+            <span class="lk-name">{ex.free.fonts.join(' + ')}</span>
+            <span class="lk-sw" aria-hidden="true">{ex.free.colours.map((c) => <i style={`background:${c}`}></i>)}</span>
+            <span class="lk-note">{ex.free.why}</span>
+          </div>
+        )}
         {t && (
           <a class="lock" href={`/themes/${t.id}`}>
             <span class="eyebrow">Theme</span>

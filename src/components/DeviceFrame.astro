@@ -111,3 +111,4 @@ const poster = Astro.props.poster ?? framePoster(slug);
     <iframe title={`Live preview: ${title}`} sandbox="allow-scripts allow-downloads" loading={eager ? 'eager' : 'lazy'} tabindex={interactive ? undefined : -1} inert={interactive ? undefined : true}></iframe>
   </div>
 </lounge-frame>
+{eager && <script is:inline set:html={`(function(f){var d=f.querySelector('.lf-device'),w=+f.dataset.dw,h=+f.dataset.dh,p=f.dataset.frame==='phone'?6:0,cw=f.clientWidth,ch=f.clientHeight;if(!cw||!ch)return;var k=Math.min(cw/(w+2*p),ch/h);d.style.width=w+'px';d.style.height=h+'px';d.style.transform='translate('+((cw-w*k)/2).toFixed(2)+'px,'+((ch-h*k)/2).toFixed(2)+'px) scale('+k.toFixed(4)+')';f.classList.add('lf-ready')})(document.currentScript.previousElementSibling)`} />}

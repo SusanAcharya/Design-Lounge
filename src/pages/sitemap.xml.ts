@@ -10,7 +10,7 @@ export const GET: APIRoute = async ({ site }) => {
   const pieces = await getPieces();
   const urls = [
     '/', '/browse', '/collections', '/guide', '/about', '/privacy', '/sources', '/rooms', '/platforms', '/styles',
-    '/type', '/themes', '/icons', '/motion', '/agents', '/sections', '/system', '/start', '/kit', '/examples',
+    '/type', '/themes', '/icons', '/motion', '/agents', '/sections', '/system', '/start', '/kit', '/examples', '/examples/compare',
     ...Object.keys(TYPE_META).map((k) => `/rooms/${k}`),
     ...Object.keys(PLATFORM_META).map((k) => `/platforms/${k}`),
     ...Object.keys(STYLE_META).map((k) => `/styles/${k}`),

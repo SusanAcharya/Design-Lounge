@@ -31,7 +31,9 @@
   "editorial-landing-hero",
   "hero-editorial-name-rotator",
   "hero-chaptered-scenes",
-  "bento-feature-grid"
+  "bento-feature-grid",
+  "scroll-space-voyage",
+  "moonlit-ridge-hero"
  ],
  "directions": [
   {
@@ -129,6 +131,30 @@
    "effect": "spring-deck",
    "work": "card-event-countdown",
    "footer": "footer-newsletter-split"
+  },
+  {
+   "id": "deep-field",
+   "name": "Deep field",
+   "mood": "A show you travel through, the scroll is the journey, starlight and amber on black",
+   "theme": "deep-field",
+   "pairing": "night-show",
+   "family": "lit",
+   "hero": "scroll-space-voyage",
+   "effect": "scroll-space-voyage",
+   "work": "week-schedule",
+   "footer": "footer-sitemap-columns"
+  },
+  {
+   "id": "place-and-hour",
+   "name": "Place and hour",
+   "mood": "A night tied to one city and one hour, the sky drawn live, the clock counting down",
+   "theme": "sodium-night",
+   "pairing": "night-show",
+   "family": "lit",
+   "hero": "moonlit-ridge-hero",
+   "effect": "moonlit-ridge-hero",
+   "work": "event-ticket-checkout",
+   "footer": "footer-engraved-caravan-strip"
   }
  ]
 }

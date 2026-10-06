@@ -26,7 +26,9 @@
   "week-schedule",
   "handwritten-homepage",
   "paper-article-reader",
-  "hero-silk-ribbon-ticker"
+  "hero-silk-ribbon-ticker",
+  "moonlit-ridge-hero",
+  "hero-asymmetric-type-lockup"
  ],
  "directions": [
   {
@@ -124,6 +126,30 @@
    "effect": "coverflow-strip",
    "work": "kinetic-type-marquee",
    "footer": "footer-centered-colophon"
+  },
+  {
+   "id": "after-midnight",
+   "name": "After midnight",
+   "mood": "A label or a venue tied to one city and one hour, lamp light on indigo, a sound you can play",
+   "theme": "sodium-night",
+   "pairing": "ai-editorial",
+   "family": "lit",
+   "hero": "moonlit-ridge-hero",
+   "effect": "moonlit-ridge-hero",
+   "work": "coverflow-strip",
+   "footer": "footer-newsletter-split"
+  },
+  {
+   "id": "first-bell",
+   "name": "First bell",
+   "mood": "The same city at dawn, lime-wash and marigold, releases as a lit list",
+   "theme": "temple-dawn",
+   "pairing": "night-show",
+   "family": "editorial",
+   "hero": "hero-asymmetric-type-lockup",
+   "effect": "text-mask-line-reveal",
+   "work": "corner-player",
+   "footer": "footer-sitemap-columns"
   }
  ]
 }
