@@ -218,20 +218,6 @@ export const EXAMPLES: Example[] = [
     free: { colours: ['#07050b', '#f0e8e2', '#ff4b3e'], fonts: ['IM Fell English', 'Atkinson Hyperlegible Next'], why: 'The red of the lamps that keep your eyes used to the dark, and an inky letterpress serif for old light.' },
   },
   {
-    id: 'late-light-b',
-    slug: 'pair-late-light-b',
-    title: 'Late Light',
-    what: 'A lit Bauhaus sky poster. Scroll through its ring and fly into the next scale of space, four times over, while the real distance from your seat counts up.',
-    mode: 'one-shot',
-    prompt: "A site for a planetarium's late-night show. You scroll and you travel through space. Make it unforgettable.",
-    recipe: 'museum',
-    direction: 'night-gallery',
-    theme: 'observatory',
-    pairing: 'bauhaus-school',
-    family: 'sharp',
-    effects: ['hero-bauhaus-composition', 'scroll-zoom-portal', 'gallery-contact-sheet', 'contact-booking-hours'],
-  },
-  {
     id: 'aadhi-raat-a',
     slug: 'pair-aadhi-raat-a',
     title: 'Aadhi Raat Records',
@@ -304,7 +290,7 @@ export interface Pair {
 }
 
 export const PAIRS: Pair[] = [
-  { id: 'late-light', title: 'Late Light', prompt: "A site for a planetarium's late-night show. You scroll and you travel through space. Make it unforgettable.", a: 'late-light-a', b: 'late-light-b', made: 'One shot each, by a coding agent with the skill, 6 October 2026. The second build was told the product already had a site and to make a different look.' },
+  { id: 'late-light', title: 'Late Light', prompt: "A site for a planetarium's late-night show. You scroll and you travel through space. Make it unforgettable.", a: 'late-light-a', b: 'late-light', made: 'One shot each, by a coding agent with the skill, from the same prompt. Style A was built on 6 October 2026. Style B is the first Late Light, built on 4 October 2026 with an earlier version of the skill.' },
   { id: 'aadhi-raat', title: 'Aadhi Raat Records', prompt: 'Make a website for a record label that only releases music recorded after midnight in Kathmandu. Go wild, I want it to feel like an Awwwards site of the day.', a: 'aadhi-raat-a', b: 'aadhi-raat-b', made: 'One shot each, by a coding agent with the skill, 6 October 2026. The second build was told the product already had a site and to make a different look.' },
   { id: 'key-01', title: 'KEY-01', prompt: 'Build a launch page for a mechanical keyboard called KEY-01. I want people to be able to actually play with it on the page.', a: 'key-01-a', b: 'key-01-b', made: 'One shot each, by a coding agent with the skill, 6 October 2026. The second build was told the product already had a site and to make a different look.' },
 ];
