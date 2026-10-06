@@ -118,18 +118,18 @@ const copyIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" 
   .ui-bar { display: flex; align-items: stretch; border-bottom: 1px solid var(--line); background: var(--paper-2); overflow-x: auto; scrollbar-width: none; }
   .ui-bar::-webkit-scrollbar { display: none; }
   .ui-tabs { display: flex; padding: 0 8px; }
-  .ui-tabs button { position: relative; display: inline-flex; align-items: baseline; gap: 8px; padding: 13px 12px 12px; font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); white-space: nowrap; transition: color var(--t-fast); }
+  .ui-tabs button { position: relative; display: inline-flex; align-items: baseline; gap: 8px; padding: 13px 12px 12px; font-family: var(--mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); white-space: nowrap; transition: color var(--t-fast); }
   .ui-tabs button:hover { color: var(--ink); }
   .ui-tabs button[aria-selected="true"] { color: var(--ink); }
   .ui-tabs button[aria-selected="true"]::after { content: ""; position: absolute; left: 12px; right: 12px; bottom: -1px; height: 2px; background: var(--ink); }
   .ui-tabs button:focus-visible { outline-offset: -4px; }
-  .meta { font-size: 10px; letter-spacing: .04em; text-transform: none; color: var(--ink-3); }
+  .meta { font-size: 12px; letter-spacing: .04em; text-transform: none; color: var(--ink-3); }
 
   .ui-panel { padding: 20px; display: flex; flex-direction: column; gap: 16px; min-width: 0; }
   .ui-panel[hidden] { display: none; }
   .step { display: flex; flex-direction: column; gap: 8px; }
-  .step-l { display: flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); }
-  .n { display: grid; place-items: center; width: 18px; height: 18px; border-radius: 50%; border: 1px solid var(--line-2); font-size: 10px; letter-spacing: 0; color: var(--ink-2); }
+  .step-l { display: flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); }
+  .n { display: grid; place-items: center; width: 18px; height: 18px; border-radius: 50%; border: 1px solid var(--line-2); font-size: 12px; letter-spacing: 0; color: var(--ink-2); }
   .line { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 10px 10px 14px; border: 1px solid var(--line); border-radius: var(--r); background: var(--paper-2); min-width: 0; }
   .line code { font-size: 13px; color: var(--ink); overflow-x: auto; white-space: nowrap; scrollbar-width: none; min-width: 0; }
   .line code::-webkit-scrollbar { display: none; }
@@ -137,10 +137,10 @@ const copyIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" 
   .line.prompt { align-items: flex-start; }
   .line.prompt p { font-family: var(--mono); font-size: 13px; line-height: 1.6; color: var(--ink); min-width: 0; text-wrap: pretty; padding: 3px 0; }
   .line .btn { flex: none; }
-  .note { font-size: 11px; }
+  .note { font-size: 12px; }
 
   .tools { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-  .hint { margin-left: auto; font-size: 11px; }
+  .hint { margin-left: auto; font-size: 12px; }
   .peek, .src :global(pre) { margin: 0; max-height: 420px; overflow: auto; border: 1px solid var(--line); border-radius: var(--r); background: var(--paper-2) !important; font-size: 12.5px; line-height: 1.6; scrollbar-width: thin; scrollbar-color: var(--line-2) transparent; }
   .peek { padding: 14px 16px; white-space: pre-wrap; overflow-wrap: anywhere; color: var(--ink-2); }
   .peek .more { color: var(--ink-3); font-style: italic; }

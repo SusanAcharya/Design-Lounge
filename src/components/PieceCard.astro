@@ -1,13 +1,11 @@
 ---
-import { existsSync } from 'node:fs';
 import { PLATFORM_META, TYPE_META, pieceUrl, briefUrl, type Piece } from '../lib/pieces';
+import { cardPoster } from '../lib/posters';
 
 interface Props { piece: Piece; n: string; index?: number; priority?: boolean; }
 const { piece, n, index = 0, priority = false } = Astro.props;
 const d = piece.data;
-const thumbWebp = new URL(`../../public/thumbs/${piece.id}.webp`, import.meta.url);
-const thumbJpg = new URL(`../../public/thumbs/${piece.id}.jpg`, import.meta.url);
-const poster = existsSync(thumbWebp) ? `/thumbs/${piece.id}.webp` : existsSync(thumbJpg) ? `/thumbs/${piece.id}.jpg` : '';
+const { src: poster, tall } = cardPoster(piece.id, d.platform);
 const plate = d.palette.slice(0, 4);
 ---
 <article
@@ -28,7 +26,7 @@ const plate = d.palette.slice(0, 4);
   <div class="stage">
     <div class="plate" style={poster ? undefined : `background:${plate[0] ?? 'var(--paper-3)'}`}>
       {poster
-        ? <img src={poster} alt="" width="640" height="480" loading={priority ? 'eager' : 'lazy'} fetchpriority={priority ? 'high' : undefined} decoding="async" />
+        ? <img src={poster} alt="" class:list={[{ tall }]} width={tall ? 390 : 640} height={tall ? 844 : 480} loading={priority ? 'eager' : 'lazy'} fetchpriority={priority ? 'high' : undefined} decoding="async" />
         : <span class="swatch" aria-hidden="true">{plate.map((c) => <i style={`background:${c}`}></i>)}</span>}
     </div>
     <a class="cover" href={pieceUrl(piece.id)} aria-label={`Open ${d.title}`} tabindex="-1"></a>

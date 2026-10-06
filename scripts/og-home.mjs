@@ -1,11 +1,8 @@
-// Writes public/og/home.jpg from the current piece count. Run: node scripts/og-home.mjs
+// Writes public/og/home.jpg. It carries no piece count, so it never goes stale; the og:image:alt text has the live count. Run: node scripts/og-home.mjs
 import { chromium } from 'playwright';
-import { readdir } from 'node:fs/promises';
 import path from 'node:path';
 
 const root = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
-const slugs = (await readdir(path.join(root, 'src/content/pieces'))).filter((f) => f.endsWith('.md'));
-const count = slugs.length;
 const browser = await chromium.launch();
 const page = await browser.newPage({ viewport: { width: 1200, height: 630 }, deviceScaleFactor: 1 });
 await page.setContent(`<!doctype html>
@@ -22,8 +19,8 @@ await page.setContent(`<!doctype html>
 <body>
   <p class="k">Design Lounge</p>
   <h1>Give your AI agent <i>design taste.</i></h1>
-  <p>${count} design ideas</p>
+  <p>designlounge.live</p>
 </body></html>`, { waitUntil: 'networkidle' });
 await page.screenshot({ path: path.join(root, 'public/og/home.jpg'), type: 'jpeg', quality: 86 });
 await browser.close();
-console.log('wrote public/og/home.jpg', count);
+console.log('wrote public/og/home.jpg');

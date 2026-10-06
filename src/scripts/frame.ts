@@ -47,7 +47,7 @@ class LoungeFrame extends HTMLElement {
           if (e.isIntersecting) this.load();
           else this.unload();
         }
-      }, { rootMargin: '100vh 0px' });
+      }, { rootMargin: '800px 0px' });
       this.io.observe(this);
     } else if (this.dataset.lazy === 'true') {
       this.load();

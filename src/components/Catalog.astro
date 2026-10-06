@@ -1,7 +1,7 @@
 ---
 /* Filterable, sortable catalogue. The page draws one screen of poster cards; the rest stay in JSON until asked for. */
-import { existsSync } from 'node:fs';
 import PieceCard from './PieceCard.astro';
+import { cardPoster } from '../lib/posters';
 import { PLATFORM_META, TYPE_META, STYLE_META, CATEGORY_META, CATEGORY_GROUPS, numberMap, type Piece, type Category } from '../lib/pieces';
 
 interface Props {
@@ -32,8 +32,7 @@ const SHORT: Partial<Record<Category, string>> = {
 const MOTION_OPTS = [{ v: 'none', label: 'Static' }, { v: 'subtle', label: 'Subtle' }, { v: 'rich', label: 'Rich' }];
 const motionCount = (m: string) => pieces.filter((p) => p.data.motion === m).length;
 const rows = list.map((p) => {
-  const webp = new URL(`../../public/thumbs/${p.id}.webp`, import.meta.url);
-  const jpg = new URL(`../../public/thumbs/${p.id}.jpg`, import.meta.url);
+  const poster = cardPoster(p.id, p.data.platform);
   return {
     id: p.id,
     n: nums.get(p.id) || '000',
@@ -49,7 +48,8 @@ const rows = list.map((p) => {
     difficulty: String(p.data.difficulty),
     tags: p.data.tags.join(' '),
     palette: p.data.palette.slice(0, 4),
-    poster: existsSync(webp) ? `/thumbs/${p.id}.webp` : existsSync(jpg) ? `/thumbs/${p.id}.jpg` : '',
+    poster: poster.src,
+    tall: poster.tall,
   };
 });
 const catalogJson = JSON.stringify(rows).replace(/</g, '\\u003c');
@@ -259,7 +259,7 @@ const WAYS_IN = [
       el.style.setProperty('--d', `${Math.min(i, 12) * 30}ms`);
       const eager = i === 0 ? ' loading="eager" fetchpriority="high"' : ' loading="lazy"';
       const plate = p.poster
-        ? `<img src="${p.poster}" alt="" width="640" height="480"${eager} decoding="async">`
+        ? `<img src="${p.poster}" alt="" ${p.tall ? 'class="tall" width="390" height="844"' : 'width="640" height="480"'}${eager} decoding="async">`
         : `<span class="swatch" aria-hidden="true">${p.palette.map((c) => `<i style="background:${c}"></i>`).join('')}</span>`;
       el.innerHTML = `<div class="stage"><div class="plate"${p.poster ? '' : ` style="background:${p.palette[0] || ''}"`}>${plate}</div><a class="cover" href="/p/${p.id}" tabindex="-1" aria-label="Open ${p.title.replace(/"/g, '&quot;')}"></a></div><div class="body"><div class="meta"><span class="n num">Nº ${p.n}</span><span class="n">${p.typeLabel} · ${p.platformLabel}</span></div><h3 class="title"><a href="/p/${p.id}"></a></h3><p class="summary"></p><button class="brief-copy" type="button" data-copy-brief-url="/p/${p.id}.md" data-done-label="Copied">Copy brief</button></div>`;
       el.querySelector('.title a')!.textContent = p.title;
@@ -378,7 +378,7 @@ const WAYS_IN = [
   .side-all { font-weight: 550; color: var(--ink); margin-bottom: 6px; }
   .side-all:hover, .sitem:hover { background: var(--paper-2); color: var(--ink); }
   .side-all[aria-pressed="true"], .sitem[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
-  .side .c { font-family: var(--mono); font-size: 11.5px; color: var(--ink-3); }
+  .side .c { font-family: var(--mono); font-size: 12px; color: var(--ink-3); }
   .side [aria-pressed="true"] .c { color: color-mix(in srgb, var(--paper) 65%, transparent); }
   .sgroup { border-top: 1px solid var(--line); padding: 6px 0; }
   .sgroup summary { display: flex; align-items: center; justify-content: space-between; padding: 8px 10px; font-size: 12.5px; font-weight: 600; color: var(--ink); cursor: pointer; list-style: none; border-radius: var(--r); }

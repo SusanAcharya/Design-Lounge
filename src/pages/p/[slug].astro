@@ -208,13 +208,13 @@ const json = (s: string) => JSON.stringify(s).replace(/</g, '\\u003c');
   .phead { display: flex; flex-direction: column; gap: 12px; padding-bottom: 36px; }
   .toprow { display: flex; align-items: center; gap: 14px; min-height: 32px; }
   .allbtn { display: none; }
-  .crumbs { display: flex; gap: 8px; flex-wrap: wrap; color: var(--ink-3); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; min-width: 0; }
+  .crumbs { display: flex; gap: 8px; flex-wrap: wrap; color: var(--ink-3); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; min-width: 0; }
   .crumbs a:hover { color: var(--ink); }
   .crumbs span { color: var(--ink-3); }
   .pnav { margin-left: auto; display: flex; align-items: center; gap: 4px; flex: none; }
-  .pn-link { font-family: var(--mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-2); display: inline-flex; gap: 6px; align-items: center; padding: 4px 6px; border-radius: var(--r); }
+  .pn-link { font-family: var(--mono); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-2); display: inline-flex; gap: 6px; align-items: center; padding: 4px 6px; border-radius: var(--r); }
   .pn-link:hover { color: var(--ink); background: var(--paper-2); }
-  .nmark { margin-top: 18px; font-size: 11px; letter-spacing: .1em; }
+  .nmark { margin-top: 18px; font-size: 12px; letter-spacing: .1em; }
   .nmark span { color: var(--ink-3); }
   .title { font-size: clamp(34px, 4vw, 56px); }
   .summary { font-size: 17px; line-height: 1.5; color: var(--ink-2); max-width: 62ch; text-wrap: pretty; }
@@ -223,10 +223,10 @@ const json = (s: string) => JSON.stringify(s).replace(/</g, '\\u003c');
   .sec { padding-top: 8px; margin-bottom: 64px; }
   .sec-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding-bottom: 14px; margin-bottom: 18px; border-bottom: 1px solid var(--ink); }
   .sec-title { font-family: var(--display); font-size: 26px; letter-spacing: -0.02em; line-height: 1.1; font-variation-settings: "opsz" 36; }
-  .sec-head > .mono { font-size: 11px; }
+  .sec-head > .mono { font-size: 12px; }
 
   .seg { display: inline-flex; padding: 2px; border: 1px solid var(--line-2); border-radius: 999px; background: var(--paper); }
-  .seg button { height: 26px; padding: 0 12px; border-radius: 999px; font-family: var(--mono); font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); transition: color var(--t-fast), background-color var(--t-fast); }
+  .seg button { height: 26px; padding: 0 12px; border-radius: 999px; font-family: var(--mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); transition: color var(--t-fast), background-color var(--t-fast); }
   .seg button:hover { color: var(--ink); }
   .seg button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
   .seg button:focus-visible { outline-offset: 1px; }
@@ -234,7 +234,7 @@ const json = (s: string) => JSON.stringify(s).replace(/</g, '\\u003c');
   .stage-card { display: flex; flex-direction: column; gap: 10px; }
   .stage-bar { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
   .stage-bar .l { display: flex; gap: 6px; flex-wrap: wrap; }
-  .stage-bar .r { font-size: 11px; }
+  .stage-bar .r { font-size: 12px; }
   .stage { height: min(70vh, 760px); border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--paper-2); background-image: radial-gradient(var(--line-2) 1px, transparent 1px); background-size: 16px 16px; background-position: center; position: relative; transition: height var(--t-slow) var(--ease); }
   .stage.tall { height: max(90vh, 900px); }
   .stage :global(lounge-frame) { position: absolute; inset: 24px; }
@@ -251,7 +251,7 @@ const json = (s: string) => JSON.stringify(s).replace(/</g, '\\u003c');
   .note p:not(.eyebrow) { color: var(--ink-2); font-size: 14px; max-width: 52ch; }
   .studied { font-family: var(--display); font-size: 22px; letter-spacing: -0.02em; align-self: flex-start; }
   .studied:hover { text-decoration: underline; text-underline-offset: 4px; }
-  .note .more { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; align-self: flex-start; margin-top: 4px; }
+  .note .more { font-family: var(--mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; align-self: flex-start; margin-top: 4px; }
   .note .more:hover { text-decoration: underline; text-underline-offset: 3px; }
   .shelf-list li { padding: 4px 0; font-size: 14px; }
   .shelf-list a:hover { text-decoration: underline; text-underline-offset: 3px; }

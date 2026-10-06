@@ -1,5 +1,5 @@
 ---
-import { existsSync } from 'node:fs';
+import { framePoster } from '../lib/posters';
 import { PLATFORM_META, demoUrl, type Platform } from '../lib/pieces';
 
 interface Props {
@@ -29,9 +29,7 @@ const hasWeb = frame === 'web';
 const hasPhone = frame === 'phone' || switchable;
 const hasTablet = frame === 'tablet' || switchable;
 const hasUrlbar = platform === 'mobile-web' || switchable;
-const thumbWebp = new URL(`../../public/thumbs/${slug}.webp`, import.meta.url);
-const thumbJpg = new URL(`../../public/thumbs/${slug}.jpg`, import.meta.url);
-const poster = Astro.props.poster ?? (existsSync(thumbWebp) ? `/thumbs/${slug}.webp` : existsSync(thumbJpg) ? `/thumbs/${slug}.jpg` : '');
+const poster = Astro.props.poster ?? framePoster(slug);
 ---
 <lounge-frame
   class:list={['lf', `lf-${frame}`, `lf-${platform}`, { interactive }, cls]}

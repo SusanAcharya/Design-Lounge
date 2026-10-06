@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "astro build --force",
     "preview": "astro preview",
     "thumbs": "node scripts/thumbs.mjs",
     "check:pieces": "node scripts/check-pieces.mjs",
