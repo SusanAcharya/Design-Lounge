@@ -41,6 +41,8 @@ const system = [
   { n: ICONS.length, label: 'Icons', href: '/icons' },
   { n: RECIPES.length, label: 'Motion recipes', href: '/motion' },
 ];
+// The two sites the homepage shows under Built from one prompt.
+const homeBuilt = ['meridian-no-7', 'key-01'].map((id) => SOLO.find((e) => e.id === id)).filter((e) => e !== undefined);
 const pair = PAIRS[0];
 const pairSides = pair ? [pair.a, pair.b].map((id) => EXAMPLES.find((e) => e.id === id)).filter((e) => e !== undefined) : [];
 const installCmd = 'npx skills add SusanAcharya/Design-Lounge';
@@ -183,7 +185,7 @@ const faq = [
       <a class="textlink" href="/examples">All {EXAMPLES.length} sites <span aria-hidden="true">→</span></a>
     </header>
     <ol class="built-row">
-      {SOLO.filter((e) => !e.phone).slice(0, 3).map((e) => (
+      {homeBuilt.map((e) => (
         <li>
           <a href={exampleUrl(e)} class="built-card">
             <img src={`/built/${e.id}/cover.jpg`} alt={`${e.title}, built by an agent with the skill`} width="1280" height="800" loading="lazy" />
@@ -410,7 +412,7 @@ const faq = [
   .built { padding-block: clamp(64px, 8vw, 120px); border-top: 1px solid var(--line); }
   .built-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: clamp(24px, 3vw, 40px); }
   .built-head .eyebrow { margin-bottom: 10px; }
-  .built-row { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 12px; }
+  .built-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
   .built-card { display: flex; flex-direction: column; height: 100%; border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden; background: var(--paper); transition: border-color var(--t-med) var(--ease), transform var(--t-med) var(--ease-out), box-shadow var(--t-med) var(--ease); }
   .built-card:hover { border-color: var(--line-2); transform: translateY(-3px); box-shadow: var(--shadow); }
   .built-card img { display: block; width: 100%; aspect-ratio: 16 / 10; height: auto; object-fit: cover; object-position: top; border-bottom: 1px solid var(--line); }
