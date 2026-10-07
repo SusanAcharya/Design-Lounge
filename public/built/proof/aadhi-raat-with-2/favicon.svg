@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- Aadhi Raat Records monogram · Designed using Design Lounge (https://www.designlounge.live) -->
+  <rect width="64" height="64" rx="4" fill="#f3b63f"/>
+  <g fill="#141210">
+    <path d="M9 46 L19.5 18 L26 18 L36.5 46 L30 46 L27.6 39 L17.9 39 L15.5 46 Z M19.6 33.6 L25.9 33.6 L22.75 24.4 Z"/>
+    <path d="M38 46 L38 18 L49 18 C54.2 18 57.5 21.2 57.5 26 C57.5 29.6 55.6 32.2 52.6 33.3 L58.5 46 L51.8 46 L46.6 34.4 L44 34.4 L44 46 Z M44 29.2 L48.4 29.2 C50.4 29.2 51.5 28 51.5 26.2 C51.5 24.4 50.4 23.3 48.4 23.3 L44 23.3 Z"/>
+  </g>
+  <circle cx="32" cy="54" r="2.4" fill="#141210"/>
+</svg>

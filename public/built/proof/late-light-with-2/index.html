@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dome After Dark · the planetarium's late show</title>
+  <meta name="description" content="The planetarium's late-night show. Lie back, the lights go down, and the scroll takes you past the Moon and Saturn, into the Orion Nebula and on to Andromeda.">
+  <meta name="theme-color" content="#070b16">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <meta property="og:title" content="Dome After Dark">
+  <meta property="og:description" content="The planetarium's late-night show. You scroll, and you travel through space.">
+  <meta property="og:image" content="share.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=Source+Sans+3:ital,wght@0,400..600;1,400&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <canvas id="space" aria-hidden="true"></canvas>
+  <div class="fx house" id="house" aria-hidden="true"></div>
+  <div class="fx vignette" aria-hidden="true"></div>
+  <div class="fx grain" aria-hidden="true"></div>
+
+  <header class="hud top">
+    <a href="#top" id="home" class="mark" aria-label="Dome After Dark, back to your seat">Dome After <em>Dark</em></a>
+    <nav aria-label="Primary">
+      <a href="#route">The route</a>
+      <a href="#tonight">Tonight</a>
+    </nav>
+  </header>
+
+  <nav class="rail" aria-label="Stops"><ol id="rail"></ol></nav>
+
+  <aside class="hud bot" aria-label="Readouts">
+    <div class="ro"><span>From your seat</span><b id="dist" class="num">0 km</b></div>
+    <div class="ro"><span>The light left</span><b id="age" class="num">now</b></div>
+    <div class="ro"><span>Local time</span><b id="clock" class="num">00:00:00</b></div>
+  </aside>
+  <p class="sr" id="say" aria-live="polite"></p>
+
+  <main id="top">
+    <section class="ch hero" data-label="Your seat" data-km="0" aria-labelledby="h-seat">
+      <div class="in">
+        <p class="kicker">The late show, under the dome</p>
+        <h1 id="h-seat"><span>Lights</span> <em>down.</em></h1>
+        <p class="lede">A late show for people who stay up. Lie back in the dome. The house lights go down, and the sky takes you out past the Moon and Saturn, into the Orion Nebula, and on to Andromeda before it brings you back to your seat.</p>
+        <a class="btn btn-primary" href="#moon" id="start">Start the show <i aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></i></a>
+      </div>
+    </section>
+
+    <section class="ch" id="moon" data-label="The Moon" data-km="384400" data-obj="moon" aria-labelledby="h-moon" style="--accent:#e9e2d2">
+      <div class="in">
+        <div class="copy">
+          <p class="meta">First stop · 1.3 light-seconds away</p>
+          <h2 id="h-moon">The Moon first, close enough that <em>it stops being a disc.</em></h2>
+          <p>Three hundred and eighty-four thousand kilometres from your seat. The light that shows you the craters left the Moon a little over a second ago. It is the only stop tonight you could drive to, given a road and four months.</p>
+          <dl class="facts">
+            <div><dt>Distance</dt><dd class="num">384,400 km</dd></div>
+            <div><dt>Light age</dt><dd class="num">1.3 seconds</dd></div>
+            <div><dt>Across</dt><dd class="num">3,474 km</dd></div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <section class="ch right" id="saturn" data-label="Saturn" data-km="1400000000" data-obj="saturn" aria-labelledby="h-saturn" style="--accent:#e9d2a0">
+      <div class="in">
+        <div class="copy">
+          <p class="meta">Second stop · 78 light-minutes away</p>
+          <h2 id="h-saturn">Saturn, and the rings <em>you have seen in books.</em></h2>
+          <p>About 1.4 billion kilometres out. The light you see here left Saturn 78 minutes ago, around the time you were deciding whether to stay up. The rings are mostly water ice, grains to boulders, and edge to edge they would reach three quarters of the way from the Earth to the Moon.</p>
+          <dl class="facts">
+            <div><dt>Distance</dt><dd class="num">1.4 billion km</dd></div>
+            <div><dt>Light age</dt><dd class="num">78 minutes</dd></div>
+            <div><dt>Rings across</dt><dd class="num">282,000 km</dd></div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <section class="ch" id="orion" data-label="The Orion Nebula" data-km="1.2715e16" data-obj="orion" aria-labelledby="h-orion" style="--accent:#ff8fa8">
+      <div class="in">
+        <div class="copy">
+          <p class="meta">Third stop · 1,344 light-years away</p>
+          <h2 id="h-orion">The Orion Nebula, where stars <em>are still being made.</em></h2>
+          <p>Thirteen hundred light-years out, and you fly into it. This is the glow under Orion's belt: a cloud of hydrogen lit from inside by four young stars, with new ones still forming in the dark lanes. The light reaching the dome tonight set out in the seventh century.</p>
+          <dl class="facts">
+            <div><dt>Distance</dt><dd class="num">1,344 light-years</dd></div>
+            <div><dt>Light age</dt><dd class="num">1,344 years</dd></div>
+            <div><dt>Across</dt><dd class="num">24 light-years</dd></div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <section class="ch right" id="andromeda" data-label="Andromeda" data-km="2.4e19" data-obj="andromeda" aria-labelledby="h-andromeda" style="--accent:#b9c8ff">
+      <div class="in">
+        <div class="copy">
+          <p class="meta">Last stop · 2.5 million light-years away</p>
+          <h2 id="h-andromeda">Andromeda. This light left <em>before there were people.</em></h2>
+          <p>The nearest big galaxy, a trillion stars, and the farthest thing you can see with your own eyes from a dark field. Its light took two and a half million years to reach the dome. It is also coming closer, and in about four billion years it will arrive.</p>
+          <dl class="facts">
+            <div><dt>Distance</dt><dd class="num">2.5 million light-years</dd></div>
+            <div><dt>Light age</dt><dd class="num">2.5 million years</dd></div>
+            <div><dt>Stars</dt><dd class="num">1 trillion</dd></div>
+          </dl>
+          <a class="btn" href="#top" id="back">Back to your seat <i aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M6 11l6-6 6 6"/></svg></i></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <section class="still route" id="route" aria-labelledby="h-route">
+    <div class="route-head">
+      <h2 id="h-route">What you pass tonight</h2>
+      <p class="lede">Four stops, each one farther than the last, and a seat that reclines. The figures are the real ones.</p>
+    </div>
+    <div class="grid">
+      <article class="cell a">
+        <h3>The Orion Nebula</h3>
+        <p>The one stop you fly into: a cloud lit from inside by four young stars.</p>
+        <div class="art" role="img" aria-label="The Orion Nebula, a rose and teal cloud with four bright stars at its heart"><canvas class="art-canvas" data-body="orion" aria-hidden="true"></canvas></div>
+        <span class="tag num">1,344 light-years</span>
+      </article>
+      <article class="cell b">
+        <h3>The Moon</h3>
+        <p>Close enough to see the craters. Its light is 1.3 seconds old.</p>
+        <div class="art" role="img" aria-label="The Moon, lit from the upper left"><canvas class="art-canvas" data-body="moon" aria-hidden="true"></canvas></div>
+        <span class="tag num">384,400 km</span>
+      </article>
+      <article class="cell c">
+        <h3>Saturn</h3>
+        <p>Rings of ice, 282,000 km edge to edge.</p>
+        <div class="art" role="img" aria-label="Saturn with its rings, tilted, lit from the upper left"><canvas class="art-canvas" data-body="saturn" aria-hidden="true"></canvas></div>
+        <span class="tag num">1.4 billion km</span>
+      </article>
+      <article class="cell d">
+        <h3>Andromeda</h3>
+        <p>A trillion stars. The last stop, and the oldest light.</p>
+        <div class="art" role="img" aria-label="The Andromeda galaxy, a tilted spiral with a bright core"><canvas class="art-canvas" data-body="andromeda" aria-hidden="true"></canvas></div>
+        <span class="tag num">2.5 million light-years</span>
+      </article>
+      <article class="cell e">
+        <h3>Your seat</h3>
+        <p>The seats recline. The dome stays dark for the whole show, so come in before the lights go down.</p>
+        <div class="art" role="img" aria-label="The inside of the dome: a ring of red cove light above a row of reclined seats and the star projector"><canvas class="art-canvas" data-body="seat" aria-hidden="true"></canvas></div>
+      </article>
+      <article class="cell f">
+        <h3>How old the light is</h3>
+        <p>Each stop's light set out longer ago than the last, on a scale where every step is ten times the one before.</p>
+        <div class="art scale" role="img" aria-label="A logarithmic scale of light age: the Moon 1.3 seconds, Saturn 78 minutes, the Orion Nebula 1,344 years, Andromeda 2.5 million years">
+          <div class="axis"></div>
+          <div class="tick start" style="left:0"><span class="v">1.3 s</span><span class="n">Moon</span></div>
+          <div class="tick" style="left:26%"><span class="v">78 min</span><span class="n">Saturn</span></div>
+          <div class="tick down" style="left:76%"><span class="v">1,344 yr</span><span class="n">Orion</span></div>
+          <div class="tick end up" style="left:100%"><span class="v">2.5 million yr</span><span class="n">Andromeda</span></div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="still tonight" id="tonight" aria-labelledby="h-tonight">
+    <div class="left">
+      <p class="kicker">Tonight</p>
+      <p class="big" id="h-tonight">Stay late.<br>Lie back.</p>
+      <p class="hint">The seats recline and the dome goes fully dark for the length of the show, so come in before the lights go down. Everything on the right is the planetarium's to fill in.</p>
+    </div>
+    <div class="right" aria-labelledby="h-show">
+      <h2 id="h-show">The show</h2>
+      <table>
+        <thead><tr><th scope="col">Detail</th><th scope="col">Tonight</th></tr></thead>
+        <tbody>
+          <tr><td>Doors</td><td><span class="slot">not set yet</span></td></tr>
+          <tr><td>Lights down</td><td><span class="slot">not set yet</span></td></tr>
+          <tr><td>Running time</td><td><span class="slot">not set yet</span></td></tr>
+          <tr><td>Tickets</td><td><span class="slot">not set yet</span></td></tr>
+          <tr><td>Where</td><td><span class="slot">not set yet</span></td></tr>
+          <tr><td>Ages</td><td><span class="slot">not set yet</span></td></tr>
+        </tbody>
+      </table>
+      <p class="tz"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v6l4 2"/></svg>Six facts to fill from the planetarium's listing. None of them are on the page yet.</p>
+    </div>
+  </section>
+
+  <footer>
+    <span class="rule" aria-hidden="true"></span>
+    <p class="fmark">Dome After Dark</p>
+    <p class="issue">The late show</p>
+    <ul class="links">
+      <li><a href="#route">The route</a></li>
+      <li><a href="#tonight">Tonight</a></li>
+      <li><a href="#moon">Start the show</a></li>
+    </ul>
+    <p class="place"><span class="slot">address to come</span></p>
+    <button class="top" id="topbtn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg>Back to top</button>
+    <p class="credit">Designed using <a href="https://www.designlounge.live">Design Lounge</a></p>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>

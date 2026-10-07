@@ -13,6 +13,7 @@ export const GET: APIRoute = async ({ site }) => {
     '/type', '/themes', '/icons', '/motion', '/agents', '/sections', '/system', '/start', '/kit', '/examples',
     // The compare page stays out of search until it has a pair to show.
     ...(PAIRS.length ? ['/examples/compare'] : []),
+    '/examples/proof',
     ...Object.keys(TYPE_META).map((k) => `/rooms/${k}`),
     ...Object.keys(PLATFORM_META).map((k) => `/platforms/${k}`),
     ...Object.keys(STYLE_META).map((k) => `/styles/${k}`),

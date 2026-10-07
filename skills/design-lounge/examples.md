@@ -90,8 +90,8 @@ User: "A clay shop. People should be able to buy a bowl. Just build it."
 User: "Company site. Show me palettes."
 
 1. Kind `website`.
-2. From that kind's `palettes`, name three: name, mood, and `{site}/themes/<id>`. No loose hex pickers.
-3. After they pick, do the same for two pairings, then lock a family (default Editorial for a public site unless they say otherwise).
+2. Name three palettes and two pairings, each with name, mood and link, in one message. Stop.
+3. After they pick, lock a family (default Editorial for a public site) and build.
 4. Copy the locked CSS and rules, read the named briefs, write Sources, and implement.
 
 ## They want one screen changed

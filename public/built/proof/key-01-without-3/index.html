@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KEY-01 — Press anything</title>
+<meta name="description" content="KEY-01 is a mechanical keyboard. This page is a working one: press keys, change the switch, the lighting and the caps.">
+<meta name="theme-color" content="#0e0e10">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,300..800&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body data-caps="milk" data-switch="tactile" data-light="reactive">
+<a class="skip" href="#board">Skip to the keyboard</a>
+
+<header class="top">
+  <a class="mark" href="#top" aria-label="KEY-01 home">KEY<span>-</span>01</a>
+  <nav class="top-nav" aria-label="Sections">
+    <a href="#board">Play</a>
+    <a href="#inside">Inside</a>
+    <a href="#switches">Switches</a>
+    <a href="#reserve">Reserve</a>
+  </nav>
+  <button class="sound-btn" type="button" data-sound-toggle aria-pressed="false">
+    <svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true" focusable="false">
+      <path class="spk" d="M3 7.5v5h3l4 3.5v-12l-4 3.5z" fill="currentColor"/>
+      <path class="wave" d="M13 7.2a3.6 3.6 0 0 1 0 5.6M15.2 5a6.6 6.6 0 0 1 0 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      <path class="mute" d="M13 7.5l5 5M18 7.5l-5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+    <span data-sound-label>Sound off</span>
+  </button>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <p class="eyebrow"><span class="num">01</span> KEY-01 · Mechanical keyboard</p>
+    <h1>Press<br>any<em>thing.</em></h1>
+    <div class="lede">
+      <p>This page is a working KEY-01. Tap a key below, or use the keyboard in front of you. Change the switch, the lighting and the caps. Turn the sound on to hear the difference.</p>
+      <a class="arrow" href="#board">Start pressing <span aria-hidden="true">↓</span></a>
+    </div>
+  </section>
+
+  <section class="play" id="board" aria-labelledby="play-h">
+    <h2 id="play-h" class="sr-only">Play with KEY-01</h2>
+
+    <div class="tape" aria-live="off">
+      <div class="tape-text" data-tape><span class="tape-empty" data-tape-empty>Type something</span><span data-tape-out></span><span class="caret" aria-hidden="true"></span></div>
+      <div class="tape-meta">
+        <span><b data-count>0</b> keystrokes</span>
+        <span class="tape-sep" aria-hidden="true">·</span>
+        <span data-last>—</span>
+      </div>
+    </div>
+
+    <div class="kb-wrap" data-kb-wrap>
+      <div class="kb" data-kb role="group" aria-label="Interactive KEY-01 keyboard. Click or tap a key, or type on your own keyboard.">
+        <div class="kb-rows" data-rows></div>
+        <div class="kb-foot">
+          <span class="kb-brand">KEY-01</span>
+          <span class="kb-leds"><i data-led="caps" title="Caps lock"></i><span>caps</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <fieldset class="ctl">
+        <legend>Switch</legend>
+        <div class="seg" data-seg="switch">
+          <label><input type="radio" name="switch" value="linear"><span>Linear</span></label>
+          <label><input type="radio" name="switch" value="tactile" checked><span>Tactile</span></label>
+          <label><input type="radio" name="switch" value="clicky"><span>Clicky</span></label>
+        </div>
+      </fieldset>
+
+      <fieldset class="ctl">
+        <legend>Lighting</legend>
+        <div class="seg" data-seg="light">
+          <label><input type="radio" name="light" value="off"><span>Off</span></label>
+          <label><input type="radio" name="light" value="static"><span>Static</span></label>
+          <label><input type="radio" name="light" value="reactive" checked><span>Reactive</span></label>
+          <label><input type="radio" name="light" value="wave"><span>Wave</span></label>
+        </div>
+      </fieldset>
+
+      <fieldset class="ctl">
+        <legend>Caps</legend>
+        <div class="seg seg-swatch" data-seg="caps">
+          <label><input type="radio" name="caps" value="milk" checked><span><i style="--sw:#ebe6dc"></i>Milk</span></label>
+          <label><input type="radio" name="caps" value="ink"><span><i style="--sw:#2b2b30"></i>Ink</span></label>
+          <label><input type="radio" name="caps" value="olive"><span><i style="--sw:#6c7257"></i>Olive</span></label>
+        </div>
+      </fieldset>
+
+      <fieldset class="ctl ctl-sound">
+        <legend>Sound</legend>
+        <div class="sound-row">
+          <button class="sound-btn" type="button" data-sound-toggle aria-pressed="false">
+            <svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true" focusable="false">
+              <path class="spk" d="M3 7.5v5h3l4 3.5v-12l-4 3.5z" fill="currentColor"/>
+              <path class="wave" d="M13 7.2a3.6 3.6 0 0 1 0 5.6M15.2 5a6.6 6.6 0 0 1 0 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              <path class="mute" d="M13 7.5l5 5M18 7.5l-5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            <span data-sound-label>Sound off</span>
+          </button>
+          <label class="vol"><span class="sr-only">Volume</span><input type="range" min="0" max="100" value="70" data-volume></label>
+        </div>
+      </fieldset>
+
+      <div class="ctl ctl-rhythm">
+        <span class="ctl-label">Rhythm</span>
+        <canvas data-rhythm width="300" height="32" aria-label="Bars for your last keystrokes: taller means faster" role="img"></canvas>
+      </div>
+    </div>
+  </section>
+
+  <section class="inside" id="inside" aria-labelledby="inside-h">
+    <div class="sec-head">
+      <p class="eyebrow"><span class="num">02</span> Inside</p>
+      <h2 id="inside-h">One key, cut in half.</h2>
+      <p class="sec-p">Every key on KEY-01 is the same stack: a cap on a stem, a spring in a housing, a plate to hold it, a board to read it. Drag to press it and watch where the letter registers.</p>
+    </div>
+
+    <figure class="cut" data-cut>
+      <svg viewBox="40 44 580 232" class="cut-svg" aria-labelledby="cut-title" role="img">
+        <title id="cut-title">Cross-section of a KEY-01 key showing keycap, stem, housing, spring, plate and circuit board</title>
+        <defs>
+          <pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+            <line x1="0" y1="0" x2="0" y2="6" stroke="rgba(255,255,255,.08)" stroke-width="1"/>
+          </pattern>
+        </defs>
+
+        <!-- PCB -->
+        <rect x="50" y="248" width="462" height="16" rx="2" class="p-pcb"/>
+        <g class="p-trace">
+          <line x1="70" y1="256" x2="250" y2="256"/><line x1="350" y1="256" x2="495" y2="256"/>
+          <circle cx="273" cy="256" r="3"/><circle cx="327" cy="256" r="3"/>
+        </g>
+        <!-- pins -->
+        <rect x="270" y="236" width="6" height="14" class="p-pin"/>
+        <rect x="324" y="236" width="6" height="14" class="p-pin"/>
+
+        <!-- bottom housing -->
+        <rect x="232" y="186" width="136" height="52" rx="4" class="p-house"/>
+        <rect x="232" y="186" width="136" height="52" rx="4" fill="url(#hatch)"/>
+
+        <!-- plate -->
+        <rect x="60" y="178" width="168" height="10" class="p-plate"/>
+        <rect x="372" y="178" width="140" height="10" class="p-plate"/>
+
+        <!-- spring -->
+        <g class="p-spring-wrap" data-spring>
+          <path class="p-spring" d="M300 150 L314 158 L286 166 L314 174 L286 182 L314 190 L286 198 L314 206 L286 214 L314 222 L300 230"/>
+        </g>
+
+        <!-- top housing -->
+        <path class="p-house-top" d="M238 150 h124 v36 h-124 z M284 150 h32 v-10 h-32 z" fill-rule="evenodd"/>
+        <rect x="238" y="140" width="124" height="46" rx="6" class="p-house-outline"/>
+        <!-- leaf contact -->
+        <path class="p-leaf" d="M352 160 v40" data-leaf/>
+        <path class="p-leaf" d="M345 162 v38"/>
+
+        <!-- actuation line -->
+        <line x1="212" y1="170" x2="420" y2="170" class="p-act" data-act-line/>
+        <circle cx="420" cy="170" r="4" class="p-act-dot" data-act-dot/>
+
+        <!-- cap + stem (moves) -->
+        <g class="p-cap-g" data-capg>
+          <rect x="291" y="118" width="18" height="34" rx="2" class="p-stem"/>
+          <rect x="296" y="118" width="8" height="34" class="p-stem-x"/>
+          <path class="p-cap" d="M230 62 Q300 72 370 62 L392 120 L208 120 Z"/>
+          <path class="p-cap-lip" d="M214 106 L386 106"/>
+          <text x="300" y="94" class="p-cap-legend" text-anchor="middle">K</text>
+        </g>
+
+        <!-- labels -->
+        <g class="p-labels">
+          <line x1="388" y1="80" x2="440" y2="80"/><text x="448" y="84">Keycap</text>
+          <line x1="310" y1="126" x2="440" y2="126"/><text x="448" y="130">Stem</text>
+          <line x1="362" y1="148" x2="440" y2="148"/><text x="448" y="152">Housing</text>
+          <line x1="316" y1="208" x2="440" y2="208"/><text x="448" y="212">Spring</text>
+          <line x1="514" y1="183" x2="540" y2="183"/><text x="548" y="187">Plate</text>
+          <line x1="514" y1="256" x2="540" y2="256"/><text x="548" y="260">Board</text>
+          <text x="448" y="174" class="p-act-label" data-act-label>Actuation</text>
+          <line x1="130" y1="120" x2="130" y2="150" class="p-depth" data-depth-line/>
+          <text x="138" y="140" class="p-depth-label">Travel</text>
+        </g>
+      </svg>
+
+      <figcaption class="cut-ctl">
+        <label class="depth">
+          <span class="ctl-label">Press depth</span>
+          <input type="range" min="0" max="100" value="0" step="1" data-depth aria-valuetext="Resting">
+        </label>
+        <button type="button" class="btn" data-press-once>Press once</button>
+        <p class="cut-status" data-cut-status aria-live="polite">Resting</p>
+      </figcaption>
+    </figure>
+  </section>
+
+  <section class="switches" id="switches" aria-labelledby="sw-h">
+    <div class="sec-head">
+      <p class="eyebrow"><span class="num">03</span> Switches</p>
+      <h2 id="sw-h">Three ways to say the same letter.</h2>
+      <p class="sec-p">KEY-01 ships with one of three switches under every cap. Pick one here and the keyboard above changes with it.</p>
+    </div>
+
+    <div class="sw-grid" data-sw-grid>
+      <article class="sw" data-sw="linear">
+        <header><h3>Linear</h3><span class="sw-tag" data-sw-tag>Selected</span></header>
+        <svg viewBox="0 0 200 120" class="curve" aria-label="Linear: force rises in a straight line through the travel" role="img">
+          <line x1="14" y1="106" x2="190" y2="106" class="ax"/><line x1="14" y1="106" x2="14" y2="10" class="ax"/>
+          <path d="M14 106 L186 22" class="ln"/>
+          <text x="186" y="116" class="axl" text-anchor="end">travel</text>
+          <text x="10" y="10" class="axl">force</text>
+        </svg>
+        <p>Smooth all the way down. Nothing to feel on the way, nothing to hear but the landing.</p>
+        <button type="button" class="btn btn-ghost" data-sw-pick="linear">Use linear</button>
+      </article>
+
+      <article class="sw" data-sw="tactile">
+        <header><h3>Tactile</h3><span class="sw-tag" data-sw-tag>Selected</span></header>
+        <svg viewBox="0 0 200 120" class="curve" aria-label="Tactile: a bump in the force curve early in the travel" role="img">
+          <line x1="14" y1="106" x2="190" y2="106" class="ax"/><line x1="14" y1="106" x2="14" y2="10" class="ax"/>
+          <path d="M14 106 C40 92 48 50 66 44 C76 41 80 66 92 70 L186 28" class="ln"/>
+          <text x="186" y="116" class="axl" text-anchor="end">travel</text>
+          <text x="10" y="10" class="axl">force</text>
+        </svg>
+        <p>A bump where the letter registers. You feel it before you bottom out, so you can stop there.</p>
+        <button type="button" class="btn btn-ghost" data-sw-pick="tactile">Use tactile</button>
+      </article>
+
+      <article class="sw" data-sw="clicky">
+        <header><h3>Clicky</h3><span class="sw-tag" data-sw-tag>Selected</span></header>
+        <svg viewBox="0 0 200 120" class="curve" aria-label="Clicky: a sharp bump followed by a sudden drop in force" role="img">
+          <line x1="14" y1="106" x2="190" y2="106" class="ax"/><line x1="14" y1="106" x2="14" y2="10" class="ax"/>
+          <path d="M14 106 L58 64 L72 50 L78 88 L186 30" class="ln"/>
+          <text x="186" y="116" class="axl" text-anchor="end">travel</text>
+          <text x="10" y="10" class="axl">force</text>
+        </svg>
+        <p>The bump, plus a click you can hear from the next desk. Loud on purpose.</p>
+        <button type="button" class="btn btn-ghost" data-sw-pick="clicky">Use clicky</button>
+      </article>
+    </div>
+  </section>
+
+  <section class="reserve" id="reserve" aria-labelledby="res-h">
+    <div class="sec-head">
+      <p class="eyebrow"><span class="num">04</span> Reserve</p>
+      <h2 id="res-h">Be first in line.</h2>
+      <p class="sec-p">Leave an email and we will write once, when KEY-01 is ready to order. Nothing else.</p>
+    </div>
+    <form class="res-form" data-res-form novalidate>
+      <label class="sr-only" for="email">Email</label>
+      <input id="email" name="email" type="email" inputmode="email" autocomplete="email" required placeholder="you@example.com">
+      <button type="submit" class="btn btn-solid">Notify me</button>
+      <p class="res-msg" data-res-msg aria-live="polite"></p>
+    </form>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <span class="mark">KEY<span>-</span>01</span>
+  <span>Press anything.</span>
+  <a href="#top">Back to top ↑</a>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>

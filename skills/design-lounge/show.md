@@ -1,6 +1,6 @@
 # Show mode
 
-Read this only when Show mode is on: the trigger in Show mode in [website.md](website.md) fired, and the brief says `Mode: Show`. A Kit-mode site never needs this file.
+Read this only when Show mode is on: the Show mode trigger in [website.md](website.md) fired, and the brief says `Mode: Show`. A Kit-mode site never needs this file.
 
 A strong agent with no library builds something memorable here, because it starts from the subject, picks colour and type for that world, and spends all its effort on one thing. Show mode does the same, then adds what the library is good at: finished sections, real states, accessibility, and a page that holds together on a phone.
 

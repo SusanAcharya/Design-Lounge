@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KEY-01, a mechanical keyboard you can type on before it ships</title>
+  <meta name="description" content="KEY-01 is a mechanical keyboard. The board is on the page: type on it, hear the switch, and read what is inside a key.">
+  <meta name="theme-color" content="#e9e4d8">
+  <meta property="og:title" content="KEY-01, a mechanical keyboard you can type on before it ships">
+  <meta property="og:description" content="The board is on the page. Whatever you type on it becomes the headline.">
+  <meta property="og:image" content="og.png">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anybody:ital,wdth,wght@0,50..150,100..900;1,50..150,100..900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip" href="#board">Skip to the keyboard</a>
+  <div class="grain" aria-hidden="true"></div>
+
+  <div class="page" id="top">
+    <header class="bar">
+      <a class="brand" href="#top" aria-label="KEY-01, back to the top">KEY<span class="dash">-</span><span class="num01">01</span></a>
+      <nav class="nav" aria-label="Page">
+        <a href="#inside">Inside</a>
+        <a href="#sound">Sound</a>
+        <a href="#launch">Launch</a>
+      </nav>
+      <button class="btn snd" id="snd" type="button" aria-pressed="false">
+        <svg class="ic" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 10v4h4l5 4V6l-5 4H5z"/><path class="wave" d="M16 9.5a3.5 3.5 0 010 5"/><path class="cross" d="M17 9.5l4 5M21 9.5l-4 5"/></svg>
+        <span class="snd-label">Sound off</span>
+      </button>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="line">
+        <div class="lamp" aria-hidden="true"></div>
+
+        <h1 class="typed" id="line">
+          <span class="linebox"><span class="buf" id="buf">Type on it.</span><span class="caret" aria-hidden="true"></span></span>
+        </h1>
+
+        <div class="head">
+          <p class="lede">The board below is KEY-01. Your own keyboard drives it, or click its keys. Whatever you type is the headline. Enter clears the line, Esc puts the first one back.</p>
+          <div class="side">
+            <dl class="readouts">
+              <div><dt>Last key</dt><dd class="num" id="r-key">none</dd></div>
+              <div><dt>Keystrokes</dt><dd class="num" id="r-count">0</dd></div>
+              <div><dt>Words a minute</dt><dd class="num" id="r-wpm">0</dd></div>
+            </dl>
+            <button class="btn primary" id="type-btn" type="button">Type on it</button>
+          </div>
+        </div>
+
+        <label class="sr" for="tap">Type on KEY-01</label>
+        <input id="tap" class="tap" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="done" aria-describedby="line">
+
+        <div class="stage">
+          <div class="board-wrap">
+            <div class="case">
+              <div class="plate">
+                <div class="keys" id="board" role="group" tabindex="0" aria-label="KEY-01 keyboard, 61 keys. Type on your own keyboard, or click a key. Enter clears the line, Esc puts the first line back."></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="inside reveal" id="inside" aria-labelledby="inside-h">
+        <div class="copy">
+          <h2 id="inside-h">What one press <em>passes through.</em></h2>
+          <p class="lede">A keystroke on KEY-01 is four parts stacked on top of each other. Pick one to see it in the figure.</p>
+          <ol class="steps" id="steps">
+            <li class="step on" data-s="1">
+              <button class="numb" type="button" aria-label="Show the keycap" aria-current="step">1</button>
+              <div>
+                <h3>Keycap</h3>
+                <p>The part you touch. The legend sits on the top face, under the lamp, and a cross stem on the underside grips the switch.</p>
+              </div>
+            </li>
+            <li class="step" data-s="2">
+              <button class="numb" type="button" aria-label="Show the switch" aria-current="false">2</button>
+              <div>
+                <h3>Switch</h3>
+                <p>Press the cap and the stem pushes a leaf onto a contact, against a spring that pushes back. The click on this page is synthesised to stand in for it.</p>
+              </div>
+            </li>
+            <li class="step" data-s="3">
+              <button class="numb" type="button" aria-label="Show the plate" aria-current="false">3</button>
+              <div>
+                <h3>Plate</h3>
+                <p>Every switch clips into one plate. The plate decides how firm the bottom of a press feels and keeps the rows straight.</p>
+              </div>
+            </li>
+            <li class="step" data-s="4">
+              <button class="numb" type="button" aria-label="Show the case" aria-current="false">4</button>
+              <div>
+                <h3>Case</h3>
+                <p>The case holds the plate and the circuit board, and gives the sound its room. It is what sits on the desk.</p>
+              </div>
+            </li>
+          </ol>
+        </div>
+
+        <div class="aside">
+          <figure class="viz" id="viz" data-step="1" aria-label="The parts of one key, exploded: keycap, switch, plate, case">
+            <svg viewBox="0 0 520 560" width="100%" aria-hidden="true">
+              <!-- 4 Case -->
+              <g class="l l4">
+                <path d="M40 470 L480 470 L480 540 L40 540 Z" fill="#24252c"/>
+                <path d="M40 470 L480 470" stroke="#50515b" stroke-width="2"/>
+                <path d="M40 470 L40 540" stroke="#3b3c45" stroke-width="2"/>
+                <path d="M60 456 L460 456 L460 470 L60 470 Z" fill="#121317"/>
+                <rect x="60" y="430" width="400" height="12" fill="#3a3b43"/>
+                <rect x="60" y="430" width="400" height="2" fill="#54555f"/>
+                <circle cx="110" cy="436" r="2.5" fill="#c9c2b2"/><circle cx="170" cy="436" r="2.5" fill="#c9c2b2"/><circle cx="350" cy="436" r="2.5" fill="#c9c2b2"/><circle cx="410" cy="436" r="2.5" fill="#c9c2b2"/>
+              </g>
+              <!-- 3 Plate -->
+              <g class="l l3">
+                <path d="M60 356 L218 356 L218 372 L60 372 Z" fill="#24252c"/>
+                <path d="M302 356 L460 356 L460 372 L302 372 Z" fill="#24252c"/>
+                <path d="M60 356 L218 356 M302 356 L460 356" stroke="#50515b" stroke-width="2"/>
+                <path d="M60 372 L218 372 M302 372 L460 372" stroke="#0e0f12" stroke-width="2"/>
+                <path d="M218 356 L218 372 M302 356 L302 372" stroke="#8e877a" stroke-width="1" stroke-dasharray="3 3"/>
+              </g>
+              <!-- 2 Switch -->
+              <g class="l l2">
+                <path d="M196 286 L324 286 L324 338 L196 338 Z" fill="#efe9dc"/>
+                <path d="M196 286 L324 286" stroke="#fbf8f2" stroke-width="2"/>
+                <path d="M196 338 L324 338" stroke="#b8b09e" stroke-width="2"/>
+                <path d="M196 230 L324 230 L316 286 L204 286 Z" fill="#3a3b43"/>
+                <path d="M196 230 L324 230" stroke="#54555f" stroke-width="2"/>
+                <rect x="248" y="206" width="24" height="26" fill="#2242c8"/>
+                <path d="M248 206 L272 206" stroke="#4f6be3" stroke-width="2"/>
+                <path d="M252 246 L268 246 L268 322 L252 322 Z" fill="#2242c8"/>
+                <path d="M224 258 L240 262 L224 268 L240 274 L224 280 L240 286 L224 292 L240 298 L224 304 L240 310 L224 316 L240 322" fill="none" stroke="#8e877a" stroke-width="2.5" stroke-linejoin="round"/>
+                <path d="M288 250 L288 326 M302 262 L302 326" stroke="#8e877a" stroke-width="3" stroke-linecap="round"/>
+                <path d="M286 250 Q296 254 302 262" fill="none" stroke="#8e877a" stroke-width="3" stroke-linecap="round"/>
+                <path d="M196 338 L196 346 L212 346 M324 338 L324 346 L308 346" fill="none" stroke="#b8b09e" stroke-width="3" stroke-linecap="round"/>
+              </g>
+              <!-- 1 Keycap -->
+              <g class="l l1">
+                <path d="M176 84 L344 84 L364 150 L156 150 Z" fill="#efe9dc"/>
+                <path d="M176 84 L344 84" stroke="#fbf8f2" stroke-width="3"/>
+                <path d="M176 84 L156 150" stroke="#fbf8f2" stroke-width="2"/>
+                <path d="M344 84 L364 150" stroke="#b8b09e" stroke-width="2"/>
+                <path d="M156 150 L364 150 L364 160 L156 160 Z" fill="#b8b09e"/>
+                <text x="206" y="124" font-family="'JetBrains Mono', ui-monospace, monospace" font-size="22" font-weight="600" fill="#2a2925">K</text>
+                <path d="M254 160 L266 160 L266 170 L276 170 L276 182 L266 182 L266 192 L254 192 L254 182 L244 182 L244 170 L254 170 Z" fill="#2242c8"/>
+              </g>
+              <!-- arrows between layers -->
+              <g class="guides" stroke="#8e877a" stroke-width="1" stroke-dasharray="2 4" fill="none">
+                <path d="M260 196 L260 204"/>
+                <path d="M260 346 L260 354"/>
+                <path d="M260 376 L260 426"/>
+              </g>
+            </svg>
+            <figcaption class="vfoot">
+              <p class="panel p1">The cap lifts straight off the stem. On the page it is bone, with slate modifiers and one cobalt Enter.</p>
+              <p class="panel p2">Top housing, stem, leaf, spring, bottom housing. The stem is the part the cap holds.</p>
+              <p class="panel p3">One plate, one cutout per switch. The dashed edges are where this key clips in.</p>
+              <p class="panel p4">The board inside the case. Nothing on this page states its material or price: that is still to come.</p>
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="sound reveal" id="sound" aria-labelledby="sound-h">
+        <div class="sound-in">
+          <div class="sound-copy">
+            <h2 id="sound-h">Hear it before <em>you hold it.</em></h2>
+            <p class="lede on-primary">Sound is off until you switch it on. Once it is on, every key you press plays a click and draws its waveform here. The click is synthesised in your browser. The real switch has its own voice.</p>
+            <div class="sound-ctl">
+              <button class="btn ghost" id="one-click" type="button">Play one click</button>
+              <button class="btn ghost snd" id="snd2" type="button" aria-pressed="false">
+                <svg class="ic" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 10v4h4l5 4V6l-5 4H5z"/><path class="wave" d="M16 9.5a3.5 3.5 0 010 5"/><path class="cross" d="M17 9.5l4 5M21 9.5l-4 5"/></svg>
+                <span class="snd-label">Sound off</span>
+              </button>
+            </div>
+          </div>
+          <div class="scope-wrap">
+            <canvas id="scope" class="scope" width="1120" height="260" role="img" aria-label="Waveform of the last click"></canvas>
+            <p class="scope-line"><span>Last click</span> <span class="num" id="r-click">none yet</span></p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="colophon reveal" id="launch">
+      <span class="rule" aria-hidden="true"></span>
+      <p class="mark">KEY<span class="num01">-01</span></p>
+      <p class="issue">A mechanical keyboard</p>
+      <ul class="links">
+        <li><a href="#inside">Inside</a></li>
+        <li><a href="#sound">Sound</a></li>
+        <li><a href="#board">The board</a></li>
+      </ul>
+      <p class="place">Price and date to be announced.</p>
+      <button class="totop" id="topbtn" type="button">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg>
+        <span>Back to top</span>
+      </button>
+      <p class="credit">Designed using <a href="https://www.designlounge.live">Design Lounge</a></p>
+    </footer>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>

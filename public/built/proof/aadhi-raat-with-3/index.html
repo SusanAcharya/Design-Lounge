@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Aadhi Raat Records · Recorded after midnight, Kathmandu</title>
+  <meta name="description" content="A record label in Kathmandu that releases only music recorded after midnight, Nepal time. One night, from eleven to first light.">
+  <meta name="theme-color" content="#0b0e1a">
+  <meta property="og:title" content="Aadhi Raat Records">
+  <meta property="og:description" content="Recorded after midnight in Kathmandu. Nothing else.">
+  <meta property="og:image" content="og.png">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="favicon.ico" sizes="32x32">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Khand:wght@500;600;700&family=Mukta:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-ch="0" data-window="closed">
+
+  <a class="skip" href="#night">Skip to the night</a>
+
+  <canvas id="sky" aria-hidden="true"></canvas>
+  <div class="fx vignette" aria-hidden="true"></div>
+  <div class="fx grain" aria-hidden="true"></div>
+
+  <header class="rail">
+    <a class="mark" href="#night" aria-label="Aadhi Raat Records, back to the start of the night"><span>Aadhi Raat</span></a>
+    <nav class="sections" aria-label="Sections">
+      <div class="ind" aria-hidden="true"></div>
+      <ol>
+        <li><a href="#night" aria-current="true">Night</a></li>
+        <li><a href="#sleeve">The sleeve</a></li>
+        <li><a href="#send">Send a tape</a></li>
+      </ol>
+    </nav>
+    <div class="foot">
+      <span class="place">Kathmandu</span>
+      <time id="railClock" class="num" datetime="">--:--</time>
+      <span class="dot" aria-hidden="true"></span>
+      <span id="railWin" class="win">Opens at 00:00</span>
+    </div>
+    <button class="burger" type="button" aria-controls="menu" aria-expanded="false" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <nav class="menu" id="menu" aria-label="Main menu">
+    <p class="menu-k"><span>Aadhi Raat Records</span><span id="menuClock" class="num">--:--</span></p>
+    <ul class="links">
+      <li style="--i:0"><a href="#night" aria-current="true">Night<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+      <li style="--i:1"><a href="#sleeve">The sleeve<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+      <li style="--i:2"><a href="#send">Send a tape<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+    </ul>
+    <p class="menu-f">Recorded after midnight, Nepal time. <span id="menuWin">Opens at 00:00.</span></p>
+  </nav>
+
+  <main id="main">
+
+    <div class="night" id="night">
+
+      <section class="ch hero" data-n="0" data-label="Eleven" aria-labelledby="h0">
+        <div class="in">
+          <div class="copy">
+            <h1 id="h0">
+              <span class="w">Recorded after</span>
+              <span class="w lit" lang="ne">आधी रात</span>
+              <span class="w">in Kathmandu</span>
+            </h1>
+            <p class="lede">A record label in the valley. We put out only what was recorded after 00:00 Nepal time, in the hours before the city wakes. This page is one of those nights, from eleven to first light.</p>
+            <a class="btn primary" href="#send">Send a tape</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="ch" data-n="1" data-label="Midnight" aria-labelledby="h1">
+        <div class="in">
+          <div class="copy">
+            <p class="meta num">00:00 NPT · 18:15 UTC</p>
+            <h2 id="h1">At midnight the city <em>goes quiet.</em></h2>
+            <p>The shutters are down in Asan, the last microbus is in, the generators have stopped. What gets recorded now was not planned at a desk in the afternoon. That is the sound we put out, and nothing from before the hour.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="ch" data-n="2" data-label="Small hours" aria-labelledby="h2">
+        <div class="in">
+          <div class="copy">
+            <p class="meta num">02:30 NPT · the moon over Shivapuri</p>
+            <h2 id="h2">The take <em>keeps the clock.</em></h2>
+            <p>A release qualifies on one thing: the time the take started, Nepal time. Not the mix, not the master, not the upload. If the first note landed after midnight and before first light, it is ours to consider.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="ch" data-n="3" data-label="First light" aria-labelledby="h3">
+        <div class="in">
+          <div class="copy">
+            <p class="meta num">Sunrise today <span id="sunriseMeta">--:--</span> NPT</p>
+            <h2 id="h3">The window closes <em>at sunrise.</em></h2>
+            <p>Anything that starts after first light waits for the next night. The hour on this page is real: the readouts below follow Kathmandu's clock, and the label opens the moment it crosses midnight.</p>
+            <div class="row">
+              <a class="btn primary" href="#send">Send a tape</a>
+              <a class="btn" href="#night">Back to eleven</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <aside class="hud" aria-label="Night readouts">
+      <div class="ro"><span>Scene clock</span><b id="roScene" class="num">23:00</b></div>
+      <div class="ro"><span>Kathmandu now</span><b id="roNow" class="num">--:--:--</b></div>
+      <div class="ro key"><span id="roWinLabel">Midnight in</span><b id="roWin" class="num">--:--:--</b></div>
+    </aside>
+    <p class="sr" id="live" aria-live="polite"></p>
+
+    <section class="sleeve" id="sleeve" aria-labelledby="hs">
+      <div class="frame">
+        <div class="stage">
+          <div class="obj" role="img" aria-label="A record sleeve in black card. The front prints the time the take started, 01:12 Nepal time, under the label's name. The record is half out of the sleeve. Example.">
+            <div class="disc"><span class="disc-label"></span></div>
+            <div class="jacket">
+              <span class="j-mark" lang="ne">आधी रात</span>
+              <span class="j-time num">01:12</span>
+              <span class="j-foot">NPT · Kathmandu</span>
+              <span class="j-spine"></span>
+            </div>
+          </div>
+          <p class="cap">Example. No release exists yet.</p>
+        </div>
+        <div class="text">
+          <h2 id="hs">Every sleeve <em>prints the clock.</em></h2>
+          <p>There is no cover art. The front of each release carries the time its take started, Nepal time, in the same type as this page. The hour is the picture, and the record is the proof that someone was awake for it.</p>
+          <p>The catalogue opens with the first take that qualifies. Until then the sleeve above is a study, so nobody reads it as a release.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="send" id="send" aria-labelledby="hsend">
+      <div class="frame">
+        <aside class="side">
+          <h2 id="hsend">Send <em>a tape.</em></h2>
+          <ol class="steps-rail" aria-label="Brief steps">
+            <li aria-current="step"><span class="box">1</span>The clock</li>
+            <li><span class="box">2</span>The room</li>
+            <li><span class="box">3</span>You</li>
+          </ol>
+          <p class="side-note">Three questions. The first one checks the take against the rule, with sunrise for that date. At the end you copy the brief and send it with the take.</p>
+        </aside>
+
+        <div class="card" aria-labelledby="stepLabel">
+          <div class="bar">
+            <p id="stepLabel" aria-live="polite">Step 1 of 3</p>
+            <div class="prog" aria-hidden="true"><i class="on"></i><i></i><i></i></div>
+          </div>
+
+          <form id="brief" novalidate>
+
+            <div class="step" data-step="1">
+              <fieldset aria-describedby="err1">
+                <legend><h3 tabindex="-1">When did the take start?</h3></legend>
+                <p class="hint">Nepal time, UTC+5:45. The time the first note landed, not the time you bounced it.</p>
+                <div class="grid2">
+                  <div class="f">
+                    <label for="tDate">Date</label>
+                    <input id="tDate" name="date" type="date" required>
+                    <p class="ferr" id="errDate"></p>
+                  </div>
+                  <div class="f">
+                    <label for="tTime">Start time</label>
+                    <input id="tTime" name="time" type="time" required step="60">
+                    <p class="ferr" id="errTime"></p>
+                  </div>
+                </div>
+                <p class="verdict" id="verdict" aria-live="polite"></p>
+                <p class="gerr" id="err1"></p>
+              </fieldset>
+            </div>
+
+            <div class="step" data-step="2" hidden>
+              <fieldset aria-describedby="err2">
+                <legend><h3 tabindex="-1">Where was it recorded?</h3></legend>
+                <p class="hint">Somewhere in the valley. Pick the room, then name the place if you want to.</p>
+                <div class="rcs">
+                  <label class="rc"><input type="radio" name="room" value="Bedroom"><span class="dot"></span><strong>Bedroom</strong><small>Headphones, a laptop, the neighbours asleep.</small></label>
+                  <label class="rc"><input type="radio" name="room" value="Rooftop"><span class="dot"></span><strong>Rooftop</strong><small>Water tanks, dogs, the ridge.</small></label>
+                  <label class="rc"><input type="radio" name="room" value="Live room"><span class="dot"></span><strong>Live room</strong><small>A studio that stayed open.</small></label>
+                  <label class="rc"><input type="radio" name="room" value="Rehearsal space"><span class="dot"></span><strong>Rehearsal space</strong><small>The band's room, after the last set.</small></label>
+                </div>
+                <p class="gerr" id="err2"></p>
+                <div class="f">
+                  <label for="place">Neighbourhood <span class="opt">(optional)</span></label>
+                  <input id="place" name="place" type="text" maxlength="80" autocomplete="off">
+                </div>
+              </fieldset>
+            </div>
+
+            <div class="step" data-step="3" hidden>
+              <fieldset aria-describedby="err3">
+                <legend><h3 tabindex="-1">Who are you?</h3></legend>
+                <p class="hint">A name, a link to the take, and anything the clock does not say.</p>
+                <div class="f">
+                  <label for="who">Name or act</label>
+                  <input id="who" name="who" type="text" required maxlength="80" autocomplete="name">
+                  <p class="ferr" id="errWho"></p>
+                </div>
+                <div class="f">
+                  <label for="link">Link to the take</label>
+                  <input id="link" name="link" type="url" required inputmode="url" autocomplete="url">
+                  <p class="ferr" id="errLink"></p>
+                </div>
+                <div class="f">
+                  <label for="note">Note <span class="opt">(optional)</span></label>
+                  <textarea id="note" name="note" rows="4" maxlength="400" aria-describedby="noteCount"></textarea>
+                  <p class="count" id="noteCount"><span class="num">0</span> of 400</p>
+                </div>
+                <p class="gerr" id="err3"></p>
+              </fieldset>
+            </div>
+
+            <div class="step review" data-step="4" hidden>
+              <h3 tabindex="-1">Check the brief.</h3>
+              <p class="hint">This is what gets copied. Edit anything before you copy it.</p>
+              <dl class="rev" id="rev"></dl>
+            </div>
+
+            <div class="nav">
+              <button type="button" class="btn" id="back" hidden>
+                <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>Back
+              </button>
+              <button type="button" class="btn primary" id="next">Next<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+              <button type="submit" class="btn primary" id="copy" hidden>Copy the brief<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5 9-9"/></svg></button>
+            </div>
+          </form>
+
+          <div class="sent" id="sent" hidden>
+            <h3 tabindex="-1">Copied.</h3>
+            <p>Paste the brief into your message and send it with the take. Keep the original file: its clock is the proof.</p>
+            <p class="small">The label has not published an address on this page yet, so the brief stays with you until it does.</p>
+            <button type="button" class="btn" id="again">Start another</button>
+          </div>
+          <textarea id="clip" class="sr" aria-hidden="true" tabindex="-1" readonly></textarea>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="colophon">
+    <span class="rule" aria-hidden="true"></span>
+    <p class="wordmark">Aadhi Raat</p>
+    <p class="issue">Records · Kathmandu</p>
+    <ul class="flinks">
+      <li><a href="#night">Night</a></li>
+      <li><a href="#sleeve">The sleeve</a></li>
+      <li><a href="#send">Send a tape</a></li>
+    </ul>
+    <p class="place-line">Kathmandu · 2026 · set in Khand and Mukta</p>
+    <p class="credit">Designed using <a href="https://www.designlounge.live">Design Lounge</a></p>
+    <button type="button" class="top" id="topbtn">
+      <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg>
+      Back to eleven
+    </button>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>

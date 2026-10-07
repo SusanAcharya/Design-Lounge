@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KEY-01 — a mechanical keyboard you can try in the browser</title>
+  <meta name="description" content="KEY-01 is a 75% mechanical keyboard. This page is the keyboard: type on it, pick a switch, turn the knob, listen.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="topbar">
+  <a class="wordmark" href="#top" aria-label="KEY-01 home">
+    <svg class="wordmark-cap" viewBox="0 0 28 28" aria-hidden="true"><rect x="2" y="2" width="24" height="24" rx="5" fill="currentColor"/><rect x="6" y="5" width="16" height="14" rx="3" fill="var(--bg)"/></svg>
+    <span>KEY-01</span>
+  </a>
+  <nav class="nav" aria-label="Sections">
+    <a href="#play">Play</a>
+    <a href="#switches">Switches</a>
+    <a href="#layout">Layout</a>
+    <a href="#reserve">Reserve</a>
+  </nav>
+  <button class="sound-btn" id="soundBtn" type="button" aria-pressed="false">
+    <svg viewBox="0 0 20 20" aria-hidden="true" width="16" height="16"><path d="M3 7.5v5h3.2L11 16.5v-13L6.2 7.5z" fill="currentColor"/><path class="sound-wave" d="M13.5 6.8a4.5 4.5 0 0 1 0 6.4M15.8 4.5a7.8 7.8 0 0 1 0 11" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path class="sound-x" d="M13 7.5l5 5m0-5l-5 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    <span class="sound-label">Sound off</span>
+  </button>
+</header>
+
+<main id="top">
+
+  <section class="hero" id="play">
+    <div class="hero-copy">
+      <p class="eyebrow">A mechanical keyboard. First batch.</p>
+      <h1>Try it before <em>it exists.</em></h1>
+      <p class="lede">This is the whole board, drawn in your browser. Type on your own keys or tap these. Pick a switch, turn the knob, listen. Nothing here is a photograph.</p>
+    </div>
+
+    <div class="controls" role="group" aria-label="Keyboard options">
+      <fieldset class="seg" id="switchSeg">
+        <legend>Switch</legend>
+        <label><input type="radio" name="switch" value="linear" checked><span>Linear</span></label>
+        <label><input type="radio" name="switch" value="tactile"><span>Tactile</span></label>
+        <label><input type="radio" name="switch" value="clicky"><span>Clicky</span></label>
+      </fieldset>
+
+      <fieldset class="seg swatches" id="colorSeg">
+        <legend>Keycaps</legend>
+        <label><input type="radio" name="colorway" value="graphite" checked><span><i class="sw sw-graphite"></i>Graphite</span></label>
+        <label><input type="radio" name="colorway" value="bone"><span><i class="sw sw-bone"></i>Bone</span></label>
+        <label><input type="radio" name="colorway" value="signal"><span><i class="sw sw-signal"></i>Signal</span></label>
+      </fieldset>
+
+      <div class="toggles">
+        <button type="button" class="toggle" id="lightBtn" aria-pressed="false"><i class="dot"></i>Backlight</button>
+        <button type="button" class="toggle" id="heatBtn" aria-pressed="false"><i class="dot"></i>Heat map</button>
+      </div>
+    </div>
+
+    <div class="stage-wrap">
+      <div class="stage" id="stage" tabindex="0" role="application" aria-label="KEY-01 keyboard. Press keys on your keyboard or tap the keys on screen to try it.">
+        <div class="keyboard" id="keyboard" data-colorway="graphite" data-switch="linear">
+          <div class="case">
+            <div class="board" id="board"></div>
+            <div class="badge" aria-hidden="true">KEY-01</div>
+          </div>
+        </div>
+      </div>
+      <p class="hint" id="hint"><span class="hint-key">type</span> anything · or tap the keys</p>
+      <p class="swipe-hint" aria-hidden="true">swipe to see the whole board</p>
+    </div>
+
+    <div class="readout">
+      <div class="tape-wrap">
+        <p class="tape-label" id="tapeLabel">Type this sentence</p>
+        <p class="tape" id="tape" aria-live="off"></p>
+        <p class="tape-note" id="tapeNote" role="status" aria-live="polite"></p>
+      </div>
+      <dl class="stats">
+        <div><dt>Keys pressed</dt><dd id="statKeys">0</dd></div>
+        <div><dt>Most used</dt><dd id="statTop">—</dd></div>
+        <div><dt>Volume</dt><dd id="statVol">70%</dd></div>
+      </dl>
+      <button type="button" class="link-btn" id="resetBtn">Start over</button>
+    </div>
+  </section>
+
+  <section class="switches" id="switches">
+    <div class="section-head">
+      <p class="eyebrow">Switches</p>
+      <h2>Three ways down.</h2>
+      <p class="lede">KEY-01 ships with one of three switches, and the sockets are hot-swap, so the choice is not permanent. Hold the switch below to see what each one does on the way down.</p>
+    </div>
+
+    <div class="switch-grid">
+      <div class="cutaway-wrap">
+        <button type="button" class="cutaway-btn" id="cutawayBtn" aria-label="Press and hold to see the switch move">
+          <svg class="cutaway" id="cutaway" viewBox="0 0 240 260" aria-hidden="true">
+            <defs>
+              <linearGradient id="capGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="var(--cw-cap-hi)"/>
+                <stop offset="1" stop-color="var(--cw-cap)"/>
+              </linearGradient>
+              <linearGradient id="housingGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#3a3733"/>
+                <stop offset="1" stop-color="#1e1c19"/>
+              </linearGradient>
+            </defs>
+            <!-- plate -->
+            <rect x="10" y="150" width="220" height="8" fill="#5a5651"/>
+            <rect x="10" y="158" width="220" height="3" fill="#2b2927"/>
+            <!-- bottom housing -->
+            <path d="M60 150 h120 v70 a8 8 0 0 1 -8 8 h-104 a8 8 0 0 1 -8 -8 z" fill="url(#housingGrad)"/>
+            <rect x="72" y="160" width="96" height="60" fill="#121110"/>
+            <!-- leaf contacts -->
+            <g class="leaf">
+              <rect x="140" y="170" width="3" height="48" fill="#d9b25c"/>
+              <path class="leaf-moving" d="M152 170 v48" stroke="#d9b25c" stroke-width="3" fill="none"/>
+            </g>
+            <!-- spring -->
+            <g class="spring-g">
+              <path class="spring" d="M120 220 l-12 -6 l24 -6 l-24 -6 l24 -6 l-24 -6 l24 -6 l-24 -6 l24 -6 l-24 -6 l24 -6 l-12 -6" fill="none" stroke="#c9c4bb" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+            </g>
+            <!-- stem (moves) -->
+            <g class="stem-g">
+              <rect class="stem-body" x="104" y="118" width="32" height="56" rx="3" fill="var(--sw-stem)"/>
+              <rect x="117" y="96" width="6" height="26" fill="var(--sw-stem)"/>
+              <rect x="107" y="106" width="26" height="6" fill="var(--sw-stem)"/>
+              <path class="stem-leg" d="M136 140 l8 0 l-2 8 l-6 0 z" fill="var(--sw-stem)"/>
+              <path class="stem-bump" d="M144 134 l5 4 l-5 4 z" fill="var(--sw-stem)"/>
+              <rect class="click-jacket" x="100" y="150" width="40" height="18" rx="2" fill="#ffffff" opacity="0.28"/>
+            </g>
+            <!-- top housing (translucent) -->
+            <path d="M64 150 v-30 a8 8 0 0 1 8 -8 h26 v-12 h44 v12 h26 a8 8 0 0 1 8 8 v30" fill="#cfc9bf" opacity="0.18" stroke="#e7e1d7" stroke-opacity="0.45" stroke-width="2"/>
+            <!-- keycap -->
+            <g class="cap-g">
+              <path d="M44 100 l12 -44 h128 l12 44 z" fill="url(#capGrad)"/>
+              <path d="M44 100 h152 v6 a4 4 0 0 1 -4 4 h-144 a4 4 0 0 1 -4 -4 z" fill="var(--cw-side)"/>
+              <text x="70" y="88" class="cap-legend" fill="var(--cw-legend)">K</text>
+            </g>
+            <!-- travel marker -->
+            <g class="travel" opacity="0.7">
+              <line x1="206" y1="110" x2="206" y2="150" stroke="#9a9388" stroke-width="1" stroke-dasharray="2 3"/>
+              <text x="216" y="130" transform="rotate(90 216 130)" text-anchor="middle" class="travel-label" fill="#9a9388">travel</text>
+            </g>
+          </svg>
+          <span class="cutaway-caption"><span class="cutaway-state" id="cutawayState">hold to press</span></span>
+        </button>
+      </div>
+
+      <div class="switch-cards" role="radiogroup" aria-label="Choose a switch">
+        <label class="switch-card" data-switch="linear">
+          <input type="radio" name="switch-card" value="linear" checked>
+          <span class="card-top"><i class="stem-chip" style="--chip:#d9433a"></i><strong>Linear</strong></span>
+          <span class="card-body">Nothing in the way. The stem slides straight down on the spring and bottoms out with a soft thud. For people who type fast and late.</span>
+          <span class="card-meta">quiet · smooth · no bump</span>
+        </label>
+        <label class="switch-card" data-switch="tactile">
+          <input type="radio" name="switch-card" value="tactile">
+          <span class="card-top"><i class="stem-chip" style="--chip:#9a6b3f"></i><strong>Tactile</strong></span>
+          <span class="card-body">A small bump partway down, where the leg on the stem pushes past the leaf. You feel the keystroke register without needing to hear it.</span>
+          <span class="card-meta">bump · muted · no click</span>
+        </label>
+        <label class="switch-card" data-switch="clicky">
+          <input type="radio" name="switch-card" value="clicky">
+          <span class="card-top"><i class="stem-chip" style="--chip:#3f7fd9"></i><strong>Clicky</strong></span>
+          <span class="card-body">A loose collar on the stem snaps against the housing. You feel the bump and hear it, down and up. Not for shared rooms.</span>
+          <span class="card-meta">bump · loud · two clicks</span>
+        </label>
+      </div>
+    </div>
+  </section>
+
+  <section class="layout" id="layout">
+    <div class="section-head">
+      <p class="eyebrow">Layout</p>
+      <h2>Eighty-three keys and a knob.</h2>
+      <p class="lede">A 75% layout keeps the function row and the arrow cluster and drops the number pad, so your mouse hand does not have to travel. The knob in the corner is volume on the page, and volume on the board.</p>
+    </div>
+
+    <ul class="features">
+      <li>
+        <svg viewBox="0 0 40 40" aria-hidden="true"><rect x="8" y="8" width="24" height="24" rx="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M14 20h12M20 14v12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <strong>Hot-swap sockets</strong>
+        <span>Every key takes any MX-style switch. Change your mind without a soldering iron.</span>
+      </li>
+      <li>
+        <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M6 24h28" stroke="currentColor" stroke-width="2"/><path d="M10 24c0-6 4-10 10-10s10 4 10 10" fill="none" stroke="currentColor" stroke-width="2"/><rect x="12" y="24" width="16" height="6" rx="2" fill="currentColor"/></svg>
+        <strong>Gasket mount</strong>
+        <span>The plate floats on soft strips instead of screws, so the whole board gives a little when you bottom out.</span>
+      </li>
+      <li>
+        <svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="11" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 12v8l5 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/><path d="M20 4v3M20 33v3M4 20h3M33 20h3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <strong>The knob</strong>
+        <span>Turn it with the scroll wheel or drag it. Click it to mute. It has a detent for every step.</span>
+      </li>
+      <li>
+        <svg viewBox="0 0 40 40" aria-hidden="true"><rect x="6" y="12" width="28" height="16" rx="8" fill="none" stroke="currentColor" stroke-width="2"/><path d="M14 20h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M2 20h4M34 20h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <strong>USB-C, both ways</strong>
+        <span>Wired, with a cable that unplugs from the board. No batteries to wear out, nothing to pair.</span>
+      </li>
+      <li>
+        <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M8 28l6-16h12l6 16z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M8 28h24" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <strong>Thick PBT keycaps</strong>
+        <span>Keycaps that do not go shiny. Legends are in the plastic, not printed on it.</span>
+      </li>
+      <li>
+        <svg viewBox="0 0 40 40" aria-hidden="true"><rect x="6" y="10" width="28" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 30v3M28 30v3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M11 20h4m4 0h4m4 0h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <strong>Machined aluminium case</strong>
+        <span>One piece, cut from a block, in the same grey as the page you are reading.</span>
+      </li>
+    </ul>
+  </section>
+
+  <section class="reserve" id="reserve">
+    <div class="reserve-inner">
+      <p class="eyebrow">Reserve</p>
+      <h2>Hear about the first batch.</h2>
+      <p class="lede">Leave an address and we will write once, when KEY-01 is ready to order. Nothing else.</p>
+      <form class="reserve-form" id="reserveForm" novalidate>
+        <label class="sr-only" for="email">Email address</label>
+        <input id="email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="you@yours.com" required>
+        <button type="submit">Notify me</button>
+      </form>
+      <p class="form-note" id="formNote" role="status" aria-live="polite"></p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <p><strong>KEY-01</strong> is drawn entirely in HTML, CSS and SVG. The sounds are synthesized in your browser and never play unless you turn them on.</p>
+  <p class="footer-keys" aria-hidden="true"><span>⌘</span><span>⌥</span><span>⇧</span><span>⏎</span></p>
+</footer>
+
+<noscript><p class="noscript">The keyboard needs JavaScript to be pressable. The rest of the page works without it.</p></noscript>
+
+<script src="main.js"></script>
+</body>
+</html>

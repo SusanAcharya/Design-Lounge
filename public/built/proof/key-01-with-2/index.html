@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>KEY-01. A mechanical keyboard you can type on before it launches.</title>
+<meta name="description" content="KEY-01 is a mechanical keyboard. Type on it here: every key you press lands on the board, clicks, and becomes the headline. Leave an email to get the launch date.">
+<meta property="og:title" content="KEY-01">
+<meta property="og:description" content="A mechanical keyboard you can type on before it launches.">
+<meta property="og:image" content="og.png">
+<meta property="og:type" content="website">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon.ico" sizes="32x32">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="page">
+
+<section class="hero" id="play" aria-labelledby="typed">
+  <div class="frame">
+    <header class="bar">
+      <a class="mark" href="#play" aria-label="KEY-01, top of page">KEY<i aria-hidden="true"></i>01</a>
+      <div class="controls">
+        <div class="seg" role="radiogroup" aria-label="Switch profile">
+          <button type="button" role="radio" aria-checked="true" data-switch="linear" tabindex="0">Linear</button>
+          <button type="button" role="radio" aria-checked="false" data-switch="tactile" tabindex="-1">Tactile</button>
+          <button type="button" role="radio" aria-checked="false" data-switch="clicky" tabindex="-1">Clicky</button>
+        </div>
+        <button type="button" class="snd" id="snd" aria-pressed="true">
+          <span class="led" aria-hidden="true"></span>
+          <svg class="on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16 9.5a3.5 3.5 0 0 1 0 5"/><path d="M18.5 7a7 7 0 0 1 0 10"/></svg>
+          <svg class="off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16 9l5 6M21 9l-5 6"/></svg>
+          <span class="snd-label">Sound on</span>
+        </button>
+      </div>
+    </header>
+
+    <div class="head">
+      <p class="lede" id="lede">Type on your own keyboard, or tap the keys. What you type is the headline.</p>
+      <div class="slot" id="slot"><h1 class="typed empty" id="typed" aria-live="off"><span class="buf">Go on, type.</span><span class="caret" aria-hidden="true"></span></h1></div>
+    </div>
+
+    <div class="stage">
+      <div class="tray" id="tray">
+        <div class="board" id="board" data-switch="linear">
+          <div class="case">
+            <div class="strip" aria-hidden="true">
+              <span><b>KEY-01</b></span>
+              <span class="leds"><span><i id="led-caps"></i>Caps</span></span>
+            </div>
+            <div class="keys" id="keys" role="group" tabindex="0" aria-label="KEY-01, 67 keys. Type on your own keyboard, or tap a key. What you type becomes the headline. Enter starts a new line, Escape clears it." aria-describedby="lede"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ro">
+      <dl>
+        <div><dt>Last key</dt><dd id="lastkey">None yet</dd></div>
+        <div><dt>Presses</dt><dd id="count" class="num">0</dd></div>
+      </dl>
+      <p class="hint">A mechanical keyboard. Not on sale yet. <a href="#launch">Get the launch date.</a></p>
+    </div>
+  </div>
+</section>
+
+<section class="feel frame" id="feel" aria-labelledby="feel-h">
+  <header class="rise">
+    <h2 id="feel-h">What your finger just <em>felt</em>.</h2>
+    <p class="lede">Every key on KEY-01 is a switch under a cap. These four panels run off the board above, so they show what you did, not a brochure.</p>
+  </header>
+  <div class="bento">
+    <article class="cell a rise">
+      <h3>One key, cut open</h3>
+      <p>The cap, the stem, the spring, the housing, the plate. It sinks when you press any key on the board.</p>
+      <div class="art">
+        <svg class="sw" id="sw" viewBox="0 0 320 300" role="img" aria-label="A cross-section of one key: keycap on a stem, a spring inside the switch housing, the housing seated in a plate above the circuit board, all inside the case. The cap and stem move down when a key on the board is pressed.">
+          <!-- case floor -->
+          <rect x="20" y="252" width="280" height="30" rx="4" fill="#2C2A2B"/>
+          <rect x="20" y="252" width="280" height="3" fill="#4B4849"/>
+          <!-- pcb -->
+          <rect x="34" y="236" width="252" height="14" fill="#5A4F45"/>
+          <rect x="34" y="236" width="252" height="2" fill="#7D7064"/>
+          <!-- plate -->
+          <rect x="34" y="196" width="94" height="10" fill="#6B625A"/>
+          <rect x="192" y="196" width="94" height="10" fill="#6B625A"/>
+          <rect x="34" y="196" width="94" height="2" fill="#857B72"/>
+          <rect x="192" y="196" width="94" height="2" fill="#857B72"/>
+          <!-- bottom housing -->
+          <path d="M128 206 L128 236 L192 236 L192 206 L182 206 L182 172 L138 172 L138 206 Z" fill="#D3C7B2"/>
+          <path d="M138 172 h44 v2 h-44z" fill="#F6F0E6"/>
+          <!-- spring -->
+          <g class="spring">
+            <polyline points="160,232 150,226 170,220 150,214 170,208 150,202 170,196 150,190 170,184 160,178" fill="none" stroke="#8B7D6E" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+          </g>
+          <!-- stem -->
+          <g class="stem-g">
+            <rect x="148" y="138" width="24" height="42" rx="2" fill="#3E6B35"/>
+            <rect x="148" y="138" width="24" height="3" fill="#5C8A52"/>
+            <rect x="156" y="122" width="8" height="20" fill="#3E6B35"/>
+          </g>
+          <!-- top housing -->
+          <path d="M132 172 L132 150 L144 136 L148 136 L148 160 L172 160 L172 136 L176 136 L188 150 L188 172 Z" fill="#E0D5C2"/>
+          <path d="M132 150 L144 136 L148 136 L148 139 L145 139 L135 151 Z" fill="#F6F0E6"/>
+          <!-- keycap -->
+          <g class="cap-g">
+            <path d="M104 126 L116 84 Q160 76 204 84 L216 126 Z" fill="#C4BAA8"/>
+            <path d="M110 124 L120 86 Q160 79 200 86 L210 124 Z" fill="#F1EBDF"/>
+            <path d="M120 86 Q160 79 200 86 L198 92 Q160 86 122 92 Z" fill="#FBF8F2"/>
+            <path d="M104 126 L216 126 L216 132 L104 132 Z" fill="#C4BAA8"/>
+            <line x1="112" y1="132" x2="112" y2="122" stroke="#2B2622" stroke-width="1" opacity=".25"/>
+          </g>
+          <!-- labels -->
+          <g class="lbl" fill="none">
+            <line x1="212" y1="98" x2="262" y2="98"/>
+            <line x1="176" y1="150" x2="262" y2="150"/>
+            <line x1="172" y1="214" x2="262" y2="214"/>
+            <line x1="100" y1="201" x2="60" y2="201"/>
+            <line x1="100" y1="243" x2="60" y2="243"/>
+          </g>
+          <text x="266" y="102">Cap</text>
+          <text x="266" y="154">Stem</text>
+          <text x="266" y="218">Spring</text>
+          <text x="58" y="186" text-anchor="end">Plate</text>
+          <text x="58" y="233" text-anchor="end">Board</text>
+        </svg>
+      </div>
+    </article>
+    <article class="cell b rise">
+      <h3 id="wave-h">The sound, drawn: Linear</h3>
+      <p>One keystroke from the board above, rendered by this page's own synthesis and plotted. Change the profile in the top bar and the shape changes with it.</p>
+      <div class="art">
+        <svg class="wave" id="wave" viewBox="0 0 600 140" preserveAspectRatio="none" role="img" aria-label="Waveform of one synthesised keystroke in the selected switch profile.">
+          <line class="base" x1="0" y1="70" x2="600" y2="70"/>
+          <path class="ln" id="wave-path" d=""/>
+          <text class="ms" x="4" y="134">0 ms</text>
+          <text class="ms" x="596" y="134" text-anchor="end">120 ms</text>
+        </svg>
+      </div>
+    </article>
+    <article class="cell c rise">
+      <h3>The map</h3>
+      <p>67 keys, as drawn. Each one you have pressed fills in.</p>
+      <div class="art">
+        <svg class="map" id="map" viewBox="0 0 320 104" role="img" aria-label="A map of the 67 keys. Keys you have pressed are filled in."></svg>
+      </div>
+    </article>
+    <article class="cell d rise">
+      <h3>Your line so far</h3>
+      <p class="echo none" id="echo">Nothing yet.</p>
+      <dl>
+        <div><dt>Most pressed</dt><dd id="most">None</dd></div>
+        <div><dt>Keys used</dt><dd id="used" class="num">0 of 67</dd></div>
+      </dl>
+    </article>
+  </div>
+</section>
+
+<footer class="foot" id="launch" aria-label="Site footer">
+  <div class="frame split">
+    <section class="sub rise" aria-labelledby="sub-h">
+      <p class="kicker">Launch date</p>
+      <h2 id="sub-h">Get the <em>date</em>, once.</h2>
+      <p class="why">KEY-01 is not on sale yet. Leave an email and you get one message when it launches, with the date. Nothing before, nothing after.</p>
+      <form class="form" id="form" novalidate>
+        <label class="vh" for="email">Email address</label>
+        <div class="row" id="row">
+          <input id="email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="you@somewhere.com" aria-describedby="msg" required>
+          <button class="go" id="go" type="submit">
+            <span class="go-label">Send me the date</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+        </div>
+        <p class="msg" id="msg" role="status" aria-live="polite">
+          <svg class="i-bad" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5v.5"/></svg>
+          <svg class="i-ok" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+          <span id="msg-text">One message, on launch day.</span>
+        </p>
+      </form>
+    </section>
+    <aside class="side rise">
+      <nav aria-label="On this page">
+        <h3>On this page</h3>
+        <ul>
+          <li><a href="#play">Play the keyboard</a></li>
+          <li><a href="#feel">What your finger felt</a></li>
+          <li><a href="#launch">Get the launch date</a></li>
+        </ul>
+      </nav>
+      <div class="mast">
+        <p class="big" aria-label="KEY-01">KEY<i aria-hidden="true"></i>01</p>
+        <p>A mechanical keyboard. Linear, tactile or clicky, and the page lets you hear all three.</p>
+      </div>
+    </aside>
+    <div class="legal">
+      <span>KEY-01 · 2026 · Set in Bricolage Grotesque and Manrope.</span>
+      <span>Designed using <a href="https://www.designlounge.live">Design Lounge</a></span>
+    </div>
+  </div>
+</footer>
+
+</div>
+<script src="main.js"></script>
+</body>
+</html>

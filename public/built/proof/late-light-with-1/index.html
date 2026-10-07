@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Late Light, the planetarium's late-night show</title>
+<meta name="description" content="A planetarium's late-night show. Scroll, and you leave the hill: past the Moon as it is tonight, past Jupiter, to the nearest star, to the black hole at the centre of the galaxy, and to the oldest light there is.">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#06070f">
+<meta property="og:title" content="Late Light, the planetarium's late-night show">
+<meta property="og:description" content="Scroll, and you leave the hill. Past the Moon as it is tonight, Jupiter, the nearest star, the black hole at the centre of the galaxy, and the oldest light there is.">
+<meta property="og:image" content="share.png">
+<meta property="og:type" content="website">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon.ico" sizes="32x32">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Hanken+Grotesk:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<canvas id="space" aria-hidden="true"></canvas>
+<div class="fx vignette" aria-hidden="true"></div>
+<div class="fx grain" aria-hidden="true"></div>
+
+<header class="top">
+  <a class="mark" href="#top" aria-label="Late Light, back to the hill"><span class="m1">Late</span> <span class="m2">Light</span></a>
+  <nav class="topnav" aria-label="Site">
+    <a href="#board">Departures</a>
+    <a href="#seat">Your seat</a>
+  </nav>
+  <p class="now" aria-label="Tonight, where you are"><time data-clock datetime="">--:--</time><span class="sep" aria-hidden="true">·</span><span data-phase>Moon tonight</span></p>
+</header>
+
+<aside class="hud" aria-label="Voyage readouts">
+  <div class="ro"><span>From the hill</span><b id="ro-dist">0 km</b></div>
+  <div class="ro"><span>This light left</span><b id="ro-age">just now</b></div>
+</aside>
+
+<nav class="rail" aria-label="Stops"><ol id="rail"></ol></nav>
+<p class="sr" id="live" aria-live="polite"></p>
+
+<main id="main">
+
+  <section class="ch hero" id="top" data-label="The hill" data-km="0" data-lt="0" aria-labelledby="h1">
+    <div class="in">
+      <div class="copy">
+        <p class="meta">A planetarium's late-night show</p>
+        <h1 id="h1"><span class="vh">Late Light</span><span class="ln" aria-hidden="true"><span class="w"><span class="lt">L</span><span class="lt">a</span><span class="lt">t</span><span class="lt">e</span></span></span><span class="ln l2" aria-hidden="true"><span class="w"><em><span class="lt">L</span><span class="lt">i</span><span class="lt">g</span><span class="lt">h</span><span class="lt">t</span></em></span></span></h1>
+        <p class="lede">The last show starts after dark. Lean back, and the scroll carries you off the hill and out past the Moon, Jupiter, the nearest star, the black hole at the centre of the galaxy, and the oldest light there is.</p>
+        <a class="pill" href="#seat">Take a seat<i class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></i></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="ch" id="moon" data-label="The Moon" data-km="384400" data-lt="1.28" data-obj="moon" aria-labelledby="h-moon">
+    <div class="in">
+      <div class="copy">
+        <p class="meta">The Moon</p>
+        <h2 id="h-moon">The Moon, exactly as it is <em>tonight.</em></h2>
+        <p class="body">Drawn from today's date. This is the phase over the dome when the show lets out, and its light is just over a second old.</p>
+        <dl class="facts">
+          <div><dt>Distance</dt><dd>384,400 km</dd></div>
+          <div><dt>Light age</dt><dd>1.3 seconds</dd></div>
+          <div><dt>Tonight</dt><dd data-phase>Moon tonight</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="ch right" id="jupiter" data-label="Jupiter" data-km="780000000" data-lt="2600" data-obj="jupiter" aria-labelledby="h-jupiter">
+    <div class="in">
+      <div class="copy">
+        <p class="meta">Jupiter</p>
+        <h2 id="h-jupiter">Jupiter, with a storm you could <em>lose the Earth in.</em></h2>
+        <p class="body">Eleven Earths across, striped by wind, with four big moons strung out beside it. The red spot has been watched since 1831.</p>
+        <dl class="facts">
+          <div><dt>Distance</dt><dd>about 780 million km</dd></div>
+          <div><dt>Light age</dt><dd>43 minutes</dd></div>
+          <div><dt>Width</dt><dd>11 Earths</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="ch" id="proxima" data-label="Proxima Centauri" data-km="40100000000000" data-lt="133800000" data-obj="proxima" aria-labelledby="h-proxima">
+    <div class="in">
+      <div class="copy">
+        <p class="meta">Proxima Centauri</p>
+        <h2 id="h-proxima">The nearest star after the Sun, and it is <em>red.</em></h2>
+        <p class="body">A dwarf with an eighth of the Sun's mass, too faint to see without a telescope. Its light left four years and three months ago.</p>
+        <dl class="facts">
+          <div><dt>Distance</dt><dd>4.24 light years</dd></div>
+          <div><dt>Light age</dt><dd>4 years 3 months</dd></div>
+          <div><dt>Mass</dt><dd>12% of the Sun's</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="ch right" id="sgra" data-label="Sagittarius A*" data-km="246000000000000000" data-lt="820000000000" data-obj="sgra" aria-labelledby="h-sgra">
+    <div class="in">
+      <div class="copy">
+        <p class="meta">Sagittarius A*</p>
+        <h2 id="h-sgra">The black hole at the centre of <em>everything you know.</em></h2>
+        <p class="body">Four million Suns in a point you cannot see. What glows is the gas falling in. This light left during the last ice age.</p>
+        <dl class="facts">
+          <div><dt>Distance</dt><dd>26,000 light years</dd></div>
+          <div><dt>Light age</dt><dd>26,000 years</dd></div>
+          <div><dt>Mass</dt><dd>4 million Suns</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="ch centre" id="first" data-label="The first light" data-km="435000000000000000000000" data-lt="435500000000000000" aria-labelledby="h-first">
+    <div class="in">
+      <div class="copy">
+        <p class="meta">The first light</p>
+        <h2 id="h-first">Then the oldest light there is, <em>still arriving.</em></h2>
+        <p class="body">It set out 13.8 billion years ago, before there were stars, and it still falls on the dome every night: faint, everywhere, 2.7 degrees above absolute zero.</p>
+        <dl class="facts">
+          <div><dt>Light age</dt><dd>13.8 billion years</dd></div>
+          <div><dt>Temperature</dt><dd>2.7 K</dd></div>
+          <div><dt>The edge we can see</dt><dd>46 billion light years</dd></div>
+        </dl>
+        <button class="pill" type="button" id="back">Back to the hill<i class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M6 11l6-6 6 6"/></svg></i></button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<section class="board-sec" id="board" aria-labelledby="h-board">
+  <div class="wrap">
+    <header class="sec-head">
+      <p class="meta">Tonight's departures</p>
+      <h2 id="h-board">Five stops, each one's light <em>older than the last.</em></h2>
+      <p class="lede">The board at the door. Every figure is public astronomy, rounded.</p>
+    </header>
+    <div class="board" id="flaps" aria-label="Tonight's stops and how old their light is">
+      <div class="legend" aria-hidden="true"><span>Stop</span><span>Its light left</span></div>
+      <div class="row" data-a="MOON" data-b="1.3 S"></div>
+      <div class="row" data-a="JUPITER" data-b="43 MIN"></div>
+      <div class="row" data-a="PROXIMA" data-b="4.2 YR"></div>
+      <div class="row" data-a="SGR A*" data-b="26,000 YR"></div>
+      <div class="row" data-a="FIRST LIGHT" data-b="13.8 BN YR"></div>
+    </div>
+    <button class="pill small" type="button" id="replay">Replay the board</button>
+  </div>
+</section>
+
+<section class="band" id="seat" aria-labelledby="h-seat">
+  <div class="left">
+    <h2 id="h-seat"><span>Take</span><span>a</span><span><em>seat.</em></span></h2>
+    <p class="note">Dates, times and the ticket link are not on this page yet.</p>
+  </div>
+  <div class="right">
+    <p class="reason">When the late show's dates are set, we send them once, with the ticket link.</p>
+    <form id="form" novalidate>
+      <label for="email">Email</label>
+      <div class="row-f" id="rowf">
+        <input id="email" name="email" type="email" autocomplete="email" required placeholder="you@somewhere.night" aria-describedby="msg">
+        <button class="go" type="submit">Tell me</button>
+      </div>
+      <p class="msg" id="msg" role="status" aria-live="polite"></p>
+    </form>
+    <p class="fine">One email when the dates are set. Nothing else.</p>
+  </div>
+</section>
+
+<footer aria-labelledby="ft">
+  <h2 id="ft" class="vh">Site footer</h2>
+  <div class="fgrid">
+    <div class="brand">
+      <a class="logo" href="#top"><span class="m1">Late</span> <span class="m2">Light</span></a>
+      <p class="tag">A planetarium's late-night show. You scroll, and you travel.</p>
+      <ul class="contact">
+        <li><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><span>Moon tonight: <span data-phase>Moon tonight</span></span></li>
+      </ul>
+    </div>
+    <nav class="col" aria-label="The voyage">
+      <h3>The voyage</h3>
+      <ul>
+        <li><a href="#moon">The Moon</a></li>
+        <li><a href="#jupiter">Jupiter</a></li>
+        <li><a href="#proxima">Proxima Centauri</a></li>
+        <li><a href="#sgra">Sagittarius A*</a></li>
+        <li><a href="#first">The first light</a></li>
+      </ul>
+    </nav>
+    <nav class="col" aria-label="Tonight">
+      <h3>Tonight</h3>
+      <ul>
+        <li><a href="#board">Departures</a></li>
+        <li><a href="#seat">Take a seat</a></li>
+        <li><a href="#top">Back to the hill</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="legal">
+    <span>Late Light, a planetarium's late-night show. Figures are public astronomy, rounded.</span>
+    <nav aria-label="Credit"><span>Designed using <a href="https://www.designlounge.live">Design Lounge</a></span></nav>
+  </div>
+  <svg class="art" viewBox="0 0 1280 260" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false">
+    <defs>
+      <pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(-28)"><line x1="0" y1="0" x2="0" y2="6" stroke="currentColor" stroke-width="0.8" opacity=".35"/></pattern>
+      <pattern id="hatch2" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(-18)"><line x1="0" y1="0" x2="0" y2="5" stroke="currentColor" stroke-width="0.8" opacity=".5"/></pattern>
+      <g id="post"><line x1="0" y1="0" x2="0" y2="-26" stroke="currentColor" stroke-width="1.2"/><circle cx="0" cy="-28" r="2.4" class="lamp"/></g>
+    </defs>
+    <g class="stars">
+      <circle cx="60" cy="30" r="1"/><circle cx="140" cy="70" r=".8"/><circle cx="230" cy="22" r="1.1"/><circle cx="330" cy="58" r=".7"/><circle cx="410" cy="18" r=".9"/><circle cx="520" cy="80" r=".8"/><circle cx="610" cy="35" r="1.2"/><circle cx="700" cy="66" r=".7"/><circle cx="790" cy="20" r="1"/><circle cx="880" cy="50" r=".8"/><circle cx="960" cy="26" r="1.1"/><circle cx="1050" cy="74" r=".7"/><circle cx="1140" cy="38" r="1"/><circle cx="1230" cy="62" r=".9"/><circle cx="470" cy="44" r=".6"/><circle cx="1010" cy="92" r=".6"/>
+    </g>
+    <g class="far"><path d="M0 150 L80 128 L170 140 L260 118 L360 134 L440 112 L540 130 L640 108 L740 126 L840 104 L940 124 L1040 110 L1140 128 L1220 112 L1280 124 L1280 260 L0 260Z" class="fill"/><path d="M0 150 L80 128 L170 140 L260 118 L360 134 L440 112 L540 130 L640 108 L740 126 L840 104 L940 124 L1040 110 L1140 128 L1220 112 L1280 124 L1280 260 L0 260Z" fill="url(#hatch)" class="hatchc"/></g>
+    <g class="mid">
+      <path d="M0 196 L120 172 L240 186 L340 168 L430 180 L520 166 L600 170 L760 170 L860 176 L980 160 L1100 178 L1200 164 L1280 174 L1280 260 L0 260Z" class="fill"/>
+      <path d="M0 196 L120 172 L240 186 L340 168 L430 180 L520 166 L600 170 L760 170 L860 176 L980 160 L1100 178 L1200 164 L1280 174 L1280 260 L0 260Z" fill="url(#hatch2)" class="hatchc"/>
+      <g class="dome" transform="translate(680 170)">
+        <rect x="-70" y="-22" width="140" height="24" class="wall"/>
+        <path d="M-48 -22 A48 48 0 0 1 48 -22Z" class="cap"/>
+        <path d="M-48 -22 A48 48 0 0 1 48 -22" fill="none" class="rim"/>
+        <path d="M-40 -22 A40 40 0 0 1 40 -22" fill="url(#hatch)" class="hatchc"/>
+        <rect x="-62" y="-14" width="5" height="14" class="door"/>
+        <line x1="-70" y1="-22" x2="70" y2="-22" class="rim"/>
+      </g>
+    </g>
+    <g class="near">
+      <path d="M0 232 L160 222 L300 230 L420 218 L560 228 L700 214 L840 226 L980 216 L1120 228 L1280 220 L1280 260 L0 260Z" class="fill"/>
+      <path d="M470 226 Q560 206 660 194" fill="none" class="path"/>
+      <use href="#post" x="500" y="222"/><use href="#post" x="572" y="208"/><use href="#post" x="640" y="196"/>
+      <g class="walker" transform="translate(530 218)">
+        <circle cx="0" cy="-19" r="3"/>
+        <path d="M0 -16 L0 -6 M0 -6 L-4 2 M0 -6 L4 2 M0 -13 L-5 -8 M0 -13 L5 -9" fill="none" stroke-linecap="round"/>
+        <rect x="3" y="-13" width="5" height="6" rx="1"/>
+      </g>
+      <g class="tufts"><path d="M60 226 l3 -8 l3 8 M120 229 l3 -7 l3 7 M900 224 l3 -8 l3 8 M1180 228 l3 -7 l3 7 M1040 226 l3 -6 l3 6"/></g>
+    </g>
+  </svg>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>

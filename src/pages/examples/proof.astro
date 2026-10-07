@@ -1,0 +1,98 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHead from '../../components/PageHead.astro';
+import DeviceFrame from '../../components/DeviceFrame.astro';
+import { PROOF, PROOF_META, proofUrl, proofCount, type Arm } from '../../data/proof';
+
+const total = proofCount();
+const perArm = PROOF.map((s) => Math.min(s.runs.without.length, s.runs.with.length));
+const ARMS: { arm: Arm; label: string; note: string }[] = [
+  { arm: 'without', label: 'Without the skill', note: PROOF_META.without },
+  { arm: 'with', label: 'With the skill', note: PROOF_META.with },
+];
+---
+<Base rail={false} title="Proof: with and without the skill" description={`The same three prompts, built ${total} times by the same model and harness: ${PROOF.map((s) => s.runs.without.length).join(', ')} runs without the Design Lounge skill and the same with it. Every run shown, none edited.`} crumbs={[{ name: 'Examples', href: '/examples' }, { name: 'Proof', href: '/examples/proof' }]}>
+  <PageHead eyebrow="Examples" title="Same prompt, <i>with and without.</i>" count={total} countLabel="builds" blurb="Three prompts. Each one was built several times without the Design Lounge skill and the same number of times with it, by the same model, in the same harness, on the same plain stack. Every run is here, as it was produced. No edits, no cherry-picking." />
+
+  <section class="wrap setup" aria-label="How the runs were made">
+    <dl>
+      <div><dt>Model</dt><dd>{PROOF_META.model}</dd></div>
+      <div><dt>Harness</dt><dd>{PROOF_META.harness}</dd></div>
+      <div><dt>Stack</dt><dd>{PROOF_META.stack}</dd></div>
+      <div><dt>Date</dt><dd>{PROOF_META.date}</dd></div>
+      <div><dt>Without</dt><dd>{PROOF_META.without}</dd></div>
+      <div><dt>With</dt><dd>{PROOF_META.with}</dd></div>
+    </dl>
+  </section>
+
+  {PROOF.map((s, i) => (
+    <section class="wrap subject" aria-labelledby={`proof-${s.id}`}>
+      <header class="subject-head">
+        <h2 class="display h3" id={`proof-${s.id}`}>{s.title}</h2>
+        <p class="prompt"><span class="mono" aria-hidden="true">&gt;</span> <span id={`prompt-${s.id}`}>{s.prompt}</span></p>
+        <p class="made mono">
+          <button class="copy" type="button" data-copy={`#prompt-${s.id}`}><span data-label>Copy the prompt</span></button>
+          <span>{s.runs.without.length} runs without · {s.runs.with.length} runs with · no edits, no cherry-picking: all {s.runs.without.length + s.runs.with.length} runs shown</span>
+        </p>
+      </header>
+      {Array.from({ length: Math.max(s.runs.without.length, s.runs.with.length) }, (_, k) => (
+        <div class="run">
+          <p class="run-label mono">Run {k + 1}</p>
+          <div class="sides">
+            {ARMS.map(({ arm, label }) => {
+              const n = s.runs[arm][k];
+              if (n === undefined) return <figure class="side"><div class="stage pending"><p>Run {k + 1} {label.toLowerCase()} is still building. It is added here when it finishes, unedited.</p></div></figure>;
+              const url = proofUrl(s.id, arm, n);
+              return (
+                <figure class="side">
+                  <div class="stage">
+                    <DeviceFrame slug={`${s.id}-${arm}-${n}`} platform="web" title={`${s.title}, ${label.toLowerCase()}, run ${n}`} src={url} path={`proof/${s.id}-${arm}-${n}`} interactive eager={i === 0 && k === 0} />
+                  </div>
+                  <figcaption>
+                    <p class="label">{label}</p>
+                    <p class="meta"><a href={url} target="_blank" rel="noopener">Full size <span aria-hidden="true">↗</span></a></p>
+                  </figcaption>
+                </figure>
+              );
+            })}
+          </div>
+        </div>
+      ))}
+    </section>
+  ))}
+
+  <section class="close wrap" aria-labelledby="proof-close">
+    <h2 class="display h2" id="proof-close">Two looks for one prompt are on <a href="/examples/compare">Compare</a>.</h2>
+    <p class="lede">That page is the skill against itself, on two directions. This one is the skill against nothing.</p>
+  </section>
+</Base>
+
+<style>
+  .setup { padding-block: 8px 0; }
+  .setup dl { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px 28px; margin: 0; padding: 18px 0 8px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .setup div { display: flex; flex-direction: column; gap: 4px; }
+  .setup dt { font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); }
+  .setup dd { margin: 0; font-size: 14.5px; color: var(--ink-2); text-wrap: pretty; }
+  .subject { padding-block: clamp(48px, 6vw, 88px) 0; }
+  .subject-head { display: flex; flex-direction: column; gap: 12px; max-width: 72ch; margin-bottom: clamp(20px, 3vw, 32px); }
+  .prompt { font-family: var(--mono); font-size: 14px; line-height: 1.55; color: var(--ink); padding: 12px 14px; background: var(--paper-2); border: 1px solid var(--line); border-radius: var(--r); text-wrap: pretty; }
+  .prompt .mono { color: var(--accent-text); margin-right: 4px; }
+  .made { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; font-size: 12px; color: var(--ink-3); }
+  .copy { font: inherit; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink); background: var(--paper); border: 1px solid var(--line-2); border-radius: 999px; padding: 6px 12px; cursor: pointer; }
+  .copy:hover { border-color: var(--ink); }
+  .run { margin-bottom: clamp(28px, 4vw, 44px); }
+  .run-label { font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 10px; }
+  .sides { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(16px, 2vw, 28px); }
+  .side { display: flex; flex-direction: column; gap: 12px; margin: 0; min-width: 0; }
+  .stage { position: relative; aspect-ratio: 16 / 11; border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--paper-2) radial-gradient(var(--line-2) 1px, transparent 1.2px) center / 16px 16px; }
+  .stage :global(lounge-frame) { position: absolute; inset: 14px; }
+  .stage.pending { display: grid; place-items: center; padding: 24px; text-align: center; color: var(--ink-2); font-size: 14px; }
+  .label { font-size: 15px; font-weight: 500; color: var(--ink); }
+  .meta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; font-size: 13.5px; }
+  .meta a { color: var(--ink-2); border-bottom: 1px solid var(--line-2); }
+  .meta a:hover { color: var(--accent-text); border-color: var(--accent-text); }
+  .close { padding-block: clamp(56px, 8vw, 110px) clamp(40px, 6vw, 80px); max-width: 60ch; }
+  .close a { border-bottom: 1px solid var(--line-2); }
+  .close .lede { margin-top: 12px; }
+  @media (max-width: 760px) { .sides { grid-template-columns: 1fr; } }
+</style>

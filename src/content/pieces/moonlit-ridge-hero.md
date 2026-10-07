@@ -135,7 +135,7 @@ Scene numbers (canvas CSS pixels, W×H = hero size):
 | Light glow | warm lights with r > 1.05 get a 12r amber sprite at .32 × flicker |
 | Hut | on ridge 2 at .63W, scale s = clamp(.8, H/800, 1.4); 20s wide walls, 7s tall, roof peak 17s with 3s eaves, 3×6s chimney; filled with the ridge colour; two 3.4×3.6s windows `#ffc56e`; 60s amber sprite at .5 × flicker |
 | Embers | 30 from the chimney top; cycle 3 to 7s; rise .16 to .40H; drift 20 to 110px right; sway 6 to 22px; sprite 6 to 16px shrinking 60%; 1.4px core `#ffe2a8`; alpha sin²(π·life) × (1 − life/2) |
-| Waveform | y .868H, sampled every 3px, `rgba(255,176,74,.8)`, 1.2px, `shadowBlur 8` |
+| Waveform | y .868H, sampled every 3px, `rgba(255,176,74,.8)`, 1.2px, over a 7px stroke at `rgba(255,176,74,.16)` (no shadowBlur) |
 | Grain | 160px noise tile generated at runtime, `opacity: .045` |
 
 ## Typography

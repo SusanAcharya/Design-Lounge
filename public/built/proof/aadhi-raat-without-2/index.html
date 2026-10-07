@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Aadhi Raat — music recorded after midnight in Kathmandu</title>
+  <meta name="description" content="Aadhi Raat is a record label that releases only music recorded after midnight, Kathmandu time.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&family=Tiro+Devanagari+Hindi&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="is-loading">
+
+  <div class="curtain" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="cursor" aria-hidden="true"></div>
+  <div class="progress" aria-hidden="true"><i></i></div>
+
+  <header class="nav">
+    <a class="nav__mark" href="#top" aria-label="Aadhi Raat, back to top">
+      <span class="nav__deva" lang="ne">आधी रात</span>
+      <span class="nav__latin">Aadhi Raat</span>
+    </a>
+    <div class="nav__clock" aria-live="off">
+      <span class="nav__city">KTM</span>
+      <span class="nav__time" data-ktm-clock>00:00:00</span>
+      <span class="nav__dot" data-ktm-dot></span>
+    </div>
+    <nav class="nav__links" aria-label="Sections">
+      <a href="#rule" data-cursor>Rule</a>
+      <a href="#midnight" data-cursor>Midnight</a>
+      <a href="#hours" data-cursor>Hours</a>
+      <a href="#check" data-cursor>Check</a>
+      <a href="#send" data-cursor>Send</a>
+    </nav>
+    <button class="sound" type="button" data-sound aria-pressed="false" data-cursor>
+      <span class="sound__bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+      <span data-sound-label>Night tone off</span>
+    </button>
+  </header>
+
+  <main id="top">
+
+    <!-- HERO -->
+    <section class="hero" id="hero">
+      <canvas id="sky" class="hero__sky" aria-hidden="true"></canvas>
+      <div class="hero__ghost" lang="ne" aria-hidden="true">आधी रात</div>
+
+      <div class="hero__inner">
+        <p class="hero__eyebrow"><span>A record label</span><span>Kathmandu</span><span>UTC +5:45</span></p>
+
+        <h1 class="hero__title">
+          <span class="hero__line"><span>Aadhi</span></span>
+          <span class="hero__line"><span>Raat<em>.</em></span></span>
+        </h1>
+
+        <div class="hero__foot">
+          <p class="hero__dek">We release music recorded after midnight in Kathmandu. Nothing else. The city sleeps; the tape runs.</p>
+
+          <div class="clock" role="group" aria-label="Current time in Kathmandu">
+            <span class="clock__label">Kathmandu, now</span>
+            <span class="clock__time" data-ktm-clock data-hero-clock>00:00:00</span>
+            <span class="clock__state" data-ktm-state aria-live="polite">—</span>
+          </div>
+        </div>
+      </div>
+
+      <a class="hero__scroll" href="#rule" aria-label="Scroll to the rule"><i></i></a>
+    </section>
+
+    <!-- MARQUEE -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__track" data-marquee>
+        <span>Recorded after midnight</span><span>Kathmandu time only</span><span>00:00 – 05:45 NPT</span><span>Session files, not promises</span><span lang="ne">आधी रात</span>
+      </div>
+    </div>
+
+    <!-- RULE -->
+    <section class="sec sec--rule" id="rule">
+      <header class="sec__head">
+        <span class="sec__num">01</span>
+        <span class="sec__name">The rule</span>
+      </header>
+
+      <h2 class="statement" data-split>If the first take did not begin after midnight in Kathmandu, it is not ours.</h2>
+
+      <div class="rule__grid">
+        <div class="rule__cell reveal">
+          <span class="rule__k">The window</span>
+          <p class="rule__big">00:00 <span class="rule__arrow">→</span> 05:45</p>
+          <p>Nepal Time. Five hours and forty-five minutes: the same odd number that sets Kathmandu's clock apart from everyone else's.</p>
+        </div>
+        <div class="rule__cell reveal">
+          <span class="rule__k">The room</span>
+          <p class="rule__big">Anywhere</p>
+          <p>The rule is about when, not where. A bedroom in Patan counts; so does a studio on the other side of the world, as long as Kathmandu's clock says night.</p>
+        </div>
+        <div class="rule__cell reveal">
+          <span class="rule__k">The proof</span>
+          <p class="rule__big">Session files</p>
+          <p>We read the timestamps, not the press release. Creation times, converted to Nepal Time, decide what we release.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- MIDNIGHT ELSEWHERE -->
+    <section class="sec sec--midnight" id="midnight">
+      <header class="sec__head">
+        <span class="sec__num">02</span>
+        <span class="sec__name">Midnight, elsewhere</span>
+      </header>
+
+      <h2 class="statement" data-split>Midnight in Kathmandu is 18:15 UTC. Wherever you are, this is what your clock says when ours strikes twelve.</h2>
+
+      <div class="you reveal">
+        <span class="you__k">Where you are</span>
+        <span class="you__zone" data-you-zone>—</span>
+        <span class="you__time" data-you-time>—</span>
+        <span class="you__note" data-you-note>—</span>
+      </div>
+
+      <ul class="cities reveal" data-cities aria-label="Local time in other cities at Kathmandu midnight"></ul>
+    </section>
+
+    <!-- HOURS -->
+    <section class="sec sec--hours" id="hours">
+      <header class="sec__head">
+        <span class="sec__num">03</span>
+        <span class="sec__name">The six hours</span>
+      </header>
+
+      <h2 class="statement" data-split>The catalogue is shelved by the hour of the first take. Scroll across the night.</h2>
+
+      <div class="track" data-track>
+        <article class="hour" data-hour="0" data-cursor="drag">
+          <header><span class="hour__n">00</span><span class="hour__range">00:00 – 00:59</span></header>
+          <canvas class="hour__wave" aria-hidden="true"></canvas>
+          <p class="hour__line">Midnight. The door opens. Ring Road goes quiet.</p>
+          <footer><span class="hour__cat">AR·00</span><span class="hour__tag">first hour</span></footer>
+        </article>
+        <article class="hour" data-hour="1" data-cursor="drag">
+          <header><span class="hour__n">01</span><span class="hour__range">01:00 – 01:59</span></header>
+          <canvas class="hour__wave" aria-hidden="true"></canvas>
+          <p class="hour__line">The hour of second thoughts.</p>
+          <footer><span class="hour__cat">AR·01</span><span class="hour__tag">second hour</span></footer>
+        </article>
+        <article class="hour" data-hour="2" data-cursor="drag">
+          <header><span class="hour__n">02</span><span class="hour__range">02:00 – 02:59</span></header>
+          <canvas class="hour__wave" aria-hidden="true"></canvas>
+          <p class="hour__line">Dogs, a generator somewhere, and the first clean take.</p>
+          <footer><span class="hour__cat">AR·02</span><span class="hour__tag">third hour</span></footer>
+        </article>
+        <article class="hour" data-hour="3" data-cursor="drag">
+          <header><span class="hour__n">03</span><span class="hour__range">03:00 – 03:59</span></header>
+          <canvas class="hour__wave" aria-hidden="true"></canvas>
+          <p class="hour__line">Nothing moves. Not even the dust.</p>
+          <footer><span class="hour__cat">AR·03</span><span class="hour__tag">fourth hour</span></footer>
+        </article>
+        <article class="hour" data-hour="4" data-cursor="drag">
+          <header><span class="hour__n">04</span><span class="hour__range">04:00 – 04:59</span></header>
+          <canvas class="hour__wave" aria-hidden="true"></canvas>
+          <p class="hour__line">Temple bells start before the light does.</p>
+          <footer><span class="hour__cat">AR·04</span><span class="hour__tag">fifth hour</span></footer>
+        </article>
+        <article class="hour hour--last" data-hour="5" data-cursor="drag">
+          <header><span class="hour__n">05</span><span class="hour__range">05:00 – 05:44</span></header>
+          <canvas class="hour__wave" aria-hidden="true"></canvas>
+          <p class="hour__line">Forty-five minutes left. First light on the ridge. Stop the tape.</p>
+          <footer><span class="hour__cat">AR·05</span><span class="hour__tag">last hour</span></footer>
+        </article>
+      </div>
+    </section>
+
+    <!-- CHECK -->
+    <section class="sec sec--check" id="check">
+      <header class="sec__head">
+        <span class="sec__num">04</span>
+        <span class="sec__name">Check a session</span>
+      </header>
+
+      <h2 class="statement" data-split>Enter when the first take began, in your own time. We convert it to Kathmandu.</h2>
+
+      <form class="checker reveal" data-checker novalidate>
+        <div class="checker__fields">
+          <label class="field">
+            <span class="field__k">First take began</span>
+            <input class="field__in" type="datetime-local" id="check-time" name="when" data-cursor required>
+          </label>
+          <label class="field">
+            <span class="field__k">In this time zone</span>
+            <select class="field__in" id="check-zone" name="zone" data-cursor></select>
+          </label>
+        </div>
+        <output class="verdict" for="check-time check-zone" aria-live="polite">
+          <span class="verdict__time" data-v-time>—</span>
+          <span class="verdict__k">Nepal Time</span>
+          <span class="verdict__msg" data-v-msg>Pick a time to begin.</span>
+        </output>
+      </form>
+    </section>
+
+    <!-- SEND -->
+    <section class="sec sec--send" id="send">
+      <header class="sec__head">
+        <span class="sec__num">05</span>
+        <span class="sec__name">Send the night</span>
+      </header>
+
+      <h2 class="statement" data-split>Submissions are taken only while the window is open in Kathmandu. The button knows.</h2>
+
+      <div class="gate reveal">
+        <button class="gate__btn" type="button" data-gate disabled data-cursor>
+          <span class="gate__status" data-gate-status>Window closed</span>
+          <span class="gate__when" data-gate-when>—</span>
+        </button>
+        <p class="gate__local" data-gate-local>—</p>
+
+        <div class="gate__panel" data-gate-panel hidden>
+          <p class="gate__lead">The window is open. Here is how it works.</p>
+          <ol class="gate__steps">
+            <li>Send the session folder exactly as it was saved. Timestamps intact.</li>
+            <li>No bounces, no edits, no explanation. The files speak.</li>
+            <li>If the clock agrees, we listen. If it does not, we do not open it.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="foot">
+    <div class="foot__mark">
+      <span class="foot__deva" lang="ne">आधी रात</span>
+      <span class="foot__latin">Aadhi Raat Records</span>
+    </div>
+    <div class="foot__meta">
+      <span>Kathmandu, Nepal</span>
+      <span>27.7° N, 85.3° E</span>
+      <span>UTC +5:45</span>
+      <span>Window 00:00 – 05:45 NPT</span>
+    </div>
+    <div class="foot__ctl">
+      <button class="sound" type="button" data-sound aria-pressed="false" data-cursor>
+        <span class="sound__bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        <span data-sound-label>Night tone off</span>
+      </button>
+      <a class="foot__top" href="#top" data-cursor>Back to the top ↑</a>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>

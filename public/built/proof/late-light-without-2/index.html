@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Late Light — the planetarium's late-night show</title>
+  <meta name="description" content="Late Light is the planetarium's late-night show. Scroll to leave Earth and travel outward, one stop at a time, until the lights come back up.">
+  <meta name="theme-color" content="#04050c">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-stop="earth">
+
+  <canvas class="sky" id="sky" aria-hidden="true"></canvas>
+  <div class="haze" aria-hidden="true"></div>
+
+  <header class="hud">
+    <a class="hud-brand" href="#top">
+      <span class="hud-mark" aria-hidden="true"></span>
+      <span>Late Light</span>
+    </a>
+    <div class="hud-readout" aria-live="off">
+      <span class="hud-label">Light-time from the dome</span>
+      <output class="hud-value" id="odometer" for="journey">under the dome</output>
+    </div>
+  </header>
+
+  <nav class="track" aria-label="Stops on the journey">
+    <a href="#earth" data-track="earth"><span>Earth</span></a>
+    <a href="#moon" data-track="moon"><span>Moon</span></a>
+    <a href="#mars" data-track="mars"><span>Mars</span></a>
+    <a href="#jupiter" data-track="jupiter"><span>Jupiter</span></a>
+    <a href="#saturn" data-track="saturn"><span>Saturn</span></a>
+    <a href="#lookback" data-track="lookback"><span>Look back</span></a>
+    <a href="#nebula" data-track="nebula"><span>Nebula</span></a>
+    <a href="#galaxy" data-track="galaxy"><span>Another galaxy</span></a>
+    <a href="#home" data-track="home"><span>Home</span></a>
+  </nav>
+
+  <main id="journey">
+
+    <!-- 0 · Earth -->
+    <section class="stop stop-earth" id="earth" data-stop="earth" data-ls="0">
+      <a id="top" class="anchor" aria-hidden="true" tabindex="-1"></a>
+      <div class="stage">
+        <div class="earth orb" aria-hidden="true">
+          <canvas class="earth-lights" id="earth-lights" width="1600" height="580"></canvas>
+          <div class="earth-night"></div>
+        </div>
+        <div class="copy copy-hero">
+          <p class="eyebrow">The planetarium, after hours</p>
+          <h1 class="title">Late&nbsp;Light</h1>
+          <p class="lede">A late-night show under the dome. The lights go down, the doors close, and for one hour the ceiling is the only sky there is.</p>
+          <p class="cue"><span class="cue-arrow" aria-hidden="true"></span>Scroll to leave Earth</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 1 · Moon -->
+    <section class="stop" id="moon" data-stop="moon" data-ls="1.28">
+      <div class="stage">
+        <div class="orb moon" aria-hidden="true"></div>
+        <div class="copy">
+          <p class="eyebrow">First stop</p>
+          <h2>The Moon</h2>
+          <p class="fact">1.3 light-seconds from the dome</p>
+          <p>Moonlight is a little over a second old when it reaches your eye. It is the only other world anyone has stood on, and from here the whole of the night show begins.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2 · Mars -->
+    <section class="stop" id="mars" data-stop="mars" data-ls="750">
+      <div class="stage">
+        <div class="orb mars" aria-hidden="true"><div class="mars-cap"></div></div>
+        <div class="copy">
+          <p class="eyebrow">Second stop</p>
+          <h2>Mars</h2>
+          <p class="fact">Between 3 and 22 light-minutes, depending on the year</p>
+          <p>A rust-coloured world with a day almost as long as ours and a sky that goes pink at sunset. We dim the dome to the brightness of a Martian afternoon so your eyes can adjust.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3 · Jupiter -->
+    <section class="stop" id="jupiter" data-stop="jupiter" data-ls="2600">
+      <div class="stage">
+        <div class="orb jupiter" aria-hidden="true">
+          <div class="jupiter-bands"></div>
+          <div class="jupiter-spot"></div>
+          <div class="jupiter-shade"></div>
+        </div>
+        <div class="copy">
+          <p class="eyebrow">Third stop</p>
+          <h2>Jupiter</h2>
+          <p class="fact">About 43 light-minutes</p>
+          <p>Large enough to hold every other planet put together, with a storm older than the telescope that first saw it. On the full dome it fills the ceiling from wall to wall.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 · Saturn -->
+    <section class="stop" id="saturn" data-stop="saturn" data-ls="4800">
+      <div class="stage">
+        <div class="orb saturn" aria-hidden="true">
+          <svg viewBox="0 0 400 400" width="100%" height="100%" role="img" aria-label="Saturn with its rings">
+            <defs>
+              <radialGradient id="sat-body" cx="38%" cy="32%" r="75%">
+                <stop offset="0" stop-color="#f6e2b4"/>
+                <stop offset="0.55" stop-color="#d9b77a"/>
+                <stop offset="0.85" stop-color="#8f7042"/>
+                <stop offset="1" stop-color="#2f2415"/>
+              </radialGradient>
+              <linearGradient id="sat-band" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#fff" stop-opacity="0"/>
+                <stop offset="0.3" stop-color="#000" stop-opacity="0.08"/>
+                <stop offset="0.42" stop-color="#fff" stop-opacity="0.06"/>
+                <stop offset="0.6" stop-color="#000" stop-opacity="0.1"/>
+                <stop offset="0.75" stop-color="#fff" stop-opacity="0.05"/>
+                <stop offset="1" stop-color="#000" stop-opacity="0.25"/>
+              </linearGradient>
+              <clipPath id="sat-clip"><circle cx="200" cy="200" r="112"/></clipPath>
+              <clipPath id="sat-front"><rect x="0" y="200" width="400" height="200"/></clipPath>
+              <clipPath id="sat-back"><rect x="0" y="0" width="400" height="200"/></clipPath>
+            </defs>
+            <g class="sat-rings" transform="rotate(-18 200 200)">
+              <g clip-path="url(#sat-back)">
+                <ellipse cx="200" cy="200" rx="196" ry="48" fill="none" stroke="#c9ab77" stroke-opacity="0.75" stroke-width="22"/>
+                <ellipse cx="200" cy="200" rx="166" ry="40" fill="none" stroke="#1f1a12" stroke-opacity="0.8" stroke-width="5"/>
+                <ellipse cx="200" cy="200" rx="150" ry="36" fill="none" stroke="#e6cc98" stroke-opacity="0.55" stroke-width="14"/>
+              </g>
+            </g>
+            <g clip-path="url(#sat-clip)">
+              <circle cx="200" cy="200" r="112" fill="url(#sat-body)"/>
+              <rect x="88" y="88" width="224" height="224" fill="url(#sat-band)"/>
+              <ellipse cx="200" cy="248" rx="200" ry="34" fill="#1a130a" opacity="0.55" transform="rotate(-18 200 200)"/>
+            </g>
+            <g class="sat-rings" transform="rotate(-18 200 200)">
+              <g clip-path="url(#sat-front)">
+                <ellipse cx="200" cy="200" rx="196" ry="48" fill="none" stroke="#d9bb85" stroke-opacity="0.9" stroke-width="22"/>
+                <ellipse cx="200" cy="200" rx="166" ry="40" fill="none" stroke="#1f1a12" stroke-opacity="0.85" stroke-width="5"/>
+                <ellipse cx="200" cy="200" rx="150" ry="36" fill="none" stroke="#f1dcae" stroke-opacity="0.7" stroke-width="14"/>
+              </g>
+            </g>
+          </svg>
+        </div>
+        <div class="copy">
+          <p class="eyebrow">Fourth stop</p>
+          <h2>Saturn</h2>
+          <p class="fact">About 80 light-minutes</p>
+          <p>The rings are mostly ice, thinner in proportion than a sheet of paper, and wide enough that light takes a while to cross them. This is the part of the show where nobody talks.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5 · Look back -->
+    <section class="stop" id="lookback" data-stop="lookback" data-ls="86400">
+      <div class="stage">
+        <div class="orb beam" aria-hidden="true"><span class="dot"></span></div>
+        <div class="copy">
+          <p class="eyebrow">Fifth stop</p>
+          <h2>Look back</h2>
+          <p class="fact">Roughly one light-day</p>
+          <p>From the edge of the Sun's reach, Earth is a single pale point caught in a sunbeam. The dome, the seats, everyone who ever sat in them: all inside that point. We hold this frame for a long time.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6 · Nebula -->
+    <section class="stop" id="nebula" data-stop="nebula" data-ls="42400000000">
+      <div class="stage">
+        <div class="orb nebula" aria-hidden="true">
+          <i class="n1"></i><i class="n2"></i><i class="n3"></i><i class="n7"></i><i class="n8"></i><i class="n5"></i><i class="n6"></i><i class="n4"></i>
+          <b class="ns ns1"></b><b class="ns ns2"></b><b class="ns ns3"></b><b class="ns ns4"></b>
+        </div>
+        <div class="copy">
+          <p class="eyebrow">Sixth stop</p>
+          <h2>A nursery of stars</h2>
+          <p class="fact">About 1,300 light-years</p>
+          <p>The Orion Nebula, visible from the dome's roof as a smudge below the belt. New stars are lighting inside it now. The light leaving them tonight will reach the planetarium in the thirty-fourth century.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7 · Galaxy -->
+    <section class="stop" id="galaxy" data-stop="galaxy" data-ls="79000000000000">
+      <div class="stage">
+        <div class="orb galaxy" aria-hidden="true"><canvas id="galaxy-canvas" width="900" height="900"></canvas></div>
+        <div class="copy">
+          <p class="eyebrow">Last stop</p>
+          <h2>Another galaxy</h2>
+          <p class="fact">2.5 million light-years</p>
+          <p>Andromeda: the farthest thing a human eye can see unaided, and the oldest light in the show. It left before anyone was here to look up. It arrives tonight, in a dark room, on purpose.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8 · Home -->
+    <section class="stop stop-home" id="home" data-stop="home" data-ls="0">
+      <div class="stage">
+        <div class="dome" aria-hidden="true">
+          <svg viewBox="0 0 1200 420" preserveAspectRatio="xMidYMax meet">
+            <defs>
+              <linearGradient id="dome-fill" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#f2b56b" stop-opacity="0.16"/>
+                <stop offset="1" stop-color="#f2b56b" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <path d="M40 420 A560 560 0 0 1 1160 420 Z" fill="url(#dome-fill)"/>
+            <path d="M40 420 A560 560 0 0 1 1160 420" fill="none" stroke="#f2b56b" stroke-opacity="0.5" stroke-width="2"/>
+            <g class="seats" fill="#0b0d1a" stroke="#f2b56b" stroke-opacity="0.45" stroke-width="1.5">
+              <rect x="300" y="366" width="48" height="30" rx="8"/><rect x="368" y="358" width="48" height="30" rx="8"/><rect x="436" y="352" width="48" height="30" rx="8"/><rect x="504" y="348" width="48" height="30" rx="8"/><rect x="572" y="346" width="48" height="30" rx="8"/><rect x="640" y="346" width="48" height="30" rx="8"/><rect x="708" y="348" width="48" height="30" rx="8"/><rect x="776" y="352" width="48" height="30" rx="8"/><rect x="844" y="358" width="48" height="30" rx="8"/><rect x="912" y="366" width="48" height="30" rx="8"/>
+            </g>
+            <g class="projector">
+              <circle cx="600" cy="400" r="9" fill="#f2b56b"/>
+              <path d="M600 392 L560 120 M600 392 L640 120 M600 392 L600 100" stroke="#f2b56b" stroke-opacity="0.25" stroke-width="1"/>
+            </g>
+          </svg>
+        </div>
+        <div class="copy copy-home">
+          <p class="eyebrow">Then the lights come up</p>
+          <h2>Welcome back to the dome</h2>
+          <p>You travelled two and a half million light-years and never left your seat. That is the whole trick of a planetarium, and it is the whole of Late Light.</p>
+          <dl class="details">
+            <div><dt>What it is</dt><dd>One hour under the full dome, narrated live, taking the route you just scrolled.</dd></div>
+            <div><dt>When</dt><dd>Late nights, after the last daytime show. The doors close when the lights go down; late arrivals wait for the next trip.</dd></div>
+            <div><dt>Bring</dt><dd>Nothing. Leave the phone in your pocket for an hour; the sky is brighter without it.</dd></div>
+          </dl>
+          <div class="actions">
+            <a class="button" href="#top" id="again">Travel again</a>
+            <p class="note">Seats are reserved at the planetarium's box office.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="foot">
+    <p>Late Light is the planetarium's late-night show. Distances are given in light-time: how long the light you see has been travelling.</p>
+    <button class="sound" id="sound" type="button" aria-pressed="false">Sound <span>off</span></button>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>

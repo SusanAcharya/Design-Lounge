@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <!-- Aadhi Raat Records · the hands at midnight · Designed using Design Lounge (https://www.designlounge.live) -->
+  <rect width="64" height="64" fill="#f2a93b"/>
+  <circle cx="32" cy="34" r="20" fill="none" stroke="#141210" stroke-width="3"/>
+  <path d="M32 34V17" stroke="#141210" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="32" cy="34" r="3.5" fill="#141210"/>
+</svg>

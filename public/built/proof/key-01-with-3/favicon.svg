@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- KEY-01 monogram: one keycap. Designed using Design Lounge · https://www.designlounge.live -->
+  <rect width="64" height="64" fill="#ffc83d"/>
+  <rect x="10" y="12" width="44" height="44" rx="6" fill="#b8871a"/>
+  <rect x="10" y="7" width="44" height="44" rx="6" fill="#141210"/>
+  <text x="32" y="40" text-anchor="middle" font-family="Epilogue, Helvetica Neue, Arial, sans-serif" font-weight="800" font-size="30" fill="#ffc83d" letter-spacing="-1">K</text>
+</svg>

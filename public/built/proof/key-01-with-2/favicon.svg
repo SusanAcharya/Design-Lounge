@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- KEY-01 monogram: one keycap with a K, the olive accent key · Designed using Design Lounge (https://www.designlounge.live) -->
+  <rect x="2" y="4" width="28" height="26" rx="6" fill="#27471F"/>
+  <rect x="2" y="2" width="28" height="26" rx="6" fill="#3E6B35"/>
+  <rect x="5" y="4" width="22" height="20" rx="4" fill="#5C8A52" opacity=".35"/>
+  <path d="M11 8v14M21 8l-8 7 8 7" fill="none" stroke="#F6F0E6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

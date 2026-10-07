@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Aadhi Raat Records · Music recorded after midnight in Kathmandu</title>
+  <meta name="description" content="A record label in Kathmandu with one rule: it only releases music recorded after midnight. The tape machine on this page keeps Kathmandu time.">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#0a0b12">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&family=Red+Hat+Mono:wght@400;500&family=Yatra+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header class="bar">
+    <a class="logo" href="#top" aria-label="Aadhi Raat Records, top of page">
+      <span class="logo-word">Aadhi Raat</span><span class="logo-dot" aria-hidden="true"></span>
+    </a>
+    <nav class="island-nav" aria-label="Primary">
+      <a href="#window">The window</a>
+      <a href="#steps">How it gets in</a>
+      <a href="#check">Check a recording</a>
+    </nav>
+    <button class="burger" type="button" aria-expanded="false" aria-controls="menu" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <nav class="menu" id="menu" aria-label="Main menu">
+    <p class="menu-kicker">Index</p>
+    <ul class="menu-links">
+      <li style="--i:0"><a href="#window"><span class="menu-n" aria-hidden="true">01</span>The window<svg class="menu-arrow" aria-hidden="true" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+      <li style="--i:1"><a href="#steps"><span class="menu-n" aria-hidden="true">02</span>How it gets in<svg class="menu-arrow" aria-hidden="true" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+      <li style="--i:2"><a href="#check"><span class="menu-n" aria-hidden="true">03</span>Check a recording<svg class="menu-arrow" aria-hidden="true" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+    </ul>
+    <div class="menu-foot">
+      <p class="menu-place">Kathmandu, Nepal. UTC+5:45.</p>
+      <p class="menu-time num" id="menu-time" aria-live="off">--:--:--</p>
+    </div>
+  </nav>
+
+  <main class="page" id="top">
+
+    <section class="hero" aria-labelledby="name">
+      <div class="scene-fallback" aria-hidden="true"></div>
+      <canvas id="scene" aria-hidden="true"></canvas>
+      <div class="scrim" aria-hidden="true"></div>
+
+      <div class="hero-copy">
+        <h1 id="name" class="wordmark"><span>Aadhi</span> <span>Raat</span></h1>
+        <p class="nepali" lang="ne">आधी रात</p>
+        <p class="lede">A record label in Kathmandu. We release music recorded after midnight, and nothing else. Not a genre, not a scene: an hour.</p>
+      </div>
+
+      <div class="deck-controls">
+        <button class="btn btn-primary" id="roll" type="button" aria-pressed="false">
+          <svg class="ic" id="roll-ic" aria-hidden="true" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6l12 6-12 6z"/></svg>
+          <span id="roll-label">Roll the tape</span>
+        </button>
+        <p class="deck-note">Sound starts only when you press it. The same button stops it.</p>
+      </div>
+
+      <dl class="readouts" aria-label="Kathmandu, live">
+        <div><dt>Kathmandu</dt><dd class="num" id="r-time">--:--:--</dd></div>
+        <div><dt id="r-gate-label">To midnight</dt><dd class="num" id="r-gate">--</dd></div>
+        <div><dt>First light</dt><dd class="num" id="r-dawn">--:--</dd></div>
+        <div><dt>Tape</dt><dd class="num" id="r-tape">idle</dd></div>
+      </dl>
+    </section>
+
+    <section class="window" id="window" aria-labelledby="window-h">
+      <div class="frame">
+        <h2 id="window-h" class="title">When the tape may roll</h2>
+        <p class="detail" id="window-detail" aria-live="polite">Loading this week.</p>
+        <div class="board" id="board" role="list" aria-label="The seven nights of this week"></div>
+        <p class="board-note">The window opens at 00:00 Kathmandu time and closes at first light, which we take from the sun over the valley each night. Tonight is pressed. Press another night to read its window.</p>
+      </div>
+    </section>
+
+    <section class="steps" id="steps" aria-labelledby="steps-h">
+      <div class="frame steps-head">
+        <h2 id="steps-h" class="title">How a release gets in</h2>
+        <p class="intro">Three things. The third one you can do right here.</p>
+      </div>
+
+      <ol class="stack" id="stack">
+        <li style="--i:0">
+          <article class="card" aria-labelledby="c1">
+            <div class="card-txt">
+              <p class="card-step num">Step 1 of 3</p>
+              <h3 id="c1">Record after midnight.</h3>
+              <p>Start the session once the Kathmandu clock passes 00:00 and finish before first light. Any room, any instrument, any length. The hour is the only rule.</p>
+            </div>
+            <div class="card-art" aria-hidden="true">
+              <div class="art-clock">
+                <svg viewBox="0 0 240 240" width="240" height="240">
+                  <circle cx="120" cy="120" r="110" fill="none" stroke="currentColor" stroke-width="1.5" opacity=".5"/>
+                  <g id="art-ticks"></g>
+                  <path d="M120 120 L120 36" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                  <path d="M120 120 L120 54" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
+                  <circle cx="120" cy="120" r="5" fill="currentColor"/>
+                  <path class="art-window" d="M120 120 L120 10 A110 110 0 0 1 211.8 60.1 Z" fill="var(--primary)" opacity=".22"/>
+                </svg>
+                <p class="art-caption num">00:00 to first light</p>
+              </div>
+            </div>
+          </article>
+        </li>
+        <li style="--i:1">
+          <article class="card" aria-labelledby="c2">
+            <div class="card-txt">
+              <p class="card-step num">Step 2 of 3</p>
+              <h3 id="c2">Keep the clock on the file.</h3>
+              <p>Bounce it that night and leave it alone. The time your computer stamps on the file is the proof. Do not re-export it in the afternoon.</p>
+            </div>
+            <div class="card-art" aria-hidden="true">
+              <div class="art-file">
+                <div class="art-file-tab"></div>
+                <div class="art-file-body">
+                  <p class="art-file-name num">session.wav</p>
+                  <p class="art-file-meta num">modified <span class="art-file-time">02:31</span> NPT</p>
+                  <div class="art-wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+                </div>
+              </div>
+              <p class="art-caption num">Example</p>
+            </div>
+          </article>
+        </li>
+        <li style="--i:2">
+          <article class="card card-gate" aria-labelledby="c3" id="check">
+            <div class="card-txt">
+              <p class="card-step num">Step 3 of 3</p>
+              <h3 id="c3">Check it here.</h3>
+              <p>Hand this page the file. It reads the clock on it, turns it into Kathmandu time, and tells you whether it counts. The file never leaves your computer and nothing is sent.</p>
+            </div>
+            <div class="gate" id="gate">
+              <label class="drop" id="drop" for="file">
+                <svg class="ic" aria-hidden="true" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V8M7 12l5-5 5 5M5 4h14"/></svg>
+                <span class="drop-title">Drop a recording here</span>
+                <span class="drop-sub">or choose one. Any audio file.</span>
+                <span class="btn btn-outline drop-btn" aria-hidden="true">Choose a recording</span>
+                <input type="file" id="file" accept="audio/*,.wav,.aif,.aiff,.flac,.mp3,.m4a,.ogg" class="visually-hidden">
+              </label>
+              <div class="verdict" id="verdict" aria-live="polite"></div>
+            </div>
+          </article>
+        </li>
+      </ol>
+    </section>
+
+    <footer class="colophon">
+      <span class="rule" aria-hidden="true"></span>
+      <p class="mark">Aadhi Raat</p>
+      <p class="issue">Records</p>
+      <ul class="links">
+        <li><a href="#window">The window</a></li>
+        <li><a href="#steps">How it gets in</a></li>
+        <li><a href="#check">Check a recording</a></li>
+      </ul>
+      <p class="place">Kathmandu · UTC+5:45</p>
+      <button class="top" id="topbtn" type="button">
+        <svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M6 11l6-6 6 6"/></svg>
+        Back to top
+      </button>
+      <p class="credit">Designed using <a href="https://www.designlounge.live">Design Lounge</a></p>
+    </footer>
+
+  </main>
+
+  <div class="grain" aria-hidden="true"></div>
+
+  <script src="main.js"></script>
+</body>
+</html>

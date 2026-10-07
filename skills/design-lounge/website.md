@@ -161,7 +161,7 @@ Open the brief for every section you build. A phone menu, a copy-email button, o
 
 Write `quiet` or one piece id on the sheet. This is how a thin request still lands on a style that fits.
 
-A ledger, a clinic, a settings screen, or a dashboard stays quiet. Motion is the sheet: 200ms, 320ms, 400ms. Do not add a cursor, a scroll story, or a hover tilt because the page felt plain.
+A website takes one effect piece unless its direction's effect is null or its Dials motion is 1–3 (trust, health, money, a clinic); then Register is quiet. Quiet means motion is the sheet: 200ms, 320ms, 400ms. Do not add a cursor, a scroll story, or a hover tilt because the page felt plain.
 
 A portfolio, a launch, a product page, or a refine they described as motion is in the library. Search categories `cursor`, `scroll`, and `text-motion`. Take one piece for the effect they named.
 
@@ -177,7 +177,7 @@ A portfolio, a launch, a product page, or a refine they described as motion is i
 - A headline that moves: `kinetic-type-marquee` or `variable-font-proximity`.
 - A phone: `ios-pull-to-refresh`, `shared-element-expand`, or `m3-container-transform`. Not a web cursor. A phone web story: `mobile-scroll-story`.
 
-A website always takes one effect piece, even when they did not name one. Pick the one that serves the Idea. A daily tool with no named effect stays quiet. Do not add one to fill the page. The piece's motion table wins inside that region. The rest of the page stays on the sheet's easing. Reduced motion still applies.
+When Register is an effect, pick the one piece that serves the Idea, even when they did not name one. Do not add one to fill the page. The piece's motion table wins inside that region. The rest of the page stays on the sheet's easing. Reduced motion still applies.
 
 ### More than one effect
 

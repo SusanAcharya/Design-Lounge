@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Aadhi Raat Records — recorded after midnight, Kathmandu</title>
+  <meta name="description" content="A record label with one rule: everything it releases was recorded between midnight and first light in Kathmandu, Nepal, UTC+5:45.">
+  <meta name="theme-color" content="#07060b">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Tiro+Devanagari+Hindi:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-window="unknown">
+
+  <div class="cursor" aria-hidden="true"><span class="cursor-dot"></span><span class="cursor-ring"></span></div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <header class="nav">
+    <a class="brand" href="#top" aria-label="Aadhi Raat Records, home">
+      <span class="brand-dev" lang="ne">आधी रात</span>
+      <span class="brand-en">Aadhi Raat</span>
+    </a>
+    <nav class="nav-links" aria-label="Sections">
+      <a href="#rule">Rule</a>
+      <a href="#window">Window</a>
+      <a href="#night">Night</a>
+      <a href="#release">Release</a>
+    </nav>
+    <div class="nav-tools">
+      <div class="npt" aria-live="off">
+        <span class="npt-label">KTM</span>
+        <time class="npt-time" id="nav-clock" datetime="">--:--:--</time>
+      </div>
+      <button class="sound-toggle" id="sound-toggle" type="button" aria-pressed="false" aria-label="Sound off. Press to play the night drone." data-magnet>
+        <span class="sound-bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        <span class="sound-text">Sound off</span>
+      </button>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- HERO -->
+    <section class="hero" id="hero">
+      <canvas class="sky" id="sky" aria-hidden="true"></canvas>
+      <div class="moon" id="moon" aria-hidden="true"></div>
+      <div class="ridges" id="ridges" aria-hidden="true">
+        <svg class="ridge ridge-3" viewBox="0 0 1600 400" preserveAspectRatio="none">
+          <path d="M0 400 L0 250 L90 215 L160 240 L240 180 L330 210 L420 140 L500 175 L580 120 L660 160 L760 95 L840 140 L930 110 L1010 150 L1100 90 L1190 130 L1280 85 L1370 125 L1450 100 L1530 140 L1600 110 L1600 400 Z"/>
+        </svg>
+        <svg class="ridge ridge-2" viewBox="0 0 1600 400" preserveAspectRatio="none">
+          <path d="M0 400 L0 290 L110 255 L200 280 L300 225 L380 250 L470 200 L560 240 L640 195 L730 230 L820 180 L910 215 L1000 170 L1090 205 L1180 160 L1270 200 L1360 165 L1450 195 L1530 175 L1600 200 L1600 400 Z"/>
+        </svg>
+        <svg class="ridge ridge-1" viewBox="0 0 1600 400" preserveAspectRatio="none">
+          <path d="M0 400 L0 330 L80 318 L150 335 L230 300 L310 322 L400 290 L470 310 L540 285 L620 305 L700 270 L780 295 L860 262 L930 290 L1010 258 L1090 285 L1170 250 L1250 282 L1330 255 L1410 280 L1490 262 L1600 290 L1600 400 Z"/>
+          <!-- a few windows still lit in the valley -->
+          <g class="lights">
+            <rect x="412" y="318" width="3" height="3"/><rect x="705" y="300" width="3" height="3"/>
+            <rect x="868" y="292" width="3" height="3"/><rect x="1176" y="280" width="3" height="3"/>
+            <rect x="1333" y="286" width="3" height="3"/><rect x="240" y="330" width="3" height="3"/>
+            <rect x="1020" y="290" width="3" height="3"/>
+          </g>
+        </svg>
+      </div>
+
+      <div class="hero-inner">
+        <p class="eyebrow" data-reveal>
+          <span>Aadhi Raat Records</span><span class="sep">·</span><span>Kathmandu, Nepal</span><span class="sep">·</span><span>UTC+5:45</span>
+        </p>
+        <h1 class="display" id="hero-title">
+          <span class="line"><span class="w" data-split>After</span></span>
+          <span class="line line-mid"><span class="w it" data-split>midnight,</span></span>
+          <span class="line"><span class="w" data-split>Kathmandu.</span></span>
+        </h1>
+        <div class="hero-foot">
+          <p class="lede" data-reveal>
+            A record label with one rule. Everything we release was recorded between 00:00 and first light in Kathmandu, Nepal. Nothing else gets out.
+          </p>
+          <div class="status" id="status" data-reveal>
+            <span class="status-dot" aria-hidden="true"></span>
+            <span class="status-text" id="status-text">Reading the clock…</span>
+          </div>
+        </div>
+      </div>
+
+      <a class="scroll-cue" href="#rule" aria-label="Scroll to the rule">
+        <span class="scroll-line" aria-hidden="true"></span>
+        <span>The rule</span>
+      </a>
+    </section>
+
+    <!-- MARQUEE -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span>Recorded after midnight</span><span class="dot">●</span><span>Kathmandu</span><span class="dot">●</span><span>UTC+5:45</span><span class="dot">●</span><span lang="ne" class="dev">आधी रात</span><span class="dot">●</span><span>Nothing before 00:00</span><span class="dot">●</span>
+        <span>Recorded after midnight</span><span class="dot">●</span><span>Kathmandu</span><span class="dot">●</span><span>UTC+5:45</span><span class="dot">●</span><span lang="ne" class="dev">आधी रात</span><span class="dot">●</span><span>Nothing before 00:00</span><span class="dot">●</span>
+      </div>
+    </div>
+
+    <!-- RULE -->
+    <section class="rule section" id="rule">
+      <div class="section-head" data-reveal>
+        <span class="num">01</span>
+        <h2>One rule</h2>
+      </div>
+      <p class="prose big" data-reveal>
+        The night is a different room. The traffic on the ring road thins out, the dogs give up, and the valley at fourteen hundred metres goes quiet enough that you can hear the room tone. We think music made in that room sounds different. So it is the only music we put out.
+      </p>
+
+      <ol class="clauses">
+        <li class="clause" data-reveal>
+          <span class="clause-n">i</span>
+          <h3>Tape rolls after 00:00.</h3>
+          <p>The take begins after midnight, Nepal Standard Time. Not your midnight. Ours.</p>
+        </li>
+        <li class="clause" data-reveal>
+          <span class="clause-n">ii</span>
+          <h3>It stops before first light.</h3>
+          <p>Civil dawn over the valley closes the window. Tonight that is <strong class="live" id="dawn-inline">—</strong> NPT. The window is never the same length twice.</p>
+        </li>
+        <li class="clause" data-reveal>
+          <span class="clause-n">iii</span>
+          <h3>The files are the proof.</h3>
+          <p>We cut from the original session files. Their timestamps are the only credentials we check. No daylight overdubs, no afternoon remasters.</p>
+        </li>
+      </ol>
+    </section>
+
+    <!-- WINDOW -->
+    <section class="window section" id="window">
+      <div class="section-head" data-reveal>
+        <span class="num">02</span>
+        <h2>The window, tonight</h2>
+      </div>
+
+      <div class="window-grid">
+        <div class="dial-wrap" data-reveal>
+          <svg class="dial" id="dial" viewBox="0 0 400 400" role="img" aria-labelledby="dial-title dial-desc">
+            <title id="dial-title">Twenty-four hour dial of Kathmandu time</title>
+            <desc id="dial-desc">The amber arc marks the recording window from midnight to civil dawn. The hand shows the current time in Kathmandu.</desc>
+            <g id="dial-ticks"></g>
+            <path id="dial-arc" class="dial-arc" d=""/>
+            <circle class="dial-ring" cx="200" cy="200" r="150"/>
+            <g id="dial-hand" class="dial-hand">
+              <line x1="200" y1="200" x2="200" y2="62"/>
+              <circle cx="200" cy="200" r="4"/>
+            </g>
+            <text class="dial-label dial-top" x="200" y="30" text-anchor="middle">00:00</text>
+            <text class="dial-label" x="372" y="205" text-anchor="middle">06</text>
+            <text class="dial-label" x="200" y="382" text-anchor="middle">12</text>
+            <text class="dial-label" x="28" y="205" text-anchor="middle">18</text>
+            <text class="dial-now" id="dial-now" x="200" y="192" text-anchor="middle">--:--</text>
+            <text class="dial-sub" x="200" y="218" text-anchor="middle">NPT</text>
+          </svg>
+        </div>
+
+        <div class="window-stats">
+          <dl class="stats">
+            <div class="stat" data-reveal>
+              <dt>Opens</dt>
+              <dd>00:00 <small>NPT</small></dd>
+            </div>
+            <div class="stat" data-reveal>
+              <dt>Closes at first light</dt>
+              <dd><span id="dawn-stat">--:--</span> <small>NPT</small></dd>
+            </div>
+            <div class="stat" data-reveal>
+              <dt>Length</dt>
+              <dd id="length-stat">--</dd>
+            </div>
+            <div class="stat" data-reveal>
+              <dt id="countdown-label">Opens in</dt>
+              <dd class="mono" id="countdown">--:--:--</dd>
+            </div>
+          </dl>
+          <p class="prose" data-reveal>
+            Midnight here is <strong class="live" id="local-midnight">—</strong> where you are. First light is calculated for 27.7172° N, 85.3240° E on tonight's date, so the window drifts with the season: long in December, short in June.
+          </p>
+        </div>
+      </div>
+
+      <div class="cities" data-reveal>
+        <p class="cities-head">When it turns midnight in Kathmandu, it is</p>
+        <ul class="city-list" id="city-list">
+          <li><span class="city">Tokyo</span><span class="city-time" data-tz="Asia/Tokyo">--:--</span></li>
+          <li><span class="city">Sydney</span><span class="city-time" data-tz="Australia/Sydney">--:--</span></li>
+          <li><span class="city">New Delhi</span><span class="city-time" data-tz="Asia/Kolkata">--:--</span></li>
+          <li><span class="city">Berlin</span><span class="city-time" data-tz="Europe/Berlin">--:--</span></li>
+          <li><span class="city">London</span><span class="city-time" data-tz="Europe/London">--:--</span></li>
+          <li><span class="city">New York</span><span class="city-time" data-tz="America/New_York">--:--</span></li>
+          <li><span class="city">Los Angeles</span><span class="city-time" data-tz="America/Los_Angeles">--:--</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- OFFSET -->
+    <section class="offset section" id="offset">
+      <div class="offset-inner">
+        <p class="offset-big" data-reveal>
+          <span class="offset-num">+5</span><span class="offset-colon">:</span><span class="offset-num">45</span>
+        </p>
+        <div class="offset-copy">
+          <h2 data-reveal>Forty-five minutes off everyone.</h2>
+          <p class="prose" data-reveal>
+            Nepal Standard Time runs on the meridian of Gaurishankar, 86°15′ east. That puts Kathmandu fifteen minutes ahead of New Delhi and three quarters of an hour away from every round number on the map. Midnight here lands on nobody else's hour.
+          </p>
+          <p class="prose" data-reveal>
+            That is the point. The window is ours alone.
+          </p>
+        </div>
+      </div>
+      <div class="offset-strip" aria-hidden="true">
+        <span class="strip-mark" style="--p:0">UTC</span>
+        <span class="strip-mark strip-before" style="--p:.4583">+5:30 Delhi</span>
+        <span class="strip-mark strip-ktm" style="--p:.4792">+5:45 Kathmandu</span>
+        <span class="strip-mark strip-after" style="--p:.5">+6 Dhaka</span>
+        <span class="strip-mark" style="--p:.75">+9 Tokyo</span>
+        <span class="strip-mark" style="--p:1">+12</span>
+      </div>
+    </section>
+
+    <!-- NIGHT / SOUND -->
+    <section class="night section" id="night">
+      <div class="section-head" data-reveal>
+        <span class="num">03</span>
+        <h2>The night, as a drone</h2>
+      </div>
+      <div class="night-grid">
+        <div class="night-copy">
+          <p class="prose big" data-reveal>
+            A tone tuned to a sleeping city: a low hum, a little wind through the valley, a temple bell now and then. Nothing here is a recording. It is synthesised in your browser the moment you press play, and it stays silent until you do.
+          </p>
+          <div class="night-controls" data-reveal>
+            <button class="btn btn-primary" id="play" type="button" aria-pressed="false" data-magnet>
+              <span class="btn-ic" aria-hidden="true"></span>
+              <span class="btn-label" id="play-label">Play the night</span>
+            </button>
+            <label class="vol">
+              <span>Level</span>
+              <input type="range" id="vol" min="0" max="100" value="60" aria-label="Drone level">
+            </label>
+          </div>
+          <p class="fine" data-reveal>Sound never starts on its own. The switch in the top corner also turns it off.</p>
+        </div>
+        <div class="scope-wrap" data-reveal>
+          <canvas class="scope" id="scope" aria-hidden="true"></canvas>
+          <div class="scope-label"><span>Drone</span><span id="scope-state">silent</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RELEASE -->
+    <section class="release section" id="release">
+      <div class="section-head" data-reveal>
+        <span class="num">04</span>
+        <h2>To release with us</h2>
+      </div>
+      <ol class="steps">
+        <li class="step" data-reveal>
+          <span class="step-n">1</span>
+          <h3>Record after midnight, NPT.</h3>
+          <p>The whole take, start to finish, inside the window. If you are not in Kathmandu, set a second clock. Ours.</p>
+        </li>
+        <li class="step" data-reveal>
+          <span class="step-n">2</span>
+          <h3>Keep the originals.</h3>
+          <p>Session files with their timestamps untouched. A bounce made at noon tells us nothing.</p>
+        </li>
+        <li class="step" data-reveal>
+          <span class="step-n">3</span>
+          <h3>Send them while the door is open.</h3>
+          <p>The door opens at 00:00 Nepal Standard Time and closes at first light. Outside those hours, this page just counts.</p>
+        </li>
+      </ol>
+      <div class="door" id="door" data-reveal>
+        <div class="door-frame">
+          <div class="door-light" aria-hidden="true"></div>
+          <p class="door-state" id="door-state">The door is closed.</p>
+          <p class="door-count" id="door-count">--:--:--</p>
+          <p class="door-sub" id="door-sub">until it opens</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="foot">
+    <div class="foot-brand">
+      <span class="foot-dev" lang="ne">आधी रात</span>
+      <span class="foot-en">Aadhi Raat Records</span>
+    </div>
+    <ul class="foot-meta">
+      <li>Kathmandu, Nepal</li>
+      <li>27.7172° N, 85.3240° E</li>
+      <li>UTC+5:45</li>
+      <li><time id="foot-clock" datetime="">--:--:--</time> NPT</li>
+    </ul>
+    <p class="foot-line">Nothing recorded before midnight.</p>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>

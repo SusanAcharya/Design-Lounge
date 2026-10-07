@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Aadhi Raat — recorded after midnight, Kathmandu</title>
+  <meta name="description" content="Aadhi Raat is a record label in Kathmandu. It releases only music recorded after midnight, Nepal time.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-window="unknown">
+
+  <div class="lamp" aria-hidden="true"></div>
+
+  <header class="nav">
+    <a class="brand" href="#top" aria-label="Aadhi Raat, home">
+      <span class="brand-dev" lang="ne">आधी रात</span>
+      <span class="brand-lat">Aadhi Raat</span>
+    </a>
+    <div class="nav-clock" aria-live="off">
+      <span class="clock-label">Kathmandu</span>
+      <span class="clock-time" id="navClock">--:--:--</span>
+      <span class="clock-zone">NPT</span>
+    </div>
+    <nav class="nav-links" aria-label="Sections">
+      <a href="#rule">Rule</a>
+      <a href="#window">Window</a>
+      <a href="#sleeves">Sleeves</a>
+      <a href="#submit">Submit</a>
+    </nav>
+    <button class="sound" id="soundToggle" type="button" aria-pressed="false">
+      <span class="sound-bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+      <span class="sound-text">Sound off</span>
+    </button>
+  </header>
+
+  <main id="top">
+
+    <section class="hero" aria-labelledby="heroTitle">
+      <canvas class="sky" id="sky" aria-hidden="true"></canvas>
+      <div class="moon" id="moon" aria-hidden="true">
+        <div class="moon-disc"></div>
+        <div class="moon-shadow" id="moonShadow"></div>
+      </div>
+
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="dot" aria-hidden="true"></span> A record label · Kathmandu · UTC+5:45</p>
+        <h1 id="heroTitle" class="title">
+          <span class="line"><span>Nothing</span></span>
+          <span class="line"><span>before</span></span>
+          <span class="line"><span class="it">midnight.</span></span>
+        </h1>
+        <p class="lede">We release only music recorded after 00:00 Nepal time. The tape rolls at midnight and stops at first light. Everything else goes back.</p>
+      </div>
+
+      <div class="status" id="status" role="status">
+        <div class="status-clock">
+          <span class="status-time" id="heroClock">--:--:--</span>
+          <span class="status-date" id="heroDate"></span>
+        </div>
+        <div class="status-state">
+          <span class="status-pill" id="statusPill">Reading the clock</span>
+          <span class="status-detail" id="statusDetail"></span>
+        </div>
+      </div>
+
+      <svg class="skyline" viewBox="0 0 1600 260" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+        <defs>
+          <linearGradient id="hillFade" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#12142a"/>
+            <stop offset="1" stop-color="#06060c"/>
+          </linearGradient>
+        </defs>
+        <path class="hills-far" d="M0 150 C120 110 220 128 330 100 C430 76 520 120 640 96 C760 72 860 118 980 90 C1100 64 1200 110 1320 86 C1420 66 1520 102 1600 92 L1600 260 L0 260 Z"/>
+        <path class="hills-near" fill="url(#hillFade)" d="M0 190 C140 160 230 184 360 160 C470 140 560 178 700 158 C820 142 900 176 1040 150 C1160 130 1260 172 1400 152 C1490 140 1550 160 1600 152 L1600 260 L0 260 Z"/>
+        <g class="city">
+          <!-- Boudhanath stupa -->
+          <g transform="translate(560 0)">
+            <rect x="-150" y="214" width="300" height="46"/>
+            <rect x="-120" y="198" width="240" height="18"/>
+            <rect x="-96" y="184" width="192" height="16"/>
+            <path d="M-78 186 C-78 130 78 130 78 186 Z"/>
+            <rect x="-20" y="102" width="40" height="32"/>
+            <path d="M-18 102 L18 102 L8 50 L-8 50 Z"/>
+            <rect x="-6" y="34" width="12" height="18"/>
+            <circle cx="0" cy="32" r="5"/>
+            <!-- eyes -->
+            <path class="eye" d="M-15 112 q7 -6 14 0 q-7 6 -14 0z"/>
+            <path class="eye" d="M1 112 q7 -6 14 0 q-7 6 -14 0z"/>
+            <path class="eye" d="M-2 122 q2 -3 4 0 l-1 7 q-1 1 -2 0z"/>
+          </g>
+          <!-- Dharahara tower -->
+          <g transform="translate(1180 0)">
+            <rect x="-14" y="60" width="28" height="200"/>
+            <path d="M-14 60 L14 60 L0 32 Z"/>
+            <rect x="-22" y="120" width="44" height="6"/>
+            <rect x="-20" y="170" width="40" height="6"/>
+          </g>
+          <!-- pagoda temple -->
+          <g transform="translate(880 0)">
+            <rect x="-40" y="212" width="80" height="48"/>
+            <path d="M-70 214 L70 214 L46 190 L-46 190 Z"/>
+            <rect x="-30" y="170" width="60" height="22"/>
+            <path d="M-54 172 L54 172 L36 152 L-36 152 Z"/>
+            <rect x="-20" y="136" width="40" height="18"/>
+            <path d="M-36 138 L36 138 L22 122 L-22 122 Z"/>
+            <rect x="-3" y="104" width="6" height="20"/>
+          </g>
+          <!-- rooftops -->
+          <path d="M0 260 L0 228 L40 228 L40 214 L72 214 L72 236 L120 236 L120 206 L150 206 L150 222 L200 222 L200 240 L260 240 L260 220 L300 220 L300 232 L360 232 L360 212 L400 212 L400 244 L440 244 L440 260 Z"/>
+          <path d="M700 260 L700 236 L740 236 L740 222 L790 222 L790 240 L830 240 L830 260 Z"/>
+          <path d="M960 260 L960 230 L1000 230 L1000 218 L1050 218 L1050 238 L1110 238 L1110 226 L1150 226 L1150 260 Z"/>
+          <path d="M1220 260 L1220 232 L1270 232 L1270 212 L1300 212 L1300 228 L1360 228 L1360 240 L1420 240 L1420 218 L1470 218 L1470 236 L1530 236 L1530 224 L1600 224 L1600 260 Z"/>
+          <!-- lit windows -->
+          <g class="windows">
+            <rect x="126" y="212" width="4" height="5"/>
+            <rect x="268" y="226" width="4" height="5"/>
+            <rect x="372" y="218" width="4" height="5"/>
+            <rect x="752" y="228" width="4" height="5"/>
+            <rect x="1010" y="224" width="4" height="5"/>
+            <rect x="1278" y="218" width="4" height="5"/>
+            <rect x="1432" y="226" width="4" height="5"/>
+          </g>
+          <!-- prayer flags -->
+          <path class="flagline" d="M300 212 Q400 232 500 214" />
+          <path class="flagline" d="M1300 214 Q1400 234 1500 212" />
+        </g>
+      </svg>
+
+      <a class="scroll-cue" href="#rule" aria-label="Scroll to the rule">
+        <span>Scroll</span><i aria-hidden="true"></i>
+      </a>
+    </section>
+
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span>Recorded after midnight</span><b>·</b><span lang="ne">आधी रात</span><b>·</b><span>Kathmandu</span><b>·</b><span>UTC+5:45</span><b>·</b><span>Tape rolls at 00:00</span><b>·</b><span>Stops at first light</span><b>·</b>
+        <span>Recorded after midnight</span><b>·</b><span lang="ne">आधी रात</span><b>·</b><span>Kathmandu</span><b>·</b><span>UTC+5:45</span><b>·</b><span>Tape rolls at 00:00</span><b>·</b><span>Stops at first light</span><b>·</b>
+      </div>
+    </div>
+
+    <section class="rule" id="rule" aria-labelledby="ruleTitle">
+      <p class="section-num">01 — The rule</p>
+      <h2 id="ruleTitle" class="manifesto" data-split>
+        One rule. The tape rolls at 00:00 Nepal time and stops at first light over the valley. Anything recorded before midnight, however good, goes back to the artist.
+      </h2>
+      <div class="clauses">
+        <div class="clause reveal">
+          <span class="clause-num">00:00</span>
+          <h3>The clock is the A&amp;R.</h3>
+          <p>We do not pick a sound. We pick an hour. What people play when the city has stopped asking anything of them is the only brief.</p>
+        </div>
+        <div class="clause reveal">
+          <span class="clause-num">00:00 → dawn</span>
+          <h3>The window is whatever the sky gives.</h3>
+          <p>It closes at civil dawn, which moves through the year. Winter nights are long. June nights are short and the records are shorter.</p>
+        </div>
+        <div class="clause reveal">
+          <span class="clause-num">File time</span>
+          <h3>The timestamp is the proof.</h3>
+          <p>Session files keep their clock. We read the creation time against Nepal Standard Time, UTC+5:45. No timestamp, no release.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="window" id="window" aria-labelledby="windowTitle">
+      <p class="section-num">02 — Tonight's window</p>
+      <h2 id="windowTitle" class="h2">Twenty-four hours. <em>We use the dark ones.</em></h2>
+      <p class="window-lede">The band is tonight's recording window in Kathmandu, from midnight to civil dawn, computed for 27.72° N, 85.32° E. The marker is now.</p>
+
+      <div class="timeline reveal" id="timeline">
+        <svg viewBox="0 0 1000 160" preserveAspectRatio="none" class="timeline-svg" aria-hidden="true">
+          <rect class="tl-base" x="0" y="70" width="1000" height="20" rx="10"/>
+          <rect class="tl-window" id="tlWindow" x="0" y="70" width="0" height="20" rx="10"/>
+          <g class="tl-ticks" id="tlTicks"></g>
+          <g class="tl-now" id="tlNow">
+            <line x1="0" y1="40" x2="0" y2="120"/>
+            <circle cx="0" cy="40" r="6"/>
+          </g>
+        </svg>
+        <div class="tl-labels" aria-hidden="true">
+          <span>00:00</span><span>06:00</span><span>12:00</span><span>18:00</span><span>24:00</span>
+        </div>
+        <dl class="tl-facts">
+          <div><dt>Opens</dt><dd>00:00 NPT</dd></div>
+          <div><dt>Civil dawn</dt><dd id="dawnTime">--:--</dd></div>
+          <div><dt>Window</dt><dd id="windowLength">--</dd></div>
+          <div><dt>Moon</dt><dd id="moonPhase">--</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="why" aria-labelledby="whyTitle">
+      <p class="section-num">03 — Why midnight</p>
+      <div class="why-grid">
+        <h2 id="whyTitle" class="h2">The city has a second voice, <em>and it only speaks after twelve.</em></h2>
+        <div class="why-copy reveal">
+          <p>By midnight the generators have cut out and the last bus has climbed out of Ratna Park. What is left is the valley itself: dogs trading calls across the rooftops, a bell somewhere in Patan, a tap filling a bucket, the hum of a city that is finally not trying to be heard.</p>
+          <p>Musicians play differently inside that quiet. Slower, closer to the microphone, more willing to leave a mistake in. We built a label around that difference instead of around a genre.</p>
+          <p>So the catalogue has no sound in common. It has an hour in common.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="sleeves" id="sleeves" aria-labelledby="sleevesTitle">
+      <p class="section-num">04 — Sleeves</p>
+      <h2 id="sleevesTitle" class="h2">One sleeve for each hour <em>of the window.</em></h2>
+      <p class="sleeves-lede">Every release is sleeved by the hour it was recorded, not by the artist. The artwork is the sky over Kathmandu at that hour, drawn in your browser, never the same twice.</p>
+      <div class="sleeve-grid" id="sleeveGrid"></div>
+    </section>
+
+    <section class="submit" id="submit" aria-labelledby="submitTitle">
+      <p class="section-num">05 — Submit</p>
+      <div class="submit-grid">
+        <div>
+          <h2 id="submitTitle" class="h2">Send us <em>the night.</em></h2>
+          <ol class="steps">
+            <li class="reveal"><span>1</span><p>Record between 00:00 and civil dawn, Nepal time. Anywhere in the valley counts. The clock does not care which room.</p></li>
+            <li class="reveal"><span>2</span><p>Keep the raw session files. Do not re-export them; the original creation time is what we check.</p></li>
+            <li class="reveal"><span>3</span><p>Submissions are only open while the window is open. If the button below is sleeping, so are we.</p></li>
+          </ol>
+        </div>
+        <div class="submit-card reveal">
+          <p class="submit-label">Submission desk</p>
+          <p class="submit-state" id="submitState">Reading the clock in Kathmandu.</p>
+          <p class="submit-countdown" id="submitCountdown"></p>
+          <button type="button" class="submit-btn" id="submitBtn" aria-expanded="false" aria-controls="submitPanel">Open the desk</button>
+          <div class="submit-panel" id="submitPanel" hidden>
+            <p>Bring the raw files and their timestamps to the desk before first light. We listen at dawn and reply the same night.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="foot">
+    <div class="foot-brand">
+      <span lang="ne">आधी रात</span>
+      <span>Aadhi Raat Records</span>
+    </div>
+    <div class="foot-meta">
+      <span>Kathmandu, Nepal</span>
+      <span>27.7172° N, 85.3240° E</span>
+      <span>Nepal Standard Time, UTC+5:45</span>
+    </div>
+    <p class="foot-note">Everything on this page, the sky, the sleeves and the sound, is drawn or generated in your browser. The sound never starts on its own.</p>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>

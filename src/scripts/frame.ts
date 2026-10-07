@@ -13,13 +13,14 @@ const GEO: Record<string, Geo> = {
 const VIEWS: View[] = ['auto', 'desktop', 'tablet', 'phone'];
 const TINY = 0.3;
 const reduced = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
-// Demos start after the page's first paint, a short beat and an idle moment; the poster covers the wait.
-// `load` fires long before first paint on a slow phone, and each demo pulls its own fonts, so waiting for
-// `load` alone let four iframes and their font requests compete with the page's own first paint.
-// Any scroll of the page, tap or key press starts them at once, since the reader is already moving.
-// Only the page's own scroll counts: the piece rail scrolls itself to the current piece on load,
-// and that element scroll reaches this capture listener before first paint.
-const PAINT_BEAT = 1200;
+// Demos start on the reader's first scroll, tap or key press, or after a quiet wait once the page has painted;
+// the poster covers the wait. `load` fires long before first paint on a slow phone, and each demo pulls its own
+// fonts, so waiting for `load` alone let four iframes and their font requests compete with the page's own first
+// paint. The wait is a plain timer, not an idle callback: an idle callback fires at the same moment a browser
+// (or Lighthouse) decides the page is settled and may leave it, and a frame mid-navigation at that moment keeps
+// the page out of the back/forward cache. Only the page's own scroll counts as input: the piece rail scrolls
+// itself to the current piece on load, and that element scroll reaches this capture listener before first paint.
+const QUIET_WAIT = 7000;
 const INPUT = ['scroll', 'wheel', 'touchstart', 'pointerdown', 'keydown'] as const;
 const pageReady = new Promise<void>((res) => {
   let started = false;
@@ -30,8 +31,7 @@ const pageReady = new Promise<void>((res) => {
     res();
   };
   for (const t of INPUT) addEventListener(t, start, { capture: true, passive: true });
-  const idle = () => ('requestIdleCallback' in window ? requestIdleCallback(() => start(), { timeout: 2500 }) : setTimeout(() => start(), 300));
-  const painted = () => setTimeout(idle, PAINT_BEAT);
+  const painted = () => setTimeout(() => start(), QUIET_WAIT);
   if ('PerformanceObserver' in window && PerformanceObserver.supportedEntryTypes?.includes('paint')) {
     const po = new PerformanceObserver((list) => {
       if (list.getEntriesByName('first-contentful-paint').length) { po.disconnect(); painted(); }
@@ -152,20 +152,30 @@ class LoungeFrame extends HTMLElement {
   }
   loading = false;
   onLoad = () => { this.loading = false; if (this.iframe.getAttribute('src')) setTimeout(() => this.classList.add('loaded'), 250); };
-  // A demo still loading when the reader leaves keeps the page out of the back/forward cache,
-  // so on pagehide a loading frame is swapped for a fresh one, and it loads again if the page comes back.
+  // Any demo frame with a document in it can keep the page out of the back/forward cache (a frame whose
+  // navigation never settled, a frame still fetching). On pagehide every frame that has a src is swapped for a
+  // fresh empty one. Not about:blank: that itself starts a navigation. On pageshow the wanted ones load again.
+  // The frame is taken out of the document, not replaced: a new iframe would start its own initial navigation
+  // at the worst moment. It goes back in the same place when the page is shown again.
+  slot: { parent: ParentNode; next: Node | null } | null = null;
   rest() {
-    if (!this.loading) return;
+    if (!this.iframe.getAttribute('src') || !this.iframe.parentNode) return;
+    this.slot = { parent: this.iframe.parentNode, next: this.iframe.nextSibling };
+    // Same-origin frames can be told to stop first, so a navigation in flight ends before the frame goes.
+    try { this.iframe.contentWindow?.stop(); } catch { /* cross-origin, nothing to stop */ }
     const fresh = this.iframe.cloneNode(false) as HTMLIFrameElement;
     fresh.removeAttribute('src');
     fresh.addEventListener('load', this.onLoad);
-    this.iframe.replaceWith(fresh);
+    this.iframe.remove();
     this.iframe = fresh; this.loading = false;
     this.classList.remove('loaded');
   }
+  mount() {
+    if (this.slot && !this.iframe.parentNode) { this.slot.parent.insertBefore(this.iframe, this.slot.next); this.slot = null; }
+  }
   load() {
     this.wanted = true;
-    pageReady.then(() => { if (this.wanted && !this.iframe.getAttribute('src')) { this.loading = true; this.iframe.src = this.dataset.src || ''; } });
+    pageReady.then(() => { if (this.wanted && !this.iframe.getAttribute('src')) { this.mount(); this.loading = true; this.iframe.src = this.dataset.src || ''; } });
   }
   unload() {
     this.wanted = false;
@@ -177,6 +187,6 @@ if (!customElements.get('lounge-frame')) {
   customElements.define('lounge-frame', LoungeFrame);
   const frames = () => document.querySelectorAll<LoungeFrame>('lounge-frame');
   addEventListener('pagehide', () => frames().forEach((f) => f.rest()));
-  addEventListener('pageshow', (e) => { if (e.persisted) frames().forEach((f) => { if (f.wanted) f.load(); }); });
+  addEventListener('pageshow', (e) => { if (e.persisted) frames().forEach((f) => { f.mount(); if (f.wanted) f.load(); }); });
 }
 export {};

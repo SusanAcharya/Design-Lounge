@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Aadhi Raat</title>
+  <meta name="description" content="Aadhi Raat is a record label in Kathmandu. It releases only music recorded between 00:00 and sunrise, Nepal time.">
+  <meta name="theme-color" content="#0e0c10">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230e0c10'/%3E%3Cpath d='M18 46 L32 16 L46 46 M24 36 H40' fill='none' stroke='%23ff4fa8' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tilt+Neon&family=Eczar:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+
+  <header class="top">
+    <a class="mark" href="#top" aria-label="Aadhi Raat, home">
+      <span class="mark-en">Aadhi Raat</span>
+      <span class="mark-ne" lang="ne">आधी रात</span>
+    </a>
+    <nav aria-label="Primary">
+      <a href="#rule">The rule</a>
+      <a href="#week">This week</a>
+      <a href="#send">Send a tape</a>
+    </nav>
+    <p class="clock" aria-label="Kathmandu time">
+      <span class="lamp" aria-hidden="true"></span>
+      <time id="clk" datetime="">--:--:--</time>
+      <span class="zone">Kathmandu</span>
+    </p>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top" aria-labelledby="h1">
+      <canvas id="street" aria-hidden="true"></canvas>
+
+      <h1 id="h1" class="vh">Aadhi Raat. A record label in Kathmandu that releases only music recorded after midnight, before sunrise.</h1>
+
+      <div class="scene">
+        <div class="sign-wrap" id="signWrap">
+          <svg class="sign" id="sign" viewBox="0 0 1000 400" aria-hidden="true" focusable="false">
+            <defs>
+              <linearGradient id="panel" x1="0" y1="0" x2="0.4" y2="1">
+                <stop offset="0" stop-color="#2a2430"/>
+                <stop offset="0.35" stop-color="#1a1620"/>
+                <stop offset="1" stop-color="#0f0d12"/>
+              </linearGradient>
+              <linearGradient id="panelSide" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#0b090d"/>
+                <stop offset="1" stop-color="#050406"/>
+              </linearGradient>
+              <radialGradient id="lampOnPanel" cx="0.08" cy="0" r="1.1">
+                <stop offset="0" stop-color="#ffa23a" stop-opacity="0.34"/>
+                <stop offset="0.45" stop-color="#ffa23a" stop-opacity="0.08"/>
+                <stop offset="1" stop-color="#ffa23a" stop-opacity="0"/>
+              </radialGradient>
+              <linearGradient id="tubeDark" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#4a3d55"/>
+                <stop offset="0.5" stop-color="#2c2433"/>
+                <stop offset="1" stop-color="#1c1721"/>
+              </linearGradient>
+              <linearGradient id="tubeDark2" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#3b4a52"/>
+                <stop offset="1" stop-color="#1b2327"/>
+              </linearGradient>
+              <linearGradient id="tubeLit" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#ffd7ec"/>
+                <stop offset="0.5" stop-color="#fff6fb"/>
+                <stop offset="1" stop-color="#ffb3d9"/>
+              </linearGradient>
+              <linearGradient id="tubeLit2" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#c9f6fb"/>
+                <stop offset="0.5" stop-color="#f4ffff"/>
+                <stop offset="1" stop-color="#a9eef5"/>
+              </linearGradient>
+              <filter id="glowNear" x="-20%" y="-40%" width="140%" height="180%">
+                <feGaussianBlur stdDeviation="5"/>
+              </filter>
+              <filter id="glowMid" x="-30%" y="-60%" width="160%" height="220%">
+                <feGaussianBlur stdDeviation="16"/>
+              </filter>
+              <filter id="glowFar" x="-40%" y="-80%" width="180%" height="260%">
+                <feGaussianBlur stdDeviation="42"/>
+              </filter>
+              <filter id="panelShadow" x="-20%" y="-20%" width="150%" height="160%">
+                <feGaussianBlur stdDeviation="18"/>
+              </filter>
+            </defs>
+
+            <!-- cast shadow of the panel on the wall, away from the lamp -->
+            <rect x="92" y="78" width="880" height="330" rx="18" fill="#000" opacity="0.55" filter="url(#panelShadow)"/>
+
+            <!-- chains to the bracket above -->
+            <g stroke="#3a3340" stroke-width="3" stroke-linecap="round">
+              <path d="M220 0 V40"/>
+              <path d="M780 0 V40"/>
+            </g>
+            <g stroke="#6b6175" stroke-width="1" stroke-linecap="round" opacity="0.7">
+              <path d="M218.5 2 V38"/>
+              <path d="M778.5 2 V38"/>
+            </g>
+
+            <!-- panel: side wall, then top face -->
+            <rect x="60" y="48" width="880" height="330" rx="18" fill="url(#panelSide)"/>
+            <rect x="60" y="40" width="880" height="330" rx="18" fill="url(#panel)"/>
+            <rect x="60" y="40" width="880" height="330" rx="18" fill="url(#lampOnPanel)"/>
+            <rect x="60.5" y="40.5" width="879" height="329" rx="17.5" fill="none" stroke="#ffffff" stroke-opacity="0.09"/>
+            <path d="M78 41 H922" stroke="#ffd9a8" stroke-opacity="0.22" stroke-width="1"/>
+            <!-- screws -->
+            <g fill="#4a4250">
+              <circle cx="84" cy="64" r="4"/><circle cx="916" cy="64" r="4"/>
+              <circle cx="84" cy="346" r="4"/><circle cx="916" cy="346" r="4"/>
+            </g>
+            <g fill="#8a8090" opacity="0.8">
+              <circle cx="82.6" cy="62.6" r="1.4"/><circle cx="914.6" cy="62.6" r="1.4"/>
+              <circle cx="82.6" cy="344.6" r="1.4"/><circle cx="914.6" cy="344.6" r="1.4"/>
+            </g>
+
+            <!-- painted line, Devanagari -->
+            <text class="paint" x="500" y="108" text-anchor="middle" lang="ne">आधी रात</text>
+
+            <!-- main tube: three glow layers under the tube -->
+            <g class="tube tube-main">
+              <text class="glow glow-far" x="500" y="250" text-anchor="middle" textLength="800" lengthAdjust="spacing" filter="url(#glowFar)">AADHI RAAT</text>
+              <text class="glow glow-mid" x="500" y="250" text-anchor="middle" textLength="800" lengthAdjust="spacing" filter="url(#glowMid)">AADHI RAAT</text>
+              <text class="glow glow-near" x="500" y="250" text-anchor="middle" textLength="800" lengthAdjust="spacing" filter="url(#glowNear)">AADHI RAAT</text>
+              <text class="core" x="500" y="250" text-anchor="middle" textLength="800" lengthAdjust="spacing">AADHI RAAT</text>
+            </g>
+
+            <!-- second tube, cyan -->
+            <g class="tube tube-sub">
+              <text class="glow glow-mid" x="500" y="330" text-anchor="middle" textLength="560" lengthAdjust="spacing" filter="url(#glowMid)">RECORDED AFTER MIDNIGHT</text>
+              <text class="glow glow-near" x="500" y="330" text-anchor="middle" textLength="560" lengthAdjust="spacing" filter="url(#glowNear)">RECORDED AFTER MIDNIGHT</text>
+              <text class="core" x="500" y="330" text-anchor="middle" textLength="560" lengthAdjust="spacing">RECORDED AFTER MIDNIGHT</text>
+            </g>
+          </svg>
+          <div class="reflect" id="reflect" aria-hidden="true"></div>
+        </div>
+      </div>
+
+      <div class="hero-foot">
+        <div class="lede">
+          <p class="big">Only music recorded in Kathmandu after <em>midnight</em>, before the sun is up. The sign is on while the window is open.</p>
+          <div class="ctl">
+            <button class="btn btn-soft snd" id="snd" type="button" aria-pressed="false">
+              <svg class="ic ic-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6l12 6-12 6z"/></svg>
+              <svg class="ic ic-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14M16 5v14"/></svg>
+              <span class="snd-label">Hear the street</span>
+            </button>
+            <p class="status" role="timer" aria-atomic="true">
+              <span class="lamp" aria-hidden="true"></span>
+              <span class="st-title" id="stTitle">Lights on at 00:00</span>
+              <span class="num st-num" id="stNum">--:--:--</span>
+            </p>
+          </div>
+        </div>
+        <dl class="window">
+          <dt id="winTitle">Tonight's window</dt>
+          <dd class="num" id="win">00:00 to --:-- NPT</dd>
+          <dd class="win-note">Sunrise is computed for 27.72° N, 85.32° E, sea-level horizon.</dd>
+        </dl>
+      </div>
+    </section>
+
+    <section class="rule" id="rule" aria-labelledby="rule-h">
+      <h2 id="rule-h" class="kicker">The rule</h2>
+      <p class="manifesto">
+        <span class="vh">Kathmandu goes quiet after midnight. The traffic thins, the dogs settle, and the valley holds its breath until the first bell. We release only what is recorded in that quiet: between 00:00 and sunrise, Nepal time, with the file's own timestamp as the proof. No overdubs after breakfast. No mix made at noon. If the sun was up, it is not ours.</span>
+        <span class="words" aria-hidden="true">Kathmandu goes quiet <mark>after midnight.</mark> The traffic thins, the dogs settle, and the valley holds its breath until the first bell. We release only what is recorded in that quiet: between 00:00 and sunrise, Nepal time, with <mark>the file's own timestamp as the proof.</mark> No overdubs after breakfast. No mix made at noon. If the sun was up, <mark>it is not ours.</mark></span>
+      </p>
+    </section>
+
+    <section class="week" id="week" aria-labelledby="week-h">
+      <div class="week-head">
+        <h2 id="week-h">Week of <span id="weekOf">…</span></h2>
+        <p class="detail" id="weekDetail" aria-live="polite">…</p>
+      </div>
+      <div class="board" id="board"></div>
+      <p class="board-note">Every night has a window. It opens at 00:00 and closes at the computed sunrise for Kathmandu. The moon is drawn at its phase that night.</p>
+    </section>
+
+    <section class="send" id="send" aria-labelledby="send-h">
+      <div class="send-head">
+        <h2 id="send-h">Send a tape</h2>
+        <p>Three things, and the third is not ready yet.</p>
+      </div>
+      <ol class="stack" id="stack">
+        <li style="--i:0">
+          <article class="card card-a" aria-labelledby="c1">
+            <div class="txt">
+              <p class="step num">1 of 3</p>
+              <h3 id="c1">Record</h3>
+              <p>Start after 00:00 Nepal time and stop before the sun is up. Anywhere in Kathmandu: a bedroom, a rooftop, a temple step, a bus with the engine off.</p>
+              <dl class="meta">
+                <div><dt>Opens</dt><dd class="num">00:00</dd></div>
+                <div><dt>Closes</dt><dd class="num" id="metaClose">sunrise</dd></div>
+                <div><dt>Place</dt><dd>Kathmandu</dd></div>
+              </dl>
+            </div>
+            <div class="art" aria-hidden="true">
+              <svg viewBox="0 0 320 320" class="art-svg">
+                <defs>
+                  <radialGradient id="dialFace" cx="0.35" cy="0.3" r="0.9">
+                    <stop offset="0" stop-color="#2b2431"/>
+                    <stop offset="1" stop-color="#120f15"/>
+                  </radialGradient>
+                  <linearGradient id="bezel" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0" stop-color="#8d8296"/>
+                    <stop offset="0.5" stop-color="#3b3342"/>
+                    <stop offset="1" stop-color="#1b171f"/>
+                  </linearGradient>
+                </defs>
+                <ellipse cx="172" cy="262" rx="110" ry="14" fill="#000" opacity="0.5"/>
+                <circle cx="160" cy="160" r="118" fill="url(#bezel)"/>
+                <circle cx="160" cy="160" r="108" fill="url(#dialFace)"/>
+                <circle cx="160" cy="160" r="108" fill="none" stroke="#fff" stroke-opacity="0.08"/>
+                <g stroke="#b4acbd" stroke-width="2" stroke-linecap="round">
+                  <path d="M160 62 V74"/><path d="M258 160 H246"/><path d="M160 258 V246"/><path d="M62 160 H74"/>
+                </g>
+                <g stroke="#6e6578" stroke-width="1.5" stroke-linecap="round">
+                  <path d="M209 75 L203 85"/><path d="M245 111 L235 117"/><path d="M245 209 L235 203"/><path d="M209 245 L203 235"/>
+                  <path d="M111 245 L117 235"/><path d="M75 209 L85 203"/><path d="M75 111 L85 117"/><path d="M111 75 L117 85"/>
+                </g>
+                <path d="M160 160 V96" stroke="#f2eef4" stroke-width="5" stroke-linecap="round"/>
+                <path d="M160 160 V82" stroke="#ff4fa8" stroke-width="3" stroke-linecap="round"/>
+                <circle cx="160" cy="160" r="6" fill="#f2eef4"/>
+                <circle cx="160" cy="160" r="2.5" fill="#ff4fa8"/>
+              </svg>
+            </div>
+          </article>
+        </li>
+        <li style="--i:1">
+          <article class="card card-b" aria-labelledby="c2">
+            <div class="txt">
+              <p class="step num">2 of 3</p>
+              <h3 id="c2">Keep the stamp</h3>
+              <p>Do not rename it, bounce it again at noon, or strip the metadata. The file's own recorded time is the proof we check, and it has to fall inside that night's window.</p>
+              <dl class="meta">
+                <div><dt>Proof</dt><dd>the file's timestamp</dd></div>
+                <div><dt>Zone</dt><dd class="num">UTC+05:45</dd></div>
+                <div><dt>Edits</dt><dd>none after sunrise</dd></div>
+              </dl>
+            </div>
+            <div class="art" aria-hidden="true">
+              <div class="file">
+                <div class="file-top"><span class="num">night-take.wav</span><span class="chip">Example</span></div>
+                <div class="file-rows">
+                  <div><span>Recorded</span><b class="num" id="exStamp">02:14 NPT</b></div>
+                  <div><span>Window</span><b class="num" id="exWindow">00:00 to 05:59</b></div>
+                  <div><span>Format</span><b class="num">48 kHz · 24-bit</b></div>
+                  <div class="ok"><span>Rule</span><b>passes</b></div>
+                </div>
+              </div>
+            </div>
+          </article>
+        </li>
+        <li style="--i:2">
+          <article class="card card-c" aria-labelledby="c3">
+            <div class="txt">
+              <p class="step num">3 of 3</p>
+              <h3 id="c3">Send it</h3>
+              <p>The address goes here when the first window is announced. Until then, keep the file exactly as it is. Its timestamp will still be true.</p>
+              <dl class="meta">
+                <div><dt>Address</dt><dd>to be announced</dd></div>
+                <div><dt>Until then</dt><dd>keep the original</dd></div>
+                <div><dt>Reply</dt><dd>after the next window</dd></div>
+              </dl>
+            </div>
+            <div class="art" aria-hidden="true">
+              <svg viewBox="0 0 320 320" class="art-svg">
+                <defs>
+                  <linearGradient id="envTop" x1="0" y1="0" x2="0.3" y2="1">
+                    <stop offset="0" stop-color="#2d2632"/>
+                    <stop offset="1" stop-color="#171419"/>
+                  </linearGradient>
+                  <linearGradient id="envBody" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0" stop-color="#211c25"/>
+                    <stop offset="1" stop-color="#120f15"/>
+                  </linearGradient>
+                </defs>
+                <ellipse cx="176" cy="268" rx="120" ry="12" fill="#000" opacity="0.5"/>
+                <rect x="48" y="104" width="224" height="152" rx="10" fill="#0b090d"/>
+                <rect x="44" y="96" width="224" height="152" rx="10" fill="url(#envBody)"/>
+                <rect x="44.5" y="96.5" width="223" height="151" rx="9.5" fill="none" stroke="#fff" stroke-opacity="0.1"/>
+                <path d="M44 106 L156 184 L268 106" fill="url(#envTop)" stroke="#6e6578" stroke-width="1.5" stroke-linejoin="round"/>
+                <path d="M52 100 H260" stroke="#ffd9a8" stroke-opacity="0.25"/>
+                <g stroke="#6e6578" stroke-width="2" stroke-linecap="round" stroke-dasharray="4 7">
+                  <path d="M84 206 H200"/><path d="M84 224 H168"/>
+                </g>
+                <circle cx="236" cy="216" r="16" fill="none" stroke="#ff4fa8" stroke-width="2.5" stroke-dasharray="3 5"/>
+              </svg>
+              <p class="slot-caption">Address to be announced.</p>
+            </div>
+          </article>
+        </li>
+      </ol>
+      <nav class="rail" aria-label="Steps" id="rail"></nav>
+    </section>
+  </main>
+
+  <section class="tail" aria-labelledby="tail-h">
+    <h2 id="tail-h">Catalogue</h2>
+    <p>Nothing yet. The first release will be the first tape that passes the rule.</p>
+    <a class="btn btn-soft" href="#send">Send a tape <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+  </section>
+
+  <footer aria-label="Site footer" id="foot">
+    <div class="f-top">
+      <div>
+        <p class="kicker">The rule, in one line</p>
+        <p class="line">Recorded in Kathmandu between 00:00 and sunrise. Nothing else.</p>
+      </div>
+      <div class="f-clock" aria-label="Kathmandu local time">
+        <p class="t num"><span id="fclk">--:--</span><span class="sec" id="fsec">:--</span></p>
+        <p class="z"><span class="lamp" aria-hidden="true"></span> Kathmandu · UTC+05:45 · <span id="fstate">lights off</span></p>
+      </div>
+    </div>
+    <nav class="cols" aria-label="Sitemap">
+      <div>
+        <h3>On this page</h3>
+        <ul>
+          <li><a href="#rule">The rule</a></li>
+          <li><a href="#week">This week</a></li>
+          <li><a href="#send">Send a tape</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Catalogue</h3>
+        <ul>
+          <li><span class="muted">Nothing released yet</span></li>
+        </ul>
+      </div>
+      <p class="note">Aadhi Raat is a record label in Kathmandu. It releases only music recorded between 00:00 and sunrise, Nepal time. आधी रात means midnight.</p>
+    </nav>
+    <div class="legal">
+      <span>© 2026 Aadhi Raat (working name)</span>
+      <span class="credit">Designed using <a href="https://www.designlounge.live">Design Lounge</a></span>
+      <span class="spacer"></span>
+      <button class="replay" type="button" id="replay">Replay reveal</button>
+    </div>
+    <div class="word" id="word" aria-hidden="true">
+      <span style="--i:0">a</span><span style="--i:1">a</span><span style="--i:2">d</span><span style="--i:3">h</span><span style="--i:4">i</span><span class="gap" style="--i:5">&nbsp;</span><span style="--i:6">r</span><span style="--i:7">a</span><span style="--i:8">a</span><span style="--i:9">t</span><span class="end" style="--i:10">.</span>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>

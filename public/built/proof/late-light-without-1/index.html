@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en" data-motion="on">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Late Light — the planetarium's late-night show</title>
+  <meta name="description" content="Late Light is the planetarium's late-night show. Scroll and travel outward from Earth, and watch how old the light gets.">
+  <meta name="theme-color" content="#06070f">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;1,9..144,300&family=Instrument+Sans:wght@400;500&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip" href="#arrive">Skip to show details</a>
+
+  <canvas id="sky" aria-hidden="true"></canvas>
+  <div class="grain" aria-hidden="true"></div>
+
+  <header class="top">
+    <a class="wordmark" href="#earth">Late Light</a>
+    <button class="motion" id="motion" type="button" aria-pressed="true">
+      <span class="motion-dot" aria-hidden="true"></span>
+      Motion <span class="motion-state">on</span>
+    </button>
+  </header>
+
+  <nav class="rail" aria-label="Waypoints">
+    <a href="#earth" data-rail="earth"><span>Earth</span></a>
+    <a href="#moon" data-rail="moon"><span>The Moon</span></a>
+    <a href="#mars" data-rail="mars"><span>Mars</span></a>
+    <a href="#saturn" data-rail="saturn"><span>Saturn</span></a>
+    <a href="#voyager" data-rail="voyager"><span>Voyager 1</span></a>
+    <a href="#proxima" data-rail="proxima"><span>Proxima Centauri</span></a>
+    <a href="#orion" data-rail="orion"><span>The Orion Nebula</span></a>
+    <a href="#andromeda" data-rail="andromeda"><span>Andromeda</span></a>
+    <a href="#arrive" data-rail="arrive"><span>The dome</span></a>
+  </nav>
+
+  <main>
+
+    <section class="chapter hero" id="earth" data-ls="0" data-name="Earth">
+      <div class="hero-copy">
+        <p class="eyebrow">The planetarium's late-night show</p>
+        <h1>Late <em>Light</em></h1>
+        <p class="lede">Every star you will see tonight is old news. Its light set out long before you sat down, and some of it set out before there was anyone to sit. Scroll, and we will go out to meet it.</p>
+        <a class="hint" href="#moon">
+          <span>Scroll to leave Earth</span>
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M5 9l7 7 7-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+      <div class="earth" id="earth-globe" aria-hidden="true">
+        <div class="earth-land"></div>
+        <div class="earth-cloud"></div>
+        <div class="earth-night"></div>
+      </div>
+    </section>
+
+    <section class="chapter" id="moon" data-ls="1.3" data-name="The Moon">
+      <figure class="object" aria-hidden="true">
+        <div class="moon"></div>
+      </figure>
+      <div class="copy">
+        <p class="eyebrow"><span class="idx">01</span> The Moon</p>
+        <h2><em>1.3 seconds</em> ago</h2>
+        <p>The nearest thing in the sky, and even it is a little late. The moonlight on your hand tonight left the Moon while you were reading this sentence. It is the freshest light you will ever see from anywhere but here.</p>
+      </div>
+    </section>
+
+    <section class="chapter" id="mars" data-ls="780" data-name="Mars">
+      <figure class="object" aria-hidden="true">
+        <div class="mars"></div>
+      </figure>
+      <div class="copy">
+        <p class="eyebrow"><span class="idx">02</span> Mars</p>
+        <h2><em>13 minutes</em> ago, give or take</h2>
+        <p>Mars swings from three light-minutes away to twenty-two as the two orbits wheel past each other. Its sunsets are blue: the dust steals the red out of the sky and leaves the rest, the opposite of ours. We will stand on it for a while.</p>
+      </div>
+    </section>
+
+    <section class="chapter" id="saturn" data-ls="4680" data-name="Saturn">
+      <figure class="object" aria-hidden="true">
+        <svg class="saturn" viewBox="0 0 440 300" role="img">
+          <defs>
+            <radialGradient id="sat-body" cx="38%" cy="32%" r="75%">
+              <stop offset="0" stop-color="#f6e2b5"/>
+              <stop offset=".45" stop-color="#d9b47a"/>
+              <stop offset=".8" stop-color="#8a6a3c"/>
+              <stop offset="1" stop-color="#2b1f12"/>
+            </radialGradient>
+            <linearGradient id="sat-bands" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#fff" stop-opacity="0"/>
+              <stop offset=".3" stop-color="#5a4020" stop-opacity=".18"/>
+              <stop offset=".34" stop-color="#fff" stop-opacity="0"/>
+              <stop offset=".55" stop-color="#5a4020" stop-opacity=".22"/>
+              <stop offset=".6" stop-color="#fff" stop-opacity="0"/>
+              <stop offset=".78" stop-color="#5a4020" stop-opacity=".2"/>
+              <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+            </linearGradient>
+            <clipPath id="sat-front"><rect x="0" y="150" width="440" height="150"/></clipPath>
+            <clipPath id="sat-disc"><circle cx="220" cy="150" r="78"/></clipPath>
+          </defs>
+          <g transform="rotate(-16 220 150)">
+            <g class="rings">
+              <ellipse cx="220" cy="150" rx="190" ry="46" fill="none" stroke="#c9b58f" stroke-opacity=".35" stroke-width="10"/>
+              <ellipse cx="220" cy="150" rx="168" ry="40" fill="none" stroke="#e8d7b4" stroke-opacity=".7" stroke-width="18"/>
+              <ellipse cx="220" cy="150" rx="146" ry="34" fill="none" stroke="#b9a37d" stroke-opacity=".55" stroke-width="12"/>
+              <ellipse cx="220" cy="150" rx="128" ry="29" fill="none" stroke="#8d7a5a" stroke-opacity=".3" stroke-width="8"/>
+            </g>
+            <circle cx="220" cy="150" r="78" fill="url(#sat-body)"/>
+            <rect x="142" y="72" width="156" height="156" fill="url(#sat-bands)" clip-path="url(#sat-disc)"/>
+            <g clip-path="url(#sat-disc)"><ellipse cx="246" cy="168" rx="78" ry="78" fill="none" stroke="#000" stroke-opacity=".35" stroke-width="22"/></g>
+            <g class="rings" clip-path="url(#sat-front)">
+              <ellipse cx="220" cy="150" rx="190" ry="46" fill="none" stroke="#c9b58f" stroke-opacity=".35" stroke-width="10"/>
+              <ellipse cx="220" cy="150" rx="168" ry="40" fill="none" stroke="#e8d7b4" stroke-opacity=".7" stroke-width="18"/>
+              <ellipse cx="220" cy="150" rx="146" ry="34" fill="none" stroke="#b9a37d" stroke-opacity=".55" stroke-width="12"/>
+              <ellipse cx="220" cy="150" rx="128" ry="29" fill="none" stroke="#8d7a5a" stroke-opacity=".3" stroke-width="8"/>
+            </g>
+          </g>
+        </svg>
+      </figure>
+      <div class="copy">
+        <p class="eyebrow"><span class="idx">03</span> Saturn</p>
+        <h2><em>80 minutes</em> ago</h2>
+        <p>The rings are water ice, almost pure, from snowflakes up to houses. Edge to edge they reach most of the way from the Earth to the Moon, and in places they are only tens of metres thick. We will fly straight through the gap.</p>
+      </div>
+    </section>
+
+    <section class="chapter" id="voyager" data-ls="84600" data-name="Voyager 1">
+      <figure class="object" aria-hidden="true">
+        <svg class="voyager" viewBox="0 0 440 300" role="img">
+          <g fill="none" stroke="#efe7d6" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <ellipse cx="200" cy="150" rx="74" ry="92" transform="rotate(-22 200 150)" stroke-opacity=".9"/>
+            <ellipse cx="200" cy="150" rx="52" ry="66" transform="rotate(-22 200 150)" stroke-opacity=".35"/>
+            <ellipse cx="200" cy="150" rx="28" ry="36" transform="rotate(-22 200 150)" stroke-opacity=".35"/>
+            <line x1="200" y1="150" x2="258" y2="108" stroke-opacity=".9"/>
+            <circle cx="258" cy="108" r="5" fill="#06070f"/>
+            <path d="M222 190 l26 10 l-2 26 l-26 -10 z" fill="#06070f"/>
+            <line x1="248" y1="200" x2="330" y2="236"/>
+            <line x1="330" y1="236" x2="404" y2="268" stroke-dasharray="3 5" stroke-opacity=".7"/>
+            <circle cx="338" cy="240" r="7"/>
+            <circle cx="356" cy="247" r="7"/>
+            <circle cx="374" cy="255" r="7"/>
+            <line x1="236" y1="206" x2="196" y2="262"/>
+            <line x1="196" y1="262" x2="186" y2="276"/>
+            <circle cx="186" cy="280" r="6" fill="#06070f"/>
+            <line x1="232" y1="214" x2="60" y2="248" stroke-opacity=".8"/>
+            <line x1="60" y1="248" x2="24" y2="256" stroke-dasharray="3 5" stroke-opacity=".6"/>
+          </g>
+          <circle cx="258" cy="108" r="2" fill="#efe7d6"/>
+        </svg>
+      </figure>
+      <div class="copy">
+        <p class="eyebrow"><span class="idx">04</span> Voyager 1</p>
+        <h2><em>Almost a day</em> ago</h2>
+        <p>The farthest thing we have ever made. It left in 1977 with a gold record of greetings and still calls home on a transmitter weaker than a fridge bulb. Say hello to it tonight and the answer takes nearly two days to come back.</p>
+      </div>
+    </section>
+
+    <section class="chapter" id="proxima" data-ls="133800000" data-name="Proxima Centauri">
+      <figure class="object" aria-hidden="true">
+        <div class="proxima"><i></i><i></i></div>
+      </figure>
+      <div class="copy">
+        <p class="eyebrow"><span class="idx">05</span> Proxima Centauri</p>
+        <h2><em>4.2 years</em> ago</h2>
+        <p>The nearest star after the Sun. A small red one, cooler than a welding torch, with at least one planet that would fit in your hand if you could hold a planet. If it went out tonight, no one on Earth would know until the start of the 2030s.</p>
+      </div>
+    </section>
+
+    <section class="chapter" id="orion" data-ls="42400000000" data-name="The Orion Nebula">
+      <figure class="object" aria-hidden="true">
+        <div class="nebula">
+          <b class="n1"></b><b class="n2"></b><b class="n3"></b><b class="n4"></b>
+          <s></s><s></s><s></s><s></s>
+        </div>
+      </figure>
+      <div class="copy">
+        <p class="eyebrow"><span class="idx">06</span> The Orion Nebula</p>
+        <h2><em>1,300 years</em> ago</h2>
+        <p>A nursery. Stars are being born in here right now, out of gas that glows because the newest ones are so hot. The light arriving tonight left in the early Middle Ages; whatever has switched on since, we will not hear about it for another thirteen centuries.</p>
+      </div>
+    </section>
+
+    <section class="chapter" id="andromeda" data-ls="78900000000000" data-name="Andromeda">
+      <figure class="object" aria-hidden="true">
+        <div class="galaxy"><i></i></div>
+      </figure>
+      <div class="copy">
+        <p class="eyebrow"><span class="idx">07</span> Andromeda</p>
+        <h2><em>2.5 million years</em> ago</h2>
+        <p>The farthest thing you can see with your own eyes, a smudge above the autumn horizon that is a trillion suns. This light set out before anyone on Earth could look up. It is the oldest thing you will ever look at, and it is falling toward us.</p>
+      </div>
+    </section>
+
+    <section class="chapter arrive" id="arrive" data-home="true" data-name="The dome">
+      <figure class="object dome-wrap" aria-hidden="true">
+        <svg class="dome" viewBox="0 0 440 300" role="img">
+          <defs>
+            <radialGradient id="dome-g" cx="50%" cy="100%" r="85%">
+              <stop offset="0" stop-color="#1a2258"/>
+              <stop offset=".6" stop-color="#0b0f2c"/>
+              <stop offset="1" stop-color="#06070f"/>
+            </radialGradient>
+            <linearGradient id="beam-g" x1="0" y1="1" x2="0" y2="0">
+              <stop offset="0" stop-color="#efe7d6" stop-opacity=".28"/>
+              <stop offset="1" stop-color="#efe7d6" stop-opacity="0"/>
+            </linearGradient>
+            <clipPath id="dome-c"><path d="M30 214 A190 190 0 0 1 410 214 Z"/></clipPath>
+          </defs>
+          <path d="M30 214 A190 190 0 0 1 410 214 Z" fill="url(#dome-g)"/>
+          <g id="dome-stars" clip-path="url(#dome-c)" fill="#efe7d6"></g>
+          <polygon points="214,214 226,214 330,36 110,36" fill="url(#beam-g)" clip-path="url(#dome-c)"/>
+          <path d="M30 214 A190 190 0 0 1 410 214" fill="none" stroke="#efe7d6" stroke-opacity=".5"/>
+          <line x1="18" y1="214" x2="422" y2="214" stroke="#efe7d6" stroke-opacity=".5"/>
+          <g id="dome-seats" fill="none" stroke="#efe7d6" stroke-opacity=".55" stroke-width="1.2"></g>
+          <rect x="214" y="204" width="12" height="10" rx="2" fill="#efe7d6"/>
+        </svg>
+      </figure>
+      <div class="copy">
+        <p class="eyebrow"><span class="idx">08</span> Home</p>
+        <h2>Then we bring you <em>back</em></h2>
+        <p>Late Light runs after the last daytime show, when the building is dark and most of the city is too. The seats go flat. The dome goes darker than any sky you have stood under, and then, one by one, it fills with light that has been on its way for longer than you have been alive.</p>
+        <ul class="facts">
+          <li><span>When</span>After the last daytime show, one night at a time</li>
+          <li><span>Where</span>Under the dome at the planetarium</li>
+          <li><span>Bring</span>Nothing. Your eyes take a few minutes to open up; we wait for them</li>
+        </ul>
+        <div class="actions">
+          <button class="btn primary" type="button">Reserve a seat</button>
+          <a class="btn" href="#earth">Back to Earth</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <aside class="hud" aria-label="Where you are">
+    <div class="hud-row">
+      <span class="hud-k">Distance from Earth</span>
+      <span class="hud-v" id="hud-dist">0 light-seconds</span>
+    </div>
+    <div class="hud-row">
+      <span class="hud-k">This light left</span>
+      <span class="hud-v" id="hud-when">just now</span>
+    </div>
+    <div class="hud-bar" aria-hidden="true"><i id="hud-fill"></i></div>
+  </aside>
+
+  <footer class="foot">
+    <p>Late Light is the planetarium's late-night show. Everything on this page is drawn, not photographed; the distances are real.</p>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
