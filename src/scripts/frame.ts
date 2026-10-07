@@ -67,7 +67,7 @@ class LoungeFrame extends HTMLElement {
     this.ro = new ResizeObserver(() => this.schedule());
     this.ro.observe(this);
     this.layout();
-    this.iframe.addEventListener('load', () => { if (this.iframe.getAttribute('src')) setTimeout(() => this.classList.add('loaded'), 250); });
+    this.iframe.addEventListener('load', this.onLoad);
     if (this.dataset.lazy !== 'true') this.load();
     if ('IntersectionObserver' in window) {
       this.io = new IntersectionObserver((entries) => {
@@ -150,15 +150,33 @@ class LoungeFrame extends HTMLElement {
     this.classList.toggle('lf-tiny', fit < TINY);
     this.classList.add('lf-ready');
   }
+  loading = false;
+  onLoad = () => { this.loading = false; if (this.iframe.getAttribute('src')) setTimeout(() => this.classList.add('loaded'), 250); };
+  // A demo still loading when the reader leaves keeps the page out of the back/forward cache,
+  // so on pagehide a loading frame is swapped for a fresh one, and it loads again if the page comes back.
+  rest() {
+    if (!this.loading) return;
+    const fresh = this.iframe.cloneNode(false) as HTMLIFrameElement;
+    fresh.removeAttribute('src');
+    fresh.addEventListener('load', this.onLoad);
+    this.iframe.replaceWith(fresh);
+    this.iframe = fresh; this.loading = false;
+    this.classList.remove('loaded');
+  }
   load() {
     this.wanted = true;
-    pageReady.then(() => { if (this.wanted && !this.iframe.getAttribute('src')) this.iframe.src = this.dataset.src || ''; });
+    pageReady.then(() => { if (this.wanted && !this.iframe.getAttribute('src')) { this.loading = true; this.iframe.src = this.dataset.src || ''; } });
   }
   unload() {
     this.wanted = false;
-    if (this.iframe.getAttribute('src')) { this.iframe.removeAttribute('src'); this.classList.remove('loaded'); }
+    if (this.iframe.getAttribute('src')) { this.iframe.removeAttribute('src'); this.loading = false; this.classList.remove('loaded'); }
   }
-  reload() { this.classList.remove('loaded'); this.iframe.src = (this.dataset.src || '') + '?r=' + Date.now(); }
+  reload() { this.classList.remove('loaded'); this.loading = true; this.iframe.src = (this.dataset.src || '') + '?r=' + Date.now(); }
 }
-if (!customElements.get('lounge-frame')) customElements.define('lounge-frame', LoungeFrame);
+if (!customElements.get('lounge-frame')) {
+  customElements.define('lounge-frame', LoungeFrame);
+  const frames = () => document.querySelectorAll<LoungeFrame>('lounge-frame');
+  addEventListener('pagehide', () => frames().forEach((f) => f.rest()));
+  addEventListener('pageshow', (e) => { if (e.persisted) frames().forEach((f) => { if (f.wanted) f.load(); }); });
+}
 export {};
