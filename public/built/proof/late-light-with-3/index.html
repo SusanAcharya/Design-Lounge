@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Late Light, a planetarium's late-night show</title>
+<meta name="description" content="The late show at the planetarium. Scroll, and every step takes you ten times further from the dome, until the light arriving is two and a half million years old.">
+<meta property="og:title" content="Late Light, a planetarium's late-night show">
+<meta property="og:description" content="Scroll, and every step takes you ten times further from the dome.">
+<meta property="og:image" content="og-image.png">
+<meta name="theme-color" content="#050811">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon.ico" sizes="32x32">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip" href="#frames">Skip the journey</a>
+
+<canvas id="space" aria-hidden="true"></canvas>
+<div class="fx vignette" aria-hidden="true"></div>
+<div class="fx grain" aria-hidden="true"></div>
+
+<header class="top">
+  <a class="mark" href="#top" aria-label="Late Light, back to the dome">Late <i>Light</i></a>
+  <nav aria-label="Site">
+    <a href="#frames">The frames</a>
+    <a href="#visit">Visit</a>
+  </nav>
+</header>
+
+<div class="voyage" id="top">
+  <div class="track" id="track" aria-hidden="true"></div>
+
+  <main class="stage" id="stage">
+
+    <section class="ch hero" data-e="1" data-label="The dome" data-width="10 m" aria-labelledby="h-dome">
+      <div class="in">
+        <h1 id="h-dome"><span>Late</span><span class="lit">Light</span></h1>
+        <p class="lede">A planetarium's late-night show. Start on the crown of the dome and scroll. Every step is ten times further out, until the light arriving is two and a half million years old.</p>
+      </div>
+    </section>
+
+    <section class="ch" data-e="2" data-label="The building" data-width="100 m" aria-labelledby="h-building">
+      <div class="in">
+        <h2 id="h-building">One step <em>back.</em></h2>
+        <p>The planetarium, its roof, the lamps in the car park and the street outside. You are the dot in the middle of the dome, and you stay there all the way out.</p>
+        <dl class="facts">
+          <div><dt>The frame</dt><dd class="num">100 m</dd></div>
+          <div><dt>Light crosses it in</dt><dd class="num">0.33 µs</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="ch right" data-e="4" data-label="The town" data-width="10 km" aria-labelledby="h-town">
+      <div class="in">
+        <h2 id="h-town">Three more, and the town is <em>lamps.</em></h2>
+        <p>Every street is a line of sodium light. The dome is in there, under the centre of the square, and it is already too small to see.</p>
+        <dl class="facts">
+          <div><dt>The frame</dt><dd class="num">10 km</dd></div>
+          <div><dt>Light crosses it in</dt><dd class="num">33 µs</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="ch" data-e="7" data-label="Earth" data-width="10,000 km" aria-labelledby="h-earth">
+      <div class="in">
+        <h2 id="h-earth">Seven steps from the dome: the <em>Earth.</em></h2>
+        <p>It is night on this side. The Sun is behind the planet, lighting a thin edge of tomorrow morning.</p>
+        <dl class="facts">
+          <div><dt>Diameter</dt><dd class="num">12,742 km</dd></div>
+          <div><dt>Light across it</dt><dd class="num">42 ms</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="ch right" data-e="9" data-label="The Moon" data-width="1 million km" aria-labelledby="h-moon">
+      <div class="in">
+        <h2 id="h-moon">The Moon's whole orbit in one <em>frame.</em></h2>
+        <p>Moonlight is sunlight that left the Sun eight minutes ago and bounced. From the Moon to the dome it takes another 1.3 seconds.</p>
+        <dl class="facts">
+          <div><dt>Earth to Moon</dt><dd class="num">384,400 km</dd></div>
+          <div><dt>Light</dt><dd class="num">1.3 s</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="ch" data-e="12" data-label="The inner planets" data-width="1 billion km" aria-labelledby="h-inner">
+      <div class="in">
+        <h2 id="h-inner">The Sun is not in the <em>middle.</em></h2>
+        <p>We are, because this is the frame around the dome. Mercury, Venus, Earth and Mars circle the Sun, 150 million km from where you started.</p>
+        <dl class="facts">
+          <div><dt>Sun to Earth</dt><dd class="num">150 million km</dd></div>
+          <div><dt>Light</dt><dd class="num">8.3 min</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="ch right" data-e="13" data-label="The outer planets" data-width="10 billion km" aria-labelledby="h-outer">
+      <div class="in">
+        <h2 id="h-outer">Jupiter, Saturn, Uranus, <em>Neptune.</em></h2>
+        <p>Neptune is 4.5 billion km from the Sun. Sunlight takes four hours to reach it, and Neptune's reflected light takes four more to come back to the dome.</p>
+        <dl class="facts">
+          <div><dt>Sun to Neptune</dt><dd class="num">4.5 billion km</dd></div>
+          <div><dt>Light</dt><dd class="num">4.2 h</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="ch" data-e="16" data-label="One light-year" data-width="1 light-year" aria-labelledby="h-ly">
+      <div class="in">
+        <h2 id="h-ly">A whole light-year, and still only <em>us.</em></h2>
+        <p>The frame is now 9.5 trillion km wide, the distance light goes in a year. Nothing we have ever launched has crossed it. Voyager 1, the farthest, is less than one light-day out.</p>
+        <dl class="facts">
+          <div><dt>One light-year</dt><dd class="num">9.46 trillion km</dd></div>
+          <div><dt>Voyager 1</dt><dd class="num">under 1 light-day</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="ch right" data-e="18" data-label="The neighbours" data-width="100 light-years" aria-labelledby="h-near">
+      <div class="in">
+        <h2 id="h-near">The nearest star is four years <em>away.</em></h2>
+        <p>Proxima Centauri's light takes 4.2 years to reach the dome. Sirius, the brightest star in our night, takes 8.6. When you look at it tonight, you see it as it was 8.6 years ago.</p>
+        <dl class="facts">
+          <div><dt>Proxima Centauri</dt><dd class="num">4.2 light-years</dd></div>
+          <div><dt>Sirius</dt><dd class="num">8.6 light-years</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="ch" data-e="21" data-label="The Milky Way" data-width="100,000 light-years" aria-labelledby="h-mw">
+      <div class="in">
+        <h2 id="h-mw">Our galaxy, with us <em>inside</em> it.</h2>
+        <p>About 100,000 light-years across. The Sun is 26,000 light-years from the centre, out in one of the arms, and the dome is still the dot in the middle of the frame.</p>
+        <dl class="facts">
+          <div><dt>Across</dt><dd class="num">100,000 light-years</dd></div>
+          <div><dt>Sun to the centre</dt><dd class="num">26,000 light-years</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="ch last" data-e="23" data-label="The Local Group" data-width="10 million light-years" aria-labelledby="h-lg">
+      <div class="in">
+        <h2 id="h-lg">Andromeda's light is 2.5 million years <em>old.</em></h2>
+        <p>It is the farthest thing you can see with your own eyes, and the late show ends here, ten million light-years wide. The light leaving Andromeda tonight arrives in the year 2,500,000. The show is on sooner than that.</p>
+        <dl class="facts">
+          <div><dt>Andromeda</dt><dd class="num">2.5 million light-years</dd></div>
+          <div><dt>Its light is</dt><dd class="num">2.5 million years old</dd></div>
+        </dl>
+        <button class="btn btn-primary" id="home" type="button">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg>
+          Back to the dome
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+  <aside class="hud" aria-label="Readouts">
+    <div class="ro"><span>This frame is</span><b class="num" id="ro-w">10 m</b></div>
+    <div class="ro"><span>Light crosses it in</span><b class="num" id="ro-t">33 ns</b></div>
+    <div class="ro since"><span>Since you arrived, light has gone</span><b class="num" id="ro-s">0 km</b></div>
+  </aside>
+
+  <nav class="rail" aria-label="Stops"><ol id="rail"></ol></nav>
+  <p class="sr" aria-live="polite" id="live"></p>
+</div>
+
+<section class="frames" id="frames" aria-labelledby="h-frames">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 id="h-frames">Eleven frames</h2>
+      <p>Every stop of the journey, held still. Pick one, and hold the loupe over it.</p>
+    </div>
+
+    <div class="stage2">
+      <div class="lightbox">
+        <div class="view" id="view" tabindex="0" role="img" aria-label="Enlarged frame. Arrow keys move the loupe.">
+          <canvas id="viewc"></canvas>
+          <div class="loupe" id="loupe" aria-hidden="true"><canvas id="loupec"></canvas></div>
+        </div>
+      </div>
+      <aside class="meta" id="meta" aria-live="polite">
+        <p class="meta-n" id="meta-n"></p>
+        <h3 class="meta-t" id="meta-t"></h3>
+        <p class="meta-p" id="meta-p"></p>
+        <dl>
+          <div><dt>The frame is</dt><dd class="num" id="meta-w"></dd></div>
+          <div><dt>Light crosses it in</dt><dd class="num" id="meta-l"></dd></div>
+        </dl>
+      </aside>
+    </div>
+
+    <div class="reel" role="region" aria-label="Film strip">
+      <div class="scroller" id="scroller">
+        <div class="strip">
+          <div class="holes" aria-hidden="true"></div>
+          <ol class="row" id="row"></ol>
+          <div class="holes" aria-hidden="true"></div>
+        </div>
+      </div>
+      <p class="hint"><span>Drag the strip, or step through it with the arrow keys.</span><span class="num" id="count">Frame 1 of 11</span></p>
+    </div>
+  </div>
+</section>
+
+<section class="visit" id="visit" aria-labelledby="h-visit">
+  <div class="wrap grid">
+    <div class="left">
+      <h2 id="h-visit">Come after <em>dark.</em></h2>
+      <p>It is a late show. The house lights go down, the projector comes up, and you lie back under the dome for the same journey this page makes with squares, with the whole sky doing the work.</p>
+      <p>The doors, the running time, the address and the tickets go here as soon as the planetarium confirms them.</p>
+    </div>
+    <div class="right">
+      <h3 id="hours-h">Tonight</h3>
+      <table aria-labelledby="hours-h">
+        <thead><tr><th scope="col">Detail</th><th scope="col">Answer</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Doors</th><td><i>To be announced</i></td></tr>
+          <tr><th scope="row">Running time</th><td><i>To be announced</i></td></tr>
+          <tr><th scope="row">Where</th><td><i>Address to come</i></td></tr>
+          <tr><th scope="row">Tickets</th><td><i>Link to come</i></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<footer class="colophon" aria-labelledby="ft">
+  <h2 id="ft" class="sr">Colophon</h2>
+  <span class="rule" aria-hidden="true"></span>
+  <p class="mark2">Late <i>Light</i></p>
+  <p class="issue">A planetarium's late-night show</p>
+  <ul class="links">
+    <li><a href="#top">The journey</a></li>
+    <li><a href="#frames">The frames</a></li>
+    <li><a href="#visit">Visit</a></li>
+  </ul>
+  <p class="credit">Designed using <a href="https://www.designlounge.live">Design Lounge</a></p>
+  <button class="btn top" id="topbtn" type="button">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg>
+    Back to the dome
+  </button>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>

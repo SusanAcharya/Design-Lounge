@@ -24,8 +24,7 @@ export const PROOF: ProofSubject[] = [
     id: 'late-light',
     title: 'Late Light',
     prompt: "A site for a planetarium's late-night show. You scroll and you travel through space. Make it unforgettable.",
-    // With-skill run 3 was still building when this was published; it is added when it finishes, unedited.
-    runs: { without: [1, 2, 3], with: [1, 2] },
+    runs: { without: [1, 2, 3], with: [1, 2, 3] },
   },
   {
     id: 'aadhi-raat',
