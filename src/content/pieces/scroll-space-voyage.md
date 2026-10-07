@@ -1,5 +1,5 @@
 ---
-title: "Scroll-driven space voyage"
+title: "Apogee"
 summary: "A canvas flight from Earth's night limb, out past a shrinking Earth and the Moon, to a deep field. Scroll is the throttle; a HUD counts distance, velocity and mission time."
 platform: web
 type: section
@@ -15,7 +15,7 @@ fonts: ["Instrument Serif", "JetBrains Mono"]
 related: [three-scroll-world, hero-chaptered-scenes, webgl-shader-hero]
 ---
 
-# Scroll-driven space voyage
+# Apogee
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
@@ -133,7 +133,7 @@ The title is one word split at the syllable: "Apo" in `--star` roman, "gee" in t
 | Star streak | scroll speed | line length | 0 → 1100 depth units | per frame | `vel` lerp 0.35 | off |
 | Star twinkle | time | alpha | 0.44 → 1.0 | 0.5 to 3 rad/s per star | sine | fixed 0.86 |
 | Star drift | time | depth | +10 units/s | constant | linear | off |
-| Launch flare | first interaction | opacity | held at 0 (the intro clock starts already finished) | none | none | starts at 0 |
+| Launch flare | load | opacity | 0.95 → 0 | 0.3s → 2.6s | smoothstep | starts at 0 |
 | Title syllables | load | opacity, Y, blur | 0, +0.3em, 16px → 1, 0, 0 | 1400ms, "gee" +180ms | `--expo` | no animation |
 | Hero copy | scroll | opacity, Y, scale | 1, 0, 1 → 0, -0.25 × sy, 0.94 | over 0.65 viewport | linear in scroll | opacity only |
 | Chapter copy | scroll | opacity, Y | 0 → 1 → 0, +18 → -18px | across 200vh | linear in scroll | opacity only |
@@ -146,7 +146,7 @@ The title is one word split at the syllable: "Apo" in `--star` roman, "gee" in t
 | Index label | hover, focus, current | opacity, X | 0, 6px → 1, 0 | 400ms | `--ease` | instant |
 | HUD values | scroll | number | follows `sy` | per frame | smoothstep between chapters | follows `scrollY` |
 
-The canvas paints one still frame on load. The continuous loop (twinkle, drift, city lights) starts on the first scroll, pointer move, wheel, tap or key. A slow phone that is only looking never pays for it.
+Keep it cheap enough for a slow phone. The loop runs at 30fps and stops while the tab is hidden. The sky behind the stars (the Milky Way and the deep field) and Earth's limb and disc are cached in two offscreen layers, repainted only when the camera, the scroll or the fade moves them. Every glow (the dawn on the limb, the halos round the Moon and Earth) is a sprite drawn once. Stars are plain dots until the scroll speed draws streaks. The Milky Way does not turn with time, only with scroll.
 
 ## States
 

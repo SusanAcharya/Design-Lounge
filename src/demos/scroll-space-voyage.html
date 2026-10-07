@@ -315,11 +315,15 @@ h2 em{color:var(--accent)}
     moon:   { r: 150, k: 4.2, mul: 1,   side: 1,  glow: '220,214,200' },
     earth:  { r: 150, k: 4.6, mul: 1,   side: -1, off: .28, glow: '120,180,255', back: true, near: .2 },
   };
+  for (const o of Object.values(objs)) o.halo = glowSprite([0, `rgba(${o.glow},0)`, .45, `rgba(${o.glow},.14)`, .95, `rgba(${o.glow},0)`, 1, `rgba(${o.glow},0)`]);
   let W, H, DPR, F, CX, CY, VH, chapters = [], stars = [], cities = [], milky, milkySize = 0;
   let sy = scrollY, lastCam = 0, vel = 0, camX = 0, camY = 0, mx = 0, my = 0;
-  // Until the first scroll, pointer move, tap or key, the page holds one still frame with the intro finished.
-  // The continuous loop is too much for a slow phone that is only looking.
-  let t0 = performance.now() - 2700, woke = false;
+  const t0 = performance.now();
+  // Full-screen layers are cached and only repainted when what they show moves; the loop runs at 30fps.
+  const [bgA, gA] = mk(1), [bgE, gE] = mk(1);
+  let keyA = '', keyE = '';
+  function glowSprite(stops) { const [c, g] = mk(256); g.fillStyle = rad(g, 128, 128, 0, 128, 128, 128, stops); g.fillRect(0, 0, 256, 256); return c; }
+  const dawn = glowSprite([0, 'rgba(255,190,120,.7)', .25, 'rgba(255,140,80,.25)', 1, 'rgba(255,120,60,0)']);
 
   function seed() {
     const n = clamp(Math.round(innerWidth * innerHeight / 650), 700, 2000), SX = W / 2 * DEPTH / F * 1.3, SY = H / 2 * DEPTH / F * 1.3;
@@ -334,6 +338,7 @@ h2 em{color:var(--accent)}
   function layout() {
     DPR = Math.min(devicePixelRatio || 1, 2);
     W = cvs.width = Math.round(innerWidth * DPR); H = cvs.height = Math.round(innerHeight * DPR);
+    bgA.width = bgE.width = W; bgA.height = bgE.height = H; keyA = keyE = '';
     CX = W / 2; CY = H / 2; F = Math.min(W, H) * .9; VH = innerHeight;
     const top = (el) => el.getBoundingClientRect().top + scrollY;
     chapters = $$('.ch').map((el) => ({ el, top: top(el), h: el.offsetHeight, in: el.querySelector('.in'), km: +el.dataset.km, v: +el.dataset.v, met: +el.dataset.met, label: el.dataset.label, hero: el.classList.contains('hero') }));
@@ -375,13 +380,24 @@ h2 em{color:var(--accent)}
   const put = (i, s) => { if (last[i] !== s) { out[i].textContent = s; last[i] = s; } };
 
   /* drawing */
-  function drawMilky(a, t) {
+  function drawMilky(g, a) {
     if (a <= .01) return;
-    ctx.save(); ctx.globalCompositeOperation = 'lighter'; ctx.globalAlpha = a;
-    ctx.translate(CX - camX * .4 * DPR, CY - camY * .4 * DPR);
-    ctx.rotate(-.55 + sy * .00004 + t * .002);
-    const s = milkySize * DPR; ctx.drawImage(milky, -s / 2, -s / 2, s, s);
-    ctx.restore();
+    g.save(); g.globalCompositeOperation = 'lighter'; g.globalAlpha = a;
+    g.translate(CX - camX * .4 * DPR, CY - camY * .4 * DPR);
+    g.rotate(-.55 + sy * .00004);
+    const s = milkySize * DPR; g.drawImage(milky, -s / 2, -s / 2, s, s);
+    g.restore();
+  }
+  /* the sky behind the stars: repainted only when the camera, the scroll or the fade moves it */
+  function drawBackdrop(ma, da) {
+    const key = [Math.round(ma * 200), Math.round(da * 200), Math.round(camX * 2), Math.round(camY * 2), Math.round(sy)].join();
+    if (key !== keyA) {
+      keyA = key;
+      gA.globalCompositeOperation = 'source-over'; gA.globalAlpha = 1;
+      gA.fillStyle = '#04050a'; gA.fillRect(0, 0, W, H);
+      drawMilky(gA, ma); drawDeep(gA, da);
+    }
+    ctx.drawImage(bgA, 0, 0);
   }
 
   function drawStars(z, t, dim) {
@@ -395,9 +411,11 @@ h2 em{color:var(--accent)}
       const near = 1 - dz / DEPTH, tw = reduce ? .86 : .72 + .28 * Math.sin(t * s.tw + s.ph);
       const a = Math.min(1, .15 + near * 1.9) * tw * s.b * dim;
       if (a < .02) continue;
+      const lw = (.8 + near * near * 2.8) * s.m * DPR;
+      if (Math.abs(streak) < 2) { ctx.fillStyle = s.c + a.toFixed(3) + ')'; ctx.fillRect(x - lw / 2, y - lw / 2, lw, lw); continue; }
       const k2 = F / Math.max(6, dz + streak);
       ctx.strokeStyle = s.c + a.toFixed(3) + ')';
-      ctx.lineWidth = (.8 + near * near * 2.8) * s.m * DPR;
+      ctx.lineWidth = lw;
       ctx.beginPath(); ctx.moveTo(CX + (s.x - px) * k2, CY + (s.y - py) * k2); ctx.lineTo(x + .01, y); ctx.stroke();
     }
   }
@@ -415,9 +433,8 @@ h2 em{color:var(--accent)}
     ctx.save();
     if (o.glow) {
       const gr = o.r * k;
-      ctx.globalCompositeOperation = 'lighter';
-      ctx.fillStyle = rad(ctx, sx, sy2, gr * .9, sx, sy2, gr * 1.9, [0, `rgba(${o.glow},${.14 * a})`, 1, `rgba(${o.glow},0)`]);
-      ctx.fillRect(sx - gr * 2, sy2 - gr * 2, gr * 4, gr * 4);
+      ctx.globalCompositeOperation = 'lighter'; ctx.globalAlpha = a;
+      ctx.drawImage(o.halo, sx - gr * 2, sy2 - gr * 2, gr * 4, gr * 4);
     }
     ctx.globalCompositeOperation = 'source-over'; ctx.globalAlpha = a;
     ctx.translate(sx, sy2);
@@ -432,15 +449,21 @@ h2 em{color:var(--accent)}
     const leave = smooth(1.5, 2.9, p), Re = Math.max(W, H) * 1.2 * (1 - leave * .3);
     const top = H * (.76 - smooth(.2, 1.3, p) * .08) + leave * H * .6 - camY * .2 * DPR;
     const ex = CX + smooth(.3, 1.4, p) * W * .2 - camX * .3 * DPR, ey = top + Re;
-    ctx.save(); ctx.globalAlpha = 1 - smooth(2.1, 2.9, p); ctx.globalCompositeOperation = 'source-over';
-    ctx.fillStyle = rad(ctx, ex, ey, Re * .985, ex, ey, Re * 1.08, [0, 'rgba(150,215,255,.85)', .12, 'rgba(70,140,255,.38)', .45, 'rgba(40,70,180,.1)', 1, 'rgba(20,30,90,0)']);
-    ctx.beginPath(); ctx.arc(ex, ey, Re * 1.08, 0, TAU); ctx.fill();
-    ctx.globalCompositeOperation = 'lighter';
-    ctx.strokeStyle = 'rgba(140,255,170,.16)'; ctx.lineWidth = Math.max(2, Re * .004);
-    ctx.beginPath(); ctx.arc(ex, ey, Re * 1.011, 0, TAU); ctx.stroke();
-    ctx.globalCompositeOperation = 'source-over';
-    ctx.fillStyle = rad(ctx, ex, ey, Re * .86, ex, ey, Re, [0, '#02040a', .92, '#061127', 1, '#0d2448']);
-    ctx.beginPath(); ctx.arc(ex, ey, Re, 0, TAU); ctx.fill();
+    const fade = 1 - smooth(2.1, 2.9, p), key = [Math.round(ex), Math.round(ey), Math.round(Re)].join();
+    if (key !== keyE) {
+      keyE = key;
+      gE.globalCompositeOperation = 'source-over'; gE.clearRect(0, 0, W, H);
+      gE.fillStyle = rad(gE, ex, ey, Re * .985, ex, ey, Re * 1.08, [0, 'rgba(150,215,255,.85)', .12, 'rgba(70,140,255,.38)', .45, 'rgba(40,70,180,.1)', 1, 'rgba(20,30,90,0)']);
+      gE.beginPath(); gE.arc(ex, ey, Re * 1.08, 0, TAU); gE.fill();
+      gE.globalCompositeOperation = 'lighter';
+      gE.strokeStyle = 'rgba(140,255,170,.16)'; gE.lineWidth = Math.max(2, Re * .004);
+      gE.beginPath(); gE.arc(ex, ey, Re * 1.011, 0, TAU); gE.stroke();
+      gE.globalCompositeOperation = 'source-over';
+      gE.fillStyle = rad(gE, ex, ey, Re * .86, ex, ey, Re, [0, '#02040a', .92, '#061127', 1, '#0d2448']);
+      gE.beginPath(); gE.arc(ex, ey, Re, 0, TAU); gE.fill();
+    }
+    ctx.save(); ctx.globalAlpha = fade; ctx.globalCompositeOperation = 'source-over';
+    ctx.drawImage(bgE, 0, 0);
     ctx.globalCompositeOperation = 'lighter';
     cities.forEach((c, i) => {
       const x = ex + Math.cos(c.a) * Re * c.d, y = ey + Math.sin(c.a) * Re * c.d;
@@ -449,20 +472,19 @@ h2 em{color:var(--accent)}
       ctx.fillRect(x, y, c.s * DPR, c.s * DPR);
     });
     const da = -Math.PI / 2 - .42, dx = ex + Math.cos(da) * Re, dy = ey + Math.sin(da) * Re;
-    ctx.fillStyle = rad(ctx, dx, dy, 0, dx, dy, Re * .32, [0, 'rgba(255,190,120,.7)', .25, 'rgba(255,140,80,.25)', 1, 'rgba(255,120,60,0)']);
-    ctx.fillRect(dx - Re * .32, dy - Re * .32, Re * .64, Re * .64);
+    ctx.drawImage(dawn, dx - Re * .32, dy - Re * .32, Re * .64, Re * .64);
     ctx.strokeStyle = 'rgba(255,214,170,.55)'; ctx.lineWidth = 1.5 * DPR;
     ctx.beginPath(); ctx.arc(ex, ey, Re * 1.001, da - .12, da + .12); ctx.stroke();
     ctx.restore();
   }
 
-  function drawDeep(a) {
+  function drawDeep(g, a) {
     if (a <= .01) return;
     const d = chap('Deep field'), s = Math.max(W / 1600, H / 1000) * (1 + clamp((sy - d.top) / VH, -1, 3) * .06) * 1.05;
-    ctx.save(); ctx.globalCompositeOperation = 'lighter'; ctx.globalAlpha = a;
-    ctx.translate(CX - camX * .15 * DPR, CY - camY * .15 * DPR);
-    ctx.drawImage(sprites.deep, -800 * s, -500 * s, 1600 * s, 1000 * s);
-    ctx.restore();
+    g.save(); g.globalCompositeOperation = 'lighter'; g.globalAlpha = a;
+    g.translate(CX - camX * .15 * DPR, CY - camY * .15 * DPR);
+    g.drawImage(sprites.deep, -800 * s, -500 * s, 1600 * s, 1000 * s);
+    g.restore();
   }
 
   /* text follows the same scroll value as the camera */
@@ -494,10 +516,8 @@ h2 em{color:var(--accent)}
     flare.style.opacity = (intro * .95).toFixed(3);
 
     ctx.globalCompositeOperation = 'source-over'; ctx.globalAlpha = 1;
-    ctx.fillStyle = '#04050a'; ctx.fillRect(0, 0, W, H);
     const dim = 1 - intro * .85;
-    drawMilky((.5 - smooth(moon.ctr, deep.ctr, sy) * .3) * dim, t);
-    drawDeep(smooth(deep.top - VH * .2, deep.ctr, sy));
+    drawBackdrop((.5 - smooth(moon.ctr, deep.ctr, sy) * .3) * dim, smooth(deep.top - VH * .2, deep.ctr, sy));
     drawStars(camZ + (reduce ? 0 : t * 10), t, dim);
     drawObj('earth', camZ, t); drawObj('moon', camZ, t);
     drawEarth(t);
@@ -535,12 +555,17 @@ h2 em{color:var(--accent)}
 
   /* loop: continuous with motion, one frame per scroll without */
   let raf = 0;
-  function loop(now) { raf = 0; frame(now); if ((!reduce && woke) || scrollY !== sy) raf = requestAnimationFrame(loop); }
+  // 30fps is plenty for a slow drift, and halves the work on a phone. Nothing runs while the tab is hidden.
+  let lastT = -1e9;
+  function loop(now) {
+    raf = 0;
+    if (document.hidden) return;
+    if (now - lastT >= 32 || scrollY !== sy) { lastT = now; frame(now); }
+    if (!reduce || scrollY !== sy) raf = requestAnimationFrame(loop);
+  }
   function kick() { if (!raf) raf = requestAnimationFrame(loop); }
-  const WAKE = ['scroll', 'wheel', 'pointermove', 'pointerdown', 'touchstart', 'keydown'];
-  function wake() { if (woke) return; woke = true; for (const w of WAKE) removeEventListener(w, wake, true); kick(); }
-  for (const w of WAKE) addEventListener(w, wake, { capture: true, passive: true });
   addEventListener('scroll', kick, { passive: true });
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) kick(); });
   mq.addEventListener('change', (e) => { reduce = e.matches; kick(); });
   addEventListener('pointermove', (e) => { mx = e.clientX / innerWidth * 2 - 1; my = e.clientY / innerHeight * 2 - 1; }, { passive: true });
   let rt;

@@ -67,7 +67,7 @@ a{color:inherit;text-decoration:none}
 .sub{max-width:420px;margin:0;font-size:13.5px;line-height:1.65;color:var(--bone-dim);text-shadow:0 1px 14px rgba(6,7,12,.95)}
 .sub em{font:italic 400 1.4em/1 var(--serif);color:var(--bone)}
 .ctl{display:flex;gap:12px;align-items:center}
-.status,.play{border:1px solid var(--line);border-radius:999px;background:rgba(6,7,12,.5);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.status,.play{border:1px solid var(--line);border-radius:999px;background:rgba(6,7,12,.82)}
 .status{display:flex;gap:14px;align-items:center;padding:13px 22px 13px 16px;font-variant-numeric:tabular-nums}
 .status strong{display:block;font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase}
 .status small{display:block;font-size:12px;color:var(--bone-dim)}
@@ -176,7 +176,7 @@ a{color:inherit;text-decoration:none}
   /* sky */
   const cv = $('#sky'), x = cv.getContext('2d'), hero = $('.hero');
   const rng = (s) => () => ((s = (s * 1664525 + 1013904223) >>> 0) / 4294967296);
-  let W, H, DPR, stars, ridges, lamps, embers, moon, spark, ember, hut;
+  let W, H, DPR, stars, ridges, lamps, embers, moon, spark, ember, hut, skyL, haloL, ridgeL = [], back, backG, front, frontG, frontY = 0, sceneKey = '';
   const ptr = { x: .5, y: .5, tx: .5, ty: .5 };
 
   function ridge(seed, base, amp, rough, sharp) {
@@ -196,7 +196,8 @@ a{color:inherit;text-decoration:none}
   const rx = (k) => -60 + k / 128 * (W + 120);
 
   function build() {
-    DPR = Math.min(devicePixelRatio || 1, 2);
+    // A soft night sky does not need more than 1.5x; it halves the pixels a phone repaints every frame.
+    DPR = Math.min(devicePixelRatio || 1, 1.5);
     W = cv.clientWidth; H = cv.clientHeight;
     cv.width = W * DPR; cv.height = H * DPR;
     x.setTransform(DPR, 0, 0, DPR, 0, 0);
@@ -239,10 +240,83 @@ a{color:inherit;text-decoration:none}
     moon.r = mr; moon.c = c;
     spark = sprite(10, '236,230,214', .18);
     ember = sprite(16, '255,176,74', .14);
+    bake();
+  }
+
+  /* Everything that only moves with the pointer or the scroll is painted once into layers here.
+     Each frame then slides the layers and draws only what flickers: stars, lamps, the hut, embers, the waveform. */
+  function layer(w, h, dpr = DPR) {
+    const c = document.createElement('canvas'); c.width = Math.ceil(w * dpr); c.height = Math.ceil(h * dpr);
+    const g = c.getContext('2d'); g.setTransform(dpr, 0, 0, dpr, 0, 0); return [c, g];
+  }
+  function bake() {
+    let g;
+    [skyL, g] = layer(W, H);
+    const sk = g.createLinearGradient(0, 0, 0, H);
+    sk.addColorStop(0, '#03050a'); sk.addColorStop(.38, '#0a1022'); sk.addColorStop(.66, '#18234a'); sk.addColorStop(1, '#24305e');
+    g.fillStyle = sk; g.fillRect(0, 0, W, H);
+    g.globalCompositeOperation = 'lighter';
+    const band = g.createLinearGradient(W * .05, 0, W * .5, H * .7);
+    band.addColorStop(0, 'rgba(120,135,210,0)'); band.addColorStop(.5, 'rgba(120,135,210,.05)'); band.addColorStop(1, 'rgba(120,135,210,0)');
+    g.fillStyle = band; g.fillRect(0, 0, W, H * .7);
+    const cg = g.createRadialGradient(W * .5, H * .95, 0, W * .5, H * .95, W * .6);
+    cg.addColorStop(0, 'rgba(255,150,70,.11)'); cg.addColorStop(1, 'rgba(255,150,70,0)');
+    g.fillStyle = cg; g.fillRect(0, 0, W, H);
+
+    const mr = moon.r, R9 = mr * 9;
+    [haloL, g] = layer(R9 * 2, R9 * 2, 1);
+    g.globalCompositeOperation = 'lighter';
+    for (const [r0, r1, a] of [[mr * .6, mr * 9, .16], [mr * .6, mr * 3, .2], [mr * .7, mr * 1.6, .26]]) {
+      const hg = g.createRadialGradient(R9, R9, r0, R9, R9, r1);
+      hg.addColorStop(0, `rgba(255,222,176,${a})`); hg.addColorStop(.4, `rgba(255,210,160,${a * .32})`); hg.addColorStop(1, 'rgba(255,210,160,0)');
+      g.fillStyle = hg; g.fillRect(R9 - r1, R9 - r1, r1 * 2, r1 * 2);
+    }
+    haloL.r = R9;
+
+    const mcx = W * .76, mcy = H * .19;
+    ridgeL = ridges.map((rg, i) => {
+      const [c, g] = layer(W + 160, H + 60);
+      g.translate(80, 0);
+      g.beginPath(); g.moveTo(-80, H + 60);
+      for (let k = 0; k < 129; k++) g.lineTo(rx(k), rg.p[k]);
+      g.lineTo(W + 80, H + 60); g.closePath();
+      if (i === 0) {
+        const top = Math.min(...rg.p), gr = g.createLinearGradient(0, top, 0, top + H * .4);
+        gr.addColorStop(0, '#59628f'); gr.addColorStop(.12, '#2e366b'); gr.addColorStop(.4, '#1b2250'); gr.addColorStop(1, '#151b42');
+        g.fillStyle = gr; g.fill();
+        g.save(); g.clip();
+        const mw = g.createRadialGradient(mcx, mcy, 0, mcx, mcy, W * .45);
+        mw.addColorStop(0, 'rgba(255,228,190,.2)'); mw.addColorStop(1, 'rgba(255,228,190,0)');
+        g.fillStyle = mw; g.fillRect(-80, 0, W + 160, H + 60); g.restore();
+      } else { g.fillStyle = rg.fill; g.fill(); }
+      if (rg.snow) facets(g, rg, 0, 0, mcx);
+      const nx = ridges[i + 1];
+      if (nx) {
+        const y0 = H * nx.base - H * .2, y1 = H * nx.base;
+        const mist = g.createLinearGradient(0, y0, 0, y1);
+        mist.addColorStop(0, 'rgba(90,105,160,0)'); mist.addColorStop(1, `rgba(90,105,160,${.3 - i * .07})`);
+        g.fillStyle = mist; g.fillRect(-80, y0, W + 160, y1 - y0 + 2);
+      }
+      return c;
+    });
+    [back, backG] = layer(W, H); [front, frontG] = layer(W, H); sceneKey = '';
+    frontY = Math.max(0, Math.floor(Math.min(...ridges[3].p) - H * .06));
+  }
+
+  /* sky and the three back ridges in one image, the front ridge in another. Rebuilt only when the
+     pointer or the scroll moves them, so a still frame copies one image instead of five. */
+  function scene(offs) {
+    const key = offs.map(([a, b]) => Math.round(a) + ',' + Math.round(b)).join(';');
+    if (key === sceneKey) return;
+    sceneKey = key;
+    backG.drawImage(skyL, 0, 0, W, H);
+    for (let i = 0; i < 3; i++) backG.drawImage(ridgeL[i], Math.round(offs[i][0]) - 80, Math.round(offs[i][1]), W + 160, H + 60);
+    frontG.clearRect(0, 0, W, H);
+    frontG.drawImage(ridgeL[3], Math.round(offs[3][0]) - 80, Math.round(offs[3][1]), W + 160, H + 60);
   }
 
   /* lit faces: segments whose slope turns toward the moon catch snow light, the rest fall into shade */
-  function facets(rg, ox, oy, mcx) {
+  function facets(g, rg, ox, oy, mcx) {
     const p = rg.p, dx = (W + 120) / 128, b = H * rg.base;
     for (let i = 0; i < 128; i++) {
       const x0 = rx(i) + ox, x1 = x0 + dx, alt = (b - Math.min(p[i], p[i + 1])) / rg.amp;
@@ -250,15 +324,15 @@ a{color:inherit;text-decoration:none}
       const f = (p[i + 1] - p[i]) / dx * Math.sign(mcx - x0 - dx / 2);
       if (Math.abs(f) < .04) continue;
       const hi = Math.min(1, (alt - .28) * 2.4), d = 3 + Math.min(1, Math.abs(f)) * rg.amp * .16 * alt;
-      const y0 = Math.min(p[i], p[i + 1]) + oy, g = x.createLinearGradient(0, y0, 0, y0 + d * 1.3);
+      const y0 = Math.min(p[i], p[i + 1]) + oy, fg = g.createLinearGradient(0, y0, 0, y0 + d * 1.3);
       const c = f > 0 ? '238,240,255' : '5,8,26';
-      g.addColorStop(0, `rgba(${c},1)`); g.addColorStop(1, `rgba(${c},0)`);
-      x.globalAlpha = Math.min(1, Math.abs(f) * 1.5) * hi * (f > 0 ? rg.snow * .9 : .45);
-      x.fillStyle = g; x.beginPath();
-      x.moveTo(x0, p[i] + oy); x.lineTo(x1 + .6, p[i + 1] + oy); x.lineTo(x1 + .6, p[i + 1] + oy + d); x.lineTo(x0, p[i] + oy + d * .7);
-      x.fill();
+      fg.addColorStop(0, `rgba(${c},1)`); fg.addColorStop(1, `rgba(${c},0)`);
+      g.globalAlpha = Math.min(1, Math.abs(f) * 1.5) * hi * (f > 0 ? rg.snow * .9 : .45);
+      g.fillStyle = fg; g.beginPath();
+      g.moveTo(x0, p[i] + oy); g.lineTo(x1 + .6, p[i + 1] + oy); g.lineTo(x1 + .6, p[i + 1] + oy + d); g.lineTo(x0, p[i] + oy + d * .7);
+      g.fill();
     }
-    x.globalAlpha = 1;
+    g.globalAlpha = 1;
   }
 
   let wave = null, an = null;
@@ -266,14 +340,17 @@ a{color:inherit;text-decoration:none}
     ptr.x += (ptr.tx - ptr.x) * .05; ptr.y += (ptr.ty - ptr.y) * .05;
     const mx = ptr.x - .5, my = ptr.y - .5, sy = Math.min(scrollY, H);
 
-    const sk = x.createLinearGradient(0, 0, 0, H);
-    sk.addColorStop(0, '#03050a'); sk.addColorStop(.38, '#0a1022'); sk.addColorStop(.66, '#18234a'); sk.addColorStop(1, '#24305e');
-    x.fillStyle = sk; x.fillRect(0, 0, W, H);
+    const offs = ridges.map((rg, i) => [-mx * rg.par, -my * rg.par * .35 + sy * (.04 + i * .07)]);
+    scene(offs);
+    x.globalCompositeOperation = 'source-over'; x.globalAlpha = 1;
+    x.drawImage(back, 0, 0, W, H);
 
+    // Stars, halo and moon live in the sky above the back ridge, and sink behind it as you scroll.
+    const r0 = ridges[0], [o0x, o0y] = offs[0];
+    x.save(); x.beginPath(); x.moveTo(-80, -10);
+    for (let k = 0; k < 129; k++) x.lineTo(rx(k) + o0x, r0.p[k] + o0y);
+    x.lineTo(W + 80, -10); x.closePath(); x.clip();
     x.globalCompositeOperation = 'lighter';
-    const band = x.createLinearGradient(W * .05, 0, W * .5, H * .7);
-    band.addColorStop(0, 'rgba(120,135,210,0)'); band.addColorStop(.5, 'rgba(120,135,210,.05)'); band.addColorStop(1, 'rgba(120,135,210,0)');
-    x.fillStyle = band; x.fillRect(0, 0, W, H * .7);
     for (const s of stars) {
       const a = s.a * (RM ? .8 : .55 + .45 * Math.sin(t * .001 * s.s + s.p));
       const px = s.x - mx * 5, py = s.y - my * 4 + sy * .08;
@@ -284,50 +361,20 @@ a{color:inherit;text-decoration:none}
 
     const mr = moon.r, mcx = W * .76 - mx * 16, mcy = H * .19 - my * 10 + sy * .22;
     const hx = mcx - mr * .35, hy = mcy + mr * .15;
-    const halo = (r0, r1, a) => {
-      const g = x.createRadialGradient(hx, hy, r0, hx, hy, r1);
-      g.addColorStop(0, `rgba(255,222,176,${a})`); g.addColorStop(.4, `rgba(255,210,160,${a * .32})`); g.addColorStop(1, 'rgba(255,210,160,0)');
-      x.globalAlpha = 1; x.fillStyle = g; x.fillRect(hx - r1, hy - r1, r1 * 2, r1 * 2);
-    };
-    halo(mr * .6, mr * 9, .16); halo(mr * .6, mr * 3, .2); halo(mr * .7, mr * 1.6, .26);
+    x.globalAlpha = 1; x.drawImage(haloL, hx - haloL.r, hy - haloL.r, haloL.r * 2, haloL.r * 2);
     x.globalCompositeOperation = 'source-over';
     x.globalAlpha = .55; x.fillStyle = '#0e1430'; x.beginPath(); x.arc(mcx, mcy, mr * .99, 0, 7); x.fill();
     x.globalAlpha = .06; x.fillStyle = '#c8cdeb'; x.fill();
     x.globalAlpha = 1;
     x.drawImage(moon, mcx - moon.c, mcy - moon.c, moon.c * 2, moon.c * 2);
-
-    x.globalCompositeOperation = 'lighter';
-    const cg = x.createRadialGradient(W * .5, H * .95, 0, W * .5, H * .95, W * .6);
-    cg.addColorStop(0, 'rgba(255,150,70,.11)'); cg.addColorStop(1, 'rgba(255,150,70,0)');
-    x.fillStyle = cg; x.fillRect(0, 0, W, H);
-    x.globalCompositeOperation = 'source-over';
+    x.restore();
 
     let hc = null;
-    ridges.forEach((rg, i) => {
-      const ox = -mx * rg.par, oy = -my * rg.par * .35 + sy * (.04 + i * .07);
-      x.beginPath(); x.moveTo(-80, H + 20);
-      for (let k = 0; k < 129; k++) x.lineTo(rx(k) + ox, rg.p[k] + oy);
-      x.lineTo(W + 80, H + 20); x.closePath();
-      if (i === 0) {
-        const top = Math.min(...rg.p) + oy, g = x.createLinearGradient(0, top, 0, top + H * .4);
-        g.addColorStop(0, '#59628f'); g.addColorStop(.12, '#2e366b'); g.addColorStop(.4, '#1b2250'); g.addColorStop(1, '#151b42');
-        x.fillStyle = g; x.fill();
-        x.save(); x.clip();
-        const mw = x.createRadialGradient(mcx, mcy, 0, mcx, mcy, W * .45);
-        mw.addColorStop(0, 'rgba(255,228,190,.2)'); mw.addColorStop(1, 'rgba(255,228,190,0)');
-        x.fillStyle = mw; x.fillRect(0, 0, W, H); x.restore();
-      } else { x.fillStyle = rg.fill; x.fill(); }
-      if (rg.snow) facets(rg, ox, oy, mcx);
-      const nx = ridges[i + 1];
-      if (nx) {
-        const y0 = H * nx.base - H * .2 + oy, y1 = H * nx.base + oy;
-        const mist = x.createLinearGradient(0, y0, 0, y1);
-        mist.addColorStop(0, 'rgba(90,105,160,0)'); mist.addColorStop(1, `rgba(90,105,160,${.3 - i * .07})`);
-        x.fillStyle = mist; x.fillRect(0, y0, W, y1 - y0 + 2);
-      }
-      if (i === 2 || i === 3) lights(t, i, ox, oy);
-      if (i === 2) hc = cabin(t, rg, ox, oy);
-    });
+    lights(t, 2, offs[2][0], offs[2][1]);
+    hc = cabin(t, ridges[2], offs[2][0], offs[2][1]);
+    x.globalCompositeOperation = 'source-over'; x.globalAlpha = 1;
+    x.drawImage(front, 0, frontY * DPR, front.width, front.height - frontY * DPR, 0, frontY, W, H - frontY);
+    lights(t, 3, offs[3][0], offs[3][1]);
 
     x.globalCompositeOperation = 'lighter';
     if (!RM && hc) for (const e of embers) {
@@ -383,22 +430,20 @@ a{color:inherit;text-decoration:none}
     x.globalAlpha = 1; x.globalCompositeOperation = 'source-over';
   }
 
-  let raf = 0, running = false;
-  const loop = (t) => { draw(t); raf = requestAnimationFrame(loop); };
-  function start() { if (!running) { running = true; raf = requestAnimationFrame(loop); } }
+  // 30fps, and only while the hero is on screen in a visible tab.
+  let raf = 0, running = false, lastT = -1e9;
+  const loop = (t) => { if (t - lastT >= 32) { lastT = t; draw(t); } raf = requestAnimationFrame(loop); };
+  function start() { if (!running && !document.hidden) { running = true; raf = requestAnimationFrame(loop); } }
   function stop() { running = false; cancelAnimationFrame(raf); }
   function paint() { build(); draw(performance.now()); }
   paint();
   let rs; addEventListener('resize', () => { clearTimeout(rs); rs = setTimeout(paint, 120); });
   if (!RM) {
-    // The first frame holds still until someone moves, scrolls, taps or types. Redrawing the whole sky
-    // every frame is too much for a slow phone that is only looking.
-    let woke = false, seen = true;
-    const WAKE = ['pointermove', 'pointerdown', 'wheel', 'touchstart', 'keydown', 'scroll'];
-    const wake = () => { if (woke) return; woke = true; for (const w of WAKE) removeEventListener(w, wake, true); if (seen) start(); };
-    for (const w of WAKE) addEventListener(w, wake, { capture: true, passive: true });
+    let seen = true;
+    start();
     hero.addEventListener('pointermove', (e) => { ptr.tx = e.clientX / innerWidth; ptr.ty = e.clientY / innerHeight; }, { passive: true });
-    new IntersectionObserver(([e]) => { seen = e.isIntersecting; if (woke) seen ? start() : stop(); }).observe(hero);
+    new IntersectionObserver(([e]) => { seen = e.isIntersecting; seen ? start() : stop(); }).observe(hero);
+    document.addEventListener('visibilitychange', () => (document.hidden ? stop() : seen && start()));
   }
   if (document.fonts) document.fonts.ready.then(() => draw(performance.now()));
 

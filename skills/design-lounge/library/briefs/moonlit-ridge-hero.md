@@ -1,6 +1,6 @@
-<!-- Design Lounge Nº 529 · "Moonlit ridge hero" · www.designlounge.live -->
+<!-- Design Lounge Nº 529 · "Le Dernier Feu" · www.designlounge.live -->
 
-# Moonlit ridge hero
+# Le Dernier Feu
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. Use the stack already chosen for this build (When to ask in SKILL.md). Match the numbers below; don't "improve" them.
 
@@ -61,7 +61,7 @@ then: section.next, 84px top / 96px bottom padding
 | Sound disc | active | scale | 1 → .94 | 240ms | `--ease` | none | instant |
 | Sound gain | click | gain | 0 → .6 / current → 0 | 2500ms / 800ms | linear ramp | none | same (audio is not motion) |
 
-The canvas paints one frame on load and holds it. The per-frame loop starts on the first pointer move, scroll, tap, wheel or key, then runs while the hero is on screen. A slow phone that is only looking never pays for it. The waveform glow is a 7px stroke at .16 alpha under the 1.2px line, not `shadowBlur`.
+Keep it cheap enough for a slow phone. The sky, the moon's halo, and each ridge (with its snow faces and mist) are painted once into offscreen layers. The sky and the back three ridges are composited into one image, and the front ridge into another. They are rebuilt only when the pointer or the scroll moves them. Each frame copies those two images and draws only what flickers: stars, the halo and moon (clipped to the sky above the back ridge), lamps, the hut, embers and the waveform. The loop starts on its own, runs at 30fps, and stops when the hero is off screen or the tab is hidden. The canvas resolution is capped at 1.5x. The waveform glow is a 7px stroke at .16 alpha under the 1.2px line, not `shadowBlur`. The pill buttons use a solid `rgba(6,7,12,.82)` fill, not `backdrop-filter`, because a blur over a moving canvas is redone every frame.
 
 Pause the animation loop with an `IntersectionObserver` when the hero leaves the viewport. Never run a loop while reduced motion is on, except while the sound plays (so the live waveform still works).
 
