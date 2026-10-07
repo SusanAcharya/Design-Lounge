@@ -199,6 +199,8 @@ h2 em{color:var(--accent)}
   const R = Math.random, TAU = Math.PI * 2;
   const mq = matchMedia('(prefers-reduced-motion: reduce)');
   let reduce = mq.matches;
+  // A phone gets fewer stars, no per-star twinkle, and the same scene otherwise.
+  const cheap = () => innerWidth < 700;
   const mk = (w, h = w) => { const c = document.createElement('canvas'); c.width = w; c.height = h; return [c, c.getContext('2d')]; };
 
   /* radial gradient from flat [offset, colour, offset, colour, ...] stops */
@@ -224,15 +226,15 @@ h2 em{color:var(--accent)}
     blob(g, x, y, len * .28, '255,255,255', Math.min(1, a * 1.4));
   }
 
-  /* sprites: drawn once to offscreen canvases */
+  /* sprites: drawn once to offscreen canvases, after the first frame, one per idle slot */
   function makeMoon() {
     const S = 512, [c, g] = mk(S), r = S / 2;
     g.beginPath(); g.arc(r, r, r - 1, 0, TAU); g.clip();
     g.fillStyle = rad(g, r * .7, r * .65, r * .1, r, r, r, [0, '#e3ddd0', 1, '#8f8a82']); g.fillRect(0, 0, S, S);
     for (const [mx0, my0, mr] of [[.38, .36, .2], [.58, .3, .16], [.62, .52, .22], [.42, .6, .14], [.3, .5, .12], [.72, .42, .12]])
       for (let k = 0; k < 6; k++) blob(g, S * mx0 + gauss() * S * .05, S * my0 + gauss() * S * .05, S * mr * (.6 + R() * .6), '78,76,82', .22);
-    for (let i = 0; i < 8000; i++) { g.fillStyle = R() < .5 ? 'rgba(40,38,36,.07)' : 'rgba(255,250,240,.05)'; g.fillRect(R() * S, R() * S, 1.2, 1.2); }
-    for (let i = 0; i < 300; i++) {
+    for (let i = 0; i < 3200; i++) { g.fillStyle = R() < .5 ? 'rgba(40,38,36,.08)' : 'rgba(255,250,240,.06)'; g.fillRect(R() * S, R() * S, 1.4, 1.4); }
+    for (let i = 0; i < 220; i++) {
       const cr = Math.pow(R(), 4.5) * 30 + 1.2, x = R() * S, y = R() * S;
       g.fillStyle = 'rgba(60,56,54,.16)'; g.beginPath(); g.arc(x, y, cr, 0, TAU); g.fill();
       g.strokeStyle = 'rgba(255,250,238,.14)'; g.lineWidth = Math.max(.6, cr * .14);
@@ -258,7 +260,7 @@ h2 em{color:var(--accent)}
         blob(g, x, y, 10 + R() * 20, R() < .6 ? '70,102,56' : '150,128,86', .24);
       }
     }
-    for (let i = 0; i < 5000; i++) { g.fillStyle = R() < .5 ? 'rgba(4,20,48,.08)' : 'rgba(220,240,255,.05)'; g.fillRect(R() * S, R() * S, 1.4, 1.4); }
+    for (let i = 0; i < 2400; i++) { g.fillStyle = R() < .5 ? 'rgba(4,20,48,.09)' : 'rgba(220,240,255,.06)'; g.fillRect(R() * S, R() * S, 1.6, 1.6); }
     blob(g, S * .36, S * .32, S * .16, '210,235,255', .22);
     for (let w = 0; w < 44; w++) {
       let x = R() * S, y = R() * S, ang = (R() - .5) * 1.2;
@@ -273,18 +275,18 @@ h2 em{color:var(--accent)}
   function makeDeep() {
     const [c, g] = mk(1600, 1000), cols = ['255,190,140', '255,140,110', '200,215,255', '255,235,210', '255,110,150', '255,170,90'];
     g.globalCompositeOperation = 'lighter';
-    for (let i = 0; i < 900; i++) {
+    for (let i = 0; i < 600; i++) {
       const size = Math.pow(R(), 4.2) * 16 + .9;
       g.save(); g.translate(R() * 1600, R() * 1000); g.rotate(R() * Math.PI); g.scale(1, .25 + R() * .75);
       blob(g, 0, 0, size, cols[R() * 6 | 0], .45 + R() * .5);
       if (size > 5) blob(g, 0, 0, size * .3, '255,245,230', .8);
       g.restore();
     }
-    for (let i = 0; i < 24; i++) {
+    for (let i = 0; i < 18; i++) {
       const Rg = 12 + R() * 20;
       g.save(); g.translate(R() * 1600, R() * 1000); g.rotate(R() * Math.PI); g.scale(1, .4 + R() * .6);
       blob(g, 0, 0, Rg * .5, '255,226,190', .7);
-      for (let k = 0; k < 200; k++) {
+      for (let k = 0; k < 160; k++) {
         const t = R(), th = (k & 1) * Math.PI + t * 4.5 + gauss() * .3;
         g.fillStyle = `rgba(190,210,255,${.5 * (1 - t)})`; g.fillRect(Math.cos(th) * t * Rg, Math.sin(th) * t * Rg, 1.2, 1.2);
       }
@@ -299,46 +301,68 @@ h2 em{color:var(--accent)}
     const [c, g] = mk(size), h = size / 2, bw = size * .075;
     g.globalCompositeOperation = 'lighter';
     for (let i = 0; i < 70; i++) blob(g, R() * size, h + gauss() * bw * .8, bw * (.6 + R() * 1.4), R() < .3 ? '255,190,150' : '140,150,230', .05 + R() * .04);
-    for (let i = 0; i < 8000; i++) { g.fillStyle = `rgba(235,230,255,${R() * .5})`; const s = R() < .1 ? 1.6 : .9; g.fillRect(R() * size, h + gauss() * bw * 1.1, s, s); }
+    for (let i = 0; i < 4000; i++) { g.fillStyle = `rgba(235,230,255,${(R() * .5).toFixed(2)})`; const s = R() < .1 ? 1.6 : .9; g.fillRect(R() * size, h + gauss() * bw * 1.1, s, s); }
     g.globalCompositeOperation = 'destination-out';
-    for (let i = 0; i < 160; i++) { const t = R(); blob(g, t * size, h + Math.sin(t * 9) * bw * .3 + gauss() * bw * .18, bw * (.07 + R() * .2), '0,0,0', .22); }
+    for (let i = 0; i < 120; i++) { const t = R(); blob(g, t * size, h + Math.sin(t * 9) * bw * .3 + gauss() * bw * .18, bw * (.07 + R() * .2), '0,0,0', .22); }
     return c;
   }
 
   /* state */
   const cvs = $('#space'), ctx = cvs.getContext('2d'), flare = $('#flare');
   const out = [$('#dist'), $('#vel'), $('#met')], last = ['', '', ''];
-  const DEPTH = 2600, ZVH = 1000;
-  const starCols = ['255,246,232,', '255,246,232,', '255,246,232,', '200,220,255,', '170,200,255,', '255,206,150,', '255,170,140,'];
-  const sprites = { moon: makeMoon(), earth: makeEarth(), deep: makeDeep() };
+  const DEPTH = 2600, ZVH = 1000, BUCKETS = 8;
+  // Star colours as eight alpha buckets each, built once: no fillStyle string is made per star per frame.
+  const starRGB = [[255, 246, 232], [255, 246, 232], [255, 246, 232], [200, 220, 255], [170, 200, 255], [255, 206, 150], [255, 170, 140]];
+  const starStyle = starRGB.map(([r, g, b]) => Array.from({ length: BUCKETS }, (_, k) => `rgba(${r},${g},${b},${((k + 1) / BUCKETS).toFixed(3)})`));
+  const sprites = { moon: null, earth: null, deep: null };
   const objs = {
     moon:   { r: 150, k: 4.2, mul: 1,   side: 1,  glow: '220,214,200' },
     earth:  { r: 150, k: 4.6, mul: 1,   side: -1, off: .28, glow: '120,180,255', back: true, near: .2 },
   };
-  for (const o of Object.values(objs)) o.halo = glowSprite([0, `rgba(${o.glow},0)`, .45, `rgba(${o.glow},.14)`, .95, `rgba(${o.glow},0)`, 1, `rgba(${o.glow},0)`]);
-  let W, H, DPR, F, CX, CY, VH, chapters = [], stars = [], cities = [], milky, milkySize = 0;
-  let sy = scrollY, lastCam = 0, vel = 0, camX = 0, camY = 0, mx = 0, my = 0;
-  const t0 = performance.now();
-  // Full-screen layers are cached and only repainted when what they show moves; the loop runs at 30fps.
-  const [bgA, gA] = mk(1), [bgE, gE] = mk(1);
-  let keyA = '', keyE = '';
   function glowSprite(stops) { const [c, g] = mk(256); g.fillStyle = rad(g, 128, 128, 0, 128, 128, 128, stops); g.fillRect(0, 0, 256, 256); return c; }
+  for (const o of Object.values(objs)) o.halo = glowSprite([0, `rgba(${o.glow},0)`, .45, `rgba(${o.glow},.14)`, .95, `rgba(${o.glow},0)`, 1, `rgba(${o.glow},0)`]);
   const dawn = glowSprite([0, 'rgba(255,190,120,.7)', .25, 'rgba(255,140,80,.25)', 1, 'rgba(255,120,60,0)']);
+  let W, H, DPR, F, CX, CY, VH, chapters = [], stars = [], cities = [], milky = null, milkySize = 0;
+  let sy = scrollY, lastSy = -1, lastCam = 0, vel = 0, camX = 0, camY = 0, mx = 0, my = 0;
+  const t0 = performance.now();
+  // Three cached layers: the sky behind the stars, Earth's limb and disc with its cities baked in, and the cities
+  // alone for one flicker overlay. Each is repainted only when what it shows moves; the loop runs at 30fps.
+  const [bgA, gA] = mk(1), [bgE, gE] = mk(1), [cityL, gC] = mk(1);
+  let keyA = '', keyE = '', lastFlare = '';
+
+  // The heavy textures are built after the first painted frame, one per idle slot, so the page is on screen
+  // with stars and readouts before any of them starts. Each one repaints the sky when it lands.
+  const idle = (fn) => ('requestIdleCallback' in window ? requestIdleCallback(fn, { timeout: 1200 }) : setTimeout(fn, 50));
+  let building = false;
+  function buildLater() {
+    if (building) return;
+    building = true;
+    const jobs = [
+      () => { if (!milky || milky.width !== milkySize) milky = makeMilky(milkySize); },
+      () => { if (!sprites.earth) sprites.earth = makeEarth(); },
+      () => { if (!sprites.moon) sprites.moon = makeMoon(); },
+      () => { if (!sprites.deep) sprites.deep = makeDeep(); },
+    ];
+    const step = () => { const job = jobs.shift(); if (!job) { building = false; return; } job(); keyA = ''; kick(); idle(step); };
+    idle(step);
+  }
 
   function seed() {
-    const n = clamp(Math.round(innerWidth * innerHeight / 650), 700, 2000), SX = W / 2 * DEPTH / F * 1.3, SY = H / 2 * DEPTH / F * 1.3;
-    stars = Array.from({ length: n }, () => ({ x: (R() * 2 - 1) * SX, y: (R() * 2 - 1) * SY, z: R() * DEPTH, m: .4 + Math.pow(R(), 3) * 1.6, b: .55 + R() * .45, tw: .5 + R() * 2.5, ph: R() * TAU, c: starCols[R() * 7 | 0] }));
+    const n = clamp(Math.round(innerWidth * innerHeight / 650), cheap() ? 350 : 700, 2000), SX = W / 2 * DEPTH / F * 1.3, SY = H / 2 * DEPTH / F * 1.3;
+    stars = Array.from({ length: n }, () => ({ x: (R() * 2 - 1) * SX, y: (R() * 2 - 1) * SY, z: R() * DEPTH, m: .4 + Math.pow(R(), 3) * 1.6, b: .55 + R() * .45, tw: .5 + R() * 2.5, ph: R() * TAU, ci: R() * 7 | 0 }));
     if (cities.length) return;
     for (let k = 0; k < 70; k++) {
       const a0 = -Math.PI / 2 + gauss() * .42, d0 = .84 + R() * .15, n2 = 3 + (R() * 16 | 0);
-      for (let i = 0; i < n2; i++) cities.push({ a: a0 + gauss() * .012, d: clamp(d0 + gauss() * .01, .8, .996), s: R() < .15 ? 2 : 1, b: .3 + R() * .7 });
+      for (let i = 0; i < n2; i++) cities.push({ a: a0 + gauss() * .012, d: clamp(d0 + gauss() * .01, .8, .996), s: R() < .15 ? 2 : 1, b: .3 + R() * .7, c: `rgba(255,${180 + (i % 40)},${100 + (i % 30)},` });
     }
   }
 
   function layout() {
-    DPR = Math.min(devicePixelRatio || 1, 2);
-    W = cvs.width = Math.round(innerWidth * DPR); H = cvs.height = Math.round(innerHeight * DPR);
-    bgA.width = bgE.width = W; bgA.height = bgE.height = H; keyA = keyE = '';
+    DPR = Math.min(devicePixelRatio || 1, 1.5);
+    const w = Math.round(innerWidth * DPR), h = Math.round(innerHeight * DPR);
+    const resized = w !== W || h !== H;
+    W = cvs.width = w; H = cvs.height = h;
+    bgA.width = bgE.width = cityL.width = W; bgA.height = bgE.height = cityL.height = H; keyA = keyE = '';
     CX = W / 2; CY = H / 2; F = Math.min(W, H) * .9; VH = innerHeight;
     const top = (el) => el.getBoundingClientRect().top + scrollY;
     chapters = $$('.ch').map((el) => ({ el, top: top(el), h: el.offsetHeight, in: el.querySelector('.in'), km: +el.dataset.km, v: +el.dataset.v, met: +el.dataset.met, label: el.dataset.label, hero: el.classList.contains('hero') }));
@@ -351,8 +375,10 @@ h2 em{color:var(--accent)}
       o.y = (o.side > 0 ? -.03 : .03) * H * o.vd / F;
     }
     const size = Math.round(Math.hypot(innerWidth, innerHeight) * 1.1);
-    if (!milky || Math.abs(size - milkySize) > 200) { milky = makeMilky(size); milkySize = size; }
-    seed(); kick();
+    if (Math.abs(size - milkySize) > 200) { milkySize = size; if (milky) { milky = null; buildLater(); } }
+    if (resized || !stars.length) seed();
+    lastSy = -1;
+    kick();
   }
   const chap = (l) => chapters.find((c) => c.label === l);
 
@@ -381,26 +407,30 @@ h2 em{color:var(--accent)}
 
   /* drawing */
   function drawMilky(g, a) {
-    if (a <= .01) return;
+    if (a <= .01 || !milky) return;
     g.save(); g.globalCompositeOperation = 'lighter'; g.globalAlpha = a;
     g.translate(CX - camX * .4 * DPR, CY - camY * .4 * DPR);
     g.rotate(-.55 + sy * .00004);
     const s = milkySize * DPR; g.drawImage(milky, -s / 2, -s / 2, s, s);
     g.restore();
   }
-  /* the sky behind the stars: repainted only when the camera, the scroll or the fade moves it */
-  function drawBackdrop(ma, da) {
+  /* the sky behind the stars: repainted only when the camera or the scroll moves it; the intro fade is one
+     globalAlpha on the cached layer, so the fade never repaints it */
+  function drawBackdrop(ma, da, dim) {
     const key = [Math.round(ma * 200), Math.round(da * 200), Math.round(camX * 2), Math.round(camY * 2), Math.round(sy)].join();
-    if (key !== keyA) {
+    if (key !== keyA && (milky || sprites.deep)) {
       keyA = key;
       gA.globalCompositeOperation = 'source-over'; gA.globalAlpha = 1;
       gA.fillStyle = '#04050a'; gA.fillRect(0, 0, W, H);
       drawMilky(gA, ma); drawDeep(gA, da);
     }
-    ctx.drawImage(bgA, 0, 0);
+    ctx.globalCompositeOperation = 'source-over'; ctx.globalAlpha = 1;
+    ctx.fillStyle = '#04050a'; ctx.fillRect(0, 0, W, H);
+    if (keyA) { ctx.globalAlpha = dim; ctx.drawImage(bgA, 0, 0); ctx.globalAlpha = 1; }
   }
 
   function drawStars(z, t, dim) {
+    const twinkle = !reduce && !cheap();
     const streak = reduce ? 0 : clamp(vel * 5, -500, 1100), px = camX * .6, py = camY * .6;
     ctx.globalCompositeOperation = 'lighter'; ctx.lineCap = 'round';
     for (const s of stars) {
@@ -408,21 +438,22 @@ h2 em{color:var(--accent)}
       if (dz < 6) continue;
       const k = F / dz, x = CX + (s.x - px) * k, y = CY + (s.y - py) * k;
       if (x < -80 || x > W + 80 || y < -80 || y > H + 80) continue;
-      const near = 1 - dz / DEPTH, tw = reduce ? .86 : .72 + .28 * Math.sin(t * s.tw + s.ph);
+      const near = 1 - dz / DEPTH, tw = twinkle ? .72 + .28 * Math.sin(t * s.tw + s.ph) : .86;
       const a = Math.min(1, .15 + near * 1.9) * tw * s.b * dim;
       if (a < .02) continue;
+      const style = starStyle[s.ci][Math.min(BUCKETS - 1, (a * BUCKETS) | 0)];
       const lw = (.8 + near * near * 2.8) * s.m * DPR;
-      if (Math.abs(streak) < 2) { ctx.fillStyle = s.c + a.toFixed(3) + ')'; ctx.fillRect(x - lw / 2, y - lw / 2, lw, lw); continue; }
+      if (Math.abs(streak) < 2) { ctx.fillStyle = style; ctx.fillRect(x - lw / 2, y - lw / 2, lw, lw); continue; }
       const k2 = F / Math.max(6, dz + streak);
-      ctx.strokeStyle = s.c + a.toFixed(3) + ')';
+      ctx.strokeStyle = style;
       ctx.lineWidth = lw;
       ctx.beginPath(); ctx.moveTo(CX + (s.x - px) * k2, CY + (s.y - py) * k2); ctx.lineTo(x + .01, y); ctx.stroke();
     }
   }
 
-  function drawObj(key, camZ, t) {
+  function drawObj(key, camZ) {
     const o = objs[key];
-    if (o.z === undefined) return;
+    if (o.z === undefined || !sprites[key]) return;
     const far = o.vd * 3.2, nc = (o.near || .08) * o.vd;
     const dz = o.back ? 2 * o.vd - (o.z - camZ) : o.z - camZ;
     if (dz <= nc * .3 || dz > far) return;
@@ -443,6 +474,8 @@ h2 em{color:var(--accent)}
     ctx.restore();
   }
 
+  /* Earth's limb, disc and cities are one cached layer; the cities alone are a second, drawn over it with one
+     globalAlpha that breathes, so the flicker costs one drawImage instead of a fillStyle per city */
   function drawEarth(t) {
     const p = sy / VH;
     if (p >= 3) return;
@@ -461,25 +494,27 @@ h2 em{color:var(--accent)}
       gE.globalCompositeOperation = 'source-over';
       gE.fillStyle = rad(gE, ex, ey, Re * .86, ex, ey, Re, [0, '#02040a', .92, '#061127', 1, '#0d2448']);
       gE.beginPath(); gE.arc(ex, ey, Re, 0, TAU); gE.fill();
+      gE.globalCompositeOperation = 'lighter';
+      gC.clearRect(0, 0, W, H); gC.globalCompositeOperation = 'lighter';
+      for (const c of cities) {
+        const x = ex + Math.cos(c.a) * Re * c.d, y = ey + Math.sin(c.a) * Re * c.d;
+        if (x < 0 || x > W || y < 0 || y > H) continue;
+        gE.fillStyle = c.c + (c.b * .85).toFixed(3) + ')'; gE.fillRect(x, y, c.s * DPR, c.s * DPR);
+        gC.fillStyle = c.c + (c.b * .3).toFixed(3) + ')'; gC.fillRect(x, y, c.s * DPR, c.s * DPR);
+      }
+      const da = -Math.PI / 2 - .42, dx = ex + Math.cos(da) * Re, dy = ey + Math.sin(da) * Re;
+      gE.drawImage(dawn, dx - Re * .32, dy - Re * .32, Re * .64, Re * .64);
+      gE.strokeStyle = 'rgba(255,214,170,.55)'; gE.lineWidth = 1.5 * DPR;
+      gE.beginPath(); gE.arc(ex, ey, Re * 1.001, da - .12, da + .12); gE.stroke();
     }
     ctx.save(); ctx.globalAlpha = fade; ctx.globalCompositeOperation = 'source-over';
     ctx.drawImage(bgE, 0, 0);
-    ctx.globalCompositeOperation = 'lighter';
-    cities.forEach((c, i) => {
-      const x = ex + Math.cos(c.a) * Re * c.d, y = ey + Math.sin(c.a) * Re * c.d;
-      if (x < 0 || x > W || y < 0 || y > H) return;
-      ctx.fillStyle = `rgba(255,${180 + i % 40},${100 + i % 30},${c.b * (reduce ? 1 : .85 + .15 * Math.sin(t * 3 + i))})`;
-      ctx.fillRect(x, y, c.s * DPR, c.s * DPR);
-    });
-    const da = -Math.PI / 2 - .42, dx = ex + Math.cos(da) * Re, dy = ey + Math.sin(da) * Re;
-    ctx.drawImage(dawn, dx - Re * .32, dy - Re * .32, Re * .64, Re * .64);
-    ctx.strokeStyle = 'rgba(255,214,170,.55)'; ctx.lineWidth = 1.5 * DPR;
-    ctx.beginPath(); ctx.arc(ex, ey, Re * 1.001, da - .12, da + .12); ctx.stroke();
+    if (!reduce) { ctx.globalCompositeOperation = 'lighter'; ctx.globalAlpha = fade * (.5 + .5 * Math.sin(t * 3)); ctx.drawImage(cityL, 0, 0); }
     ctx.restore();
   }
 
   function drawDeep(g, a) {
-    if (a <= .01) return;
+    if (a <= .01 || !sprites.deep) return;
     const d = chap('Deep field'), s = Math.max(W / 1600, H / 1000) * (1 + clamp((sy - d.top) / VH, -1, 3) * .06) * 1.05;
     g.save(); g.globalCompositeOperation = 'lighter'; g.globalAlpha = a;
     g.translate(CX - camX * .15 * DPR, CY - camY * .15 * DPR);
@@ -487,7 +522,7 @@ h2 em{color:var(--accent)}
     g.restore();
   }
 
-  /* text follows the same scroll value as the camera */
+  /* text follows the same scroll value as the camera; written only when the scroll or the intro moved it */
   function choreograph() {
     for (const c of chapters) {
       if (c.hero) {
@@ -504,6 +539,7 @@ h2 em{color:var(--accent)}
     }
   }
 
+  let first = true;
   function frame(now) {
     const t = reduce ? 0 : (now - t0) / 1000;
     sy = reduce ? scrollY : lerp(sy, scrollY, .085);
@@ -513,18 +549,19 @@ h2 em{color:var(--accent)}
     camX = reduce ? 0 : lerp(camX, mx * 40, .04);
     camY = reduce ? 0 : lerp(camY, my * 26, .04);
     const intro = reduce ? 0 : 1 - smooth(.3, 2.6, t), moon = chap('Moon'), deep = chap('Deep field');
-    flare.style.opacity = (intro * .95).toFixed(3);
+    const fo = (intro * .95).toFixed(2);
+    if (fo !== lastFlare) { flare.style.opacity = fo; lastFlare = fo; }
 
-    ctx.globalCompositeOperation = 'source-over'; ctx.globalAlpha = 1;
     const dim = 1 - intro * .85;
-    drawBackdrop((.5 - smooth(moon.ctr, deep.ctr, sy) * .3) * dim, smooth(deep.top - VH * .2, deep.ctr, sy));
+    drawBackdrop(.5 - smooth(moon.ctr, deep.ctr, sy) * .3, smooth(deep.top - VH * .2, deep.ctr, sy), dim);
     drawStars(camZ + (reduce ? 0 : t * 10), t, dim);
-    drawObj('earth', camZ, t); drawObj('moon', camZ, t);
+    drawObj('earth', camZ); drawObj('moon', camZ);
     drawEarth(t);
-    choreograph();
+    if (sy !== lastSy || intro > 0) { choreograph(); lastSy = sy; }
 
     put(0, fmtDist(at(sy, 'km'))); put(1, fmtVel(at(sy, 'v'))); put(2, fmtMet(at(sy, 'met')));
     rail();
+    if (first) { first = false; requestAnimationFrame(buildLater); }
   }
 
   /* chapter index */
@@ -553,20 +590,21 @@ h2 em{color:var(--accent)}
   }
   $('#home').addEventListener('click', () => go(0));
 
-  /* loop: continuous with motion, one frame per scroll without */
-  let raf = 0;
-  // 30fps is plenty for a slow drift, and halves the work on a phone. Nothing runs while the tab is hidden.
+  /* loop: continuous with motion, one frame per scroll without; nothing runs off-screen or in a hidden tab */
+  let raf = 0, seen = true;
+  // 30fps is plenty for a slow drift, and halves the work on a phone.
   let lastT = -1e9;
   function loop(now) {
     raf = 0;
-    if (document.hidden) return;
+    if (document.hidden || !seen) return;
     if (now - lastT >= 32 || scrollY !== sy) { lastT = now; frame(now); }
     if (!reduce || scrollY !== sy) raf = requestAnimationFrame(loop);
   }
-  function kick() { if (!raf) raf = requestAnimationFrame(loop); }
+  function kick() { if (!raf && seen && !document.hidden) raf = requestAnimationFrame(loop); }
   addEventListener('scroll', kick, { passive: true });
   document.addEventListener('visibilitychange', () => { if (!document.hidden) kick(); });
-  mq.addEventListener('change', (e) => { reduce = e.matches; kick(); });
+  new IntersectionObserver(([e]) => { seen = e.isIntersecting; if (seen) kick(); }).observe(cvs);
+  mq.addEventListener('change', (e) => { reduce = e.matches; lastSy = -1; kick(); });
   addEventListener('pointermove', (e) => { mx = e.clientX / innerWidth * 2 - 1; my = e.clientY / innerHeight * 2 - 1; }, { passive: true });
   let rt;
   addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(layout, 120); });
