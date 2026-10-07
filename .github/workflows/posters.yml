@@ -1,6 +1,5 @@
 # Shoots a card poster for every new piece and re-shoots any piece whose demo changed,
-# then opens (or updates) one pull request with the WebP files. Vercel's build has no browser, so this runs here.
-# The repo setting "Allow GitHub Actions to create and approve pull requests" must be on.
+# then commits the WebP files back to main. Vercel's build has no browser, so this runs here.
 name: Posters
 
 on:
@@ -11,7 +10,6 @@ on:
 
 permissions:
   contents: write
-  pull-requests: write
 
 concurrency:
   group: posters
@@ -57,14 +55,12 @@ jobs:
           npx --yes wait-on -t 60000 http-get://127.0.0.1:4335/
           node scripts/posters.mjs
 
-      - name: Open a pull request with the posters
-        uses: peter-evans/create-pull-request@v7
-        with:
-          add-paths: public/thumbs
-          branch: bot/posters
-          commit-message: Shoot posters for new and changed pieces.
-          title: Posters for new and changed pieces
-          body: |
-            Shot by the Posters workflow for ${{ github.sha }}. Look at the cards, then merge.
-          author: github-actions[bot] <41898341+github-actions[bot]@users.noreply.github.com>
-          delete-branch: true
+      - name: Commit posters
+        run: |
+          git add public/thumbs
+          if git diff --cached --quiet; then echo "No poster changes."; exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898341+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Shoot posters for new and changed pieces."
+          git pull --rebase origin main
+          git push origin HEAD:main
