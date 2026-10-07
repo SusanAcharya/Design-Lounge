@@ -1,6 +1,6 @@
-<!-- Design Lounge Nº 530 · "Playable product hero" · www.designlounge.live -->
+<!-- Design Lounge Nº 530 · "TU-16" · www.designlounge.live -->
 
-# Playable product hero
+# TU-16
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. Use the stack already chosen for this build (When to ask in SKILL.md). Match the numbers below; don't "improve" them. Draw the product in HTML/CSS only. No images, no audio files, no 3D libraries.
 

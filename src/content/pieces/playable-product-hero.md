@@ -1,5 +1,5 @@
 ---
-title: "Playable product hero"
+title: "TU-16"
 summary: "A hero where the product is the demo: a pocket drum machine in HTML/CSS with rubber pad depth, key-mapped pads, an LCD echo, a tempo knob and synthesized drums."
 platform: web
 type: section
@@ -15,7 +15,7 @@ fonts: ["Archivo", "IBM Plex Mono"]
 related: [hero-product-window-tilt, object-3d-turntable, scroll-scrub-product-sequence]
 ---
 
-# Playable product hero
+# TU-16
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. Draw the product in HTML/CSS only. No images, no audio files, no 3D libraries.
 
