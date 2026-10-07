@@ -3,7 +3,8 @@
 //   ALL=1 BASE=http://localhost:4330 node scripts/posters.mjs    (every piece)
 //   CHANGED=a,b BASE=... node scripts/posters.mjs                (these, plus any without a poster; used by CI)
 // <slug>.webp is the whole screen at its own aspect, 640px wide (phones 390), used by cards and device frames.
-// When a piece fills under a quarter of the screen, <slug>-card.webp is a 640x480 crop around it for the card.
+// Library cards are 4:3. A web piece's <slug>-card.webp is shot again at 1280x960, so the card shows the whole
+// layout instead of cropping the sides off a 16:10 shot. When the piece fills under a quarter of that, the card is a crop around it.
 // public/thumbs/cards.json lists the pieces that have one; scripts/check-build.mjs fails the build if a listed crop is missing.
 import { chromium } from 'playwright';
 import { readdir, readFile, writeFile, unlink } from 'node:fs/promises';
@@ -107,6 +108,14 @@ async function worker() {
         const c = await encode(await page.screenshot({ type: 'png' }), 640, false);
         await writeFile(card, Buffer.from(c.full, 'base64'));
         sparse.push(slug);
+      } else if (platform === 'web') {
+        await page.setViewportSize({ width: 1280, height: 960 });
+        await page.goto(`${base}/demo/${slug}.html`, { waitUntil: 'networkidle', timeout: 20000 });
+        await page.waitForTimeout(WAIT[slug] || 1400);
+        await page.evaluate(() => document.querySelector('lounge-signature')?.remove());
+        const c = await encode(await page.screenshot({ type: 'png' }), 640, true);
+        await writeFile(card, Buffer.from(c.card || c.full, 'base64'));
+        sparse.push(slug);
       } else if (r.card) {
         await writeFile(card, Buffer.from(r.card, 'base64'));
         sparse.push(slug);
@@ -128,5 +137,5 @@ const cards = new Set(JSON.parse(await readFile(manifest, 'utf8').catch(() => '[
 for (const s of sparse) cards.add(s);
 for (const s of dropped) cards.delete(s);
 await writeFile(manifest, JSON.stringify([...cards].sort(), null, 2) + '\n');
-console.log('wrote', n, 'posters,', sparse.length, 'with a zoomed card crop');
+console.log('wrote', n, 'posters,', sparse.length, 'with a 4:3 card');
 console.log(sparse.join(' '));
