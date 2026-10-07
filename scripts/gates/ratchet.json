@@ -1,7 +1,7 @@
 {
   "ceiling": {
     "phone390": 275,
-    "contrast": 324,
+    "contrast": 322,
     "uiLines": 180
   },
   "phone390": [
@@ -577,7 +577,6 @@
     "team-hover-portrait-grid",
     "terminal-ui-style",
     "testimonials-masonry-wall",
-    "testimonials-metric-tabs",
     "testimonials-quote-carousel",
     "testimonials-wall-grid",
     "text-annotated-underlines",
@@ -594,7 +593,6 @@
     "widget-activity-rings",
     "widget-analog-clock",
     "widget-compass",
-    "widget-control-toggles",
     "widget-flight-arrival",
     "widget-heart-rate",
     "widget-hydration",
