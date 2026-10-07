@@ -611,9 +611,14 @@ const FAMILY_SPEC: Record<string, string> = {
   'Inter Tight': 'Inter+Tight:wght@300;400;500;600',
   'Archivo': 'Archivo:wdth,wght@62..125,400..900',
   'IBM Plex Mono': 'IBM+Plex+Mono:wght@400;500;600',
+  'Gochi Hand': 'Gochi+Hand',
+  'Patrick Hand': 'Patrick+Hand',
+  'Silkscreen': 'Silkscreen:wght@400;700',
+  'Space Mono': 'Space+Mono:wght@400;700',
 };
 
 export function themeFontHref(t: Theme) {
-  const specs = [FAMILY_SPEC[t.display], FAMILY_SPEC[t.text]].filter(Boolean);
+  // A family missing from FAMILY_SPEC still loads at its default weight, so the request is never empty.
+  const specs = [...new Set([t.display, t.text].filter(Boolean).map((f) => FAMILY_SPEC[f] ?? f.replace(/ /g, '+')))];
   return `https://fonts.googleapis.com/css2?${specs.map((s) => `family=${s}`).join('&')}&display=swap`;
 }
