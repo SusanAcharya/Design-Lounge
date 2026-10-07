@@ -38,7 +38,7 @@ Read this only when you need a path or a kind map. The procedure is in SKILL.md.
 | Fashion, a lookbook, a luxury good | `website` | Also recipe `fashion` |
 | Food, a local shop that sells or ships, and they did not ask for a landing page | `website` | Also recipe `food` |
 | Restaurant, cafe, bar, a menu people come in for | `website` | Also recipe `restaurant` |
-| Wellness, a retreat, a class | `website` | Also recipe `wellness` |
+| Wellness, a retreat, a spa, a practice with no timetable | `website` | Also recipe `wellness` |
 | Clinic, dentist, physio, vet, a doctor people book | `website` | Also recipe `clinic`. The phone app is `health`. |
 | Gym, boxing, yoga or spin studio with a timetable | `website` | Also recipe `gym` |
 | Real estate, a listing, an agent, rentals | `website` | Also recipe `real-estate` |
@@ -97,7 +97,7 @@ Pick one source for a public site. Read its `line` and `take`. The pieces listed
 
 ## Brand files
 
-Use these for Brand flow in SKILL.md. Each one is a DESIGN.md that describes a real brand's look: colours, type, radius, spacing, components, and dos and don'ts. They come from [awesome-design-md](https://github.com/VoltAgent/awesome-design-md) (MIT). The site [getdesign.md](https://getdesign.md) shows each file with a preview.
+Use these for Brand flow in [flows.md](flows.md). Each one is a DESIGN.md that describes a real brand's look: colours, type, radius, spacing, components, and dos and don'ts. They come from [awesome-design-md](https://github.com/VoltAgent/awesome-design-md) (MIT). The site [getdesign.md](https://getdesign.md) shows each file with a preview.
 
 The file is at `https://raw.githubusercontent.com/VoltAgent/awesome-design-md/main/design-md/<slug>/DESIGN.md`. The slugs:
 

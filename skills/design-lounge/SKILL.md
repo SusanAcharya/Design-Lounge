@@ -17,7 +17,7 @@ description: >-
 
 The library is already in this skill folder. Read it. For products and tools, do not invent a palette, a type pairing, a radius, an easing, or a component language, and do not wait for a website.
 
-The library is the floor and the vocabulary, not the ceiling. When they ask for spectacle, the page is built around one thing made for this subject, in colour and type you choose for its world, and the library holds the craft. That is Show mode, Free, in [website.md](website.md). The rule above about not inventing a palette is for products and tools.
+The library is the floor and the vocabulary, not the ceiling. When they ask for spectacle, the page is built around one thing made for this subject, in colour and type you choose for its world, and the library holds the craft. That is Show mode, Free, in [show.md](show.md). The rule above about not inventing a palette is for products and tools.
 
 Every new build starts with a brief: their sentence, rewritten as the prompt a strong designer would want. See Write the brief first, below.
 
@@ -29,7 +29,7 @@ This skill is a set of defaults. When the person asks for something a default fo
 
 ## Write the brief first
 
-For every new website or app, before you read the recipes, turn their request into a brief with [brief.md](brief.md): their words in quotes, the product and its facts, who it is for, the world, the one thing, the ambition, the mode, the stack, what is missing, the hard limits, and what done means. Put it at the top of `DESIGN.md` and build to it. If you hand work to a subagent, send the whole brief.
+For every new website or app, before you read the recipes, turn their request into a brief with [brief.md](brief.md): their words in quotes, the product and its facts, who it is for, the world, the one thing, the ambition, the mode, the stack, what is missing, the hard limits, and what done means. Put it at the top of `DESIGN.md` and build to it. If you hand work to a subagent, send the whole brief. Any question that When to ask allows comes before the brief, and the brief records the answer.
 
 A short request ("make a cool scrolling space website") and a good brief give very different sites. The brief adds no facts. It names what their words already imply, and sets the bar.
 
@@ -37,15 +37,17 @@ A short request ("make a cool scrolling space website") and a good brief give ve
 
 Everything you need is next to this file. Read only what the job needs.
 
-1. `library/map.json` — read this first. Kinds, families, the recipe list with each direction's mood, every theme and pairing by mood, and the motion tokens. About 56 KB.
-2. Then open only what you lock: `library/starts/<id>.json` for the recipe, `library/themes/<id>.css`, `library/pairings/<id>.css`.
+1. `library/map.json` — read this first. Kinds, families, the recipe list, every theme and pairing by mood, and the motion tokens. About 39 KB. Each recipe's directions are in its own file (step 2).
+2. Then open only what you lock: `library/starts/<id>.json` for the recipe and its directions, `library/themes/<id>.css`, `library/pairings/<id>.css`.
 3. `library/pieces.txt` — one line per piece. Search it (grep for a category, platform, or tag). Do not read it top to bottom.
 4. `library/briefs/<id>.md` — the spec for one piece. Open only the pieces you will build.
 5. `library/icons.json` — Lounge Icons, only when the screen needs icons.
 6. [components.md](components.md) — the controls, icons (including what to do when one is missing), the logo and favicon, and which piece to use for which job.
 7. [practice.md](practice.md) — the method every build shares. Its first lines say which other file your job adds: [website.md](website.md), [app.md](app.md), [native.md](native.md), or [locale.md](locale.md). Read only those.
 8. [brief.md](brief.md) — how to turn their request into the build brief. Every new website or app.
-9. [taste.md](taste.md) — the taste-skill pack folded in: named looks (minimal, brutalist, high-end), page shape, craft details, image-first mockups, and brand boards. You do not need those skills installed separately.
+9. [show.md](show.md) — Show mode: the centrepiece, Free colour and type, and the rendering bar. Only when the brief says `Mode: Show`.
+10. [flows.md](flows.md) — the app short path, Adopt flow, and Brand flow. Only when What they are asking sends you there.
+11. [taste.md](taste.md) — the taste-skill pack folded in: named looks (minimal, brutalist, high-end), page shape, craft details, image-first mockups, and brand boards. You do not need those skills installed separately.
 
 Do not run scripts from this skill. If `library/map.json` is missing, the install is broken. Say so. Do not design from memory.
 
@@ -55,15 +57,16 @@ If the open project is the Design Lounge repo itself (`src/demos` and `src/conte
 
 | They want | Do |
 | --- | --- |
+| *Rows are in order. Use the first row that matches.* | |
 | The project already has a design system, DESIGN.md, tokens, or styled screens | Adopt flow |
-| A redesign of a site that already exists | Adopt flow, with the audit |
+| A redesign of a site that already exists | Adopt flow, then Redesign (the audit) in [practice.md](practice.md) |
 | "Make it look like Stripe" (or Linear, Apple, Notion, any named brand) | Brand flow |
 | A new product, site, app, or design system | Kit flow |
 | Spectacle: an ambition word ("go wild", "Awwwards", "site of the day", "unforgettable", "award-level", "make it an experience"), or a verb that makes the page the experience ("let people play with it", "you scroll and you travel") | Kit flow, then Show mode in [website.md](website.md). Free colour and type, unless they named a theme, colour, or brand. Without one of these, it is Kit mode, even for a show, a launch, or a world you could draw |
 | Two looks for one product, or "show me options" built out | Kit flow twice, on two directions that differ in theme, pairing, and hero. When the subject has a world, one is Show mode, Free, and the other is locked to the library |
 | A style by name: minimal, brutalist, Swiss, terminal, high-end, agency, luxury, handwritten, pixel, arcade | Kit flow, with Named looks in [taste.md](taste.md) |
 | A game site, a web game, a lobby, a scoreboard | Kit flow, recipe `game`, then Games and Three.js in [taste.md](taste.md) |
-| Three.js, a 3D scene, an orbit, a scroll-driven world | Kit flow, recipe `game`, direction Orbit. The Lounge demo is raw WebGL. Build the product in Three.js from the brief. |
+| They name Three.js, a 3D scene, or an orbit, and the job is not a show, a launch, or a venue | Kit flow, recipe `game`, direction Orbit. The Lounge demo is raw WebGL. Build the product in Three.js from the brief. |
 | A handwritten or hand-lettered site | Kit flow, recipe `notebook` |
 | A brand kit, identity, logo system, or brand board | Kit flow, then Brand board in [taste.md](taste.md) |
 | The product people use in a browser, logged in | Kit flow, then the app short path, recipe `web-app`. The public homepage is `saas`, a separate pass |
@@ -92,16 +95,16 @@ Write the same links into `DESIGN.md` as Sources, so a later message can say "ch
 
 ### When to ask
 
-This is the only rule about asking. Every other file, brief, and template follows it.
+This is the only rule about asking before a build. Every other file, brief, and template follows it. Asking before you install a tool (Opening the page in [reference.md](reference.md)) is separate.
 
 If they said "just build it", "go", "decide", or "don't ask", never ask. Use the project's stack, or plain HTML + CSS + a little JS in an empty folder. Settle the recipe with When recipes overlap in [practice.md](practice.md). On a redesign, keep the brand. Then build.
 
 Otherwise, ask before building only when one of these is true, all in one message, once, then stop:
 
 - The folder is empty and they named no stack. Ask which stack, and say you will use plain HTML + CSS + a little JS if they have no preference.
-- Two recipes are still left after When recipes overlap in [practice.md](practice.md), and they would lock different worlds, such as a staff dashboard versus a personal ledger. Ask which one.
+- Two recipes are still left after When recipes overlap in [practice.md](practice.md), and they would lock different themes, such as a staff dashboard versus a personal ledger. Ask which one.
 - They asked to see options or to choose. Name three palettes and two pairings with links, names and moods only.
-- It is a redesign and you cannot tell whether to keep the brand (Adopt flow, below).
+- It is a redesign and you cannot tell whether to keep the brand (Adopt flow in [flows.md](flows.md)).
 - It is a portfolio and they gave no work (Real content only in [website.md](website.md)).
 
 Everything else, decide and say what you assumed.
@@ -113,9 +116,9 @@ If they ask for a change after, edit that one Source line and rebuild that scree
 The full method is long. For a website, these are the steps that matter, in order. Open the named section only when you reach its step.
 
 0. Write the brief ([brief.md](brief.md)). Its Ambition and Mode lines decide whether step 3 switches to Show mode, and whether it is Free.
-1. Read `~/.design-lounge/history.jsonl` (Recent picks in [practice.md](practice.md)). Then write three words for the subject's world: its materials, tools, and place, not "beginner" or "friendly" (Pick a direction, rules 2 to 4).
+1. Read `~/.design-lounge/history.jsonl` (Recent picks in [practice.md](practice.md)). Then write three words for the subject's world: its materials, tools, and place, not "beginner" or "friendly" (Pick a direction in [practice.md](practice.md), rules 2 to 4).
 2. Lock the recipe and the direction whose mood names that world, and that is not in the recent history for this recipe. The name number only breaks a tie. The direction names the hero, the work, and the footer. Use those. Append a claim line to the history now (Recent picks), so an agent running beside you does not take the same direction.
-3. Write the Idea and the Signature (Write the idea in [website.md](website.md)). Name the default look you are avoiding, including the studio template. If they asked for spectacle, switch to Show mode in [website.md](website.md) here: the Idea becomes the centrepiece, and the direction's hero, work, and footer become candidates. In Free, its theme and pairing do too: choose colour and type with Free colour and type.
+3. Write the Idea and the Signature (Write the idea in [website.md](website.md)). Name the default look you are avoiding, including the studio template. If they asked for spectacle, switch to Show mode in [show.md](show.md) here: the Idea becomes the centrepiece, and the direction's hero, work, and footer become candidates. In Free, its theme and pairing do too: choose colour and type with Free colour and type.
 4. Pick about and contact by what content they have (Sections, one by one in [website.md](website.md)). Work and footer stay on the direction. Then the uniqueness check in Recent picks: if two of the hero, the work, and the footer match a recent site of this recipe or its related group, take the next direction. Write the Unlike line on the sheet. Then append the history line, with `work` and `footer` filled in.
 5. Open the brief of every piece you build, including the menu and any copy button. Read each down to "Optional below this line".
 6. Build with their facts only. The brief's names, prices, and quotes stay in the brief. A sentence that is still true after you swap in another product's name gets rewritten. A button names the action on this screen. Links go where they say. Drawn data says "Example".
@@ -126,17 +129,7 @@ The rules are the floor, not the design. Passing all of them makes a page correc
 
 ## An app, the short path
 
-The full method is long. For a phone app, a web app, a desktop window, or a native app, these are the steps. Open the named section only when you reach its step. A public website still uses the path above. A PWA uses the recipe for its job, then PWAs in [native.md](native.md).
-
-0. Write the brief ([brief.md](brief.md)). An app is always Mode `Kit`.
-1. Read `~/.design-lounge/history.jsonl`. Write three words for the subject's world. Lock the app recipe and a direction whose mood names it (bank, health, messages, music, news, shop, social, weather, or the general mobile app), not one used recently for this recipe. The name number only breaks a tie. Append the pick.
-2. Write the Idea (The one screen in [app.md](app.md)). Name the real tabs, three to five. Do not copy Home, Search, Activity, Profile unless those are the product's sections.
-3. Pick the platform once. iOS uses the `phone-` and `ios-` pieces. Android, or a Material family, uses the `m3-` piece when one exists for that job. One tab bar. A web app or a desktop window has no phone tab bar: the shell is `sidebar-workspace-switcher` or `collapsing-sidebar-rail`.
-4. Build the minimum set before you stop: the shell, the primary list, one detail, the empty state, the failed load, and settings or account. Open each brief down to "Optional below this line".
-5. Accounts add sign-in and delete-account. A price adds the paywall or the subscription screen, with real dates. A rating uses `phone-rating-prompt`, after a success, never on first launch.
-6. Restyle every piece onto the locked theme and pairing. The demo's colours and fonts do not come along.
-7. Screenshot light, dark, and the large text size (Looking at the app in [native.md](native.md)). Fix what you see. Make one correction.
-8. End with the closing block in The reply.
+In [flows.md](flows.md). Open it when the table above sends you there.
 
 ## Kit flow
 
@@ -152,26 +145,9 @@ The full method is long. For a phone app, a web app, a desktop window, or a nati
 
 An internal tool, admin, ops screen, or dashboard is kind `platform`, then the `dashboard` recipe. A chart, a metric, an empty list, and a failed load come from pieces, not a chart library's defaults.
 
-## Adopt flow
+## Adopt flow and Brand flow
 
-Use this when a design system is already in the project.
-
-1. Keep their colours, type, radius, and shadow. Do not lock a second Lounge palette on top.
-2. Take structure, states, motion, and hit targets from the piece briefs. Name the demos you take structure from.
-3. Restyle onto a Lounge kit only when they asked for a new look. A refine that asks for scroll, hover, or a cursor keeps their colours and adds effect pieces from Register in [website.md](website.md).
-
-For a redesign, first decide which kind it is: keep the brand, or start the look again. If you can't tell, follow When to ask above. Then follow Redesign in [practice.md](practice.md). Look at the site before you change it. Never change the URLs, the nav labels, the form field names, the logo, or the legal text unless they asked.
-
-## Brand flow
-
-Use this when they want the product to look like a brand they named.
-
-1. Find the brand in Brand files in [reference.md](reference.md). Fetch its file from `https://raw.githubusercontent.com/VoltAgent/awesome-design-md/main/design-md/<slug>/DESIGN.md`. It lists that brand's colours, type, radius, spacing, and components.
-2. Treat that file as their design system and follow Adopt flow. Its colours, fonts, and radius win over the Lounge theme. The structure, states, and motion still come from the piece briefs.
-3. If the brand uses a font you can't load, use the stand-in the file names. Never copy the brand's logo, name, wordmark, photos, or words. The product keeps its own name.
-4. Put the file's URL in `DESIGN.md` under Sources.
-
-If the brand isn't in the list, say so. Then pick the closest Lounge theme and pairing, and say which one you picked and why.
+In [flows.md](flows.md), with redesigns. Open it when the table above sends you there.
 
 ## Piece flow
 
@@ -179,6 +155,8 @@ If the brand isn't in the list, say so. Then pick the closest Lounge theme and p
 2. Read `library/briefs/<id>.md`. The brief is the spec for structure, counts, sizes, motion timing, states, and hit targets. `demo` is the HTML acceptance file, if you need to see the motion.
 3. The brief's colours, fonts, and light or dark mode belong to its demo. Translate them by role onto the locked theme and pairing. Follow Adapting a brief in [practice.md](practice.md). A dusk-blue parallax on a light theme becomes a daylight parallax with the same layers and speeds.
 4. Hold the result to the brief's acceptance checklist, skipping lines that only hold for the demo's copy. Fix what fails.
+
+No kit locked and no design system in the project: lock a theme and pairing first with Library flow, by mood for this product, and say which. A project's stock Tailwind or framework colours are not a design system; a configured theme, tokens, or styled screens are.
 
 If `pieces.txt` has no piece for that job, say so. Do not invent a slug.
 

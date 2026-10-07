@@ -2,7 +2,7 @@
 
 This is how you design with the library. The catalogue is the material. This file is the discipline every build shares. The rest is split by job, so you only read what yours needs:
 
-- A website: this file, then [website.md](website.md). Then Page shape and Craft in [taste.md](taste.md), and Named looks there if they named a style.
+- A website: this file, then [website.md](website.md). Then Page shape and Craft in [taste.md](taste.md), and Named looks there if they named a style. Add [show.md](show.md) only when the brief says `Mode: Show`.
 - An app, a tool, a dashboard, or a shop: this file, then [app.md](app.md).
 - A React Native, Expo, Flutter, SwiftUI, or Compose app, or a PWA: also [native.md](native.md).
 - Another language, a currency, a calendar, or a regional look: [locale.md](locale.md) as well.
@@ -130,11 +130,11 @@ Every recipe has three or more `directions`. Each one is a complete look: theme,
 
 Before you choose, read the history (Recent picks, below). Then choose in this order.
 
-1. They named a theme, a pairing, a colour, or a site they like. Lock the direction closest to it, then swap in what they named.
+1. They named a theme, a pairing, a colour, or a site they like. Lock the direction closest to it, then swap in what they named. If what they named is not in the library, say so, and use the closest theme or pairing by mood, named on the sheet.
 2. The subject's world. Write the materials of the thing itself: the instrument, the tool, the room, the place, the craft. Guitar: strings, wood, a stage, a setlist. Drawing: paper, a pencil line, a sketchbook. Code: a terminal, short drills. Lock the direction whose `mood` names that world. A clear dark, Nepali, retro, or AI request also counts here.
 3. Audience words come last, and never alone: beginner, friendly, simple, fun, modern, clean, for everyone, easy. Almost every brief says them. They break a tie between two directions that both fit the subject. They do not pick a direction by themselves. Fun, cool, simple, and professional set the dials above. "For kids" is the exception: it is a world.
 4. Read the person. Most messages carry more than they say: a bio, a tagline, project names, their job, their own site or GitHub, the way they write. Write three words that describe that material, in their words where you can. Compare them with each direction's `mood` and lock the closest. Write it on the sheet. For a twelve-seat momo counter whose owner wrote "we fold every momo in front of you, no freezer": `Direction: garden-supper (their words: small, made in front of you, slow; mood: olive, cream, slow food)`. A designer starts from the person, not from a number.
-5. Two or more directions fit equally, or there is truly nothing to read (a bare "make me a portfolio"). Only then use the name number, and only among the directions that fit. Work out the name number: add up the place of each letter of the product or brand name in the alphabet (a = 1, b = 2, … z = 26), ignoring spaces, digits and punctuation. If there is no name, use the first noun in their message. Divide by the number of directions. The remainder picks it, counting the first direction as 0. Write the sum on the sheet, for example `Direction: garden-supper (Tsering = 20+19+5+18+9+14+7 = 92, three directions fit, 92 mod 3 = 2)`. The name number keeps one product consistent and keeps two products apart. It does not know who they are, so it never overrules rules 2 to 4. Counting letters is not enough, because names of the same length would always land together.
+5. Two or more directions fit equally, or there is truly nothing to read (a bare "make me a portfolio"). Only then use the name number, and only among the directions that fit. Work out the name number: add up the place of each letter of the product or brand name in the alphabet (a = 1, b = 2, … z = 26), ignoring spaces, digits and punctuation. If there is no name, use the first noun in their message. Divide by the number of directions that fit. The remainder picks it, counting the first direction as 0. Write the sum on the sheet, for example `Direction: garden-supper (Tsering = 20+19+5+18+9+14+7 = 92, three directions fit, 92 mod 3 = 2)`. The name number keeps one product consistent and keeps two products apart. It does not know who they are, so it never overrules rules 2 to 4. Counting letters is not enough, because names of the same length would always land together.
 
 Do not take the first direction because it is first. Do not mix two directions. If the hero is unset, use the recipe's first piece. If the effect is null, the register stays quiet.
 
@@ -164,7 +164,7 @@ Keep a short history on their machine.
 {"date":"2026-10-05","product":"Happy Easel","folder":"painting-lesson","recipe":"education","direction":"gallery-class","theme":"marble-hall","pairing":"gallery-wall","hero":"editorial-landing-hero","work":"stacking-cards-scroll","footer":"footer-centered-colophon","effect":"scroll-zoom-portal"}
 ```
 
-A Free build (Show mode in [website.md](website.md)) writes `"mode":"free"`, `"theme":"free"`, `"pairing":"free"`, the faces in `"fonts"`, and `"colours"` as `[bg, primary]`. The next Free build reads those and does not reuse the display face of the last three, or the same pair:
+A Free build (Show mode in [show.md](show.md)) writes `"mode":"free"`, `"theme":"free"`, `"pairing":"free"`, the faces in `"fonts"`, and `"colours"` as `[bg, primary]`. The next Free build reads those and does not reuse the display face of the last three, or the same pair:
 
 ```
 {"date":"2026-10-06","product":"Low Tide","folder":"low-tide","recipe":"event","direction":"deep-field","mode":"free","theme":"free","pairing":"free","fonts":["Bodoni Moda","IBM Plex Mono"],"colours":["#05060b","#ffb04a"],"hero":"scroll-space-voyage","work":"contact-booking-hours","footer":"footer-centered-colophon","effect":null}
@@ -235,7 +235,7 @@ The four lines decide a screen. They do not decide the product. People name a pr
 Several recipes can fit one sentence. Settle it in this order before you think about asking.
 
 1. A page kind they named wins. "A landing page" is `landing`, unless it is for fashion, wellness, fintech, or a tool, which have their own recipes (the kind map in [reference.md](reference.md)). "A shop" or "an online store" is `commerce`. "A menu" or "book a table" is `restaurant`. "A website" or "a homepage" names no kind, so go on to 2.
-2. The first screen's job. One offer and one action (pre-order, join the list, subscribe) is `landing`. Things to buy and ship is `commerce`. What is for sale today and the hours, to order or collect, is `food`. Today's hours, the menu with prices, and a table, for people who sit down, is `restaurant`. A company that needs several pages to explain itself is `marketing-site`, or `saas` when it sells software.
+2. The first screen's job. One offer and one action (pre-order, join the list, subscribe) is `landing`. Things to buy and ship is `commerce`. What is for sale today and the hours, to order or collect, is `food`. Today's hours, the menu with prices, and a table, for people who sit down, is `restaurant`. A company that needs several pages to explain itself is `marketing-site`, or `saas` when it sells software. A class studio people book on a timetable (yoga, spin, climbing, boxing) is `gym`. A retreat, a spa, or a calm practice with no timetable is `wellness`.
 3. The business picks the direction inside that recipe, not the recipe. "A landing page for a coffee roaster" is `landing`, with a warm, made-by-hand direction such as `clay-launch`. The same roaster's café would be `restaurant`, and its bean shop `commerce`.
 
 If two recipes are still left and they would lock different themes, ask once which world it is (When to ask in [SKILL.md](SKILL.md)), then stop. A staff dashboard and a personal ledger are that case. A shop and a portfolio are that case. Do not send a list of questions. Do not invent a research study.
@@ -392,7 +392,7 @@ These are fails. They are the tells of a page that was generated and not designe
 - A gradient, a glow, or a mesh you added. The locked effect piece and a Show mode centrepiece may use them. Every other region stays the theme's flat `--bg`.
 - Glass, blur, or a floating card on every region.
 - Gradient text, except the one word that changes voice in Show mode. A second accent used as decoration. The accent is the action and the live state.
-- In Show mode: a centrepiece drawn in flat fills, with no light source, no depth, and nothing you can do to it. That is a diagram, not a scene. Hold it to The rendering bar in [website.md](website.md).
+- In Show mode: a centrepiece drawn in flat fills, with no light source, no depth, and nothing you can do to it. That is a diagram, not a scene. Hold it to The rendering bar in [show.md](show.md).
 - An emoji used as an icon. Icons are Lounge Icons.
 - A radius that is not the family's. Every corner on a large radius when the family is sharp, editorial, or industrial.
 - Three identical cards — icon, title, one sentence — standing in for the product. A feature row is allowed when a named piece is that row and the copy is about this product.

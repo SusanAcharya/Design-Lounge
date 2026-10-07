@@ -275,7 +275,8 @@ fs.writeFileSync(
     counts: index.counts,
     kinds: index.kit.kinds,
     families: index.kit.families,
-    starts: STARTS.map((s) => ({ id: s.id, surface: s.surface, title: s.title, when: s.when, directions: s.directions.map((d) => `${d.id}: ${d.mood}`) })),
+    // Directions live in library/starts/<id>.json, which the agent opens once it picks the recipe. The map only lists recipes.
+    starts: STARTS.map((s) => ({ id: s.id, surface: s.surface, title: s.title, when: s.when })),
     themes: index.themes.map((t) => brief(t, ['id', 'name', 'mood', 'bestFor', 'mode', 'pair'])),
     pairings: index.pairings.map((p) => brief(p, ['id', 'name', 'mood', 'bestFor', 'mono', 'numbers', 'caution'])),
     scales: SCALES,
