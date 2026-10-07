@@ -49,7 +49,7 @@ Last night 22/800                                           ( Night | Week )  we
 ```
 
 - `main.set` → `div.head` (`h1`, `div.seg[role=group]` of two `aria-pressed` buttons), `div.tiles`.
-- Each `section.tile[aria-labelledby]` → `span.label`, `div.num` (spans for the figures, `small` for the units), `span.delta` (an arrow SVG and text), then either `div.bars[aria-label]` of seven `i` plus `div.bars-l` labels, or a `p`.
+- Each `section.tile[aria-labelledby]` → `span.label`, `div.num` (spans for the figures, `small` for the units), `span.delta` (an arrow SVG and text), then either `div.bars[role=img][aria-label]` of seven `i` plus `div.bars-l` labels, or a `p`.
 
 ## Tokens
 
@@ -106,7 +106,7 @@ Reduced motion: no bar growth, 1ms transitions.
 ## Accessibility
 
 - Each tile is a `<section>` labelled by its own label; the figures are real text ("7", "h", "42", "min"), so a screen reader hears "7 h 42 min".
-- The bar tray has an `aria-label` ("Hours asleep, the last seven nights"); the labels under it are visual (`aria-hidden`) because the sentence and figure carry the data. Add a visually hidden list of the seven values if the chart is the only place they appear in your product.
+- The bar tray is `role="img"` with an `aria-label` ("Hours asleep, the last seven nights"), since a label on a plain `div` is prohibited; the labels under it are visual (`aria-hidden`) because the sentence and figure carry the data. Add a visually hidden list of the seven values if the chart is the only place they appear in your product.
 - Up and down deltas use different arrow glyphs and words ("more than", "below"); nothing depends on colour.
 - The segmented control is a `role="group"` of `aria-pressed` buttons; the title changes with it.
 - Contrast: `--ink` 11.7:1, `--ink-2` 6.1:1, `--ink-3` 4.9:1 on the surface; `--edge` 3.5:1 around tiles, pills, bars and the tray.
