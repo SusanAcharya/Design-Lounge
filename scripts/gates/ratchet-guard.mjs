@@ -21,10 +21,22 @@ export function raises(prev, next) {
   return out;
 }
 
-/** The reason in `[raise-ceiling: <reason>]` in the given commit messages, or null. Nothing else allows a raise. */
+/** A reason that only names the slot, or says too little to explain a raise. */
+export function isPlaceholder(reason) {
+  const r = reason.trim();
+  return r.length < 10 || /^<.*>$/s.test(r);
+}
+
+/**
+ * The first real reason in a raise-ceiling tag in the given commit messages, or null. Nothing else allows a raise.
+ * Placeholders do not count: "<reason>", anything wrapped in < >, or fewer than 10 characters. A message that
+ * only describes the tag (as this repository's own commits do) therefore never opens it.
+ */
 export function raiseReason(message = '') {
-  const m = message.match(/\[raise-ceiling:\s*([^\]]*\S)\s*\]/i);
-  return m ? m[1].trim() : null;
+  for (const m of message.matchAll(/\[raise-ceiling:\s*([^\]]*?)\s*\]/gi)) {
+    if (!isPlaceholder(m[1])) return m[1].trim();
+  }
+  return null;
 }
 
 /** Commit messages from `base` (exclusive) to HEAD, or HEAD's alone when there is no base. */
