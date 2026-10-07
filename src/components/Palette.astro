@@ -63,7 +63,7 @@ import { TYPE_META, PLATFORM_META, SECTION_NAV, CATEGORY_META } from '../lib/pie
     const res = await fetch('/search.json');
     const pieces = await res.json();
     items = pieces.map((p) => ({ kind: p.type, title: p.title, sub: p.summary, n: p.n, href: p.href || ('/p/' + p.id), platform: p.platform,
-      hay: [p.title, p.summary, p.type, p.platform, (p.category || '').replace(/-/g, ' '), ...(p.tags || []), ...(p.styles || [])].join(' ').toLowerCase() }));
+      hay: [p.title, p.summary, p.type, p.platform, (p.category || '').replace(/-/g, ' '), ...(p.tags || []), ...(p.styles || []), ...(p.aka || [])].join(' ').toLowerCase() }));
     return items;
   }
 

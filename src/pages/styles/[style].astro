@@ -3,6 +3,8 @@ import Base from '../../layouts/Base.astro';
 import PageHead from '../../components/PageHead.astro';
 import Catalog from '../../components/Catalog.astro';
 import { getPieces, STYLE_META, type Style } from '../../lib/pieces';
+import { THEMES } from '../../data/themes';
+import { PAIRINGS } from '../../data/type';
 
 export async function getStaticPaths() {
   return Object.keys(STYLE_META).map((style) => ({ params: { style } }));
@@ -11,6 +13,8 @@ const style = Astro.params.style as Style;
 const meta = STYLE_META[style];
 const all = await getPieces();
 const pieces = all.filter((p) => (p.data.styles as string[]).includes(style));
+const themes = THEMES.filter((t) => t.tags.includes(style));
+const pairings = PAIRINGS.filter((p) => p.tags.includes(style));
 const others = Object.entries(STYLE_META).filter(([k]) => k !== style && all.some((p) => (p.data.styles as string[]).includes(k)));
 ---
 <Base title={`${meta.label} style`} description={`${meta.label} pieces in the Design Lounge. ${meta.blurb}`} crumbs={[{ name: 'Styles', href: '/styles' }, { name: meta.label, href: `/styles/${Astro.params.style}` }]}>
@@ -22,10 +26,54 @@ const others = Object.entries(STYLE_META).filter(([k]) => k !== style && all.som
   </PageHead>
   <div class="wrap">
     {pieces.length ? <Catalog pieces={pieces} all={all} lock={{ style }} /> : <p class="lede" style="padding:40px 0">Nothing in this style yet.</p>}
+    {(themes.length || pairings.length) ? (
+      <section class="system" aria-label={`${meta.label} themes and pairings`}>
+        {themes.length ? (
+          <div class="group">
+            <h2 class="display h4">Themes in this style</h2>
+            <ul class="list">
+              {themes.map((t) => (
+                <li>
+                  <a href={`/themes/${t.id}`} class="swatch" style={`background:${t.tokens.bg};color:${t.tokens.ink};border-color:${t.tokens.line}`}>
+                    <span class="dots">{(['primary', 'secondary', 'tertiary'] as const).map((k) => <i style={`background:${t.tokens[k]}`}></i>)}</span>
+                    <span class="name">{t.name}</span>
+                    <span class="mood">{t.mood}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : null}
+        {pairings.length ? (
+          <div class="group">
+            <h2 class="display h4">Pairings in this style</h2>
+            <ul class="list">
+              {pairings.map((p) => (
+                <li>
+                  <a href={`/type/${p.id}`} class="swatch" style={`background:${p.bg};color:${p.ink};border-color:transparent`}>
+                    <span class="name">{p.name}</span>
+                    <span class="mood">{p.display.family} + {p.text.family}. {p.mood}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : null}
+      </section>
+    ) : null}
   </div>
 </Base>
 
 <style>
   .rooms { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-top: 8px; }
   .rooms .eyebrow { margin-right: 6px; }
+  .system { display: grid; gap: 36px; margin: 56px 0 24px; padding-top: 32px; border-top: 1px solid var(--line); }
+  .group h2 { margin: 0 0 14px; }
+  .list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; }
+  .swatch { display: flex; flex-direction: column; gap: 6px; min-height: 112px; padding: 16px; border: 1px solid; border-radius: var(--r-lg); text-decoration: none; transition: transform var(--t-med) var(--ease), box-shadow var(--t-med); }
+  .swatch:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+  .dots { display: flex; gap: 5px; }
+  .dots i { width: 14px; height: 14px; border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(0,0,0,.15); }
+  .name { font-weight: 600; font-size: 16px; }
+  .mood { font-size: 13px; opacity: .78; text-wrap: pretty; }
 </style>

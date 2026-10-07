@@ -1,10 +1,13 @@
 import type { APIRoute } from 'astro';
-import { getPieces, numberMap } from '../lib/pieces';
+import { getPieces, numberMap, STYLE_META } from '../lib/pieces';
 import { PAIRINGS } from '../data/type';
 import { THEMES } from '../data/themes';
 import { STARTS, SURFACES, MAP } from '../data/starts';
 import { COLLECTIONS } from '../data/collections';
 import { SOURCES } from '../data/website-list';
+
+/** Search synonyms: every style's aka words, for a piece from its styles and for a theme or pairing from its tags. */
+const aka = (keys: string[]) => [...new Set(keys.flatMap((k) => (STYLE_META as Record<string, { aka: string[] }>)[k]?.aka ?? []))];
 
 export const GET: APIRoute = async () => {
   const pieces = await getPieces();
@@ -19,6 +22,7 @@ export const GET: APIRoute = async () => {
       type: p.data.type,
       styles: p.data.styles,
       tags: p.data.tags,
+      aka: aka(p.data.styles as string[]),
       category: p.data.category,
     })),
     ...PAIRINGS.map((p) => ({
@@ -27,6 +31,7 @@ export const GET: APIRoute = async () => {
       summary: p.mood,
       type: 'pairing',
       tags: p.tags,
+      aka: aka(p.tags),
       href: '/type/' + p.id,
     })),
     ...THEMES.map((t) => ({
@@ -35,6 +40,7 @@ export const GET: APIRoute = async () => {
       summary: t.mood,
       type: 'theme',
       tags: t.tags,
+      aka: aka(t.tags),
       href: '/themes/' + t.id,
     })),
     { id: 'kit', title: 'Compose a kit', summary: 'Pick a kind, a palette, a pairing and a family. Get a brief.', type: 'map', href: '/kit' },

@@ -8,7 +8,7 @@ import { AUTHOR } from '../../lib/pieces';
   <PageHead eyebrow="System" title="Themes" count={THEMES.length} countLabel="themes" />
   <div class="wrap">
     <nav class="tags" aria-label="Filter themes">
-      {['dark', 'warm', 'cool', 'editorial', 'product', 'playful', 'luxe', 'industrial'].map((t) => <button class="chip" type="button" data-tag={t}>{t}</button>)}
+      {['dark', 'light', 'warm', 'cool', 'editorial', 'luxe', 'playful', 'industrial', 'organic', 'paper', 'minimal', 'swiss', 'retro', 'riso', 'deco', 'y2k', 'cyber', 'pixel', 'clay', 'glass'].map((t) => <button class="chip" type="button" data-tag={t}>{t}</button>)}
       <button class="chip on" type="button" data-tag="all">all</button>
     </nav>
     <ol class="grid">
