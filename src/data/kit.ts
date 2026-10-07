@@ -53,7 +53,7 @@ export const KINDS: Kind[] = [
     kicker: 'Product',
     blurb: 'SaaS, a tool, a service with a price. Data when it earns the screen.',
     when: 'Someone is deciding whether to use you. Clarity over theatre.',
-    palettes: ['fog-city', 'alpine-clinic', 'glacier', 'harbour-ledger', 'night-desk', 'ice-station', 'circuit', 'playroom', 'kiln', 'neon-alley', 'press-room'],
+    palettes: ['fog-city', 'alpine-clinic', 'glacier', 'harbour-ledger', 'night-desk', 'ice-station', 'circuit', 'playroom', 'kiln', 'neon-alley', 'press-room', 'skylight'],
     pairings: ['friendly-saas', 'geometric-modern', 'swiss-precision', 'developer-docs', 'signal-mono', 'indie-maker', 'atelier', 'y2k-chrome', 'newsroom'],
     families: ['quiet', 'soft', 'sharp', 'glass', 'bold'],
     copy: {
@@ -72,7 +72,7 @@ export const KINDS: Kind[] = [
     kicker: 'Platform',
     blurb: 'The thing staff live in: ops, admin, a dense home. Density without noise.',
     when: 'People open this every morning. Taste has to survive eight hours.',
-    palettes: ['harbour-ledger', 'fog-city', 'signal-green', 'circuit', 'cinder', 'hud-teal', 'courtroom', 'night-desk'],
+    palettes: ['harbour-ledger', 'fog-city', 'signal-green', 'circuit', 'cinder', 'hud-teal', 'courtroom', 'night-desk', 'skylight'],
     pairings: ['developer-docs', 'swiss-precision', 'slab-ledger', 'red-hat', 'neo-grotesk-mono', 'academic'],
     families: ['sharp', 'quiet', 'industrial', 'glass'],
     copy: {
@@ -179,7 +179,7 @@ export const FAMILIES: Family[] = [
     button: 'soft',
     density: 'regular',
     shadow: '0 16px 40px -20px rgba(0,0,0,.28)',
-    pieces: ['ios-glass-tab-bar', 'ios-weather-hourly-scrub', 'm3-expressive-home', 'ios-bottom-sheet-detents'],
+    pieces: ['dashboard-glass-home', 'ios-glass-tab-bar', 'ios-weather-hourly-scrub', 'm3-expressive-home', 'ios-bottom-sheet-detents'],
     rules: [
       'Bars use backdrop-filter: blur(16px) at ~72% opacity. Always give a solid fallback.',
       'Radius 16px on sheets, 999px on tab pills.',

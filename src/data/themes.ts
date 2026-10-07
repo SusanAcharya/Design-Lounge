@@ -418,6 +418,12 @@ export const THEMES: Theme[] = [
   { id: 'sign-shop-night', name: 'Sign Shop Night', mood: 'The bench with the shutter down. Cream borders on ink, the same vinyl yellow, blue and pink lit from behind.', bestFor: ['Launches', 'Zines', 'Tools with a voice'], tags: ['brutalist', 'playful', 'dark'],
     tokens: paint({ bg: '#17151a', surface: '#211e26', surface2: '#2c2833', ink: '#f6f1e4', ink2: '#c9c2b4', ink3: '#8f8999', line: '#3b3644', primary: '#ffd23f', secondary: '#6b8aff', tertiary: '#ff7ab0', success: '#5fc98a', warning: '#f0a93a', danger: '#ff6b5a', info: '#6b8aff' }),
     display: 'Archivo Black', text: 'Archivo', radius: '4px', shadow: '4px 4px 0 #f6f1e4', specimen: 'The shutter is down, the sign is on' },
+  { id: 'skylight', name: 'Skylight', mood: 'A glass roof at noon. Pale sky, frost-white panels, ink type, one cobalt. Built for frosted surfaces over one scene.', bestFor: ['Dashboards', 'Weather', 'Home and energy'], tags: ['glass', 'cool', 'light'],
+    tokens: paint({ bg: '#dfeaf6', surface: '#f7fafd', surface2: '#e6eef8', ink: '#0f1b2d', ink2: '#3b4a62', ink3: '#4a5870', line: '#c3d3e6', primary: '#1f5fd6', secondary: '#1a8a7a', tertiary: '#d9792a', success: '#1f7a4d', warning: '#c27a14', danger: '#c0392b', info: '#1f5fd6' }),
+    display: 'Sora', text: 'Sora', radius: '16px', shadow: '0 16px 40px -20px rgba(15,27,45,.28)', specimen: 'Generating 3.8 kW, the house is using 1.1' },
+  { id: 'skylight-night', name: 'Skylight Night', mood: 'The glass roof after dark. Deep slate blue, frost-white type, the same cobalt lit from behind.', bestFor: ['Dashboards', 'Weather', 'Home and energy'], tags: ['glass', 'cool', 'dark'],
+    tokens: paint({ bg: '#0e1726', surface: '#17233a', surface2: '#213049', ink: '#eef4fb', ink2: '#b7c4d8', ink3: '#8a9ab4', line: '#2b3a55', primary: '#6ea0ff', secondary: '#4fc3b1', tertiary: '#f0a35a', success: '#5fc98a', warning: '#f0b14a', danger: '#ff7a6b', info: '#6ea0ff' }),
+    display: 'Sora', text: 'Sora', radius: '16px', shadow: '0 20px 50px -24px rgba(0,0,0,.6)', specimen: 'The battery carries the house until six' },
   { id: 'bone-signal', name: 'Bone Signal', mood: 'A machined object on a bench. Bone, charcoal, cream caps, one signal orange.', bestFor: ['Hardware', 'Instruments', 'Launches'], tags: ['light', 'industrial', 'warm'],
     tokens: paint({ bg: '#ece8df', surface: '#f6f3ec', surface2: '#e3ded2', ink: '#141414', ink2: '#4c4841', ink3: '#6a655b', line: '#ccc5b6', primary: '#ff4f1a', secondary: '#2a2925', tertiary: '#3b6e8f', success: '#2f7a52', warning: '#b06a08', danger: '#c4301a', info: '#3b6e8f' }),
     display: 'Archivo', text: 'IBM Plex Mono', radius: '10px', shadow: '0 2px 0 #c7c0b1, 0 14px 30px -14px rgba(20,20,20,.35)', specimen: 'Tap to begin' },
@@ -567,6 +573,8 @@ export const THEME_PAIRS: Record<string, { mode: 'light' | 'dark'; pair: string 
   'graphite-signal': { mode: 'dark', pair: 'bone-signal' },
   'sign-shop': { mode: 'light', pair: 'sign-shop-night' },
   'sign-shop-night': { mode: 'dark', pair: 'sign-shop' },
+  'skylight': { mode: 'light', pair: 'skylight-night' },
+  'skylight-night': { mode: 'dark', pair: 'skylight' },
 };
 
 export function themeById(id: string) {

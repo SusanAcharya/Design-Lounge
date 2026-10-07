@@ -1,0 +1,167 @@
+<!-- Design Lounge piece: dashboard-glass-home · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Sunroof — home</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sky-1:#cfe2f6;--sky-2:#e9f2fb;--sun:#ffd58a;--hill:#b9d4c3;--hill-2:#a9c8b4;
+  --ink:#0f1b2d;--ink-2:#3b4a62;--ink-3:#4a5870;--line:rgba(255,255,255,.72);--line-ink:rgba(15,27,45,.12);
+  --glass:rgba(247,250,253,.64);--glass-solid:rgba(247,250,253,.94);--blur:20px;
+  --primary:#1f5fd6;--primary-ink:#ffffff;--primary-soft:rgba(31,95,214,.14);--secondary:#1a8a7a;--tertiary:#d9792a;
+  --sans:"Sora",system-ui,sans-serif;--r:16px;--r-sm:10px;--shadow:0 16px 40px -20px rgba(15,27,45,.28);
+  --t-micro:200ms;--t-in:600ms;--ease:cubic-bezier(.2,.7,.2,1);--expo:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--sky-2);color:var(--ink);font:15px/1.5 var(--sans);-webkit-font-smoothing:antialiased;overflow:hidden;position:relative}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--primary);outline-offset:3px}
+/* the one scene layer */
+.scene{position:fixed;inset:0;z-index:0;pointer-events:none;background:linear-gradient(180deg,var(--sky-1) 0%,var(--sky-2) 70%)}
+.scene .sun{position:absolute;right:14%;top:9%;width:150px;height:150px;border-radius:50%;background:var(--sun);box-shadow:0 0 80px 30px rgba(255,213,138,.55)}
+.scene svg{position:absolute;left:0;bottom:0;width:100%;height:34%}
+/* panels */
+.wrap{position:relative;z-index:1;max-width:1220px;margin:0 auto;padding:22px 30px 0;display:grid;gap:18px}
+.panel{background:var(--glass);-webkit-backdrop-filter:blur(var(--blur)) saturate(140%);backdrop-filter:blur(var(--blur)) saturate(140%);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow),inset 0 1px 0 rgba(255,255,255,.9)}
+@supports not (backdrop-filter:blur(1px)){.panel{background:var(--glass-solid)}}
+.bar{height:60px;padding:0 10px 0 20px;display:flex;align-items:center;gap:22px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:17px;letter-spacing:-.02em}
+.logo i{width:26px;height:26px;border-radius:50%;background:var(--tertiary);box-shadow:inset 0 -8px 0 var(--primary)}
+.when{color:var(--ink-2);font-size:14px}
+.seg{margin-left:auto;display:flex;padding:3px;border:1px solid var(--line-ink);border-radius:999px;background:rgba(255,255,255,.5)}
+.seg button{border:0;background:transparent;border-radius:999px;padding:0 16px;height:34px;font-weight:600;font-size:14px;color:var(--ink-2);cursor:pointer;transition:background var(--t-micro) var(--ease),color var(--t-micro) var(--ease)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:#fff}
+.acct{width:40px;height:40px;border-radius:50%;background:var(--primary);color:var(--primary-ink);display:grid;place-items:center;font-weight:700;font-size:13px;border:0;cursor:pointer}
+.grid{display:grid;grid-template-columns:420px 1fr;gap:18px;align-items:stretch}
+.now{padding:24px 26px 22px;display:flex;flex-direction:column;gap:18px}
+.label{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+.big{font-size:88px;line-height:.95;font-weight:800;letter-spacing:-.045em;font-variant-numeric:tabular-nums;display:flex;align-items:baseline;gap:8px}
+.big small{font-size:26px;font-weight:600;letter-spacing:-.02em;color:var(--ink-2)}
+.sub{margin:0;color:var(--ink-2)}
+.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:auto}
+.flow div{padding:12px 12px 10px;border-radius:var(--r-sm);background:rgba(255,255,255,.55);border:1px solid var(--line-ink)}
+.flow b{display:block;font-size:20px;font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.flow span{font-size:12px;color:var(--ink-3)}
+.flow .on b{color:var(--primary)}
+.chart{padding:22px 26px 18px;display:flex;flex-direction:column;gap:10px}
+.chart .head{display:flex;align-items:baseline;justify-content:space-between}
+.chart .head h2{margin:0;font-size:17px;font-weight:600;letter-spacing:-.01em}
+.chart .head span{font-size:13px;color:var(--ink-3)}
+.chart svg{width:100%;height:190px;overflow:visible}
+.area{fill:var(--primary);fill-opacity:.16}
+.line{fill:none;stroke:var(--primary);stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round}
+.gridl{stroke:var(--line-ink);stroke-width:1}
+.ax{font:11px var(--sans);fill:var(--ink-3)}
+.dot{fill:#fff;stroke:var(--primary);stroke-width:3}
+.row3{display:grid;grid-template-columns:1fr 1fr 1.3fr;gap:18px}
+.card{padding:20px 22px;display:flex;flex-direction:column;gap:12px}
+.card h2{margin:0;font-size:15px;font-weight:600;display:flex;justify-content:space-between;align-items:baseline}
+.card h2 span{font-size:12px;color:var(--ink-3);font-weight:600}
+.ring{display:flex;align-items:center;gap:16px}
+.ring svg{width:76px;height:76px;transform:rotate(-90deg)}
+.ring .track{fill:none;stroke:var(--line-ink);stroke-width:8}
+.ring .val{fill:none;stroke:var(--secondary);stroke-width:8;stroke-linecap:round;stroke-dasharray:201;stroke-dashoffset:76;transition:stroke-dashoffset var(--t-in) var(--expo)}
+.ring b{font-size:30px;font-weight:800;letter-spacing:-.03em;display:block;line-height:1}
+.ring span{font-size:13px;color:var(--ink-2)}
+.list{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.list li{display:flex;align-items:center;gap:10px;font-size:14px}
+.list li i{width:8px;height:8px;border-radius:50%;background:var(--ink-3);flex:none}
+.list li.on i{background:var(--secondary)}
+.list li b{margin-left:auto;font-weight:600;font-variant-numeric:tabular-nums}
+.export .num{font-size:30px;font-weight:800;letter-spacing:-.03em;line-height:1}
+.export p{margin:0;color:var(--ink-2);font-size:14px}
+.btn{align-self:flex-start;margin-top:auto;height:40px;padding:0 16px;border-radius:999px;border:1px solid var(--line-ink);background:rgba(255,255,255,.6);font-weight:600;font-size:14px;cursor:pointer;transition:background var(--t-micro) var(--ease),color var(--t-micro) var(--ease)}
+.btn[aria-pressed="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.btn:hover{background:rgba(255,255,255,.9)}
+.btn[aria-pressed="true"]:hover{background:var(--ink-2)}
+.panel.in{animation:in var(--t-in) var(--expo) both;animation-delay:var(--d,0ms)}
+@keyframes in{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="scene" aria-hidden="true">
+  <span class="sun"></span>
+  <svg viewBox="0 0 1280 272" preserveAspectRatio="none"><path d="M0 190 C 180 120, 300 150, 460 130 S 760 70, 940 120 S 1180 150, 1280 110 V272 H0Z" fill="#b9d4c3"/><path d="M0 230 C 200 190, 360 215, 540 200 S 860 150, 1040 190 S 1200 205, 1280 180 V272 H0Z" fill="#a9c8b4"/></svg>
+</div>
+<main class="wrap">
+  <header class="panel bar in">
+    <span class="logo"><i></i>Sunroof</span>
+    <span class="when">Tuesday 7 October · 13:42 · 21°C, clear</span>
+    <div class="seg" role="group" aria-label="Range">
+      <button type="button" aria-pressed="true" data-r="today">Today</button>
+      <button type="button" aria-pressed="false" data-r="week">This week</button>
+    </div>
+    <button class="acct" type="button" aria-label="Account, Mira H.">MH</button>
+  </header>
+  <div class="grid">
+    <section class="panel now in" style="--d:60ms" aria-labelledby="now-h">
+      <span class="label" id="now-h">Generating now</span>
+      <div class="big"><span id="big">3.8</span><small>kW</small></div>
+      <p class="sub" id="sub">14 panels on the south roof. Peak today was 4.6 kW at 12:50.</p>
+      <div class="flow" aria-label="Where the power is going">
+        <div class="on"><b>3.8</b><span>Roof</span></div>
+        <div><b>1.1</b><span>House</span></div>
+        <div><b>1.2</b><span>Battery</span></div>
+        <div><b>1.5</b><span>To grid</span></div>
+      </div>
+    </section>
+    <section class="panel chart in" style="--d:120ms" aria-labelledby="ch-h">
+      <div class="head"><h2 id="ch-h">Generation</h2><span id="ch-sub">Today, 06:00 to 20:00 · kW</span></div>
+      <svg viewBox="0 0 760 190" role="img" aria-label="Generation curve, rising from six in the morning to a peak at one and falling to evening">
+        <g class="gridl"><line x1="0" y1="10" x2="760" y2="10"/><line x1="0" y1="70" x2="760" y2="70"/><line x1="0" y1="130" x2="760" y2="130"/></g>
+        <g class="ax" id="ax-y"><text x="0" y="8">5</text><text x="0" y="68">2.5</text><text x="0" y="128">0</text></g>
+        <path class="area" id="area"/><path class="line" id="line"/>
+        <circle class="dot" id="dot" r="5"/>
+        <g class="ax" id="ax-x"></g>
+      </svg>
+    </section>
+  </div>
+  <div class="row3">
+    <section class="panel card in" style="--d:180ms" aria-labelledby="b-h">
+      <h2 id="b-h">Battery <span>13.5 kWh</span></h2>
+      <div class="ring"><svg viewBox="0 0 76 76" aria-hidden="true"><circle class="track" cx="38" cy="38" r="32"/><circle class="val" cx="38" cy="38" r="32"/></svg><div><b>62%</b><span>Full by 15:10, carries the house until 06:00</span></div></div>
+    </section>
+    <section class="panel card in" style="--d:240ms" aria-labelledby="h-h">
+      <h2 id="h-h">House, 1.1 kW <span>4 of 9 on</span></h2>
+      <ul class="list"><li class="on"><i></i>Heat pump<b>0.6</b></li><li class="on"><i></i>Fridge<b>0.1</b></li><li class="on"><i></i>Workshop<b>0.3</b></li><li class="on"><i></i>Everything else<b>0.1</b></li></ul>
+    </section>
+    <section class="panel card export in" style="--d:300ms" aria-labelledby="e-h">
+      <h2 id="e-h">Exported today <span>at 0.11 per kWh</span></h2>
+      <div class="num" id="exp">9.4 kWh</div>
+      <p id="exp-p">About 1.03 earned. Export pauses when the battery is below 20%.</p>
+      <button class="btn" type="button" id="pause" aria-pressed="false">Pause export</button>
+    </section>
+  </div>
+</main>
+<script>
+  const DATA={
+    today:{pts:[0,.2,.9,1.9,2.9,3.7,4.3,4.6,4.4,3.8,3.0,2.1,1.1,.3,0],labels:['06','08','10','12','14','16','18','20'],now:9,big:'3.8',sub:'14 panels on the south roof. Peak today was 4.6 kW at 12:50.',ysub:'Today, 06:00 to 20:00 · kW',y:['5','2.5','0'],max:5},
+    week:{pts:[22,26,14,9,24,27,25.6],labels:['Wed','Thu','Fri','Sat','Sun','Mon','Tue'],now:6,big:'25.6',sub:'kWh so far today. The week is 147.6 kWh, 18 ahead of last week.',ysub:'This week, kWh a day',y:['30','15','0'],max:30}
+  };
+  const W=760,H=130,TOP=10;
+  const area=document.getElementById('area'),line=document.getElementById('line'),dot=document.getElementById('dot'),axx=document.getElementById('ax-x'),axy=document.getElementById('ax-y');
+  function draw(k){
+    const d=DATA[k],n=d.pts.length;
+    const xy=d.pts.map((v,i)=>[i*(W/(n-1)),TOP+H-(v/d.max)*H]);
+    const path=xy.map((p,i)=>(i?'L':'M')+p[0].toFixed(1)+' '+p[1].toFixed(1)).join(' ');
+    line.setAttribute('d',path);area.setAttribute('d',path+' L'+W+' '+(TOP+H)+' L0 '+(TOP+H)+'Z');
+    dot.setAttribute('cx',xy[d.now][0]);dot.setAttribute('cy',xy[d.now][1]);
+    axx.innerHTML=d.labels.map((l,i)=>'<text x="'+(i*(W/(d.labels.length-1))).toFixed(0)+'" y="160" text-anchor="'+(i===0?'start':i===d.labels.length-1?'end':'middle')+'">'+l+'</text>').join('');
+    axy.innerHTML='<text x="0" y="8">'+d.y[0]+'</text><text x="0" y="68">'+d.y[1]+'</text><text x="0" y="128">'+d.y[2]+'</text>';
+    document.getElementById('big').textContent=d.big;document.getElementById('sub').textContent=d.sub;document.getElementById('ch-sub').textContent=d.ysub;
+    document.querySelector('.big small').textContent=k==='today'?'kW':'kWh';
+  }
+  draw('today');
+  document.querySelectorAll('.seg button').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.seg button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));draw(b.dataset.r)}));
+  const pause=document.getElementById('pause');
+  pause.addEventListener('click',()=>{const on=pause.getAttribute('aria-pressed')!=='true';pause.setAttribute('aria-pressed',String(on));pause.textContent=on?'Resume export':'Pause export';document.getElementById('exp-p').textContent=on?'Export paused. The surplus goes to the battery, then stops.':'About 1.03 earned. Export pauses when the battery is below 20%.'});
+</script>
+</body>
+</html>

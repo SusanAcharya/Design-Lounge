@@ -42,7 +42,8 @@
   "calendar-week-planner",
   "onboarding-workspace-setup",
   "crypto-exchange-trade",
-  "card-terminal-log"
+  "card-terminal-log",
+  "dashboard-glass-home"
  ],
  "directions": [
   {
@@ -103,6 +104,16 @@
    "pairing": "terminal-native",
    "family": "sharp",
    "hero": "card-terminal-log",
+   "effect": null
+  },
+  {
+   "id": "skylight-desk",
+   "name": "Skylight desk",
+   "mood": "Frosted panels over one pale sky, a home you glance at, the number first",
+   "theme": "skylight",
+   "pairing": "geometric-modern",
+   "family": "glass",
+   "hero": "dashboard-glass-home",
    "effect": null
   }
  ]

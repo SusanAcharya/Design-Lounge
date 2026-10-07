@@ -199,6 +199,7 @@ const DIRECTIONS: Record<string, Direction[]> = {
     ['civic', 'Civic', 'An admin that lasts, cool gray, the records', 'fog-city', 'red-hat', 'quiet', 'dense-data-table', null],
     ['paper-office', 'Paper office', 'A quiet office, warm paper, the people and their roles', 'paper-ink', 'academic', 'editorial', 'people-role-list', null],
     ['signal-ops', 'Signal ops', 'A terminal, phosphor on soot, the log is the screen', 'signal-green', 'terminal-native', 'sharp', 'card-terminal-log', null],
+    ['skylight-desk', 'Skylight desk', 'Frosted panels over one pale sky, a home you glance at, the number first', 'skylight', 'geometric-modern', 'glass', 'dashboard-glass-home', null],
   ]),
   'web-app': d([
     ['cobalt-app', 'Cobalt app', 'A calm tool people keep open, a sidebar and the work', 'fog-city', 'friendly-saas', 'quiet', 'sidebar-workspace-switcher', null],

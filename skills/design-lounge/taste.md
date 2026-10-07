@@ -29,7 +29,7 @@ People name a style in many words. Find their word here, then route. The Route c
 | --- | --- | --- |
 | neo-brutalism, neubrutalism, neo-brutalist, "brutalist" with bright colours, offset or hard shadows | `bold` · `sign-shop` / `sign-shop-night` · `brutal-grotesk` · `neo-brutalist-style`, `hero-brutal-stack`, `pricing-brutal-tiers`, `form-brutal-signup`, `card-grid-brutal`. Directions: `sticker-launch` (landing), `paste-up-zine` (editorial), `sticker-wall` (portfolio). | Not *Industrial brutalist*. The family's shadow and ink border are the style; Named aesthetic lifts the rest. |
 | brutalist, brutalism, raw, Swiss brutal (black and white, no colour) | *Industrial brutalist*, below | Ask once only if the prompt does not say which brutalism. |
-| glassmorphism, glass, frosted, liquid glass | `glass` · `observatory` / `alpine-night` / `cockpit-day` · `geometric-modern` or `wide-tech` · `ios-glass-tab-bar`, `spotlight-command-bar`, `widget-weather-glance`, `card-glass-credit`, `navbar-floating-pill-shrink` | Blur on surfaces is allowed under Named aesthetic, measured for contrast on the blurred ground. |
+| glassmorphism, glass, frosted, liquid glass | `glass` · `skylight` / `skylight-night` / `observatory` / `alpine-night` / `cockpit-day` · `geometric-modern` or `wide-tech` · `dashboard-glass-home`, `ios-glass-tab-bar`, `spotlight-command-bar`, `widget-weather-glance`, `card-glass-credit`, `navbar-floating-pill-shrink`. A dashboard takes direction `skylight-desk`. | *Glass*, below, is the sanctioned look: one scene layer, frosted panels, a solid fallback, contrast measured on the blur. |
 | claymorphism, clay UI, puffy, 3D soft cards | `soft` · `playroom` / `bedtime` · `candy-clay` · `clay-soft-style`, `tactile-chip-tabs-stretch`, `widget-device-battery`, `phone-lesson-quiz` | **A clay, pottery, or ceramics shop or studio is a subject, not this style.** It goes to recipe `commerce`, direction `clay-shop` (Kiln). |
 | neumorphism, neomorphism, soft UI, numorphism | `soft` · `glacier` / `fog-city` · `geometric-modern` · `button-inset-soft` | Every control keeps 3:1 non-text contrast against its ground. |
 | cybercore, cyber, HUD, sci-fi interface | `sharp` · `hud-teal` · `hud` · `cyber-hud-style`, `hud-boot-gate`, `game-hud`, `glitch-text` | |
@@ -80,6 +80,18 @@ A blueprint or a declassified file. Pick one of the two modes and never mix them
 - Texture: halftone or dither on images, scanlines on the dark mode only, one fixed noise layer.
 - Use real tags for data: `<data>`, `<samp>`, `<kbd>`, `<output>`, `<dl>`.
 - Pieces: `hero-swiss-grid-wordmark`, `swiss-poster-style`, `swiss-grid-pricing`, `terminal-ui-style`, `card-terminal-log`, `background-halftone-pop`.
+
+### Glass
+
+Glassmorphism, done so it still reads. The style is frosted surfaces over **one** image or scene layer, never floating blobs. Write `Look: glass` on the sheet, and `Named aesthetic: glassmorphism · scope page` when they named it.
+
+- Themes: `skylight` (light) and `skylight-night`, or `observatory`, `alpine-night`, `cockpit-day`. Family `glass`. Pairings `geometric-modern` or `wide-tech`.
+- One scene layer, fixed, behind everything: a drawn sky, a gradient of the theme's own hues, a photo they gave you. Everything else is a frosted panel: `--surface` at 60 to 75% opacity, `backdrop-filter: blur(16px to 24px)`, a 1px line at 60 to 80% white (light) or 20% white (dark), the family radius.
+- No blobs. No second gradient. No glass panel on top of another glass panel. Panels sit on the scene, not on each other.
+- A solid fallback: `@supports not (backdrop-filter: blur(1px))` sets the panel to `--surface` at 92%. Test it once with the filter off.
+- Contrast is measured on the blurred background, not on `--surface`: blend the panel colour with the darkest part of the scene under it, then check 4.5:1 for text and 3:1 for lines and icons. If a muted ink fails, darken the ink, not the scene.
+- Blur only on panels that stay put (fixed or sticky bars, cards in a grid). Never on an element that animates its position.
+- Pieces: `dashboard-glass-home`, `ios-glass-tab-bar`, `spotlight-command-bar`, `widget-weather-glance`, `card-glass-credit`, `navbar-floating-pill-shrink`.
 
 ### High-end agency
 
