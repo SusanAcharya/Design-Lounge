@@ -97,7 +97,7 @@ If you remember nothing, or the answer is yes, it fails. Change the idea or the 
 
 ## Show mode
 
-Use this only when their words ask for spectacle: an ambition word ("go wild", "Awwwards", "site of the day", "unforgettable", "award-level", "make it an experience"), or a verb that makes the page itself the experience ("let people play with it", "you scroll and you travel", "type on it"). With neither, it is Kit mode. "A site" never triggers Show mode, and neither does a world you could draw (space, a city at night, the sea, a mountain, an instrument, a machine) or the kind of job (a show, a launch, a label, an event) on its own. Those fill the World line and pick the direction inside Kit. Write the `Show:` line on the sheet.
+Show mode is on when the brief says `Mode: Show`. Reading the request in [brief.md](brief.md) is the only place that decides it, from their words. Write the `Show:` line on the sheet.
 
 When it fires, read [show.md](show.md) before you build: the centrepiece, Free colour and type, the rendering bar, and what Show mode relaxes. In Kit mode, skip it.
 

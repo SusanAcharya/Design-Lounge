@@ -9,7 +9,7 @@ on:
     branches: [main]
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
   group: gates-${{ github.ref }}
@@ -22,12 +22,14 @@ jobs:
     # The ratchet is measured here, on x86 Linux in this image. A run on an ARM Mac renders some backgrounds
     # differently, so to match CI locally use the x86 image (slow under emulation; fine for a few ids):
     #   docker run --rm --platform linux/amd64 --ipc=host -v "$PWD":/work -w /work mcr.microsoft.com/playwright:v1.63.0-noble node scripts/gates/demos.mjs --ids a,b
-    # A push whose message contains [write-ratchet] measures the ratchet here and commits it back instead of gating.
+    # The ratchet is written only by the manual Ratchet workflow (ratchet.yml). This job never writes it.
     container:
       image: mcr.microsoft.com/playwright:v1.63.0-noble
       options: --ipc=host
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          fetch-depth: 0  # the ratchet guard compares with the commit before this push
 
       - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4.4.0
         with:
@@ -41,22 +43,11 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm build
 
+      # git in the container would refuse the checkout as another user's, and the ratchet guard needs git.
+      - run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
       - name: Gate
-        if: ${{ !contains(github.event.head_commit.message, '[write-ratchet]') }}
+        env:
+          # The ratchet may not go up since this base without [raise-ceiling: <reason>] in a commit message.
+          RATCHET_BASE: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.sha || github.event.before }}
         run: pnpm gate
-
-      - name: Write the ratchet on this platform
-        if: ${{ github.event_name == 'push' && contains(github.event.head_commit.message, '[write-ratchet]') }}
-        run: node scripts/gates/demos.mjs --write-ratchet
-
-      - name: Commit the ratchet
-        if: ${{ github.event_name == 'push' && contains(github.event.head_commit.message, '[write-ratchet]') }}
-        run: |
-          git config --global --add safe.directory "$GITHUB_WORKSPACE"
-          git config user.name "github-actions[bot]"
-          git config user.email "41898341+github-actions[bot]@users.noreply.github.com"
-          git add scripts/gates/ratchet.json
-          if git diff --cached --quiet; then echo "Ratchet unchanged."; exit 0; fi
-          git commit -m "Measure the gate ratchet on CI's own platform."
-          git pull --rebase origin main
-          git push origin HEAD:main

@@ -1,0 +1,58 @@
+# Measures the demo gate's ratchet on CI's own platform (x86 Linux, the pinned Playwright image) and commits it.
+# Manual only. The ratchet only goes down: the write fails if any ceiling or list would rise, or a new id would be
+# added, unless the latest commit message on main carries [raise-ceiling: <reason>]. That reason is copied into
+# the bot's commit message. This is the only workflow that may write to the repository for the ratchet.
+name: Ratchet
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ratchet
+  cancel-in-progress: false
+
+jobs:
+  write:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    container:
+      image: mcr.microsoft.com/playwright:v1.63.0-noble
+      options: --ipc=host
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+
+      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4.4.0
+        with:
+          version: 10.16.0
+
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+
+      - name: Write the ratchet
+        id: write
+        run: node scripts/gates/demos.mjs --write-ratchet
+
+      - name: Commit the ratchet
+        env:
+          RAISE_REASON: ${{ steps.write.outputs.raise_reason }}
+        run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898341+github-actions[bot]@users.noreply.github.com"
+          git add scripts/gates/ratchet.json
+          if git diff --cached --quiet; then echo "Ratchet unchanged."; exit 0; fi
+          if [ -n "$RAISE_REASON" ]; then
+            git commit -m "Measure the gate ratchet on CI's platform." -m "[raise-ceiling: $RAISE_REASON]"
+          else
+            git commit -m "Measure the gate ratchet on CI's platform. Nothing went up."
+          fi
+          git pull --rebase origin main
+          git push origin HEAD:main

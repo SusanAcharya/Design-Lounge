@@ -13,6 +13,7 @@ import http from 'node:http';
 import path from 'node:path';
 import { execSync } from 'node:child_process';
 import { chromium } from 'playwright';
+import { raises, raiseReason, messagesSince, headMessage, ratchetAt } from './ratchet-guard.mjs';
 
 const root = path.resolve(path.dirname(new URL(import.meta.url).pathname), '../..');
 const at = (...p) => path.join(root, ...p);
@@ -49,6 +50,27 @@ else if (value('--changed')) ids = changedIds(value('--changed'));
 else if (value('--ids')) ids = value('--ids').split(',').map((s) => s.trim()).filter(Boolean);
 else { console.error('usage: demos.mjs --all | --changed <ref> | --ids a,b [--json file] [--write-ratchet]'); process.exit(2); }
 if (!fs.existsSync(path.join(dist, 'demo'))) { console.error('dist/demo is missing. Run pnpm build first.'); process.exit(2); }
+
+/* ---------- the ratchet only goes down ---------- */
+// The ratchet in the working tree is compared with the one at the base: the commit before this push in CI
+// (RATCHET_BASE, set from github.event.before), otherwise HEAD^. A raise needs [raise-ceiling: <reason>] in a commit
+// message between the base and HEAD. This runs before any page opens, so a hand-edited ratchet fails at once.
+if (!flag('--write-ratchet') && fs.existsSync(RATCHET)) {
+  const base = process.env.RATCHET_BASE && !/^0+$/.test(process.env.RATCHET_BASE) ? process.env.RATCHET_BASE : 'HEAD^';
+  const prev = ratchetAt(root, base);
+  if (prev) {
+    const found = raises(prev, JSON.parse(fs.readFileSync(RATCHET, 'utf8')));
+    const reason = raiseReason(messagesSince(root, base));
+    if (found.length && !reason) {
+      console.error(`Gate failed: the ratchet went up since ${base}, and no commit says [raise-ceiling: <reason>]:\n` + found.map((f) => '  ✗ ' + f).join('\n'));
+      process.exit(1);
+    }
+    if (found.length) console.log(`The ratchet went up since ${base}, allowed by [raise-ceiling: ${reason}]`);
+  } else if (process.env.CI) {
+    console.error(`Gate failed: could not read the ratchet at ${base} to compare with (is the checkout shallow, or is git refusing it?).`);
+    process.exit(1);
+  } else console.log(`(no ratchet at ${base} to compare with)`);
+}
 
 /* ---------- static server ---------- */
 const TYPES = { '.html': 'text/html; charset=utf-8', '.css': 'text/css', '.js': 'text/javascript', '.mjs': 'text/javascript', '.json': 'application/json', '.svg': 'image/svg+xml', '.png': 'image/png', '.jpg': 'image/jpeg', '.webp': 'image/webp', '.woff2': 'font/woff2', '.woff': 'font/woff', '.ico': 'image/x-icon', '.txt': 'text/plain', '.xml': 'application/xml' };
@@ -346,9 +368,21 @@ if (flag('--write-ratchet')) {
     fresh.ceiling[k] = fresh[k].length;
     for (const id of failing[k]) if ((NUMBERS[id] ?? Infinity) > LEGACY_MAX) problems.push(`${k}: ${id} (n ${NUMBERS[id]}) fails and is too new for the ratchet`);
   }
-  fs.writeFileSync(RATCHET, JSON.stringify(fresh, null, 2) + '\n');
-  ratchet = fresh;
-  console.log(`wrote ${path.relative(root, RATCHET)}: ${CHECKS.map((k) => `${k} ${fresh[k].length}`).join(' · ')}`);
+  // The new lists may only shrink against the committed ratchet, unless HEAD's message says [raise-ceiling: <reason>].
+  const up = raises(ratchet, fresh);
+  const reason = raiseReason(headMessage(root));
+  if (up.length && !reason) {
+    problems.push(...up.map((u) => `would raise the ratchet (${u}); add [raise-ceiling: <reason>] to the commit message to allow it`));
+    console.error('Not written: the measured ratchet is higher than the committed one.');
+  } else {
+    fs.writeFileSync(RATCHET, JSON.stringify(fresh, null, 2) + '\n');
+    if (up.length) {
+      console.log(`raise allowed: ${reason}\n` + up.map((u) => '  ' + u).join('\n'));
+      if (process.env.GITHUB_OUTPUT) fs.appendFileSync(process.env.GITHUB_OUTPUT, `raise_reason=${reason.replace(/\n/g, ' ')}\n`);
+    }
+    ratchet = fresh;
+    console.log(`wrote ${path.relative(root, RATCHET)}: ${CHECKS.map((k) => `${k} ${fresh[k].length}`).join(' · ')}`);
+  }
 } else {
   const checked = new Set(ids);
   for (const k of CHECKS) {
