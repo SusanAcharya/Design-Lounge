@@ -19,6 +19,11 @@ jobs:
   gate:
     runs-on: ubuntu-latest
     timeout-minutes: 45
+    # The ratchet is measured in this image. Run it locally the same way, so pixels match CI:
+    #   docker run --rm --ipc=host -v "$PWD":/work -w /work mcr.microsoft.com/playwright:v1.63.0-noble node scripts/gates/demos.mjs --all
+    container:
+      image: mcr.microsoft.com/playwright:v1.63.0-noble
+      options: --ipc=host
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
 
@@ -32,6 +37,5 @@ jobs:
           cache: pnpm
 
       - run: pnpm install --frozen-lockfile
-      - run: pnpm exec playwright install --with-deps chromium
       - run: pnpm build
       - run: pnpm gate
