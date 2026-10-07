@@ -28,7 +28,8 @@
   "card-magazine-cover",
   "card-journal-page",
   "hero-asymmetric-type-lockup",
-  "hero-bauhaus-composition"
+  "hero-bauhaus-composition",
+  "hero-brutal-stack"
  ],
  "directions": [
   {
@@ -114,6 +115,18 @@
    "effect": "scroll-word-highlight",
    "work": "card-journal-page",
    "footer": "footer-engraved-caravan-strip"
+  },
+  {
+   "id": "paste-up-zine",
+   "name": "Paste-up zine",
+   "mood": "A zine cut and pasted, ink borders, yellow and pink stickers, issues as a wall of cards",
+   "theme": "sign-shop",
+   "pairing": "brutal-grotesk",
+   "family": "bold",
+   "hero": "hero-brutal-stack",
+   "effect": "text-mask-scroll-reveal",
+   "work": "paper-article-reader",
+   "footer": "footer-enterprise-sitemap"
   }
  ]
 }

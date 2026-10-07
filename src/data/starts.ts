@@ -60,6 +60,7 @@ const DIRECTIONS: Record<string, Direction[]> = {
     ['darkroom-sheet', 'Darkroom sheet', 'A photographer who shoots many frames, a contact sheet', 'press-room', 'newsroom', 'editorial', 'gallery-contact-sheet', 'grow-grid'],
     ['riso-wall', 'Riso wall', 'Illustrator, two inks, printed and loud', 'festival', 'riso-zine', 'sharp', 'masonry-gallery-captions', 'kinetic-type-marquee'],
     ['maker-wall', 'Maker wall', 'Objects and craft, a workshop wall, things you can turn', 'oxide', 'industrial-label', 'industrial', 'gallery-wall-frames', 'object-3d-turntable'],
+    ['sticker-wall', 'Sticker wall', 'A designer with opinions, cream and ink, the work as bordered cards you push into their shadows', 'sign-shop', 'brutal-grotesk', 'bold', 'card-grid-brutal', 'scroll-velocity-type'],
   ]),
   'portfolio-builder': d([
     ['kiln-workbench', 'Kiln workbench', 'Warm, human, product screens as the art', 'kiln', 'indie-maker', 'soft', 'hero-product-window-tilt', 'stacking-cards-scroll'],
@@ -125,6 +126,7 @@ const DIRECTIONS: Record<string, Direction[]> = {
     ['sunday-cover', 'Sunday cover', 'One issue, blush paper, the cover is the page', 'sakura-desk', 'literary', 'editorial', 'card-magazine-cover', 'overlap-slider'],
     ['field-journal', 'Field journal', 'Olive paper, notes from outside, a hand in the margin', 'loam', 'garden-journal', 'soft', 'card-journal-page', 'text-annotated-underlines'],
     ['quarterly', 'Quarterly', 'A strict grid, one essay, the measure is the design', 'fog-city', 'academic', 'quiet', 'magazine-editorial-grid', 'scroll-word-highlight'],
+    ['paste-up-zine', 'Paste-up zine', 'A zine cut and pasted, ink borders, yellow and pink stickers, issues as a wall of cards', 'sign-shop', 'brutal-grotesk', 'bold', 'hero-brutal-stack', 'text-mask-scroll-reveal'],
   ]),
   docs: d([
     ['cobalt-docs', 'Cobalt docs', 'A clear reader, three columns, civic gray', 'fog-city', 'developer-docs', 'quiet', 'docs-three-column', null],
@@ -188,6 +190,7 @@ const DIRECTIONS: Record<string, Direction[]> = {
     ['playable', 'Playable', 'A product you can touch on the page, bone and signal orange, it makes a sound', 'bone-signal', 'machined', 'lit', 'playable-product-hero', 'playable-product-hero'],
     ['bench-at-night', 'Bench at night', 'The same object in the dark, graphite and one lit orange, specs read like an engraving', 'graphite-signal', 'machined', 'sharp', 'object-3d-turntable', 'scroll-scrub-product-sequence'],
     ['deep-launch', 'Deep launch', 'A launch as a voyage, starlight on black, you scroll from the ground to the product', 'deep-field', 'night-show', 'lit', 'scroll-space-voyage', 'scroll-space-voyage'],
+    ['sticker-launch', 'Sticker launch', 'Neo-brutalist, cream and vinyl yellow, ink borders and hard shadows, a launch that shouts', 'sign-shop', 'brutal-grotesk', 'bold', 'hero-brutal-stack', 'kinetic-type-marquee'],
   ]),
   dashboard: d([
     ['harbour-desk', 'Harbour desk', 'Finance ops, navy and brass, the numbers first', 'harbour-ledger', 'swiss-precision', 'sharp', 'analytics-dashboard-overview', null],

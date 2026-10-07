@@ -1,0 +1,121 @@
+<!-- Design Lounge piece: pricing-brutal-tiers · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Stapler — pick a press</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f1e4;--surface:#fffaf0;--surface-2:#ece4d0;--ink:#17151a;--ink-2:#4a4650;--ink-3:#76717d;
+  --yellow:#ffd23f;--blue:#2f5bff;--blue-ink:#fffdf8;--pink:#ff5c9a;
+  --display:"Archivo Black",Impact,sans-serif;--sans:"Archivo",system-ui,sans-serif;
+  --bw:2px;--off:4px;--off-lg:8px;--r:4px;--r-card:6px;
+  --t-micro:120ms;--t-knob:160ms;--ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.5 var(--sans);-webkit-font-smoothing:antialiased;overflow:hidden}
+button{font:inherit;color:inherit}
+:focus-visible{outline:var(--bw) solid var(--blue);outline-offset:3px}
+.wrap{max-width:1180px;margin:0 auto;padding:44px 40px 0}
+.head{display:flex;align-items:flex-end;justify-content:space-between;gap:32px;margin-bottom:34px}
+h1{margin:0;font:400 56px/.95 var(--display);letter-spacing:-.02em;text-transform:uppercase}
+h1 small{display:block;font:700 13px/1 var(--sans);letter-spacing:.12em;color:var(--ink-3);margin-bottom:12px}
+.period{display:flex;align-items:center;gap:14px;font-weight:700;font-size:15px}
+.period .save{font-size:12px;letter-spacing:.08em;text-transform:uppercase;background:var(--pink);border:var(--bw) solid var(--ink);padding:6px 8px;box-shadow:3px 3px 0 var(--ink)}
+.sw{width:64px;height:32px;border:var(--bw) solid var(--ink);background:var(--surface);position:relative;cursor:pointer;padding:0;box-shadow:3px 3px 0 var(--ink);transition:background var(--t-micro) var(--ease);border-radius:var(--r)}
+.sw::after{content:"";position:absolute;top:2px;left:2px;width:24px;height:24px;background:var(--ink);border-radius:2px;transition:transform var(--t-knob) var(--ease)}
+.sw[aria-checked="true"]{background:var(--yellow)}
+.sw[aria-checked="true"]::after{transform:translateX(32px)}
+.tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;align-items:start;padding-right:8px}
+.tier{position:relative;border:var(--bw) solid var(--ink);border-radius:var(--r-card);background:var(--surface);box-shadow:var(--off) var(--off) 0 var(--ink);display:flex;flex-direction:column;margin-top:12px}
+.tier.pick{box-shadow:var(--off-lg) var(--off-lg) 0 var(--ink);margin-top:0}
+.tier .band{border-bottom:var(--bw) solid var(--ink);padding:18px 22px 16px}
+.tier.pick .band{background:var(--yellow)}
+.tier .band h2{margin:0;font:400 22px/1 var(--display);text-transform:uppercase;letter-spacing:-.01em}
+.tier .band p{margin:8px 0 0;font-weight:500;color:var(--ink-2);font-size:14px}
+.tier.pick .band p{color:var(--ink)}
+.sticker{position:absolute;top:-14px;right:18px;font:700 12px/1 var(--sans);letter-spacing:.1em;text-transform:uppercase;background:var(--pink);border:var(--bw) solid var(--ink);padding:8px 10px;box-shadow:3px 3px 0 var(--ink);transform:rotate(4deg)}
+.price{padding:22px 22px 4px;display:flex;align-items:baseline;gap:6px;min-height:84px;overflow:hidden}
+.price b{font:400 56px/1 var(--display);letter-spacing:-.03em;display:inline-block;transition:transform var(--t-knob) var(--ease),opacity var(--t-knob) var(--ease)}
+.price b.flip{transform:translateY(-10px);opacity:0}
+.price span{font-weight:700;color:var(--ink-3);font-size:14px;text-transform:uppercase;letter-spacing:.06em}
+.was{padding:0 22px;font-size:13px;font-weight:500;color:var(--ink-3);min-height:20px}
+.was s{text-decoration-thickness:2px}
+.feat{list-style:none;margin:0;padding:18px 22px 6px;display:grid;gap:12px;font-weight:500;font-size:15px}
+.feat li{display:flex;gap:12px;align-items:flex-start}
+.feat i{flex:none;width:18px;height:18px;border:var(--bw) solid var(--ink);background:var(--surface);margin-top:2px;position:relative}
+.feat i::after{content:"";position:absolute;left:3px;top:3px;width:8px;height:8px;background:var(--ink)}
+.feat li.no i::after{display:none}
+.feat li.no{color:var(--ink-3)}
+.act{padding:18px 22px 22px}
+.btn{width:100%;display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 18px;border:var(--bw) solid var(--ink);border-radius:var(--r);background:var(--surface);font-weight:700;cursor:pointer;box-shadow:var(--off) var(--off) 0 var(--ink);transition:transform var(--t-micro) var(--ease),box-shadow var(--t-micro) var(--ease)}
+.btn:hover{transform:translate(var(--off),var(--off));box-shadow:0 0 0 var(--ink)}
+.btn:active{transform:translate(var(--off),var(--off));box-shadow:0 0 0 var(--ink);background:var(--surface-2)}
+.btn.y{background:var(--yellow)}
+.btn.b{background:var(--blue);color:var(--blue-ink)}
+.foot{margin-top:26px;font-size:13px;font-weight:500;color:var(--ink-3)}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div class="head">
+    <h1><small>Pricing</small>Pick a press</h1>
+    <div class="period">
+      <span id="lab-m">Monthly</span>
+      <button class="sw" id="period" role="switch" aria-checked="false" aria-label="Bill yearly"></button>
+      <span id="lab-y">Yearly</span>
+      <span class="save">2 months free</span>
+    </div>
+  </div>
+  <div class="tiers">
+    <article class="tier">
+      <div class="band"><h2>Hobby</h2><p>One newsletter, one zine a quarter.</p></div>
+      <div class="price"><b data-m="0" data-y="0">$0</b><span>/ month</span></div>
+      <div class="was"></div>
+      <ul class="feat"><li><i></i>Up to 40 copies per issue</li><li><i></i>16 pages, black ink</li><li><i></i>Reader address book</li><li class="no"><i></i>Colour cover</li><li class="no"><i></i>Spot the typos before print</li></ul>
+      <div class="act"><button class="btn" type="button">Start for free</button></div>
+    </article>
+    <article class="tier pick">
+      <span class="sticker">Most picked</span>
+      <div class="band"><h2>Studio</h2><p>A monthly zine with a colour cover.</p></div>
+      <div class="price"><b data-m="18" data-y="15">$18</b><span>/ month</span></div>
+      <div class="was"></div>
+      <ul class="feat"><li><i></i>Up to 400 copies per issue</li><li><i></i>16 or 24 pages, colour cover</li><li><i></i>Reader address book and postage</li><li><i></i>A proof PDF two days before print</li><li class="no"><i></i>Your own paper stock</li></ul>
+      <div class="act"><button class="btn y" type="button">Print with Studio</button></div>
+    </article>
+    <article class="tier">
+      <div class="band"><h2>Press</h2><p>For a publication with a print run.</p></div>
+      <div class="price"><b data-m="64" data-y="53">$64</b><span>/ month</span></div>
+      <div class="was"></div>
+      <ul class="feat"><li><i></i>Up to 4,000 copies per issue</li><li><i></i>Any page count, full colour</li><li><i></i>Your own paper stock and inserts</li><li><i></i>A proof PDF and a printed proof</li><li><i></i>Someone to call at the press</li></ul>
+      <div class="act"><button class="btn b" type="button">Talk to the press</button></div>
+    </article>
+  </div>
+  <p class="foot">Prices in USD, postage included inside the EU. Change or cancel from the account page; the current issue still prints.</p>
+</main>
+<script>
+  const sw=document.getElementById('period');
+  const prices=[...document.querySelectorAll('.price b')];
+  sw.addEventListener('click',()=>{
+    const yearly=sw.getAttribute('aria-checked')!=='true';
+    sw.setAttribute('aria-checked',String(yearly));
+    prices.forEach(b=>{
+      b.classList.add('flip');
+      setTimeout(()=>{
+        const v=yearly?b.dataset.y:b.dataset.m;
+        b.textContent='$'+v;
+        const was=b.closest('.tier').querySelector('.was');
+        was.innerHTML=yearly&&b.dataset.m!=='0'?'<s>$'+b.dataset.m+'</s> billed $'+(Number(b.dataset.y)*12)+' a year':'';
+        b.classList.remove('flip');
+      },160);
+    });
+  });
+</script>
+</body>
+</html>

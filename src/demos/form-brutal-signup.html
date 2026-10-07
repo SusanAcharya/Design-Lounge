@@ -1,0 +1,110 @@
+<!-- Design Lounge piece: form-brutal-signup · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Stapler — get issue zero</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f1e4;--surface:#fffaf0;--surface-2:#ece4d0;--ink:#17151a;--ink-2:#4a4650;--ink-3:#76717d;
+  --yellow:#ffd23f;--blue:#2f5bff;--blue-ink:#fffdf8;--pink:#ff5c9a;--danger:#d8322a;--danger-soft:#fbe3e0;
+  --display:"Archivo Black",Impact,sans-serif;--sans:"Archivo",system-ui,sans-serif;
+  --bw:2px;--off:4px;--off-lg:8px;--r:4px;--r-card:6px;
+  --t-micro:120ms;--t-swap:240ms;--ease:cubic-bezier(.2,.7,.2,1);--expo:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.5 var(--sans);-webkit-font-smoothing:antialiased;overflow:hidden}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:var(--bw) solid var(--blue);outline-offset:3px}
+.wrap{max-width:1120px;margin:0 auto;padding:64px 40px 0;display:grid;grid-template-columns:minmax(0,1fr) 520px;gap:72px;align-items:start}
+.kicker{display:inline-block;font:700 12px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;background:var(--yellow);border:var(--bw) solid var(--ink);padding:8px 10px;box-shadow:3px 3px 0 var(--ink)}
+h1{margin:24px 0 18px;font:400 60px/.95 var(--display);letter-spacing:-.02em;text-transform:uppercase}
+.lede{font-size:18px;font-weight:500;color:var(--ink-2);max-width:40ch;margin:0 0 30px}
+.claims{list-style:none;margin:0;padding:0;display:grid;gap:14px;max-width:420px}
+.claims li{display:flex;gap:14px;align-items:flex-start;font-weight:500}
+.claims b{flex:none;width:44px;height:44px;border:var(--bw) solid var(--ink);background:var(--surface);box-shadow:3px 3px 0 var(--ink);display:grid;place-items:center;font:400 18px/1 var(--display)}
+.claims li:nth-child(2) b{background:var(--pink)}.claims li:nth-child(3) b{background:var(--blue);color:var(--blue-ink)}
+.card{position:relative;border:var(--bw) solid var(--ink);border-radius:var(--r-card);background:var(--surface);box-shadow:var(--off-lg) var(--off-lg) 0 var(--ink);padding:28px;min-height:520px}
+.card h2{margin:0 0 20px;font:400 26px/1 var(--display);text-transform:uppercase;letter-spacing:-.01em}
+.fld{margin-bottom:16px}
+.fld label{display:block;font:700 12px/1 var(--sans);letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+.fld input,.fld select{width:100%;height:48px;border:var(--bw) solid var(--ink);border-radius:var(--r);background:var(--surface);padding:0 14px;outline:none;transition:box-shadow var(--t-micro) var(--ease),transform var(--t-micro) var(--ease);appearance:none}
+.sel{position:relative}
+.sel::after{content:"";position:absolute;right:18px;top:17px;width:9px;height:9px;border-right:var(--bw) solid var(--ink);border-bottom:var(--bw) solid var(--ink);transform:rotate(45deg);pointer-events:none}
+.fld input::placeholder{color:var(--ink-3)}
+.fld input:focus-visible,.fld select:focus-visible{outline:none;box-shadow:var(--off) var(--off) 0 var(--blue);transform:translate(calc(var(--off) * -1),calc(var(--off) * -1))}
+.fld.bad input{border-color:var(--danger);box-shadow:var(--off) var(--off) 0 var(--danger)}
+.err{display:none;margin-top:8px;font-size:13px;font-weight:700;color:var(--danger);background:var(--danger-soft);border:var(--bw) solid var(--danger);padding:8px 10px}
+.fld.bad .err{display:block}
+.chk{display:flex;gap:12px;align-items:flex-start;margin:6px 0 22px;font-weight:500;font-size:15px;cursor:pointer}
+.chk input{appearance:none;flex:none;width:22px;height:22px;border:var(--bw) solid var(--ink);background:var(--surface);margin:1px 0 0;position:relative;cursor:pointer;transition:background var(--t-micro) var(--ease)}
+.chk input:checked{background:var(--yellow)}
+.chk input:checked::after{content:"";position:absolute;inset:4px;background:var(--ink)}
+.btn{width:100%;display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:0 18px;border:var(--bw) solid var(--ink);border-radius:var(--r);background:var(--yellow);font-weight:700;font-size:17px;cursor:pointer;box-shadow:var(--off) var(--off) 0 var(--ink);transition:transform var(--t-micro) var(--ease),box-shadow var(--t-micro) var(--ease)}
+.btn:hover{transform:translate(var(--off),var(--off));box-shadow:0 0 0 var(--ink)}
+.btn:active{transform:translate(var(--off),var(--off));box-shadow:0 0 0 var(--ink);background:var(--surface-2)}
+.btn.ghost{background:var(--surface);width:auto;min-height:44px;font-size:15px}
+.fine{margin:16px 0 0;font-size:13px;font-weight:500;color:var(--ink-3)}
+/* done state */
+.done{display:none;position:absolute;inset:0;padding:28px;flex-direction:column;align-items:flex-start;justify-content:center;gap:18px}
+.card.is-done form{visibility:hidden}
+.card.is-done .done{display:flex}
+.stamp{font:400 54px/1 var(--display);text-transform:uppercase;letter-spacing:-.02em;color:var(--pink);border:4px solid var(--pink);padding:10px 16px;transform:rotate(-6deg);transform-origin:left bottom;animation:stamp var(--t-swap) var(--expo) both}
+@keyframes stamp{from{transform:rotate(-6deg) scale(1.6);opacity:0}to{transform:rotate(-6deg) scale(1);opacity:1}}
+.done p{margin:8px 0 0;font-size:17px;font-weight:500;max-width:36ch}
+.done p b{font-weight:700;border-bottom:var(--bw) solid var(--ink)}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important;animation-duration:1ms!important}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div>
+    <span class="kicker">Issue zero</span>
+    <h1>Get the sample issue</h1>
+    <p class="lede">Sixteen pages of someone else's newsletter, stapled, so you can hold what yours would feel like.</p>
+    <ul class="claims">
+      <li><b>16</b><span>Pages, folded from four sheets of 90gsm paper. The cover is 170gsm.</span></li>
+      <li><b>4d</b><span>From the form to your letterbox inside the EU. Ten days elsewhere.</span></li>
+      <li><b>0</b><span>Cost. The sample is on us. The first real issue is from $18.</span></li>
+    </ul>
+  </div>
+  <div class="card" id="card">
+    <form id="form" novalidate>
+      <h2>Where should it go?</h2>
+      <div class="fld"><label for="name">Your name</label><input id="name" type="text" autocomplete="name" placeholder="Mira Haldane"></div>
+      <div class="fld" id="f-email"><label for="email">Email</label><input id="email" type="email" autocomplete="email" placeholder="mira@haldane.press" aria-describedby="e-email" required><div class="err" id="e-email" role="alert">Write an email with an @ in it. We need it for the tracking line.</div></div>
+      <div class="fld sel"><label for="kind">What do you write?</label><select id="kind"><option>A personal newsletter</option><option selected>A newsletter for a company</option><option>A magazine with more than one writer</option><option>Not sure yet</option></select></div>
+      <label class="chk"><input id="paper" type="checkbox" checked><span>Also post the paper sample. Otherwise we send the PDF only.</span></label>
+      <button class="btn" type="submit">Send me issue zero<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square"><path d="M5 12h13M13 6l6 6-6 6"/></svg></button>
+      <p class="fine">One email with the tracking line. No list, no digest.</p>
+    </form>
+    <div class="done" aria-live="polite">
+      <span class="stamp">You're in</span>
+      <p id="done-msg">Issue zero goes to <b>mira@haldane.press</b> tomorrow morning. The paper copy follows in about four days.</p>
+      <button class="btn ghost" type="button" id="again">Send another</button>
+    </div>
+  </div>
+</main>
+<script>
+  const form=document.getElementById('form'),card=document.getElementById('card'),email=document.getElementById('email'),fe=document.getElementById('f-email');
+  form.addEventListener('submit',e=>{
+    e.preventDefault();
+    const ok=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim());
+    fe.classList.toggle('bad',!ok);
+    email.setAttribute('aria-invalid',String(!ok));
+    if(!ok){email.focus();return}
+    const paper=document.getElementById('paper').checked;
+    document.getElementById('done-msg').innerHTML='Issue zero goes to <b>'+email.value.trim().replace(/[<>&]/g,'')+'</b> tomorrow morning.'+(paper?' The paper copy follows in about four days.':' PDF only, as you asked.');
+    card.classList.add('is-done');
+    document.getElementById('again').focus();
+  });
+  email.addEventListener('input',()=>{if(fe.classList.contains('bad')&&/@/.test(email.value)){fe.classList.remove('bad');email.setAttribute('aria-invalid','false')}});
+  document.getElementById('again').addEventListener('click',()=>{card.classList.remove('is-done');form.reset();document.getElementById('name').focus()});
+</script>
+</body>
+</html>

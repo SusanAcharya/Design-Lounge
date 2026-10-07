@@ -412,6 +412,12 @@ export const THEMES: Theme[] = [
   { id: 'temple-dawn', name: 'Temple Dawn', mood: 'The same city at the first bell. Lime-washed walls, indigo ink, marigold and sindoor.', bestFor: ['Labels', 'Venues', 'Late shows'], tags: ['light', 'warm', 'editorial'],
     tokens: paint({ bg: '#f3ece0', surface: '#fbf6ec', surface2: '#e8dfcf', ink: '#1a1730', ink2: '#47435e', ink3: '#6c6880', line: '#d9cfbd', primary: '#b8560f', secondary: '#b8321f', tertiary: '#2b3480', success: '#2f7a52', warning: '#a86410', danger: '#b8321f', info: '#2b3480' }),
     display: 'Instrument Serif', text: 'JetBrains Mono', radius: '999px', shadow: '0 24px 60px -30px rgba(26,23,48,.25)', specimen: 'After the first bell' },
+  { id: 'sign-shop', name: 'Sign Shop', mood: 'A sign-cutter\'s bench. Vinyl yellow, sign blue, one pink stripe on cream, ink borders on everything.', bestFor: ['Launches', 'Zines', 'Tools with a voice'], tags: ['brutalist', 'playful', 'loud'],
+    tokens: paint({ bg: '#f6f1e4', surface: '#fffaf0', surface2: '#ece4d0', ink: '#17151a', ink2: '#4a4650', ink3: '#76717d', line: '#d8cfba', primary: '#ffd23f', secondary: '#2f5bff', tertiary: '#ff5c9a', success: '#1f8a4c', warning: '#e08a00', danger: '#d8322a', info: '#2f5bff' }),
+    display: 'Archivo Black', text: 'Archivo', radius: '4px', shadow: '4px 4px 0 #17151a', specimen: 'Cut, stuck, out by Friday' },
+  { id: 'sign-shop-night', name: 'Sign Shop Night', mood: 'The bench with the shutter down. Cream borders on ink, the same vinyl yellow, blue and pink lit from behind.', bestFor: ['Launches', 'Zines', 'Tools with a voice'], tags: ['brutalist', 'playful', 'dark'],
+    tokens: paint({ bg: '#17151a', surface: '#211e26', surface2: '#2c2833', ink: '#f6f1e4', ink2: '#c9c2b4', ink3: '#8f8999', line: '#3b3644', primary: '#ffd23f', secondary: '#6b8aff', tertiary: '#ff7ab0', success: '#5fc98a', warning: '#f0a93a', danger: '#ff6b5a', info: '#6b8aff' }),
+    display: 'Archivo Black', text: 'Archivo', radius: '4px', shadow: '4px 4px 0 #f6f1e4', specimen: 'The shutter is down, the sign is on' },
   { id: 'bone-signal', name: 'Bone Signal', mood: 'A machined object on a bench. Bone, charcoal, cream caps, one signal orange.', bestFor: ['Hardware', 'Instruments', 'Launches'], tags: ['light', 'industrial', 'warm'],
     tokens: paint({ bg: '#ece8df', surface: '#f6f3ec', surface2: '#e3ded2', ink: '#141414', ink2: '#4c4841', ink3: '#6a655b', line: '#ccc5b6', primary: '#ff4f1a', secondary: '#2a2925', tertiary: '#3b6e8f', success: '#2f7a52', warning: '#b06a08', danger: '#c4301a', info: '#3b6e8f' }),
     display: 'Archivo', text: 'IBM Plex Mono', radius: '10px', shadow: '0 2px 0 #c7c0b1, 0 14px 30px -14px rgba(20,20,20,.35)', specimen: 'Tap to begin' },
@@ -559,6 +565,8 @@ export const THEME_PAIRS: Record<string, { mode: 'light' | 'dark'; pair: string 
   'temple-dawn': { mode: 'light', pair: 'sodium-night' },
   'bone-signal': { mode: 'light', pair: 'graphite-signal' },
   'graphite-signal': { mode: 'dark', pair: 'bone-signal' },
+  'sign-shop': { mode: 'light', pair: 'sign-shop-night' },
+  'sign-shop-night': { mode: 'dark', pair: 'sign-shop' },
 };
 
 export function themeById(id: string) {
@@ -615,6 +623,7 @@ const FAMILY_SPEC: Record<string, string> = {
   'Patrick Hand': 'Patrick+Hand',
   'Silkscreen': 'Silkscreen:wght@400;700',
   'Space Mono': 'Space+Mono:wght@400;700',
+  'Archivo Black': 'Archivo+Black',
 };
 
 export function themeFontHref(t: Theme) {

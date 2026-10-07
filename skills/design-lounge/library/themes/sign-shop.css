@@ -1,0 +1,67 @@
+/* Sign Shop · light · pair: sign-shop-night
+   A sign-cutter's bench. Vinyl yellow, sign blue, one pink stripe on cream, ink borders on everything.
+   Best for: Launches, Zines, Tools with a voice
+   Tags: brutalist, playful, loud */
+/* Colour only. Fonts come from the locked pairing file. Radius and shadow come from the locked family. */
+/* Sign Shop · full palette · Designed using Design Lounge (https://www.designlounge.live)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #ffd23f;
+  --primary-ink: #141210;
+  --primary-soft: #f7edcd;
+  --secondary: #2f5bff;
+  --secondary-ink: #fffdf8;
+  --secondary-soft: #dadce8;
+  --tertiary: #ff5c9a;
+  --tertiary-ink: #141210;
+  --tertiary-soft: #f7dcda;
+
+  /* Surface */
+  --bg: #f6f1e4;
+  --surface: #fffaf0;
+  --surface-2: #ece4d0;
+  --surface-3: #dfd8c5;
+  --ink: #17151a;
+  --ink-2: #4a4650;
+  --ink-3: #68636e;
+  --line: #d8cfba;
+  --line-strong: #8f887d;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #1d7f46;
+  --success-ink: #fffdf8;
+  --success-soft: #d8e3cf;
+  --success-on-soft: #1a703e;
+  --warning: #e08a00;
+  --warning-ink: #141210;
+  --warning-soft: #f3e3c4;
+  --warning-on-soft: #865200;
+  --danger: #d8322a;
+  --danger-ink: #fffdf8;
+  --danger-soft: #f2d6ca;
+  --danger-on-soft: #a72721;
+  --info: #2f5bff;
+  --info-ink: #fffdf8;
+  --info-soft: #dadce8;
+  --info-on-soft: #2950e0;
+
+  /* Chrome */
+  --focus: #ffd23f;
+  --link: #7a651e;
+  --overlay: #141210;
+  --inverse: #17151a;
+  --inverse-ink: #f6f1e4;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+
+}

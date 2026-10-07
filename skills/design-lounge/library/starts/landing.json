@@ -28,7 +28,8 @@
   "hero-bauhaus-composition",
   "playable-product-hero",
   "object-3d-turntable",
-  "scroll-space-voyage"
+  "scroll-space-voyage",
+  "hero-brutal-stack"
  ],
  "directions": [
   {
@@ -114,6 +115,18 @@
    "effect": "scroll-space-voyage",
    "work": "bento-feature-grid",
    "footer": "footer-newsletter-split"
+  },
+  {
+   "id": "sticker-launch",
+   "name": "Sticker launch",
+   "mood": "Neo-brutalist, cream and vinyl yellow, ink borders and hard shadows, a launch that shouts",
+   "theme": "sign-shop",
+   "pairing": "brutal-grotesk",
+   "family": "bold",
+   "hero": "hero-brutal-stack",
+   "effect": "kinetic-type-marquee",
+   "work": "stacking-cards-scroll",
+   "footer": "footer-sitemap-columns"
   }
  ]
 }

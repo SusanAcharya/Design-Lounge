@@ -532,3 +532,7 @@ selection-rewrite | web | reading | Rewrite the selected sentence | paper editor
 moonlit-ridge-hero | web | hero | Le Dernier Feu | dark editorial kinetic | hero night canvas clock countdown audio
 playable-product-hero | web | hero | TU-16 | industrial minimal playful | hero product interactive sound launch music
 scroll-space-voyage | web | scroll | Apogee | dark kinetic editorial | scroll canvas space journey hud livestream
+hero-brutal-stack | web | hero | Hero with a fanned issue stack | brutalist playful | hero brutalist stack zine launch
+pricing-brutal-tiers | web | pricing | Pricing tiers with a lifted pick | brutalist playful | pricing brutalist tiers toggle plans
+form-brutal-signup | web | newsletter | Signup form that rises to the caret | brutalist playful | form signup brutalist validation waitlist
+card-grid-brutal | web | gallery | Card grid with sticker filters | brutalist playful | grid cards brutalist filter portfolio

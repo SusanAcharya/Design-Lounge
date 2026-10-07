@@ -27,7 +27,8 @@
   "brutalist-studio-home",
   "gallery-contact-sheet",
   "masonry-gallery-captions",
-  "gallery-wall-frames"
+  "gallery-wall-frames",
+  "card-grid-brutal"
  ],
  "directions": [
   {
@@ -125,6 +126,18 @@
    "effect": "object-3d-turntable",
    "work": "gallery-photo-album",
    "footer": "footer-newsletter-split"
+  },
+  {
+   "id": "sticker-wall",
+   "name": "Sticker wall",
+   "mood": "A designer with opinions, cream and ink, the work as bordered cards you push into their shadows",
+   "theme": "sign-shop",
+   "pairing": "brutal-grotesk",
+   "family": "bold",
+   "hero": "card-grid-brutal",
+   "effect": "scroll-velocity-type",
+   "work": "portfolio-case-study-long",
+   "footer": "footer-sitemap-columns"
   }
  ]
 }

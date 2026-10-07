@@ -49,7 +49,8 @@
         "phone-checkout",
         "phone-orders",
         "phone-cart",
-        "chart-share-bar"
+        "chart-share-bar",
+        "form-brutal-signup"
       ]
     },
     {
@@ -110,7 +111,8 @@
         "chart-rank-spend",
         "select-field",
         "contact-project-brief-steps",
-        "phone-delete-account"
+        "phone-delete-account",
+        "pricing-brutal-tiers"
       ]
     },
     {
@@ -282,7 +284,8 @@
         "widget-activity-rings",
         "time-field",
         "mockup-watch-faces",
-        "widget-world-clocks"
+        "widget-world-clocks",
+        "hero-brutal-stack"
       ]
     },
     {
@@ -771,7 +774,8 @@
         "game-leaderboard",
         "phone-skeleton-list",
         "toolbar-selection-swap",
-        "agent-tool-chip"
+        "agent-tool-chip",
+        "card-grid-brutal"
       ]
     },
     {

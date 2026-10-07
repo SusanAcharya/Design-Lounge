@@ -36,7 +36,7 @@ export const KINDS: Kind[] = [
     when: 'People arrive from the outside. The first viewport has to hold them.',
     palettes: ['paper-ink', 'linen-shop', 'atelier-noir', 'kiln', 'press-room', 'sakura-desk', 'marble-hall', 'loam', 'night-desk', 'neon-alley', 'festival', 'alpine-clinic', 'deep-field', 'sodium-night', 'bone-signal'],
     pairings: ['the-lounge', 'gallery-wall', 'maison', 'newsroom', 'lettera', 'garden-journal', 'brutal-grotesk', 'y2k-chrome', 'poster-condensed', 'indie-maker', 'studio-display', 'neo-grotesk-mono', 'night-show', 'machined'],
-    families: ['editorial', 'quiet', 'soft', 'sharp', 'lit'],
+    families: ['editorial', 'quiet', 'soft', 'sharp', 'lit', 'bold'],
     copy: {
       brand: 'Northroom',
       nav: ['Work', 'Studio', 'Journal'],
@@ -55,7 +55,7 @@ export const KINDS: Kind[] = [
     when: 'Someone is deciding whether to use you. Clarity over theatre.',
     palettes: ['fog-city', 'alpine-clinic', 'glacier', 'harbour-ledger', 'night-desk', 'ice-station', 'circuit', 'playroom', 'kiln', 'neon-alley', 'press-room'],
     pairings: ['friendly-saas', 'geometric-modern', 'swiss-precision', 'developer-docs', 'signal-mono', 'indie-maker', 'atelier', 'y2k-chrome', 'newsroom'],
-    families: ['quiet', 'soft', 'sharp', 'glass'],
+    families: ['quiet', 'soft', 'sharp', 'glass', 'bold'],
     copy: {
       brand: 'Tally',
       nav: ['Product', 'Pricing', 'Docs'],
@@ -201,6 +201,22 @@ export const FAMILIES: Family[] = [
       'Primary is a committed fill (accent or ink). 36px on web, 44px on phone.',
       'Mono for numbers. Tabular nums. No ornament.',
       'Status colour is reserved for live state, never decoration.',
+    ],
+  },
+  {
+    id: 'bold',
+    name: 'Bold',
+    mood: 'Neo-brutalism. A 2px ink border on everything, a hard offset shadow, flat bright fills. Loud, square, nothing blurred.',
+    radius: '4px',
+    button: 'solid',
+    density: 'regular',
+    shadow: '4px 4px 0 var(--ink)',
+    pieces: ['neo-brutalist-style', 'hero-brutal-stack', 'pricing-brutal-tiers', 'form-brutal-signup', 'card-grid-brutal'],
+    rules: [
+      'Radius 0 to 6px: 4px on controls, 6px on cards, 0 on a hero block or a sticker. Never a pill.',
+      'Every card and control has a 2px border in --ink. The offset shadow is the family shadow: 4px 4px 0 var(--ink), no blur, no alpha. A hero card may take 8px 8px 0.',
+      'Hover moves the element into its shadow: translate(4px, 4px) while the shadow collapses to 0, both on one 120ms clock. Nothing lifts.',
+      'Fills are flat: --surface, --primary, --secondary, --tertiary. No gradient, no tint, no blur. Ink is --ink, never pure #000.',
     ],
   },
   {

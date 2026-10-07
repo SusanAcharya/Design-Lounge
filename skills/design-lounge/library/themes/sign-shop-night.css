@@ -1,0 +1,67 @@
+/* Sign Shop Night · dark · pair: sign-shop
+   The bench with the shutter down. Cream borders on ink, the same vinyl yellow, blue and pink lit from behind.
+   Best for: Launches, Zines, Tools with a voice
+   Tags: brutalist, playful, dark */
+/* Colour only. Fonts come from the locked pairing file. Radius and shadow come from the locked family. */
+/* Sign Shop Night · full palette · Designed using Design Lounge (https://www.designlounge.live)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #ffd23f;
+  --primary-ink: #141210;
+  --primary-soft: #4f4223;
+  --secondary: #6b8aff;
+  --secondary-ink: #141210;
+  --secondary-soft: #2b3151;
+  --tertiary: #ff7ab0;
+  --tertiary-ink: #141210;
+  --tertiary-soft: #4f2d3e;
+
+  /* Surface */
+  --bg: #17151a;
+  --surface: #211e26;
+  --surface-2: #2c2833;
+  --surface-3: #403c45;
+  --ink: #f6f1e4;
+  --ink-2: #c9c2b4;
+  --ink-3: #8f8999;
+  --line: #3b3644;
+  --line-strong: #827d81;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #5fc98a;
+  --success-ink: #141210;
+  --success-soft: #284035;
+  --success-on-soft: #5fc98a;
+  --warning: #f0a93a;
+  --warning-ink: #141210;
+  --warning-soft: #4b3922;
+  --warning-on-soft: #f0a93a;
+  --danger: #ff6b5a;
+  --danger-ink: #141210;
+  --danger-soft: #4f2a29;
+  --danger-on-soft: #ff7d6e;
+  --info: #6b8aff;
+  --info-ink: #141210;
+  --info-soft: #2b3151;
+  --info-on-soft: #7d98ff;
+
+  /* Chrome */
+  --focus: #ffd23f;
+  --link: #ffd23f;
+  --overlay: #070605;
+  --inverse: #f6f1e4;
+  --inverse-ink: #17151a;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+
+}

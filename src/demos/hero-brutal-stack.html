@@ -1,0 +1,107 @@
+<!-- Design Lounge piece: hero-brutal-stack · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Stapler — your newsletter, stapled</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f1e4;--surface:#fffaf0;--surface-2:#ece4d0;--ink:#17151a;--ink-2:#4a4650;--ink-3:#76717d;
+  --yellow:#ffd23f;--blue:#2f5bff;--blue-ink:#fffdf8;--pink:#ff5c9a;
+  --display:"Archivo Black",Impact,sans-serif;--sans:"Archivo",system-ui,sans-serif;
+  --bw:2px;--off:4px;--off-lg:8px;--r:4px;--r-card:6px;
+  --t-micro:120ms;--t-fan:320ms;--ease:cubic-bezier(.2,.7,.2,1);--expo:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.5 var(--sans);-webkit-font-smoothing:antialiased;overflow:hidden}
+button,a{font:inherit;color:inherit}
+:focus-visible{outline:var(--bw) solid var(--blue);outline-offset:3px}
+.nav{max-width:1200px;margin:0 auto;padding:22px 40px;display:flex;align-items:center;gap:28px}
+.logo{font:400 22px/1 var(--display);text-transform:uppercase;letter-spacing:-.01em;text-decoration:none;background:var(--yellow);border:var(--bw) solid var(--ink);padding:8px 10px;box-shadow:var(--off) var(--off) 0 var(--ink)}
+.links{display:flex;gap:26px;margin-left:auto;font-weight:700;font-size:15px}
+.links a{text-decoration:none;color:var(--ink);padding:4px 0;border-bottom:var(--bw) solid transparent}
+.links a:hover{border-color:var(--ink)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:44px;padding:0 18px;border:var(--bw) solid var(--ink);border-radius:var(--r);background:var(--surface);font-weight:700;text-decoration:none;cursor:pointer;box-shadow:var(--off) var(--off) 0 var(--ink);transition:transform var(--t-micro) var(--ease),box-shadow var(--t-micro) var(--ease)}
+.btn:hover{transform:translate(var(--off),var(--off));box-shadow:0 0 0 var(--ink)}
+.btn:active{transform:translate(var(--off),var(--off));box-shadow:0 0 0 var(--ink);background:var(--surface-2)}
+.btn.y{background:var(--yellow)}
+.btn.b{background:var(--blue);color:var(--blue-ink)}
+.btn svg{width:18px;height:18px;flex:none}
+.hero{max-width:1200px;margin:0 auto;padding:36px 40px 0;display:grid;grid-template-columns:minmax(0,1fr) 520px;gap:48px;align-items:center}
+.sticker{display:inline-block;font:700 13px/1 var(--sans);letter-spacing:.1em;text-transform:uppercase;background:var(--pink);border:var(--bw) solid var(--ink);padding:9px 12px;box-shadow:3px 3px 0 var(--ink);transform:rotate(-4deg);transform-origin:left center}
+h1{margin:26px 0 20px;font:400 76px/.95 var(--display);letter-spacing:-.02em;text-transform:uppercase}
+h1 .blk{display:inline-block;background:var(--yellow);border:var(--bw) solid var(--ink);padding:0 10px;box-shadow:var(--off-lg) var(--off-lg) 0 var(--ink);margin-top:10px}
+.lede{font-size:19px;line-height:1.5;color:var(--ink-2);max-width:42ch;margin:0 0 30px;font-weight:500}
+.lede b{color:var(--ink);font-weight:700}
+.ctas{display:flex;gap:16px;flex-wrap:wrap}
+.ctas .btn{min-height:56px;padding:0 24px;font-size:17px}
+.fine{margin:28px 0 0;font-size:13px;font-weight:500;color:var(--ink-3)}
+/* stack */
+.stage{display:flex;flex-direction:column;align-items:center;gap:44px;padding-top:24px}
+.stack{position:relative;width:280px;height:392px;list-style:none;margin:0;padding:0}
+.cover{position:absolute;inset:0;border:var(--bw) solid var(--ink);border-radius:var(--r-card);background:var(--surface);box-shadow:var(--off-lg) var(--off-lg) 0 var(--ink);display:flex;flex-direction:column;overflow:hidden;transform:rotate(var(--rot)) translate(var(--x),var(--y));transition:transform var(--t-fan) var(--expo)}
+.cover[data-pos="0"]{--rot:-7deg;--x:-56px;--y:12px;z-index:1}
+.cover[data-pos="1"]{--rot:0deg;--x:0px;--y:0px;z-index:2}
+.cover[data-pos="2"]{--rot:7deg;--x:56px;--y:12px;z-index:3}
+.stage:hover .cover[data-pos="0"],.stage:focus-within .cover[data-pos="0"]{--rot:-13deg;--x:-128px;--y:26px}
+.stage:hover .cover[data-pos="2"],.stage:focus-within .cover[data-pos="2"]{--rot:13deg;--x:128px;--y:26px}
+.band{height:140px;border-bottom:var(--bw) solid var(--ink);display:flex;align-items:flex-end;padding:14px 16px;font:400 64px/1 var(--display);letter-spacing:-.03em}
+.cover.c1 .band{background:var(--yellow)}.cover.c2 .band{background:var(--blue);color:var(--blue-ink)}.cover.c3 .band{background:var(--pink)}
+.cover .body{padding:16px;display:flex;flex-direction:column;gap:10px;flex:1}
+.cover .kicker{font:700 11px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+.cover h2{margin:0;font:400 24px/1.05 var(--display);text-transform:uppercase;letter-spacing:-.01em}
+.cover .lines{margin-top:auto;display:grid;gap:7px}
+.cover .lines i{display:block;height:8px;background:var(--surface-2);border:1.5px solid var(--ink)}
+.cover .lines i:nth-child(2){width:72%}.cover .lines i:nth-child(3){width:86%}.cover .lines i:nth-child(4){width:48%}
+.cover .meta{display:flex;justify-content:space-between;font:700 12px/1 var(--sans);letter-spacing:.06em;text-transform:uppercase;border-top:var(--bw) solid var(--ink);padding-top:12px}
+.row{display:flex;align-items:center;justify-content:space-between;width:100%;padding:0 8px}
+.next{min-height:44px}
+.count{font:700 12px/1 var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important}.stage:hover .cover,.stage:focus-within .cover{--rot:0deg;--x:0px;--y:0px}.cover[data-pos="0"],.cover[data-pos="2"]{--rot:0deg;--x:0px;--y:0px}}
+</style>
+</head>
+<body>
+<header class="nav">
+  <a class="logo" href="#">Stapler</a>
+  <nav class="links" aria-label="Main"><a href="#">Issues</a><a href="#">Paper</a><a href="#">Pricing</a><a href="#">Journal</a></nav>
+  <a class="btn b" href="#">Print issue zero</a>
+</header>
+<main class="hero">
+  <div>
+    <span class="sticker">Issue 12 is out</span>
+    <h1>Your newsletter, <span class="blk">stapled.</span></h1>
+    <p class="lede">Stapler turns each month of your newsletter into a <b>16-page zine</b>, printed on 90gsm paper, and posts it to every reader who asked for one.</p>
+    <div class="ctas">
+      <a class="btn y" href="#">Print the first issue<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square"><path d="M5 12h13M13 6l6 6-6 6"/></svg></a>
+      <a class="btn" href="#">See a spread</a>
+    </div>
+    <p class="fine">From 40 copies. No minimum run after the first issue.</p>
+  </div>
+  <div class="stage">
+    <ol class="stack" aria-label="The last three issues">
+      <li class="cover c1" data-pos="0"><div class="band">10</div><div class="body"><span class="kicker">October</span><h2>The slow inbox</h2><div class="lines"><i></i><i></i><i></i><i></i></div><div class="meta"><span>16 pages</span><span>1,240 printed</span></div></div></li>
+      <li class="cover c2" data-pos="1"><div class="band">11</div><div class="body"><span class="kicker">November</span><h2>Reply all, on paper</h2><div class="lines"><i></i><i></i><i></i><i></i></div><div class="meta"><span>16 pages</span><span>1,318 printed</span></div></div></li>
+      <li class="cover c3" data-pos="2"><div class="band">12</div><div class="body"><span class="kicker">December</span><h2>The year, stapled</h2><div class="lines"><i></i><i></i><i></i><i></i></div><div class="meta"><span>24 pages</span><span>1,402 printed</span></div></div></li>
+    </ol>
+    <div class="row">
+      <span class="count" id="count" aria-live="polite">Issue 12 on top</span>
+      <button class="btn next" id="next" type="button">Next issue</button>
+    </div>
+  </div>
+</main>
+<script>
+  const covers=[...document.querySelectorAll('.cover')];
+  const count=document.getElementById('count');
+  document.getElementById('next').addEventListener('click',()=>{
+    covers.forEach(c=>c.dataset.pos=String((Number(c.dataset.pos)+1)%3));
+    const top=covers.find(c=>c.dataset.pos==='2');
+    count.textContent='Issue '+top.querySelector('.band').textContent.trim()+' on top';
+  });
+</script>
+</body>
+</html>
