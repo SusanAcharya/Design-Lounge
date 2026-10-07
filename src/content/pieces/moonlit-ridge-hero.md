@@ -178,6 +178,8 @@ Load one Google family: `Instrument+Serif:ital@0;1`. The mono is the system stac
 | Sound disc | active | scale | 1 → .94 | 240ms | `--ease` | none | instant |
 | Sound gain | click | gain | 0 → .6 / current → 0 | 2500ms / 800ms | linear ramp | none | same (audio is not motion) |
 
+The canvas paints one frame on load and holds it. The per-frame loop starts on the first pointer move, scroll, tap, wheel or key, then runs while the hero is on screen. A slow phone that is only looking never pays for it. The waveform glow is a 7px stroke at .16 alpha under the 1.2px line, not `shadowBlur`.
+
 Pause the animation loop with an `IntersectionObserver` when the hero leaves the viewport. Never run a loop while reduced motion is on, except while the sound plays (so the live waveform still works).
 
 ## States

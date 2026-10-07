@@ -133,7 +133,7 @@ The title is one word split at the syllable: "Apo" in `--star` roman, "gee" in t
 | Star streak | scroll speed | line length | 0 → 1100 depth units | per frame | `vel` lerp 0.35 | off |
 | Star twinkle | time | alpha | 0.44 → 1.0 | 0.5 to 3 rad/s per star | sine | fixed 0.86 |
 | Star drift | time | depth | +10 units/s | constant | linear | off |
-| Launch flare | load | opacity | 0.95 → 0 | 0.3s → 2.6s | smoothstep | starts at 0 |
+| Launch flare | first interaction | opacity | held at 0 (the intro clock starts already finished) | none | none | starts at 0 |
 | Title syllables | load | opacity, Y, blur | 0, +0.3em, 16px → 1, 0, 0 | 1400ms, "gee" +180ms | `--expo` | no animation |
 | Hero copy | scroll | opacity, Y, scale | 1, 0, 1 → 0, -0.25 × sy, 0.94 | over 0.65 viewport | linear in scroll | opacity only |
 | Chapter copy | scroll | opacity, Y | 0 → 1 → 0, +18 → -18px | across 200vh | linear in scroll | opacity only |
@@ -145,6 +145,8 @@ The title is one word split at the syllable: "Apo" in `--star` roman, "gee" in t
 | Index line | chapter change | width | 14 → 36px | 500ms | `--expo` | instant |
 | Index label | hover, focus, current | opacity, X | 0, 6px → 1, 0 | 400ms | `--ease` | instant |
 | HUD values | scroll | number | follows `sy` | per frame | smoothstep between chapters | follows `scrollY` |
+
+The canvas paints one still frame on load. The continuous loop (twinkle, drift, city lights) starts on the first scroll, pointer move, wheel, tap or key. A slow phone that is only looking never pays for it.
 
 ## States
 

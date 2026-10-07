@@ -317,7 +317,9 @@ h2 em{color:var(--accent)}
   };
   let W, H, DPR, F, CX, CY, VH, chapters = [], stars = [], cities = [], milky, milkySize = 0;
   let sy = scrollY, lastCam = 0, vel = 0, camX = 0, camY = 0, mx = 0, my = 0;
-  const t0 = performance.now();
+  // Until the first scroll, pointer move, tap or key, the page holds one still frame with the intro finished.
+  // The continuous loop is too much for a slow phone that is only looking.
+  let t0 = performance.now() - 2700, woke = false;
 
   function seed() {
     const n = clamp(Math.round(innerWidth * innerHeight / 650), 700, 2000), SX = W / 2 * DEPTH / F * 1.3, SY = H / 2 * DEPTH / F * 1.3;
@@ -533,8 +535,11 @@ h2 em{color:var(--accent)}
 
   /* loop: continuous with motion, one frame per scroll without */
   let raf = 0;
-  function loop(now) { raf = 0; frame(now); if (!reduce || scrollY !== sy) raf = requestAnimationFrame(loop); }
+  function loop(now) { raf = 0; frame(now); if ((!reduce && woke) || scrollY !== sy) raf = requestAnimationFrame(loop); }
   function kick() { if (!raf) raf = requestAnimationFrame(loop); }
+  const WAKE = ['scroll', 'wheel', 'pointermove', 'pointerdown', 'touchstart', 'keydown'];
+  function wake() { if (woke) return; woke = true; for (const w of WAKE) removeEventListener(w, wake, true); kick(); }
+  for (const w of WAKE) addEventListener(w, wake, { capture: true, passive: true });
   addEventListener('scroll', kick, { passive: true });
   mq.addEventListener('change', (e) => { reduce = e.matches; kick(); });
   addEventListener('pointermove', (e) => { mx = e.clientX / innerWidth * 2 - 1; my = e.clientY / innerHeight * 2 - 1; }, { passive: true });
