@@ -20,7 +20,7 @@ export const AUTHOR = {
     { label: 'Dribbble', href: 'https://dribbble.com/SusanAcharya' },
     { label: 'GitHub', href: 'https://github.com/SusanAcharya' },
     { label: 'LinkedIn', href: 'https://www.linkedin.com/in/AcharyaSusan' },
-    { label: 'X', href: 'https://x.com/n00dlehead' },
+    { label: 'X', href: 'https://x.com/nasusanooo' },
   ],
 } as const;
 
