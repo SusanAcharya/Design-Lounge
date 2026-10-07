@@ -9,7 +9,7 @@ on:
     branches: [main]
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
   group: gates-${{ github.ref }}
@@ -19,8 +19,10 @@ jobs:
   gate:
     runs-on: ubuntu-latest
     timeout-minutes: 45
-    # The ratchet is measured in this image. Run it locally the same way, so pixels match CI:
-    #   docker run --rm --ipc=host -v "$PWD":/work -w /work mcr.microsoft.com/playwright:v1.63.0-noble node scripts/gates/demos.mjs --all
+    # The ratchet is measured here, on x86 Linux in this image. A run on an ARM Mac renders some backgrounds
+    # differently, so to match CI locally use the x86 image (slow under emulation; fine for a few ids):
+    #   docker run --rm --platform linux/amd64 --ipc=host -v "$PWD":/work -w /work mcr.microsoft.com/playwright:v1.63.0-noble node scripts/gates/demos.mjs --ids a,b
+    # A push whose message contains [write-ratchet] measures the ratchet here and commits it back instead of gating.
     container:
       image: mcr.microsoft.com/playwright:v1.63.0-noble
       options: --ipc=host
@@ -38,4 +40,23 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
       - run: pnpm build
-      - run: pnpm gate
+
+      - name: Gate
+        if: ${{ !contains(github.event.head_commit.message, '[write-ratchet]') }}
+        run: pnpm gate
+
+      - name: Write the ratchet on this platform
+        if: ${{ github.event_name == 'push' && contains(github.event.head_commit.message, '[write-ratchet]') }}
+        run: node scripts/gates/demos.mjs --write-ratchet
+
+      - name: Commit the ratchet
+        if: ${{ github.event_name == 'push' && contains(github.event.head_commit.message, '[write-ratchet]') }}
+        run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898341+github-actions[bot]@users.noreply.github.com"
+          git add scripts/gates/ratchet.json
+          if git diff --cached --quiet; then echo "Ratchet unchanged."; exit 0; fi
+          git commit -m "Measure the gate ratchet on CI's own platform."
+          git pull --rebase origin main
+          git push origin HEAD:main

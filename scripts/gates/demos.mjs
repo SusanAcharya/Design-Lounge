@@ -276,6 +276,19 @@ async function contrastAt(page, label) {
 // ratchet flaps. Every page gets a seeded generator in place of Math.random before any script runs.
 const SEED_SCRIPT = `(() => { let s = 0x9e3779b9; Math.random = () => { s |= 0; s = s + 0x6D2B79F5 | 0; let t = Math.imul(s ^ s >>> 15, 1 | s); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; })()`;
 
+// Wait until the page is still: every finite animation and transition has finished (infinite ones are left
+// running), then two frames. A fixed delay alone depends on machine load, and a fade caught half-way made
+// results differ between a loaded run and a quiet one.
+const SETTLE = `(async () => {
+  const finite = () => document.getAnimations().filter((a) => { const t = a.effect && a.effect.getComputedTiming ? a.effect.getComputedTiming() : null; return !t || t.iterations !== Infinity; });
+  for (let i = 0; i < 3; i++) {
+    const pending = finite().filter((a) => a.playState === 'running' || a.playState === 'pending');
+    if (!pending.length) break;
+    await Promise.race([Promise.all(pending.map((a) => a.finished.catch(() => {}))), new Promise((r) => setTimeout(r, 4000))]);
+  }
+  await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+})()`;
+
 async function gateOne(browser, id) {
   const url = `${base}/demo/${id}.html`;
   const result = { id, n: NUMBERS[id] ?? null, phone390: [], contrast: [], uiLines: [] };
@@ -286,12 +299,14 @@ async function gateOne(browser, id) {
     const p = await phone.newPage();
     await p.goto(url, { waitUntil: 'load', timeout: 45000 });
     await p.waitForTimeout(1500);
+    await p.evaluate(SETTLE);
     result.phone390 = await p.evaluate(PHONE_SCRIPT);
     result.contrast.push(...await contrastAt(p, '390'));
     result.uiLines.push(...(await p.evaluate(UI_SCRIPT)).map((s) => '390: ' + s));
     const d = await desktop.newPage();
     await d.goto(url, { waitUntil: 'load', timeout: 45000 });
     await d.waitForTimeout(1500);
+    await d.evaluate(SETTLE);
     result.contrast.push(...await contrastAt(d, '1280'));
     result.uiLines.push(...(await d.evaluate(UI_SCRIPT)).map((s) => '1280: ' + s));
   } catch (e) {
