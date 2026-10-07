@@ -17,8 +17,9 @@ Put these on `:root` with the theme colour tokens. Density comes from [practice.
 | glass | 16px | 16px | 44 / 44 | 16px | 16px | soft, pill on tab items |
 | industrial | 2px | 2px | 36 / 44 | 12px | 12px | solid |
 | bold | 4px | 6px | 44 / 48 | 16px | 16px | solid primary, 2px `--ink` border, the offset shadow |
+| tactile | 20px | 24px | 48 / 52 | 20px | 20px | raised (`--raise`), pressed is the inset well; a 1px `--line-strong` edge keeps 3:1 |
 
-`--shadow` is the family's shadow. Sharp, editorial, and industrial use `none`. Bold's is the hard offset `4px 4px 0 var(--ink)`, and hover moves the control into it.
+`--shadow` is the family's shadow. Sharp, editorial, and industrial use `none`. Bold's is the hard offset `4px 4px 0 var(--ink)`, and hover moves the control into it. Tactile has two: `--raise` (the family shadow) and `--well` (the same pair, `inset`).
 
 A filter, a chip, and a segmented control use `--radius` and `--control` too. A brief that draws a pill does not win unless this family's button is already a pill.
 

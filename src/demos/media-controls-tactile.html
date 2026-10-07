@@ -1,0 +1,90 @@
+<!-- Design Lounge piece: media-controls-tactile · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Hush — now playing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --surface:#e6e3df;--ink:#2a2622;--ink-2:#56514b;--ink-3:#625c56;--edge:#7d7770;
+  --light:rgba(255,255,255,.85);--shade:rgba(74,66,58,.22);
+  --raise:10px 10px 24px var(--shade),-10px -10px 24px var(--light);
+  --raise-sm:5px 5px 12px var(--shade),-5px -5px 12px var(--light);
+  --well:inset 6px 6px 14px var(--shade),inset -6px -6px 14px var(--light);
+  --well-sm:inset 3px 3px 7px var(--shade),inset -3px -3px 7px var(--light);
+  --sans:"Sora",system-ui,sans-serif;--r:20px;--r-card:24px;
+  --t-micro:200ms;--ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--surface);color:var(--ink);font:15px/1.45 var(--sans);-webkit-font-smoothing:antialiased;overflow:hidden;display:grid;place-items:center}
+button,input{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--ink);outline-offset:4px}
+.player{width:460px;padding:30px 30px 28px;border-radius:var(--r-card);border:1px solid var(--edge);box-shadow:var(--raise);display:grid;gap:22px}
+.art{display:flex;gap:20px;align-items:center}
+.disc{width:120px;height:120px;border-radius:var(--r);box-shadow:var(--well);border:1px solid var(--edge);display:grid;place-items:center;flex:none}
+.disc i{display:block;border-radius:50%;border:1px solid var(--edge);box-shadow:var(--raise-sm)}
+.disc i.a{width:84px;height:84px;display:grid;place-items:center}.disc i.b{width:52px;height:52px;display:grid;place-items:center;box-shadow:var(--well-sm)}.disc i.c{width:16px;height:16px;background:var(--ink);border:0;box-shadow:none}
+.meta h1{margin:0 0 4px;font-size:22px;font-weight:800;letter-spacing:-.025em;line-height:1.1}
+.meta p{margin:0;color:var(--ink-2);font-size:14px}
+.meta .tag{display:inline-block;margin-top:10px;padding:5px 10px;border-radius:999px;box-shadow:var(--well-sm);border:1px solid var(--edge);font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2)}
+.scrub{display:grid;gap:8px}
+.scrub input{-webkit-appearance:none;appearance:none;width:100%;height:14px;border-radius:999px;background:var(--surface);box-shadow:var(--well-sm);border:1px solid var(--edge);margin:0;cursor:pointer}
+.scrub input::-webkit-slider-thumb{-webkit-appearance:none;width:30px;height:30px;border-radius:50%;background:var(--surface);border:1px solid var(--edge);box-shadow:var(--raise-sm),inset 0 0 0 7px var(--surface),inset 0 0 0 10px var(--ink)}
+.scrub input::-moz-range-thumb{width:30px;height:30px;border-radius:50%;background:var(--surface);border:1px solid var(--edge);box-shadow:var(--raise-sm)}
+.times{display:flex;justify-content:space-between;font-size:12px;font-weight:600;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.transport{display:flex;align-items:center;justify-content:center;gap:22px}
+.tb{border-radius:50%;border:1px solid var(--edge);background:var(--surface);box-shadow:var(--raise-sm);display:grid;place-items:center;cursor:pointer;padding:0;transition:box-shadow var(--t-micro) var(--ease),color var(--t-micro) var(--ease)}
+.tb:active{box-shadow:var(--well-sm)}
+.tb.sm{width:56px;height:56px}.tb.sm svg{width:22px;height:22px}
+.tb.play{width:80px;height:80px;box-shadow:var(--raise)}
+.tb.play svg{width:30px;height:30px}
+.tb.play[aria-pressed="true"]{box-shadow:var(--well)}
+.tb.play .pause{display:none}.tb.play[aria-pressed="true"] .pause{display:block}.tb.play[aria-pressed="true"] .go{display:none}
+.vol{display:flex;align-items:center;gap:14px}
+.vol svg{width:20px;height:20px;color:var(--ink-2);flex:none}
+.vol input{-webkit-appearance:none;appearance:none;flex:1;height:12px;border-radius:999px;background:var(--surface);box-shadow:var(--well-sm);border:1px solid var(--edge);margin:0;cursor:pointer}
+.vol input::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;border-radius:50%;background:var(--surface);border:1px solid var(--edge);box-shadow:var(--raise-sm),inset 0 0 0 5px var(--surface),inset 0 0 0 8px var(--ink)}
+.vol input::-moz-range-thumb{width:24px;height:24px;border-radius:50%;background:var(--surface);border:1px solid var(--edge);box-shadow:var(--raise-sm)}
+.vol output{font-size:12px;font-weight:600;color:var(--ink-3);width:34px;text-align:right;font-variant-numeric:tabular-nums}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important}}
+</style>
+</head>
+<body>
+<section class="player" aria-label="Now playing">
+  <div class="art">
+    <div class="disc" aria-hidden="true"><i class="a"><i class="b"><i class="c"></i></i></i></div>
+    <div class="meta"><h1>Rain on the skylight</h1><p>Field tapes · recorded in Pokhara, 2025</p><span class="tag">Sleep · 42 min</span></div>
+  </div>
+  <div class="scrub">
+    <input id="pos" type="range" min="0" max="2520" step="1" value="1134" aria-label="Position" aria-valuetext="18 minutes 54 seconds of 42 minutes">
+    <div class="times"><span id="cur">18:54</span><span id="rem">-23:06</span></div>
+  </div>
+  <div class="transport">
+    <button class="tb sm" type="button" aria-label="Back 30 seconds"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 1 0 3-6.2M4 4v5h5"/></svg></button>
+    <button class="tb play" id="play" type="button" aria-pressed="false" aria-label="Play"><svg class="go" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg><svg class="pause" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg></button>
+    <button class="tb sm" type="button" aria-label="Forward 30 seconds"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 1 1-3-6.2M20 4v5h-5"/></svg></button>
+  </div>
+  <div class="vol">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9zM16 9a4 4 0 0 1 0 6"/></svg>
+    <input id="vol" type="range" min="0" max="100" value="60" aria-label="Volume">
+    <output for="vol" id="vol-o">60%</output>
+  </div>
+</section>
+<script>
+  const pos=document.getElementById('pos'),cur=document.getElementById('cur'),rem=document.getElementById('rem'),play=document.getElementById('play');
+  const fmt=s=>Math.floor(s/60)+':'+String(s%60).padStart(2,'0');
+  const show=()=>{const v=Number(pos.value),max=Number(pos.max);cur.textContent=fmt(v);rem.textContent='-'+fmt(max-v);pos.setAttribute('aria-valuetext',Math.floor(v/60)+' minutes '+(v%60)+' seconds of '+Math.floor(max/60)+' minutes')};
+  pos.addEventListener('input',show);
+  let timer=null;
+  play.addEventListener('click',()=>{const on=play.getAttribute('aria-pressed')!=='true';play.setAttribute('aria-pressed',String(on));play.setAttribute('aria-label',on?'Pause':'Play');clearInterval(timer);if(on)timer=setInterval(()=>{if(Number(pos.value)>=Number(pos.max)){play.click();return}pos.value=Number(pos.value)+1;show()},1000)});
+  document.querySelectorAll('.tb.sm').forEach((b,i)=>b.addEventListener('click',()=>{pos.value=Math.max(0,Math.min(Number(pos.max),Number(pos.value)+(i?30:-30)));show()}));
+  const vol=document.getElementById('vol');vol.addEventListener('input',()=>document.getElementById('vol-o').textContent=vol.value+'%');
+  document.addEventListener('visibilitychange',()=>{if(document.hidden&&play.getAttribute('aria-pressed')==='true')play.click()});
+</script>
+</body>
+</html>

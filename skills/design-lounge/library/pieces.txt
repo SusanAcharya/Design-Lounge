@@ -537,3 +537,6 @@ pricing-brutal-tiers | web | pricing | Pricing tiers with a lifted pick | brutal
 form-brutal-signup | web | newsletter | Signup form that rises to the caret | brutalist playful | form signup brutalist validation waitlist
 card-grid-brutal | web | gallery | Card grid with sticker filters | brutalist playful | grid cards brutalist filter portfolio
 dashboard-glass-home | web | dashboard | Glass dashboard home | glass minimal | dashboard glass energy chart home
+settings-tactile-panel | mobile-app | settings | Tactile settings panel | clay soft minimal | settings neumorphism clay switch slider
+media-controls-tactile | web | media | Tactile media controls | clay soft minimal | player media neumorphism clay controls
+stat-tile-tactile | web | charts | Tactile stat tiles | clay soft minimal | stat kpi neumorphism clay chart

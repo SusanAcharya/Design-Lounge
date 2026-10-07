@@ -93,6 +93,19 @@
    ]
   },
   {
+   "id": "tactile",
+   "radius": 20,
+   "button": "soft",
+   "density": "regular",
+   "shadow": "8px 8px 18px rgba(0,0,0,.14), -8px -8px 18px rgba(255,255,255,.7)",
+   "rules": [
+    "Radius 18 to 24px on cards and controls. 999px only on a knob, a switch, or a round transport button.",
+    "Two shadow tokens, both built from the theme surface: --raise for a control at rest (light top-left, shade bottom-right, outside) and --well for a pressed, inset, or track state (the same pair, inset). Never a drop shadow in a third colour, and never a shadow on --bg that differs from --surface.",
+    "Every control keeps 3:1 non-text contrast against the surface: a 1px edge at --line-strong, or a fill in --primary-soft, on top of the shadow. The shadow alone is decoration, not the boundary.",
+    "A pressed or on state is the inset shadow plus --primary (or --ink in a monochrome theme) on the icon, knob, or label, so the change is visible without the depth."
+   ]
+  },
+  {
    "id": "lit",
    "radius": 999,
    "button": "outline",

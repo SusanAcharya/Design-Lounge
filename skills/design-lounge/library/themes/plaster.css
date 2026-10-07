@@ -1,0 +1,67 @@
+/* Plaster · light · pair: plaster-night
+   One warm putty, lit from the top left. Nothing is coloured; things are raised or pressed in. Monochrome neumorphism that still reads.
+   Best for: Settings, Players, Personal apps
+   Tags: clay, minimal, light */
+/* Colour only. Fonts come from the locked pairing file. Radius and shadow come from the locked family. */
+/* Plaster · full palette · Designed using Design Lounge (https://www.designlounge.live)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #3d3833;
+  --primary-ink: #fffdf8;
+  --primary-soft: #cecbc7;
+  --secondary: #6b655e;
+  --secondary-ink: #fffdf8;
+  --secondary-soft: #d5d1cd;
+  --tertiary: #8a3d2e;
+  --tertiary-ink: #fffdf8;
+  --tertiary-soft: #d9ccc6;
+
+  /* Surface */
+  --bg: #e6e3df;
+  --surface: #e6e3df;
+  --surface-2: #dad6d0;
+  --surface-3: #cfcbc6;
+  --ink: #2a2622;
+  --ink-2: #56514b;
+  --ink-3: #625c56;
+  --line: #b9b3aa;
+  --line-strong: #837d76;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #2f6b4a;
+  --success-ink: #fffdf8;
+  --success-soft: #ccd2ca;
+  --success-on-soft: #295e41;
+  --warning: #9b6212;
+  --warning-ink: #fffdf8;
+  --warning-soft: #ddd2c3;
+  --warning-on-soft: #784c0e;
+  --danger: #a63a2e;
+  --danger-ink: #fffdf8;
+  --danger-soft: #ddcbc6;
+  --danger-on-soft: #923328;
+  --info: #4b5d75;
+  --info-ink: #fffdf8;
+  --info-soft: #d0d0d0;
+  --info-on-soft: #425267;
+
+  /* Chrome */
+  --focus: #3d3833;
+  --link: #3d3833;
+  --overlay: #141210;
+  --inverse: #2a2622;
+  --inverse-ink: #e6e3df;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+
+}

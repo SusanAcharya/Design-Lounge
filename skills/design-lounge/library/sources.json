@@ -112,7 +112,8 @@
         "select-field",
         "contact-project-brief-steps",
         "phone-delete-account",
-        "pricing-brutal-tiers"
+        "pricing-brutal-tiers",
+        "settings-tactile-panel"
       ]
     },
     {
@@ -478,7 +479,8 @@
         "widget-weather-glance",
         "winding-ribbon-scroll-story",
         "m3-top-app-bar-scroll",
-        "dashboard-glass-home"
+        "dashboard-glass-home",
+        "stat-tile-tactile"
       ]
     },
     {
@@ -538,7 +540,8 @@
         "spring-deck",
         "card-stamped-document",
         "game-playfield",
-        "agent-approval-card"
+        "agent-approval-card",
+        "media-controls-tactile"
       ]
     },
     {

@@ -55,7 +55,7 @@ export const KINDS: Kind[] = [
     when: 'Someone is deciding whether to use you. Clarity over theatre.',
     palettes: ['fog-city', 'alpine-clinic', 'glacier', 'harbour-ledger', 'night-desk', 'ice-station', 'circuit', 'playroom', 'kiln', 'neon-alley', 'press-room', 'skylight'],
     pairings: ['friendly-saas', 'geometric-modern', 'swiss-precision', 'developer-docs', 'signal-mono', 'indie-maker', 'atelier', 'y2k-chrome', 'newsroom'],
-    families: ['quiet', 'soft', 'sharp', 'glass', 'bold'],
+    families: ['quiet', 'soft', 'sharp', 'glass', 'bold', 'tactile'],
     copy: {
       brand: 'Tally',
       nav: ['Product', 'Pricing', 'Docs'],
@@ -93,7 +93,7 @@ export const KINDS: Kind[] = [
     when: 'The person using it is the customer. The number on the screen is theirs.',
     palettes: ['lokta', 'harbour-ledger', 'alpine-clinic', 'kiln', 'loam', 'fog-city'],
     pairings: ['devanagari', 'friendly-saas', 'bookish', 'garden-journal'],
-    families: ['quiet', 'soft', 'editorial'],
+    families: ['quiet', 'soft', 'editorial', 'tactile'],
     copy: {
       brand: 'Asar',
       nav: ['Spend', 'Budgets', 'You'],
@@ -217,6 +217,22 @@ export const FAMILIES: Family[] = [
       'Every card and control has a 2px border in --ink. The offset shadow is the family shadow: 4px 4px 0 var(--ink), no blur, no alpha. A hero card may take 8px 8px 0.',
       'Hover moves the element into its shadow: translate(4px, 4px) while the shadow collapses to 0, both on one 120ms clock. Nothing lifts.',
       'Fills are flat: --surface, --primary, --secondary, --tertiary. No gradient, no tint, no blur. Ink is --ink, never pure #000.',
+    ],
+  },
+  {
+    id: 'tactile',
+    name: 'Tactile',
+    mood: 'Clay and neumorphism. One surface colour, light from the top left, controls raised out of it or pressed into it. Soft and round, and still readable.',
+    radius: '20px',
+    button: 'soft',
+    density: 'regular',
+    shadow: '8px 8px 18px rgba(0,0,0,.14), -8px -8px 18px rgba(255,255,255,.7)',
+    pieces: ['clay-soft-style', 'button-inset-soft', 'settings-tactile-panel', 'media-controls-tactile', 'stat-tile-tactile'],
+    rules: [
+      'Radius 18 to 24px on cards and controls. 999px only on a knob, a switch, or a round transport button.',
+      'Two shadow tokens, both built from the theme surface: --raise for a control at rest (light top-left, shade bottom-right, outside) and --well for a pressed, inset, or track state (the same pair, inset). Never a drop shadow in a third colour, and never a shadow on --bg that differs from --surface.',
+      'Every control keeps 3:1 non-text contrast against the surface: a 1px edge at --line-strong, or a fill in --primary-soft, on top of the shadow. The shadow alone is decoration, not the boundary.',
+      'A pressed or on state is the inset shadow plus --primary (or --ink in a monochrome theme) on the icon, knob, or label, so the change is visible without the depth.',
     ],
   },
   {

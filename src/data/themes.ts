@@ -424,6 +424,12 @@ export const THEMES: Theme[] = [
   { id: 'skylight-night', name: 'Skylight Night', mood: 'The glass roof after dark. Deep slate blue, frost-white type, the same cobalt lit from behind.', bestFor: ['Dashboards', 'Weather', 'Home and energy'], tags: ['glass', 'cool', 'dark'],
     tokens: paint({ bg: '#0e1726', surface: '#17233a', surface2: '#213049', ink: '#eef4fb', ink2: '#b7c4d8', ink3: '#8a9ab4', line: '#2b3a55', primary: '#6ea0ff', secondary: '#4fc3b1', tertiary: '#f0a35a', success: '#5fc98a', warning: '#f0b14a', danger: '#ff7a6b', info: '#6ea0ff' }),
     display: 'Sora', text: 'Sora', radius: '16px', shadow: '0 20px 50px -24px rgba(0,0,0,.6)', specimen: 'The battery carries the house until six' },
+  { id: 'plaster', name: 'Plaster', mood: 'One warm putty, lit from the top left. Nothing is coloured; things are raised or pressed in. Monochrome neumorphism that still reads.', bestFor: ['Settings', 'Players', 'Personal apps'], tags: ['clay', 'minimal', 'light'],
+    tokens: paint({ bg: '#e6e3df', surface: '#e6e3df', surface2: '#dad6d0', ink: '#2a2622', ink2: '#56514b', ink3: '#625c56', line: '#b9b3aa', primary: '#3d3833', secondary: '#6b655e', tertiary: '#8a3d2e', success: '#2f6b4a', warning: '#a86a14', danger: '#a63a2e', info: '#4b5d75' }),
+    display: 'Sora', text: 'Sora', radius: '20px', shadow: '8px 8px 18px rgba(74,66,58,.22), -8px -8px 18px rgba(255,255,255,.85)', specimen: 'Pressed in, or raised out' },
+  { id: 'plaster-night', name: 'Plaster Night', mood: 'The same putty with the lamp off. Dark clay, light still from the top left, one pale ink.', bestFor: ['Settings', 'Players', 'Personal apps'], tags: ['clay', 'minimal', 'dark'],
+    tokens: paint({ bg: '#2b2825', surface: '#2b2825', surface2: '#36322e', ink: '#ece8e2', ink2: '#bdb7af', ink3: '#9a938a', line: '#4a453f', primary: '#e3ded7', secondary: '#a39b91', tertiary: '#e08a6f', success: '#6fbf8f', warning: '#e0a34b', danger: '#ff7a6b', info: '#8fb0d6' }),
+    display: 'Sora', text: 'Sora', radius: '20px', shadow: '8px 8px 18px rgba(0,0,0,.45), -8px -8px 18px rgba(255,255,255,.06)', specimen: 'The dial you can find in the dark' },
   { id: 'bone-signal', name: 'Bone Signal', mood: 'A machined object on a bench. Bone, charcoal, cream caps, one signal orange.', bestFor: ['Hardware', 'Instruments', 'Launches'], tags: ['light', 'industrial', 'warm'],
     tokens: paint({ bg: '#ece8df', surface: '#f6f3ec', surface2: '#e3ded2', ink: '#141414', ink2: '#4c4841', ink3: '#6a655b', line: '#ccc5b6', primary: '#ff4f1a', secondary: '#2a2925', tertiary: '#3b6e8f', success: '#2f7a52', warning: '#b06a08', danger: '#c4301a', info: '#3b6e8f' }),
     display: 'Archivo', text: 'IBM Plex Mono', radius: '10px', shadow: '0 2px 0 #c7c0b1, 0 14px 30px -14px rgba(20,20,20,.35)', specimen: 'Tap to begin' },
@@ -575,6 +581,8 @@ export const THEME_PAIRS: Record<string, { mode: 'light' | 'dark'; pair: string 
   'sign-shop-night': { mode: 'dark', pair: 'sign-shop' },
   'skylight': { mode: 'light', pair: 'skylight-night' },
   'skylight-night': { mode: 'dark', pair: 'skylight' },
+  'plaster': { mode: 'light', pair: 'plaster-night' },
+  'plaster-night': { mode: 'dark', pair: 'plaster' },
 };
 
 export function themeById(id: string) {
