@@ -48,6 +48,7 @@ Everything you need is next to this file. Read only what the job needs.
 9. [show.md](show.md) — Show mode: the centrepiece, Free colour and type, and the rendering bar. Only when the brief says `Mode: Show`.
 10. [flows.md](flows.md) — the app short path, Adopt flow, and Brand flow. Only when What they are asking sends you there.
 11. [taste.md](taste.md) — the taste-skill pack folded in: named looks (minimal, brutalist, high-end), page shape, craft details, image-first mockups, and brand boards. You do not need those skills installed separately.
+12. [styles.md](styles.md) — the style routing table: every named style, its synonyms, and where it goes. Only when they named a style.
 
 Do not run scripts from this skill. If `library/map.json` is missing, the install is broken. Say so. Do not design from memory.
 
@@ -61,10 +62,10 @@ If the open project is the Design Lounge repo itself (`src/demos` and `src/conte
 | The project already has a design system, DESIGN.md, tokens, or styled screens | Adopt flow |
 | A redesign of a site that already exists | Adopt flow, then Redesign (the audit) in [practice.md](practice.md) |
 | "Make it look like Stripe" (or Linear, Apple, Notion, any named brand) | Brand flow |
+| A style by name (any row in [styles.md](styles.md), including -ism forms and misspellings) | Read [styles.md](styles.md) and set the Named aesthetic line from its row, then keep reading rows for the flow: the next row that matches decides it (Kit flow for a new product, the app short path for an app, Show mode for spectacle) |
 | A new product, site, app, or design system | Kit flow |
-| Spectacle: an ambition word ("go wild", "Awwwards", "site of the day", "unforgettable", "award-level", "make it an experience"), or a verb that makes the page the experience ("let people play with it", "you scroll and you travel") | Kit flow, then Show mode in [website.md](website.md). Free colour and type, unless they named a theme, colour, or brand. Without one of these, it is Kit mode, even for a show, a launch, or a world you could draw |
+| Spectacle: an ambition word ("go wild", "Awwwards", "site of the day", "unforgettable", "award-level", "make it an experience"), or a verb that makes the page the experience ("let people play with it", "you scroll and you travel") | Kit flow, then Show mode in [show.md](show.md). Free colour and type, unless they named a theme, colour, or brand. Without one of these, it is Kit mode, even for a show, a launch, or a world you could draw |
 | Two looks for one product, or "show me options" built out | Kit flow twice, on two directions that differ in theme, pairing, and hero. When the subject has a world, one is Show mode, Free, and the other is locked to the library |
-| A style by name (any row in Style aliases in [taste.md](taste.md), including -ism forms) | Kit flow, routed by Style aliases in [taste.md](taste.md) |
 | A game site, a web game, a lobby, a scoreboard | Kit flow, recipe `game`, then Games and Three.js in [taste.md](taste.md) |
 | They name Three.js, a 3D scene, or an orbit, and the job is not a show, a launch, or a venue | Kit flow, recipe `game`, direction Orbit. The Lounge demo is raw WebGL. Build the product in Three.js from the brief. |
 | A handwritten or hand-lettered site | Kit flow, recipe `notebook` |
@@ -117,7 +118,7 @@ The full method is long. For a website, these are the steps that matter, in orde
 
 0. Write the brief ([brief.md](brief.md)). Its Ambition and Mode lines decide whether step 3 switches to Show mode, and whether it is Free.
 1. Read `~/.design-lounge/history.jsonl` (Recent picks in [practice.md](practice.md)). Then write three words for the subject's world: its materials, tools, and place, not "beginner" or "friendly" (Pick a direction in [practice.md](practice.md), rules 2 to 4).
-2. Lock the recipe and the direction whose mood names that world, and that is not in the recent history for this recipe. The name number only breaks a tie. The direction names the hero, the work, and the footer. Use those. Append a claim line to the history now (Recent picks), so an agent running beside you does not take the same direction.
+2. If they named a style, write the Named aesthetic line from [styles.md](styles.md) before you lock. Lock the recipe and the direction whose mood names that world, and that is not in the recent history for this recipe. The name number only breaks a tie. The direction names the hero, the work, and the footer. Use those. Append a claim line to the history now (Recent picks), so an agent running beside you does not take the same direction.
 3. Write the Idea and the Signature (Write the idea in [website.md](website.md)). Name the default look you are avoiding, including the studio template. If they asked for spectacle, switch to Show mode in [show.md](show.md) here: the Idea becomes the centrepiece, and the direction's hero, work, and footer become candidates. In Free, its theme and pairing do too: choose colour and type with Free colour and type.
 4. Pick about and contact by what content they have (Sections, one by one in [website.md](website.md)). Work and footer stay on the direction. Then the uniqueness check in Recent picks: if two of the hero, the work, and the footer match a recent site of this recipe or its related group, take the next direction. Write the Unlike line on the sheet. Then append the history line, with `work` and `footer` filled in.
 5. Open the brief of every piece you build, including the menu and any copy button. Read each down to "Optional below this line".

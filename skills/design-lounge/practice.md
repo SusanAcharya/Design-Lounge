@@ -85,7 +85,7 @@ Three numbers from 1 to 10 that say how far to push. Set them from their words, 
 | Government, health, money, anything where trust comes first | 3 | 2 | 5 |
 
 - Variance: 1 is centred and even. 10 is off-grid, with sizes that clash on purpose. Above 6, no two sections share a shape.
-- Motion: 1 to 3 is Register quiet (Register is in [website.md](website.md)). 4 to 7 is one lead effect, and a form on that page uses `field-label-morph`. 8 to 10 is that lead plus one supporting piece from the list below.
+- Motion: 1 to 3 is Register quiet, and so is a direction whose effect is null (Register is in [website.md](website.md)). 4 to 7 is one lead effect, and a form on that page uses `field-label-morph`. 8 to 10 is that lead plus one supporting piece from the list below.
 - Density: 1 to 3 is air, 4 to 6 is regular, 7 to 10 is dense. It sets the Density line.
 
 Fun, cool, simple, and professional set this table. They do not pick a direction. Unique, bold, and "make it stand out" are the Signature in [website.md](website.md). They do not raise these numbers.
@@ -188,7 +188,7 @@ Choose in this order.
 
 1. They named a theme, a pairing, or a family. Lock what they named. Choose the rest by the rules below.
 2. A recipe in `starts` matches the product. The full list is the Kind map in [reference.md](reference.md). Say which recipe, then pick one direction, as Pick a direction says. These are the pairs people mix up. One person's money is `personal`, not `dashboard` and not `bank`. A Nepali finance app is `personal`: Lokta and the Devanagari pairing. A photographer is `portfolio`. A person who ships software is `portfolio-builder`. A menu people visit is `restaurant`. A shop that ships is `food`. A retreat is `wellness`. A clinic people book is `clinic`. The marketing page of a tool is `saas`. The tool they log into is `web-app`. Staff ops is `dashboard`. A shop in a browser is `commerce`. A shop on a phone is `shop-app`. The direction locks the theme, pairing, family, hero, work, footer, and effect. The recipe's `pieces` are still the screens to open.
-3. No recipe matches. Stay inside that kind's `palettes`, `pairings`, and `families`. Read `bestFor`, `mood`, and `tags` on each theme in `library/map.json`. Lock the theme whose `bestFor` names this world. A clinic is Alpine Clinic. A payroll run is Harbour Ledger, because the job is paying people. Fog City is the first palette on kind `product` and is the wrong lock for both.
+3. No recipe matches. Stay inside that kind's `palettes`, `pairings`, and `families`. Read `mood` and `tags` on each theme in `library/map.json`, then `bestFor` in the header of `library/themes/<id>.css` for the two or three that fit. Lock the theme whose `bestFor` names this world. A clinic is Alpine Clinic. A payroll run is Harbour Ledger, because the job is paying people. Fog City is the first palette on kind `product` and is the wrong lock for both.
 4. Lock a pairing from that kind's list whose `bestFor` is the same world. Payroll on kind `product` takes Friendly SaaS, which lists fintech. A paper takes Newsroom. A clay shop whose recipe is commerce takes Atelier.
 5. Lock the family for how the product is used. Editorial for a page people read. Industrial for a yard or a field tool. Sharp for a dense platform. Quiet for a product that has to last. Soft for a friendly consumer app. Glass only when the direction names it, or when a Named aesthetic (below) lifts that.
 
@@ -236,7 +236,7 @@ Several recipes can fit one sentence. Settle it in this order before you think a
 
 1. A page kind they named wins. "A landing page" is `landing`, unless it is for fashion, wellness, fintech, or a tool, which have their own recipes (the kind map in [reference.md](reference.md)). "A shop" or "an online store" is `commerce`. "A menu" or "book a table" is `restaurant`. "A website" or "a homepage" names no kind, so go on to 2.
 2. The first screen's job. One offer and one action (pre-order, join the list, subscribe) is `landing`. Things to buy and ship is `commerce`. What is for sale today and the hours, to order or collect, is `food`. Today's hours, the menu with prices, and a table, for people who sit down, is `restaurant`. A company that needs several pages to explain itself is `marketing-site`, or `saas` when it sells software. A class studio people book on a timetable (yoga, spin, climbing, boxing) is `gym`. A retreat, a spa, or a calm practice with no timetable is `wellness`.
-3. The business picks the direction inside that recipe, not the recipe. "A landing page for a coffee roaster" is `landing`, with a warm, made-by-hand direction such as `clay-launch`. The same roaster's café would be `restaurant`, and its bean shop `commerce`.
+3. The business picks the direction inside that recipe, not the recipe. "A landing page for a bike repair shop" is `landing`, with a warm, made-by-hand direction such as `clay-launch`. The same shop's workshop with a booking page would be `professional`, and its parts shop `commerce`.
 
 If two recipes are still left and they would lock different themes, ask once which world it is (When to ask in [SKILL.md](SKILL.md)), then stop. A staff dashboard and a personal ledger are that case. A shop and a portfolio are that case. Do not send a list of questions. Do not invent a research study.
 
@@ -361,7 +361,7 @@ Feedback colours are for live state only.
 
 ### Named aesthetic
 
-When they name a style and it resolves to a row in Style aliases in [taste.md](taste.md), its signature elements are allowed, and the Look fails below that forbid them do not apply to those elements. **Scope:** "a <style> site, app, or dashboard" means the whole page or product. "with a <style> hero" or "a <style> touch" means the hero and the effect piece only.
+When they name a style and it resolves to a row in [styles.md](styles.md), its signature elements are allowed, and the Look fails below that forbid them do not apply to those elements. **Scope:** "a <style> site, app, or dashboard" means the whole page or product. "with a <style> hero" or "a <style> touch" means the hero and the effect piece only.
 
 **The lifted bans, only for that style's signature:**
 

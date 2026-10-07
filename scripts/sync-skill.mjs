@@ -264,6 +264,48 @@ fs.writeFileSync(path.join(skillLib, 'app.json'), JSON.stringify({
 }, null, 1));
 
 const brief = (o, keys) => Object.fromEntries(keys.map((k) => [k, o[k]]));
+// map.json is read whole on every build, so each theme and pairing carries a mood of at most ten words there.
+// The full mood and bestFor stay in themes/<id>.css and pairings/<id>.css, which the agent opens once it locks.
+const SHORT_MOOD = {
+  'paper-ink': 'Warm newsprint, a well-printed book, not a template.',
+  'kiln': 'Fired clay, sand, charcoal, dust still on the floor.',
+  'signal-green': 'A terminal that grew up: phosphor on soot.',
+  'loam': 'Garden journal: olive, cream, a rust like soil.',
+  'greenhouse': 'Leaf-filtered light: soft, wet, growing.',
+  'circuit': 'Engineered and a little expensive: lime on charcoal.',
+  'cinder': 'Yard ops: safety orange on poured concrete.',
+  'fog-city': 'Cool gray, white, one cobalt: civic and calm.',
+  'linen-shop': 'Flax, clay, sage, washed twice so it arrives soft.',
+  'festival': 'Two inks, one drum: fluoro pink on indigo cream.',
+  'oxide': 'Rusted metal, olive, bone: a shed that still works.',
+  'hud-teal': 'Cockpit glass: signal teal, scanline black.',
+  'lokta': 'Lokta paper, flag crimson, navy ink: a Nepali surface.',
+  'skylight': 'A glass roof at noon: pale sky, frosted panels, one cobalt.',
+  'plaster': 'One warm putty, raised or pressed in, nothing coloured.',
+  'midnight-drive': 'Synthwave: a magenta sun, a cyan grid, indigo asphalt.',
+  'gallery-wall': 'Quiet confidence: an ink-trap serif over a neutral grotesk.',
+  'swiss-precision': 'Grid-first: a grotesk for prose, a mono for numbers.',
+  'atelier': 'A heavy display serif with a soft rounded geometric.',
+  'deco-hotel': 'Thin, tall, 1920s caps over a bookish text face.',
+  'poster-condensed': 'Tall and urgent: condensed caps with an honest mono.',
+  'candy-clay': 'Puffy, round, delighted: built for chunky buttons.',
+  'hud': 'Angular, technical, cockpit-adjacent: cut corners and scanlines.',
+  'letter-hand': 'The whole site handwritten: a loose script, a clear hand.',
+  'handwritten-notes': 'A real hand for notes, a neutral grotesk for the rest.',
+  'terminal-native': 'A mono that reads like prose, a plain sans beside it.',
+  'classic-garamond': 'The book face of record with a sober grotesk.',
+  'geometric-modern': 'Clean geometric sans in two weights: the sharp product default.',
+  'night-show': 'A film-title serif set huge, one word in italic.',
+  'machined': 'An expanded grotesk at full width, a mono for specs.',
+};
+function shortMood(id, mood) {
+  if (SHORT_MOOD[id]) return SHORT_MOOD[id];
+  let s = mood.split(/(?<=[.!?])\s+/)[0].trim();
+  const words = s.split(/\s+/);
+  if (words.length > 10) s = words.slice(0, 10).join(' ').replace(/[,;:]$/, '') + '.';
+  return s;
+}
+const mapEntry = (o, keys) => ({ ...brief(o, keys), mood: shortMood(o.id, o.mood) });
 fs.writeFileSync(
   path.join(skillLib, 'map.json'),
   JSON.stringify({
@@ -271,14 +313,14 @@ fs.writeFileSync(
     site: index.site,
     credit,
     license: index.license,
-    readme: 'Read this first. Then open only what you lock: starts/<id>.json for the recipe, themes/<id>.css, pairings/<id>.css, and briefs/<id>.md for each piece. Search pieces.txt for pieces. Do not read index.json; it is the whole catalogue for tools.',
+    readme: 'Read this first. Then open only what you lock: starts/<id>.json for the recipe, themes/<id>.css, pairings/<id>.css, and briefs/<id>.md for each piece. Theme and pairing moods here are short; the full mood, bestFor, and a pairing\'s mono and numbers are in the themes/<id>.css and pairings/<id>.css headers. Search pieces.txt for pieces. Do not read index.json; it is the whole catalogue for tools.',
     counts: index.counts,
     kinds: index.kit.kinds,
     families: index.kit.families,
     // Directions live in library/starts/<id>.json, which the agent opens once it picks the recipe. The map only lists recipes.
     starts: STARTS.map((s) => ({ id: s.id, surface: s.surface, title: s.title, when: s.when })),
-    themes: index.themes.map((t) => brief(t, ['id', 'name', 'mood', 'bestFor', 'tags', 'mode', 'pair'])),
-    pairings: index.pairings.map((p) => brief(p, ['id', 'name', 'mood', 'bestFor', 'tags', 'mono', 'numbers', 'caution'])),
+    themes: index.themes.map((t) => mapEntry(t, ['id', 'name', 'mood', 'tags', 'mode', 'pair'])),
+    pairings: index.pairings.map((p) => mapEntry(p, ['id', 'name', 'mood', 'tags', 'caution'])),
     scales: SCALES,
     motion: { css: tokensCss(), durations: DURATIONS },
   }),
