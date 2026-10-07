@@ -279,4 +279,4 @@ A failed load is a banner in `--danger-soft` with `--danger-on-soft` text and a 
 
 ## What you do not add
 
-A gradient button. A glass surface on every card. A second radius. A shadow on a family whose shadow is `none`. A purple focus ring. An emoji as an icon. A control whose height is not `--control`. A default face such as Inter, Roboto, or Arial when a pairing is locked. The full list of generated-page tells is Look in [practice.md](practice.md).
+A gradient button. A glass surface on every card. A second radius. A shadow on a family whose shadow is `none` (unless lifted by Named aesthetic in [practice.md](practice.md)). A purple focus ring. An emoji as an icon. A control whose height is not `--control`. A default face such as Inter, Roboto, or Arial when a pairing is locked. The full list of generated-page tells is Look in [practice.md](practice.md).

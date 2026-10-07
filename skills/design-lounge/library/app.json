@@ -63,7 +63,7 @@
     "Bars use backdrop-filter: blur(16px) at ~72% opacity. Always give a solid fallback.",
     "Radius 16px on sheets, 999px on tab pills.",
     "Phone chrome: 44px tab bar, home indicator clearance 10px.",
-    "Do not glass a whole page. One floating layer is enough."
+    "Do not glass a whole page. One floating layer is enough, unless a Named aesthetic (glassmorphism) lifts that; then surfaces may frost over one image or scene layer."
    ]
   },
   {

@@ -190,7 +190,7 @@ Choose in this order.
 2. A recipe in `starts` matches the product. The full list is the Kind map in [reference.md](reference.md). Say which recipe, then pick one direction, as Pick a direction says. These are the pairs people mix up. One person's money is `personal`, not `dashboard` and not `bank`. A Nepali finance app is `personal`: Lokta and the Devanagari pairing. A photographer is `portfolio`. A person who ships software is `portfolio-builder`. A menu people visit is `restaurant`. A shop that ships is `food`. A retreat is `wellness`. A clinic people book is `clinic`. The marketing page of a tool is `saas`. The tool they log into is `web-app`. Staff ops is `dashboard`. A shop in a browser is `commerce`. A shop on a phone is `shop-app`. The direction locks the theme, pairing, family, hero, work, footer, and effect. The recipe's `pieces` are still the screens to open.
 3. No recipe matches. Stay inside that kind's `palettes`, `pairings`, and `families`. Read `bestFor`, `mood`, and `tags` on each theme in `library/map.json`. Lock the theme whose `bestFor` names this world. A clinic is Alpine Clinic. A payroll run is Harbour Ledger, because the job is paying people. Fog City is the first palette on kind `product` and is the wrong lock for both.
 4. Lock a pairing from that kind's list whose `bestFor` is the same world. Payroll on kind `product` takes Friendly SaaS, which lists fintech. A paper takes Newsroom. A clay shop whose recipe is commerce takes Atelier.
-5. Lock the family for how the product is used. Editorial for a page people read. Industrial for a yard or a field tool. Sharp for a dense platform. Quiet for a product that has to last. Soft for a friendly consumer app. Glass only when the direction names it.
+5. Lock the family for how the product is used. Editorial for a page people read. Industrial for a yard or a field tool. Sharp for a dense platform. Quiet for a product that has to last. Soft for a friendly consumer app. Glass only when the direction names it, or when a Named aesthetic (below) lifts that.
 
 Write one sentence: why this theme, and which theme you rejected. "Harbour Ledger, because this is payroll. Fog City is first on the list and is a general app, so it loses." Put both lines on the system sheet.
 
@@ -273,7 +273,7 @@ Reading order on the view, and only this order:
 4. The evidence. The list, the chart, or the facts that justify the answer.
 5. Chrome. Nav, filters, account. Quiet, and smaller than the answer.
 
-Size is the hierarchy. Colour is not a second hierarchy. The accent is for the action and for live state, not for making a second thing look important.
+Size is the hierarchy. Colour is not a second hierarchy. The accent is for the action and for live state, not for making a second thing look important (unless lifted by Named aesthetic, below).
 
 Group facts that are decided together. One title per group. Space between groups is the density stack gap. Space inside a group is half of that. Do not invent a third gap on the same screen.
 
@@ -359,6 +359,22 @@ Empty, loading, and error ship with the screen. A list without an empty state is
 
 Feedback colours are for live state only.
 
+### Named aesthetic
+
+When they name a style and it resolves to a row in Style aliases in [taste.md](taste.md), its signature elements are allowed, and the Look fails below that forbid them do not apply to those elements. **Scope:** "a <style> site, app, or dashboard" means the whole page or product. "with a <style> hero" or "a <style> touch" means the hero and the effect piece only.
+
+**The lifted bans, only for that style's signature:**
+
+- an added gradient, glow, or mesh (synthwave, vaporwave, ethereal, Y2K, glass);
+- glass or blur beyond the bars (glassmorphism);
+- gradient text (Y2K, vaporwave);
+- hard offset shadows and near-black ink borders (neo-brutalism; use `--ink`, still not pure `#000`);
+- neon (cyberpunk, synthwave);
+- stickers in place of icons (scrapbook; real icons stay Lounge Icons);
+- one accent and one effect (maximalism: up to three accents, two effects).
+
+**Never lifted:** 4.5:1 body text and 3:1 large text and non-text contrast, measured on the actual background, including blurred and gradient ones; focus rings; reduced motion; the label limit; placeholder and invented-content rules; one pairing. Write `Named aesthetic: <style> · scope <page|hero>` on the sheet and in DESIGN.md.
+
 ## Look
 
 You can see the finished screen. Open it. A browser at the frame size, or a screenshot of that frame. Web is 1280×800. Phone is 390×844. Tablet is 1180×820. Read the page. A screenshot alone can hide a gap. The commands are in Opening the page in [reference.md](reference.md): `playwright-cli` opens the file, resizes it, takes the screenshots, turns on reduced motion, and reads the console.
@@ -389,17 +405,17 @@ Fix every fail. Open the screen again. A fail that is still visible means the pa
 
 These are fails. They are the tells of a page that was generated and not designed.
 
-- A gradient, a glow, or a mesh you added. The locked effect piece and a Show mode centrepiece may use them. Every other region stays the theme's flat `--bg`.
-- Glass, blur, or a floating card on every region.
-- Gradient text, except the one word that changes voice in Show mode. A second accent used as decoration. The accent is the action and the live state.
+- A gradient, a glow, or a mesh you added. The locked effect piece, a Show mode centrepiece, and a Named aesthetic that lists it may use them. Every other region stays the theme's flat `--bg`.
+- Glass, blur, or a floating card on every region, unless lifted by Named aesthetic (glassmorphism, scope page).
+- Gradient text, except the one word that changes voice in Show mode. A second accent used as decoration. The accent is the action and the live state. Both unless lifted by Named aesthetic (Y2K, vaporwave, maximalism).
 - In Show mode: a centrepiece drawn in flat fills, with no light source, no depth, and nothing you can do to it. That is a diagram, not a scene. Hold it to The rendering bar in [show.md](show.md).
-- An emoji used as an icon. Icons are Lounge Icons.
+- An emoji used as an icon. Icons are Lounge Icons. A scrapbook Named aesthetic may use stickers as decoration, never as the icon.
 - A radius that is not the family's. Every corner on a large radius when the family is sharp, editorial, or industrial.
 - Three identical cards — icon, title, one sentence — standing in for the product. A feature row is allowed when a named piece is that row and the copy is about this product.
 - A headline that could sit on any company. Welcome. Unlock. Elevate. The future of. Next-generation. Your all-in-one. All-in-one platform. Use this product's noun and a number you were given.
 - A face that is not the locked pairing. Inter, Roboto, or Arial are a fail only when that pairing names a different family. If the pairing's text face is Inter, Inter is correct.
 - Body text in the display face. A fourth family.
-- A shadow on a family whose shadow is `none`.
+- A shadow on a family whose shadow is `none`, unless lifted by Named aesthetic (neo-brutalism's offset shadow).
 - A button labelled Get started, Submit, Click here, or Learn more, when the screen has a real verb. "Open the week", "Add to bag", "Confirm load".
 - Placeholder copy. Lorem. Feature one. Your text here. John Doe. Acme. A price of $99 with no product attached.
 - Motion that loops because the page felt empty. `ease` or `linear` on a UI move. The curve is the sheet's, or the piece's.
@@ -415,7 +431,7 @@ These are fails. They are the tells of a page that was generated and not designe
 - On a phone, a pinned panel or sticky block that covers more than a third of the screen. Unpin it below 720px and let it scroll with its section.
 - Pure `#000` black. A custom cursor on a daily tool. A grey box standing in for the product. Draw the product as a small working screen, as Show the work in [website.md](website.md) says, or leave it out.
 
-A piece you locked may use one of these when it is the piece's whole point: a clock footer may show the clock. Decoration a brief adds around its point is not that. A scroll cue, a numbered eyebrow, a version tag, or extra small labels in a brief are dropped, like anything you would have added yourself.
+A piece you locked may use one of these when it is the piece's whole point: a clock footer may show the clock. So may a Named aesthetic, for the elements and scope it lists. Decoration a brief adds around its point is not that. A scroll cue, a numbered eyebrow, a version tag, or extra small labels in a brief are dropped, like anything you would have added yourself.
 
 Uniform means the column, the page padding, the button, the filter, the field, the radius, the type roles, the sidebar, the panel, and the nav labels match on every screen of this pass, and on the phone form of that nav. Screen two inventing its own card, its own width, or its own rail is a fail.
 

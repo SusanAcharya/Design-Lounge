@@ -60,7 +60,7 @@ A document that reads like a good workspace tool. Warm white, near-black ink, on
 - A serif for the big headings, tight (letter-spacing about -0.03em, line-height 1.1). A plain sans for the rest. Mono only for keys and code.
 - Body ink is never pure black. Body line-height 1.6.
 - Cards are a 1px hairline with 8 to 12px corners and no shadow. Big containers and main buttons are not pills. Tags may be pills.
-- Colour is rare. Tints of `--secondary` or `--tertiary` go on tags and small icon tiles only. No colour hero band, no gradients, no neon, no glass beyond the nav.
+- Colour is rare. Tints of `--secondary` or `--tertiary` go on tags and small icon tiles only. No colour hero band, no gradients, no neon, no glass beyond the nav (unless lifted by Named aesthetic in [practice.md](practice.md)).
 - FAQ rows have no boxes, only a bottom hairline and a plain + and −.
 - Keys are `<kbd>` with a hairline and the mono face. A drawn app window gets a white top bar with three small grey dots.
 - Motion is almost invisible: fade up 12px over 600ms with `--ease-expo-out`, list items 80ms apart.
@@ -72,7 +72,7 @@ A blueprint or a declassified file. Pick one of the two modes and never mix them
 
 - Swiss print, light: themes `press-room`, `cinder`, `archive`, `oxide`. Pairings `brutal-grotesk`, `swiss-precision`, `poster-condensed`, `industrial-label`. One red accent, nothing else.
 - Telemetry, dark: themes `signal-green`, `hud-teal`, `circuit`. Pairings `terminal-native`, `signal-mono`, `hud`. A green may mark one status readout only, never body text.
-- Family `sharp` (0px) or `industrial` (2px). No soft shadows, no gradients, no glass.
+- Family `sharp` (0px) or `industrial` (2px). No soft shadows, no gradients, no glass (unless lifted by Named aesthetic in [practice.md](practice.md)).
 - Huge uppercase headings with `clamp()`, tracking -0.03 to -0.06em, line-height 0.85 to 0.95. Small uppercase mono for meta, tracking 0.05 to 0.1em.
 - Visible grid. Lines between zones: `display: grid; gap: 1px` on a parent whose background is the line colour.
 - Pages swing between dense clusters of mono data and large empty space around one heading.
@@ -85,7 +85,7 @@ A blueprint or a declassified file. Pick one of the two modes and never mix them
 
 What people mean by "make it look expensive". Choose one texture.
 
-- Dark glass, for tech and AI: themes `observatory`, `atelier-noir`, `night-desk`. Family `glass`. Blur only on the nav and overlays.
+- Dark glass, for tech and AI: themes `observatory`, `atelier-noir`, `night-desk`. Family `glass`. Blur only on the nav and overlays (unless lifted by Named aesthetic in [practice.md](practice.md)).
 - Editorial luxury, for lifestyle, property, and studios: themes `marble-hall`, `kiln`, `linen-shop`, `courtroom`. Pairings `maison`, `atelier`, `magazine-contrast`. One fixed grain layer at 3% opacity.
 - Soft structure, for consumer, health, and portfolios: themes `glacier`, `fog-city`, `greenhouse`. Family `soft`. Very wide, very soft shadows.
 - Section padding is generous: 96 to 160px on web.
@@ -134,7 +134,7 @@ The images are a picture of the locked kit, not a new design. Lock the theme, pa
 6. Build from what you read. Where an image breaks the lock (a colour not in the theme, a font not in the pairing), the lock wins. Where it breaks a rule in practice.md (a fourth small label, a six-line headline, invented stats), the rule wins.
 7. Put the image files in `design/` and list them in DESIGN.md under Sources.
 
-Image prompts ban: purple-blue gradients, floating glass widgets, blob backgrounds, rows of stat cards, avatar rows, many pills and badges, "Acme" or "NovaCore" brand names, and filler lines like "elevate your workflow".
+Image prompts ban: purple-blue gradients, floating glass widgets, blob backgrounds, rows of stat cards, avatar rows, many pills and badges, "Acme" or "NovaCore" brand names, and filler lines like "elevate your workflow". A Named aesthetic in [practice.md](practice.md) keeps its own signature in the prompt: glass widgets for glassmorphism, a gradient for synthwave.
 
 ## Brand board
 

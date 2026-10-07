@@ -33,6 +33,7 @@ World: <three words: its materials, tools, place, or hour>
 The one thing: <the centrepiece their words imply, as something you can see, touch, or travel through>
 Ambition: <everyday | finished | spectacle>, because "<their words that say so>"
 Mode: <Kit | Show, Free | Show, locked>
+Named aesthetic: <style row from Style aliases · scope page|hero, or none>
 Stack: <theirs, or plain index.html + styles.css + main.js that works when opened directly>
 Missing: <facts the page needs that they did not give, or none>
 
@@ -59,6 +60,7 @@ Done means: <the sections or screens>, opened in a browser at both sizes, fixed,
 | A place, or an hour | The World line, and a live readout candidate (the local time, a countdown). |
 | Facts: hours, prices, names, links | The Product line, word for word. |
 | A theme, colour, brand, or "use the Lounge look" | Mode stays locked to what they named. Never Free. |
+| A style by name ("glassmorphism", "neo-brutalist", "y2k") | Named aesthetic line, from Style aliases in [taste.md](taste.md). Mode stays Kit unless an ambition word is also present. |
 | "Just build it", "go", "decide", "don't ask" | Keep the line "Decide everything yourself. Do not ask." Without these words, delete that line. Any question was asked before the brief, as When to ask in [SKILL.md](SKILL.md) says. |
 
 Mode `Free` is only for spectacle on a website (Show mode in [website.md](website.md)). A product, a tool, an app, or a dashboard is `Kit`, locked to the library.

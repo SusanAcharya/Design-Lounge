@@ -10,7 +10,7 @@ These are fails, unless they asked for one by name:
 
 - Four tabs named Home, Search, Activity, and Profile, filled with the demo's sample rows.
 - A home made of four equal numbers.
-- A greeting ("Good evening, Alex"), a purple gradient, and a glass card.
+- A greeting ("Good evening, Alex"), a purple gradient, and a glass card (unless lifted by Named aesthetic in [practice.md](practice.md)).
 
 Good: "The home is today's three deliveries, and the next stop is already open." "The first screen is the recording, the timer big enough to read from across the counter."
 
