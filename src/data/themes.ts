@@ -430,6 +430,12 @@ export const THEMES: Theme[] = [
   { id: 'plaster-night', name: 'Plaster Night', mood: 'The same putty with the lamp off. Dark clay, light still from the top left, one pale ink.', bestFor: ['Settings', 'Players', 'Personal apps'], tags: ['clay', 'minimal', 'dark'],
     tokens: paint({ bg: '#2b2825', surface: '#2b2825', surface2: '#36322e', ink: '#ece8e2', ink2: '#bdb7af', ink3: '#9a938a', line: '#4a453f', primary: '#e3ded7', secondary: '#a39b91', tertiary: '#e08a6f', success: '#6fbf8f', warning: '#e0a34b', danger: '#ff7a6b', info: '#8fb0d6' }),
     display: 'Sora', text: 'Sora', radius: '20px', shadow: '8px 8px 18px rgba(0,0,0,.45), -8px -8px 18px rgba(255,255,255,.06)', specimen: 'The dial you can find in the dark' },
+  { id: 'midnight-drive', name: 'Midnight Drive', mood: 'Synthwave. Indigo asphalt, a magenta sun, cyan grid lines running to the horizon. Neon that still reads.', bestFor: ['Music', 'Events', 'Games'], tags: ['cyber', 'retro', 'dark'],
+    tokens: paint({ bg: '#120b2e', surface: '#1a1140', surface2: '#241a52', ink: '#f4ecff', ink2: '#c3b6e6', ink3: '#9a8cc4', line: '#2f2466', primary: '#ff3fa4', secondary: '#2fe2f0', tertiary: '#ffb347', success: '#5fe3a1', warning: '#ffb347', danger: '#ff5c5c', info: '#2fe2f0' }),
+    display: 'Monoton', text: 'Josefin Sans', radius: '6px', shadow: '0 0 24px rgba(255,63,164,.35)', specimen: 'Doors at ten, the grid runs all night' },
+  { id: 'sunset-drive', name: 'Sunset Drive', mood: 'The same road at golden hour. Peach sky, the magenta deeper, the cyan turned teal, ink type.', bestFor: ['Music', 'Events', 'Games'], tags: ['retro', 'warm', 'light'],
+    tokens: paint({ bg: '#ffe9dc', surface: '#fff5ee', surface2: '#ffd9c4', ink: '#2a1245', ink2: '#5c4a78', ink3: '#6f5f8c', line: '#f0c6b0', primary: '#d6177f', secondary: '#0f8f9c', tertiary: '#e0731a', success: '#1f8a5a', warning: '#c27a14', danger: '#c0392b', info: '#0f8f9c' }),
+    display: 'Monoton', text: 'Josefin Sans', radius: '6px', shadow: '0 14px 32px -16px rgba(42,18,69,.3)', specimen: 'Golden hour, then the sign comes on' },
   { id: 'bone-signal', name: 'Bone Signal', mood: 'A machined object on a bench. Bone, charcoal, cream caps, one signal orange.', bestFor: ['Hardware', 'Instruments', 'Launches'], tags: ['light', 'industrial', 'warm'],
     tokens: paint({ bg: '#ece8df', surface: '#f6f3ec', surface2: '#e3ded2', ink: '#141414', ink2: '#4c4841', ink3: '#6a655b', line: '#ccc5b6', primary: '#ff4f1a', secondary: '#2a2925', tertiary: '#3b6e8f', success: '#2f7a52', warning: '#b06a08', danger: '#c4301a', info: '#3b6e8f' }),
     display: 'Archivo', text: 'IBM Plex Mono', radius: '10px', shadow: '0 2px 0 #c7c0b1, 0 14px 30px -14px rgba(20,20,20,.35)', specimen: 'Tap to begin' },
@@ -583,6 +589,8 @@ export const THEME_PAIRS: Record<string, { mode: 'light' | 'dark'; pair: string 
   'skylight-night': { mode: 'dark', pair: 'skylight' },
   'plaster': { mode: 'light', pair: 'plaster-night' },
   'plaster-night': { mode: 'dark', pair: 'plaster' },
+  'midnight-drive': { mode: 'dark', pair: 'sunset-drive' },
+  'sunset-drive': { mode: 'light', pair: 'midnight-drive' },
 };
 
 export function themeById(id: string) {

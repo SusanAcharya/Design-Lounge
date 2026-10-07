@@ -26,7 +26,8 @@
   "three-scroll-world",
   "three-room-look",
   "webgl-shader-hero",
-  "object-3d-turntable"
+  "object-3d-turntable",
+  "sunset-grid-hero"
  ],
  "directions": [
   {
@@ -68,6 +69,16 @@
    "family": "quiet",
    "hero": "three-orbit-object",
    "effect": "three-scroll-world"
+  },
+  {
+   "id": "neon-drive",
+   "name": "Neon drive",
+   "mood": "A retro racer, a magenta sun and a cyan grid, the score in tube letters",
+   "theme": "midnight-drive",
+   "pairing": "neon-marquee",
+   "family": "sharp",
+   "hero": "sunset-grid-hero",
+   "effect": "sunset-grid-hero"
   }
  ]
 }

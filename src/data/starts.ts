@@ -149,6 +149,7 @@ const DIRECTIONS: Record<string, Direction[]> = {
     ['chrome-mixtape', 'Chrome mixtape', 'Ice silver, a drop, covers you can flip', 'y2k-chrome', 'wide-tech', 'glass', 'hero-silk-ribbon-ticker', 'coverflow-strip'],
     ['after-midnight', 'After midnight', 'A label or a venue tied to one city and one hour, lamp light on indigo, a sound you can play', 'sodium-night', 'ai-editorial', 'lit', 'moonlit-ridge-hero', 'moonlit-ridge-hero'],
     ['first-bell', 'First bell', 'The same city at dawn, lime-wash and marigold, releases as a lit list', 'temple-dawn', 'night-show', 'editorial', 'hero-asymmetric-type-lockup', 'text-mask-line-reveal'],
+    ['sunset-grid', 'Sunset grid', 'Synthwave, a magenta sun over a cyan grid, the name in tube letters', 'midnight-drive', 'neon-marquee', 'glass', 'sunset-grid-hero', 'sunset-grid-hero'],
   ]),
   'personal-site': d([
     ['sakura-essay', 'Sakura essay', 'A writer, blush paper', 'sakura-desk', 'the-lounge', 'editorial', 'hero-editorial-name-rotator', 'scroll-word-highlight'],
@@ -169,6 +170,7 @@ const DIRECTIONS: Record<string, Direction[]> = {
     ['school-fair', 'School fair', 'A bright weekend, butter and coral, many small stalls', 'playroom', 'playground', 'soft', 'bento-feature-grid', 'spring-deck'],
     ['deep-field', 'Deep field', 'A show you travel through, the scroll is the journey, starlight and amber on black', 'deep-field', 'night-show', 'lit', 'scroll-space-voyage', 'scroll-space-voyage'],
     ['place-and-hour', 'Place and hour', 'A night tied to one city and one hour, the sky drawn live, the clock counting down', 'sodium-night', 'night-show', 'lit', 'moonlit-ridge-hero', 'moonlit-ridge-hero'],
+    ['outrun-night', 'Outrun night', 'A night drive to the venue, indigo and neon, the grid is the stage', 'midnight-drive', 'neon-marquee', 'glass', 'sunset-grid-hero', 'sunset-grid-hero'],
   ]),
   museum: d([
     ['marble-hall', 'Marble hall', 'White stone, a brass plaque, the hall', 'marble-hall', 'the-lounge', 'editorial', 'editorial-landing-hero', 'pan-canvas'],
@@ -405,6 +407,7 @@ const DIRECTIONS: Record<string, Direction[]> = {
     ['ticket-booth', 'Ticket booth', 'Daylight arcade, family scores, a card table', 'ticket-booth', 'pixel-soft', 'soft', 'game-card-table', 'game-leaderboard'],
     ['cockpit-run', 'Cockpit run', 'A mission HUD over a live view', 'hud-teal', 'hud', 'sharp', 'game-hud', 'webgl-shader-hero'],
     ['orbit', 'Orbit', 'A lit object you turn, then a world you scroll through', 'night-desk', 'wide-tech', 'quiet', 'three-orbit-object', 'three-scroll-world'],
+    ['neon-drive', 'Neon drive', 'A retro racer, a magenta sun and a cyan grid, the score in tube letters', 'midnight-drive', 'neon-marquee', 'sharp', 'sunset-grid-hero', 'sunset-grid-hero'],
   ]),
   notebook: d([
     ['inkwell', 'Inkwell', 'A letter on warm paper, the whole site in a hand', 'inkwell', 'letter-hand', 'soft', 'handwritten-homepage', 'text-annotated-underlines'],

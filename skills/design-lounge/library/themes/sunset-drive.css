@@ -1,0 +1,67 @@
+/* Sunset Drive · light · pair: midnight-drive
+   The same road at golden hour. Peach sky, the magenta deeper, the cyan turned teal, ink type.
+   Best for: Music, Events, Games
+   Tags: retro, warm, light */
+/* Colour only. Fonts come from the locked pairing file. Radius and shadow come from the locked family. */
+/* Sunset Drive · full palette · Designed using Design Lounge (https://www.designlounge.live)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #d6177f;
+  --primary-ink: #fffdf8;
+  --primary-soft: #f9cccf;
+  --secondary: #0f8f9c;
+  --secondary-ink: #141210;
+  --secondary-soft: #dddcd3;
+  --tertiary: #e0731a;
+  --tertiary-ink: #141210;
+  --tertiary-soft: #fbd8c1;
+
+  /* Surface */
+  --bg: #ffe9dc;
+  --surface: #fff5ee;
+  --surface-2: #ffd9c4;
+  --surface-3: #f2cdbc;
+  --ink: #2a1245;
+  --ink-2: #5c4a78;
+  --ink-3: #6f5f8c;
+  --line: #f0c6b0;
+  --line-strong: #a58287;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #319367;
+  --success-ink: #141210;
+  --success-soft: #e0dcca;
+  --success-on-soft: #216446;
+  --warning: #c27a14;
+  --warning-ink: #141210;
+  --warning-soft: #f6d9c0;
+  --warning-on-soft: #84530e;
+  --danger: #c0392b;
+  --danger-ink: #fffdf8;
+  --danger-soft: #f6d0c3;
+  --danger-on-soft: #a93226;
+  --info: #0f8f9c;
+  --info-ink: #141210;
+  --info-soft: #dddcd3;
+  --info-on-soft: #0a626a;
+
+  /* Chrome */
+  --focus: #d6177f;
+  --link: #c11572;
+  --overlay: #141210;
+  --inverse: #2a1245;
+  --inverse-ink: #ffe9dc;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+
+}

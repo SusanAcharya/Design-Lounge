@@ -33,7 +33,8 @@
   "hero-chaptered-scenes",
   "bento-feature-grid",
   "scroll-space-voyage",
-  "moonlit-ridge-hero"
+  "moonlit-ridge-hero",
+  "sunset-grid-hero"
  ],
  "directions": [
   {
@@ -155,6 +156,18 @@
    "effect": "moonlit-ridge-hero",
    "work": "event-ticket-checkout",
    "footer": "footer-engraved-caravan-strip"
+  },
+  {
+   "id": "outrun-night",
+   "name": "Outrun night",
+   "mood": "A night drive to the venue, indigo and neon, the grid is the stage",
+   "theme": "midnight-drive",
+   "pairing": "neon-marquee",
+   "family": "glass",
+   "hero": "sunset-grid-hero",
+   "effect": "sunset-grid-hero",
+   "work": "card-event-ticket-stub",
+   "footer": "footer-enterprise-sitemap"
   }
  ]
 }

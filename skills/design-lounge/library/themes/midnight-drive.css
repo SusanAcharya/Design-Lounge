@@ -1,0 +1,67 @@
+/* Midnight Drive · dark · pair: sunset-drive
+   Synthwave. Indigo asphalt, a magenta sun, cyan grid lines running to the horizon. Neon that still reads.
+   Best for: Music, Events, Games
+   Tags: cyber, retro, dark */
+/* Colour only. Fonts come from the locked pairing file. Radius and shadow come from the locked family. */
+/* Midnight Drive · full palette · Designed using Design Lounge (https://www.designlounge.live)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #ff3fa4;
+  --primary-ink: #141210;
+  --primary-soft: #4b174a;
+  --secondary: #2fe2f0;
+  --secondary-ink: #141210;
+  --secondary-soft: #193f5d;
+  --tertiary: #ffb347;
+  --tertiary-ink: #141210;
+  --tertiary-soft: #4b3334;
+
+  /* Surface */
+  --bg: #120b2e;
+  --surface: #1a1140;
+  --surface-2: #241a52;
+  --surface-3: #392f63;
+  --ink: #f4ecff;
+  --ink-2: #c3b6e6;
+  --ink-3: #9a8cc4;
+  --line: #2f2466;
+  --line-strong: #7a70a0;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #5fe3a1;
+  --success-ink: #141210;
+  --success-soft: #243f4a;
+  --success-on-soft: #5fe3a1;
+  --warning: #ffb347;
+  --warning-ink: #141210;
+  --warning-soft: #4b3334;
+  --warning-on-soft: #ffb347;
+  --danger: #ff5c5c;
+  --danger-ink: #141210;
+  --danger-soft: #4b1e39;
+  --danger-on-soft: #ff7070;
+  --info: #2fe2f0;
+  --info-ink: #141210;
+  --info-soft: #193f5d;
+  --info-on-soft: #2fe2f0;
+
+  /* Chrome */
+  --focus: #ff3fa4;
+  --link: #ff3fa4;
+  --overlay: #070605;
+  --inverse: #f4ecff;
+  --inverse-ink: #120b2e;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+
+}

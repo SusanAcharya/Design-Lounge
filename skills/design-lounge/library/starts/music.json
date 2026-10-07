@@ -28,7 +28,8 @@
   "paper-article-reader",
   "hero-silk-ribbon-ticker",
   "moonlit-ridge-hero",
-  "hero-asymmetric-type-lockup"
+  "hero-asymmetric-type-lockup",
+  "sunset-grid-hero"
  ],
  "directions": [
   {
@@ -150,6 +151,18 @@
    "effect": "text-mask-line-reveal",
    "work": "corner-player",
    "footer": "footer-sitemap-columns"
+  },
+  {
+   "id": "sunset-grid",
+   "name": "Sunset grid",
+   "mood": "Synthwave, a magenta sun over a cyan grid, the name in tube letters",
+   "theme": "midnight-drive",
+   "pairing": "neon-marquee",
+   "family": "glass",
+   "hero": "sunset-grid-hero",
+   "effect": "sunset-grid-hero",
+   "work": "week-schedule",
+   "footer": "footer-engraved-caravan-strip"
   }
  ]
 }

@@ -540,3 +540,4 @@ dashboard-glass-home | web | dashboard | Glass dashboard home | glass minimal | 
 settings-tactile-panel | mobile-app | settings | Tactile settings panel | clay soft minimal | settings neumorphism clay switch slider
 media-controls-tactile | web | media | Tactile media controls | clay soft minimal | player media neumorphism clay controls
 stat-tile-tactile | web | charts | Tactile stat tiles | clay soft minimal | stat kpi neumorphism clay chart
+sunset-grid-hero | web | hero | Sunset grid hero | cyber retro dark | synthwave grid sun canvas hero neon

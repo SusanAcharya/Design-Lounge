@@ -604,7 +604,8 @@
         "greeting-loader",
         "hud-boot-gate",
         "phone-splash-launch",
-        "loader-spinner-set"
+        "loader-spinner-set",
+        "sunset-grid-hero"
       ]
     },
     {
