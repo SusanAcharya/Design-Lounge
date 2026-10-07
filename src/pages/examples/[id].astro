@@ -106,7 +106,7 @@ const pad = (k: number) => String(k).padStart(2, '0');
           <a class="lock" href={`/type/${p.id}`}>
             <span class="eyebrow">Type pairing</span>
             <span class="lk-name">{p.name}</span>
-            <span class="lk-note">{p.display.family} + {p.text.family}</span>
+            <span class="lk-note">{ex.builtFonts ?? `${p.display.family} + ${p.text.family}`}</span>
           </a>
         )}
         {f && (

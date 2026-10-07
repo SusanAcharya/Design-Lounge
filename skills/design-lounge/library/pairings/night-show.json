@@ -2,12 +2,12 @@
  "id": "night-show",
  "name": "Night Show",
  "display": {
-  "family": "Instrument Serif",
+  "family": "Noto Serif Display",
   "weight": 400,
   "italic": false,
   "upper": false,
-  "trackingEm": -0.035,
-  "google": "Instrument+Serif:ital@0;1",
+  "trackingEm": -0.025,
+  "google": "Noto+Serif+Display:ital,wght@0,300..700;1,300..700",
   "lineHeight": 1
  },
  "text": {

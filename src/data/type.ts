@@ -212,7 +212,7 @@ export const PAIRINGS: Pairing[] = [
     text: { family: 'Sora', spec: 'Sora:wght@400;600;800', weight: 400, fallback: sans },
     headline: 'Your next appointment', body: 'Dr. Pradhan, Thursday 10:30. Bring your last two reports. Parking is free for the first hour.', label: 'Clinic app', bg: '#edf6f2', ink: '#11302a', accent: '#10a37f' },
   { id: 'night-show', name: 'Night Show', mood: 'A film-title serif set huge, one word in italic, over a light grotesk and a mono for the readouts.', bestFor: ['Shows', 'Launches', 'Labels'], tags: ['editorial', 'cinematic'],
-    display: { family: 'Instrument Serif', spec: 'Instrument+Serif:ital@0;1', weight: 400, tracking: '-0.035em', fallback: serif },
+    display: { family: 'Noto Serif Display', spec: 'Noto+Serif+Display:ital,wght@0,300..700;1,300..700', weight: 400, tracking: '-0.025em', fallback: serif },
     text: { family: 'Inter Tight', spec: 'Inter+Tight:wght@300;400;500;600', weight: 400, fallback: sans },
     mono: { family: 'JetBrains Mono', spec: 'JetBrains+Mono:wght@300;400;500', weight: 400, fallback: mono },
     headline: 'Go for apogee', body: 'Four crew, nine minutes to orbit, three days to the far side of the Moon. Watch it from the pad.', label: 'T minus 00:42:10', bg: '#04050a', ink: '#f1e8d6', accent: '#ffb35e' },

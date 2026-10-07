@@ -24,6 +24,8 @@ export interface Example {
   phone?: boolean;
   /** Show mode, Free: colour and type chosen for this world instead of a library theme and pairing. */
   free?: { colours: string[]; fonts: string[]; why: string };
+  /** The pairing's faces when this was built, if the pairing has changed since. */
+  builtFonts?: string;
 }
 
 export const builtUrl = (e: Example) => `/built/${e.id}/index.html`;
@@ -257,6 +259,7 @@ export const EXAMPLES: Example[] = [
     direction: 'first-bell',
     theme: 'temple-dawn',
     pairing: 'night-show',
+    builtFonts: 'Instrument Serif + Inter Tight, the faces Night Show set when this was built',
     family: 'editorial',
     effects: ['hero-asymmetric-type-lockup', 'text-mask-line-reveal', 'stacking-cards-scroll', 'corner-player'],
   },
