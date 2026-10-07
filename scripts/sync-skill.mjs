@@ -222,7 +222,7 @@ for (const dir of ['starts', 'themes', 'pairings']) {
 }
 for (const s of STARTS) fs.writeFileSync(path.join(skillLib, 'starts', `${s.id}.json`), JSON.stringify(s, null, 1));
 for (const t of index.themes) {
-  const head = `/* ${t.name} · ${t.mode}${t.pair ? ` · pair: ${t.pair}` : ' · no pair'}\n   ${t.mood}\n   Best for: ${(t.bestFor || []).join(', ')} */\n`;
+  const head = `/* ${t.name} · ${t.mode}${t.pair ? ` · pair: ${t.pair}` : ' · no pair'}\n   ${t.mood}\n   Best for: ${(t.bestFor || []).join(', ')}\n   Tags: ${(t.tags || []).join(', ')} */\n`;
   const colourOnly = t.css
     .split('\n')
     .filter((line) => !/--(font-(display|text|mono)|radius|shadow)\s*:/.test(line))
@@ -277,16 +277,16 @@ fs.writeFileSync(
     families: index.kit.families,
     // Directions live in library/starts/<id>.json, which the agent opens once it picks the recipe. The map only lists recipes.
     starts: STARTS.map((s) => ({ id: s.id, surface: s.surface, title: s.title, when: s.when })),
-    themes: index.themes.map((t) => brief(t, ['id', 'name', 'mood', 'bestFor', 'mode', 'pair'])),
-    pairings: index.pairings.map((p) => brief(p, ['id', 'name', 'mood', 'bestFor', 'mono', 'numbers', 'caution'])),
+    themes: index.themes.map((t) => brief(t, ['id', 'name', 'mood', 'bestFor', 'tags', 'mode', 'pair'])),
+    pairings: index.pairings.map((p) => brief(p, ['id', 'name', 'mood', 'bestFor', 'tags', 'mono', 'numbers', 'caution'])),
     scales: SCALES,
     motion: { css: tokensCss(), durations: DURATIONS },
   }),
 );
 fs.writeFileSync(
   path.join(skillLib, 'pieces.txt'),
-  `# Design Lounge pieces · id | platform | category | title | tags\n# Spec: briefs/<id>.md · Live demo: ${lounge}/demo/<id>.html\n# Search this file. Do not read it top to bottom.\n` +
-    index.pieces.map((p) => [p.id, p.platform, p.category, p.title, (p.tags || []).join(' ')].join(' | ')).join('\n') + '\n',
+  `# Design Lounge pieces · id | platform | category | title | styles | tags\n# Spec: briefs/<id>.md · Live demo: ${lounge}/demo/<id>.html\n# Search this file. Do not read it top to bottom.\n` +
+    index.pieces.map((p) => [p.id, p.platform, p.category, p.title, (p.styles || []).join(' '), (p.tags || []).join(' ')].join(' | ')).join('\n') + '\n',
 );
 fs.writeFileSync(
   path.join(skillLib, 'icons.json'),

@@ -1,534 +1,534 @@
-# Design Lounge pieces · id | platform | category | title | tags
+# Design Lounge pieces · id | platform | category | title | styles | tags
 # Spec: briefs/<id>.md · Live demo: https://www.designlounge.live/demo/<id>.html
 # Search this file. Do not read it top to bottom.
-analytics-dashboard-overview | web | dashboard | Analytics dashboard overview | dashboard analytics chart svg table
-avatar-stack-presence | web | micro | Avatar stack with presence | avatars presence collaboration tooltip realtime
-bento-feature-grid | web | features | Bento feature grid | marketing grid features landing
-ios-bottom-sheet-detents | mobile-app | overlays | Bottom sheet with three detents | bottom-sheet map gesture ios list
-brutalist-studio-home | web | portfolio | Brutalist studio home | homepage studio portfolio list marquee
-button-state-morph | web | buttons | Button state morph | button checkout loading success micro-interaction
-collapsing-sidebar-rail | web | navigation | Collapsing sidebar rail | navigation sidebar dashboard shell
-command-palette | web | navigation | Command palette | command-palette search keyboard navigation dialog
-date-range-picker | web | pickers | Date range picker | date-picker calendar popover analytics keyboard
-dense-data-table | web | data | Dense data table | table data selection sorting billing
-docs-three-column | web | reading | Documentation three-column layout | documentation navigation layout developer
-editorial-landing-hero | web | hero | Editorial landing hero | landing hero editorial typography reveal
-editorial-mega-menu | web | navbar | Editorial mega menu | navigation mega-menu editorial header hover
-empty-state-line-illustration | web | feedback | Empty state with line illustration | empty-state inbox illustration onboarding
-mobile-filter-chips-list | mobile-web | inputs | Filter chips product list | ecommerce filters chips bottom-sheet grid skeleton
-ios-fintech-home | mobile-app | dashboard | Fintech home | fintech banking list glass ios
-ios-glass-tab-bar | mobile-app | navigation | Floating glass tab bar | navigation tab-bar glass ios
-tablet-floating-tool-palette | tablet | utility | Floating tool palette | toolbar palette canvas drawing popover drag
-mobile-fullscreen-menu | mobile-web | navbar | Full-screen mobile menu | navigation menu overlay hamburger editorial
-ios-grouped-settings | mobile-app | settings | Grouped settings list | settings list toggle forms ios
-hover-tilt-cards | web | cards | Hover tilt cards | cards pricing hover 3d tilt
-ink-fill-progress | web | loaders | Ink-fill upload progress | progress upload loader typography
-inline-form-validation | web | inputs | Inline form validation | form validation signup password accessibility
-kanban-board | web | dashboard | Kanban board | kanban board drag-and-drop project
-kinetic-type-marquee | web | text-motion | Kinetic type marquee | typography marquee variable-font specimen hero
-lamp-theme-toggle | web | micro | Lamp pull-cord theme toggle | theme dark-mode toggle view-transition editorial
-ios-large-title-collapse | mobile-app | scroll | Large title collapse on scroll | navigation toolbar scroll glass ios editorial
-luxe-product-detail | web | ecommerce | Luxe product detail | ecommerce product luxury selector button
-luxe-serif-style | web | design-language | Luxe serif design style | style-guide luxe serif ecommerce typography
-m3-fab-menu | mobile-app | buttons | M3 expanding FAB menu | material fab menu actions dark
-m3-expressive-home | mobile-app | dashboard | M3 Expressive home feed | material home feed toolbar fab cards
-m3-navigation-drawer | mobile-app | navigation | M3 modal navigation drawer | material navigation drawer menu app-bar
-m3-search-bar-morph | mobile-app | inputs | M3 search bar morph | material search container-transform app-bar dark
-magazine-editorial-grid | web | blog | Magazine editorial grid | editorial magazine grid typography
-masonry-gallery-captions | web | gallery | Masonry gallery with captions | gallery masonry portfolio filter
-mobile-landing-sticky-cta | mobile-web | landing | Mobile landing with sticky CTA | landing marketing carousel accordion cta
-modal-dialog-focus-trap | web | overlays | Modal dialog with focus trap | dialog modal confirm destructive focus
-multi-step-form-stepper | web | inputs | Multi-step form stepper | form stepper onboarding validation wizard
-neo-brutalist-style | web | design-language | Neo-brutalist design style | style-guide brutalist components buttons toggles
-nested-dropdown-menu | web | navigation | Nested dropdown menu | menu dropdown submenu menubar keyboard
-notification-center-panel | web | overlays | Notification center panel | notifications popover tabs dashboard dark
-ios-now-playing | mobile-app | media | Now playing | music player scrubber lyrics ios dark
-odometer-counter | web | stats | Odometer counter | counter odometer numbers dashboard revenue
-ios-onboarding-carousel | mobile-app | onboarding | Onboarding carousel | onboarding carousel pagination ios dark
-onboarding-checklist | web | onboarding | Onboarding checklist card | onboarding checklist progress activation card
-mobile-one-page-checkout | mobile-web | ecommerce | One-page mobile checkout | checkout form ecommerce validation payment
-optimistic-like-button | web | micro | Optimistic like button | like optimistic-ui toast micro-interaction social
-orbit-dots-loader | web | loaders | Orbit dots loader family | loader spinner animation feedback
-page-transition-curtain | web | transitions | Page transition curtain | transition navigation curtain typography hotel
-paper-ink-style | web | design-language | Paper and ink design style | style-guide paper editorial typography components
-paper-article-reader | web | reading | Paper article reader | article reading typography sidenotes progress
-ios-pull-to-refresh | mobile-app | loaders | Pull to refresh with drawn ring | pull-to-refresh list gesture loading dark
-pwa-app-shell | pwa | loaders | PWA app shell hydration | pwa app-shell skeleton loading cache transit
-pwa-connectivity-banner | pwa | feedback | PWA connectivity banner | pwa offline banner status cache
-pwa-install-sheet | pwa | overlays | PWA install sheet | pwa install bottom-sheet onboarding dialog
-pwa-news-reader | pwa | reading | PWA news reader | pwa news reading offline chips list
-pwa-update-toast | pwa | feedback | PWA update toast | pwa toast update service-worker countdown dark
-scroll-reading-progress | web | scroll | Scroll reading progress | scroll article progress table-of-contents editorial
-settings-page-sticky-nav | web | settings | Settings page with sticky nav | settings navigation forms scroll-spy toggle
-tablet-sidebar-overlay-pin | tablet | navigation | Sidebar with overlay and pin modes | sidebar navigation notes overlay layout
-skeleton-to-content-swap | web | loaders | Skeleton to content swap | loading skeleton feed cards stagger
-segmented-control-sliding | web | navigation | Sliding segmented control | segmented-control tabs toggle radio banking
-split-sign-in | web | auth | Split sign-in | auth form sign-in testimonial split
-spotlight-hover-grid | web | cursor | Spotlight hover grid | grid hover spotlight cards features
-staggered-list-reveal | web | scroll | Staggered list reveal | list stagger filter table banking
-sticky-split-story | web | scroll | Sticky split scroll story | storytelling scroll sticky editorial
-mobile-story-viewer | mobile-web | media | Story viewer with hold to pause | stories gestures progress media viewer
-ios-swipe-row-actions | mobile-app | micro | Swipe-to-reveal row actions | list gesture swipe mail ios
-swiss-grid-pricing | web | pricing | Swiss grid pricing | pricing grid toggle marketing swiss
-swiss-poster-style | web | design-language | Swiss poster style | poster swiss typography grid
-tablet-split-view-mail | tablet | messaging | Tablet mail split view | mail split-view three-pane list-detail keyboard
-tablet-dashboard-grid | tablet | dashboard | Tablet ops dashboard grid | dashboard chart gauge live-data dark ops
-tabs-morphing-underline | web | navigation | Tabs with morphing underline | tabs navigation underline overflow publishing
-terminal-404 | web | error | Terminal 404 | 404 error terminal typewriter command-line
-terminal-ui-style | web | design-language | Terminal UI style sheet | terminal monospace style-guide ops
-text-scramble-reveal | web | text-motion | Text scramble reveal | typography text-effect headline monospace hero
-toast-stack | web | feedback | Toast stack | toast notification feedback stack hover
-tablet-two-column-reader | tablet | reading | Two-column tablet reader | reader typography columns pagination editorial
-card-flip-3d | web | cards | 3D card flip trio | card flip 3d wallet transform
-accordion-grid-rows | web | faq | Grid-rows FAQ accordion | accordion faq disclosure keyboard grid
-hover-image-trail | web | cursor | Hover image trail | portfolio cursor trail list hover editorial
-ios-app-switcher-stack | mobile-app | transitions | iOS app switcher stack | app-switcher cards gesture multitasking ios
-ios-context-menu-lift | mobile-app | overlays | iOS context menu lift | context-menu long-press messaging ios haptics
-logo-draw-intro | web | transitions | Logo draw site intro | intro preloader svg stagger hero reveal
-magnetic-buttons | web | cursor | Magnetic buttons | buttons hover cursor navigation microinteraction
-shared-element-expand | web | transitions | Shared element expand | flip transition cards dialog gallery
-variable-font-proximity | web | text-motion | Variable font proximity headline | typography variable-font hero cursor specimen
-account-menu-panel | web | overlays | Account menu panel | account menu overlay focus
-ios-health-activity-rings | mobile-app | dashboard | Activity rings with weekly picker | health rings chart fitness ios
-landing-agency-case-wall | web | landing | Agency landing with case wall | landing agency grid brutalist cta
-hero-ai-prompt-cycle | web | hero | AI prompt cycle hero | hero prompt typewriter saas answer
-pricing-annual-toggle-roll | web | pricing | Annual toggle with rolling prices | pricing toggle odometer billing numbers
-portfolio-architect-index | web | portfolio | Architect index with plan drawings | portfolio index architecture grid hover
-hero-asymmetric-type-lockup | web | hero | Asymmetric type lockup hero | hero typography editorial lockup
-audit-activity-log | web | data | Audit activity log | audit log activity filter
-hero-bauhaus-composition | web | hero | Bauhaus composition hero | hero geometric composition school landing
-bauhaus-style | web | design-language | Bauhaus design language kit | bauhaus geometric kit typography primary
-billing-plan-summary | web | settings | Billing plan summary | billing plan usage invoices
-footer-centered-colophon | web | footer | Centered colophon footer | footer colophon editorial essay
-checkbox-draw-list | web | inputs | Checkbox draw list | checkbox todo list progress form
-clay-soft-style | web | design-language | Clay soft design language kit | clay playful kit kids habit
-contact-conversational-form | web | contact | Conversational contact form | contact form conversational multi-step keyboard
-profile-creator-masthead | web | profile | Creator profile with masthead | profile editorial masthead subscribe chips
-cta-split-dark-band | web | cta | CTA split dark band | cta footer form hardware
-cyber-hud-style | web | design-language | Cyber HUD design language kit | cyber hud kit dark console
-landing-devtool-dark | web | landing | Dark devtool landing page | landing api developer code pricing
-deco-hotel-style | web | design-language | Deco hotel design language kit | deco hotel kit gold identity
-background-dot-wave | web | backgrounds | Dot wave background | background canvas dots hero wave
-hero-editorial-name-rotator | web | hero | Editorial name rotator hero | hero portfolio rotator editorial slots
-footer-enterprise-sitemap | web | footer | Enterprise sitemap footer | footer sitemap status locale enterprise saas
-faq-two-column-search | web | faq | FAQ two-column search | faq search accordion docs
-landing-fashion-atelier | web | landing | Fashion atelier landing page | landing fashion hero editorial lookbook
-hero-flashlight-reveal | web | hero | Flashlight reveal hero | hero cursor mask reveal saas
-navbar-floating-pill-shrink | web | navbar | Floating pill navbar | navbar scroll sticky landing scrollspy
-contact-giant-email-copy | web | contact | Giant email, click to copy | contact copy email scramble cursor
-footer-giant-wordmark-reveal | web | footer | Giant wordmark reveal footer | footer wordmark scroll sitemap clock studio
-cursor-ink-blob | web | cursor | Ink blob cursor | cursor blob editorial hover
-navbar-island-morph | web | navbar | Island morph navbar | navbar island morph search radio
-charts-kpi-spark-row | web | charts | KPI row with sparklines | charts kpi sparkline dashboard
-landing-fintech-light | web | landing | Light fintech landing with tilting card | landing fintech banking card tilt
-logos-mono-marquee | web | logos | Logos mono marquee | logos marquee customers swiss
-portfolio-case-study-long | web | portfolio | Long-form product case study | portfolio case-study editorial product-design scroll
-m3-container-transform | mobile-app | transitions | M3 container transform | transition container-transform list detail material
-m3-music-player-expressive | mobile-app | media | M3 expressive music player | music player material waveform mobile
-auth-magic-link-sent | web | auth | Magic link sent | auth sign-in email passwordless countdown
-text-marker-highlight-draw | web | text-motion | Marker highlight draw | text marker highlight handwriting editorial
-text-mask-line-reveal | web | text-motion | Mask line reveal | headline reveal stagger mask editorial
-mobile-inbox-list | mobile-app | messaging | Mobile inbox list | inbox list mobile tabs
-mobile-run-detail | mobile-app | utility | Mobile run detail | detail mobile confirm record
-portfolio-motion-showreel | web | portfolio | Motion designer showreel index | portfolio motion accordion showreel dark
-newsletter-fold-inline | web | newsletter | Newsletter fold inline | newsletter article form editorial
-footer-newsletter-split | web | footer | Newsletter split footer | footer newsletter subscribe magazine sitemap
-organic-garden-style | web | design-language | Organic garden design language kit | organic garden kit typography seed
-background-paper-grain | web | backgrounds | Paper grain and ink blots | background grain paper poetry
-auth-passkey-setup | mobile-app | auth | Passkey setup with face-scan ring | auth passkey biometrics ios security
-people-role-list | web | team | People by role | people directory roles list
-portfolio-photographer-horizontal | web | portfolio | Photographer horizontal gallery | portfolio gallery horizontal photography scroll
-pixel-arcade-style | web | design-language | Pixel arcade design language kit | pixel arcade kit retro game
-portfolio-index-hover-preview | web | portfolio | Portfolio index with hover preview | portfolio index hover list cursor
-hero-product-window-tilt | web | hero | Product window tilt hero | hero saas 3d parallax product
-record-detail-header | web | dashboard | Record detail header | detail record tabs admin
-riso-print-style | web | design-language | Riso print design language kit | riso print kit zine overprint
-search-results-filters | web | utility | Search results with filters | search filters catalogue list
-text-split-letter-wave | web | text-motion | Split letter wave | headline letters stagger hover hero
-contact-split-map-form | web | contact | Split map contact form | contact form map locations floating-labels
-stacking-cards-scroll | web | scroll | Stacking cards on scroll | scroll sticky cards stack skincare
-stats-ticker-band | web | stats | Stats ticker band | stats counter climate numbers band
-pricing-comparison-sticky | web | pricing | Sticky comparison table | pricing table comparison sticky accordion
-cta-sticky-mobile-bar | mobile-web | cta | Sticky mobile CTA bar | cta sticky mobile product
-features-sticky-scroll-steps | web | features | Sticky scroll feature steps | features sticky scroll steps product
-contact-booking-hours | web | contact | Studio hours and booking | contact dialog hours studio
-hero-swiss-grid-wordmark | web | hero | Swiss grid wordmark hero | hero grid wordmark typography studio
-features-tabbed-preview | web | features | Tabbed feature preview | features tabs autoplay product-ui saas
-team-hover-portrait-grid | web | team | Team hover portrait grid | team portraits hover studio
-testimonials-quote-carousel | web | testimonials | Testimonials quote carousel | testimonials carousel quotes section
-testimonials-wall-grid | web | testimonials | Testimonials wall grid | testimonials masonry grid quotes
-toggle-switch-set | web | buttons | Toggle switch set | toggle switch settings preferences form
-background-topographic-lines | web | backgrounds | Topographic lines background | background canvas contours map hero
-upload-file-queue | web | inputs | Upload file queue | upload files queue progress
-ios-weather-hourly-scrub | mobile-app | utility | Weather with an hourly scrubber | weather scrubber chart gesture ios
-landing-wellness-retreat | web | landing | Wellness retreat booking landing | landing wellness booking cards retreat
-y2k-chrome-style | web | design-language | Y2K chrome design language kit | y2k chrome kit typography music
-button-3d-press | web | buttons | 3D keycap press buttons | buttons keycap 3d press toggle shortcuts
-button-add-to-cart | web | buttons | Add to cart that becomes a stepper | ecommerce cart stepper add-to-cart shop
-phone-calendar-agenda | mobile-app | utility | Agenda calendar with quick add | calendar agenda schedule material sheet
-agent-step-trace | web | data | Agent step trace | agent trace steps
-ai-chat-workspace | web | messaging | AI chat workspace | ai chat assistant streaming citations
-features-alternating-rows | web | features | Alternating feature rows | features product-ui scroll industrial saas
-analog-stick | web | inputs | Analog stick | stick direction lean
-app-icon-colour-wall | web | gallery | App icon colour wall | gallery app-icons sorting colour flip
-app-icon-shelf-gallery | web | gallery | App icon shelf gallery | gallery app-icons museum filters detail
-app-icon-spec-sheet | web | utility | App icon spec sheet | app-icons spec keylines export ios
-architecture-studio-index | web | portfolio | Architecture studio index | portfolio architecture table sort map
-background-aurora-mesh | web | backgrounds | Aurora mesh background | background gradient aurora mesh hero grain
-automation-config-live-preview | web | features | Automation builder with live preview | configurator preview form sticky saas
-card-boarding-pass | web | cards | Boarding pass with fold-out details | cards travel boarding-pass qr wallet
-book-page-flip | web | reading | Book page flip | book page flip
-phone-booking-slots | mobile-app | pickers | Booking time slots | booking appointment slots date wellness
-gym-membership-home | web | landing | Boxing gym home with timetable | landing gym timetable pricing sport
-breadcrumb | web | navigation | Breadcrumb | breadcrumb navigation path
-budget-meter | web | charts | Budget meters | budget meter finance warning
-button-roles | web | buttons | Button roles | button primary destructive disabled
-card-cafe-menu-board | web | cards | Café chalkboard and letterboard menu | cards menu cafe chalkboard toggle
-calendar-month | web | pickers | Calendar month | calendar date month picker
-calendar-week-planner | web | utility | Calendar week planner | calendar week schedule drag planner
-case-file-horizontal-scroll | web | scroll | Case file horizontal scroll | horizontal pinned storytelling chapters night
-changelog-timeline | web | blog | Changelog timeline | changelog timeline filter
-hero-chaptered-scenes | web | hero | Chaptered cinema hero | hero chapters autoplay cinema architecture
-chat-thread | mobile-app | messaging | Chat thread | chat thread message phone
-checkbox-group | web | inputs | Checkbox group | checkbox field loads group
-chip-bucket | web | cards | Chip bucket | drag bucket chips
-card-cinema-ticket | web | cards | Cinema ticket with tear-off stub | cards ticket cinema drag tear
-hero-video-loop | web | hero | Cinematic video loop hero | hero video film loop hotel
-cited-answer | web | reading | Cited answer | citation source answer
-mockup-ipod-classic | web | mockups | Click-wheel player mockup | mockup music player click-wheel retro
-code-snippet-tabs | web | reading | Code snippet tabs | code tabs copy
-combobox | web | inputs | Combobox | combobox search listbox form
-card-event-ticket-stub | web | cards | Concert ticket stack with foil strip | cards ticket concert foil stack
-integrations-connect | web | features | Connection grid | integrations connect grid
-consent-bar | web | utility | Consent bar | consent privacy bar choice
-gallery-contact-sheet | web | gallery | Contact sheet | gallery contact-sheet plates selection
-content-card | web | cards | Content card | card record load list
-widget-control-toggles | mobile-app | widgets | Control centre toggles | controls toggles sliders settings phone
-button-copy-share | web | buttons | Copy, share and copy-email buttons | copy clipboard share menu tooltip editorial
-corner-player | web | media | Corner player | player corner video
-course-landing-curriculum | web | landing | Course landing with curriculum | course education curriculum accordion modal pricing
-coverflow-strip | web | media | Coverflow strip | coverflow carousel cards
-cta-giant-email-band | web | cta | CTA giant email band | cta email form signup trial
-curve-drawer | web | overlays | Curve drawer | drawer curve hold
-frame-circle-cut | web | cards | Cut-shape image frames | cards image mask portfolio product
-card-daily-quote | web | cards | Daily quote card | quote card swipe share gradient wellbeing
-social-repo-card | web | social | Dark mono repository card | repository code sparkline stars developer
-motion-shot-gallery-dark | web | gallery | Dark motion shot gallery | gallery motion filters grid showcase
-clinic-home-booking | web | landing | Dental clinic home with live booking | landing clinic booking health local
-notif-deploy-status | web | feedback | Deploy status notification | notification deploy devtools progress stepper toast
-frame-transform-box | web | micro | Design-tool transform box | selection resize rotate canvas editor drag
-dropdown-menubar-file | web | overlays | Desktop app menubar | menubar menu submenu desktop keyboard shortcuts
-widget-device-battery | web | widgets | Device battery widget | battery widget devices charging rings
-background-diagonal-boxes | web | backgrounds | Diagonal boxes background | background isometric canvas pointer 3d
-dial-knob | web | inputs | Dial knob | dial knob input
-diamond-badge-rail | web | cards | Diamond badge rail | cards carousel badges filter scrubber dark
-profile-contact-card | web | profile | Digital business card | profile contact vcard flip qr
-docs-install-steps | web | reading | Docs install steps with code panels | documentation code steps install developer
-docs-hatched-gutter-shell | web | reading | Docs shell with hatched gutters | documentation layout dark-mode sidebar developer
-donation-page-impact | web | landing | Donation page with impact | donation nonprofit form progress landing
-hero-dot-matrix-field | web | hero | Dot-matrix blob field hero | hero canvas dot-matrix agency interactive
-button-download-progress | web | buttons | Download button with progress and retry | download progress retry developer release
-drag-to-confirm | web | buttons | Drag to confirm | confirm drag destructive
-widget-analog-clock | web | widgets | Dress-watch analog clock widget | clock time watch timezone svg
-card-drop-cap-editorial | web | reading | Drop-cap editorial card | editorial article typography drop-cap reading
-edge-light-button | web | buttons | Edge light button | button edge light
-error-404-editorial | web | error | Editorial 404 with search | 404 error search riso print
-social-profile-card | web | social | Editorial creator profile card | profile creator follow stats card
-phone-sign-in | mobile-app | auth | Editorial phone sign-in | auth sign-in form validation phone
-profile-editorial-staff | web | team | Editorial staff profile card | team staff author newspaper signature
-footer-engraved-caravan-strip | web | footer | Engraved caravan footer | footer illustration parallax newsletter clock svg
-throw-loop-engraved-strip | web | backgrounds | Engraved disc throw loop | illustration offset-path loop svg keyframes playful
-hero-engraved-moonrise-plate | web | hero | Engraved moonrise hero plate | hero illustration parallax portfolio svg night
-card-event-countdown | web | cards | Event countdown ticket card | cards event countdown tickets calendar
-event-ticket-checkout | web | ecommerce | Event ticket checkout | tickets checkout seats timer events
-load-failed-retry | web | error | Failed load with retry | error retry list banner
-faq-category-accordion | web | faq | FAQ category accordion | faq accordion search help support
-widget-compass | web | widgets | Field compass widget | compass widget outdoor dial map
-file-upload-manager | web | inputs | File upload manager | upload files dropzone progress queue
-gallery-film-strip | web | gallery | Film strip with loupe | gallery film loupe negative darkroom
-dropdown-filter-sort | web | overlays | Filter and sort dropdowns | filter sort dropdown table chips listbox
-filter-toolbar | web | utility | Filter toolbar | filter search toolbar list
-widget-flight-arrival | web | widgets | Flight arrival split-flap widget | widget flight split-flap travel status
-focus-dim | web | cards | Focus dim | focus dim cards
-folder-reveal | web | cards | Folder reveal | folder cards reveal
-button-follow-bookmark | web | buttons | Follow, unfollow and save buttons | social follow bookmark toast profile
-funnel-chart | web | charts | Funnel chart | chart funnel stages
-social-chat-server-card | web | social | Gamer community chat card | chat community presence messages gaming
-card-glass-credit | web | cards | Glass credit card with flip | cards payments wallet tilt flip
-glitch-text | web | text-motion | Glitch text | glitch type replay
-card-progress-goals | web | cards | Goals card with rings and confetti | goals progress rings celebration inline-edit
-gooey-menu | web | buttons | Gooey menu | menu goo blob
-gooey-nav | web | navbar | Gooey nav | nav goo pill
-background-graph-paper | web | backgrounds | Graph paper background | background grid crosshair blueprint engineering
-graph-paper-homepage | web | portfolio | Graph paper homepage | personal homepage typewriter paper notebook
-greeting-loader | web | loaders | Greeting loader | greeting loader type
-grow-grid | web | gallery | Grow grid | grid hover rooms
-background-halftone-pop | web | backgrounds | Halftone pop background | background halftone canvas pointer pop-art hero
-hamburger-circle-reveal | mobile-web | navbar | Hamburger circle reveal | navigation menu hamburger overlay clip-path
-text-annotated-underlines | web | text-motion | Hand-drawn text annotations | annotation svg handwriting editorial scroll
-handheld-talk-player | web | media | Handheld talk player | video talks retro console playlist
-text-rise-underline-whisper | web | text-motion | Headline rise with drawn underline | headline intro underline svg stagger editorial
-hero-live-browser-card | web | hero | Hero with a live browser card | hero saas mockup live automation
-navbar-hide-on-scroll | web | navbar | Hide-on-scroll navbar | navbar scroll scrollspy announcement saas
-button-hold-to-confirm | web | buttons | Hold and slide to confirm | buttons destructive confirm slider payment hold
-streak-hold-confetti | mobile-app | feedback | Hold to log, streak and confetti | streak reward long-press confetti success
-widget-voice-assistant | web | widgets | Hold-to-talk voice orb | widget voice assistant waveform transcript
-card-holo-foil | web | cards | Holographic foil pass | cards tilt foil pass membership
-app-icon-home-screen-set | mobile-app | mockups | Home screen icon set | app-icons home-screen ios dark-mode tinted
-hud-boot-gate | web | loaders | HUD boot gate | intro boot hud gate portfolio
-notif-incoming-call | mobile-app | feedback | Incoming call banner | notification call banner swipe phone voip
-widget-stopwatch-laps | web | widgets | Industrial stopwatch with lap log | stopwatch timer laps keyboard sports
-background-ink-wash | web | backgrounds | Ink wash background | background canvas ink watercolour paper
-inline-alert | web | feedback | Inline alert | alert warning dismiss banner
-inline-edit | web | inputs | Inline edit | edit inline name
-phone-workout-timer | mobile-app | utility | Interval workout timer | workout timer fitness countdown intervals
-features-isometric-fig-triptych | web | features | Isometric figure triptych | features isometric svg illustration dark
-blog-issue-index | web | blog | Issue index | blog index essays filter
-job-board-search | web | utility | Job board search | jobs search filters list detail
-card-journal-page | web | utility | Journal page | journal notes textarea stickers autosave
-dropdown-kebab-actions | web | overlays | Kebab row actions menu | menu dropdown kebab table actions confirm
-object-3d-turntable | web | ecommerce | Kraft box 3D turntable | 3d product turntable packaging drag
-mockup-laptop-browser | web | mockups | Laptop browser mockup | mockup laptop browser device showcase
-law-firm-home | web | landing | Law firm home, editorial | landing law professional editorial form
-hero-layered-letter-swap | web | hero | Layered letter word-swap hero | hero headline word-swap parallax fintech
-parallax-layered-hero | web | scroll | Layered parallax landscape hero | parallax hero landscape outdoor scroll
-lens-bento | web | cards | Lens bento | lens magnify chips
-scroll-lens-card-ticker | web | scroll | Lens card scroll ticker | scroll ticker features sticky benefits
-letter-sleeve | web | cards | Letter sleeve | letter sleeve paper
-background-linen-weave | web | backgrounds | Linen weave background | background textile svg pattern paper
-link-orbit | web | features | Link orbit | integrations orbit connections
-features-live-checkout-bento | web | features | Live checkout bento | features bento checkout fintech ledger
-widget-heart-rate | web | widgets | Live heart-rate tile | widget health heart-rate ecg watch
-card-terminal-log | web | data | Live terminal log card | logs terminal streaming filter search devtools
-notif-delivery-live | mobile-app | feedback | Lock screen delivery live update | notification live-activity delivery lock-screen map eta
-logos-grid-case-hover | web | logos | Logos grid case hover | logos clients grid hover
-m3-navigation-bar | mobile-app | navigation | M3 navigation bar | material android navigation tabs badge fab
-hero-machined-part-breakout | web | hero | Machined part breakout hero | hero industrial manufacturing callouts isometric
-card-magazine-cover | web | cards | Magazine cover card | magazine cover card editorial print
-dock-magnify-desktop | web | navigation | Magnifying desktop dock | dock desktop launcher magnification toolbar
-card-folder-tabs | web | cards | Manila folder with tabs | cards folder tabs documents files
-phone-map-listings | mobile-app | utility | Map with price pins and listing sheet | map listings bottom-sheet carousel travel
-hero-search-marketplace | web | hero | Marketplace search hero | hero search travel marketplace calendar
-cta-material-rod-rack | web | cta | Material rod rack CTA | cta industrial materials picker radiogroup
-table-users-select | web | data | Members table with range select | table admin selection pagination invite
-social-microblog-post | web | social | Microblog post card | social post feed like counter
-social-microblog-profile | web | social | Microblog profile header | social profile tabs follow dark
-minute-wheel | web | pickers | Minute wheel | wheel minutes picker
-card-article-mix | web | cards | Mixed article cards | cards blog articles magazine grid
-mobile-scroll-story | mobile-web | scroll | Mobile scroll story | story scrollytelling progress chapters phone
-mobile-web-bottom-nav | mobile-web | navigation | Mobile website bottom bar | navigation bottom-bar scroll website pwa
-mood-pill-morph-card | mobile-app | micro | Mood pill that morphs into a card | morph picker mood spring check-in
-gallery-museum-placard | web | gallery | Museum wall with placards | gallery museum lightbox labels art
-newsletter-close-band | web | newsletter | Newsletter close | newsletter email form close
-node-graph | web | data | Node graph | graph nodes links
-kpi-delta | web | charts | One number, with a delta | kpi metric dashboard delta
-otp-code | web | auth | One-time code | otp code sign-in digits
-careers-role-list | web | team | Open roles | careers list hiring
-order-confirmed | web | ecommerce | Order confirmed | order receipt confirmation shop
-table-orders-status | web | data | Orders table with fulfilment | table ecommerce orders bulk expand
-logos-outline-name-marquee | web | logos | Outline name marquee | logos marquee clients agency outline
-outline-fill-topic-list | web | features | Outline to fill topic list | list scroll outline-type topics night
-overlap-slider | web | media | Overlap slider | slider cards scale
-page-transition-tile-wipe | web | transitions | Page transition tile wipe | transition navigation tiles routing typography
-pagination | web | data | Pagination | pagination list pages
-pan-canvas | web | gallery | Pan canvas | pan canvas map
-social-contribution-graph | web | social | Paper contribution heatmap | heatmap calendar streaks contributions profile
-sidebar-docs-toc | web | navigation | Paper docs with scrollspy TOC | documentation toc scrollspy sidebar reading
-widget-hydration | web | widgets | Paper hydration tumbler | widget health water tracker undo
-password-field | web | inputs | Password field | password field show form
-notif-payment-received | mobile-app | feedback | Payment received banner | notification payments banner count-up stack split
-phone-comments-sheet | mobile-app | messaging | Phone comments sheet | comments sheet thread replies phone
-mobile-list-empty | mobile-app | feedback | Phone empty list | empty list phone yard
-mobile-load-failed | mobile-app | error | Phone failed load | error retry phone list
-phone-form-fields | mobile-app | inputs | Phone form fields | form validation phone inputs booking
-input-phone-country | web | inputs | Phone input with country picker | phone country combobox form validation checkout
-phone-splash-launch | mobile-app | loaders | Phone launch splash lift | splash launch logo reveal phone
-phone-notifications-list | mobile-app | feedback | Phone notification centre | notifications list filter unread empty
-phone-order-tracking | mobile-app | ecommerce | Phone order tracking | delivery tracking map order courier
-phone-paywall-plans | mobile-app | pricing | Phone paywall with two plans | paywall subscription plans trial phone
-phone-permission-prompt | mobile-app | overlays | Phone permission prompt | permissions notifications onboarding phone overlay
-phone-photo-picker | mobile-app | pickers | Phone photo picker | photos picker sheet multi-select media
-phone-product-detail | mobile-app | ecommerce | Phone product page | product shop gallery swatches cart
-phone-profile-header | mobile-app | profile | Phone profile header | profile follow tabs scroll phone ios
-phone-qr-scanner | mobile-app | utility | Phone QR ticket scanner | scanner qr tickets camera events
-phone-ride-request | mobile-app | utility | Phone ride request | ride map booking transport sheet
-phone-search-results | mobile-app | utility | Phone search with live results | search suggestions tabs empty-state ios
-mockup-phone-showcase | web | mockups | Phone showcase mockup | mockup phone device showcase 3d
-phone-video-player | mobile-app | media | Phone video player | video player scrubber chapters captions dark
-gallery-photo-album | web | gallery | Photo album with page turns | gallery album page-flip 3d nostalgia
-social-photo-post | web | social | Photo post with carousel | social photo carousel like feed
-list-empty-plain | web | feedback | Plain list empty | empty list dashboard
-phone-tab-plain | mobile-app | navigation | Plain phone tabs | navigation tabs phone ios
-card-music-playlist | web | media | Playlist card with now playing | music playlist player cards tracks
-polaroid-fan | web | cards | Polaroid fan | polaroid fan stack
-card-polaroid-frames | web | cards | Polaroid frames, three ways | cards polaroid photo sticky-note drag
-popover-panel | web | overlays | Popover panel | popover panel note disclosure
-card-postcard-stamp | web | cards | Postcard with stamp and postmark | cards postcard flip stamp travel
-preloader-counter-intro | web | loaders | Preloader counter intro | preloader counter intro split hero
-dock-presence-bar | web | navigation | Presence dock with follow mode | collaboration presence avatars cursors dock
-press-well | web | buttons | Press well | button press well
-process-step-dossier | web | portfolio | Process step dossier | portfolio case-study process hover artboards
-card-product-quick-add | web | cards | Product cards with quick add | cards shop product quick-add swatches
-mega-menu-product-grid | web | navbar | Product mega menu grid | navigation mega-menu header saas hover
-social-pro-post | web | social | Professional network post | social post reactions document comments
-social-pro-profile | web | social | Professional network profile card | social profile network timeline connect
-progress-bar | web | feedback | Progress bar | progress meter packing status
-prompt-composer | web | inputs | Prompt composer | prompt composer form
-property-list | web | data | Property list | properties definition record list
-card-pull-quote | web | testimonials | Pull-quote testimonial card | testimonials quote carousel highlight editorial
-pwa-offline-library | pwa | reading | PWA offline library | pwa offline downloads storage podcast reading
-pwa-outbox-sync | pwa | feedback | PWA outbox sync | pwa offline sync queue conflict retry
-qty-stepper | web | ecommerce | Quantity stepper | quantity stepper cart price
-chart-line-range | web | charts | Quarter line chart | charts line dashboard quarter
-radio-group | web | inputs | Radio group | radio form choice shift
-chart-rank-spend | web | charts | Ranked spend | charts spend finance nepal
-rating-score | web | inputs | Rating score | rating score radio handoff
-realestate-listing-detail | web | ecommerce | Real estate listing detail | property listing floor-plan mortgage booking map
-receipt-slip | web | ecommerce | Receipt slip | receipt slip print
-redaction-bar-reveal | web | text-motion | Redaction bar reveal | redaction text reveal investigative report stagger
-restaurant-menu-page | web | landing | Restaurant menu page | restaurant menu scrollspy booking popover
-widget-ride-pickup | mobile-app | widgets | Ride pickup live activity | widget live-activity ride map countdown
-rolling-total-period-switch | mobile-app | data | Rolling total with a jelly period switch | ticker numbers segmented finance spring
-gallery-wall-frames | web | gallery | Salon wall planner | gallery drag snap-grid frames planner
-saved-banner | web | feedback | Saved banner | feedback save banner confirmation
-scan-page | web | micro | Scan page | scan beam note
-school-admissions-home | web | landing | School admissions home | education school admissions timeline form
-scroll-split | web | scroll | Scroll split | scroll split panels
-scroll-velocity-type | web | scroll | Scroll velocity type | scroll tracking type
-scroll-word-highlight | web | text-motion | Scroll word highlight | scroll manifesto about words underline
-scroll-zoom-portal | web | scroll | Scroll zoom portal | scroll zoom portal hero typography
-scroll-scrub-product-sequence | web | scroll | Scroll-scrubbed product teardown | scroll product pinned exploded watch
-navbar-section-tagline-pill | web | navbar | Section-tagline nav pill | navbar menu sticky agency drawer
-select-field | web | inputs | Select field | select form listbox role
-selection-bar | web | data | Selection bar | table selection bulk
-dropdown-share-menu | web | overlays | Share menu with invites and QR | share popover menu invite chips qr
-button-sheen-pill | web | buttons | Sheen pill buttons | buttons pill gradient-border loading success hover
-shop-cart | web | ecommerce | Shop cart | shop cart quantity total
-shop-collection | web | ecommerce | Shop collection | shop collection filter empty
-hamburger-drawer-accordion | mobile-web | navigation | Shop drawer with accordion sections | navigation drawer accordion shop menu
-shop-product | web | ecommerce | Shop product | shop product bag bowl
-shortcut-sheet | web | utility | Shortcut sheet | keyboard shortcuts sheet
-shred-button | web | buttons | Shred button | delete shred paper
-sidebar-workspace-switcher | web | navigation | Sidebar with workspace switcher | sidebar navigation workspace saas keyboard
-hero-silk-ribbon-ticker | web | hero | Silk ribbon hero with live ticker | hero fintech canvas gradient ticker
-footer-sitemap-columns | web | footer | Sitemap columns footer | footer sitemap newsletter accordion status saas
-widget-sleep-score | web | widgets | Sleep score with scrubbable hypnogram | widget sleep health hypnogram scrubber
-slider-field | web | inputs | Slider field | slider range form time
-smooth-scroll-inertia | web | scroll | Smooth scroll with inertia | scroll smooth-scroll parallax agency inertia
-phone-feed-posts | mobile-app | media | Social feed with stories and posts | feed social stories like carousel
-button-inset-soft | web | buttons | Soft inset clay buttons | buttons neumorphic toggle switch segmented soft-ui
-spend-list | mobile-app | dashboard | Spend list | list finance phone nepal
-loader-spinner-set | web | loaders | Spinner specimen set | spinner loading css specimen copy
-split-button | web | buttons | Split button | button menu send
-hero-split-ui-stack | web | hero | Split hero with UI card stack | hero saas product cards parallax
-navbar-split-centered-logo | web | navbar | Split navbar with centred wordmark | navbar scroll sticky hotel restaurant
-split-flap-board | web | text-motion | Split-flap board | text flap board
-spotlight-command-bar | web | navigation | Spotlight search with preview | search spotlight command keyboard preview
-spring-deck | web | cards | Spring deck | deck drag spring
-card-stamped-document | web | cards | Stamped document | cards document stamp signature approval
-stats-count-up-band | web | stats | Stats count-up band | stats numbers counter sparkline band
-status-badge | web | feedback | Status badge | badge status list
-contact-project-brief-steps | web | contact | Stepped project brief form | contact form steps agency validation
-widget-activity-rings | web | widgets | Sticker activity rings | widget fitness rings progress health
-card-sticky-notepad | web | utility | Sticky notes board | notes board drag retro collaboration
-stretch-switch | web | inputs | Stretch switch | switch hold thumb
-background-sunrise-horizon | web | backgrounds | Sunrise horizon background | background sunrise gradient scroll editorial hero
-card-retail-price-tag | web | ecommerce | Swinging kraft hang tag | price tag retail sale sizes barcode
-card-stacked-deck | web | cards | Swipe deck with undo | deck swipe drag undo travel shortlist
-swipe-pay-ember-bloom | mobile-app | micro | Swipe to pay, ember bloom | payments slider swipe success checkout
-switch-row | web | buttons | Switch row | switch toggle setting gate
-tablet-pos-register | tablet | ecommerce | Tablet cafe register | pos register cafe order checkout touch
-tablet-kiosk-checkin | tablet | utility | Tablet kiosk check-in | kiosk check-in keypad tablet reception
-tablet-notes-three-pane | tablet | utility | Tablet notes in three panes | notes editor three-pane writing focus-mode
-tablet-cook-mode | tablet | reading | Tablet recipe cook mode | recipe cooking timer steps kitchen swipe
-tactile-chip-tabs-stretch | mobile-app | navigation | Tactile chip tabs with a stretch | tabs chips press spring skeleton
-table-tasks-inline | web | data | Tasks table with inline editing | table tasks drag inline-edit productivity
-settings-team-members | web | settings | Team members settings | settings team members invite roles table
-crypto-exchange-trade | web | dashboard | Terminal crypto trading screen | trading crypto chart order-book finance
-background-terrazzo | web | backgrounds | Terrazzo background | background terrazzo svg generative parallax hero
-testimonials-masonry-wall | web | testimonials | Testimonials masonry wall | testimonials masonry quotes riso
-testimonials-metric-tabs | web | testimonials | Testimonials metric tabs | testimonials tabs case-study metrics
-text-field | web | inputs | Text field | field form error disabled
-loader-text-shimmer | web | loaders | Text loaders for AI states | loading text ai shimmer typewriter status
-text-mask-scroll-reveal | web | scroll | Text mask scroll reveal | scroll mask wordmark zoom hero
-textarea-field | web | inputs | Textarea field | textarea field note count
-features-thread-to-issue-board | web | features | Thread to issue board | features kanban chat agent dark
-social-thread-card | web | social | Threaded conversation card | social thread replies quote comments
-stage-passes-compare | web | features | Three passes, one frame | process compare tabs before-after studio
-phone-sign-up-steps | mobile-app | auth | Three-step phone sign-up | auth sign-up stepper form chips
-stats-tilted-card-stack | web | stats | Tilted stat card stack | stats scroll sticky cards count-up agency
-time-field | web | pickers | Time field | time field hour gate
-token-field | web | inputs | Token field | tokens chips tags field
-widget-pomodoro | web | widgets | Tomato pomodoro timer widget | timer pomodoro focus productivity ring
-tooltip | web | overlays | Tooltip | tooltip hint hover focus
-trail-type | web | text-motion | Trail type | type drag trail
-table-transactions-ledger | web | data | Transactions ledger | table finance ledger search banking
-tree-nav | web | navigation | Tree | tree navigation nested folders
-input-otp-underline | web | inputs | Underline OTP input | otp verification code auth form
-undo-toast | web | feedback | Undo toast | toast undo archive
-pricing-usage-slider | web | pricing | Usage pricing slider | pricing slider usage saas calculator
-features-vertical-label-columns | web | features | Vertical label service columns | features services accordion agency columns
-navbar-vertical-rail | web | navbar | Vertical rail navbar | navbar rail portfolio scrollspy studio
-widget-now-playing | web | widgets | Vinyl now-playing widget | widget music player vinyl scrubber
-phone-wallet-cards | mobile-app | ecommerce | Wallet card stack | wallet cards payments passes ios dark
-mockup-watch-faces | web | mockups | Watch crown mockup | mockup watch wearable crown device
-widget-weather-glance | web | widgets | Weather glance widget, three sizes | weather widget forecast sizes hourly
-webgl-shader-hero | web | backgrounds | WebGL shader hero | webgl shader hero noise background
-week-schedule | web | utility | Week schedule | calendar week schedule
-chart-bar-week | web | charts | Weekly bar chart | charts bars dashboard week
-dock-editor-tools | web | navigation | Whiteboard tool dock | toolbar dock whiteboard editor flyout
-winding-ribbon-scroll-story | web | scroll | Winding ribbon scroll story | scroll svg path storytelling steps illustration
-phone-lesson-quiz | mobile-app | feedback | Word-bank lesson card | lesson quiz language tiles streak
-onboarding-workspace-setup | web | onboarding | Workspace setup with live preview | onboarding workspace form preview invite
-widget-world-clocks | web | widgets | World clocks meeting planner | clock timezone meeting scheduler slider
-game-lobby | web | social | Bramble parlour lobby | lobby multiplayer ready room
-shot-callout-pins | web | overlays | Callouts on a review still | annotation callout review screenshot
-phone-code-entry | mobile-app | auth | Chitthi code entry | auth otp phone ios
-phone-app-lock | mobile-app | auth | Coffer drawer lock | auth lock biometric phone ios
-phone-delete-account | mobile-app | settings | Delete account with a 30-day undo | settings account delete destructive confirmation ios
-game-hud | web | overlays | Duskwell mission HUD | hud pause minimap overlay wave
-phone-account-edit | mobile-app | profile | Edit profile with live username check | profile account forms username validation ios
-phone-photo-viewer | mobile-app | media | Full-bleed photo viewer | photos viewer swipe zoom phone
-handwritten-homepage | web | landing | Handwritten homepage | letter handwriting landing paper personal
-handwritten-letter | web | reading | Handwritten night letter | letter handwriting reading paper night
-phone-large-text-layout | mobile-app | utility | Large text layout rules | accessibility dynamic-type layout text-size reflow
-handwritten-style | web | design-language | Letter hand kit | handwriting kit paper type buttons
-game-card-table | web | media | Linnet pairs table | cards memory table keyboard
-three-orbit-object | web | mockups | Lit study on a quiet stage | mockup webgl orbit lighting architecture
-live-cursors-board | web | cursor | Live cursors on a board | cursor collaboration board presence
-three-room-look | web | hero | Look around a small room | hero webgl room camera interior
-m3-dialog | mobile-app | overlays | M3 basic and destructive dialogs | material dialog android alert overlay
-m3-top-app-bar-scroll | mobile-app | scroll | M3 collapsing large top app bar | material android app-bar fab scroll list
-m3-list-detail | mobile-app | transitions | M3 list to detail with predictive back | list detail container-transform back android material
-m3-modal-bottom-sheet | mobile-app | overlays | M3 modal bottom sheet with predictive back | material android bottom-sheet filters gesture spring
-m3-search-results | mobile-app | utility | M3 search results | material search android filter empty
-m3-settings-list | mobile-app | settings | M3 settings list | material android settings switch dialog list
-m3-sign-in | mobile-app | auth | M3 sign-in with passkey | sign-in form passkey android material
-m3-snackbar | mobile-app | feedback | M3 snackbar with undo | material snackbar android undo list
-game-playfield | web | media | Mallow Court brick rally | game breakout paddle canvas pause
-phone-subscription-manage | mobile-app | settings | Manage subscription, honest cancel | settings subscription billing pricing cancel ios
-phone-composer | mobile-app | messaging | New note composer | composer notes sheet phone ios
-game-title-screen | web | landing | Pebbleline attract screen | arcade attract pixel title credits
-phone-checkout | mobile-app | ecommerce | Phone checkout | checkout delivery payment phone ios
-phone-notification-settings | mobile-app | settings | Phone notification settings | settings notifications ios time-picker toggles
-phone-orders | mobile-app | ecommerce | Phone past orders | orders receipt shop phone ios
-phone-privacy-data | mobile-app | settings | Phone privacy and data | settings privacy permissions export ios
-phone-rating-prompt | mobile-app | feedback | Phone rating prompt | rating review feedback bottom-sheet ios
-phone-cart | mobile-app | ecommerce | Phone shopping bag | cart shop phone ios quantity
-game-leaderboard | web | data | Quern score ladder | leaderboard ranks tabs scores
-label-roll-button | web | buttons | Rolling label row | buttons motion type menu
-three-scroll-world | web | scroll | Scroll past three path models | scroll webgl camera chapters landscape
-chart-scrub-readout | web | charts | Scrub a firing curve | charts line scrub dashboard
-phone-skeleton-list | mobile-app | loaders | Skeleton list swap | skeleton loading list phone replay
-phone-forgot-password | mobile-app | auth | Solander password reset | auth password email phone ios
-field-label-morph | web | inputs | Label that rises in the field | form label input focus
-chart-share-bar | web | charts | One bar split into shares | charts share dashboard total
-toolbar-selection-swap | web | data | Toolbar that swaps with the selection | table selection toolbar bulk
-agent-approval-card | web | cards | Agent approval card | agent approval confirm
-agent-tool-chip | web | feedback | Agent tool chip | agent tool chip
-prompt-source-model | web | inputs | Ask with a source and a model | prompt source model
-card-confidence-pick | web | cards | Confidence and one other option | agent suggestion confidence
-selection-rewrite | web | reading | Rewrite the selected sentence | agent selection rewrite
-moonlit-ridge-hero | web | hero | Le Dernier Feu | hero night canvas clock countdown audio
-playable-product-hero | web | hero | TU-16 | hero product interactive sound launch music
-scroll-space-voyage | web | scroll | Apogee | scroll canvas space journey hud livestream
+analytics-dashboard-overview | web | dashboard | Analytics dashboard overview | minimal soft | dashboard analytics chart svg table
+avatar-stack-presence | web | micro | Avatar stack with presence | dark minimal soft | avatars presence collaboration tooltip realtime
+bento-feature-grid | web | features | Bento feature grid | minimal soft paper | marketing grid features landing
+ios-bottom-sheet-detents | mobile-app | overlays | Bottom sheet with three detents | minimal soft | bottom-sheet map gesture ios list
+brutalist-studio-home | web | portfolio | Brutalist studio home | brutalist swiss | homepage studio portfolio list marquee
+button-state-morph | web | buttons | Button state morph | minimal soft | button checkout loading success micro-interaction
+collapsing-sidebar-rail | web | navigation | Collapsing sidebar rail | minimal dark | navigation sidebar dashboard shell
+command-palette | web | navigation | Command palette | minimal dark | command-palette search keyboard navigation dialog
+date-range-picker | web | pickers | Date range picker | swiss minimal | date-picker calendar popover analytics keyboard
+dense-data-table | web | data | Dense data table | minimal swiss | table data selection sorting billing
+docs-three-column | web | reading | Documentation three-column layout | minimal | documentation navigation layout developer
+editorial-landing-hero | web | hero | Editorial landing hero | editorial paper | landing hero editorial typography reveal
+editorial-mega-menu | web | navbar | Editorial mega menu | editorial paper | navigation mega-menu editorial header hover
+empty-state-line-illustration | web | feedback | Empty state with line illustration | minimal editorial soft | empty-state inbox illustration onboarding
+mobile-filter-chips-list | mobile-web | inputs | Filter chips product list | minimal soft | ecommerce filters chips bottom-sheet grid skeleton
+ios-fintech-home | mobile-app | dashboard | Fintech home | minimal glass | fintech banking list glass ios
+ios-glass-tab-bar | mobile-app | navigation | Floating glass tab bar | glass soft | navigation tab-bar glass ios
+tablet-floating-tool-palette | tablet | utility | Floating tool palette | dark industrial minimal | toolbar palette canvas drawing popover drag
+mobile-fullscreen-menu | mobile-web | navbar | Full-screen mobile menu | editorial paper dark | navigation menu overlay hamburger editorial
+ios-grouped-settings | mobile-app | settings | Grouped settings list | minimal soft | settings list toggle forms ios
+hover-tilt-cards | web | cards | Hover tilt cards | dark minimal | cards pricing hover 3d tilt
+ink-fill-progress | web | loaders | Ink-fill upload progress | paper brutalist minimal | progress upload loader typography
+inline-form-validation | web | inputs | Inline form validation | editorial soft minimal | form validation signup password accessibility
+kanban-board | web | dashboard | Kanban board | minimal soft | kanban board drag-and-drop project
+kinetic-type-marquee | web | text-motion | Kinetic type marquee | kinetic editorial paper | typography marquee variable-font specimen hero
+lamp-theme-toggle | web | micro | Lamp pull-cord theme toggle | editorial paper dark | theme dark-mode toggle view-transition editorial
+ios-large-title-collapse | mobile-app | scroll | Large title collapse on scroll | paper editorial glass | navigation toolbar scroll glass ios editorial
+luxe-product-detail | web | ecommerce | Luxe product detail | luxe editorial | ecommerce product luxury selector button
+luxe-serif-style | web | design-language | Luxe serif design style | luxe editorial minimal | style-guide luxe serif ecommerce typography
+m3-fab-menu | mobile-app | buttons | M3 expanding FAB menu | material dark | material fab menu actions dark
+m3-expressive-home | mobile-app | dashboard | M3 Expressive home feed | material soft playful | material home feed toolbar fab cards
+m3-navigation-drawer | mobile-app | navigation | M3 modal navigation drawer | material minimal soft | material navigation drawer menu app-bar
+m3-search-bar-morph | mobile-app | inputs | M3 search bar morph | material dark kinetic | material search container-transform app-bar dark
+magazine-editorial-grid | web | blog | Magazine editorial grid | editorial paper | editorial magazine grid typography
+masonry-gallery-captions | web | gallery | Masonry gallery with captions | dark minimal | gallery masonry portfolio filter
+mobile-landing-sticky-cta | mobile-web | landing | Mobile landing with sticky CTA | editorial paper soft | landing marketing carousel accordion cta
+modal-dialog-focus-trap | web | overlays | Modal dialog with focus trap | minimal soft | dialog modal confirm destructive focus
+multi-step-form-stepper | web | inputs | Multi-step form stepper | soft minimal | form stepper onboarding validation wizard
+neo-brutalist-style | web | design-language | Neo-brutalist design style | brutalist playful | style-guide brutalist components buttons toggles
+nested-dropdown-menu | web | navigation | Nested dropdown menu | industrial dark | menu dropdown submenu menubar keyboard
+notification-center-panel | web | overlays | Notification center panel | dark minimal industrial | notifications popover tabs dashboard dark
+ios-now-playing | mobile-app | media | Now playing | dark luxe glass | music player scrubber lyrics ios dark
+odometer-counter | web | stats | Odometer counter | paper editorial minimal | counter odometer numbers dashboard revenue
+ios-onboarding-carousel | mobile-app | onboarding | Onboarding carousel | dark editorial soft | onboarding carousel pagination ios dark
+onboarding-checklist | web | onboarding | Onboarding checklist card | soft minimal | onboarding checklist progress activation card
+mobile-one-page-checkout | mobile-web | ecommerce | One-page mobile checkout | minimal soft | checkout form ecommerce validation payment
+optimistic-like-button | web | micro | Optimistic like button | dark playful minimal | like optimistic-ui toast micro-interaction social
+orbit-dots-loader | web | loaders | Orbit dots loader family | minimal kinetic | loader spinner animation feedback
+page-transition-curtain | web | transitions | Page transition curtain | luxe editorial dark | transition navigation curtain typography hotel
+paper-ink-style | web | design-language | Paper and ink design style | paper editorial | style-guide paper editorial typography components
+paper-article-reader | web | reading | Paper article reader | paper editorial | article reading typography sidenotes progress
+ios-pull-to-refresh | mobile-app | loaders | Pull to refresh with drawn ring | dark terminal minimal | pull-to-refresh list gesture loading dark
+pwa-app-shell | pwa | loaders | PWA app shell hydration | dark industrial minimal | pwa app-shell skeleton loading cache transit
+pwa-connectivity-banner | pwa | feedback | PWA connectivity banner | minimal swiss soft | pwa offline banner status cache
+pwa-install-sheet | pwa | overlays | PWA install sheet | paper editorial soft | pwa install bottom-sheet onboarding dialog
+pwa-news-reader | pwa | reading | PWA news reader | editorial paper | pwa news reading offline chips list
+pwa-update-toast | pwa | feedback | PWA update toast | dark kinetic minimal | pwa toast update service-worker countdown dark
+scroll-reading-progress | web | scroll | Scroll reading progress | editorial dark | scroll article progress table-of-contents editorial
+settings-page-sticky-nav | web | settings | Settings page with sticky nav | minimal soft | settings navigation forms scroll-spy toggle
+tablet-sidebar-overlay-pin | tablet | navigation | Sidebar with overlay and pin modes | minimal soft paper | sidebar navigation notes overlay layout
+skeleton-to-content-swap | web | loaders | Skeleton to content swap | minimal soft editorial | loading skeleton feed cards stagger
+segmented-control-sliding | web | navigation | Sliding segmented control | luxe dark | segmented-control tabs toggle radio banking
+split-sign-in | web | auth | Split sign-in | editorial soft | auth form sign-in testimonial split
+spotlight-hover-grid | web | cursor | Spotlight hover grid | dark minimal industrial | grid hover spotlight cards features
+staggered-list-reveal | web | scroll | Staggered list reveal | minimal swiss | list stagger filter table banking
+sticky-split-story | web | scroll | Sticky split scroll story | editorial dark | storytelling scroll sticky editorial
+mobile-story-viewer | mobile-web | media | Story viewer with hold to pause | dark kinetic | stories gestures progress media viewer
+ios-swipe-row-actions | mobile-app | micro | Swipe-to-reveal row actions | minimal paper | list gesture swipe mail ios
+swiss-grid-pricing | web | pricing | Swiss grid pricing | swiss minimal | pricing grid toggle marketing swiss
+swiss-poster-style | web | design-language | Swiss poster style | swiss brutalist | poster swiss typography grid
+tablet-split-view-mail | tablet | messaging | Tablet mail split view | minimal swiss | mail split-view three-pane list-detail keyboard
+tablet-dashboard-grid | tablet | dashboard | Tablet ops dashboard grid | dark terminal industrial | dashboard chart gauge live-data dark ops
+tabs-morphing-underline | web | navigation | Tabs with morphing underline | editorial dark | tabs navigation underline overflow publishing
+terminal-404 | web | error | Terminal 404 | terminal dark | 404 error terminal typewriter command-line
+terminal-ui-style | web | design-language | Terminal UI style sheet | terminal dark | terminal monospace style-guide ops
+text-scramble-reveal | web | text-motion | Text scramble reveal | terminal minimal paper | typography text-effect headline monospace hero
+toast-stack | web | feedback | Toast stack | dark soft | toast notification feedback stack hover
+tablet-two-column-reader | tablet | reading | Two-column tablet reader | paper editorial | reader typography columns pagination editorial
+card-flip-3d | web | cards | 3D card flip trio | luxe dark | card flip 3d wallet transform
+accordion-grid-rows | web | faq | Grid-rows FAQ accordion | paper editorial minimal | accordion faq disclosure keyboard grid
+hover-image-trail | web | cursor | Hover image trail | editorial paper minimal | portfolio cursor trail list hover editorial
+ios-app-switcher-stack | mobile-app | transitions | iOS app switcher stack | dark kinetic | app-switcher cards gesture multitasking ios
+ios-context-menu-lift | mobile-app | overlays | iOS context menu lift | minimal soft | context-menu long-press messaging ios haptics
+logo-draw-intro | web | transitions | Logo draw site intro | swiss brutalist kinetic | intro preloader svg stagger hero reveal
+magnetic-buttons | web | cursor | Magnetic buttons | dark industrial kinetic | buttons hover cursor navigation microinteraction
+shared-element-expand | web | transitions | Shared element expand | editorial paper soft | flip transition cards dialog gallery
+variable-font-proximity | web | text-motion | Variable font proximity headline | editorial paper kinetic | typography variable-font hero cursor specimen
+account-menu-panel | web | overlays | Account menu panel | minimal | account menu overlay focus
+ios-health-activity-rings | mobile-app | dashboard | Activity rings with weekly picker | dark minimal | health rings chart fitness ios
+landing-agency-case-wall | web | landing | Agency landing with case wall | brutalist swiss | landing agency grid brutalist cta
+hero-ai-prompt-cycle | web | hero | AI prompt cycle hero | minimal soft | hero prompt typewriter saas answer
+pricing-annual-toggle-roll | web | pricing | Annual toggle with rolling prices | minimal soft | pricing toggle odometer billing numbers
+portfolio-architect-index | web | portfolio | Architect index with plan drawings | swiss minimal | portfolio index architecture grid hover
+hero-asymmetric-type-lockup | web | hero | Asymmetric type lockup hero | editorial kinetic | hero typography editorial lockup
+audit-activity-log | web | data | Audit activity log | minimal industrial | audit log activity filter
+hero-bauhaus-composition | web | hero | Bauhaus composition hero | bauhaus swiss | hero geometric composition school landing
+bauhaus-style | web | design-language | Bauhaus design language kit | bauhaus swiss | bauhaus geometric kit typography primary
+billing-plan-summary | web | settings | Billing plan summary | minimal paper | billing plan usage invoices
+footer-centered-colophon | web | footer | Centered colophon footer | minimal paper | footer colophon editorial essay
+checkbox-draw-list | web | inputs | Checkbox draw list | minimal paper | checkbox todo list progress form
+clay-soft-style | web | design-language | Clay soft design language kit | clay playful | clay playful kit kids habit
+contact-conversational-form | web | contact | Conversational contact form | editorial playful | contact form conversational multi-step keyboard
+profile-creator-masthead | web | profile | Creator profile with masthead | editorial paper | profile editorial masthead subscribe chips
+cta-split-dark-band | web | cta | CTA split dark band | dark industrial | cta footer form hardware
+cyber-hud-style | web | design-language | Cyber HUD design language kit | cyber dark | cyber hud kit dark console
+landing-devtool-dark | web | landing | Dark devtool landing page | dark terminal | landing api developer code pricing
+deco-hotel-style | web | design-language | Deco hotel design language kit | deco luxe | deco hotel kit gold identity
+background-dot-wave | web | backgrounds | Dot wave background | minimal dark | background canvas dots hero wave
+hero-editorial-name-rotator | web | hero | Editorial name rotator hero | editorial luxe dark | hero portfolio rotator editorial slots
+footer-enterprise-sitemap | web | footer | Enterprise sitemap footer | minimal swiss | footer sitemap status locale enterprise saas
+faq-two-column-search | web | faq | FAQ two-column search | minimal swiss | faq search accordion docs
+landing-fashion-atelier | web | landing | Fashion atelier landing page | luxe editorial | landing fashion hero editorial lookbook
+hero-flashlight-reveal | web | hero | Flashlight reveal hero | dark kinetic | hero cursor mask reveal saas
+navbar-floating-pill-shrink | web | navbar | Floating pill navbar | glass minimal | navbar scroll sticky landing scrollspy
+contact-giant-email-copy | web | contact | Giant email, click to copy | brutalist kinetic | contact copy email scramble cursor
+footer-giant-wordmark-reveal | web | footer | Giant wordmark reveal footer | minimal dark | footer wordmark scroll sitemap clock studio
+cursor-ink-blob | web | cursor | Ink blob cursor | organic kinetic | cursor blob editorial hover
+navbar-island-morph | web | navbar | Island morph navbar | dark kinetic | navbar island morph search radio
+charts-kpi-spark-row | web | charts | KPI row with sparklines | minimal industrial | charts kpi sparkline dashboard
+landing-fintech-light | web | landing | Light fintech landing with tilting card | minimal soft | landing fintech banking card tilt
+logos-mono-marquee | web | logos | Logos mono marquee | minimal swiss | logos marquee customers swiss
+portfolio-case-study-long | web | portfolio | Long-form product case study | editorial soft | portfolio case-study editorial product-design scroll
+m3-container-transform | mobile-app | transitions | M3 container transform | material soft | transition container-transform list detail material
+m3-music-player-expressive | mobile-app | media | M3 expressive music player | material dark | music player material waveform mobile
+auth-magic-link-sent | web | auth | Magic link sent | soft playful | auth sign-in email passwordless countdown
+text-marker-highlight-draw | web | text-motion | Marker highlight draw | editorial paper | text marker highlight handwriting editorial
+text-mask-line-reveal | web | text-motion | Mask line reveal | editorial luxe dark | headline reveal stagger mask editorial
+mobile-inbox-list | mobile-app | messaging | Mobile inbox list | minimal paper | inbox list mobile tabs
+mobile-run-detail | mobile-app | utility | Mobile run detail | minimal paper | detail mobile confirm record
+portfolio-motion-showreel | web | portfolio | Motion designer showreel index | dark kinetic | portfolio motion accordion showreel dark
+newsletter-fold-inline | web | newsletter | Newsletter fold inline | paper editorial | newsletter article form editorial
+footer-newsletter-split | web | footer | Newsletter split footer | editorial paper | footer newsletter subscribe magazine sitemap
+organic-garden-style | web | design-language | Organic garden design language kit | organic soft | organic garden kit typography seed
+background-paper-grain | web | backgrounds | Paper grain and ink blots | paper editorial | background grain paper poetry
+auth-passkey-setup | mobile-app | auth | Passkey setup with face-scan ring | glass minimal | auth passkey biometrics ios security
+people-role-list | web | team | People by role | minimal paper | people directory roles list
+portfolio-photographer-horizontal | web | portfolio | Photographer horizontal gallery | editorial dark luxe | portfolio gallery horizontal photography scroll
+pixel-arcade-style | web | design-language | Pixel arcade design language kit | pixel retro | pixel arcade kit retro game
+portfolio-index-hover-preview | web | portfolio | Portfolio index with hover preview | minimal editorial | portfolio index hover list cursor
+hero-product-window-tilt | web | hero | Product window tilt hero | dark minimal | hero saas 3d parallax product
+record-detail-header | web | dashboard | Record detail header | minimal industrial | detail record tabs admin
+riso-print-style | web | design-language | Riso print design language kit | riso playful | riso print kit zine overprint
+search-results-filters | web | utility | Search results with filters | editorial paper | search filters catalogue list
+text-split-letter-wave | web | text-motion | Split letter wave | kinetic playful | headline letters stagger hover hero
+contact-split-map-form | web | contact | Split map contact form | minimal soft | contact form map locations floating-labels
+stacking-cards-scroll | web | scroll | Stacking cards on scroll | minimal soft | scroll sticky cards stack skincare
+stats-ticker-band | web | stats | Stats ticker band | kinetic dark | stats counter climate numbers band
+pricing-comparison-sticky | web | pricing | Sticky comparison table | swiss industrial | pricing table comparison sticky accordion
+cta-sticky-mobile-bar | mobile-web | cta | Sticky mobile CTA bar | minimal soft | cta sticky mobile product
+features-sticky-scroll-steps | web | features | Sticky scroll feature steps | organic paper | features sticky scroll steps product
+contact-booking-hours | web | contact | Studio hours and booking | organic soft | contact dialog hours studio
+hero-swiss-grid-wordmark | web | hero | Swiss grid wordmark hero | swiss kinetic | hero grid wordmark typography studio
+features-tabbed-preview | web | features | Tabbed feature preview | dark minimal | features tabs autoplay product-ui saas
+team-hover-portrait-grid | web | team | Team hover portrait grid | editorial luxe | team portraits hover studio
+testimonials-quote-carousel | web | testimonials | Testimonials quote carousel | editorial paper | testimonials carousel quotes section
+testimonials-wall-grid | web | testimonials | Testimonials wall grid | minimal soft | testimonials masonry grid quotes
+toggle-switch-set | web | buttons | Toggle switch set | soft playful | toggle switch settings preferences form
+background-topographic-lines | web | backgrounds | Topographic lines background | organic paper | background canvas contours map hero
+upload-file-queue | web | inputs | Upload file queue | paper minimal | upload files queue progress
+ios-weather-hourly-scrub | mobile-app | utility | Weather with an hourly scrubber | glass soft | weather scrubber chart gesture ios
+landing-wellness-retreat | web | landing | Wellness retreat booking landing | organic soft | landing wellness booking cards retreat
+y2k-chrome-style | web | design-language | Y2K chrome design language kit | y2k retro | y2k chrome kit typography music
+button-3d-press | web | buttons | 3D keycap press buttons | playful industrial | buttons keycap 3d press toggle shortcuts
+button-add-to-cart | web | buttons | Add to cart that becomes a stepper | soft organic editorial | ecommerce cart stepper add-to-cart shop
+phone-calendar-agenda | mobile-app | utility | Agenda calendar with quick add | material soft | calendar agenda schedule material sheet
+agent-step-trace | web | data | Agent step trace | minimal industrial | agent trace steps
+ai-chat-workspace | web | messaging | AI chat workspace | paper editorial minimal | ai chat assistant streaming citations
+features-alternating-rows | web | features | Alternating feature rows | swiss industrial | features product-ui scroll industrial saas
+analog-stick | web | inputs | Analog stick | minimal industrial | stick direction lean
+app-icon-colour-wall | web | gallery | App icon colour wall | dark kinetic minimal | gallery app-icons sorting colour flip
+app-icon-shelf-gallery | web | gallery | App icon shelf gallery | minimal editorial soft | gallery app-icons museum filters detail
+app-icon-spec-sheet | web | utility | App icon spec sheet | swiss industrial minimal | app-icons spec keylines export ios
+architecture-studio-index | web | portfolio | Architecture studio index | swiss minimal | portfolio architecture table sort map
+background-aurora-mesh | web | backgrounds | Aurora mesh background | dark organic soft | background gradient aurora mesh hero grain
+automation-config-live-preview | web | features | Automation builder with live preview | brutalist playful soft | configurator preview form sticky saas
+card-boarding-pass | web | cards | Boarding pass with fold-out details | swiss minimal | cards travel boarding-pass qr wallet
+book-page-flip | web | reading | Book page flip | editorial paper | book page flip
+phone-booking-slots | mobile-app | pickers | Booking time slots | soft organic | booking appointment slots date wellness
+gym-membership-home | web | landing | Boxing gym home with timetable | brutalist dark | landing gym timetable pricing sport
+breadcrumb | web | navigation | Breadcrumb | minimal industrial | breadcrumb navigation path
+budget-meter | web | charts | Budget meters | editorial paper | budget meter finance warning
+button-roles | web | buttons | Button roles | minimal industrial | button primary destructive disabled
+card-cafe-menu-board | web | cards | Café chalkboard and letterboard menu | organic retro playful | cards menu cafe chalkboard toggle
+calendar-month | web | pickers | Calendar month | minimal industrial | calendar date month picker
+calendar-week-planner | web | utility | Calendar week planner | soft minimal | calendar week schedule drag planner
+case-file-horizontal-scroll | web | scroll | Case file horizontal scroll | dark editorial kinetic | horizontal pinned storytelling chapters night
+changelog-timeline | web | blog | Changelog timeline | editorial minimal | changelog timeline filter
+hero-chaptered-scenes | web | hero | Chaptered cinema hero | dark editorial luxe | hero chapters autoplay cinema architecture
+chat-thread | mobile-app | messaging | Chat thread | minimal industrial | chat thread message phone
+checkbox-group | web | inputs | Checkbox group | minimal industrial | checkbox field loads group
+chip-bucket | web | cards | Chip bucket | minimal dark | drag bucket chips
+card-cinema-ticket | web | cards | Cinema ticket with tear-off stub | deco retro paper | cards ticket cinema drag tear
+hero-video-loop | web | hero | Cinematic video loop hero | luxe dark editorial | hero video film loop hotel
+cited-answer | web | reading | Cited answer | editorial paper | citation source answer
+mockup-ipod-classic | web | mockups | Click-wheel player mockup | y2k playful retro | mockup music player click-wheel retro
+code-snippet-tabs | web | reading | Code snippet tabs | terminal minimal | code tabs copy
+combobox | web | inputs | Combobox | minimal industrial | combobox search listbox form
+card-event-ticket-stub | web | cards | Concert ticket stack with foil strip | riso retro dark | cards ticket concert foil stack
+integrations-connect | web | features | Connection grid | editorial minimal | integrations connect grid
+consent-bar | web | utility | Consent bar | minimal industrial | consent privacy bar choice
+gallery-contact-sheet | web | gallery | Contact sheet | paper editorial | gallery contact-sheet plates selection
+content-card | web | cards | Content card | minimal industrial | card record load list
+widget-control-toggles | mobile-app | widgets | Control centre toggles | dark minimal | controls toggles sliders settings phone
+button-copy-share | web | buttons | Copy, share and copy-email buttons | editorial paper minimal | copy clipboard share menu tooltip editorial
+corner-player | web | media | Corner player | dark minimal | player corner video
+course-landing-curriculum | web | landing | Course landing with curriculum | editorial paper | course education curriculum accordion modal pricing
+coverflow-strip | web | media | Coverflow strip | dark minimal | coverflow carousel cards
+cta-giant-email-band | web | cta | CTA giant email band | kinetic brutalist | cta email form signup trial
+curve-drawer | web | overlays | Curve drawer | minimal paper | drawer curve hold
+frame-circle-cut | web | cards | Cut-shape image frames | editorial organic soft | cards image mask portfolio product
+card-daily-quote | web | cards | Daily quote card | soft editorial kinetic | quote card swipe share gradient wellbeing
+social-repo-card | web | social | Dark mono repository card | dark terminal minimal | repository code sparkline stars developer
+motion-shot-gallery-dark | web | gallery | Dark motion shot gallery | dark minimal kinetic | gallery motion filters grid showcase
+clinic-home-booking | web | landing | Dental clinic home with live booking | soft minimal | landing clinic booking health local
+notif-deploy-status | web | feedback | Deploy status notification | dark terminal minimal | notification deploy devtools progress stepper toast
+frame-transform-box | web | micro | Design-tool transform box | dark industrial minimal | selection resize rotate canvas editor drag
+dropdown-menubar-file | web | overlays | Desktop app menubar | dark industrial minimal | menubar menu submenu desktop keyboard shortcuts
+widget-device-battery | web | widgets | Device battery widget | clay soft | battery widget devices charging rings
+background-diagonal-boxes | web | backgrounds | Diagonal boxes background | minimal dark industrial | background isometric canvas pointer 3d
+dial-knob | web | inputs | Dial knob | minimal industrial | dial knob input
+diamond-badge-rail | web | cards | Diamond badge rail | dark brutalist industrial | cards carousel badges filter scrubber dark
+profile-contact-card | web | profile | Digital business card | luxe paper | profile contact vcard flip qr
+docs-install-steps | web | reading | Docs install steps with code panels | minimal terminal | documentation code steps install developer
+docs-hatched-gutter-shell | web | reading | Docs shell with hatched gutters | swiss minimal dark | documentation layout dark-mode sidebar developer
+donation-page-impact | web | landing | Donation page with impact | organic soft | donation nonprofit form progress landing
+hero-dot-matrix-field | web | hero | Dot-matrix blob field hero | dark industrial kinetic | hero canvas dot-matrix agency interactive
+button-download-progress | web | buttons | Download button with progress and retry | dark terminal industrial | download progress retry developer release
+drag-to-confirm | web | buttons | Drag to confirm | minimal industrial | confirm drag destructive
+widget-analog-clock | web | widgets | Dress-watch analog clock widget | luxe dark | clock time watch timezone svg
+card-drop-cap-editorial | web | reading | Drop-cap editorial card | editorial paper | editorial article typography drop-cap reading
+edge-light-button | web | buttons | Edge light button | dark minimal | button edge light
+error-404-editorial | web | error | Editorial 404 with search | riso paper editorial | 404 error search riso print
+social-profile-card | web | social | Editorial creator profile card | editorial paper | profile creator follow stats card
+phone-sign-in | mobile-app | auth | Editorial phone sign-in | editorial minimal | auth sign-in form validation phone
+profile-editorial-staff | web | team | Editorial staff profile card | editorial paper | team staff author newspaper signature
+footer-engraved-caravan-strip | web | footer | Engraved caravan footer | dark editorial paper | footer illustration parallax newsletter clock svg
+throw-loop-engraved-strip | web | backgrounds | Engraved disc throw loop | playful paper minimal | illustration offset-path loop svg keyframes playful
+hero-engraved-moonrise-plate | web | hero | Engraved moonrise hero plate | editorial dark paper | hero illustration parallax portfolio svg night
+card-event-countdown | web | cards | Event countdown ticket card | retro riso | cards event countdown tickets calendar
+event-ticket-checkout | web | ecommerce | Event ticket checkout | y2k cyber dark | tickets checkout seats timer events
+load-failed-retry | web | error | Failed load with retry | minimal industrial | error retry list banner
+faq-category-accordion | web | faq | FAQ category accordion | minimal soft | faq accordion search help support
+widget-compass | web | widgets | Field compass widget | organic paper | compass widget outdoor dial map
+file-upload-manager | web | inputs | File upload manager | dark industrial terminal | upload files dropzone progress queue
+gallery-film-strip | web | gallery | Film strip with loupe | dark retro industrial | gallery film loupe negative darkroom
+dropdown-filter-sort | web | overlays | Filter and sort dropdowns | organic soft editorial | filter sort dropdown table chips listbox
+filter-toolbar | web | utility | Filter toolbar | minimal industrial | filter search toolbar list
+widget-flight-arrival | web | widgets | Flight arrival split-flap widget | industrial dark retro | widget flight split-flap travel status
+focus-dim | web | cards | Focus dim | minimal paper | focus dim cards
+folder-reveal | web | cards | Folder reveal | paper editorial | folder cards reveal
+button-follow-bookmark | web | buttons | Follow, unfollow and save buttons | minimal swiss | social follow bookmark toast profile
+funnel-chart | web | charts | Funnel chart | minimal industrial | chart funnel stages
+social-chat-server-card | web | social | Gamer community chat card | dark cyber industrial | chat community presence messages gaming
+card-glass-credit | web | cards | Glass credit card with flip | glass dark luxe | cards payments wallet tilt flip
+glitch-text | web | text-motion | Glitch text | dark kinetic | glitch type replay
+card-progress-goals | web | cards | Goals card with rings and confetti | soft playful | goals progress rings celebration inline-edit
+gooey-menu | web | buttons | Gooey menu | minimal soft | menu goo blob
+gooey-nav | web | navbar | Gooey nav | minimal soft | nav goo pill
+background-graph-paper | web | backgrounds | Graph paper background | industrial paper swiss | background grid crosshair blueprint engineering
+graph-paper-homepage | web | portfolio | Graph paper homepage | paper retro editorial | personal homepage typewriter paper notebook
+greeting-loader | web | loaders | Greeting loader | editorial paper | greeting loader type
+grow-grid | web | gallery | Grow grid | minimal paper | grid hover rooms
+background-halftone-pop | web | backgrounds | Halftone pop background | playful riso retro | background halftone canvas pointer pop-art hero
+hamburger-circle-reveal | mobile-web | navbar | Hamburger circle reveal | kinetic dark swiss | navigation menu hamburger overlay clip-path
+text-annotated-underlines | web | text-motion | Hand-drawn text annotations | editorial paper | annotation svg handwriting editorial scroll
+handheld-talk-player | web | media | Handheld talk player | retro playful dark | video talks retro console playlist
+text-rise-underline-whisper | web | text-motion | Headline rise with drawn underline | editorial paper minimal | headline intro underline svg stagger editorial
+hero-live-browser-card | web | hero | Hero with a live browser card | brutalist playful | hero saas mockup live automation
+navbar-hide-on-scroll | web | navbar | Hide-on-scroll navbar | swiss minimal | navbar scroll scrollspy announcement saas
+button-hold-to-confirm | web | buttons | Hold and slide to confirm | industrial minimal | buttons destructive confirm slider payment hold
+streak-hold-confetti | mobile-app | feedback | Hold to log, streak and confetti | dark organic playful | streak reward long-press confetti success
+widget-voice-assistant | web | widgets | Hold-to-talk voice orb | soft minimal | widget voice assistant waveform transcript
+card-holo-foil | web | cards | Holographic foil pass | y2k cyber dark | cards tilt foil pass membership
+app-icon-home-screen-set | mobile-app | mockups | Home screen icon set | glass soft organic | app-icons home-screen ios dark-mode tinted
+hud-boot-gate | web | loaders | HUD boot gate | cyber terminal dark | intro boot hud gate portfolio
+notif-incoming-call | mobile-app | feedback | Incoming call banner | dark glass editorial | notification call banner swipe phone voip
+widget-stopwatch-laps | web | widgets | Industrial stopwatch with lap log | industrial terminal dark | stopwatch timer laps keyboard sports
+background-ink-wash | web | backgrounds | Ink wash background | organic paper editorial | background canvas ink watercolour paper
+inline-alert | web | feedback | Inline alert | minimal industrial | alert warning dismiss banner
+inline-edit | web | inputs | Inline edit | minimal industrial | edit inline name
+phone-workout-timer | mobile-app | utility | Interval workout timer | kinetic dark | workout timer fitness countdown intervals
+features-isometric-fig-triptych | web | features | Isometric figure triptych | dark minimal industrial | features isometric svg illustration dark
+blog-issue-index | web | blog | Issue index | editorial paper | blog index essays filter
+job-board-search | web | utility | Job board search | swiss minimal | jobs search filters list detail
+card-journal-page | web | utility | Journal page | paper playful | journal notes textarea stickers autosave
+dropdown-kebab-actions | web | overlays | Kebab row actions menu | minimal swiss | menu dropdown kebab table actions confirm
+object-3d-turntable | web | ecommerce | Kraft box 3D turntable | paper industrial | 3d product turntable packaging drag
+mockup-laptop-browser | web | mockups | Laptop browser mockup | industrial minimal swiss | mockup laptop browser device showcase
+law-firm-home | web | landing | Law firm home, editorial | luxe editorial | landing law professional editorial form
+hero-layered-letter-swap | web | hero | Layered letter word-swap hero | playful kinetic | hero headline word-swap parallax fintech
+parallax-layered-hero | web | scroll | Layered parallax landscape hero | organic editorial | parallax hero landscape outdoor scroll
+lens-bento | web | cards | Lens bento | minimal paper | lens magnify chips
+scroll-lens-card-ticker | web | scroll | Lens card scroll ticker | dark playful kinetic | scroll ticker features sticky benefits
+letter-sleeve | web | cards | Letter sleeve | editorial paper | letter sleeve paper
+background-linen-weave | web | backgrounds | Linen weave background | organic paper luxe | background textile svg pattern paper
+link-orbit | web | features | Link orbit | editorial paper | integrations orbit connections
+features-live-checkout-bento | web | features | Live checkout bento | minimal swiss | features bento checkout fintech ledger
+widget-heart-rate | web | widgets | Live heart-rate tile | dark industrial kinetic | widget health heart-rate ecg watch
+card-terminal-log | web | data | Live terminal log card | terminal dark industrial | logs terminal streaming filter search devtools
+notif-delivery-live | mobile-app | feedback | Lock screen delivery live update | organic riso soft | notification live-activity delivery lock-screen map eta
+logos-grid-case-hover | web | logos | Logos grid case hover | luxe minimal editorial | logos clients grid hover
+m3-navigation-bar | mobile-app | navigation | M3 navigation bar | material soft | material android navigation tabs badge fab
+hero-machined-part-breakout | web | hero | Machined part breakout hero | industrial dark swiss | hero industrial manufacturing callouts isometric
+card-magazine-cover | web | cards | Magazine cover card | editorial riso paper | magazine cover card editorial print
+dock-magnify-desktop | web | navigation | Magnifying desktop dock | glass soft | dock desktop launcher magnification toolbar
+card-folder-tabs | web | cards | Manila folder with tabs | paper editorial minimal | cards folder tabs documents files
+phone-map-listings | mobile-app | utility | Map with price pins and listing sheet | editorial paper | map listings bottom-sheet carousel travel
+hero-search-marketplace | web | hero | Marketplace search hero | editorial paper | hero search travel marketplace calendar
+cta-material-rod-rack | web | cta | Material rod rack CTA | industrial minimal | cta industrial materials picker radiogroup
+table-users-select | web | data | Members table with range select | minimal swiss | table admin selection pagination invite
+social-microblog-post | web | social | Microblog post card | minimal swiss | social post feed like counter
+social-microblog-profile | web | social | Microblog profile header | dark minimal | social profile tabs follow dark
+minute-wheel | web | pickers | Minute wheel | minimal industrial | wheel minutes picker
+card-article-mix | web | cards | Mixed article cards | editorial paper | cards blog articles magazine grid
+mobile-scroll-story | mobile-web | scroll | Mobile scroll story | riso editorial playful | story scrollytelling progress chapters phone
+mobile-web-bottom-nav | mobile-web | navigation | Mobile website bottom bar | industrial brutalist | navigation bottom-bar scroll website pwa
+mood-pill-morph-card | mobile-app | micro | Mood pill that morphs into a card | soft organic playful | morph picker mood spring check-in
+gallery-museum-placard | web | gallery | Museum wall with placards | luxe editorial | gallery museum lightbox labels art
+newsletter-close-band | web | newsletter | Newsletter close | editorial paper | newsletter email form close
+node-graph | web | data | Node graph | minimal paper | graph nodes links
+kpi-delta | web | charts | One number, with a delta | minimal industrial | kpi metric dashboard delta
+otp-code | web | auth | One-time code | minimal industrial | otp code sign-in digits
+careers-role-list | web | team | Open roles | editorial minimal | careers list hiring
+order-confirmed | web | ecommerce | Order confirmed | minimal industrial | order receipt confirmation shop
+table-orders-status | web | data | Orders table with fulfilment | soft editorial | table ecommerce orders bulk expand
+logos-outline-name-marquee | web | logos | Outline name marquee | kinetic dark editorial | logos marquee clients agency outline
+outline-fill-topic-list | web | features | Outline to fill topic list | dark kinetic editorial | list scroll outline-type topics night
+overlap-slider | web | media | Overlap slider | dark minimal | slider cards scale
+page-transition-tile-wipe | web | transitions | Page transition tile wipe | swiss kinetic minimal | transition navigation tiles routing typography
+pagination | web | data | Pagination | minimal industrial | pagination list pages
+pan-canvas | web | gallery | Pan canvas | dark minimal | pan canvas map
+social-contribution-graph | web | social | Paper contribution heatmap | paper editorial minimal | heatmap calendar streaks contributions profile
+sidebar-docs-toc | web | navigation | Paper docs with scrollspy TOC | paper editorial | documentation toc scrollspy sidebar reading
+widget-hydration | web | widgets | Paper hydration tumbler | paper minimal editorial | widget health water tracker undo
+password-field | web | inputs | Password field | minimal industrial | password field show form
+notif-payment-received | mobile-app | feedback | Payment received banner | material playful soft | notification payments banner count-up stack split
+phone-comments-sheet | mobile-app | messaging | Phone comments sheet | dark minimal | comments sheet thread replies phone
+mobile-list-empty | mobile-app | feedback | Phone empty list | minimal industrial | empty list phone yard
+mobile-load-failed | mobile-app | error | Phone failed load | minimal industrial | error retry phone list
+phone-form-fields | mobile-app | inputs | Phone form fields | industrial minimal | form validation phone inputs booking
+input-phone-country | web | inputs | Phone input with country picker | minimal soft swiss | phone country combobox form validation checkout
+phone-splash-launch | mobile-app | loaders | Phone launch splash lift | industrial dark kinetic | splash launch logo reveal phone
+phone-notifications-list | mobile-app | feedback | Phone notification centre | swiss minimal | notifications list filter unread empty
+phone-order-tracking | mobile-app | ecommerce | Phone order tracking | playful brutalist | delivery tracking map order courier
+phone-paywall-plans | mobile-app | pricing | Phone paywall with two plans | editorial paper | paywall subscription plans trial phone
+phone-permission-prompt | mobile-app | overlays | Phone permission prompt | soft organic | permissions notifications onboarding phone overlay
+phone-photo-picker | mobile-app | pickers | Phone photo picker | dark minimal | photos picker sheet multi-select media
+phone-product-detail | mobile-app | ecommerce | Phone product page | paper retro clay | product shop gallery swatches cart
+phone-profile-header | mobile-app | profile | Phone profile header | soft glass minimal | profile follow tabs scroll phone ios
+phone-qr-scanner | mobile-app | utility | Phone QR ticket scanner | dark minimal | scanner qr tickets camera events
+phone-ride-request | mobile-app | utility | Phone ride request | industrial dark | ride map booking transport sheet
+phone-search-results | mobile-app | utility | Phone search with live results | minimal swiss | search suggestions tabs empty-state ios
+mockup-phone-showcase | web | mockups | Phone showcase mockup | luxe editorial minimal | mockup phone device showcase 3d
+phone-video-player | mobile-app | media | Phone video player | dark minimal | video player scrubber chapters captions dark
+gallery-photo-album | web | gallery | Photo album with page turns | paper retro organic | gallery album page-flip 3d nostalgia
+social-photo-post | web | social | Photo post with carousel | dark minimal | social photo carousel like feed
+list-empty-plain | web | feedback | Plain list empty | minimal industrial | empty list dashboard
+phone-tab-plain | mobile-app | navigation | Plain phone tabs | minimal paper | navigation tabs phone ios
+card-music-playlist | web | media | Playlist card with now playing | soft editorial | music playlist player cards tracks
+polaroid-fan | web | cards | Polaroid fan | paper editorial | polaroid fan stack
+card-polaroid-frames | web | cards | Polaroid frames, three ways | brutalist playful paper | cards polaroid photo sticky-note drag
+popover-panel | web | overlays | Popover panel | minimal industrial | popover panel note disclosure
+card-postcard-stamp | web | cards | Postcard with stamp and postmark | retro paper playful | cards postcard flip stamp travel
+preloader-counter-intro | web | loaders | Preloader counter intro | brutalist kinetic paper | preloader counter intro split hero
+dock-presence-bar | web | navigation | Presence dock with follow mode | editorial minimal | collaboration presence avatars cursors dock
+press-well | web | buttons | Press well | minimal industrial | button press well
+process-step-dossier | web | portfolio | Process step dossier | industrial dark swiss | portfolio case-study process hover artboards
+card-product-quick-add | web | cards | Product cards with quick add | retro paper | cards shop product quick-add swatches
+mega-menu-product-grid | web | navbar | Product mega menu grid | swiss minimal | navigation mega-menu header saas hover
+social-pro-post | web | social | Professional network post | editorial paper | social post reactions document comments
+social-pro-profile | web | social | Professional network profile card | minimal swiss | social profile network timeline connect
+progress-bar | web | feedback | Progress bar | minimal industrial | progress meter packing status
+prompt-composer | web | inputs | Prompt composer | minimal industrial | prompt composer form
+property-list | web | data | Property list | minimal industrial | properties definition record list
+card-pull-quote | web | testimonials | Pull-quote testimonial card | editorial dark | testimonials quote carousel highlight editorial
+pwa-offline-library | pwa | reading | PWA offline library | editorial dark | pwa offline downloads storage podcast reading
+pwa-outbox-sync | pwa | feedback | PWA outbox sync | industrial minimal | pwa offline sync queue conflict retry
+qty-stepper | web | ecommerce | Quantity stepper | minimal industrial | quantity stepper cart price
+chart-line-range | web | charts | Quarter line chart | minimal industrial | charts line dashboard quarter
+radio-group | web | inputs | Radio group | minimal industrial | radio form choice shift
+chart-rank-spend | web | charts | Ranked spend | editorial paper | charts spend finance nepal
+rating-score | web | inputs | Rating score | minimal industrial | rating score radio handoff
+realestate-listing-detail | web | ecommerce | Real estate listing detail | luxe minimal | property listing floor-plan mortgage booking map
+receipt-slip | web | ecommerce | Receipt slip | minimal paper | receipt slip print
+redaction-bar-reveal | web | text-motion | Redaction bar reveal | editorial brutalist paper | redaction text reveal investigative report stagger
+restaurant-menu-page | web | landing | Restaurant menu page | retro riso | restaurant menu scrollspy booking popover
+widget-ride-pickup | mobile-app | widgets | Ride pickup live activity | paper minimal playful | widget live-activity ride map countdown
+rolling-total-period-switch | mobile-app | data | Rolling total with a jelly period switch | minimal kinetic swiss | ticker numbers segmented finance spring
+gallery-wall-frames | web | gallery | Salon wall planner | soft organic playful | gallery drag snap-grid frames planner
+saved-banner | web | feedback | Saved banner | editorial paper | feedback save banner confirmation
+scan-page | web | micro | Scan page | minimal industrial | scan beam note
+school-admissions-home | web | landing | School admissions home | bauhaus paper | education school admissions timeline form
+scroll-split | web | scroll | Scroll split | editorial paper | scroll split panels
+scroll-velocity-type | web | scroll | Scroll velocity type | editorial paper | scroll tracking type
+scroll-word-highlight | web | text-motion | Scroll word highlight | editorial minimal paper | scroll manifesto about words underline
+scroll-zoom-portal | web | scroll | Scroll zoom portal | bauhaus playful | scroll zoom portal hero typography
+scroll-scrub-product-sequence | web | scroll | Scroll-scrubbed product teardown | luxe dark | scroll product pinned exploded watch
+navbar-section-tagline-pill | web | navbar | Section-tagline nav pill | minimal industrial swiss | navbar menu sticky agency drawer
+select-field | web | inputs | Select field | minimal industrial | select form listbox role
+selection-bar | web | data | Selection bar | minimal industrial | table selection bulk
+dropdown-share-menu | web | overlays | Share menu with invites and QR | riso paper editorial | share popover menu invite chips qr
+button-sheen-pill | web | buttons | Sheen pill buttons | luxe dark minimal | buttons pill gradient-border loading success hover
+shop-cart | web | ecommerce | Shop cart | organic minimal | shop cart quantity total
+shop-collection | web | ecommerce | Shop collection | organic minimal | shop collection filter empty
+hamburger-drawer-accordion | mobile-web | navigation | Shop drawer with accordion sections | soft organic editorial | navigation drawer accordion shop menu
+shop-product | web | ecommerce | Shop product | organic minimal | shop product bag bowl
+shortcut-sheet | web | utility | Shortcut sheet | minimal paper | keyboard shortcuts sheet
+shred-button | web | buttons | Shred button | minimal paper | delete shred paper
+sidebar-workspace-switcher | web | navigation | Sidebar with workspace switcher | minimal dark | sidebar navigation workspace saas keyboard
+hero-silk-ribbon-ticker | web | hero | Silk ribbon hero with live ticker | minimal editorial | hero fintech canvas gradient ticker
+footer-sitemap-columns | web | footer | Sitemap columns footer | dark minimal | footer sitemap newsletter accordion status saas
+widget-sleep-score | web | widgets | Sleep score with scrubbable hypnogram | soft dark editorial | widget sleep health hypnogram scrubber
+slider-field | web | inputs | Slider field | minimal industrial | slider range form time
+smooth-scroll-inertia | web | scroll | Smooth scroll with inertia | editorial dark kinetic | scroll smooth-scroll parallax agency inertia
+phone-feed-posts | mobile-app | media | Social feed with stories and posts | playful minimal | feed social stories like carousel
+button-inset-soft | web | buttons | Soft inset clay buttons | soft clay minimal | buttons neumorphic toggle switch segmented soft-ui
+spend-list | mobile-app | dashboard | Spend list | editorial paper | list finance phone nepal
+loader-spinner-set | web | loaders | Spinner specimen set | dark swiss kinetic | spinner loading css specimen copy
+split-button | web | buttons | Split button | minimal industrial | button menu send
+hero-split-ui-stack | web | hero | Split hero with UI card stack | soft minimal | hero saas product cards parallax
+navbar-split-centered-logo | web | navbar | Split navbar with centred wordmark | luxe editorial | navbar scroll sticky hotel restaurant
+split-flap-board | web | text-motion | Split-flap board | dark kinetic | text flap board
+spotlight-command-bar | web | navigation | Spotlight search with preview | glass minimal | search spotlight command keyboard preview
+spring-deck | web | cards | Spring deck | editorial paper | deck drag spring
+card-stamped-document | web | cards | Stamped document | paper retro editorial | cards document stamp signature approval
+stats-count-up-band | web | stats | Stats count-up band | editorial dark | stats numbers counter sparkline band
+status-badge | web | feedback | Status badge | minimal industrial | badge status list
+contact-project-brief-steps | web | contact | Stepped project brief form | brutalist editorial | contact form steps agency validation
+widget-activity-rings | web | widgets | Sticker activity rings | playful bauhaus | widget fitness rings progress health
+card-sticky-notepad | web | utility | Sticky notes board | playful paper dark | notes board drag retro collaboration
+stretch-switch | web | inputs | Stretch switch | minimal industrial | switch hold thumb
+background-sunrise-horizon | web | backgrounds | Sunrise horizon background | editorial paper minimal | background sunrise gradient scroll editorial hero
+card-retail-price-tag | web | ecommerce | Swinging kraft hang tag | paper editorial retro | price tag retail sale sizes barcode
+card-stacked-deck | web | cards | Swipe deck with undo | editorial organic | deck swipe drag undo travel shortlist
+swipe-pay-ember-bloom | mobile-app | micro | Swipe to pay, ember bloom | dark kinetic minimal | payments slider swipe success checkout
+switch-row | web | buttons | Switch row | minimal industrial | switch toggle setting gate
+tablet-pos-register | tablet | ecommerce | Tablet cafe register | soft organic | pos register cafe order checkout touch
+tablet-kiosk-checkin | tablet | utility | Tablet kiosk check-in | industrial minimal | kiosk check-in keypad tablet reception
+tablet-notes-three-pane | tablet | utility | Tablet notes in three panes | paper editorial | notes editor three-pane writing focus-mode
+tablet-cook-mode | tablet | reading | Tablet recipe cook mode | playful organic | recipe cooking timer steps kitchen swipe
+tactile-chip-tabs-stretch | mobile-app | navigation | Tactile chip tabs with a stretch | clay soft organic | tabs chips press spring skeleton
+table-tasks-inline | web | data | Tasks table with inline editing | playful brutalist | table tasks drag inline-edit productivity
+settings-team-members | web | settings | Team members settings | swiss minimal | settings team members invite roles table
+crypto-exchange-trade | web | dashboard | Terminal crypto trading screen | terminal dark | trading crypto chart order-book finance
+background-terrazzo | web | backgrounds | Terrazzo background | organic minimal paper | background terrazzo svg generative parallax hero
+testimonials-masonry-wall | web | testimonials | Testimonials masonry wall | paper riso editorial | testimonials masonry quotes riso
+testimonials-metric-tabs | web | testimonials | Testimonials metric tabs | dark minimal | testimonials tabs case-study metrics
+text-field | web | inputs | Text field | minimal industrial | field form error disabled
+loader-text-shimmer | web | loaders | Text loaders for AI states | editorial paper minimal | loading text ai shimmer typewriter status
+text-mask-scroll-reveal | web | scroll | Text mask scroll reveal | kinetic dark brutalist | scroll mask wordmark zoom hero
+textarea-field | web | inputs | Textarea field | minimal industrial | textarea field note count
+features-thread-to-issue-board | web | features | Thread to issue board | dark minimal | features kanban chat agent dark
+social-thread-card | web | social | Threaded conversation card | playful brutalist | social thread replies quote comments
+stage-passes-compare | web | features | Three passes, one frame | paper editorial minimal | process compare tabs before-after studio
+phone-sign-up-steps | mobile-app | auth | Three-step phone sign-up | soft material organic | auth sign-up stepper form chips
+stats-tilted-card-stack | web | stats | Tilted stat card stack | playful soft | stats scroll sticky cards count-up agency
+time-field | web | pickers | Time field | minimal industrial | time field hour gate
+token-field | web | inputs | Token field | minimal industrial | tokens chips tags field
+widget-pomodoro | web | widgets | Tomato pomodoro timer widget | playful soft | timer pomodoro focus productivity ring
+tooltip | web | overlays | Tooltip | minimal industrial | tooltip hint hover focus
+trail-type | web | text-motion | Trail type | dark kinetic | type drag trail
+table-transactions-ledger | web | data | Transactions ledger | editorial minimal | table finance ledger search banking
+tree-nav | web | navigation | Tree | minimal industrial | tree navigation nested folders
+input-otp-underline | web | inputs | Underline OTP input | luxe editorial dark | otp verification code auth form
+undo-toast | web | feedback | Undo toast | minimal dark | toast undo archive
+pricing-usage-slider | web | pricing | Usage pricing slider | swiss minimal | pricing slider usage saas calculator
+features-vertical-label-columns | web | features | Vertical label service columns | swiss minimal editorial | features services accordion agency columns
+navbar-vertical-rail | web | navbar | Vertical rail navbar | brutalist riso | navbar rail portfolio scrollspy studio
+widget-now-playing | web | widgets | Vinyl now-playing widget | retro playful | widget music player vinyl scrubber
+phone-wallet-cards | mobile-app | ecommerce | Wallet card stack | luxe dark minimal | wallet cards payments passes ios dark
+mockup-watch-faces | web | mockups | Watch crown mockup | dark industrial kinetic | mockup watch wearable crown device
+widget-weather-glance | web | widgets | Weather glance widget, three sizes | glass soft | weather widget forecast sizes hourly
+webgl-shader-hero | web | backgrounds | WebGL shader hero | dark minimal | webgl shader hero noise background
+week-schedule | web | utility | Week schedule | editorial paper | calendar week schedule
+chart-bar-week | web | charts | Weekly bar chart | minimal industrial | charts bars dashboard week
+dock-editor-tools | web | navigation | Whiteboard tool dock | playful paper brutalist | toolbar dock whiteboard editor flyout
+winding-ribbon-scroll-story | web | scroll | Winding ribbon scroll story | playful organic | scroll svg path storytelling steps illustration
+phone-lesson-quiz | mobile-app | feedback | Word-bank lesson card | playful clay | lesson quiz language tiles streak
+onboarding-workspace-setup | web | onboarding | Workspace setup with live preview | bauhaus minimal | onboarding workspace form preview invite
+widget-world-clocks | web | widgets | World clocks meeting planner | swiss minimal | clock timezone meeting scheduler slider
+game-lobby | web | social | Bramble parlour lobby | editorial soft | lobby multiplayer ready room
+shot-callout-pins | web | overlays | Callouts on a review still | editorial minimal | annotation callout review screenshot
+phone-code-entry | mobile-app | auth | Chitthi code entry | editorial minimal | auth otp phone ios
+phone-app-lock | mobile-app | auth | Coffer drawer lock | luxe dark | auth lock biometric phone ios
+phone-delete-account | mobile-app | settings | Delete account with a 30-day undo | dark minimal | settings account delete destructive confirmation ios
+game-hud | web | overlays | Duskwell mission HUD | cyber dark | hud pause minimap overlay wave
+phone-account-edit | mobile-app | profile | Edit profile with live username check | paper minimal | profile account forms username validation ios
+phone-photo-viewer | mobile-app | media | Full-bleed photo viewer | dark editorial | photos viewer swipe zoom phone
+handwritten-homepage | web | landing | Handwritten homepage | paper | letter handwriting landing paper personal
+handwritten-letter | web | reading | Handwritten night letter | paper editorial | letter handwriting reading paper night
+phone-large-text-layout | mobile-app | utility | Large text layout rules | dark minimal | accessibility dynamic-type layout text-size reflow
+handwritten-style | web | design-language | Letter hand kit | paper | handwriting kit paper type buttons
+game-card-table | web | media | Linnet pairs table | organic soft | cards memory table keyboard
+three-orbit-object | web | mockups | Lit study on a quiet stage | dark minimal | mockup webgl orbit lighting architecture
+live-cursors-board | web | cursor | Live cursors on a board | editorial paper | cursor collaboration board presence
+three-room-look | web | hero | Look around a small room | editorial soft | hero webgl room camera interior
+m3-dialog | mobile-app | overlays | M3 basic and destructive dialogs | material editorial | material dialog android alert overlay
+m3-top-app-bar-scroll | mobile-app | scroll | M3 collapsing large top app bar | material soft | material android app-bar fab scroll list
+m3-list-detail | mobile-app | transitions | M3 list to detail with predictive back | material soft | list detail container-transform back android material
+m3-modal-bottom-sheet | mobile-app | overlays | M3 modal bottom sheet with predictive back | material dark organic | material android bottom-sheet filters gesture spring
+m3-search-results | mobile-app | utility | M3 search results | material organic | material search android filter empty
+m3-settings-list | mobile-app | settings | M3 settings list | material minimal | material android settings switch dialog list
+m3-sign-in | mobile-app | auth | M3 sign-in with passkey | material soft | sign-in form passkey android material
+m3-snackbar | mobile-app | feedback | M3 snackbar with undo | material dark | material snackbar android undo list
+game-playfield | web | media | Mallow Court brick rally | playful soft | game breakout paddle canvas pause
+phone-subscription-manage | mobile-app | settings | Manage subscription, honest cancel | editorial minimal | settings subscription billing pricing cancel ios
+phone-composer | mobile-app | messaging | New note composer | paper editorial | composer notes sheet phone ios
+game-title-screen | web | landing | Pebbleline attract screen | pixel retro | arcade attract pixel title credits
+phone-checkout | mobile-app | ecommerce | Phone checkout | minimal swiss | checkout delivery payment phone ios
+phone-notification-settings | mobile-app | settings | Phone notification settings | minimal organic | settings notifications ios time-picker toggles
+phone-orders | mobile-app | ecommerce | Phone past orders | paper editorial | orders receipt shop phone ios
+phone-privacy-data | mobile-app | settings | Phone privacy and data | dark editorial minimal | settings privacy permissions export ios
+phone-rating-prompt | mobile-app | feedback | Phone rating prompt | soft playful paper | rating review feedback bottom-sheet ios
+phone-cart | mobile-app | ecommerce | Phone shopping bag | editorial soft | cart shop phone ios quantity
+game-leaderboard | web | data | Quern score ladder | swiss minimal | leaderboard ranks tabs scores
+label-roll-button | web | buttons | Rolling label row | editorial kinetic | buttons motion type menu
+three-scroll-world | web | scroll | Scroll past three path models | editorial organic | scroll webgl camera chapters landscape
+chart-scrub-readout | web | charts | Scrub a firing curve | dark industrial | charts line scrub dashboard
+phone-skeleton-list | mobile-app | loaders | Skeleton list swap | minimal soft | skeleton loading list phone replay
+phone-forgot-password | mobile-app | auth | Solander password reset | paper organic | auth password email phone ios
+field-label-morph | web | inputs | Label that rises in the field | paper minimal | form label input focus
+chart-share-bar | web | charts | One bar split into shares | minimal industrial | charts share dashboard total
+toolbar-selection-swap | web | data | Toolbar that swaps with the selection | minimal industrial | table selection toolbar bulk
+agent-approval-card | web | cards | Agent approval card | paper minimal | agent approval confirm
+agent-tool-chip | web | feedback | Agent tool chip | industrial minimal | agent tool chip
+prompt-source-model | web | inputs | Ask with a source and a model | editorial paper | prompt source model
+card-confidence-pick | web | cards | Confidence and one other option | editorial minimal | agent suggestion confidence
+selection-rewrite | web | reading | Rewrite the selected sentence | paper editorial | agent selection rewrite
+moonlit-ridge-hero | web | hero | Le Dernier Feu | dark editorial kinetic | hero night canvas clock countdown audio
+playable-product-hero | web | hero | TU-16 | industrial minimal playful | hero product interactive sound launch music
+scroll-space-voyage | web | scroll | Apogee | dark kinetic editorial | scroll canvas space journey hud livestream

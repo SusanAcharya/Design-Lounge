@@ -151,7 +151,7 @@ In [flows.md](flows.md), with redesigns. Open it when the table above sends you 
 
 ## Piece flow
 
-1. Search `library/pieces.txt` by category, platform, title, and tags, or use the routes in [components.md](components.md). Platforms: `web`, `mobile-web`, `mobile-app`, `pwa`, `tablet`.
+1. Search `library/pieces.txt` by category, platform, title, styles, and tags, or use the routes in [components.md](components.md). Platforms: `web`, `mobile-web`, `mobile-app`, `pwa`, `tablet`.
 2. Read `library/briefs/<id>.md`. The brief is the spec for structure, counts, sizes, motion timing, states, and hit targets. `demo` is the HTML acceptance file, if you need to see the motion.
 3. The brief's colours, fonts, and light or dark mode belong to its demo. Translate them by role onto the locked theme and pairing. Follow Adapting a brief in [practice.md](practice.md). A dusk-blue parallax on a light theme becomes a daylight parallax with the same layers and speeds.
 4. Hold the result to the brief's acceptance checklist, skipping lines that only hold for the demo's copy. Fix what fails.
