@@ -64,7 +64,7 @@ If the open project is the Design Lounge repo itself (`src/demos` and `src/conte
 | A new product, site, app, or design system | Kit flow |
 | Spectacle: an ambition word ("go wild", "Awwwards", "site of the day", "unforgettable", "award-level", "make it an experience"), or a verb that makes the page the experience ("let people play with it", "you scroll and you travel") | Kit flow, then Show mode in [website.md](website.md). Free colour and type, unless they named a theme, colour, or brand. Without one of these, it is Kit mode, even for a show, a launch, or a world you could draw |
 | Two looks for one product, or "show me options" built out | Kit flow twice, on two directions that differ in theme, pairing, and hero. When the subject has a world, one is Show mode, Free, and the other is locked to the library |
-| A style by name: minimal, brutalist, Swiss, terminal, high-end, agency, luxury, handwritten, pixel, arcade | Kit flow, with Named looks in [taste.md](taste.md) |
+| A style by name (any row in Style aliases in [taste.md](taste.md), including -ism forms) | Kit flow, routed by Style aliases in [taste.md](taste.md) |
 | A game site, a web game, a lobby, a scoreboard | Kit flow, recipe `game`, then Games and Three.js in [taste.md](taste.md) |
 | They name Three.js, a 3D scene, or an orbit, and the job is not a show, a launch, or a venue | Kit flow, recipe `game`, direction Orbit. The Lounge demo is raw WebGL. Build the product in Three.js from the brief. |
 | A handwritten or hand-lettered site | Kit flow, recipe `notebook` |

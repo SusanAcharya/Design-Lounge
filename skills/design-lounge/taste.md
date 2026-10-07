@@ -10,7 +10,7 @@ One rule sits over all of it. The lock wins. When a line below names a hex or a 
 
 | The job | Section |
 | --- | --- |
-| They name a style: minimal, brutalist, Swiss, terminal, high-end, agency, luxury, Awwwards | Named looks |
+| A style by name (any row in Style aliases, below, including -ism forms) | Kit flow, routed by Style aliases, below |
 | Any website | Page shape, and Craft |
 | They want a concept, a mockup image, or "show me first", and you can make images | Image first |
 | A brand kit, identity, logo system, or brand board | Brand board |
@@ -20,6 +20,37 @@ One rule sits over all of it. The lock wins. When a line below names a hex or a 
 ## Named looks
 
 When they name one of these, it picks the theme, pairing, and family before the recipe's directions do. Write the look on the sheet: `Look: industrial · Swiss print`.
+
+### Style aliases
+
+People name a style in many words. Find their word here, then route. The Route column is family · theme · pairing · kit · pieces. A row that names a section (*Industrial brutalist*, *Minimal editorial*, *Games and Three.js*) hands over to that section. A style that resolves to a row also lifts the bans on its signature elements: Named aesthetic in [practice.md](practice.md).
+
+| They say | Route | Notes |
+| --- | --- | --- |
+| neo-brutalism, neubrutalism, neo-brutalist, "brutalist" with bright colours, offset or hard shadows | `sharp` · `festival` · `brutal-grotesk` · `neo-brutalist-style`, `hero-live-browser-card`, `card-polaroid-frames`, `dock-editor-tools`. The offset shadow and ink border come from the kit under Named aesthetic. | Not *Industrial brutalist*. |
+| brutalist, brutalism, raw, Swiss brutal (black and white, no colour) | *Industrial brutalist*, below | Ask once only if the prompt does not say which brutalism. |
+| glassmorphism, glass, frosted, liquid glass | `glass` · `observatory` / `alpine-night` / `cockpit-day` · `geometric-modern` or `wide-tech` · `ios-glass-tab-bar`, `spotlight-command-bar`, `widget-weather-glance`, `card-glass-credit`, `navbar-floating-pill-shrink` | Blur on surfaces is allowed under Named aesthetic, measured for contrast on the blurred ground. |
+| claymorphism, clay UI, puffy, 3D soft cards | `soft` · `playroom` / `bedtime` · `candy-clay` · `clay-soft-style`, `tactile-chip-tabs-stretch`, `widget-device-battery`, `phone-lesson-quiz` | **A clay, pottery, or ceramics shop or studio is a subject, not this style.** It goes to recipe `commerce`, direction `clay-shop` (Kiln). |
+| neumorphism, neomorphism, soft UI, numorphism | `soft` · `glacier` / `fog-city` · `geometric-modern` · `button-inset-soft` | Every control keeps 3:1 non-text contrast against its ground. |
+| cybercore, cyber, HUD, sci-fi interface | `sharp` · `hud-teal` · `hud` · `cyber-hud-style`, `hud-boot-gate`, `game-hud`, `glitch-text` | |
+| cyberpunk, synthwave, outrun, retrowave, retro-futurism, vaporwave | `glass` · `neon-alley` / `arcade-day` · `neon-marquee` · `card-holo-foil`, `glitch-text`. Tell them there is no sunset-grid piece yet. | Neon and glow are lifted under Named aesthetic. |
+| Y2K, chrome, millennium, early 2000s | `glass` · `y2k-chrome` / `chrome-midnight` · `y2k-chrome` · `y2k-chrome-style`, `mockup-ipod-classic`, `card-holo-foil` | |
+| pixel art, pixel, 8-bit, arcade | A game: *Games and Three.js*, below. Not a game: `sharp` · `coin-op` / `ticket-booth` · `pixel-soft` · `pixel-arcade-style`. | The `arcade` mono is for games only (Cautions in [reference.md](reference.md)). |
+| scrapbook, collage, sticker, zine-ish personal | `soft` · `market-stall` / `archive` · `handwritten-notes` · `polaroid-fan`, `card-polaroid-frames`, `card-journal-page`, `graph-paper-homepage` | |
+| editorial, magazine | `editorial` · `paper-ink` / `press-room` / `night-desk` · `newsroom` / `magazine-contrast` · `magazine-editorial-grid`, `editorial-landing-hero` | |
+| Swiss, International Typographic Style, grid | *Industrial brutalist*, Swiss print, below · `swiss-precision` / `neo-grotesk-mono` · `swiss-poster-style`, `hero-swiss-grid-wordmark` | |
+| minimal, minimalism, minimalist | *Minimal editorial*, below | |
+| maximalism, maximalist, loud, more is more | `sharp` · `festival` / `press-room` / `market-stall` · `poster-condensed` / `riso-zine` · `riso-print-style`, `background-halftone-pop` | Alias only. Up to three accents and two effects under Named aesthetic. |
+| luxury, luxe, luxury typography, high-end serif, Didone | *High-end agency*, Editorial luxury, below · `maison` / `monumental` / `literary` · `luxe-serif-style`, `deco-hotel-style` | |
+| sketch, conceptual sketch, hand-drawn, doodle | `editorial` · `inkwell` / `paper-ink` · `handwritten-notes` (`letter-hand` for a whole-letter site) · `text-annotated-underlines`, `text-marker-highlight-draw`, `checkbox-draw-list`, `handwritten-style` | Alias only. |
+| ethereal, dreamy, celestial | `soft` · `first-light` / `planetarium` / `sakura-desk` · `literary` · `background-aurora-mesh` as the one effect | Alias only. |
+| bohemian, boho | `soft` · `market-stall` / `loam` / `kiln` · `garden-journal` · `organic-garden-style`, `background-linen-weave` | Alias only. |
+| wabi-sabi, zen, Japanese minimal | `quiet` · `kiln` / `lokta` / `linen-shop` · `classic-garamond` / `garden-journal` · `background-ink-wash` | Alias only. |
+| Victorian, gothic, ornate | **Not in the library.** Nearest: `courtroom` / `chambers` · `monumental` · `hero-engraved-moonrise-plate`. Tell them. If they want the real thing, it is Show mode, Free ([show.md](show.md)). | Skipped on purpose: it needs ornament and blackletter assets the library does not have. |
+| surreal, surrealism | **Not in the library.** Nearest: Show mode, Free, with `moonlit-ridge-hero` as the scene base. Tell them. | Skipped on purpose: it is art direction, not a UI system. |
+| Ventogrid, vectorgrid | **Unknown.** Not a style this skill knows. Say so, and ask what they mean. | Nothing is routed until the word is defined. |
+
+If the style they named is not a row here, or the row says not in the library, say so in the pick line ("X is not in the library; the nearest is Y, because ...") before you build. Never substitute silently.
 
 ### Minimal editorial
 
