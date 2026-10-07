@@ -10,6 +10,8 @@
     "preview": "astro preview",
     "thumbs": "node scripts/thumbs.mjs",
     "check:pieces": "node scripts/check-pieces.mjs",
+    "gate": "node scripts/gates/demos.mjs --all",
+    "gate:changed": "node scripts/gates/demos.mjs --changed origin/main",
     "examples": "node --experimental-strip-types scripts/examples.mjs",
     "skill:sync": "node --experimental-strip-types scripts/sync-skill.mjs",
     "skill:install": "node skills/design-lounge/install.mjs"
@@ -18,6 +20,9 @@
     "astro": "^5.13.0"
   },
   "devDependencies": {
-    "playwright": "^1.55.0"
+    "axe-core": "4.14.0",
+    "js-tiktoken": "1.0.21",
+    "playwright": "^1.55.0",
+    "wait-on": "9.5.1"
   }
 }

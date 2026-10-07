@@ -41,6 +41,22 @@ if (missingCards.length) errors.push(`missing card posters in public/thumbs: ${m
 const strayCards = slugsIn('public/thumbs', '-card.webp').filter((s) => demos.has(s) && !cards.includes(s));
 if (strayCards.length) errors.push(`card posters not listed in public/thumbs/cards.json: ${strayCards.join(', ')}`);
 
+// The demo gates' ratchet (scripts/gates/demos.mjs) may list only pieces numbered up to 531, and each list has a
+// ceiling that only goes down. These two rules need no browser, so the Vercel build catches a hand edit.
+const ratchetFile = at('scripts/gates/ratchet.json');
+if (existsSync(ratchetFile)) {
+  const ratchet = JSON.parse(readFileSync(ratchetFile, 'utf8'));
+  for (const k of ['phone390', 'contrast', 'uiLines']) {
+    const list = ratchet[k] || [];
+    const tooNew = list.filter((id) => (numbers[id] ?? Infinity) > 531);
+    if (tooNew.length) errors.push(`ratchet ${k} lists pieces numbered above 531: ${tooNew.join(', ')}. New pieces must pass the gate.`);
+    if (ratchet.ceiling?.[k] === undefined) errors.push(`ratchet has no ceiling for ${k}`);
+    else if (list.length > ratchet.ceiling[k]) errors.push(`ratchet ${k} lists ${list.length} pieces but its ceiling is ${ratchet.ceiling[k]}. Ceilings only go down.`);
+    const unknown = list.filter((id) => !demos.has(id));
+    if (unknown.length) errors.push(`ratchet ${k} lists demos that do not exist: ${unknown.join(', ')}`);
+  }
+}
+
 if (errors.length) {
   console.error('\nBuild check failed:\n' + errors.map((e) => `  ✗ ${e}`).join('\n') + '\n');
   process.exit(1);
