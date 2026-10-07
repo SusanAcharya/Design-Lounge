@@ -3,14 +3,14 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Stapler — get issue zero</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#f6f1e4;--surface:#fffaf0;--surface-2:#ece4d0;--ink:#17151a;--ink-2:#4a4650;--ink-3:#76717d;
+  --bg:#f6f1e4;--surface:#fffaf0;--surface-2:#ece4d0;--ink:#17151a;--ink-2:#4a4650;--ink-3:#68636e;
   --yellow:#ffd23f;--blue:#2f5bff;--blue-ink:#fffdf8;--pink:#ff5c9a;--danger:#d8322a;--danger-soft:#fbe3e0;
   --display:"Archivo Black",Impact,sans-serif;--sans:"Archivo",system-ui,sans-serif;
   --bw:2px;--off:4px;--off-lg:8px;--r:4px;--r-card:6px;
@@ -23,7 +23,7 @@ button,input,select{font:inherit;color:inherit}
 :focus-visible{outline:var(--bw) solid var(--blue);outline-offset:3px}
 .wrap{max-width:1120px;margin:0 auto;padding:64px 40px 0;display:grid;grid-template-columns:minmax(0,1fr) 520px;gap:72px;align-items:start}
 .kicker{display:inline-block;font:700 12px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;background:var(--yellow);border:var(--bw) solid var(--ink);padding:8px 10px;box-shadow:3px 3px 0 var(--ink)}
-h1{margin:24px 0 18px;font:400 60px/.95 var(--display);letter-spacing:-.02em;text-transform:uppercase}
+h1{margin:24px 0 18px;font:400 clamp(40px,7.5vw,60px)/.95 var(--display);letter-spacing:-.02em;text-transform:uppercase}
 .lede{font-size:18px;font-weight:500;color:var(--ink-2);max-width:40ch;margin:0 0 30px}
 .claims{list-style:none;margin:0;padding:0;display:grid;gap:14px;max-width:420px}
 .claims li{display:flex;gap:14px;align-items:flex-start;font-weight:500}
@@ -58,6 +58,9 @@ h1{margin:24px 0 18px;font:400 60px/.95 var(--display);letter-spacing:-.02em;tex
 @keyframes stamp{from{transform:rotate(-6deg) scale(1.6);opacity:0}to{transform:rotate(-6deg) scale(1);opacity:1}}
 .done p{margin:8px 0 0;font-size:17px;font-weight:500;max-width:36ch}
 .done p b{font-weight:700;border-bottom:var(--bw) solid var(--ink)}
+@media (max-width:1279px){.wrap{grid-template-columns:minmax(0,1fr) 460px;gap:48px;padding:48px 32px 0}}
+@media (max-width:1023px){html{overflow-x:clip}body{overflow:auto}.wrap{grid-template-columns:1fr;gap:36px;padding:40px 28px 48px}.card{max-width:560px;min-height:0}}
+@media (max-width:639px){.wrap{padding:28px 20px 40px;gap:28px}.claims b{width:40px;height:40px;font-size:16px}.card{padding:20px}.done{padding:20px}.stamp{font-size:40px}.lede{font-size:16px}}
 @media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important;animation-duration:1ms!important}}
 </style>
 </head>

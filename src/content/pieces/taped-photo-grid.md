@@ -21,11 +21,11 @@ related: [collage-hero, sticker-board, card-polaroid-frames]
 
 ## What it is
 
-A month of pages from Paste, a fictional scrapbook printer, laid out as a four-by-two grid on a kraft board. Each page is a white card with a 10px paper margin and a 40px caption strip: a drawn picture at 4:3, a Caveat caption and a small sans date. Pages are rotated between -3° and 3° from a per-card custom property, and each is held down by either a translucent tape strip at a corner or along the top, or a red push pin. One carries a tilted red "Reprint" stamp. Hovering or focusing a page straightens it to 0° and lifts it 6px over 320ms, so the grid reads as physical without ever moving more than a few pixels. A blue handwritten note with an arrow sits at the bottom left, under the grid, where it covers nothing. The detail worth copying is the per-card `--rot` variable: the grid stays a real CSS grid with real links, and the scrapbook look is one line of CSS per card.
+A month of pages from Paste, a fictional scrapbook printer, laid out as a four-by-two grid on a kraft board. The closest piece is `collage-hero`, which stacks three pages as a hero; this is the grid under it, with its own eight pages, straight columns, and a hover that straightens one card at a time. Each page is a white card with a 10px paper margin and a 40px caption strip: a drawn picture at 4:3, a Caveat caption and a small sans date. Pages are rotated between -3° and 3° from a per-card custom property, and each is held down by either a translucent tape strip at a corner or along the top, or a red push pin. One carries a tilted red "Reprint" stamp. Hovering or focusing a page straightens it to 0° and lifts it 6px over 320ms, so the grid reads as physical without ever moving more than a few pixels. A blue handwritten note with an arrow sits at the bottom left, under the grid, where it covers nothing. The detail worth copying is the per-card `--rot` variable: the grid stays a real CSS grid with real links, and the scrapbook look is one line of CSS per card.
 
 ## Reference behaviour
 
-1. First frame: "PASTE · BOOK 3 / May, taped in" (Caveat 48px), a sentence at the right, eight pages: The lake at seven (12 May), Tej's first ticket (19 May), The good plate (26 May, pinned), Walk to the stupa (3 May, stamped Reprint), Rain, from the bus (8 May), Two mangoes (15 May, pinned), The ridge, 05:40 (22 May), Home, finally (31 May). The note: "order a reprint of any of these".
+1. First frame: "PASTE · BOOK 3 / May, taped in" (Caveat 48px), a sentence at the right ("Eight of the thirty-one pages from the bus, the roof and the garden…"), eight pages: Bus to Besisahar (2 May), Rain on the tin roof (6 May), Amma's garden (9 May, pinned), The 7:10 to work (13 May, stamped Reprint), Momos at the counter (16 May), Tej's new bike (20 May, pinned), Power cut, candles (23 May), The last mango (29 May). The note: "order a reprint of any of these".
 2. Hover or focus a page: it rotates to 0°, rises 6px and comes to the front, over 320ms expo-out. Leave: it returns to its tilt.
 3. Click a page: it is a link to the page's own view (here `#`).
 4. Nothing animates on load. Reduced motion: no straightening; focus still shows the ring.
@@ -56,8 +56,8 @@ grid 4 × 1fr, gap 34 / 28, padding-top 10
 ```css
 :root {
   --board: #c9a97c;  --paper: #fbf6ec;  --paper-2: #efe2c8;
-  --ink: #2b2118;  --ink-2: #4a3a2a;  --ink-3: #5e4d3a;  --line: #b08f62;
-  --red: #d9442b;  --blue: #2f6f8f;  --yellow: #e0a300;
+  --ink: #2b2118;  --ink-2: #4a3a2a;  --ink-3: #4d3d2c;  --line: #b08f62;
+  --red: #d9442b;  --red-ink: #b8322a;  --blue: #1d4560;  --yellow: #e0a300;
   --tape: rgba(255,250,230,.6);
   --hand: "Caveat", cursive;  --sans: "Inter", system-ui, sans-serif;
   --r: 4px;  --shadow: 0 8px 20px -10px rgba(43,33,24,.45);
@@ -76,7 +76,7 @@ grid 4 × 1fr, gap 34 / 28, padding-top 10
 | Sentence | Inter | 14px | 400 | 1.5 | 0 | sentence, `--ink-2`, right-aligned |
 | Caption | Caveat | 21px | 700 | 1 | 0 | sentence, `--ink-2` |
 | Date | Inter | 11px | 500 | 1 | +0.04em | `--ink-3` |
-| Stamp | Inter | 10px | 600 | 1 | +0.14em | UPPERCASE, `--red`, 2px border, 8° |
+| Stamp | Inter | 10px | 600 | 1 | +0.14em | UPPERCASE, `--red-ink` on a paper fill, 2px border, 8° |
 | Note | Caveat | 26px | 700 | 1 | 0 | lower case, `--blue`, −3°, bottom left |
 
 ## Motion
@@ -91,7 +91,7 @@ Reduced motion: transitions 1ms and the page keeps its tilt on hover.
 
 - **Page rest:** tilted by `--rot`, paper, shadow, tape or pin. **Hover / focus:** straight, lifted, z-index 2. **Focus-visible:** 2px blue outline at 4px offset.
 - **Pinned:** no tape; a 16px red disc at the top centre with a 2px shadow and an inner shade.
-- **Stamped:** the Reprint stamp at the top right, 85% opacity.
+- **Stamped:** the Reprint stamp at the top right, `--red-ink` (#b8322a, 5.5:1) on a paper fill.
 
 ## Content rules
 
@@ -104,7 +104,7 @@ Reduced motion: transitions 1ms and the page keeps its tilt on hover.
 
 - Every page is a link with a visible caption and date as its text; pictures, tape, pins, the stamp and the note are `aria-hidden`.
 - Focus straightens the page like hover, so keyboard users get the same cue plus the ring.
-- Contrast: `--ink-2` caption on paper 9.4:1; `--ink-3` date on paper 7.0:1; the kicker `--ink-3` on the board 4.6:1; the sentence `--ink-2` on the board 5.8:1; the note is decoration.
+- Contrast: `--ink-2` caption on paper 9.4:1; `--ink-3` date on paper 8.0:1 and on the board 4.6:1; the sentence `--ink-2` on the board 5.8:1; the `--blue` note on the board 4.6:1. Captions are one line (`white-space: nowrap`), so a caption never runs into its picture.
 - Hit targets: each page is a whole-card link; nothing smaller than the card is interactive.
 
 ## Where it lives
@@ -119,7 +119,7 @@ Reduced motion: transitions 1ms and the page keeps its tilt on hover.
 - ≥ 1280: four columns, gap 34 / 28.
 - 1024–1279: four columns, gap 26 / 20, caption 19px.
 - 768–1023: three columns; the head stacks.
-- < 640: two columns, gap 22 / 14, padding 20px, caption 18px, tape 72×20; rotations halved so pages do not overlap; the note hidden.
+- < 640: two columns, gap 22 / 14, padding 20px, caption 18px with the date on its own line under it (the strip grows to 46px), tape 72×20; rotations halved (`--tilt: .5`) so pages do not overlap; the note hidden.
 
 ## Acceptance checklist
 

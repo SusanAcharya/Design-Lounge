@@ -8,14 +8,14 @@
 
 ## What it is
 
-The now-playing card of Hush, a fictional sleep-sounds app, in monochrome neumorphism. A 460px raised card on a putty surface. Top: a 120px well holding three concentric raised and pressed rings with an ink centre (the "disc"), the title, a line of provenance and a pill tag in a well. Middle: a scrubber whose track is a 14px well and whose knob is a 30px raised disc with an ink ring; times under it. Then the transport: two 56px raised round buttons and an 80px play button in the middle. Pressing play sinks the big button into the surface (the well) and shows the pause glyph; the position then advances once a second. Bottom: a volume well with a smaller knob and a live percentage. The detail worth copying is that play is the only control whose pressed state *stays*: everything else springs back, so the one thing that is "on" reads as pushed in.
+The now-playing card of Hush, a fictional sleep-sounds app, in monochrome neumorphism. A 520px raised card on a putty surface. Top: a 132px well holding three concentric raised and pressed rings with an ink centre (the "disc"), the title, a line of provenance and a pill tag in a well. Middle: a scrubber whose track is a 14px well and whose knob is a 30px raised disc with an ink ring; times under it. Then the transport: two 56px raised round buttons and an 80px play button in the middle. Pressing play sinks the big button into the surface (the well) and shows the pause glyph; the position then advances once a second. Bottom: a volume well with a smaller knob and a live percentage. The detail worth copying is that play is the only control whose pressed state *stays*: everything else springs back, so the one thing that is "on" reads as pushed in.
 
 ## Structure
 
 ```
 1280 × 800, surface #E6E3DF; the card centred
-┌ card 460, r24, raised, padding 30 ───────────────────────────────┐
-│ ┌ disc well 120 ┐  Rain on the skylight          22/800           │
+┌ card 520, r24, raised, padding 34 ───────────────────────────────┐
+│ ┌ disc well 132 ┐  Rain on the skylight          22/800           │
 │ │  ◎ rings      │  Field tapes · recorded in Pokhara, 2025        │
 │ └───────────────┘  (SLEEP · 42 MIN) well pill                     │
 │ (═══════════●═════════════════════)  scrubber: well 14, knob 30   │
@@ -57,7 +57,7 @@ Reduced motion: transitions 1ms. The timer is not motion; it still runs.
 
 ## Responsive rules
 
-- ≥ 1280: the card at 460px, centred.
+- ≥ 1280: the card at 520px, centred.
 - 768–1279: the same card; centred in the column.
 - < 640: the card fills the width minus 20px each side; the disc drops to 96px and sits above the text; transport buttons 52 / 72 / 52.
 - Dark pair: dark putty surface, shade `rgba(0,0,0,.45)`, light `rgba(255,255,255,.06)`, the ink becomes the light ink and the edge `#4a453f`.
@@ -116,7 +116,7 @@ Reduced motion: transitions 1ms. The timer is not motion; it still runs.
 
 | Role | Family | Size | Weight | Line-height | Tracking | Case |
 |---|---|---:|---:|---:|---:|---|
-| Title | Sora | 22px | 800 | 1.1 | −0.025em | sentence |
+| Title | Sora | 24px | 800 | 1.1 | −0.025em | sentence |
 | Provenance | Sora | 14px | 400 | 1.45 | 0 | sentence, `--ink-2` |
 | Tag | Sora | 11px | 600 | 1 | +0.06em | UPPERCASE, `--ink-2` |
 | Times, volume | Sora | 12px | 600 | 1 | 0 | tabular numerals, `--ink-3` |
@@ -151,7 +151,7 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 30px;
   box-shadow: var(--raise-sm), inset 0 0 0 7px var(--surface), inset 0 0 0 10px var(--ink); }
 ```
 
-**Variants.** A compact version drops the disc and the tag and keeps the title, scrubber and transport in a 360px card. A queue is a second raised card under this one, never a list inside it; the player stays one object. On a phone the card is full width and the transport buttons grow to 56 / 72 / 56.
+**Variants.** A compact version drops the disc and the tag and keeps the title, scrubber and transport in a 400px card. A queue is a second raised card under this one, never a list inside it; the player stays one object. On a phone the card is full width and the transport buttons grow to 56 / 72 / 56.
 
 Common mistakes: letting every button stay pressed (then nothing reads as playing); a coloured progress fill on the track (the knob position is the progress; keep it monochrome); a `setInterval` faster than a second for a one-second display; forgetting the Firefox thumb selector; removing the hairline so the knob vanishes on low-contrast displays.
 

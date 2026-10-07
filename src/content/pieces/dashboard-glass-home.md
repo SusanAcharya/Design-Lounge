@@ -25,7 +25,7 @@ The home screen of Sunroof, a fictional rooftop-solar monitor. One fixed scene s
 
 ## Reference behaviour
 
-1. First frame: the scene, then the bar and five panels fade up 12px in sequence (0, 60, 120, 180, 240, 300ms). Bar: Sunroof mark, "Tuesday 7 October · 13:42 · 21°C, clear", segmented Today (pressed) / This week, an account circle "MH". Now panel: "GENERATING NOW", 3.8 kW, one sentence, the four-cell flow strip with Roof highlighted in cobalt. Chart: "Generation", "Today, 06:00 to 20:00 · kW", a curve from 0 at 06 to a 4.6 peak near 13, the dot at 14:00, x labels 06 to 20, y labels 5 / 2.5 / 0. Cards: Battery 62% ring, House 1.1 kW with four loads, Exported today 9.4 kWh with "Pause export".
+1. First frame: the scene, then the bar and five panels fade up 12px in sequence (0, 60, 120, 180, 240, 300ms). Bar: Sunroof mark, "Wednesday 7 October · 13:42 · 21°C, clear", segmented Today (pressed) / This week, an account circle "MH". Now panel: "GENERATING NOW", 3.8 kW, one sentence, the four-cell flow strip with Roof highlighted in cobalt. Chart: "Generation", "Today, 06:00 to 20:00 · kW", a curve from 0 at 06 to a 4.6 peak near 13, the dot at 14:00, x labels 06 to 20, y labels 5 / 2.5 / 0. Cards: Battery 62% ring, House 1.1 kW ("4 of 9 loads on") with four loads, Exported today 9.4 kWh with "Pause export".
 2. Click "This week": the chart redraws as seven daily bars-worth of points (Wed to Tue), the y axis becomes 30 / 15 / 0, the big number becomes 25.6 kWh, the sentence changes. Click "Today": back.
 3. Click "Pause export": the button fills ink and reads "Resume export"; the export sentence changes to "Export paused…". Click again to resume.
 4. Hover the pause button: its fill goes from 60% white to 90% white in 200ms. Pressed state hover: `--ink-2`.
@@ -38,7 +38,7 @@ The home screen of Sunroof, a fictional rooftop-solar monitor. One fixed scene s
 1280 × 800   scene: fixed, sky gradient top → 70%, sun 150px at right 14% / top 9%, two hills in the bottom 34%
 wrap max 1220, padding 22/30, grid rows gap 18
 ┌ bar 60 (glass) ─────────────────────────────────────────────────────────────────┐
-│ ● Sunroof   Tuesday 7 October · 13:42 · 21°C, clear       (Today | This week) (MH) │
+│ ● Sunroof   Wednesday 7 October · 13:42 · 21°C, clear       (Today | This week) (MH) │
 ├ grid 420 | 1fr, gap 18 ──────────────────────────────────────────────────────────┤
 │ ┌ now ──────────────────┐  ┌ chart ─────────────────────────────────────────────┐ │
 │ │ GENERATING NOW        │  │ Generation            Today, 06:00 to 20:00 · kW   │ │
@@ -48,7 +48,7 @@ wrap max 1220, padding 22/30, grid rows gap 18
 │ │ Roof House Batt Grid  │  │ 06   08   10   12   14   16   18   20   (190 tall)│ │
 │ └───────────────────────┘  └────────────────────────────────────────────────────┘ │
 ├ row 1fr | 1fr | 1.3fr, gap 18 ──────────────────────────────────────────────────┤
-│ ┌ Battery  13.5 kWh ─┐ ┌ House, 1.1 kW  4 of 9 on ─┐ ┌ Exported today  at 0.11 ─┐ │
+│ ┌ Battery  13.5 kWh ─┐ ┌ House, 1.1 kW  4 of 9 loads on ┐ ┌ Exported today  at 0.11 ─┐ │
 │ │ (ring 76) 62%      │ │ ● Heat pump          0.6  │ │ 9.4 kWh  30/800           │ │
 │ │ Full by 15:10…     │ │ ● Fridge             0.1  │ │ About 1.03 earned…        │ │
 │ └────────────────────┘ │ ● Workshop           0.3  │ │ [Pause export] 40 pill    │ │
@@ -133,8 +133,8 @@ Reduced motion: no entry animation, no ring sweep, 1ms transitions. The glass it
 
 - ≥ 1280: grid 420 | 1fr; three cards 1fr 1fr 1.3fr; the number 88px.
 - 1024–1279: grid 360 | 1fr; the number 72px; chart 170px tall.
-- 768–1023: one column; the now panel first, then the chart, then the three cards in a row of three at 1fr each; the bar's date shortens to "Tue 7 Oct · 13:42".
-- < 640: padding 16px; the number 64px; the flow strip 2×2; cards stack; the bar keeps the segmented control and drops the date to a second line. Blur stays; panels stay 64% (do not raise opacity on phones unless the scene is a photo with dark areas).
+- 768–1023: one column; the now panel first, then the chart, then the three cards in a row of three at 1fr each; the bar's date shortens to "Wed 7 Oct · 13:42".
+- < 640: padding 16px; the number 64px; the flow strip 2×2; cards stack; the bar wraps into three rows: the mark and the account, then the segmented control at full width, then the date. Blur stays; panels stay 64% (do not raise opacity on phones unless the scene is a photo with dark areas).
 
 ## Acceptance checklist
 

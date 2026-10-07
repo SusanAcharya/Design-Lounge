@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Hush — last night</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -33,7 +33,7 @@ button{font:inherit;color:inherit}
 .tiles{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:22px;align-items:stretch}
 .tile{padding:26px 28px 24px;border-radius:var(--r-card);border:1px solid var(--edge);box-shadow:var(--raise);display:flex;flex-direction:column;gap:14px}
 .label{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
-.num{font-size:72px;line-height:.95;font-weight:800;letter-spacing:-.045em;font-variant-numeric:tabular-nums;display:flex;align-items:baseline;gap:6px}
+.num{font-size:clamp(56px,6vw,72px);line-height:.95;font-weight:800;letter-spacing:-.045em;font-variant-numeric:tabular-nums;display:flex;align-items:baseline;gap:6px}
 .num small{font-size:28px;font-weight:600;letter-spacing:-.02em;color:var(--ink-2)}
 .tile.sm .num{font-size:36px}.tile.sm .num small{font-size:18px}
 .delta{align-self:flex-start;padding:7px 12px;border-radius:999px;box-shadow:var(--well-sm);border:1px solid var(--edge);font-size:13px;font-weight:600;display:inline-flex;align-items:center;gap:6px;font-variant-numeric:tabular-nums}
@@ -44,6 +44,9 @@ button{font:inherit;color:inherit}
 @keyframes grow{from{transform:scaleY(.2)}to{transform:none}}
 .bars-l{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;font-size:11px;font-weight:600;color:var(--ink-3);text-align:center;margin-top:-6px}
 .tile.sm p{margin:auto 0 0;font-size:13px;color:var(--ink-2)}
+@media (max-width:1279px){.tiles{grid-template-columns:1.4fr 1fr 1fr}.num{font-size:60px}}
+@media (max-width:1023px){html{overflow-x:clip}body{display:block;overflow:auto;padding:28px 0 40px}.set{margin:0 auto}.tiles{grid-template-columns:1fr 1fr}.tile:first-child{grid-column:1 / -1}}
+@media (max-width:639px){.set{padding:0 20px;gap:18px}.head{flex-direction:column;align-items:flex-start;gap:14px}.tiles{grid-template-columns:1fr;gap:18px}.tile{padding:20px 20px 18px}.num{font-size:56px}.bars{height:72px}}
 @media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important;animation:none!important}}
 </style>
 </head>

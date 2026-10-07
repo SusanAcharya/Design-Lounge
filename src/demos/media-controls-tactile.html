@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Hush — now playing</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -24,12 +24,12 @@ html,body{height:100%;margin:0}
 body{background:var(--surface);color:var(--ink);font:15px/1.45 var(--sans);-webkit-font-smoothing:antialiased;overflow:hidden;display:grid;place-items:center}
 button,input{font:inherit;color:inherit}
 :focus-visible{outline:2px solid var(--ink);outline-offset:4px}
-.player{width:460px;padding:30px 30px 28px;border-radius:var(--r-card);border:1px solid var(--edge);box-shadow:var(--raise);display:grid;gap:22px}
+.player{width:520px;padding:34px 34px 32px;border-radius:var(--r-card);border:1px solid var(--edge);box-shadow:var(--raise);display:grid;gap:22px}
 .art{display:flex;gap:20px;align-items:center}
-.disc{width:120px;height:120px;border-radius:var(--r);box-shadow:var(--well);border:1px solid var(--edge);display:grid;place-items:center;flex:none}
+.disc{width:132px;height:132px;border-radius:var(--r);box-shadow:var(--well);border:1px solid var(--edge);display:grid;place-items:center;flex:none}
 .disc i{display:block;border-radius:50%;border:1px solid var(--edge);box-shadow:var(--raise-sm)}
 .disc i.a{width:84px;height:84px;display:grid;place-items:center}.disc i.b{width:52px;height:52px;display:grid;place-items:center;box-shadow:var(--well-sm)}.disc i.c{width:16px;height:16px;background:var(--ink);border:0;box-shadow:none}
-.meta h1{margin:0 0 4px;font-size:22px;font-weight:800;letter-spacing:-.025em;line-height:1.1}
+.meta h1{margin:0 0 4px;font-size:24px;font-weight:800;letter-spacing:-.025em;line-height:1.1}
 .meta p{margin:0;color:var(--ink-2);font-size:14px}
 .meta .tag{display:inline-block;margin-top:10px;padding:5px 10px;border-radius:999px;box-shadow:var(--well-sm);border:1px solid var(--edge);font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2)}
 .scrub{display:grid;gap:8px}
@@ -51,6 +51,7 @@ button,input{font:inherit;color:inherit}
 .vol input::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;border-radius:50%;background:var(--surface);border:1px solid var(--edge);box-shadow:var(--raise-sm),inset 0 0 0 5px var(--surface),inset 0 0 0 8px var(--ink)}
 .vol input::-moz-range-thumb{width:24px;height:24px;border-radius:50%;background:var(--surface);border:1px solid var(--edge);box-shadow:var(--raise-sm)}
 .vol output{font-size:12px;font-weight:600;color:var(--ink-3);width:34px;text-align:right;font-variant-numeric:tabular-nums}
+@media (max-width:639px){html{overflow-x:clip}body{display:block;overflow:auto;padding:20px}.player{width:100%;padding:22px 20px 22px;gap:18px}.art{flex-direction:column;align-items:flex-start;gap:14px}.disc{width:96px;height:96px}.disc i.a{width:68px;height:68px}.disc i.b{width:42px;height:42px}.disc i.c{width:12px;height:12px}.meta h1{font-size:22px}.tb.sm{width:52px;height:52px}.tb.play{width:72px;height:72px}.transport{gap:18px}}
 @media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important}}
 </style>
 </head>

@@ -62,7 +62,7 @@ done layer (same box): [YOU'RE IN] pink stamp -6° · sentence with the email ·
 ```css
 :root {
   --bg: #f6f1e4;  --surface: #fffaf0;  --surface-2: #ece4d0;
-  --ink: #17151a;  --ink-2: #4a4650;  --ink-3: #76717d;
+  --ink: #17151a;  --ink-2: #4a4650;  --ink-3: #68636e;
   --yellow: #ffd23f;  --blue: #2f5bff;  --blue-ink: #fffdf8;  --pink: #ff5c9a;
   --danger: #d8322a;  --danger-soft: #fbe3e0;
 

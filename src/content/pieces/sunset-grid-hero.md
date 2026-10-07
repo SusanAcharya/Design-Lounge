@@ -21,11 +21,11 @@ related: [webgl-shader-hero, glitch-text, card-holo-foil]
 
 ## What it is
 
-The first screen of Night Drive, a fictional rooftop synth night. One canvas draws the whole scene: an indigo-to-plum sky with ninety slow-blinking stars, a sun that fades from amber through coral to magenta with six dark stripes cut across its lower half, a magenta horizon line with a soft glow, and a cyan grid on a near-black ground. The grid's vertical lines converge on a vanishing point behind the sun; its horizontal lines roll toward the viewer, spaced by `z²` so they bunch at the horizon and spread at the bottom, looping every 2.9 seconds. On top: a nav with a cyan tube-letter wordmark, a kicker in a cyan hairline box, a two-line Monoton headline in magenta with a neon glow, one lede and two buttons. The detail worth copying is the budget: the canvas runs at most 45 frames a second at a device pixel ratio capped at 1.5, stops when it leaves the viewport or the tab hides, and under reduced motion (or the "Grid: still" button) draws one frame and stops, so the page stays cheap on a slow phone.
+The first screen of Night Drive, a fictional rooftop synth night. One canvas draws the whole scene: an indigo-to-plum sky with ninety slow-blinking stars (none in the top 72px, so the nav sits on plain sky), a sun that fades from amber through coral to magenta with six dark stripes cut across its lower half, a magenta horizon line with a soft glow, and a cyan grid on a near-black ground. The grid's vertical lines converge on a vanishing point behind the sun; its horizontal lines roll toward the viewer, spaced by `z²` so they bunch at the horizon and spread at the bottom, looping every 2.9 seconds. On top: a nav with a cyan tube-letter wordmark, a kicker in a cyan hairline box, a two-line Monoton headline in magenta with a neon glow, one lede and two buttons. The detail worth copying is the budget: the canvas runs at most 45 frames a second at a device pixel ratio capped at 1.5, stops when it leaves the viewport or the tab hides, and under reduced motion (or the "Grid: still" button) draws one frame and stops, so the page stays cheap on a slow phone.
 
 ## Reference behaviour
 
-1. First frame: the scene already drawn, the grid rolling; the kicker, headline, lede and buttons fade up 14px in sequence (0 / 80 / 160 / 240ms) over 900ms. Copy: "Saturday 18 October · Doors 22:00", "NIGHT DRIVE / VOL. 7", the lede, buttons "Get a ticket, 1,200" (magenta) and "See the line-up" (ghost).
+1. First frame: the scene already drawn, the grid rolling; the kicker, headline, lede and buttons fade up 14px in sequence (0 / 80 / 160 / 240ms) over 900ms. Copy: "Saturday 17 October · Doors 22:00", "NIGHT DRIVE / VOL. 7", the lede, buttons "Get a ticket, 1,200" (magenta) and "See the line-up" (ghost).
 2. The horizontal grid lines move down and apart; a new line appears at the horizon every 2.9 seconds. Stars blink slowly (opacity 0.35 to 0.75 on a sine). Nothing else in the scene moves.
 3. Hover the magenta button: it lifts 2px and its glow widens (22px to 34px blur). The ghost button's border brightens.
 4. "Grid: still" (bottom left, `aria-pressed`): stops the loop and leaves the last frame. "Grid: moving" starts it again.
@@ -102,6 +102,7 @@ Budget: `requestAnimationFrame` throttled to 45fps; canvas at `min(devicePixelRa
 - **Button default / hover / focus-visible:** magenta fill with a 22px glow; lifted with a 34px glow; 2px cyan outline at 4px offset.
 - **Ghost button:** 55% indigo with an 8px blur and a 40% ink border; hover brightens the border.
 - **Offscreen or hidden tab:** the loop is stopped; the last frame stays.
+- **Grid button:** `--bg` at 88% with the ink label, so it reads over the grid lines.
 
 ## Accessibility
 
@@ -116,7 +117,7 @@ Budget: `requestAnimationFrame` throttled to 45fps; canvas at `min(devicePixelRa
 - ≥ 1280: as drawn; headline 86px; the copy ends above the horizon.
 - 1024–1279: headline 6.8vw; the sun stays at 60% W.
 - 768–1023: copy max 600px; horizon 0.68 H; the vanishing point moves to 50% W so the sun sits behind the copy's right edge.
-- < 640: padding 20px; headline 56px; buttons full width stacked; 15 verticals instead of 25; the canvas DPR cap stays 1.5 and the fps cap drops to 30. The Grid button stays reachable above the fold's bottom edge.
+- < 640: the copy sits on a dark plate (`--bg` at 86% with a 14% ink hairline, 6px radius, 16px margins), so it passes contrast wherever the sun lands; headline 44px; buttons full width stacked; the horizon drops to 74% H, the sun moves to 80% W at 17% of the short side, 15 verticals instead of 25; the canvas DPR cap stays 1.5 and the fps cap drops to 30. The Grid button stays reachable above the fold's bottom edge.
 
 ## Acceptance checklist
 
@@ -131,7 +132,7 @@ Budget: `requestAnimationFrame` throttled to 45fps; canvas at `min(devicePixelRa
 - [ ] Focus rings visible on every control.
 
 **This demo**
-- [ ] Night Drive Vol. 7, Saturday 18 October, doors 22:00, Maitighar rooftop, ticket 1,200; nav Line-up, Tickets, The room.
+- [ ] Night Drive Vol. 7, Saturday 17 October, doors 22:00, Maitighar rooftop, ticket 1,200; nav Line-up, Tickets, The room.
 
 ## Implementation notes
 

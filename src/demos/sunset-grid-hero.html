@@ -3,8 +3,8 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width">
-<title>Night Drive — Saturday 18 October</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Night Drive — Saturday 17 October</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Monoton&family=Josefin+Sans:wght@300;400;600&display=swap" rel="stylesheet">
@@ -25,7 +25,7 @@ canvas{position:absolute;inset:0;width:100%;height:100%;z-index:0}
 .nav{position:relative;z-index:2;display:flex;align-items:center;gap:28px;padding:22px 40px}
 .brand{font:400 20px/1 var(--display);letter-spacing:.06em;text-transform:uppercase;color:var(--cyan);text-decoration:none;text-shadow:0 0 12px rgba(47,226,240,.6)}
 .links{margin-left:auto;display:flex;gap:26px;font-weight:600;font-size:14px;letter-spacing:.08em;text-transform:uppercase}
-.links a{text-decoration:none;color:var(--ink-2)}
+.links a{text-decoration:none;color:var(--ink-2);white-space:nowrap}
 .links a:hover{color:var(--ink)}
 .copy{position:relative;z-index:2;padding:40px 40px 0;max-width:760px}
 .kicker{display:inline-block;font-weight:600;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);border:1px solid rgba(47,226,240,.5);padding:8px 12px;border-radius:var(--r)}
@@ -38,10 +38,12 @@ h1 span{display:block;color:var(--ink);text-shadow:0 0 18px rgba(244,236,255,.35
 .btn:hover{transform:translateY(-2px);box-shadow:0 0 34px rgba(255,63,164,.65)}
 .btn.ghost{background:rgba(18,11,46,.55);color:var(--ink);border-color:rgba(244,236,255,.4);box-shadow:none;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
 .btn.ghost:hover{border-color:var(--ink);box-shadow:none}
-.motion{position:absolute;left:40px;bottom:28px;z-index:2;min-height:40px;padding:0 14px;border-radius:999px;border:1px solid rgba(244,236,255,.35);background:rgba(18,11,46,.6);color:var(--ink-2);font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;cursor:pointer}
+.motion{position:absolute;left:40px;bottom:28px;z-index:2;min-height:40px;padding:0 14px;border-radius:999px;border:1px solid rgba(244,236,255,.35);background:rgba(18,11,46,.88);color:var(--ink);font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;cursor:pointer}
 .motion[aria-pressed="true"]{color:var(--ink);border-color:var(--ink)}
 .in{animation:in var(--t-in) var(--expo) both;animation-delay:var(--d,0ms)}
 @keyframes in{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@media (max-width:1023px){.copy{max-width:600px}h1{font-size:clamp(44px,8vw,72px)}}
+@media (max-width:639px){.nav{padding:18px 16px;gap:14px}.brand{font-size:16px;white-space:nowrap}.links{gap:12px;font-size:11px}.copy{margin:0 16px;padding:22px 18px 20px;background:rgba(18,11,46,.86);border:1px solid rgba(244,236,255,.14);border-radius:var(--r)}h1{font-size:44px;margin:16px 0 12px}.lede{font-size:16px;margin-bottom:20px}.ctas{flex-direction:column;gap:12px}.btn{width:100%}.motion{left:16px;bottom:20px}}
 @media (prefers-reduced-motion:reduce){.in{animation:none}.btn{transition:none}}
 </style>
 </head>
@@ -53,7 +55,7 @@ h1 span{display:block;color:var(--ink);text-shadow:0 0 18px rgba(244,236,255,.35
     <nav class="links" aria-label="Main"><a href="#">Line-up</a><a href="#">Tickets</a><a href="#">The room</a></nav>
   </header>
   <div class="copy">
-    <span class="kicker in">Saturday 18 October · Doors 22:00</span>
+    <span class="kicker in">Saturday 17 October · Doors 22:00</span>
     <h1 class="in" style="--d:80ms">Night Drive <span>Vol. 7</span></h1>
     <p class="lede in" style="--d:160ms">Six hours of synth on the Maitighar rooftop. <b>Lokta Beats, Himal FM and Ritu</b> play until the grid fades at four.</p>
     <div class="ctas in" style="--d:240ms"><a class="btn" href="#">Get a ticket, 1,200</a><a class="btn ghost" href="#">See the line-up</a></div>
@@ -75,15 +77,15 @@ h1 span{display:block;color:var(--ink);text-shadow:0 0 18px rgba(244,236,255,.35
     draw(t);
   }
   function draw(time) {
-    const hz = H * .64, vx = W * .6;
+    const narrow = W < 640, hz = H * (narrow ? .74 : .64), vx = W * (narrow ? .8 : .6);
     const sky = g.createLinearGradient(0, 0, 0, hz);
     sky.addColorStop(0, '#120b2e'); sky.addColorStop(1, '#3a1458');
     g.fillStyle = sky; g.fillRect(0, 0, W, hz + 1);
     g.fillStyle = '#f4ecff';
-    for (const [x, y, r] of stars) { g.globalAlpha = .35 + .4 * ((Math.sin(time * .0015 + x * 40) + 1) / 2); g.beginPath(); g.arc(x * W, y * H, r, 0, 6.283); g.fill(); }
+    for (const [x, y, r] of stars) { if (y * H < 72) continue; g.globalAlpha = .35 + .4 * ((Math.sin(time * .0015 + x * 40) + 1) / 2); g.beginPath(); g.arc(x * W, y * H, r, 0, 6.283); g.fill(); }
     g.globalAlpha = 1;
     // sun with cut stripes
-    const sr = Math.min(W, H) * .2, sx = vx, sy = hz - sr * .55;
+    const sr = Math.min(W, H) * (narrow ? .17 : .2), sx = vx, sy = hz - sr * .55;
     const sun = g.createLinearGradient(0, sy - sr, 0, sy + sr);
     sun.addColorStop(0, '#ffb347'); sun.addColorStop(.55, '#ff5c8a'); sun.addColorStop(1, '#ff3fa4');
     g.save(); g.beginPath(); g.arc(sx, sy, sr, 0, 6.283); g.clip();
@@ -96,7 +98,8 @@ h1 span{display:block;color:var(--ink);text-shadow:0 0 18px rgba(244,236,255,.35
     g.strokeStyle = '#2fe2f0'; g.lineWidth = 1.2; g.globalAlpha = .9;
     g.shadowColor = 'rgba(47,226,240,.6)'; g.shadowBlur = 0;
     g.beginPath();
-    for (let i = -12; i <= 12; i++) { const x0 = vx + i * W * .06; g.moveTo(vx + (x0 - vx) * .02, hz); g.lineTo(vx + (x0 - vx) * 4.2, H); }
+    const nv = narrow ? 7 : 12;
+    for (let i = -nv; i <= nv; i++) { const x0 = vx + i * W * (narrow ? .1 : .06); g.moveTo(vx + (x0 - vx) * .02, hz); g.lineTo(vx + (x0 - vx) * 4.2, H); }
     g.stroke();
     const ph = (time * .00035) % 1;
     g.beginPath();
@@ -110,7 +113,7 @@ h1 span{display:block;color:var(--ink);text-shadow:0 0 18px rgba(244,236,255,.35
     g.strokeStyle = '#ff3fa4'; g.lineWidth = 2; g.beginPath(); g.moveTo(0, hz); g.lineTo(W, hz); g.stroke();
   }
   function frame(now) {
-    if (now - last < 1000 / 45) { raf = requestAnimationFrame(frame); return; }
+    if (now - last < 1000 / (W < 640 ? 30 : 45)) { raf = requestAnimationFrame(frame); return; }
     t += now - last; last = now;
     draw(t); raf = requestAnimationFrame(frame);
   }

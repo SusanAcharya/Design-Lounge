@@ -58,7 +58,7 @@ The pricing section of Stapler, a fictional zine-printing service, in a neo-brut
 ```css
 :root {
   --bg: #f6f1e4;  --surface: #fffaf0;  --surface-2: #ece4d0;
-  --ink: #17151a;  --ink-2: #4a4650;  --ink-3: #76717d;
+  --ink: #17151a;  --ink-2: #4a4650;  --ink-3: #68636e;
   --yellow: #ffd23f;  --blue: #2f5bff;  --blue-ink: #fffdf8;  --pink: #ff5c9a;
 
   --display: "Archivo Black", Impact, sans-serif;
@@ -114,7 +114,7 @@ Reduced motion: all transitions 1ms; the price text still swaps, the was line st
 - The switch is a `<button role="switch" aria-checked>` with `aria-label="Bill yearly"`; the "Monthly" and "Yearly" labels are visible text beside it. Space and Enter toggle it.
 - Each tier is an `<article>` whose `h2` is its name; the price `b` is text, so a screen reader hears "$18 / month".
 - Excluded features are visibly different (empty box, grey text), and may carry `aria-label="Not included: …"` in a stack that supports it.
-- Contrast: ink on cream 15.2:1; ink on yellow 12.6:1; `--blue-ink` on blue 5.1:1; `--ink-3` on cream 4.9:1 and on `--surface` 5.2:1.
+- Contrast: ink on cream 15.2:1; ink on yellow 12.6:1; `--blue-ink` on blue 5.1:1; `--ink-3` on cream 5.2:1 and on `--surface` 5.2:1.
 - Hit targets: buttons 48px; switch 64×32 with the labels as extra target; focus rings clear the shadows.
 
 ## Responsive rules

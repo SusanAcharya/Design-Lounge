@@ -3,15 +3,15 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Paste — a scrapbook you can send</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --board:#c9a97c;--paper:#fbf6ec;--paper-2:#efe2c8;--ink:#2b2118;--ink-2:#4a3a2a;--ink-3:#5e4d3a;--line:#b08f62;
-  --red:#d9442b;--blue:#2f6f8f;--yellow:#e0a300;--tape:rgba(255,250,230,.6);
+  --board:#c9a97c;--paper:#fbf6ec;--paper-2:#efe2c8;--ink:#2b2118;--ink-2:#4a3a2a;--ink-3:#4d3d2c;--line:#b08f62;
+  --red:#bf3a24;--blue:#1d4560;--yellow:#e0a300;--tape:rgba(255,250,230,.6);
   --hand:"Caveat",cursive;--sans:"Inter",system-ui,sans-serif;
   --r:4px;--shadow:0 8px 20px -10px rgba(43,33,24,.45);--t-micro:200ms;--ease:cubic-bezier(.2,.7,.2,1);--expo:cubic-bezier(.16,1,.3,1);
 }
@@ -28,7 +28,7 @@ a,button{font:inherit;color:inherit}
 .links a:hover{background:var(--paper-2)}
 .hero{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:30px 40px 0;display:grid;grid-template-columns:minmax(0,1fr) 520px;gap:40px;align-items:center}
 .torn{position:relative;background:var(--paper);padding:30px 34px 28px;box-shadow:var(--shadow);clip-path:polygon(0 3%,4% 0,12% 2%,21% 0,33% 2%,44% 0,55% 3%,66% 0,78% 2%,89% 0,100% 2%,100% 97%,95% 100%,84% 98%,73% 100%,62% 97%,50% 100%,39% 98%,27% 100%,15% 97%,5% 100%,0 98%)}
-.torn h1{margin:0 0 14px;font:600 64px/1.02 var(--sans);letter-spacing:-.035em}
+.torn h1{margin:0 0 14px;font:600 clamp(40px,5.6vw,64px)/1.02 var(--sans);letter-spacing:-.035em}
 .torn h1 mark{background:none;color:var(--ink);background-image:linear-gradient(transparent 55%,rgba(224,163,0,.55) 55% 92%,transparent 92%);padding:0 2px}
 .torn p{margin:0 0 24px;font-size:18px;color:var(--ink-2);max-width:42ch}
 .ctas{display:flex;gap:14px;flex-wrap:wrap}
@@ -55,6 +55,9 @@ a,button{font:inherit;color:inherit}
 .stage:hover .p3{transform:rotate(0deg) translateY(-8px)}
 .sticker{position:absolute;z-index:4;right:36px;top:60px;width:96px;height:96px;border-radius:50%;background:var(--yellow);color:var(--ink);display:grid;place-items:center;text-align:center;font:700 22px/1 var(--hand);transform:rotate(12deg);box-shadow:0 3px 0 rgba(43,33,24,.25),inset 0 0 0 4px var(--paper)}
 .ticket{position:absolute;z-index:4;left:0;bottom:60px;background:var(--paper-2);padding:8px 14px;font:600 11px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;border:1px dashed var(--ink-3);transform:rotate(-10deg)}
+@media (max-width:1279px){.hero{grid-template-columns:minmax(0,1fr) 440px;gap:32px}.p1{width:280px}.p2{width:230px;top:60px}.p3{width:200px;left:120px}.stage{height:520px}}
+@media (max-width:1023px){html{overflow-x:clip}body{overflow:auto}.hero{grid-template-columns:1fr;gap:36px;padding:24px 28px 48px}.torn-wrap{margin-bottom:54px}.stage{height:420px;max-width:520px}.p1{width:240px;left:0;top:10px}.p2{width:200px;right:0;top:30px}.p3{width:180px;left:120px;bottom:0}.sticker{width:80px;height:80px;font-size:19px}.links{gap:12px}}
+@media (max-width:639px){.nav{padding:16px 20px;gap:14px}.brand{font-size:24px}.links a{padding:6px 9px;font-size:13px}.hero{padding:20px 20px 40px;gap:30px}.torn{padding:24px 20px 22px}.torn h1{font-size:40px}.torn p{font-size:16px}.ctas{flex-direction:column}.btn{width:100%}.note{font-size:24px;bottom:-50px;left:16px}.stage{height:400px;max-width:100%}.p1{width:200px;left:0;top:10px}.p2{width:160px;right:0;top:215px}.p3,.ticket{display:none}.photo figcaption{font-size:18px}.photo figcaption small{display:none}.sticker{width:72px;height:72px;font-size:18px;right:8px;top:0}}
 @media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important}.stage:hover .photo{transform:none}}
 </style>
 </head>

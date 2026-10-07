@@ -56,9 +56,9 @@ hero max 1200, padding 30/40, grid minmax(0,1fr) | 520px, gap 40, centred
 :root {
   --board: #c9a97c;    /* page */
   --paper: #fbf6ec;  --paper-2: #efe2c8;
-  --ink: #2b2118;  --ink-2: #4a3a2a;  --ink-3: #5e4d3a;  --line: #b08f62;
-  --red: #d9442b;      /* primary: the one filled button */
-  --blue: #2f6f8f;     /* secondary: the pen, focus */
+  --ink: #2b2118;  --ink-2: #4a3a2a;  --ink-3: #4d3d2c;  --line: #b08f62;
+  --red: #bf3a24;      /* primary: the one filled button; cream text passes 4.5:1 on it */
+  --blue: #1d4560;     /* secondary: the pen and the note, 4.6:1 on the board */
   --yellow: #e0a300;   /* tertiary: the marker stripe, the sticker */
   --tape: rgba(255,250,230,.6);
   --hand: "Caveat", cursive;
@@ -106,7 +106,7 @@ Reduced motion: transitions 1ms; the pages stay put on hover.
 
 - The headline, sentence and buttons are real text in the sans; the note, sticker and ticket are `aria-hidden` decoration, and nothing they say is needed to use the page.
 - The stage is labelled "Three pages from a finished book"; each page is a `figure` with a real caption and date; the pictures are `aria-hidden` SVGs.
-- Contrast: `--ink` on paper 14.1:1; `--ink-2` on paper 9.4:1; cream on the red button 4.9:1; `--ink-3` date on paper 7.0:1; `--blue` note on the board 3.6:1 (decoration, 28px). The tape is 60% white and never sits over text.
+- Contrast: `--ink` on paper 14.1:1; `--ink-2` on paper 9.4:1; cream on the red button 4.8:1; `--ink-3` date on paper 8.0:1; `--blue` note on the board 4.6:1. The tape is 60% white and never sits over text.
 - Hit targets: buttons 48px, nav tabs 32px tall with 12px padding (make them 44px on touch).
 
 ## Responsive rules
@@ -114,7 +114,7 @@ Reduced motion: transitions 1ms; the pages stay put on hover.
 - ≥ 1280: grid `minmax(0,1fr) | 520px`; headline 64px.
 - 1024–1279: right column 440px; pages 280 / 230 / 200 wide; headline 56px.
 - 768–1023: one column; the stage below the block at 420px tall; the note moves under the buttons.
-- < 640: padding 20px; headline 40px; buttons stacked full width; the stage shows pages 1 and 2 only (hide page 3 and the ticket); the sticker 72px. Keep the torn edge; it is the piece.
+- < 640: padding 20px; headline 40px; buttons stacked full width; the stage is 400px tall and shows pages 1 and 2 only (page 3 and the ticket are hidden), page 2 low and right so page 1's caption stays clear; captions 18px without their dates; the sticker 72px. Keep the torn edge; it is the piece.
 
 ## Acceptance checklist
 

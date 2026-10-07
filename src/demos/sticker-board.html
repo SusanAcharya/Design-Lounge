@@ -3,15 +3,15 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Mira's board — this month</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --board:#c9a97c;--paper:#fbf6ec;--paper-2:#efe2c8;--ink:#2b2118;--ink-2:#4a3a2a;--ink-3:#5e4d3a;--line:#b08f62;
-  --red:#d9442b;--blue:#2f6f8f;--yellow:#e0a300;--green:#3f7a4a;--tape:rgba(255,250,230,.6);
+  --board:#c9a97c;--paper:#fbf6ec;--paper-2:#efe2c8;--ink:#2b2118;--ink-2:#4a3a2a;--ink-3:#4d3d2c;--line:#b08f62;
+  --red:#d9442b;--blue:#1d4560;--yellow:#e0a300;--green:#3f7a4a;--tape:rgba(255,250,230,.6);
   --hand:"Caveat",cursive;--sans:"Inter",system-ui,sans-serif;
   --r:4px;--shadow:0 8px 20px -10px rgba(43,33,24,.45);--t-micro:200ms;--t-pop:360ms;--ease:cubic-bezier(.2,.7,.2,1);--pop:cubic-bezier(.34,1.56,.64,1);
 }
@@ -55,6 +55,9 @@ button{font:inherit;color:inherit}
 .count{font:700 22px/1 var(--hand);color:var(--blue)}
 .clear{align-self:flex-start;min-height:40px;padding:0 14px;border:2px solid var(--ink);background:var(--paper);font-weight:600;font-size:13px;cursor:pointer;box-shadow:3px 3px 0 var(--ink);border-radius:var(--r)}
 .clear:hover{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+@media (max-width:1279px){.board{height:580px}.card{--w:calc(var(--w0,260px) * .9)}}
+@media (max-width:1023px){html{overflow-x:clip}body{overflow:auto}.wrap{grid-template-columns:1fr;gap:24px;padding:24px 28px 40px;height:auto}.board{height:520px}.sheet h1{font-size:30px}.tray{grid-template-columns:repeat(6,1fr)}.sk{padding:2px}}
+@media (max-width:639px){.wrap{padding:20px 16px 40px}.board{height:auto;padding:16px 14px;display:grid;gap:14px}.card{position:static;width:auto;--w:auto;transform:rotate(calc(var(--rot) / 2))}#stuck{position:static;display:flex;flex-wrap:wrap;gap:10px;min-height:0}.stuck{position:static;width:64px;height:64px}.tray{grid-template-columns:repeat(6,1fr);gap:6px;padding:10px}.sheet h1{font-size:28px}}
 @media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important;animation-duration:1ms!important}}
 </style>
 </head>
@@ -63,7 +66,7 @@ button{font:inherit;color:inherit}
   <div class="board" id="board" aria-label="Mira's board for October">
     <article class="card c1"><span class="tape top" aria-hidden="true"></span><h2>This month</h2><p>Finish the Pokhara book. Learn to bind a spine that lies flat. Say no to one thing.</p></article>
     <article class="card c2 pin"><h2>Reading</h2><ul><li>The Glass Hotel</li><li><s>Blue Nights</s></li><li>Notes on binding, vol. 2</li></ul></article>
-    <article class="card c3"><span class="tape tl" aria-hidden="true"></span><h2>Shows</h2><p>Night Drive vol. 7, Sat 18 Oct, doors ten. The riso fair at Patan on the 25th, bring the yellow ink.</p></article>
+    <article class="card c3"><span class="tape tl" aria-hidden="true"></span><h2>Shows</h2><p>Night Drive vol. 7, Sat 17 Oct, doors ten. The riso fair at Patan on the 25th, bring the yellow ink.</p></article>
     <article class="card c4 pin"><h2>Buy</h2><ul><li>Bone folder</li><li>Linen thread, 18/3</li><li>Kraft, 300gsm, A3</li></ul></article>
     <article class="card c5"><span class="tape top" aria-hidden="true"></span><h2>Call Amma</h2><p>Sunday, before the match.</p></article>
     <article class="card c6"><span class="tape tl" aria-hidden="true"></span><h2>Done, really done</h2><p>Book 2 posted to Tej. The ridge walk. Fixed the stapler.</p></article>

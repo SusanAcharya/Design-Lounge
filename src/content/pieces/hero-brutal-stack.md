@@ -63,7 +63,7 @@ hero max 1200, padding 36/40/0, grid minmax(0,1fr) | 520px, gap 48, centred
   --surface-2: #ece4d0;     /* pressed fill, drawn bars */
   --ink: #17151a;           /* borders, shadows, text; not #000 */
   --ink-2: #4a4650;         /* lede, captions */
-  --ink-3: #76717d;         /* fine print, kickers */
+  --ink-3: #68636e;         /* fine print, kickers */
   --yellow: #ffd23f;        /* primary fill, wordmark, headline block */
   --blue: #2f5bff;          /* secondary fill, focus ring */
   --blue-ink: #fffdf8;      /* text on blue */
@@ -123,7 +123,7 @@ Reduced motion: transitions 1ms, and the fan does not happen (the outer covers s
 - The covers are an ordered list labelled "The last three issues"; each cover's number and title are real text, and the drawn bars are empty `<i>` elements (decorative).
 - "Next issue" is a real `<button>`; the caption is `aria-live="polite"` so the change is announced. Focusing the button fans the stack (`:focus-within`), so keyboard users see the same thing as hover.
 - Focus ring: 2px `--blue` at 3px offset on every control, so it clears the ink shadow.
-- Contrast: ink on cream 15.2:1; ink on yellow 12.6:1; `--blue-ink` on blue 5.1:1; `--ink-2` on cream 8.6:1; `--ink-3` on cream 4.9:1.
+- Contrast: ink on cream 15.2:1; ink on yellow 12.6:1; `--blue-ink` on blue 5.1:1; `--ink-2` on cream 8.6:1; `--ink-3` on cream 5.2:1.
 - Hit targets: nav button 44px, hero buttons 56px, Next 44px. The hover push is at most 4px, within vestibular guidance; it is still shortened to 1ms under reduced motion.
 
 ## Responsive rules

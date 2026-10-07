@@ -58,8 +58,8 @@ wrap max 1200, padding 30/40, grid minmax(0,1fr) | 300px, gap 36
 ```css
 :root {
   --board: #c9a97c;  --paper: #fbf6ec;  --paper-2: #efe2c8;  --frame: #8f7047;  --frame-2: #5e4a2e;
-  --ink: #2b2118;  --ink-2: #4a3a2a;  --ink-3: #5e4d3a;  --line: #b08f62;
-  --red: #d9442b;  --blue: #2f6f8f;  --yellow: #e0a300;  --green: #3f7a4a;  --note-yellow: #fff3b0;
+  --ink: #2b2118;  --ink-2: #4a3a2a;  --ink-3: #4d3d2c;  --line: #b08f62;
+  --red: #d9442b;  --blue: #1d4560;  --yellow: #e0a300;  --green: #3f7a4a;  --note-yellow: #fff3b0;
   --tape: rgba(255,250,230,.6);
   --hand: "Caveat", cursive;  --sans: "Inter", system-ui, sans-serif;
   --r: 4px;  --shadow: 0 8px 20px -10px rgba(43,33,24,.45);
@@ -111,7 +111,7 @@ Reduced motion: the pop and transitions 1ms.
 
 - Stickers are buttons with `aria-pressed` and an `aria-label` naming the sticker ("Gold star"); the group is labelled "Stickers". The copies on the board are `aria-hidden`; the live count tells a screen reader what happened.
 - The board is labelled; each note is an `article` with a real heading and text, so the content reads in order without the stickers.
-- Contrast: `--ink` on paper 14.1:1; `--ink-2` on paper 9.4:1 and on the yellow note 8.7:1; `--ink-3` struck text on paper 7.0:1; the count `--blue` on the board 3.6:1 at 22px bold (large text); the sheet sentence `--ink-2` on the board 5.8:1.
+- Contrast: `--ink` on paper 14.1:1; `--ink-2` on paper 9.4:1 and on the yellow note 8.7:1; `--ink-3` struck text on paper 7.0:1; the count `--blue` on the board 4.6:1; the sheet sentence `--ink-2` on the board 5.8:1.
 - Hit targets: sticker buttons about 84px square; the clear button 40px.
 
 ## Responsive rules
@@ -119,7 +119,7 @@ Reduced motion: the pop and transitions 1ms.
 - ≥ 1280: grid `minmax(0,1fr) | 300px`, the board 640px tall.
 - 1024–1279: the board 580px tall; note widths × 0.9; sticker spots scale with the board width (use percentages in your build).
 - 768–1023: the sheet moves under the board as a row of six; the board 520px tall.
-- < 640: the board becomes a column of notes with no absolute positions and no rotation over 2°; the sheet is a horizontal strip; stuck copies go to the top-right corner of the note nearest their spot.
+- < 640: the board becomes a column of notes with no absolute positions and rotations halved (at most 1.5°); the sheet is a six-across strip; stuck copies collect in a row under the notes at 64px, in the order they were stuck.
 
 ## Acceptance checklist
 

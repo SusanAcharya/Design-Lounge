@@ -55,7 +55,7 @@ Reduced motion: transitions 1ms, and filtered cards are hidden at once instead o
 - Filters are buttons with `aria-pressed` inside a `role="group"` labelled "Filter the work"; the count is `aria-live="polite"` so the result of a press is announced.
 - Cards are links; the title is real text in an `h2`; the drawn mark is `aria-hidden` and the band colour carries no meaning on its own (the category is written in the meta row).
 - Hidden cards use the `hidden` attribute, so they leave the tab order and the accessibility tree.
-- Contrast: ink on cream 15.2:1; `--bg` on `--ink` 15.2:1 (pressed tag); `--ink-2` on `--surface` 9.1:1; `--ink-3` kicker on cream 4.9:1.
+- Contrast: ink on cream 15.2:1; `--bg` on `--ink` 15.2:1 (pressed tag); `--ink-2` on `--surface` 9.1:1; `--ink-3` kicker on cream 5.2:1.
 - Hit targets: tags 40px tall; cards are whole-link targets; the push is 4px, within vestibular guidance.
 
 ## Responsive rules
@@ -100,7 +100,7 @@ Reduced motion: transitions 1ms, and filtered cards are hidden at once instead o
 ```css
 :root {
   --bg: #f6f1e4;  --surface: #fffaf0;  --surface-2: #ece4d0;
-  --ink: #17151a;  --ink-2: #4a4650;  --ink-3: #76717d;
+  --ink: #17151a;  --ink-2: #4a4650;  --ink-3: #68636e;
   --yellow: #ffd23f;  --blue: #2f5bff;  --blue-ink: #fffdf8;  --pink: #ff5c9a;
 
   --display: "Archivo Black", Impact, sans-serif;
