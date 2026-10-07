@@ -34,7 +34,7 @@ export const KINDS: Kind[] = [
     kicker: 'Website',
     blurb: 'Marketing, studio, or company site. Heroes, proof, a footer that signs off.',
     when: 'People arrive from the outside. The first viewport has to hold them.',
-    palettes: ['paper-ink', 'linen-shop', 'atelier-noir', 'kiln', 'press-room', 'sakura-desk', 'marble-hall', 'loam', 'night-desk', 'neon-alley', 'festival', 'alpine-clinic', 'deep-field', 'sodium-night', 'bone-signal', 'sign-shop', 'midnight-drive'],
+    palettes: ['paper-ink', 'linen-shop', 'atelier-noir', 'kiln', 'press-room', 'sakura-desk', 'marble-hall', 'loam', 'night-desk', 'neon-alley', 'festival', 'alpine-clinic', 'deep-field', 'sodium-night', 'bone-signal', 'sign-shop', 'midnight-drive', 'kraft-desk'],
     pairings: ['the-lounge', 'gallery-wall', 'maison', 'newsroom', 'lettera', 'garden-journal', 'brutal-grotesk', 'y2k-chrome', 'poster-condensed', 'indie-maker', 'studio-display', 'neo-grotesk-mono', 'night-show', 'machined'],
     families: ['editorial', 'quiet', 'soft', 'sharp', 'lit', 'bold'],
     copy: {
@@ -91,7 +91,7 @@ export const KINDS: Kind[] = [
     kicker: 'Personal',
     blurb: 'One person’s money, health, or home. Not a staff tool, and not a marketing site.',
     when: 'The person using it is the customer. The number on the screen is theirs.',
-    palettes: ['lokta', 'harbour-ledger', 'alpine-clinic', 'kiln', 'loam', 'fog-city'],
+    palettes: ['lokta', 'harbour-ledger', 'alpine-clinic', 'kiln', 'loam', 'fog-city', 'plaster', 'kraft-desk'],
     pairings: ['devanagari', 'friendly-saas', 'bookish', 'garden-journal'],
     families: ['quiet', 'soft', 'editorial', 'tactile'],
     copy: {

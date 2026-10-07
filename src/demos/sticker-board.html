@@ -1,0 +1,104 @@
+<!-- Design Lounge piece: sticker-board · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Mira's board — this month</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --board:#c9a97c;--paper:#fbf6ec;--paper-2:#efe2c8;--ink:#2b2118;--ink-2:#4a3a2a;--ink-3:#5e4d3a;--line:#b08f62;
+  --red:#d9442b;--blue:#2f6f8f;--yellow:#e0a300;--green:#3f7a4a;--tape:rgba(255,250,230,.6);
+  --hand:"Caveat",cursive;--sans:"Inter",system-ui,sans-serif;
+  --r:4px;--shadow:0 8px 20px -10px rgba(43,33,24,.45);--t-micro:200ms;--t-pop:360ms;--ease:cubic-bezier(.2,.7,.2,1);--pop:cubic-bezier(.34,1.56,.64,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--board);color:var(--ink);font:15px/1.5 var(--sans);-webkit-font-smoothing:antialiased;overflow:hidden}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;background-image:radial-gradient(rgba(43,33,24,.08) .8px,transparent 1px);background-size:5px 5px;opacity:.6}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+.wrap{max-width:1200px;margin:0 auto;padding:30px 40px 0;display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:36px;height:100%}
+.board{position:relative;background:var(--board);border:10px solid #8f7047;box-shadow:inset 0 0 0 2px #5e4a2e,var(--shadow);height:640px;overflow:hidden}
+.card{position:absolute;background:var(--paper);padding:16px 18px;box-shadow:var(--shadow);transform:rotate(var(--rot,0deg));width:var(--w,260px)}
+.card h2{margin:0 0 8px;font:700 26px/1 var(--hand);color:var(--ink)}
+.card p{margin:0;font-size:14px;color:var(--ink-2)}
+.card ul{margin:6px 0 0;padding-left:18px;font-size:14px;color:var(--ink-2)}
+.card li{margin:2px 0}
+.card li s{color:var(--ink-3)}
+.tape{position:absolute;width:96px;height:26px;background:var(--tape);box-shadow:0 1px 2px rgba(43,33,24,.15);z-index:3;pointer-events:none}
+.tape.top{left:50%;top:-12px;transform:translateX(-50%) rotate(-2deg)}
+.tape.tl{left:-26px;top:-8px;transform:rotate(-38deg)}
+.pin::before{content:"";position:absolute;left:50%;top:-8px;width:16px;height:16px;border-radius:50%;background:var(--red);box-shadow:0 2px 0 rgba(43,33,24,.35),inset -3px -3px 0 rgba(43,33,24,.2);z-index:3;transform:translateX(-50%)}
+.c1{--rot:-3deg;left:28px;top:30px;--w:270px}
+.c2{--rot:2deg;left:320px;top:60px;--w:230px;background:var(--paper-2)}
+.c3{--rot:-1deg;left:40px;top:330px;--w:290px}
+.c4{--rot:3deg;left:350px;top:360px;--w:200px}
+.c5{--rot:-2deg;left:565px;top:40px;--w:190px;background:#fff3b0}
+.c6{--rot:1deg;left:560px;top:390px;--w:195px}
+.stuck{position:absolute;z-index:5;width:var(--s,88px);height:var(--s,88px);transform:rotate(var(--rot,0deg)) scale(1);animation:pop var(--t-pop) var(--pop) both;filter:drop-shadow(0 3px 2px rgba(43,33,24,.3))}
+.stuck svg{width:100%;height:100%;display:block}
+@keyframes pop{from{transform:rotate(var(--rot,0deg)) scale(0)}to{transform:rotate(var(--rot,0deg)) scale(1)}}
+.sheet{display:flex;flex-direction:column;gap:14px}
+.sheet h1{margin:0;font:700 36px/1 var(--hand)}
+.sheet h1 small{display:block;font:600 12px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);margin-bottom:6px}
+.sheet p{margin:0;font-size:13px;color:var(--ink-2)}
+.tray{background:var(--paper);padding:16px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px;box-shadow:var(--shadow);border:1px dashed var(--line)}
+.sk{aspect-ratio:1;border:0;background:transparent;padding:4px;cursor:pointer;border-radius:8px;transition:transform var(--t-micro) var(--ease),background var(--t-micro) var(--ease)}
+.sk svg{width:100%;height:100%;display:block}
+.sk:hover{transform:scale(1.08) rotate(-4deg)}
+.sk[aria-pressed="true"]{background:var(--paper-2);box-shadow:inset 0 0 0 2px var(--blue)}
+.sk[aria-pressed="true"] svg{opacity:.45}
+.count{font:700 22px/1 var(--hand);color:var(--blue)}
+.clear{align-self:flex-start;min-height:40px;padding:0 14px;border:2px solid var(--ink);background:var(--paper);font-weight:600;font-size:13px;cursor:pointer;box-shadow:3px 3px 0 var(--ink);border-radius:var(--r)}
+.clear:hover{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important;animation-duration:1ms!important}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div class="board" id="board" aria-label="Mira's board for October">
+    <article class="card c1"><span class="tape top" aria-hidden="true"></span><h2>This month</h2><p>Finish the Pokhara book. Learn to bind a spine that lies flat. Say no to one thing.</p></article>
+    <article class="card c2 pin"><h2>Reading</h2><ul><li>The Glass Hotel</li><li><s>Blue Nights</s></li><li>Notes on binding, vol. 2</li></ul></article>
+    <article class="card c3"><span class="tape tl" aria-hidden="true"></span><h2>Shows</h2><p>Night Drive vol. 7, Sat 18 Oct, doors ten. The riso fair at Patan on the 25th, bring the yellow ink.</p></article>
+    <article class="card c4 pin"><h2>Buy</h2><ul><li>Bone folder</li><li>Linen thread, 18/3</li><li>Kraft, 300gsm, A3</li></ul></article>
+    <article class="card c5"><span class="tape top" aria-hidden="true"></span><h2>Call Amma</h2><p>Sunday, before the match.</p></article>
+    <article class="card c6"><span class="tape tl" aria-hidden="true"></span><h2>Done, really done</h2><p>Book 2 posted to Tej. The ridge walk. Fixed the stapler.</p></article>
+    <div id="stuck"></div>
+  </div>
+  <aside class="sheet">
+    <h1><small>Sticker sheet</small>Stick one on</h1>
+    <p>Click a sticker to put it on the board. Click it again to peel it off.</p>
+    <div class="tray" role="group" aria-label="Stickers">
+      <button class="sk" type="button" aria-pressed="false" data-id="star" aria-label="Gold star"><svg viewBox="0 0 100 100"><path d="M50 6l13 27 30 4-22 21 5 30-26-14-26 14 5-30L7 37l30-4z" fill="#e0a300" stroke="#fbf6ec" stroke-width="5"/></svg></button>
+      <button class="sk" type="button" aria-pressed="false" data-id="done" aria-label="Done badge"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" fill="#3f7a4a" stroke="#fbf6ec" stroke-width="5"/><path d="M30 52l14 13 26-30" fill="none" stroke="#fbf6ec" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <button class="sk" type="button" aria-pressed="false" data-id="heart" aria-label="Red heart"><svg viewBox="0 0 100 100"><path d="M50 86L16 54C4 42 10 20 28 20c10 0 17 6 22 13 5-7 12-13 22-13 18 0 24 22 12 34z" fill="#d9442b" stroke="#fbf6ec" stroke-width="5"/></svg></button>
+      <button class="sk" type="button" aria-pressed="false" data-id="new" aria-label="New label"><svg viewBox="0 0 100 100"><rect x="6" y="30" width="88" height="40" rx="6" fill="#2f6f8f" stroke="#fbf6ec" stroke-width="5"/><text x="50" y="58" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-weight="600" font-size="22" fill="#fbf6ec" letter-spacing="2">NEW</text></svg></button>
+      <button class="sk" type="button" aria-pressed="false" data-id="sun" aria-label="Sun"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="22" fill="#e0a300" stroke="#fbf6ec" stroke-width="5"/><g stroke="#e0a300" stroke-width="6" stroke-linecap="round"><path d="M50 8v12M50 80v12M8 50h12M80 50h12M20 20l9 9M71 71l9 9M80 20l-9 9M29 71l-9 9"/></g></svg></button>
+      <button class="sk" type="button" aria-pressed="false" data-id="arrow" aria-label="Blue arrow"><svg viewBox="0 0 100 100"><path d="M12 70C30 30 60 24 86 40" fill="none" stroke="#2f6f8f" stroke-width="8" stroke-linecap="round"/><path d="M72 28l16 12-18 8" fill="none" stroke="#2f6f8f" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    </div>
+    <span class="count" id="count" aria-live="polite">0 stuck on</span>
+    <button class="clear" type="button" id="clear">Peel them all off</button>
+  </aside>
+</main>
+<script>
+  const SPOTS={star:{l:'280px',t:'0px',r:'14deg',s:'80px'},done:{l:'640px',t:'230px',r:'-10deg',s:'92px'},heart:{l:'300px',t:'250px',r:'8deg',s:'76px'},new:{l:'500px',t:'14px',r:'-6deg',s:'96px'},sun:{l:'640px',t:'520px',r:'0deg',s:'90px'},arrow:{l:'280px',t:'500px',r:'-20deg',s:'110px'}};
+  const stuck=document.getElementById('stuck'),count=document.getElementById('count'),btns=[...document.querySelectorAll('.sk')];
+  const say=()=>{const n=stuck.children.length;count.textContent=n+' stuck on'};
+  btns.forEach(b=>b.addEventListener('click',()=>{
+    const id=b.dataset.id,on=b.getAttribute('aria-pressed')!=='true';
+    b.setAttribute('aria-pressed',String(on));
+    const have=stuck.querySelector('[data-id="'+id+'"]');
+    if(!on){have&&have.remove();say();return}
+    const s=SPOTS[id],el=document.createElement('span');
+    el.className='stuck';el.dataset.id=id;el.setAttribute('aria-hidden','true');
+    el.style.cssText='left:'+s.l+';top:'+s.t+';--rot:'+s.r+';--s:'+s.s;
+    el.innerHTML=b.innerHTML;stuck.appendChild(el);say();
+  }));
+  document.getElementById('clear').addEventListener('click',()=>{stuck.innerHTML='';btns.forEach(b=>b.setAttribute('aria-pressed','false'));say()});
+</script>
+</body>
+</html>

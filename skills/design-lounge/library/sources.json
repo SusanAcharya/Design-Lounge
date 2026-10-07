@@ -660,7 +660,8 @@
         "spend-list",
         "features-vertical-label-columns",
         "phone-subscription-manage",
-        "prompt-source-model"
+        "prompt-source-model",
+        "sticker-board"
       ]
     },
     {
@@ -701,7 +702,8 @@
         "scroll-word-highlight",
         "background-sunrise-horizon",
         "background-terrazzo",
-        "three-scroll-world"
+        "three-scroll-world",
+        "collage-hero"
       ]
     },
     {
@@ -780,7 +782,8 @@
         "phone-skeleton-list",
         "toolbar-selection-swap",
         "agent-tool-chip",
-        "card-grid-brutal"
+        "card-grid-brutal",
+        "taped-photo-grid"
       ]
     },
     {

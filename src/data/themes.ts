@@ -436,6 +436,12 @@ export const THEMES: Theme[] = [
   { id: 'sunset-drive', name: 'Sunset Drive', mood: 'The same road at golden hour. Peach sky, the magenta deeper, the cyan turned teal, ink type.', bestFor: ['Music', 'Events', 'Games'], tags: ['retro', 'warm', 'light'],
     tokens: paint({ bg: '#ffe9dc', surface: '#fff5ee', surface2: '#ffd9c4', ink: '#2a1245', ink2: '#5c4a78', ink3: '#6f5f8c', line: '#f0c6b0', primary: '#d6177f', secondary: '#0f8f9c', tertiary: '#e0731a', success: '#1f8a5a', warning: '#c27a14', danger: '#c0392b', info: '#0f8f9c' }),
     display: 'Monoton', text: 'Josefin Sans', radius: '6px', shadow: '0 14px 32px -16px rgba(42,18,69,.3)', specimen: 'Golden hour, then the sign comes on' },
+  { id: 'kraft-desk', name: 'Kraft Desk', mood: 'A scrapbook on a kraft board. Paper notes, washi tape, a red pen and a blue one, stickers in the margins.', bestFor: ['Personal sites', 'Scrapbooks', 'Journals'], tags: ['paper', 'warm', 'playful'],
+    tokens: paint({ bg: '#c9a97c', surface: '#fbf6ec', surface2: '#efe2c8', ink: '#2b2118', ink2: '#4a3a2a', ink3: '#5e4d3a', line: '#b08f62', primary: '#d9442b', secondary: '#2f6f8f', tertiary: '#e0a300', success: '#3f7a4a', warning: '#c27a14', danger: '#b8322a', info: '#2f6f8f' }),
+    display: 'Caveat', text: 'Inter', radius: '4px', shadow: '0 8px 20px -10px rgba(43,33,24,.45)', specimen: 'Taped in, not laid out' },
+  { id: 'kraft-night', name: 'Kraft Night', mood: 'The scrapbook under a desk lamp. Dark board, the same paper notes, the tape catching the light.', bestFor: ['Personal sites', 'Scrapbooks', 'Journals'], tags: ['paper', 'warm', 'dark'],
+    tokens: paint({ bg: '#2a211a', surface: '#3a2f26', surface2: '#473a2f', ink: '#f3e9d6', ink2: '#cdbfa8', ink3: '#a08f78', line: '#4a3d31', primary: '#ff7a5c', secondary: '#7fb7d4', tertiary: '#f0c23c', success: '#7fc48f', warning: '#f0b14a', danger: '#ff7a6b', info: '#7fb7d4' }),
+    display: 'Caveat', text: 'Inter', radius: '4px', shadow: '0 12px 28px -12px rgba(0,0,0,.6)', specimen: 'The lamp, the glue, the late page' },
   { id: 'bone-signal', name: 'Bone Signal', mood: 'A machined object on a bench. Bone, charcoal, cream caps, one signal orange.', bestFor: ['Hardware', 'Instruments', 'Launches'], tags: ['light', 'industrial', 'warm'],
     tokens: paint({ bg: '#ece8df', surface: '#f6f3ec', surface2: '#e3ded2', ink: '#141414', ink2: '#4c4841', ink3: '#6a655b', line: '#ccc5b6', primary: '#ff4f1a', secondary: '#2a2925', tertiary: '#3b6e8f', success: '#2f7a52', warning: '#b06a08', danger: '#c4301a', info: '#3b6e8f' }),
     display: 'Archivo', text: 'IBM Plex Mono', radius: '10px', shadow: '0 2px 0 #c7c0b1, 0 14px 30px -14px rgba(20,20,20,.35)', specimen: 'Tap to begin' },
@@ -591,6 +597,8 @@ export const THEME_PAIRS: Record<string, { mode: 'light' | 'dark'; pair: string 
   'plaster-night': { mode: 'dark', pair: 'plaster' },
   'midnight-drive': { mode: 'dark', pair: 'sunset-drive' },
   'sunset-drive': { mode: 'light', pair: 'midnight-drive' },
+  'kraft-desk': { mode: 'light', pair: 'kraft-night' },
+  'kraft-night': { mode: 'dark', pair: 'kraft-desk' },
 };
 
 export function themeById(id: string) {
@@ -648,6 +656,8 @@ const FAMILY_SPEC: Record<string, string> = {
   'Silkscreen': 'Silkscreen:wght@400;700',
   'Space Mono': 'Space+Mono:wght@400;700',
   'Archivo Black': 'Archivo+Black',
+  'Caveat': 'Caveat:wght@400;700',
+  'Inter': 'Inter:wght@400;500;600',
 };
 
 export function themeFontHref(t: Theme) {

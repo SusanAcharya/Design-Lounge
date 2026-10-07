@@ -541,3 +541,6 @@ settings-tactile-panel | mobile-app | settings | Tactile settings panel | clay s
 media-controls-tactile | web | media | Tactile media controls | clay soft minimal | player media neumorphism clay controls
 stat-tile-tactile | web | charts | Tactile stat tiles | clay soft minimal | stat kpi neumorphism clay chart
 sunset-grid-hero | web | hero | Sunset grid hero | cyber retro dark | synthwave grid sun canvas hero neon
+collage-hero | web | hero | Collage hero | paper playful | hero scrapbook collage tape handwritten
+taped-photo-grid | web | gallery | Taped photo grid | paper playful | gallery scrapbook photos tape grid
+sticker-board | web | profile | Sticker board | paper playful | scrapbook stickers board notes personal

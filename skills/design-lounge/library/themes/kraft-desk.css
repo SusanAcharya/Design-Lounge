@@ -1,0 +1,67 @@
+/* Kraft Desk · light · pair: kraft-night
+   A scrapbook on a kraft board. Paper notes, washi tape, a red pen and a blue one, stickers in the margins.
+   Best for: Personal sites, Scrapbooks, Journals
+   Tags: paper, warm, playful */
+/* Colour only. Fonts come from the locked pairing file. Radius and shadow come from the locked family. */
+/* Kraft Desk · full palette · Designed using Design Lounge (https://www.designlounge.live)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #c83f28;
+  --primary-ink: #fffdf8;
+  --primary-soft: #cb9b71;
+  --secondary: #2f6f8f;
+  --secondary-ink: #fffdf8;
+  --secondary-soft: #b3a17f;
+  --tertiary: #e0a300;
+  --tertiary-ink: #141210;
+  --tertiary-soft: #cca86b;
+
+  /* Surface */
+  --bg: #c9a97c;
+  --surface: #fbf6ec;
+  --surface-2: #efe2c8;
+  --surface-3: #e3d6bd;
+  --ink: #2b2118;
+  --ink-2: #4a3a2a;
+  --ink-3: #4a3b2d;
+  --line: #b08f62;
+  --line-strong: #7d6546;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #3f7a4a;
+  --success-ink: #fffdf8;
+  --success-soft: #b6a275;
+  --success-on-soft: #214027;
+  --warning: #c27a14;
+  --warning-ink: #141210;
+  --warning-soft: #c8a26d;
+  --warning-on-soft: #4f3109;
+  --danger: #b8322a;
+  --danger-ink: #fffdf8;
+  --danger-soft: #c79871;
+  --danger-on-soft: #621a17;
+  --info: #2f6f8f;
+  --info-ink: #fffdf8;
+  --info-soft: #b3a17f;
+  --info-on-soft: #193b4c;
+
+  /* Chrome */
+  --focus: #c83f28;
+  --link: #762517;
+  --overlay: #141210;
+  --inverse: #2b2118;
+  --inverse-ink: #c9a97c;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+
+}
