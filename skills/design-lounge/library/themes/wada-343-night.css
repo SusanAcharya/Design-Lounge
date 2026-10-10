@@ -1,0 +1,67 @@
+/* Wada 343 Night · dark · pair: wada-343
+   Combination 343 after dark. A petrol-blue ground, buff type, the sienna lit like a lamp, the olive turned to brass.
+   Best for: Publishing, Archives, Studios
+   Tags: wada, paper, warm, dark */
+/* Colour only. Fonts come from the locked pairing file. Radius and shadow come from the locked family. */
+/* Wada 343 Night · full palette · Designed using Design Lounge (https://www.designlounge.live)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #008ea5;
+  --primary-ink: #141210;
+  --primary-soft: #00313e;
+  --secondary: #d86310;
+  --secondary-ink: #141210;
+  --secondary-soft: #34271b;
+  --tertiary: #aaa64d;
+  --tertiary-ink: #141210;
+  --tertiary-soft: #293729;
+
+  /* Surface */
+  --bg: #00141e;
+  --surface: #001d2b;
+  --surface-2: #002538;
+  --surface-3: #193947;
+  --ink: #f6ebce;
+  --ink-2: #efdba5;
+  --ink-3: #9b9576;
+  --line: #00324c;
+  --line-strong: #5d787d;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #5fbf8a;
+  --success-ink: #141210;
+  --success-soft: #173d38;
+  --success-on-soft: #5fbf8a;
+  --warning: #e5bc2a;
+  --warning-ink: #141210;
+  --warning-soft: #373c21;
+  --warning-on-soft: #e5bc2a;
+  --danger: #ff6b5a;
+  --danger-ink: #141210;
+  --danger-soft: #3d292c;
+  --danger-on-soft: #ff6b5a;
+  --info: #80aac7;
+  --info-ink: #141210;
+  --info-soft: #1f3847;
+  --info-on-soft: #80aac7;
+
+  /* Chrome */
+  --focus: #008ea5;
+  --link: #008ea5;
+  --overlay: #070605;
+  --inverse: #f6ebce;
+  --inverse-ink: #00141e;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+
+}

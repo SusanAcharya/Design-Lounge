@@ -41,7 +41,7 @@ Everything you need is next to this file. Read only what the job needs.
 2. Then open only what you lock: `library/starts/<id>.json` for the recipe and its directions, `library/themes/<id>.css`, `library/pairings/<id>.css`.
 3. `library/pieces.txt` — one line per piece. Search it (grep for a category, platform, or tag). Do not read it top to bottom.
 4. `library/briefs/<id>.md` — the spec for one piece. Open only the pieces you will build.
-5. `library/icons.json` — Lounge Icons, only when the screen needs icons.
+5. `library/icons.json` — Lounge Icons, only when the screen needs icons. `library/wada.txt` — Sanzo Wada's 348 colour combinations, only for Free colour, a brand board, or colours they asked for on their own. Search it.
 6. [components.md](components.md) — the controls, icons (including what to do when one is missing), the logo and favicon, and which piece to use for which job.
 7. [practice.md](practice.md) — the method every build shares. Its first lines say which other file your job adds: [website.md](website.md), [app.md](app.md), [native.md](native.md), or [locale.md](locale.md). Read only those.
 8. [brief.md](brief.md) — how to turn their request into the build brief. Every new website or app.
@@ -165,6 +165,7 @@ If `pieces.txt` has no piece for that job, say so. Do not invent a slug.
 
 - Theme: pick by mood in `library/map.json`, then copy `library/themes/<id>.css`. It holds primary, secondary, tertiary, success, warning, danger, info, surfaces, and `link`.
 - Pairing: pick in `library/map.json`, then copy `library/pairings/<id>.css`.
+- Two to four colours that go together, not a whole theme: one line of `library/wada.txt`. Its header says how to use it.
 - Icons: `library/icons.json`. 24px stroke, 1.75. When one is missing, follow Icon and nav in [components.md](components.md).
 - Logo, favicon, share image: Logo and favicon in [components.md](components.md).
 - Motion: `motion`. Default easing `cubic-bezier(0.2, 0.7, 0.2, 1)`. UI 200ms, layout 320ms, sheets 400ms. Honour `prefers-reduced-motion`.

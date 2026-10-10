@@ -29,7 +29,8 @@
   "hero-silk-ribbon-ticker",
   "moonlit-ridge-hero",
   "hero-asymmetric-type-lockup",
-  "sunset-grid-hero"
+  "sunset-grid-hero",
+  "hero-layered-letter-swap"
  ],
  "directions": [
   {
@@ -163,6 +164,18 @@
    "effect": "sunset-grid-hero",
    "work": "week-schedule",
    "footer": "footer-engraved-caravan-strip"
+  },
+  {
+   "id": "trio-bill",
+   "name": "Trio bill",
+   "mood": "A jazz bill from the 1930s, violet-black, old rose, one bright yellow, the dates set like a programme",
+   "theme": "wada-265",
+   "pairing": "deco-hotel",
+   "family": "editorial",
+   "hero": "hero-layered-letter-swap",
+   "effect": "kinetic-type-marquee",
+   "work": "card-music-playlist",
+   "footer": "footer-enterprise-sitemap"
   }
  ]
 }

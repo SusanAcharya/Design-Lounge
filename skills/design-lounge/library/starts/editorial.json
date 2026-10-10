@@ -127,6 +127,18 @@
    "effect": "text-mask-scroll-reveal",
    "work": "paper-article-reader",
    "footer": "footer-enterprise-sitemap"
+  },
+  {
+   "id": "wada-press",
+   "name": "Wada press",
+   "mood": "A small press in the colours of a 1930s colour book, buff paper, petrol ink, a sienna stamp",
+   "theme": "wada-343",
+   "pairing": "classic-garamond",
+   "family": "editorial",
+   "hero": "hero-editorial-name-rotator",
+   "effect": "text-rise-underline-whisper",
+   "work": "magazine-editorial-grid",
+   "footer": "footer-giant-wordmark-reveal"
   }
  ]
 }

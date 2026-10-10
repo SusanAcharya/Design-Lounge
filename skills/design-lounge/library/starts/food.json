@@ -31,7 +31,8 @@
   "hero-silk-ribbon-ticker",
   "handwritten-homepage",
   "hero-swiss-grid-wordmark",
-  "luxe-product-detail"
+  "luxe-product-detail",
+  "collage-hero"
  ],
  "directions": [
   {
@@ -117,6 +118,18 @@
    "effect": "object-3d-turntable",
    "work": "restaurant-menu-page",
    "footer": "footer-enterprise-sitemap"
+  },
+  {
+   "id": "plum-stall",
+   "name": "Plum stall",
+   "mood": "A fruit stall printed in four inks, eosine pink on pale lemon, russet crates, olive type",
+   "theme": "wada-336",
+   "pairing": "lettera",
+   "family": "soft",
+   "hero": "collage-hero",
+   "effect": "stacking-cards-scroll",
+   "work": "shop-collection",
+   "footer": "footer-giant-wordmark-reveal"
   }
  ]
 }

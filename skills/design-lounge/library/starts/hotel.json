@@ -29,7 +29,8 @@
   "hero-engraved-moonrise-plate",
   "gallery-photo-album",
   "paper-article-reader",
-  "moonlit-ridge-hero"
+  "moonlit-ridge-hero",
+  "hero-asymmetric-type-lockup"
  ],
  "directions": [
   {
@@ -127,6 +128,18 @@
    "effect": "moonlit-ridge-hero",
    "work": "gallery-photo-album",
    "footer": "footer-newsletter-split"
+  },
+  {
+   "id": "ferry-inn",
+   "name": "Ferry inn",
+   "mood": "A seaside inn, turquoise walls, sienna doors, slate ink, the timetable by the door",
+   "theme": "wada-263",
+   "pairing": "bookish",
+   "family": "soft",
+   "hero": "hero-asymmetric-type-lockup",
+   "effect": "scroll-word-highlight",
+   "work": "contact-booking-hours",
+   "footer": "footer-sitemap-columns"
   }
  ]
 }

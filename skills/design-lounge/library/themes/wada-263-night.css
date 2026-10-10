@@ -1,0 +1,67 @@
+/* Wada 263 Night · dark · pair: wada-263
+   Combination 263 at night. A slate ground, turquoise type, the sienna warmed toward cinnamon like lamps along a pier.
+   Best for: Travel, Hospitality, Wellness
+   Tags: wada, organic, cool, dark */
+/* Colour only. Fonts come from the locked pairing file. Radius and shadow come from the locked family. */
+/* Wada 263 Night · full palette · Designed using Design Lounge (https://www.designlounge.live)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #cd7c3f;
+  --primary-ink: #141210;
+  --primary-soft: #403528;
+  --secondary: #c0e1ce;
+  --secondary-ink: #141210;
+  --secondary-soft: #3d4d4b;
+  --tertiary: #efbc7e;
+  --tertiary-ink: #141210;
+  --tertiary-soft: #494437;
+
+  /* Surface */
+  --bg: #141e21;
+  --surface: #1a282c;
+  --surface-2: #213238;
+  --surface-3: #344549;
+  --ink: #dcefe4;
+  --ink-2: #c0e1ce;
+  --ink-3: #849d91;
+  --line: #283b43;
+  --line-strong: #6c7f80;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #7fc48f;
+  --success-ink: #141210;
+  --success-soft: #2e463b;
+  --success-on-soft: #7fc48f;
+  --warning: #e5bc2a;
+  --warning-ink: #141210;
+  --warning-soft: #464423;
+  --warning-on-soft: #e5bc2a;
+  --danger: #ff7a6b;
+  --danger-ink: #141210;
+  --danger-soft: #4c3433;
+  --danger-on-soft: #ff8a7d;
+  --info: #80aac7;
+  --info-ink: #141210;
+  --info-soft: #2e4049;
+  --info-on-soft: #8fb4ce;
+
+  /* Chrome */
+  --focus: #cd7c3f;
+  --link: #cd7c3f;
+  --overlay: #070605;
+  --inverse: #dcefe4;
+  --inverse-ink: #141e21;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+
+}

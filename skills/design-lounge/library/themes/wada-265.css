@@ -1,0 +1,67 @@
+/* Wada 265 · dark · pair: wada-265-day
+   Sanzo Wada, combination 265. Dull violet black, old rose, one apricot yellow, olive. A jazz bill from the 1930s, the dates set like a programme.
+   Best for: Music, Theatre, Events
+   Tags: wada, deco, warm, dark */
+/* Colour only. Fonts come from the locked pairing file. Radius and shadow come from the locked family. */
+/* Wada 265 · full palette · Designed using Design Lounge (https://www.designlounge.live)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #d56a75;
+  --primary-ink: #141210;
+  --primary-soft: #412244;
+  --secondary: #ffe100;
+  --secondary-ink: #141210;
+  --secondary-soft: #4b3e28;
+  --tertiary: #aaa64d;
+  --tertiary-ink: #141210;
+  --tertiary-soft: #36303a;
+
+  /* Surface */
+  --bg: #120b34;
+  --surface: #231a4b;
+  --surface-2: #312956;
+  --surface-3: #463e62;
+  --ink: #fffad1;
+  --ink-2: #c5bfad;
+  --ink-3: #9e9795;
+  --line: #37305c;
+  --line-strong: #837d88;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #7fc48f;
+  --success-ink: #141210;
+  --success-soft: #2c374a;
+  --success-on-soft: #7fc48f;
+  --warning: #f5a100;
+  --warning-ink: #141210;
+  --warning-soft: #482f28;
+  --warning-on-soft: #f5a100;
+  --danger: #ff6b5a;
+  --danger-ink: #141210;
+  --danger-soft: #4b223d;
+  --danger-on-soft: #ff6b5a;
+  --info: #8fb0d6;
+  --info-ink: #141210;
+  --info-soft: #30335b;
+  --info-on-soft: #8fb0d6;
+
+  /* Chrome */
+  --focus: #d56a75;
+  --link: #d56a75;
+  --overlay: #070605;
+  --inverse: #fffad1;
+  --inverse-ink: #120b34;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+
+}

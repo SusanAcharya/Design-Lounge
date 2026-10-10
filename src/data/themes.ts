@@ -448,6 +448,32 @@ export const THEMES: Theme[] = [
   { id: 'graphite-signal', name: 'Graphite Signal', mood: 'The bench with the lights off. Graphite case, warm grey caps, the orange still lit.', bestFor: ['Hardware', 'Instruments', 'Launches'], tags: ['dark', 'industrial', 'warm'],
     tokens: paint({ bg: '#141414', surface: '#1d1c1b', surface2: '#282725', ink: '#ece8df', ink2: '#b5afa3', ink3: '#837e74', line: '#33312e', primary: '#ff5a26', secondary: '#d9d3c6', tertiary: '#7fb0cf', success: '#7fcf9a', warning: '#f0a63a', danger: '#ff6a55', info: '#7fb0cf' }),
     display: 'Archivo', text: 'IBM Plex Mono', radius: '10px', shadow: '0 2px 0 #0a0a0a, 0 14px 30px -14px rgba(0,0,0,.7)', specimen: 'Tap to begin' },
+  // From Sanzo Wada's A Dictionary of Color Combinations (src/data/wada.ts). Brand roles are the book's colours at their
+  // printed hex; surfaces are tints of the combination's ground; ink comes from the book's own darks.
+  { id: 'wada-343', name: 'Wada 343', mood: 'Sanzo Wada, combination 343. Ivory buff paper, Vandar Poel\'s blue ink, a burnt sienna stamp, deep olive notes. A small press from the 1930s that still takes orders.', bestFor: ['Publishing', 'Archives', 'Studios'], tags: ['wada', 'paper', 'warm', 'light'],
+    tokens: paint({ bg: '#f9f1db', surface: '#fcf8ed', surface2: '#f5e8c5', ink: '#001d2b', ink2: '#00486c', ink3: '#6d6136', line: '#d2c08d', primary: '#00486c', secondary: '#b65115', tertiary: '#6d6136', success: '#02733f', warning: '#c37608', danger: '#ad242f', info: '#00558e' }),
+    display: 'EB Garamond', text: 'Work Sans', radius: '4px', shadow: '0 12px 30px -14px rgba(0,29,43,.28)', specimen: 'Volume two ships on the ninth' },
+  { id: 'wada-343-night', name: 'Wada 343 Night', mood: 'Combination 343 after dark. A petrol-blue ground, buff type, the sienna lit like a lamp, the olive turned to brass.', bestFor: ['Publishing', 'Archives', 'Studios'], tags: ['wada', 'paper', 'warm', 'dark'],
+    tokens: paint({ bg: '#00141e', surface: '#001d2b', surface2: '#002538', ink: '#f6ebce', ink2: '#efdba5', ink3: '#9b9576', line: '#00324c', primary: '#008ea5', secondary: '#d86310', tertiary: '#aaa64d', success: '#5fbf8a', warning: '#e5bc2a', danger: '#ff6b5a', info: '#80aac7' }),
+    display: 'EB Garamond', text: 'Work Sans', radius: '4px', shadow: '0 16px 40px -18px rgba(0,0,0,.65)', specimen: 'The press runs until the last light' },
+  { id: 'wada-336', name: 'Wada 336', mood: 'Sanzo Wada, combination 336. Pale lemon paper, eosine pink, Hay\'s russet, blackish olive ink. A fruit stall printed in four inks.', bestFor: ['Food', 'Florists', 'Picture books'], tags: ['wada', 'playful', 'warm', 'light'],
+    tokens: paint({ bg: '#fffadc', surface: '#fffdf1', surface2: '#fff5c1', ink: '#242c1f', ink2: '#48583e', ink3: '#63715b', line: '#dad49b', primary: '#ed7e92', secondary: '#833121', tertiary: '#48583e', success: '#02733f', warning: '#f5a100', danger: '#cd002d', info: '#00558e' }),
+    display: 'Gloock', text: 'Figtree', radius: '10px', shadow: '0 12px 28px -14px rgba(36,44,31,.3)', specimen: 'Fresh plums until Saturday' },
+  { id: 'wada-336-night', name: 'Wada 336 Night', mood: 'Combination 336 at dusk. An olive ground, lemon type, the eosine pink still bright, the russet softened.', bestFor: ['Food', 'Florists', 'Picture books'], tags: ['wada', 'playful', 'warm', 'dark'],
+    tokens: paint({ bg: '#181e15', surface: '#21281d', surface2: '#2a3324', ink: '#fff7c9', ink2: '#d1c893', ink3: '#9e9a70', line: '#323e2b', primary: '#ed7e92', secondary: '#fff3b2', tertiary: '#b5837a', success: '#7fc48f', warning: '#f5a100', danger: '#ff6b5a', info: '#7fb7d4' }),
+    display: 'Gloock', text: 'Figtree', radius: '10px', shadow: '0 16px 36px -16px rgba(0,0,0,.6)', specimen: 'The stall stays lit until the plums run out' },
+  { id: 'wada-263', name: 'Wada 263', mood: 'Sanzo Wada, combination 263. Turquoise green walls, burnt sienna doors, pinkish cinnamon, slate ink. A seaside inn with the timetable by the door.', bestFor: ['Travel', 'Hospitality', 'Wellness'], tags: ['wada', 'organic', 'cool', 'light'],
+    tokens: paint({ bg: '#e0f0e7', surface: '#f1f8f4', surface2: '#cde7d8', ink: '#1a282c', ink2: '#2c424a', ink3: '#527177', line: '#a2c1b4', primary: '#b65115', secondary: '#efbc7e', tertiary: '#2c424a', success: '#02733f', warning: '#c37608', danger: '#ad242f', info: '#00558e' }),
+    display: 'Young Serif', text: 'Karla', radius: '8px', shadow: '0 12px 30px -14px rgba(26,40,44,.3)', specimen: 'The ferry leaves at 7:40' },
+  { id: 'wada-263-night', name: 'Wada 263 Night', mood: 'Combination 263 at night. A slate ground, turquoise type, the sienna warmed toward cinnamon like lamps along a pier.', bestFor: ['Travel', 'Hospitality', 'Wellness'], tags: ['wada', 'organic', 'cool', 'dark'],
+    tokens: paint({ bg: '#141e21', surface: '#1a282c', surface2: '#213238', ink: '#dcefe4', ink2: '#c0e1ce', ink3: '#849d91', line: '#283b43', primary: '#cd7c3f', secondary: '#c0e1ce', tertiary: '#efbc7e', success: '#7fc48f', warning: '#e5bc2a', danger: '#ff7a6b', info: '#80aac7' }),
+    display: 'Young Serif', text: 'Karla', radius: '8px', shadow: '0 16px 40px -18px rgba(0,0,0,.6)', specimen: 'Last crossing, the lamps along the pier' },
+  { id: 'wada-265', name: 'Wada 265', mood: 'Sanzo Wada, combination 265. Dull violet black, old rose, one apricot yellow, olive. A jazz bill from the 1930s, the dates set like a programme.', bestFor: ['Music', 'Theatre', 'Events'], tags: ['wada', 'deco', 'warm', 'dark'],
+    tokens: paint({ bg: '#120b34', surface: '#231a4b', surface2: '#312956', ink: '#fffad1', ink2: '#c5bfad', ink3: '#9e9795', line: '#37305c', primary: '#d56a75', secondary: '#ffe100', tertiary: '#aaa64d', success: '#7fc48f', warning: '#f5a100', danger: '#ff6b5a', info: '#8fb0d6' }),
+    display: 'Bodoni Moda', text: 'Public Sans', radius: '2px', shadow: '0 18px 44px -20px rgba(0,0,0,.7)', specimen: 'Doors at eight, the trio at nine' },
+  { id: 'wada-265-day', name: 'Wada 265 Day', mood: 'Combination 265 in daylight. Olive cream paper, violet-black ink, the old rose and the yellow printed as fills.', bestFor: ['Music', 'Theatre', 'Events'], tags: ['wada', 'deco', 'warm', 'light'],
+    tokens: paint({ bg: '#f1f1e3', surface: '#f9f9f3', surface2: '#e7e6cd', ink: '#170e41', ink2: '#5d567a', ink3: '#787391', line: '#d5d3a6', primary: '#d56a75', secondary: '#ffe100', tertiary: '#170e41', success: '#02733f', warning: '#c37608', danger: '#cd002d', info: '#00558e' }),
+    display: 'Bodoni Moda', text: 'Public Sans', radius: '2px', shadow: '0 12px 30px -14px rgba(23,14,65,.28)', specimen: 'Matinee at three, the trio rehearses' },
 ];
 
 export function themeCss(t: Theme) {
@@ -599,6 +625,14 @@ export const THEME_PAIRS: Record<string, { mode: 'light' | 'dark'; pair: string 
   'sunset-drive': { mode: 'light', pair: 'midnight-drive' },
   'kraft-desk': { mode: 'light', pair: 'kraft-night' },
   'kraft-night': { mode: 'dark', pair: 'kraft-desk' },
+  'wada-343': { mode: 'light', pair: 'wada-343-night' },
+  'wada-343-night': { mode: 'dark', pair: 'wada-343' },
+  'wada-336': { mode: 'light', pair: 'wada-336-night' },
+  'wada-336-night': { mode: 'dark', pair: 'wada-336' },
+  'wada-263': { mode: 'light', pair: 'wada-263-night' },
+  'wada-263-night': { mode: 'dark', pair: 'wada-263' },
+  'wada-265': { mode: 'dark', pair: 'wada-265-day' },
+  'wada-265-day': { mode: 'light', pair: 'wada-265' },
 };
 
 export function themeById(id: string) {

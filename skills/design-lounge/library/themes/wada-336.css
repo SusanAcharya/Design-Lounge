@@ -1,0 +1,67 @@
+/* Wada 336 · light · pair: wada-336-night
+   Sanzo Wada, combination 336. Pale lemon paper, eosine pink, Hay's russet, blackish olive ink. A fruit stall printed in four inks.
+   Best for: Food, Florists, Picture books
+   Tags: wada, playful, warm, light */
+/* Colour only. Fonts come from the locked pairing file. Radius and shadow come from the locked family. */
+/* Wada 336 · full palette · Designed using Design Lounge (https://www.designlounge.live)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #ed7e92;
+  --primary-ink: #141210;
+  --primary-soft: #fce9d2;
+  --secondary: #833121;
+  --secondary-ink: #fffdf8;
+  --secondary-soft: #eedec2;
+  --tertiary: #48583e;
+  --tertiary-ink: #fffdf8;
+  --tertiary-soft: #e5e3c6;
+
+  /* Surface */
+  --bg: #fffadc;
+  --surface: #fffdf1;
+  --surface-2: #fff5c1;
+  --surface-3: #f2e9b7;
+  --ink: #242c1f;
+  --ink-2: #48583e;
+  --ink-3: #63715b;
+  --line: #dad49b;
+  --line-strong: #95946c;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #02733f;
+  --success-ink: #fffdf8;
+  --success-soft: #dce7c6;
+  --success-on-soft: #02733f;
+  --warning: #f5a100;
+  --warning-ink: #141210;
+  --warning-soft: #feeebd;
+  --warning-on-soft: #936100;
+  --danger: #cd002d;
+  --danger-ink: #fffdf8;
+  --danger-soft: #f8d7c4;
+  --danger-on-soft: #b40028;
+  --info: #00558e;
+  --info-ink: #fffdf8;
+  --info-soft: #dbe3d1;
+  --info-on-soft: #00558e;
+
+  /* Chrome */
+  --focus: #ed7e92;
+  --link: #9c535f;
+  --overlay: #141210;
+  --inverse: #242c1f;
+  --inverse-ink: #fffadc;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+
+}

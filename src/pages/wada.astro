@@ -1,0 +1,221 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import { WADA_COLOURS, WADA_COMBINATIONS, wadaContrast } from '../data/wada';
+import { THEMES } from '../data/themes';
+
+const label = (hex: string) => (wadaContrast(hex, '#141210') >= wadaContrast(hex, '#fffdf8') ? '#141210' : '#fffdf8');
+const uses = new Map(WADA_COLOURS.map((c) => [c.n, WADA_COMBINATIONS.filter((x) => x.colours.some((y) => y.n === c.n)).length]));
+const fromBook = THEMES.filter((t) => t.tags.includes('wada'));
+const SIZES = [['all', 'All'], ['2', 'Two'], ['3', 'Three'], ['4', 'Four']];
+const TONES = [['light', 'Light'], ['mid', 'Mid'], ['dark', 'Dark']];
+---
+<Base title="A Dictionary of Color Combinations" description="Sanzo Wada's 348 colour combinations from the 1930s, as printed: every hex soft-proofed from the book's CMYK, not the neon the usual formula gives. Copy any set." crumbs={[{ name: 'System', href: '/system' }, { name: 'Wada', href: '/wada' }]}>
+  <PageHead eyebrow="System · Colour" title="A Dictionary of <em>Color</em> Combinations" count={WADA_COMBINATIONS.length} countLabel="combinations" blurb="Sanzo Wada (1883-1967) set these down in the 1930s: 159 colours in sets of two, three, and four. Each hex is the printed swatch, proofed through the press profile the reprint uses. Pick a colour below to see every set it belongs to.">
+    <p class="mono faint by">159 colours · {WADA_COMBINATIONS.length} sets · Japan Color 2001 Coated · <a href="#method">How the hex was made</a></p>
+  </PageHead>
+
+  <div class="wrap page">
+    <section class="index" aria-labelledby="index-h">
+      <h2 id="index-h" class="eyebrow">The 159 colours, in the book's order</h2>
+      <ol class="strip">
+        {WADA_COLOURS.map((c) => (
+          <li><button type="button" class="dot" data-colour={c.n} style={`background:${c.hex}`} aria-pressed="false" aria-label={`${c.name}, ${c.hex}, in ${uses.get(c.n)} sets`} title={c.name}></button></li>
+        ))}
+      </ol>
+      <p class="picked mono" data-picked hidden>
+        <i data-picked-dot></i><span data-picked-text></span>
+        <button type="button" class="clear" data-clear>Clear</button>
+      </p>
+    </section>
+
+    <div class="bar" role="group" aria-label="Filter combinations">
+      <div class="chips">
+        {SIZES.map(([v, l]) => <button type="button" class="chip" data-size={v} aria-pressed={v === 'all' ? 'true' : 'false'}>{l}</button>)}
+      </div>
+      <div class="chips">
+        {TONES.map(([v, l]) => <button type="button" class="chip" data-tone={v} aria-pressed="false">{l}</button>)}
+        <button type="button" class="chip" data-readable aria-pressed="false" title="Two of its colours reach 4.5:1, so one can be text on the other">Has a text pair</button>
+      </div>
+      <label class="find">
+        <span class="sr-only">Find a colour by name</span>
+        <input type="search" placeholder="Find a colour: russet, slate, lemon" data-find autocomplete="off" />
+      </label>
+      <p class="mono faint shown" aria-live="polite"><b class="num" data-shown>{WADA_COMBINATIONS.length}</b> shown</p>
+    </div>
+
+    <ol class="grid">
+      {WADA_COMBINATIONS.map((c) => (
+        <li class="set" data-size={c.colours.length} data-tone={c.tone} data-best={c.best} data-has={c.colours.map((x) => x.n).join(' ')} data-names={c.colours.map((x) => x.name.toLowerCase()).join(' | ')}>
+          <div class="bands">
+            {c.colours.map((x) => (
+              <button type="button" class="band" data-hex={x.hex} style={`background:${x.hex};color:${label(x.hex)}`} aria-label={`Copy ${x.name}, ${x.hex}`}>
+                <span class="mono">{x.hex}</span>
+              </button>
+            ))}
+          </div>
+          <div class="cap">
+            <button type="button" class="no mono" data-all={c.colours.map((x) => x.hex).join(' ')} aria-label={`Copy all colours of set ${c.id}`}>Nº {String(c.id).padStart(3, '0')}</button>
+            <span class="names">{c.colours.map((x) => x.name).join(' · ')}</span>
+          </div>
+        </li>
+      ))}
+    </ol>
+    <p class="empty" data-empty hidden>No set matches. <button type="button" class="link" data-reset>Show all {WADA_COMBINATIONS.length}</button></p>
+
+    <section class="themes" aria-labelledby="themes-h">
+      <div class="section-head"><div><span class="eyebrow">In the library</span><h2 id="themes-h" class="display h4">Four sets, built out as themes</h2></div><a class="more" href="/themes">All themes</a></div>
+      <ol class="tgrid">
+        {fromBook.map((t) => (
+          <li>
+            <a href={`/themes/${t.id}`} style={`background:${t.tokens.bg};color:${t.tokens.ink};border-color:${t.tokens.line}`}>
+              <span class="tdots">{(['primary', 'secondary', 'tertiary'] as const).map((k) => <i style={`background:${t.tokens[k]}`}></i>)}</span>
+              <span class="tname">{t.name}</span>
+            </a>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <section class="method" id="method" aria-labelledby="method-h">
+      <div class="section-head"><div><span class="eyebrow">Method</span><h2 id="method-h" class="display h4">How the hex was made</h2></div></div>
+      <div class="cols">
+        <p>The book gives each colour as process CMYK. The usual web conversion subtracts each ink from white, which skips the paper and the press, and turns Hermosa Pink (C0 M30 Y6) into a lilac, <code>#ffb3f0</code>. Here every CMYK value is soft-proofed through Japan Color 2001 Coated, relative colorimetric with black point compensation, so the same pink reads as printed: <code>#f7c9d5</code>.</p>
+        <p>Names, CMYK values, and set numbers come from <a href="https://github.com/mattdesl/dictionary-of-colour-combinations">Matt DesLauriers' dataset</a> (MIT, Copyright (c) 2020 Matt DesLauriers), which corrects Dain M. Blodorn Kim's original transcription. Every set was checked against the book's layout: 1 to 120 hold two colours, 121 to 240 three, 241 to 348 four. Spellings such as Sulpher and Vandar Poel's are the book's.</p>
+        <p>Agents get the same sets as <code>library/wada.txt</code> in the <a href="/agents">Design Lounge skill</a>, one per line, with tone and best contrast, for Free colour and brand boards. The book is worth owning: Seigensha's reprint, <em>A Dictionary of Color Combinations</em>.</p>
+      </div>
+    </section>
+  </div>
+</Base>
+
+<script>
+  const sets = [...document.querySelectorAll<HTMLElement>('.set')];
+  const count = document.querySelector<HTMLElement>('[data-shown]')!;
+  const empty = document.querySelector<HTMLElement>('[data-empty]')!;
+  const find = document.querySelector<HTMLInputElement>('[data-find]')!;
+  const dots = [...document.querySelectorAll<HTMLButtonElement>('[data-colour]')];
+  const picked = document.querySelector<HTMLElement>('[data-picked]')!;
+  const state = { size: 'all', tone: '', readable: false, colour: '', text: '' };
+
+  function apply() {
+    let n = 0;
+    for (const s of sets) {
+      const d = s.dataset;
+      const ok = (state.size === 'all' || d.size === state.size)
+        && (!state.tone || d.tone === state.tone)
+        && (!state.readable || Number(d.best) >= 4.5)
+        && (!state.colour || d.has!.split(' ').includes(state.colour))
+        && (!state.text || d.names!.includes(state.text));
+      s.hidden = !ok;
+      if (ok) n++;
+    }
+    count.textContent = String(n);
+    empty.hidden = n > 0;
+  }
+
+  function press(group: HTMLElement[], on: HTMLElement | null) {
+    group.forEach((b) => b.setAttribute('aria-pressed', String(b === on)));
+  }
+
+  const sizeChips = [...document.querySelectorAll<HTMLButtonElement>('[data-size].chip')];
+  sizeChips.forEach((b) => b.addEventListener('click', () => { state.size = b.dataset.size!; press(sizeChips, b); apply(); }));
+  const toneChips = [...document.querySelectorAll<HTMLButtonElement>('[data-tone].chip')];
+  toneChips.forEach((b) => b.addEventListener('click', () => {
+    state.tone = state.tone === b.dataset.tone ? '' : b.dataset.tone!;
+    press(toneChips, state.tone ? b : null); apply();
+  }));
+  const readable = document.querySelector<HTMLButtonElement>('[data-readable]')!;
+  readable.addEventListener('click', () => { state.readable = !state.readable; readable.setAttribute('aria-pressed', String(state.readable)); apply(); });
+  find.addEventListener('input', () => { state.text = find.value.trim().toLowerCase(); apply(); });
+
+  function pick(dot: HTMLButtonElement | null) {
+    state.colour = dot && state.colour !== dot.dataset.colour ? dot.dataset.colour! : '';
+    const on = state.colour ? dot : null;
+    press(dots, on);
+    picked.hidden = !on;
+    if (on) {
+      picked.querySelector<HTMLElement>('[data-picked-dot]')!.style.background = on.style.background;
+      picked.querySelector<HTMLElement>('[data-picked-text]')!.textContent = on.getAttribute('aria-label')!;
+    }
+    apply();
+  }
+  dots.forEach((d) => d.addEventListener('click', () => pick(d)));
+  document.querySelector('[data-clear]')!.addEventListener('click', () => pick(null));
+  document.querySelector('[data-reset]')!.addEventListener('click', () => {
+    Object.assign(state, { size: 'all', tone: '', readable: false, colour: '', text: '' });
+    find.value = '';
+    press(sizeChips, sizeChips[0]); press(toneChips, null); readable.setAttribute('aria-pressed', 'false'); pick(null);
+  });
+
+  async function copy(text: string, el: HTMLElement) {
+    try { await navigator.clipboard.writeText(text); } catch { return; }
+    el.dataset.done = '';
+    setTimeout(() => delete el.dataset.done, 1200);
+  }
+  document.querySelector('.grid')!.addEventListener('click', (e) => {
+    const t = (e.target as HTMLElement).closest<HTMLElement>('[data-hex], [data-all]');
+    if (t) copy(t.dataset.hex ?? t.dataset.all!, t);
+  });
+</script>
+
+<style>
+  .by { margin-top: 4px; }
+  .by a { border-bottom: 1px solid var(--line-2); }
+  .page { margin-top: 40px; display: flex; flex-direction: column; gap: 28px; }
+  :global(.ph h1 em) { font-style: italic; }
+
+  .index { display: flex; flex-direction: column; gap: 12px; }
+  .strip { display: grid; grid-template-columns: repeat(auto-fill, minmax(22px, 1fr)); gap: 3px; }
+  .dot { display: block; width: 100%; aspect-ratio: 1; border: 0; border-radius: 3px; box-shadow: inset 0 0 0 1px rgba(0,0,0,.08); cursor: pointer; transition: transform var(--t-fast) var(--ease); }
+  .dot:hover { transform: scale(1.18); }
+  .dot[aria-pressed="true"] { outline: 2px solid var(--ink); outline-offset: 2px; }
+  .picked { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--ink); }
+  .picked[hidden] { display: none; }
+  .picked i { width: 14px; height: 14px; border-radius: 3px; box-shadow: inset 0 0 0 1px rgba(0,0,0,.12); }
+  .clear, .link { border-bottom: 1px solid var(--line-2); color: var(--ink-2); font: inherit; }
+  .clear:hover, .link:hover { color: var(--ink); border-color: var(--ink); }
+
+  .bar { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; padding: 14px 0; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--line); }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .find input { height: 32px; width: min(280px, 100%); padding: 0 12px; border: 1px solid var(--line-2); border-radius: 999px; background: transparent; color: var(--ink); font: 13px var(--sans); }
+  .find input:focus-visible { outline: 2px solid var(--ink); outline-offset: 1px; }
+  .find { flex: 1 1 220px; }
+  .shown { margin-left: auto; }
+  .shown b { color: var(--ink); font-weight: 500; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(196px, 1fr)); gap: 28px 18px; }
+  .set { display: flex; flex-direction: column; gap: 10px; }
+  .set[hidden] { display: none; }
+  .bands { display: flex; height: 132px; border-radius: 4px; overflow: hidden; box-shadow: inset 0 0 0 1px rgba(0,0,0,.06); }
+  .band { flex: 1; display: flex; align-items: flex-end; padding: 8px; border: 0; cursor: copy; position: relative; }
+  .band .mono { font-size: 10.5px; opacity: 0; transition: opacity var(--t-fast); }
+  .band:hover .mono, .band:focus-visible .mono, .band[data-done] .mono { opacity: 1; }
+  .band[data-done] .mono::after { content: ' copied'; }
+  .band:focus-visible { outline: 2px solid var(--ink); outline-offset: -4px; }
+  .cap { display: flex; flex-direction: column; gap: 3px; }
+  .no { align-self: flex-start; font-size: 12px; color: var(--ink); cursor: copy; border-bottom: 1px solid transparent; }
+  .no:hover { border-color: var(--ink); }
+  .no[data-done]::after { content: ' · copied'; color: var(--ink-3); }
+  .names { font-size: 13px; line-height: 1.4; color: var(--ink-2); text-wrap: pretty; }
+  .empty { padding: 40px 0; color: var(--ink-2); }
+
+  .themes, .method { margin-top: 48px; }
+  .tgrid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+  .tgrid a { display: flex; flex-direction: column; gap: 26px; padding: 16px; border: 1px solid; border-radius: var(--r-lg); transition: transform var(--t-med) var(--ease), box-shadow var(--t-med); }
+  .tgrid a:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+  .tdots { display: flex; gap: 5px; }
+  .tdots i { width: 18px; height: 18px; border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(0,0,0,.12); }
+  .tname { font-size: 15px; font-weight: 500; }
+
+  .cols { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; }
+  .cols p { font-size: 14.5px; line-height: 1.6; color: var(--ink-2); text-wrap: pretty; }
+  .cols a { color: var(--ink); border-bottom: 1px solid var(--line-2); }
+  .cols code { font-family: var(--mono); font-size: 12.5px; color: var(--ink); }
+  @media (max-width: 900px) { .cols { grid-template-columns: minmax(0, 1fr); } .tgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 640px) {
+    .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 12px; }
+    .bands { height: 104px; }
+    .shown { margin-left: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) { .dot, .tgrid a { transition: none; } .dot:hover, .tgrid a:hover { transform: none; } }
+</style>

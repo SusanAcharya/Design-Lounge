@@ -6,6 +6,9 @@ import { PAIRINGS } from '../../data/type';
 import { THEMES } from '../../data/themes';
 import { ICONS, iconSvg } from '../../data/icons';
 import { RECIPES } from '../../data/motion';
+import { WADA_COMBINATIONS } from '../../data/wada';
+
+const strip = WADA_COMBINATIONS.filter((c) => [176, 263, 336, 343, 265, 126, 166, 303].includes(c.id));
 
 const previewIcons = ICONS.filter((i) => ['search', 'menu', 'heart', 'arrow-right', 'bell', 'image', 'cart', 'mail', 'file', 'check'].includes(i.id)).slice(0, 8);
 const previewThemes = THEMES.slice(0, 6);
@@ -56,6 +59,16 @@ const previewThemes = THEMES.slice(0, 6);
           <div class="ease" aria-hidden="true"><i></i><span class="mono faint">lounge-standard · 320ms</span></div>
         </a>
       </li>
+      <li class="wide">
+        <a href="/wada">
+          <span class="eyebrow">Colour · {WADA_COMBINATIONS.length}</span>
+          <h2 class="display h3">A Dictionary of Color Combinations</h2>
+          <p>Sanzo Wada's sets of two, three, and four colours from the 1930s, as printed.</p>
+          <ol class="sets" aria-hidden="true">
+            {strip.map((c) => <li>{c.colours.map((x) => <i style={`background:${x.hex}`}></i>)}</li>)}
+          </ol>
+        </a>
+      </li>
     </ol>
     <p class="note">Sources are the public sites. <a href="/sources">One product, one site.</a></p>
   </div>
@@ -77,6 +90,12 @@ const previewThemes = THEMES.slice(0, 6);
   .icos :global(svg) { stroke: currentColor; fill: none; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
   .ease { display: flex; align-items: center; gap: 14px; margin-top: auto; padding-top: 16px; }
   .ease i { width: 12px; height: 12px; border-radius: 50%; background: var(--accent); animation: slide 1.4s cubic-bezier(.2,.7,.2,1) infinite alternate; }
+  .wide { grid-column: 1 / -1; }
+  .wide a { min-height: 0; }
+  .sets { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 10px; margin-top: auto; padding-top: 16px; }
+  .sets li { display: flex; height: 56px; border-radius: 3px; overflow: hidden; }
+  .sets i { flex: 1; }
+  @media (max-width: 800px) { .sets { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
   .note { max-width: 56ch; display: flex; flex-direction: column; gap: 10px; }
   .note a { text-decoration: underline; text-underline-offset: 3px; }
   @keyframes slide { from { transform: translateX(0); } to { transform: translateX(48px); } }

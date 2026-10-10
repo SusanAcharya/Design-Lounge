@@ -1,0 +1,67 @@
+/* Wada 343 · light · pair: wada-343-night
+   Sanzo Wada, combination 343. Ivory buff paper, Vandar Poel's blue ink, a burnt sienna stamp, deep olive notes. A small press from the 1930s that still takes orders.
+   Best for: Publishing, Archives, Studios
+   Tags: wada, paper, warm, light */
+/* Colour only. Fonts come from the locked pairing file. Radius and shadow come from the locked family. */
+/* Wada 343 · full palette · Designed using Design Lounge (https://www.designlounge.live)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #00486c;
+  --primary-ink: #fffdf8;
+  --primary-soft: #d6d9cb;
+  --secondary: #b65115;
+  --secondary-ink: #fffdf8;
+  --secondary-soft: #f0dbbf;
+  --tertiary: #6d6136;
+  --tertiary-ink: #fffdf8;
+  --tertiary-soft: #e5ddc4;
+
+  /* Surface */
+  --bg: #f9f1db;
+  --surface: #fcf8ed;
+  --surface-2: #f5e8c5;
+  --surface-3: #e6dcbc;
+  --ink: #001d2b;
+  --ink-2: #00486c;
+  --ink-3: #6d6136;
+  --line: #d2c08d;
+  --line-strong: #828268;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #02733f;
+  --success-ink: #fffdf8;
+  --success-soft: #d6dfc5;
+  --success-on-soft: #026537;
+  --warning: #c37608;
+  --warning-ink: #141210;
+  --warning-soft: #f1e0bd;
+  --warning-on-soft: #855105;
+  --danger: #ad242f;
+  --danger-ink: #fffdf8;
+  --danger-soft: #eed4c3;
+  --danger-on-soft: #ad242f;
+  --info: #00558e;
+  --info-ink: #fffdf8;
+  --info-soft: #d6dbd0;
+  --info-on-soft: #00558e;
+
+  /* Chrome */
+  --focus: #00486c;
+  --link: #00486c;
+  --overlay: #141210;
+  --inverse: #001d2b;
+  --inverse-ink: #f9f1db;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+
+}

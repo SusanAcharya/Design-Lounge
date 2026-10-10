@@ -14,10 +14,12 @@ Read this only when you need a path or a kind map. The procedure is in SKILL.md.
 | Piece list, to search | `library/pieces.txt` |
 | One piece spec | `library/briefs/<id>.md` |
 | Icons | `library/icons.json` |
+| Wada's colour combinations, to search | `library/wada.txt` |
 | HTML demo | `{site}/demo/<id>.html` |
 | Everything in one file, for tools only | `library/index.json` (do not read it in a build) |
 | Theme page | `{site}/themes/<id>` |
 | Type page | `{site}/type/<id>` |
+| Wada's dictionary, to browse | `{site}/wada` |
 
 `site` is the field on `library/map.json`. Use these links when you show a pick. Do not paste a brief into the chat.
 

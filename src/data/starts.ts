@@ -91,6 +91,7 @@ const DIRECTIONS: Record<string, Direction[]> = {
     ['pantry-letter', 'Pantry letter', 'A small producer, a list in a hand, come by Thursday', 'inkwell', 'letter-hand', 'soft', 'handwritten-homepage', 'text-annotated-underlines'],
     ['cold-counter', 'Cold counter', 'A precise grocer, ice and a grid, weights and prices', 'ice-station', 'swiss-precision', 'quiet', 'hero-swiss-grid-wordmark', null],
     ['larder', 'Larder', 'A dark pantry, one jar you can turn', 'copper-works', 'atelier', 'editorial', 'luxe-product-detail', 'object-3d-turntable'],
+    ['plum-stall', 'Plum stall', 'A fruit stall printed in four inks, eosine pink on pale lemon, russet crates, olive type', 'wada-336', 'lettera', 'soft', 'collage-hero', 'stacking-cards-scroll'],
   ]),
   wellness: d([
     ['mint-air', 'Mint air', 'A retreat, mint and teal, dates you can book', 'alpine-clinic', 'garden-journal', 'soft', 'landing-wellness-retreat', 'parallax-layered-hero'],
@@ -111,6 +112,7 @@ const DIRECTIONS: Record<string, Direction[]> = {
     ['coast-house', 'Coast house', 'Pale air, a house by the water, rooms you turn', 'glacier', 'maison', 'quiet', 'gallery-photo-album', 'parallax-layered-hero'],
     ['guest-book', 'Guest book', 'Manila and a stamp, who stayed, a long quiet note', 'archive', 'classic-garamond', 'editorial', 'paper-article-reader', 'scroll-reading-progress'],
     ['night-arrival', 'Night arrival', 'You arrive after dark, the hills under a moon, the local time and the hour the bar closes', 'sodium-night', 'night-show', 'lit', 'moonlit-ridge-hero', 'moonlit-ridge-hero'],
+    ['ferry-inn', 'Ferry inn', 'A seaside inn, turquoise walls, sienna doors, slate ink, the timetable by the door', 'wada-263', 'bookish', 'soft', 'hero-asymmetric-type-lockup', 'scroll-word-highlight'],
   ]),
   agency: d([
     ['night-wall', 'Night wall', 'Dark, confident, a case wall', 'night-desk', 'brutal-grotesk', 'sharp', 'landing-agency-case-wall', 'smooth-scroll-inertia'],
@@ -127,6 +129,7 @@ const DIRECTIONS: Record<string, Direction[]> = {
     ['field-journal', 'Field journal', 'Olive paper, notes from outside, a hand in the margin', 'loam', 'garden-journal', 'soft', 'card-journal-page', 'text-annotated-underlines'],
     ['quarterly', 'Quarterly', 'A strict grid, one essay, the measure is the design', 'fog-city', 'academic', 'quiet', 'magazine-editorial-grid', 'scroll-word-highlight'],
     ['paste-up-zine', 'Paste-up zine', 'A zine cut and pasted, ink borders, yellow and pink stickers, issues as a wall of cards', 'sign-shop', 'brutal-grotesk', 'bold', 'hero-brutal-stack', 'text-mask-scroll-reveal'],
+    ['wada-press', 'Wada press', 'A small press in the colours of a 1930s colour book, buff paper, petrol ink, a sienna stamp', 'wada-343', 'classic-garamond', 'editorial', 'hero-editorial-name-rotator', 'text-rise-underline-whisper'],
   ]),
   docs: d([
     ['cobalt-docs', 'Cobalt docs', 'A clear reader, three columns, civic gray', 'fog-city', 'developer-docs', 'quiet', 'docs-three-column', null],
@@ -150,6 +153,7 @@ const DIRECTIONS: Record<string, Direction[]> = {
     ['after-midnight', 'After midnight', 'A label or a venue tied to one city and one hour, lamp light on indigo, a sound you can play', 'sodium-night', 'ai-editorial', 'lit', 'moonlit-ridge-hero', 'moonlit-ridge-hero'],
     ['first-bell', 'First bell', 'The same city at dawn, lime-wash and marigold, releases as a lit list', 'temple-dawn', 'night-show', 'editorial', 'hero-asymmetric-type-lockup', 'text-mask-line-reveal'],
     ['sunset-grid', 'Sunset grid', 'Synthwave, a magenta sun over a cyan grid, the name in tube letters', 'midnight-drive', 'neon-marquee', 'glass', 'sunset-grid-hero', 'sunset-grid-hero'],
+    ['trio-bill', 'Trio bill', 'A jazz bill from the 1930s, violet-black, old rose, one bright yellow, the dates set like a programme', 'wada-265', 'deco-hotel', 'editorial', 'hero-layered-letter-swap', 'kinetic-type-marquee'],
   ]),
   'personal-site': d([
     ['sakura-essay', 'Sakura essay', 'A writer, blush paper', 'sakura-desk', 'the-lounge', 'editorial', 'hero-editorial-name-rotator', 'scroll-word-highlight'],

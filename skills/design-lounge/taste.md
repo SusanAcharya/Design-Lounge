@@ -140,7 +140,7 @@ The board is a 3 by 3 grid with even gutters and little text:
 2. The logo's construction.
 3. On a screen: a browser bar, an app icon, or a header.
 4. One short line about the brand, set large.
-5. The colours: the locked theme's roles as swatches.
+5. The colours: the locked theme's roles as swatches. When the brand needs colours of its own and no theme gives them, one line of `library/wada.txt` written as those roles.
 6. The type: the locked pairing as a specimen.
 7. On an object: a card, a label, a badge, packaging.
 8. Image direction: one photo or texture in the brand's treatment.

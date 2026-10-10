@@ -10,7 +10,7 @@ export const GET: APIRoute = async ({ site }) => {
   const pieces = await getPieces();
   const urls = [
     '/', '/browse', '/collections', '/guide', '/about', '/privacy', '/sources', '/rooms', '/platforms', '/styles',
-    '/type', '/themes', '/icons', '/motion', '/agents', '/sections', '/system', '/start', '/kit', '/examples',
+    '/type', '/themes', '/wada', '/icons', '/motion', '/agents', '/sections', '/system', '/start', '/kit', '/examples',
     // The compare page stays out of search until it has a pair to show.
     ...(PAIRS.length ? ['/examples/compare'] : []),
     '/examples/proof',

@@ -8,9 +8,10 @@ import { AUTHOR } from '../../lib/pieces';
   <PageHead eyebrow="System" title="Themes" count={THEMES.length} countLabel="themes" />
   <div class="wrap">
     <nav class="tags" aria-label="Filter themes">
-      {['dark', 'light', 'warm', 'cool', 'editorial', 'luxe', 'playful', 'industrial', 'organic', 'paper', 'minimal', 'swiss', 'retro', 'riso', 'deco', 'y2k', 'cyber', 'pixel', 'clay', 'glass'].map((t) => <button class="chip" type="button" data-tag={t}>{t}</button>)}
+      {['dark', 'light', 'warm', 'cool', 'editorial', 'luxe', 'playful', 'industrial', 'organic', 'paper', 'minimal', 'swiss', 'retro', 'riso', 'deco', 'y2k', 'cyber', 'pixel', 'clay', 'glass', 'wada'].map((t) => <button class="chip" type="button" data-tag={t}>{t}</button>)}
       <button class="chip on" type="button" data-tag="all">all</button>
     </nav>
+    <p class="muted">Eight of these come from Sanzo Wada's 1930s colour book. <a href="/wada">See all 348 of his combinations</a>.</p>
     <ol class="grid">
       {THEMES.map((t, i) => (
         <li class="card reveal" style={`--d:${(i % 8) * 35}ms`} data-tags={t.tags.join(' ')}>
@@ -51,6 +52,7 @@ import { AUTHOR } from '../../lib/pieces';
   .hl { font-size: 26px; line-height: 1.05; letter-spacing: -.02em; }
   .by { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; }
   .muted { font-size: 14px; color: var(--ink-2); text-wrap: pretty; }
+  .muted a { color: var(--ink); border-bottom: 1px solid var(--line-2); }
   .jobs { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
   .credit { margin-top: 48px; }
 </style>

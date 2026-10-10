@@ -1,0 +1,67 @@
+/* Wada 263 · light · pair: wada-263-night
+   Sanzo Wada, combination 263. Turquoise green walls, burnt sienna doors, pinkish cinnamon, slate ink. A seaside inn with the timetable by the door.
+   Best for: Travel, Hospitality, Wellness
+   Tags: wada, organic, cool, light */
+/* Colour only. Fonts come from the locked pairing file. Radius and shadow come from the locked family. */
+/* Wada 263 · full palette · Designed using Design Lounge (https://www.designlounge.live)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #b65115;
+  --primary-ink: #fffdf8;
+  --primary-soft: #dadaca;
+  --secondary: #efbc7e;
+  --secondary-ink: #141210;
+  --secondary-soft: #e2e9d8;
+  --tertiary: #2c424a;
+  --tertiary-ink: #fffdf8;
+  --tertiary-soft: #c7d8d1;
+
+  /* Surface */
+  --bg: #e0f0e7;
+  --surface: #f1f8f4;
+  --surface-2: #cde7d8;
+  --surface-3: #c2dcce;
+  --ink: #1a282c;
+  --ink-2: #2c424a;
+  --ink-3: #4a666c;
+  --line: #a2c1b4;
+  --line-strong: #6e8780;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #02733f;
+  --success-ink: #fffdf8;
+  --success-soft: #c1dfcf;
+  --success-on-soft: #026537;
+  --warning: #c37608;
+  --warning-ink: #141210;
+  --warning-soft: #dcdfc8;
+  --warning-on-soft: #855105;
+  --danger: #ad242f;
+  --danger-ink: #fffdf8;
+  --danger-soft: #d9d3cd;
+  --danger-on-soft: #ad242f;
+  --info: #00558e;
+  --info-ink: #fffdf8;
+  --info-soft: #c1dadb;
+  --info-on-soft: #00558e;
+
+  /* Chrome */
+  --focus: #b65115;
+  --link: #a44913;
+  --overlay: #141210;
+  --inverse: #1a282c;
+  --inverse-ink: #e0f0e7;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+
+}

@@ -1,0 +1,67 @@
+/* Wada 265 Day · light · pair: wada-265
+   Combination 265 in daylight. Olive cream paper, violet-black ink, the old rose and the yellow printed as fills.
+   Best for: Music, Theatre, Events
+   Tags: wada, deco, warm, light */
+/* Colour only. Fonts come from the locked pairing file. Radius and shadow come from the locked family. */
+/* Wada 265 Day · full palette · Designed using Design Lounge (https://www.designlounge.live)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #d56a75;
+  --primary-ink: #141210;
+  --primary-soft: #edded4;
+  --secondary: #ffe100;
+  --secondary-ink: #141210;
+  --secondary-soft: #f3efc3;
+  --tertiary: #170e41;
+  --tertiary-ink: #fffdf8;
+  --tertiary-soft: #d2d1cc;
+
+  /* Surface */
+  --bg: #f1f1e3;
+  --surface: #f9f9f3;
+  --surface-2: #e7e6cd;
+  --surface-3: #dbd9c5;
+  --ink: #170e41;
+  --ink-2: #5d567a;
+  --ink-3: #696485;
+  --line: #d5d3a6;
+  --line-strong: #8d8880;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #02733f;
+  --success-ink: #fffdf8;
+  --success-soft: #d0dfcc;
+  --success-on-soft: #026537;
+  --warning: #c37608;
+  --warning-ink: #141210;
+  --warning-soft: #ebe0c4;
+  --warning-on-soft: #855105;
+  --danger: #cd002d;
+  --danger-ink: #fffdf8;
+  --danger-soft: #eccfca;
+  --danger-on-soft: #b40028;
+  --info: #00558e;
+  --info-ink: #fffdf8;
+  --info-soft: #cfdbd7;
+  --info-on-soft: #00558e;
+
+  /* Chrome */
+  --focus: #d56a75;
+  --link: #9c4d56;
+  --overlay: #141210;
+  --inverse: #170e41;
+  --inverse-ink: #f1f1e3;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+
+}

@@ -43,6 +43,7 @@ export const GET: APIRoute = async () => {
       aka: aka(t.tags),
       href: '/themes/' + t.id,
     })),
+    { id: 'wada', title: 'A Dictionary of Color Combinations', summary: "Sanzo Wada's 348 colour combinations from the 1930s, as printed. Palettes of two, three, and four colours.", type: 'map', tags: ['colour', 'color', 'palette', 'wada', 'japanese'], href: '/wada' },
     { id: 'kit', title: 'Compose a kit', summary: 'Pick a kind, a palette, a pairing and a family. Get a brief.', type: 'map', href: '/kit' },
     ...SURFACES.map((g) => ({
       id: 'surface-' + g.id,

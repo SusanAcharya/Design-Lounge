@@ -2,6 +2,7 @@ import type { APIRoute } from 'astro';
 import { getPieces, AUTHOR, CREDIT_LINE, TYPE_META, CATEGORY_META, STYLE_META } from '../lib/pieces';
 import { PAIRINGS } from '../data/type';
 import { THEMES } from '../data/themes';
+import { WADA_COMBINATIONS } from '../data/wada';
 import { ICONS, ICON_CREDIT } from '../data/icons';
 import { EASINGS, RECIPES } from '../data/motion';
 import { COLLECTIONS, SHELF_GROUPS } from '../data/collections';
@@ -58,6 +59,7 @@ export const GET: APIRoute = async ({ site }) => {
     `## Libraries`,
     `- Type pairings (${PAIRINGS.length}): ${base}/type`,
     `- Themes (${THEMES.length}): ${base}/themes`,
+    `- Sanzo Wada's colour combinations (${WADA_COMBINATIONS.length}), as printed: ${base}/wada`,
     `- Lounge Icons (${ICONS.length}): ${base}/icons — ${ICON_CREDIT}`,
     `- Motion recipes (${RECIPES.length}): ${base}/motion`,
     ``,

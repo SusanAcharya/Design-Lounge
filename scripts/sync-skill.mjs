@@ -16,6 +16,7 @@ import { EASINGS, DURATIONS, RECIPES, tokensCss } from '../src/data/motion.ts';
 import { STARTS } from '../src/data/starts.ts';
 import { COLLECTIONS } from '../src/data/collections.ts';
 import { sourcesFrom, studyPiece } from '../src/data/sources.ts';
+import { WADA_COMBINATIONS, WADA_META } from '../src/data/wada.ts';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const piecesDir = path.join(root, 'src/content/pieces');
@@ -111,6 +112,7 @@ const index = {
     recipes: RECIPES.length,
     starts: STARTS.length,
     sources: siteSources.length,
+    wada: WADA_COMBINATIONS.length,
   },
   sources: siteSources.map((source) => ({
     id: source.id,
@@ -297,6 +299,14 @@ const SHORT_MOOD = {
   'geometric-modern': 'Clean geometric sans in two weights: the sharp product default.',
   'night-show': 'A film-title serif set huge, one word in italic.',
   'machined': 'An expanded grotesk at full width, a mono for specs.',
+  'wada-343': 'Wada 343: buff paper, petrol ink, a sienna stamp.',
+  'wada-343-night': 'Wada 343 after dark: petrol ground, buff type, sienna.',
+  'wada-336': 'Wada 336: pale lemon, eosine pink, russet, olive ink.',
+  'wada-336-night': 'Wada 336 at dusk: olive ground, lemon type, pink.',
+  'wada-263': 'Wada 263: turquoise green walls, sienna doors, slate ink.',
+  'wada-263-night': 'Wada 263 at night: slate ground, turquoise type, sienna.',
+  'wada-265': 'Wada 265: violet-black, old rose, one bright yellow.',
+  'wada-265-day': 'Wada 265 in daylight: olive cream, violet-black ink, rose.',
 };
 function shortMood(id, mood) {
   if (SHORT_MOOD[id]) return SHORT_MOOD[id];
@@ -313,7 +323,7 @@ fs.writeFileSync(
     site: index.site,
     credit,
     license: index.license,
-    readme: 'Read this first. Then open only what you lock: starts/<id>.json for the recipe, themes/<id>.css, pairings/<id>.css, and briefs/<id>.md for each piece. Theme and pairing moods here are short; the full mood, bestFor, and a pairing\'s mono and numbers are in the themes/<id>.css and pairings/<id>.css headers. Search pieces.txt for pieces. Do not read index.json; it is the whole catalogue for tools.',
+    readme: 'Read this first. Then open only what you lock: starts/<id>.json for the recipe, themes/<id>.css, pairings/<id>.css, and briefs/<id>.md for each piece. Theme and pairing moods here are short; the full mood, bestFor, and a pairing\'s mono and numbers are in the themes/<id>.css and pairings/<id>.css headers. Search pieces.txt for pieces. Search wada.txt only for a Free palette or a brand board. Do not read index.json; it is the whole catalogue for tools.',
     counts: index.counts,
     kinds: index.kit.kinds,
     families: index.kit.families,
@@ -329,6 +339,21 @@ fs.writeFileSync(
   path.join(skillLib, 'pieces.txt'),
   `# Design Lounge pieces · id | platform | category | title | styles | tags\n# Spec: briefs/<id>.md · Live demo: ${lounge}/demo/<id>.html\n# Search this file. Do not read it top to bottom.\n` +
     index.pieces.map((p) => [p.id, p.platform, p.category, p.title, (p.styles || []).join(' '), (p.tags || []).join(' ')].join(' | ')).join('\n') + '\n',
+);
+// Wada's combinations, one per line, so a Free palette or a brand board starts from a printed harmony, not a guess.
+fs.writeFileSync(
+  path.join(skillLib, 'wada.txt'),
+  `# ${WADA_META.title} · ${WADA_META.author} · ${WADA_COMBINATIONS.length} combinations\n` +
+    `# Nº | hex, in the book's order | names | tone temperature | best contrast between two of its colours\n` +
+    `# Hex is the printed swatch (Japan Color 2001 Coated), not the naive CMYK formula. Read these ten lines, then search the rest. Do not read it top to bottom.\n` +
+    `# Browse: ${lounge}/wada. Only for Free colour (show.md), a brand board no theme fits, or colours they asked for on their own. In Kit mode the locked theme wins; wada-343, wada-336, wada-263, and wada-265 are themes from this book.\n` +
+    `# 1. Search case-insensitively (grep -i) for the world's colour or material (russet, slate, lemon, madder) or a tone (dark warm). Take one line whole. Do not blend two.\n` +
+    `# 2. Its colours are the brand roles at their exact hex. One leads as --primary. The others are --secondary and --tertiary, or scene colours.\n` +
+    `# 3. Ground: tint its palest colour toward white for --bg and --surface. Ink: its darkest colour deepened until body text passes 4.5:1, or the book's Black #191110 or Slate Color #2c424a.\n` +
+    `# 4. Last column under 3.0: none of its colours is text on another. Use them as fills and take ink from rule 3.\n` +
+    `# 5. Dark mode: the darkest colour, deepened, is --bg. The palest is --ink. A brand colour that fails on the dark ground lifts toward white until it passes.\n` +
+    `# 6. Write "Palette: Wada <Nº>" on the sheet with each colour's role, and put the number in the history line.\n` +
+    WADA_COMBINATIONS.map((c) => [String(c.id).padStart(3, '0'), c.colours.map((x) => x.hex).join(' '), c.colours.map((x) => x.name).join(', '), `${c.tone} ${c.temp}`, c.best.toFixed(1)].join(' | ')).join('\n') + '\n',
 );
 fs.writeFileSync(
   path.join(skillLib, 'icons.json'),

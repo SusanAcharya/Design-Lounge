@@ -1,0 +1,358 @@
+# A Dictionary of Color Combinations · Sanzo Wada (1883-1967) · 348 combinations
+# Nº | hex, in the book's order | names | tone temperature | best contrast between two of its colours
+# Hex is the printed swatch (Japan Color 2001 Coated), not the naive CMYK formula. Read these ten lines, then search the rest. Do not read it top to bottom.
+# Browse: https://www.designlounge.live/wada. Only for Free colour (show.md), a brand board no theme fits, or colours they asked for on their own. In Kit mode the locked theme wins; wada-343, wada-336, wada-263, and wada-265 are themes from this book.
+# 1. Search case-insensitively (grep -i) for the world's colour or material (russet, slate, lemon, madder) or a tone (dark warm). Take one line whole. Do not blend two.
+# 2. Its colours are the brand roles at their exact hex. One leads as --primary. The others are --secondary and --tertiary, or scene colours.
+# 3. Ground: tint its palest colour toward white for --bg and --surface. Ink: its darkest colour deepened until body text passes 4.5:1, or the book's Black #191110 or Slate Color #2c424a.
+# 4. Last column under 3.0: none of its colours is text on another. Use them as fills and take ink from rule 3.
+# 5. Dark mode: the darkest colour, deepened, is --bg. The palest is --ink. A brand colour that fails on the dark ground lifts toward white until it passes.
+# 6. Write "Palette: Wada <Nº>" on the sheet with each colour's role, and put the number in the history line.
+001 | #d86310 #008ea5 | English Red, Cerulian Blue | mid mixed | 1.1
+002 | #f5a100 #0a3552 | Yellow Orange, Dark Tyrian Blue | mid warm | 6.1
+003 | #c37608 #fff3b2 | Raw Sienna, Pale Lemon Yellow | light warm | 3.2
+004 | #d0b16c #551c68 | Isabella Color, Red Violet | mid neutral | 5.8
+005 | #39793c #00486c | Cossack Green, Vandar Poel's Blue | dark cool | 1.9
+006 | #ef805f #001231 | Grenadine Pink, Deep Indigo | dark warm | 7.0
+007 | #ed7100 #bed4c7 | Orange, Glaucous Green | light warm | 1.9
+008 | #c97838 #c0b8db | Cinnamon Rufous, Grayish Lavender A | mid warm | 1.8
+009 | #5e2658 #816e9d | Violet Red, Dull Blue Violet | dark neutral | 2.5
+010 | #c97838 #978c56 | Cinnamon Rufous, Dark Citrine | mid warm | 1.0
+011 | #efdba5 #afbbb5 | Ivory Buff, Mineral Gray | light warm | 1.4
+012 | #d0b16c #008f97 | Isabella Color, Green Blue | mid mixed | 1.9
+013 | #c37608 #94495e | Raw Sienna, Veronia Purple | mid warm | 1.8
+014 | #ec6e8d #fbeca3 | Spinel Red, Naples Yellow | light warm | 2.5
+015 | #009087 #c0b8db | Benzol Green, Grayish Lavender A | mid cool | 2.1
+016 | #8c1d19 #b4dae9 | Vandyke Red, Pale King's Blue | mid neutral | 6.1
+017 | #db4f58 #00ac95 | Eugenia Red B, Sea Green | mid mixed | 1.4
+018 | #d6b8aa #4d194a | Fawn, Dusky Madder Violet | mid neutral | 7.3
+019 | #703509 #88c122 | Mars Brown Tobacco, Night Green | mid warm | 4.4
+020 | #84ccd2 #cf97ab | Calamine Blue, Laelia Pink | light neutral | 1.3
+021 | #ef805f #00ac95 | Grenadine Pink, Sea Green | mid mixed | 1.1
+022 | #fff100 #033983 | Yellow, Deep Lyons Blue | mid mixed | 9.3
+023 | #fbcc7a #a070a8 | Cinnamon Buff, Light Mauve | mid warm | 2.6
+024 | #6d4f14 #94495e | Sepia, Veronia Purple | dark warm | 1.2
+025 | #ca503d #c8e7e9 | Etruscan Red, Nile Blue | mid warm | 3.4
+026 | #f2a84b #7a5329 | Golden Yellow, Pale Raw Umber | mid warm | 3.4
+027 | #f6bdc1 #2c424a | Corinthian Pink, Slate Color | mid neutral | 6.5
+028 | #802911 #001231 | Madder Brown, Deep Indigo | dark neutral | 2.0
+029 | #8c8e58 #a2b2cd | Krongbergs Green, Salvia Blue | mid neutral | 1.6
+030 | #b31831 #afbbb5 | Pompeian Red, Mineral Gray | mid warm | 3.4
+031 | #db3915 #fff3b2 | Red Orange, Pale Lemon Yellow | light warm | 4.1
+032 | #dcab77 #88c122 | Ochraceous Salmon, Night Green | light warm | 1.0
+033 | #c37608 #2c424a | Raw Sienna, Slate Color | dark warm | 3.0
+034 | #ed7e92 #c0c7c6 | Eosine Pink, Neutral Gray | light warm | 1.5
+035 | #c1a19e #ad242f | Light Brown Drab, Carmine Red | mid warm | 2.9
+036 | #c8a800 #c0e1ce | Sulphine Yellow, Turquoise Green | light warm | 1.6
+037 | #b03f16 #551c68 | Brick Red, Red Violet | dark warm | 2.0
+038 | #02733f #033983 | Diamine Green, Deep Lyons Blue | dark cool | 1.8
+039 | #cd002d #00558e | Carmine, Helvetia Blue | dark mixed | 1.4
+040 | #cb6012 #b7bc21 | Vinaceous Tawny, Citron Yellow | mid warm | 2.0
+041 | #978c56 #84ccd2 | Dark Citrine, Calamine Blue | mid neutral | 1.9
+042 | #e5bc2a #443580 | Yellow Ocher, Violet | mid warm | 5.6
+043 | #f6bdc1 #a966a2 | Corinthian Pink, Aconite Violet | mid neutral | 2.5
+044 | #008e89 #5981b5 | Light Porcelain Green, Olympic Blue | mid cool | 1.0
+045 | #fbdcc4 #f9ee28 | Seashell Pink, Lemon Yellow | light warm | 1.1
+046 | #ed7100 #191110 | Orange, Black | dark warm | 6.2
+047 | #ca503d #c7b0b8 | Etruscan Red, Grayish Lavender B | mid warm | 2.2
+048 | #b8366d #00558e | Rosolanc Purple, Helvetia Blue | dark mixed | 1.4
+049 | #b4dae9 #0065b3 | Pale King's Blue, Blue | mid cool | 4.0
+050 | #efdba5 #4d194a | Ivory Buff, Dusky Madder Violet | mid warm | 9.9
+051 | #ad242f #0065b3 | Carmine Red, Blue | dark mixed | 1.1
+052 | #f8f2c8 #191110 | Sulpher Yellow, Black | mid neutral | 16.4
+053 | #f5a100 #4d194a | Yellow Orange, Dusky Madder Violet | mid warm | 6.4
+054 | #009087 #b0cfd7 | Benzol Green, Light Glaucous Blue | mid cool | 2.4
+055 | #d56a75 #ffffff | Old Rose, White | light warm | 3.4
+056 | #c7b0b8 #443580 | Grayish Lavender B, Violet | mid cool | 5.0
+057 | #854659 #2c424a | Taupe Brown, Slate Color | dark neutral | 1.5
+058 | #833121 #00ac95 | Hay's Russet, Sea Green | mid mixed | 3.0
+059 | #ed7e92 #b4a414 | Eosine Pink, Citrine | mid warm | 1.0
+060 | #fff3b2 #0a3552 | Pale Lemon Yellow, Dark Tyrian Blue | mid neutral | 11.4
+061 | #ccd53c #520e45 | Light Green Yellow, Cotinga Purple | mid warm | 8.7
+062 | #fff100 #191110 | Yellow, Black | mid warm | 15.8
+063 | #784244 #008ea5 | Vistoris Lake, Cerulian Blue | dark cool | 2.0
+064 | #a966a2 #645b99 | Aconite Violet, Dark Soft Violet | mid neutral | 1.5
+065 | #c8a800 #84ccd2 | Sulphine Yellow, Calamine Blue | light warm | 1.3
+066 | #dabb26 #71773a | Olive Ocher, Olive Green | mid warm | 2.5
+067 | #5981b5 #0a3552 | Olympic Blue, Dark Tyrian Blue | dark cool | 3.2
+068 | #c1a19e #fff100 | Light Brown Drab, Yellow | light warm | 2.0
+069 | #acac9e #191110 | Warm Gray, Black | dark neutral | 8.1
+070 | #c37608 #5a5c2f | Raw Sienna, Lincoln Green | mid warm | 2.0
+071 | #b31831 #dcab77 | Pompeian Red, Ochraceous Salmon | mid warm | 3.3
+072 | #f8f2c8 #b4dae9 | Sulpher Yellow, Pale King's Blue | light neutral | 1.3
+073 | #7a5329 #9aa96e | Pale Raw Umber, Rainette Green | mid warm | 2.7
+074 | #c0e1ce #008f97 | Turquoise Green, Green Blue | mid cool | 2.8
+075 | #b4dae9 #373f68 | Pale King's Blue, Violet Blue | mid cool | 6.8
+076 | #fff3b2 #acac9e | Pale Lemon Yellow, Warm Gray | light warm | 2.0
+077 | #db4f58 #00486c | Eugenia Red B, Vandar Poel's Blue | dark mixed | 2.5
+078 | #efbc7e #68c3be | Pinkish Cinnamon, Venice Green | light mixed | 1.2
+079 | #802911 #008f97 | Madder Brown, Green Blue | dark mixed | 2.4
+080 | #f8f2c8 #a070a8 | Sulpher Yellow, Light Mauve | light neutral | 3.4
+081 | #f2a84b #acac9e | Golden Yellow, Warm Gray | light warm | 1.1
+082 | #833121 #4d194a | Hay's Russet, Dusky Madder Violet | dark warm | 1.6
+083 | #ced19b #373f68 | Olive Buff, Violet Blue | mid neutral | 6.4
+084 | #fbdcc4 #0b2f2c | Seashell Pink, Deep Slate Green | mid neutral | 11.1
+085 | #cb6012 #006e93 | Vinaceous Tawny, Antwarp Blue | mid mixed | 1.4
+086 | #c37608 #00ac95 | Raw Sienna, Sea Green | mid mixed | 1.2
+087 | #f6bdc1 #b7bc21 | Corinthian Pink, Citron Yellow | light warm | 1.3
+088 | #fbdcc4 #0065b3 | Seashell Pink, Blue | mid cool | 4.6
+089 | #f5a100 #373f68 | Yellow Orange, Violet Blue | mid warm | 4.8
+090 | #ed7e92 #a966a2 | Eosine Pink, Aconite Violet | mid warm | 1.6
+091 | #784244 #c86c0e | Vistoris Lake, Orange Rufous | dark warm | 2.1
+092 | #f09082 #009087 | Coral Red, Benzol Green | mid mixed | 1.7
+093 | #b4a414 #b0cfd7 | Citrine, Light Glaucous Blue | light warm | 1.5
+094 | #efdba5 #005247 | Ivory Buff, Dusky Green | mid neutral | 6.7
+095 | #833121 #170e41 | Hay's Russet, Dull Violet Black | dark neutral | 2.1
+096 | #e5bc2a #8a851f | Yellow Ocher, Olive | mid warm | 2.1
+097 | #f6bdc1 #ca503d | Corinthian Pink, Etruscan Red | mid warm | 2.7
+098 | #802911 #373f68 | Madder Brown, Violet Blue | dark neutral | 1.1
+099 | #fff3b2 #008ea5 | Pale Lemon Yellow, Cerulian Blue | light cool | 3.5
+100 | #9e8e43 #816e9d | Buffy Citrine, Dull Blue Violet | mid neutral | 1.4
+101 | #e5bcbc #033983 | Cameo Pink, Deep Lyons Blue | mid cool | 6.4
+102 | #efdba5 #c86c0e | Ivory Buff, Orange Rufous | mid warm | 2.7
+103 | #c97838 #4d194a | Cinnamon Rufous, Dusky Madder Violet | dark warm | 4.0
+104 | #ad242f #f8f2c8 | Carmine Red, Sulpher Yellow | mid warm | 6.0
+105 | #e5bcbc #7b9c6f | Cameo Pink, Chromium Green | mid neutral | 1.8
+106 | #006e93 #170e41 | Antwarp Blue, Dull Violet Black | dark cool | 3.1
+107 | #ffe100 #8e885f | Apricot Yellow, Light Grayish Olive | light warm | 2.7
+108 | #ed7e92 #b03f16 | Eosine Pink, Brick Red | mid warm | 2.2
+109 | #fff3b2 #48583e | Pale Lemon Yellow, Blackish Olive | mid warm | 6.8
+110 | #86431f #513412 | Brown, Vandyke Brown | dark warm | 1.5
+111 | #fff3b2 #b6d564 | Pale Lemon Yellow, Yellow Green | light warm | 1.5
+112 | #ef805f #191110 | Grenadine Pink, Black | dark warm | 7.0
+113 | #fbdcc4 #513412 | Seashell Pink, Vandyke Brown | mid warm | 8.7
+114 | #f9b900 #006e93 | Orange Yellow, Antwarp Blue | mid mixed | 3.3
+115 | #fbeca3 #ea5521 | Naples Yellow, Peach Red | light warm | 3.0
+116 | #e5bcbc #614498 | Cameo Pink, Blue Violet | mid neutral | 4.4
+117 | #cd002d #191110 | Carmine, Black | dark warm | 3.2
+118 | #e5bc2a #513412 | Yellow Ocher, Vandyke Brown | mid warm | 6.2
+119 | #b0cfd7 #0a3552 | Light Glaucous Blue, Dark Tyrian Blue | mid cool | 7.8
+120 | #e5bcbc #b31831 | Cameo Pink, Pompeian Red | mid warm | 4.0
+121 | #86431f #dcab77 #5a5c2f | Brown, Ochraceous Salmon, Lincoln Green | mid warm | 3.6
+122 | #cd002d #fac55f #009087 | Carmine, Cream Yellow, Benzol Green | mid mixed | 3.6
+123 | #f09082 #f9ee28 #854659 | Coral Red, Lemon Yellow, Taupe Brown | mid warm | 5.7
+124 | #8a2422 #e5bc2a #aaa64d | Pale Burnt Lake, Yellow Ocher, Olive Yellow | mid warm | 4.9
+125 | #d6b8aa #008ea5 #373f68 | Fawn, Cerulian Blue, Violet Blue | mid cool | 5.4
+126 | #efdba5 #e5bc2a #033983 | Ivory Buff, Yellow Ocher, Deep Lyons Blue | mid mixed | 8.0
+127 | #fbcc7a #649278 #645b99 | Cinnamon Buff, Pistachio Green, Dark Soft Violet | mid warm | 4.0
+128 | #f6bdc1 #68c3be #a070a8 | Corinthian Pink, Venice Green, Light Mauve | mid neutral | 2.4
+129 | #ffe100 #c49007 #a2b2cd | Apricot Yellow, Khaki, Salvia Blue | light warm | 2.2
+130 | #c37608 #ad242f #443580 | Raw Sienna, Carmine Red, Violet | dark warm | 2.9
+131 | #c37608 #d86310 #008c97 | Raw Sienna, English Red, Peacock Blue | mid mixed | 1.1
+132 | #f8f2c8 #f2a84b #b4a414 | Sulpher Yellow, Golden Yellow, Citrine | light warm | 2.2
+133 | #8c1d19 #b4a414 #00ac95 | Vandyke Red, Citrine, Sea Green | mid mixed | 3.6
+134 | #ed7e92 #a070a8 #551c68 | Eosine Pink, Light Mauve, Red Violet | mid neutral | 4.6
+135 | #f8f2c8 #39793c #a2b2cd | Sulpher Yellow, Cossack Green, Salvia Blue | mid neutral | 4.7
+136 | #cf2438 #008e5c #551c68 | Scarlet, Dull Viridian Green, Red Violet | dark mixed | 2.9
+137 | #ca503d #fbcc7a #649278 | Etruscan Red, Cinnamon Buff, Pistachio Green | mid warm | 3.0
+138 | #f2a84b #f9ee28 #68c3be | Golden Yellow, Lemon Yellow, Venice Green | light mixed | 1.7
+139 | #a2b2cd #001231 #c0c7c6 | Salvia Blue, Deep Indigo, Neutral Gray | mid cool | 10.8
+140 | #f2a84b #006e93 #2c424a | Golden Yellow, Antwarp Blue, Slate Color | mid mixed | 5.3
+141 | #ed7100 #b6d564 #0a3552 | Orange, Yellow Green, Dark Tyrian Blue | mid warm | 7.7
+142 | #ab3a45 #c8a800 #a2b2cd | Hydrangea Red, Sulphine Yellow, Salvia Blue | mid warm | 2.9
+143 | #0065b3 #bf87b0 #acac9e | Blue, Lilac, Warm Gray | mid cool | 2.6
+144 | #b8366d #ed7100 #191110 | Rosolanc Purple, Orange, Black | dark warm | 6.2
+145 | #86431f #b7bc21 #170e41 | Brown, Citron Yellow, Dull Violet Black | dark warm | 8.7
+146 | #c49007 #6d6136 #02733f | Khaki, Deep Grayish Olive, Diamine Green | mid mixed | 2.2
+147 | #ec6e8d #8c1d19 #c0e1ce | Spinel Red, Vandyke Red, Turquoise Green | mid warm | 6.5
+148 | #dabb26 #f9b900 #008ea5 | Olive Ocher, Orange Yellow, Cerulian Blue | mid mixed | 2.2
+149 | #dabb26 #ed7100 #0b2f2c | Olive Ocher, Orange, Deep Slate Green | mid warm | 7.6
+150 | #fbdcc4 #b7bc21 #bed4c7 | Seashell Pink, Citron Yellow, Glaucous Green | light warm | 1.6
+151 | #f8f2c8 #f5a100 #00486c | Sulpher Yellow, Yellow Orange, Vandar Poel's Blue | mid mixed | 8.6
+152 | #ca503d #833121 #b0cfd7 | Etruscan Red, Hay's Russet, Light Glaucous Blue | mid warm | 5.3
+153 | #ed7e92 #f9b900 #b7bc21 | Eosine Pink, Orange Yellow, Citron Yellow | light warm | 1.5
+154 | #cd002d #fff100 #0065b3 | Carmine, Yellow, Blue | mid mixed | 5.1
+155 | #e74c0a #009087 #001231 | Jasper Red, Benzol Green, Deep Indigo | dark mixed | 4.8
+156 | #dabb26 #a0d2a8 #443580 | Olive Ocher, Cobalt Green, Violet | mid warm | 5.9
+157 | #870836 #dabb26 #5981b5 | Pansy Purple, Olive Ocher, Olympic Blue | mid mixed | 5.2
+158 | #f9ee28 #c97838 #88c122 | Lemon Yellow, Cinnamon Rufous, Night Green | light warm | 2.8
+159 | #c49007 #84ccd2 #c0b8db | Khaki, Calamine Blue, Grayish Lavender A | light mixed | 1.6
+160 | #c8a800 #7a5329 #527177 | Sulphine Yellow, Pale Raw Umber, Dark Medici Blue | mid warm | 2.9
+161 | #86431f #efbc7e #00558e | Brown, Pinkish Cinnamon, Helvetia Blue | mid mixed | 4.5
+162 | #d56a75 #9aa96e #bf87b0 | Old Rose, Rainette Green, Lilac | mid warm | 1.3
+163 | #ffe100 #c0e1ce #006e93 | Apricot Yellow, Turquoise Green, Antwarp Blue | light mixed | 4.4
+164 | #db3915 #f9b900 #443580 | Red Orange, Orange Yellow, Violet | mid warm | 5.8
+165 | #e5bcbc #ec6e8d #784244 | Cameo Pink, Spinel Red, Vistoris Lake | mid warm | 4.6
+166 | #ef805f #fbeca3 #0b2f2c | Grenadine Pink, Naples Yellow, Deep Slate Green | mid warm | 12.1
+167 | #ccb998 #b4dae9 #00486c | Ecru, Pale King's Blue, Vandar Poel's Blue | mid cool | 6.6
+168 | #f9ee28 #00486c #94495e | Lemon Yellow, Vandar Poel's Blue, Veronia Purple | mid mixed | 8.1
+169 | #f6bdc1 #fff3b2 #acac9e | Corinthian Pink, Pale Lemon Yellow, Warm Gray | light warm | 2.0
+170 | #b8366d #f9b900 #551c68 | Rosolanc Purple, Orange Yellow, Red Violet | mid warm | 6.8
+171 | #8a2422 #f5a100 #bed4c7 | Pale Burnt Lake, Yellow Orange, Glaucous Green | mid warm | 5.7
+172 | #c97838 #006e93 #551c68 | Cinnamon Rufous, Antwarp Blue, Red Violet | dark mixed | 3.6
+173 | #f9ee28 #802911 #c0e1ce | Lemon Yellow, Madder Brown, Turquoise Green | mid warm | 7.7
+174 | #f6bdc1 #c7b0b8 #854659 | Corinthian Pink, Grayish Lavender B, Taupe Brown | mid warm | 4.3
+175 | #efbc7e #ced19b #614498 | Pinkish Cinnamon, Olive Buff, Blue Violet | mid warm | 4.7
+176 | #f7c9d5 #fbdcc4 #84ccd2 | Hermosa Pink, Seashell Pink, Calamine Blue | light neutral | 1.4
+177 | #8a2422 #9e8e43 #c0b8db | Pale Burnt Lake, Buffy Citrine, Grayish Lavender A | mid warm | 4.7
+178 | #efdba5 #b0cfd7 #008f97 | Ivory Buff, Light Glaucous Blue, Green Blue | light cool | 2.9
+179 | #db3915 #f2a84b #033983 | Red Orange, Golden Yellow, Deep Lyons Blue | mid mixed | 5.5
+180 | #fbcc7a #a070a8 #c0c7c6 | Cinnamon Buff, Light Mauve, Neutral Gray | light warm | 2.6
+181 | #ad242f #443580 #520e45 | Carmine Red, Violet, Cotinga Purple | dark neutral | 2.0
+182 | #c37608 #513412 #001231 | Raw Sienna, Vandyke Brown, Deep Indigo | dark warm | 5.2
+183 | #72737c #94495e #551c68 | Deep Violet / Plumbeous, Veronia Purple, Red Violet | dark neutral | 2.5
+184 | #ec6e8d #efdba5 #8e885f | Spinel Red, Ivory Buff, Light Grayish Olive | mid warm | 2.6
+185 | #c1a19e #ca503d #fff3b2 | Light Brown Drab, Etruscan Red, Pale Lemon Yellow | mid warm | 4.0
+186 | #833121 #dcab77 #0065b3 | Hay's Russet, Ochraceous Salmon, Blue | mid mixed | 4.2
+187 | #00558e #c7b0b8 #a966a2 | Helvetia Blue, Grayish Lavender B, Aconite Violet | mid cool | 3.8
+188 | #9aa96e #a2b2cd #a0d2a8 | Rainette Green, Salvia Blue, Cobalt Green | light neutral | 1.5
+189 | #f9ee28 #253121 #68c3be | Lemon Yellow, Deep Slate Olive, Venice Green | mid mixed | 11.2
+190 | #efdba5 #d86310 #191110 | Ivory Buff, English Red, Black | mid warm | 13.6
+191 | #c1a19e #e5bc2a #0065b3 | Light Brown Drab, Yellow Ocher, Blue | mid mixed | 3.3
+192 | #fac55f #513412 #72737c | Cream Yellow, Vandyke Brown, Deep Violet / Plumbeous | mid warm | 7.1
+193 | #ef805f #fbeca3 #008e89 | Grenadine Pink, Naples Yellow, Light Porcelain Green | mid mixed | 3.4
+194 | #e74c0a #fbdcc4 #5981b5 | Jasper Red, Seashell Pink, Olympic Blue | mid mixed | 3.1
+195 | #ec6e8d #fff3b2 #c0c7c6 | Spinel Red, Pale Lemon Yellow, Neutral Gray | light warm | 2.6
+196 | #b7bc21 #b4dae9 #614498 | Citron Yellow, Pale King's Blue, Blue Violet | mid mixed | 5.1
+197 | #ed7e92 #645b99 #c0c7c6 | Eosine Pink, Dark Soft Violet, Neutral Gray | mid neutral | 3.5
+198 | #b65115 #ffe100 #3a9764 | Burnt Sienna, Apricot Yellow, Green | mid warm | 3.8
+199 | #b45447 #8b7546 #033983 | Ochre Red, Light Brownish Olive, Deep Lyons Blue | dark mixed | 2.5
+200 | #ad242f #ced19b #7b9c6f | Carmine Red, Olive Buff, Chromium Green | mid warm | 4.3
+201 | #ef805f #8a851f #a0d2a8 | Grenadine Pink, Olive, Cobalt Green | mid warm | 2.3
+202 | #c0e1ce #a0d2a8 #2c424a | Turquoise Green, Cobalt Green, Slate Color | mid neutral | 7.5
+203 | #fff3b2 #efae8d #5a5c2f | Pale Lemon Yellow, Vinaceous Cinnamon, Lincoln Green | mid warm | 6.2
+204 | #b8366d #c97838 #b0cfd7 | Rosolanc Purple, Cinnamon Rufous, Light Glaucous Blue | mid warm | 3.4
+205 | #8a2422 #efae8d #443580 | Pale Burnt Lake, Vinaceous Cinnamon, Violet | mid warm | 5.4
+206 | #f6bdc1 #f2a84b #c97838 | Corinthian Pink, Golden Yellow, Cinnamon Rufous | mid warm | 2.1
+207 | #ad6b4c #bed4c7 #191110 | Sudan Brown, Glaucous Green, Black | mid warm | 11.9
+208 | #f8f2c8 #008f97 #006e93 | Sulpher Yellow, Green Blue, Antwarp Blue | mid cool | 5.1
+209 | #efdba5 #f5a100 #a2b2cd | Ivory Buff, Yellow Orange, Salvia Blue | light warm | 1.6
+210 | #fbcc7a #f9ee28 #5a5c2f | Cinnamon Buff, Lemon Yellow, Lincoln Green | mid warm | 5.8
+211 | #f18f44 #aaa64d #001231 | Apricot Orange, Olive Yellow, Deep Indigo | mid warm | 7.7
+212 | #b31831 #a37821 #a2b2cd | Pompeian Red, Orange Citrine, Salvia Blue | mid warm | 3.2
+213 | #efae8d #ffe100 #b4dae9 | Vinaceous Cinnamon, Apricot Yellow, Pale King's Blue | light warm | 1.4
+214 | #efdba5 #ad6b4c #443580 | Ivory Buff, Sudan Brown, Violet | mid warm | 7.4
+215 | #fac55f #0065b3 #c1528e | Cream Yellow, Blue, Eupatorium Purple | mid mixed | 3.8
+216 | #e74c0a #3a9764 #191110 | Jasper Red, Green, Black | dark warm | 5.1
+217 | #8a2422 #dcab77 #02733f | Pale Burnt Lake, Ochraceous Salmon, Diamine Green | mid mixed | 4.3
+218 | #00558e #c0b8db #72737c | Helvetia Blue, Grayish Lavender A, Deep Violet / Plumbeous | mid cool | 4.1
+219 | #e74c0a #7b9c6f #005247 | Jasper Red, Chromium Green, Dusky Green | mid warm | 3.0
+220 | #bc0b50 #dcab77 #a966a2 | Pomegranite Purple, Ochraceous Salmon, Aconite Violet | mid warm | 3.1
+221 | #ad242f #c0c7c6 #191110 | Carmine Red, Neutral Gray, Black | dark warm | 10.8
+222 | #e5bc2a #f5a100 #c86c0e | Yellow Ocher, Yellow Orange, Orange Rufous | mid warm | 2.1
+223 | #c1a19e #dcab77 #c0e1ce | Light Brown Drab, Ochraceous Salmon, Turquoise Green | light warm | 1.7
+224 | #ec6e8d #527177 #854659 | Spinel Red, Dark Medici Blue, Taupe Brown | mid warm | 2.4
+225 | #cd002d #005247 #703d51 | Carmine, Dusky Green, Dark Slate Purple | dark warm | 1.6
+226 | #784244 #fac55f #443580 | Vistoris Lake, Cream Yellow, Violet | mid warm | 6.4
+227 | #f7c9d5 #b0cfd7 #008ea5 | Hermosa Pink, Light Glaucous Blue, Cerulian Blue | light cool | 2.6
+228 | #ad242f #fff3b2 #c0c7c6 | Carmine Red, Pale Lemon Yellow, Neutral Gray | mid warm | 6.1
+229 | #f2a84b #253121 #c0c7c6 | Golden Yellow, Deep Slate Olive, Neutral Gray | mid warm | 7.9
+230 | #ef805f #c0e1ce #a0d2a8 | Grenadine Pink, Turquoise Green, Cobalt Green | light warm | 1.9
+231 | #e5bcbc #833121 #5981b5 | Cameo Pink, Hay's Russet, Olympic Blue | mid mixed | 5.0
+232 | #cd002d #efbc7e #001231 | Carmine, Pinkish Cinnamon, Deep Indigo | dark warm | 10.8
+233 | #ad242f #9e8e43 #373f68 | Carmine Red, Buffy Citrine, Violet Blue | dark warm | 3.1
+234 | #fbcc7a #7a5329 #b4dae9 | Cinnamon Buff, Pale Raw Umber, Pale King's Blue | mid warm | 4.6
+235 | #efdba5 #f5a100 #c7b0b8 | Ivory Buff, Yellow Orange, Grayish Lavender B | light warm | 1.5
+236 | #c49007 #033983 #8e585a | Khaki, Deep Lyons Blue, Purple Drab | dark mixed | 3.8
+237 | #ad242f #802911 #a2b2cd | Carmine Red, Madder Brown, Salvia Blue | mid warm | 4.4
+238 | #dcab77 #520e45 #acac9e | Ochraceous Salmon, Cotinga Purple, Warm Gray | mid warm | 6.7
+239 | #c1a19e #cfb948 #bed4c7 | Light Brown Drab, Pyrite Yellow, Glaucous Green | light warm | 1.5
+240 | #f1947c #fff100 #008ea5 | Fresh Color, Yellow, Cerulian Blue | light mixed | 3.3
+241 | #db3915 #fff3b2 #d0b16c #527177 | Red Orange, Pale Lemon Yellow, Isabella Color, Dark Medici Blue | mid warm | 4.7
+242 | #ed7e92 #b65115 #02733f #191110 | Eosine Pink, Burnt Sienna, Diamine Green, Black | dark mixed | 7.1
+243 | #c37608 #efdba5 #71773a #2c424a | Raw Sienna, Ivory Buff, Olive Green, Slate Color | mid warm | 7.7
+244 | #c1a19e #cb6012 #6f8278 #006e93 | Light Brown Drab, Vinaceous Tawny, Andover Green, Antwarp Blue | mid mixed | 2.4
+245 | #ad242f #849725 #0a3552 #2c424a | Carmine Red, Oil Green, Dark Tyrian Blue, Slate Color | dark warm | 3.9
+246 | #f6bdc1 #b03f16 #f8f2c8 #fbcc7a | Corinthian Pink, Brick Red, Sulpher Yellow, Cinnamon Buff | light warm | 5.2
+247 | #c37608 #ffe100 #009087 #033983 | Raw Sienna, Apricot Yellow, Benzol Green, Deep Lyons Blue | mid mixed | 8.4
+248 | #ed7e92 #c49007 #c0b8db #703d51 | Eosine Pink, Khaki, Grayish Lavender A, Dark Slate Purple | mid warm | 4.5
+249 | #833121 #ccb998 #dabb26 #527177 | Hay's Russet, Ecru, Olive Ocher, Dark Medici Blue | mid warm | 4.6
+250 | #cfb948 #ea5521 #00ac95 #c8e7e9 | Pyrite Yellow, Peach Red, Sea Green, Nile Blue | mid mixed | 2.8
+251 | #ad153b #fff100 #02733f #2c424a | Red, Yellow, Diamine Green, Slate Color | mid mixed | 9.0
+252 | #db4f58 #c37608 #c8a800 #008f97 | Eugenia Red B, Raw Sienna, Sulphine Yellow, Green Blue | mid mixed | 1.7
+253 | #f9ee28 #f18f44 #520e45 #2c424a | Lemon Yellow, Apricot Orange, Cotinga Purple, Slate Color | mid warm | 11.5
+254 | #f6bdc1 #f8f2c8 #8a851f #cf97ab | Corinthian Pink, Sulpher Yellow, Olive, Laelia Pink | light warm | 3.4
+255 | #c37608 #cfb948 #84ccd2 #191110 | Raw Sienna, Pyrite Yellow, Calamine Blue, Black | mid warm | 10.2
+256 | #efae8d #ed7100 #008e5c #191110 | Vinaceous Cinnamon, Orange, Dull Viridian Green, Black | mid mixed | 9.8
+257 | #df0716 #f9b900 #0065b3 #a966a2 | Spectrum Red, Orange Yellow, Blue, Aconite Violet | mid mixed | 3.4
+258 | #8a2422 #efbc7e #8a851f #006e93 | Pale Burnt Lake, Pinkish Cinnamon, Olive, Antwarp Blue | mid mixed | 5.2
+259 | #f9ee28 #008f97 #00558e #acac9e | Lemon Yellow, Green Blue, Helvetia Blue, Warm Gray | mid mixed | 6.4
+260 | #d56a75 #efae8d #bed4c7 #00ac95 | Old Rose, Vinaceous Cinnamon, Glaucous Green, Sea Green | mid mixed | 2.2
+261 | #ad153b #fff3b2 #84ccd2 #acac9e | Red, Pale Lemon Yellow, Calamine Blue, Warm Gray | mid warm | 6.3
+262 | #db4f58 #efdba5 #b4a414 #39793c | Eugenia Red B, Ivory Buff, Citrine, Cossack Green | mid warm | 3.9
+263 | #b65115 #efbc7e #c0e1ce #2c424a | Burnt Sienna, Pinkish Cinnamon, Turquoise Green, Slate Color | mid warm | 7.5
+264 | #f6bdc1 #db3915 #bfc9ac #008ea5 | Corinthian Pink, Red Orange, Dark Greenish Glaucous, Cerulian Blue | mid mixed | 2.8
+265 | #d56a75 #ffe100 #aaa64d #170e41 | Old Rose, Apricot Yellow, Olive Yellow, Dull Violet Black | mid warm | 13.6
+266 | #df0716 #efdba5 #9aa96e #009087 | Spectrum Red, Ivory Buff, Rainette Green, Benzol Green | mid mixed | 3.7
+267 | #fac55f #f5a100 #009087 #0065b3 | Cream Yellow, Yellow Orange, Benzol Green, Blue | mid mixed | 3.8
+268 | #c1a19e #c37608 #253121 #c8e7e9 | Light Brown Drab, Raw Sienna, Deep Slate Olive, Nile Blue | mid warm | 10.4
+269 | #c37608 #8a2422 #a966a2 #191110 | Raw Sienna, Pale Burnt Lake, Aconite Violet, Black | dark warm | 5.2
+270 | #db4f58 #f8f2c8 #71773a #39793c | Eugenia Red B, Sulpher Yellow, Olive Green, Cossack Green | mid warm | 4.7
+271 | #bc0b50 #a0d2a8 #008f97 #0b2f2c | Pomegranite Purple, Cobalt Green, Green Blue, Deep Slate Green | mid mixed | 8.4
+272 | #fff3b2 #ed7100 #c0e1ce #a2b2cd | Pale Lemon Yellow, Orange, Turquoise Green, Salvia Blue | light warm | 2.7
+273 | #f7c9d5 #870836 #ad6b4c #c0c7c6 | Hermosa Pink, Pansy Purple, Sudan Brown, Neutral Gray | mid warm | 6.7
+274 | #ea5521 #978c56 #5981b5 #a070a8 | Peach Red, Dark Citrine, Olympic Blue, Light Mauve | mid mixed | 1.2
+275 | #ca503d #ccb998 #802911 #854659 | Etruscan Red, Ecru, Madder Brown, Taupe Brown | mid warm | 4.9
+276 | #ed7e92 #fbdcc4 #b6d564 #191110 | Eosine Pink, Seashell Pink, Yellow Green, Black | mid warm | 14.3
+277 | #ec6e8d #b8366d #8a851f #170e41 | Spinel Red, Rosolanc Purple, Olive, Dull Violet Black | dark warm | 6.1
+278 | #fac55f #dabb26 #39793c #005247 | Cream Yellow, Olive Ocher, Cossack Green, Dusky Green | mid warm | 5.8
+279 | #c37608 #efae8d #ccb998 #0a3552 | Raw Sienna, Vinaceous Cinnamon, Ecru, Dark Tyrian Blue | mid warm | 6.8
+280 | #db4f58 #5a5c2f #cf97ab #854659 | Eugenia Red B, Lincoln Green, Laelia Pink, Taupe Brown | mid warm | 2.9
+281 | #fff3b2 #009087 #a0d2a8 #006e93 | Pale Lemon Yellow, Benzol Green, Cobalt Green, Antwarp Blue | mid cool | 5.1
+282 | #db4f58 #d0ac6b #a0d2a8 #bf87b0 | Eugenia Red B, Maple, Cobalt Green, Lilac | mid warm | 2.3
+283 | #b45447 #8a2422 #7b9c6f #68c3be | Ochre Red, Pale Burnt Lake, Chromium Green, Venice Green | mid mixed | 4.3
+284 | #e05d53 #ffe100 #00ac95 #005247 | Eugenia Red A, Apricot Yellow, Sea Green, Dusky Green | mid mixed | 7.0
+285 | #c1a19e #b65115 #ea5521 #c0e1ce | Light Brown Drab, Burnt Sienna, Peach Red, Turquoise Green | mid warm | 3.6
+286 | #b65115 #f9b900 #008c97 #373f68 | Burnt Sienna, Orange Yellow, Peacock Blue, Violet Blue | mid mixed | 5.8
+287 | #ed7e92 #cfb948 #b4dae9 #84ccd2 | Eosine Pink, Pyrite Yellow, Pale King's Blue, Calamine Blue | light mixed | 1.8
+288 | #f5a100 #6d4f14 #854659 #191110 | Yellow Orange, Sepia, Taupe Brown, Black | dark warm | 8.8
+289 | #f9ee28 #ccd53c #373f68 #170e41 | Lemon Yellow, Light Green Yellow, Violet Blue, Dull Violet Black | mid mixed | 14.7
+290 | #784244 #fff3b2 #5a5c2f #a0d2a8 | Vistoris Lake, Pale Lemon Yellow, Lincoln Green, Cobalt Green | mid warm | 7.0
+291 | #ccd53c #00ac95 #a0d2a8 #84ccd2 | Light Green Yellow, Sea Green, Cobalt Green, Calamine Blue | light mixed | 1.8
+292 | #fff3b2 #efbc7e #d0b16c #ccb998 | Pale Lemon Yellow, Pinkish Cinnamon, Isabella Color, Ecru | light warm | 1.8
+293 | #c37608 #c0e1ce #759894 #3a9764 | Raw Sienna, Turquoise Green, Artemesia Green, Green | mid warm | 2.6
+294 | #f8f2c8 #fac55f #39793c #a2b2cd | Sulpher Yellow, Cream Yellow, Cossack Green, Salvia Blue | light warm | 4.7
+295 | #fac55f #fff100 #0065b3 #170e41 | Cream Yellow, Yellow, Blue, Dull Violet Black | mid mixed | 15.2
+296 | #f8f2c8 #dcab77 #7a5329 #2c424a | Sulpher Yellow, Ochraceous Salmon, Pale Raw Umber, Slate Color | mid warm | 9.3
+297 | #b65115 #f5a100 #71773a #373f68 | Burnt Sienna, Yellow Orange, Olive Green, Violet Blue | mid warm | 4.8
+298 | #c37608 #f9ee28 #ea5521 #191110 | Raw Sienna, Lemon Yellow, Peach Red, Black | mid warm | 15.3
+299 | #c93465 #efae8d #849725 #006e93 | Indian Lake, Vinaceous Cinnamon, Oil Green, Antwarp Blue | mid mixed | 3.0
+300 | #ef805f #fac55f #c0e1ce #84ccd2 | Grenadine Pink, Cream Yellow, Turquoise Green, Calamine Blue | light warm | 1.9
+301 | #df0716 #efdba5 #9aa96e #a966a2 | Spectrum Red, Ivory Buff, Rainette Green, Aconite Violet | mid warm | 3.7
+302 | #fac55f #ccb998 #c8e7e9 #006e93 | Cream Yellow, Ecru, Nile Blue, Antwarp Blue | light mixed | 4.4
+303 | #fbeca3 #ea5521 #253121 #c0c7c6 | Naples Yellow, Peach Red, Deep Slate Olive, Neutral Gray | mid warm | 11.4
+304 | #833121 #fac55f #978c56 #009087 | Hay's Russet, Cream Yellow, Dark Citrine, Benzol Green | mid mixed | 5.4
+305 | #efbc7e #ffe100 #b7bc21 #c0e1ce | Pinkish Cinnamon, Apricot Yellow, Citron Yellow, Turquoise Green | light warm | 1.6
+306 | #f9ee28 #009087 #008e5c #c8e7e9 | Lemon Yellow, Benzol Green, Dull Viridian Green, Nile Blue | mid mixed | 3.4
+307 | #cd002d #c0b8db #a966a2 #520e45 | Carmine, Grayish Lavender A, Aconite Violet, Cotinga Purple | mid warm | 7.4
+308 | #d6b8aa #cf2438 #d86310 #a0d2a8 | Fawn, Scarlet, English Red, Cobalt Green | mid warm | 3.1
+309 | #f2a84b #f18f44 #373f68 #00486c | Golden Yellow, Apricot Orange, Violet Blue, Vandar Poel's Blue | mid mixed | 5.1
+310 | #f8f2c8 #efbc7e #8a851f #253121 | Sulpher Yellow, Pinkish Cinnamon, Olive, Deep Slate Olive | mid warm | 12.0
+311 | #b31831 #fac55f #bfc9ac #ccd53c | Pompeian Red, Cream Yellow, Dark Greenish Glaucous, Light Green Yellow | mid warm | 4.3
+312 | #b65115 #f5a100 #759894 #00558e | Burnt Sienna, Yellow Orange, Artemesia Green, Helvetia Blue | mid mixed | 3.7
+313 | #cd002d #fff100 #02733f #191110 | Carmine, Yellow, Diamine Green, Black | mid mixed | 15.8
+314 | #ed7e92 #833121 #033983 #4d194a | Eosine Pink, Hay's Russet, Deep Lyons Blue, Dusky Madder Violet | dark mixed | 5.1
+315 | #ef805f #f8f2c8 #f2a84b #c1528e | Grenadine Pink, Sulpher Yellow, Golden Yellow, Eupatorium Purple | mid warm | 3.8
+316 | #8c1d19 #008e5c #443580 #551c68 | Vandyke Red, Dull Viridian Green, Violet, Red Violet | dark mixed | 2.9
+317 | #face9d #ccb998 #f9ee28 #c0e1ce | Light Pinkish Cinnamon, Ecru, Lemon Yellow, Turquoise Green | light warm | 1.6
+318 | #8b7546 #48583e #005247 #0b2f2c | Light Brownish Olive, Blackish Olive, Dusky Green, Deep Slate Green | dark neutral | 3.2
+319 | #c37608 #ffe100 #f5a100 #39793c | Raw Sienna, Apricot Yellow, Yellow Orange, Cossack Green | mid warm | 4.0
+320 | #f09082 #f8f2c8 #849725 #b0cfd7 | Coral Red, Sulpher Yellow, Oil Green, Light Glaucous Blue | light warm | 2.9
+321 | #c1a19e #f8f2c8 #253121 #a2b2cd | Light Brown Drab, Sulpher Yellow, Deep Slate Olive, Salvia Blue | mid neutral | 12.0
+322 | #df0716 #b03f16 #c1528e #614498 | Spectrum Red, Brick Red, Eupatorium Purple, Blue Violet | dark warm | 1.7
+323 | #fbcc7a #b7bc21 #802911 #191110 | Cinnamon Buff, Citron Yellow, Madder Brown, Black | mid warm | 12.4
+324 | #b31831 #5981b5 #a966a2 #c0c7c6 | Pompeian Red, Olympic Blue, Aconite Violet, Neutral Gray | mid mixed | 4.0
+325 | #db4f58 #fbeca3 #e5bc2a #0b2f2c | Eugenia Red B, Naples Yellow, Yellow Ocher, Deep Slate Green | mid warm | 12.1
+326 | #f8f2c8 #ea5521 #b6d564 #88c122 | Sulpher Yellow, Peach Red, Yellow Green, Night Green | light warm | 3.2
+327 | #ed7e92 #c37608 #ccb998 #c7b0b8 | Eosine Pink, Raw Sienna, Ecru, Grayish Lavender B | mid warm | 1.9
+328 | #b03f16 #f18f44 #513412 #008e89 | Brick Red, Apricot Orange, Vandyke Brown, Light Porcelain Green | mid mixed | 4.7
+329 | #fac55f #c7b0b8 #520e45 #2c424a | Cream Yellow, Grayish Lavender B, Cotinga Purple, Slate Color | mid warm | 8.8
+330 | #ced19b #c8e7e9 #a2b2cd #008f97 | Olive Buff, Nile Blue, Salvia Blue, Green Blue | light cool | 3.0
+331 | #c93465 #170e41 #a070a8 #443580 | Indian Lake, Dull Violet Black, Light Mauve, Violet | dark mixed | 4.6
+332 | #f09082 #cf2438 #253121 #005247 | Coral Red, Scarlet, Deep Slate Olive, Dusky Green | dark warm | 5.9
+333 | #b65115 #f9ee28 #a0d2a8 #0065b3 | Burnt Sienna, Lemon Yellow, Cobalt Green, Blue | mid mixed | 4.9
+334 | #fbdcc4 #8a851f #b6d564 #006e93 | Seashell Pink, Olive, Yellow Green, Antwarp Blue | mid mixed | 4.4
+335 | #8c1d19 #f5a100 #443580 #2c424a | Vandyke Red, Yellow Orange, Violet, Slate Color | dark warm | 5.0
+336 | #ed7e92 #833121 #fff3b2 #48583e | Eosine Pink, Hay's Russet, Pale Lemon Yellow, Blackish Olive | mid warm | 7.7
+337 | #784244 #cf97ab #703645 #191110 | Vistoris Lake, Laelia Pink, Violet Carmine, Black | dark warm | 7.7
+338 | #ad242f #f9b900 #005247 #c7b0b8 | Carmine Red, Orange Yellow, Dusky Green, Grayish Lavender B | mid warm | 5.2
+339 | #dcab77 #d86310 #b0cfd7 #373f68 | Ochraceous Salmon, English Red, Light Glaucous Blue, Violet Blue | mid warm | 6.2
+340 | #ea5521 #00ac95 #c0c7c6 #191110 | Peach Red, Sea Green, Neutral Gray, Black | mid mixed | 10.8
+341 | #ef805f #39793c #253121 #b0cfd7 | Grenadine Pink, Cossack Green, Deep Slate Olive, Light Glaucous Blue | mid warm | 8.3
+342 | #f6bdc1 #fac55f #a37821 #253121 | Corinthian Pink, Cream Yellow, Orange Citrine, Deep Slate Olive | mid warm | 8.6
+343 | #b65115 #efdba5 #6d6136 #00486c | Burnt Sienna, Ivory Buff, Deep Grayish Olive, Vandar Poel's Blue | mid mixed | 7.2
+344 | #fbcc7a #033983 #a966a2 #191110 | Cinnamon Buff, Deep Lyons Blue, Aconite Violet, Black | dark mixed | 12.4
+345 | #833121 #c8e7e9 #68c3be #614498 | Hay's Russet, Nile Blue, Venice Green, Blue Violet | mid mixed | 6.6
+346 | #b8366d #c0e1ce #ccd53c #6f8278 | Rosolanc Purple, Turquoise Green, Light Green Yellow, Andover Green | mid warm | 3.9
+347 | #aaa64d #00ac95 #00558e #bf87b0 | Olive Yellow, Sea Green, Helvetia Blue, Lilac | mid mixed | 3.1
+348 | #ced19b #39793c #253121 #520e45 | Olive Buff, Cossack Green, Deep Slate Olive, Cotinga Purple | dark neutral | 8.8
