@@ -263,10 +263,18 @@ const PIXEL_SCRIPT = `async ({ png, color, threshold, near }) => {
   return { ok: worst >= threshold, worst: Number(worst.toFixed(2)), bg: worstColor && [worstColor.r, worstColor.g, worstColor.b].map(Math.round) };
 }`;
 
+// Hold the page still for a screenshot. Playwright's animations: 'disabled' finishes finite animations, which fires
+// animationend, and a demo that advances a tab on animationend then shows the next tab in the shot. Pause instead,
+// and cancel infinite ones to their resting state as Playwright does. No end events fire.
+const FREEZE = `document.getAnimations().forEach((a) => {
+  try { const t = a.effect && a.effect.getComputedTiming ? a.effect.getComputedTiming() : null; if (t && t.iterations === Infinity) a.cancel(); else a.pause(); } catch {}
+})`;
+
 /* ---------- one demo ---------- */
 async function contrastAt(page, label) {
   const fails = [];
-  await page.addScriptTag({ content: axeSource });
+  // axe schedules its checks with setTimeout. The page's timers are fake and paused, so hand axe the real ones.
+  await page.addScriptTag({ content: `(function (setTimeout, clearTimeout) {\n${axeSource}\n}).call(window, window.__gateTimers.setTimeout, window.__gateTimers.clearTimeout);` });
   const res = await page.evaluate(async () => await window.axe.run(document, { runOnly: { type: 'rule', values: ['color-contrast'] }, resultTypes: ['violations', 'incomplete'] }));
   for (const v of res.violations) for (const node of v.nodes.slice(0, 4)) {
     const data = node.any?.[0]?.data || {};
@@ -284,7 +292,8 @@ async function contrastAt(page, label) {
         const clip = { x, y, width: Math.min(box.width - (x - box.x), vw - x), height: Math.min(box.height - (y - box.y), vh - y) };
         if (clip.width < 2 || clip.height < 2) continue;
         let png;
-        try { png = (await page.screenshot({ clip, animations: 'disabled' })).toString('base64'); } catch { continue; }
+        await page.evaluate(FREEZE);
+        try { png = (await page.screenshot({ clip })).toString('base64'); } catch { continue; }
         const r = await page.evaluate(`(${PIXEL_SCRIPT})(${JSON.stringify({ png, color: it.color, threshold: it.threshold, near: it.near })})`);
         if (r.worst !== null && (!worst || r.worst < worst.worst)) worst = r;
       }
@@ -298,18 +307,39 @@ async function contrastAt(page, label) {
 // ratchet flaps. Every page gets a seeded generator in place of Math.random before any script runs.
 const SEED_SCRIPT = `(() => { let s = 0x9e3779b9; Math.random = () => { s |= 0; s = s + 0x6D2B79F5 | 0; let t = Math.imul(s ^ s >>> 15, 1 | s); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; })()`;
 
-// Wait until the page is still: every finite animation and transition has finished (infinite ones are left
-// running), then two frames. A fixed delay alone depends on machine load, and a fade caught half-way made
-// results differ between a loaded run and a quiet one.
-const SETTLE = `(async () => {
-  const finite = () => document.getAnimations().filter((a) => { const t = a.effect && a.effect.getComputedTiming ? a.effect.getComputedTiming() : null; return !t || t.iterations !== Infinity; });
-  for (let i = 0; i < 3; i++) {
-    const pending = finite().filter((a) => a.playState === 'running' || a.playState === 'pending');
-    if (!pending.length) break;
-    await Promise.race([Promise.all(pending.map((a) => a.finished.catch(() => {}))), new Promise((r) => setTimeout(r, 4000))]);
-  }
-  await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
-})()`;
+// Every page runs on a paused fake clock (Date, setTimeout, setInterval, requestAnimationFrame) that starts at the
+// same instant. The gate advances it by exactly STEP_MS, so a readout moved by requestAnimationFrame or a menu opened
+// by setTimeout is measured in the same state on a loaded runner and a quiet one. Real time only moves CSS.
+const CLOCK_START = new Date('2026-03-14T10:00:00Z');
+// Runs before the fake clock is installed, so the gate's own in-page work (axe) keeps real timers.
+const REAL_TIMERS = `window.__gateTimers = { setTimeout: setTimeout.bind(window), clearTimeout: clearTimeout.bind(window), raf: requestAnimationFrame.bind(window) };`;
+// Two real frames: scroll, resize, and observer callbacks queued by the last step run before the next one.
+const FRAME = `new Promise((r) => window.__gateTimers.raf(() => window.__gateTimers.raf(r)))`;
+const STEP_MS = 1500;
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+// Finite CSS animations and transitions still running. Infinite ones are left running.
+const PENDING = `document.getAnimations().filter((a) => {
+  const t = a.effect && a.effect.getComputedTiming ? a.effect.getComputedTiming() : null;
+  return (!t || t.iterations !== Infinity) && (a.playState === 'running' || a.playState === 'pending');
+}).length`;
+
+const FONTS = `(() => { document.body && document.body.getBoundingClientRect(); return document.fonts.ready.then(() => document.fonts.status); })()`;
+
+async function openStill(page, url) {
+  await page.clock.install({ time: CLOCK_START });
+  await page.clock.pauseAt(CLOCK_START);
+  await page.goto(url, { waitUntil: 'load', timeout: 45000 });
+  // Web fonts load with display=swap. Measure in the real face, not the fallback that was showing a moment earlier.
+  // Laying the page out first makes it request the faces it uses; fonts.ready before that resolves at once.
+  await Promise.race([page.evaluate(FONTS), sleep(8000)]);
+  // In 100ms steps with real frames between them, so a scroll event a timer caused is handled before the next timer
+  // fires, as it would be in a browser left alone. One 1500ms jump fired every timer before any event ran.
+  for (let t = 0; t < STEP_MS; t += 100) { await page.clock.runFor(100); await page.evaluate(FRAME); }
+  // The page's own timers are fake now, so wait for CSS from here, in real time, up to 4s.
+  for (let waited = 0; waited < 4000 && (await page.evaluate(PENDING)) > 0; waited += 100) await sleep(100);
+  await Promise.race([page.evaluate(FONTS), sleep(8000)]);
+}
 
 async function gateOne(browser, id) {
   const url = `${base}/demo/${id}.html`;
@@ -317,18 +347,14 @@ async function gateOne(browser, id) {
   const phone = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, deviceScaleFactor: 2, reducedMotion: 'reduce' });
   const desktop = await browser.newContext({ viewport: { width: 1280, height: 800 }, reducedMotion: 'reduce' });
   try {
-    await phone.addInitScript(SEED_SCRIPT); await desktop.addInitScript(SEED_SCRIPT);
+    for (const ctx of [phone, desktop]) { await ctx.addInitScript(REAL_TIMERS); await ctx.addInitScript(SEED_SCRIPT); }
     const p = await phone.newPage();
-    await p.goto(url, { waitUntil: 'load', timeout: 45000 });
-    await p.waitForTimeout(1500);
-    await p.evaluate(SETTLE);
+    await openStill(p, url);
     result.phone390 = await p.evaluate(PHONE_SCRIPT);
     result.contrast.push(...await contrastAt(p, '390'));
     result.uiLines.push(...(await p.evaluate(UI_SCRIPT)).map((s) => '390: ' + s));
     const d = await desktop.newPage();
-    await d.goto(url, { waitUntil: 'load', timeout: 45000 });
-    await d.waitForTimeout(1500);
-    await d.evaluate(SETTLE);
+    await openStill(d, url);
     result.contrast.push(...await contrastAt(d, '1280'));
     result.uiLines.push(...(await d.evaluate(UI_SCRIPT)).map((s) => '1280: ' + s));
   } catch (e) {
@@ -354,8 +380,36 @@ async function worker() {
 }
 await Promise.all(Array.from({ length: Math.min(concurrency, ids.length) }, worker));
 await browser.close();
-server.close();
 results.sort((a, b) => a.id.localeCompare(b.id));
+
+/* ---------- retry ---------- */
+// A demo whose result differs from the committed ratchet is gated twice more. A check that gives the same answer
+// three times is believed. One that changes between runs is unstable: it keeps its committed state, so it can neither
+// fail the gate nor enter or leave the ratchet, and it is reported so the demo can be made still.
+const committed = fs.existsSync(RATCHET) ? JSON.parse(fs.readFileSync(RATCHET, 'utf8')) : {};
+const listedIn = (k, id) => (committed[k] || []).includes(id);
+const fails = (r, k) => Boolean(r[k].length || r.error);
+const unstable = [];
+const suspects = results.filter((r) => CHECKS.some((k) => fails(r, k) !== listedIn(k, r.id)));
+if (suspects.length) {
+  const again = await chromium.launch();
+  for (const r of suspects) {
+    const runs = [r, await gateOne(again, r.id), await gateOne(again, r.id)];
+    // A page that errored once but loaded on a retry is judged by the retry, not counted as failing everything.
+    const clean = r.error && runs.find((x) => !x.error);
+    if (clean) { for (const k of CHECKS) r[k] = clean[k]; delete r.error; runs[0] = { ...r }; }
+    for (const k of CHECKS) {
+      const seen = new Set(runs.map((x) => fails(x, k)));
+      if (seen.size === 1) continue;
+      unstable.push(`${k}: ${r.id}`);
+      r[k] = listedIn(k, r.id) ? [`unstable: ${runs.find((x) => fails(x, k))[k][0] || 'error'}`] : [];
+    }
+  }
+  await again.close();
+  console.log(`re-gated ${suspects.length} demo${suspects.length === 1 ? '' : 's'} that differed from the ratchet`);
+}
+server.close();
+if (unstable.length) console.log('Unstable, kept as committed (not a failure):\n' + unstable.map((u) => '  ~ ' + u).join('\n'));
 
 /* ---------- ratchet ---------- */
 const failing = Object.fromEntries(CHECKS.map((k) => [k, results.filter((r) => r[k].length || r.error).map((r) => r.id)]));

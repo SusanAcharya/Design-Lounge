@@ -65,7 +65,7 @@ footer{--p:1;position:relative;overflow:hidden;padding:36px var(--pad) 0}
 .word .end{color:var(--accent)}
 @media (max-width:1023px){.top{grid-template-columns:1fr;gap:24px}.clock{justify-self:start;text-align:left}.clock .z{justify-content:flex-start}.cols{grid-template-columns:1fr 1fr}.note{grid-column:1/-1}.mail,.clock .t{font-size:36px}}
 @media (max-width:639px){.legal{flex-wrap:wrap}.tail h2{font-size:40px}.next{grid-template-columns:1fr;height:auto;padding:20px 0}.next b{font-size:28px}}
-@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important;animation:none!important}.word span{transform:none}}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important;animation:none!important}.word{transition:none!important}.word span{transform:none}}
 </style>
 </head>
 <body>
@@ -111,7 +111,7 @@ footer{--p:1;position:relative;overflow:hidden;padding:36px var(--pad) 0}
     const avail=foot.clientWidth-80;
     word.style.setProperty('--word',(200*avail/Math.max(1,word.scrollWidth)).toFixed(1)+'px');
   }
-  fit();if(document.fonts)document.fonts.ready.then(()=>{fit();toBottom(false);update();});
+  fit();if(document.fonts){document.fonts.ready.then(()=>{fit();toBottom(false);update();});document.fonts.addEventListener('loadingdone',()=>{fit();update();});}
   function update(){
     const r=foot.getBoundingClientRect(),vh=innerHeight;
     const p=Math.max(0,Math.min(1,(vh-r.top)/Math.max(1,Math.min(r.height,vh))));

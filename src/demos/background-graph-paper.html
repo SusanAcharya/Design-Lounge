@@ -53,7 +53,7 @@ a,button{font:inherit;color:inherit}
 .ch{position:fixed;left:0;top:0;z-index:1;pointer-events:none;background:var(--accent);opacity:.9}
 .ch.h{width:100%;height:1px}.ch.v{height:100%;width:1px}
 .readout{position:fixed;left:0;top:0;z-index:3;pointer-events:none;display:flex;gap:10px;padding:5px 8px;background:var(--ink);color:var(--paper);font:500 11px/1 var(--mono);letter-spacing:.02em;white-space:nowrap;font-variant-numeric:tabular-nums}
-.readout b{font-weight:600;color:var(--accent)}
+.readout b{font-weight:600;color:#e8735c}
 [data-cross="off"] .ch,[data-cross="off"] .readout,[data-cross="off"] .ruler i{visibility:hidden}
 .page{position:relative;z-index:2;pointer-events:none}
 .page a,.page button{pointer-events:auto}
@@ -163,7 +163,8 @@ h1 span{color:var(--accent)}
   const O=24,MM=8,root=document.documentElement;
   const $=id=>document.getElementById(id);
   const chh=$('chh'),chv=$('chv'),ro=$('ro'),rx=$('rx'),ry=$('ry'),mt=$('mt'),ml=$('ml'),live=$('live');
-  let x=O+135*MM,y=O+55*MM,snap=true,raf=0;
+  // Start at 135 x 55 mm, or nearer the corner when the sheet is narrower, so the readout opens on screen.
+  let x=O+Math.min(135,Math.floor((innerWidth-O-150)/MM))*MM,y=O+Math.min(55,Math.floor((innerHeight-O-60)/MM))*MM,snap=true,raf=0;
   function labels(){
     const rt=$('rt'),rl=$('rl');
     rt.querySelectorAll('span').forEach(s=>s.remove());rl.querySelectorAll('span').forEach(s=>s.remove());
