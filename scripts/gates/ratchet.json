@@ -1,7 +1,7 @@
 {
   "ceiling": {
-    "phone390": 275,
-    "contrast": 322,
+    "phone390": 274,
+    "contrast": 321,
     "uiLines": 180
   },
   "phone390": [
@@ -95,7 +95,6 @@
     "focus-dim",
     "folder-reveal",
     "footer-enterprise-sitemap",
-    "footer-giant-wordmark-reveal",
     "footer-newsletter-split",
     "funnel-chart",
     "gallery-contact-sheet",
@@ -294,7 +293,6 @@
     "avatar-stack-presence",
     "background-aurora-mesh",
     "background-diagonal-boxes",
-    "background-graph-paper",
     "background-ink-wash",
     "background-paper-grain",
     "background-sunrise-horizon",
