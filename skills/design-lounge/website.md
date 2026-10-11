@@ -42,7 +42,7 @@ Write `Hero shape:` on the sheet. Every agent reaches for the first one. Pick th
 - `type`: the answer at poster size across the frame, and the object full width under it.
 - `band`: one `--primary` band holds the answer and the action, and the object opens the next section.
 
-When the direction's hero piece has a shape of its own, that is the shape. If it repeats a recent site's shape, the check moves you to the next direction.
+When the direction's hero piece has a shape of its own, that is the shape. If it repeats a recent site's shape, the check moves you to the next direction. When you are reusing a direction because every fitting one is recent (Recent picks), build its hero piece in a new shape instead.
 
 The frame is the set of parts every site of this kind has: the header, the phone actions, and the find-us block. Agents build them the same way every time, so they are where sites start to rhyme. Take each from a piece, and write `Frame: header <id> · phone <id or none> · find us <id>`.
 

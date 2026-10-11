@@ -90,7 +90,7 @@ Choose, say it, and build in the same turn. Put this at the top of the reply, us
 - Theme: name, one-line mood, `{site}/themes/<id>`. In Free: `Free`, then the colours and the light they come from
 - Pairing: name, `{site}/type/<id>`. In Free: `Free`, then the faces and why
 - Family: name, and the radius it locks
-- Pieces: title and `demo` link for each screen or effect
+- Pieces: title and `{site}/demo/<id>` for each screen or effect. The piece's page is `{site}/p/<id>`. Do not make up other paths.
 
 Write the same links into `DESIGN.md` as Sources, so a later message can say "change the table" and you know which demo it came from.
 

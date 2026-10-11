@@ -24,7 +24,7 @@ One thing on that primary screen is made only for this product: a control, a lay
 
 Open the brief. Read it down to "Optional below this line". Restyle it onto the locked theme and pairing. The longer list is in [components.md](components.md). If `pieces.txt` has no piece for the job, say so. Do not invent a slug.
 
-On Android, or when the family is Material, use the `m3-` piece when one is named for that job. Otherwise use the phone piece and follow the Android rules in [native.md](native.md): a flat list, a top app bar, a back arrow. Do not put iOS grouped cards on Android, or a Material back arrow on iOS.
+On Android, or when the family is Material, use the `m3-` piece when one is named for that job. Otherwise use the phone piece and follow iOS and Android in [native.md](native.md): a flat list, a top app bar, a back arrow. Do not put iOS grouped cards on Android, or a Material back arrow on iOS.
 
 - First open: `phone-splash-launch`, under 1.6s, then the primary screen. Not a marketing hero.
 - Sign in: `phone-sign-in`, or `m3-sign-in` on Android. Sign up: `phone-sign-up-steps`. A passkey: `auth-passkey-setup`. Forgot password: `phone-forgot-password`. A code by text or email: `phone-code-entry`. A lock before private content: `phone-app-lock`.

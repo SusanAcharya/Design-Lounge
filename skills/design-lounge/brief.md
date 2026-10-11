@@ -52,7 +52,7 @@ Done means: <the sections or screens>, opened in a browser at both sizes, fixed,
 
 | Their words | What goes in the brief |
 | --- | --- |
-| "cool", "nice", "modern", "clean", "simple" | Ambition `finished`. These words never pick the look or the mode. |
+| "cool", "nice", "modern", "clean", "simple" | Ambition `finished`. These words never pick the look or the mode. "Clean" and "simple" narrow the directions to calm ones (rule 3 in Pick a direction, [practice.md](practice.md)). |
 | An ambition word: "go wild", "unforgettable", "Awwwards", "site of the day", "award-level", "an experience" | Ambition `spectacle`. Mode `Show, Free`. |
 | None of the ambition words, and no verb that makes the page the experience | Mode `Kit`, whatever the subject. |
 | A world you could draw: space, the sea, a city at night, a mountain, an instrument, a machine | The World line. On its own it never picks Show mode, and neither does "a site", "a show", "a launch", or "a label". |
