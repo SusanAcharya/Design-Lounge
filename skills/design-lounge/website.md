@@ -28,8 +28,29 @@ Agents with good taste still land on the same few pages. These are fails, unless
 - The SaaS template. A gradient hero, a centred headline, three feature cards, a row of logos.
 - The quiet paper page. Cream background, a serif headline, and everything else small grey text.
 - The studio template. The 2024-26 look that good agents now all make: hairline grid lines everywhere, small tracked uppercase mono labels, numbered sections ("01 / Work"), a giant wordmark footer, and a sticky scroll section. Each one is fine. All of them together is a template. Use two at most on one site.
+- The wellness template. Linen or blush, an italic serif, clay and sage, an arch frame, a plant sprig, and three step icons. A clinic, a salon, or a spa reaches for it by default.
+- The local-business template. Hero words on the left with one framed object on the right, a list of rows, an address beside a grey map box, a three-button bar on the phone, and a centred footer. Five sites for five businesses come out as one site. Change the hero shape and the frame (Hero shape and the frame, below).
 
 If your plan matches one of these, change the theme or the layout before you write code.
+
+### Hero shape and the frame
+
+Write `Hero shape:` on the sheet. Every agent reaches for the first one. Pick the shape the Idea needs.
+
+- `split`: words on one side, the object framed on the other. Only when the object must be read beside the words, such as a form or a price you compare.
+- `object`: the object is the first screen, full width, and the name sits on or inside it. The menu board is the hero. The docket fills the screen.
+- `type`: the answer at poster size across the frame, and the object full width under it.
+- `band`: one `--primary` band holds the answer and the action, and the object opens the next section.
+
+When the direction's hero piece has a shape of its own, that is the shape. If it repeats a recent site's shape, the check moves you to the next direction.
+
+The frame is the set of parts every site of this kind has: the header, the phone actions, and the find-us block. Agents build them the same way every time, so they are where sites start to rhyme. Take each from a piece, and write `Frame: header <id> · phone <id or none> · find us <id>`.
+
+- Header: Website navigation in [components.md](components.md).
+- Phone: `cta-sticky-mobile-bar` (one action with its fact, collapsing at 72px), `mobile-web-bottom-nav` (a site people come back to weekly), or none (the actions stay in the header and the find-us block).
+- Find us: `contact-split-map-form`, `contact-booking-hours`, `profile-contact-card`, or a map drawn in the Signature's own material.
+
+Recent picks in [practice.md](practice.md) compares both with recent sites.
 
 ### Write the idea
 
@@ -83,6 +104,7 @@ A website has one lead motion, from Register. It runs without a hover: on load, 
 - If the site is mostly a portfolio and they did not say just build it, ask once for three projects, each with a link or a screenshot.
 - A link goes where its label says. "Live demo" opens the demo. "Paper" opens the paper. If you don't have that URL, drop the link, or label it for where it really goes ("All projects"). List the missing URLs in the reply.
 - A drawn screen with made-up data (file names, logs, numbers) gets a small "Example" caption, so nobody reads it as a real result. A drawn screen that only shows real facts doesn't need one.
+- Missing facts (prices, dishes, services, hours, a pitch demo built before the owner sends anything): show what is known, at its real size, and add one line for the rest ("The full menu and prices come from the café."). Never pad a list with placeholder rows. Six "Service TBC" rows are six rows of nothing. A section with nothing known merges into another or goes. A marker such as "to confirm" sits on the one fact it qualifies. It is not the page's most repeated element.
 
 ### The five-second test
 
@@ -133,11 +155,13 @@ The lists, for a course or lessons site. `course-landing-curriculum` is one opti
 
 A lesson list is the work. It goes through the same uniqueness check as any other work piece.
 
-The lists, for a place people visit. A restaurant, a clinic, a gym, a hotel. The direction's hero is the first screen. Pick the other sections from here.
+The lists, for a place people visit, or a trade that comes to them. A restaurant, a clinic, a gym, a hotel, a pub, a roofer, a salon. The direction's hero is the first screen. Pick the other sections from here.
 
-- The offer: `restaurant-menu-page`, `week-schedule`, `gym-membership-home`, `clinic-home-booking`, `pricing-annual-toggle-roll`.
-- A time: `contact-booking-hours`, `calendar-week-planner`, `phone-booking-slots`, `calendar-month`.
+- The offer: `restaurant-menu-page`, `week-schedule`, `gym-membership-home`, `clinic-home-booking` (prices you see first), `pricing-annual-toggle-roll`. Ordering from it: `button-add-to-cart`, `shop-cart`, `order-confirmed`.
+- A time: `contact-booking-hours`, `calendar-week-planner`, `phone-booking-slots`, `calendar-month`. Open now: `status-badge`.
 - The room: `gallery-contact-sheet`, `masonry-gallery-captions`, `contact-split-map-form`.
+- A trade: before and after in one frame is `stage-passes-compare`. How a job goes is `features-sticky-scroll-steps`. Gigs or events are `card-event-ticket-stub`.
+- No photos: the room list is out. Make the place's own paper object the Signature: `card-cafe-menu-board` (a chalkboard or letterboard), `receipt-slip`, `card-retail-price-tag`, `card-stamped-document`, `card-event-ticket-stub`, `split-flap-board`. One per page, as Paper things in [components.md](components.md) says.
 - Footer: the website footer list above.
 
 The lists, for a cause, a firm, a listing, or a job board.
@@ -153,9 +177,9 @@ The lists, for docs. The direction's hero is the shell.
 - One page: `docs-install-steps`, `paper-article-reader`, `code-snippet-tabs`, `blog-issue-index`, `book-page-flip`.
 - Find it: `search-results-filters`, `command-palette`, `tree-nav`.
 
-The hero, the work, and the footer then go through the uniqueness check in Recent picks. Same kind, and the related group, must not share two of those three.
+The hero, the work, and the footer then go through the uniqueness check in Recent picks. Same kind, and the related group, must not share two of those three. The hero shape and the frame are checked there too.
 
-Open the brief for every section you build. A phone menu, a copy-email button, or a drawer is a piece too: `hamburger-circle-reveal`, `contact-giant-email-copy`, `button-copy-share`. If you build a part without opening its brief, say so in the reply.
+Open the brief for every section you build. A phone menu, a copy-email button, or a drawer is a piece too: `hamburger-circle-reveal`, `contact-giant-email-copy`, `button-copy-share`. Before you build any block from the sheet alone (a toast, a tag, a step row, a ticket, a header), search `pieces.txt` and the routes in [components.md](components.md): Website navigation, Website sections, Paper things, and Buttons beyond the basic set. If you build a part without opening its brief, say so in the reply.
 
 ## Register
 

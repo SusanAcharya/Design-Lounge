@@ -57,16 +57,18 @@ Nav:
 Phone nav: drawer | tabs
 Pieces:
 Sections: <website only> work <id> · about <id> · contact <id> · footer <id>, each with why it fits the content (and its sum if it was a tie)
+Hero shape: <website only> split | object | type | band, and why
+Frame: <website only> header <id> · phone <id or none> · find us <id>
 Kept from their system:
 
 ## Sources
 - theme <id> — {site}/themes/<id>
 - pairing <id> — {site}/type/<id>
 - family <id> — radius
-- <piece id> — layout | motion | component — demo url
+- <piece id> — layout | motion | component — demo url — point: kept | dropped (why)
 ```
 
-`{site}` is the `site` field in `library/map.json`. One line per piece you actually build. The role is layout, motion, or component: what they should look at if they want to compare. When they ask to change a screen, change that line, then rebuild only that screen.
+`{site}` is the `site` field in `library/map.json`. One line per piece you actually build. The role is layout, motion, or component: what they should look at if they want to compare. The point is in Adapting a brief. When they ask to change a screen, change that line, then rebuild only that screen.
 
 For a new product, the matching recipe in `starts` names the first pieces, and its chosen direction names the look. Build those before you invent a screen the recipe did not name.
 
@@ -155,13 +157,14 @@ Keep a short history on their machine.
   - Culture: editorial, museum, music, event, education
   - A service: professional, nonprofit, real-estate, jobs
   - The tool: web-app, dashboard
-- A line with no `work` or `footer` still blocks its hero and its effect. Its work and footer are unknown, so do not treat them as free.
+- On a website, also compare the `shape` and the `frame` with the last three lines in the group. The hero shape must differ from both of the last two. The frame (header, phone, find us) must not match any one of them on all three parts. These are what made five local sites read as one, even when their themes differed.
+- A line with no `work` or `footer` still blocks its hero and its effect. Its work and footer are unknown, so do not treat them as free. A line with no `shape` or `frame` blocks nothing there.
 - Repeat a pick only when they asked ("same look as my guitar site"), or when this is a new page of a product already in the history. Then it should match.
 - Claim first. Right after you lock the direction, append a line with `"status":"claimed"` and the recipe, direction, theme, pairing, and hero. Then read the file again. If another product claimed the same recipe and direction in the last hour, yours loses: take the next direction that fits and claim that. Agents running at the same time read the same history, and without the claim they all pick the same thing. Treat a claimed line exactly like a finished one.
 - After the sections are chosen and the check passes, append the finished line. Create the folder and file if they are missing.
 
 ```
-{"date":"2026-10-05","product":"Happy Easel","folder":"painting-lesson","recipe":"education","direction":"gallery-class","theme":"marble-hall","pairing":"gallery-wall","hero":"editorial-landing-hero","work":"stacking-cards-scroll","footer":"footer-centered-colophon","effect":"scroll-zoom-portal"}
+{"date":"2026-10-05","product":"Happy Easel","folder":"painting-lesson","recipe":"education","direction":"gallery-class","theme":"marble-hall","pairing":"gallery-wall","hero":"editorial-landing-hero","work":"stacking-cards-scroll","footer":"footer-centered-colophon","effect":"scroll-zoom-portal","shape":"type","frame":["navbar-floating-pill-shrink","none","profile-contact-card"]}
 ```
 
 A Free build (Show mode in [show.md](show.md)) writes `"mode":"free"`, `"theme":"free"`, `"pairing":"free"`, the faces in `"fonts"`, and `"colours"` as `[bg, primary]`. The next Free build reads those and does not reuse the display face of the last three, or the same pair:
@@ -170,7 +173,7 @@ A Free build (Show mode in [show.md](show.md)) writes `"mode":"free"`, `"theme":
 {"date":"2026-10-06","product":"Low Tide","folder":"low-tide","recipe":"event","direction":"deep-field","mode":"free","theme":"free","pairing":"free","fonts":["Bodoni Moda","IBM Plex Mono"],"colours":["#05060b","#ffb04a"],"hero":"scroll-space-voyage","work":"contact-booking-hours","footer":"footer-centered-colophon","effect":null}
 ```
 
-Write the check on the sheet before you build. One line is enough when nothing is close: `Unlike recent education and culture sites: hero, work, and footer are all different.` When something matches, name it: `Unlike First Fret: hero differs, work differs, footer matches. One match, so it stands.`
+Write the check on the sheet before you build. One line is enough when nothing is close: `Unlike recent education and culture sites: hero, work, footer, shape, and frame are all different.` When something matches, name it: `Unlike First Fret: hero differs, work differs, footer matches. One match, so it stands.`
 
 There are six footers, so a footer will repeat before the heroes do. A repeated footer is allowed when the hero and the work both differ. If every remaining direction still shares two of the three, use the oldest footer and write `Footer: <id>, the oldest of six, the others are recent.`
 
@@ -215,6 +218,7 @@ Briefs are written for their demo's palette and mode. Your theme may be the oppo
 - A brief's gradient or sky uses the theme's own colours: `--bg` to `--surface-2`, with `--primary` or `--accent` as the one bright stop. A dusk parallax on a light theme becomes a daylight parallax with the same layers and speeds.
 - A brief's fonts become the pairing's roles. Display stays display, body stays `--font-text`. Where the brief uses mono for labels or numbers and the pairing has no mono, labels use `--font-text` small caps or tracked caps, numbers use `.num` (the text face with even-width digits), and only code uses the system mono. Do not add a Google mono font.
 - Keep from the brief: structure, counts, sizes, motion timing, states, and hit targets.
+- Keep the point. Every brief has one: the thing its title and "What it is" name, and its "detail worth copying". The rotator rotates. The sticky bar collapses at 72px. The FAQ searches. The compare line drags. Rebuilding only the layout is not using the piece, and it reads as a generic block. Keep the point, or the still form when the section is not the lead effect (Sections, one by one in [website.md](website.md)), and write `point: kept` in Sources. If you drop it, write `point: dropped` and why. A page where most Sources say dropped has used the library as wireframes. Go back and keep the points.
 - Display type is the exception to sizes. A brief's 304px wordmark was fitted to its demo word. Fit yours instead: the real word fills the same width, set with `clamp()` and `vw`, and no letter is clipped. Check the descenders and a lowercase word on the screenshot.
 - Read a brief down to "Optional below this line". Below it are the demo's paint and long notes. Open them only for the motion, or when stuck.
 
@@ -323,6 +327,8 @@ Body stays on `--font-text`. Do not set a paragraph in the display face. Do not 
 
 One primary action per view. Secondary and tertiary follow the family.
 
+A view is everything on screen at once, so the header, the hero, and a sticky phone bar are one view. When the same verb is in all three, only one is solid. On the web the hero's is solid and the header's is outline until the hero scrolls away. On a phone the bar's is solid only after the hero's button has left the screen. Measure it at load and after one scroll, at 1280 and at 390.
+
 Write the shell on the system sheet before the first screen. Every screen in the pass uses that shell. A screen with its own sidebar width, or a screen that drops the sidebar the others have, fails the Match.
 
 Web screens share the content column from Spacing, and the same page padding. That column sits inside main. Default 720px. Reading measure stays 58–66ch. A grid inside the column is the piece's structure. It is not a different page width. Phone content is one column, the full width of the frame, with the same padding. The primary action sits in the thumb zone or in the sticky bar the piece specifies.
@@ -421,7 +427,7 @@ These are fails. They are the tells of a page that was generated and not designe
 - Motion that loops because the page felt empty. `ease` or `linear` on a UI move. The curve is the sheet's, or the piece's.
 - Two navigation systems. A sidebar, a panel, or a nav list that differs from the sheet. The content column wider because the rail closed. A chart painted in a library's default colours.
 - On a website: one of the default looks in Stand out in [website.md](website.md). A first screen with type and no picture of the work. A portfolio whose work is a text list. A site where half the text is small grey labels. A page you cannot remember after five seconds.
-- An invented client, employer, project, number, or quote.
+- An invented client, employer, project, number, or quote. A list padded with placeholder rows ("Dish TBC" six times), when one line could say what is still to come.
 - An em dash or en dash in text people read. A version label in the hero, such as BETA or v2.0, when this is not a launch. Numbered eyebrows like `001 · Work` or `01 / 04`.
 - Dots between every word in a strip (`a · b · c · d`). One per line at most. A coloured dot before every nav item or row, when it is not a live status.
 - A "Scroll" cue or an animated mouse. A strip of words along the bottom of the hero, such as `DESIGN / BUILD / SHIP`. A city, clock, or weather strip, unless the place matters to the product.
@@ -496,7 +502,8 @@ Look and One correction already checked the screen. These are the things they do
 - Nothing scrolls sideways at 390px, the console has no errors, and the reduced-motion frame is complete.
 - DESIGN.md has the sheet, the four lines, and Sources with a demo link per piece. The reply has the same links.
 - The credit line is in the footer and on the token block.
-- Website: Idea, Signature, Avoiding, and Sections are on the sheet.
+- Website: Idea, Signature, Avoiding, Sections, Hero shape, and Frame are on the sheet, and the history line has `shape` and `frame`.
+- Every Sources line says whether the piece's point was kept.
 
 ## Say so
 
