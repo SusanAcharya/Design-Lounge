@@ -24,7 +24,14 @@ export const GET: APIRoute = async ({ site }) => {
     ...pieces.map((p) => `/p/${p.id}`),
     ...EXAMPLES.map((e) => `/examples/${e.id}`),
   ];
-  const today = new Date().toISOString().slice(0, 10);
-  const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map((u) => `  <url><loc>${base}${u}</loc><lastmod>${today}</lastmod></url>`).join('\n')}\n</urlset>\n`;
+  // lastmod only where we know it. A piece's page changes when the piece does, so it carries the piece's
+  // date. Index pages change with every build, and a date that moves on every deploy teaches Google to
+  // ignore lastmod for the whole site, so they carry none.
+  const dated = new Map(pieces.map((p) => [`/p/${p.id}`, p.data.published.toISOString().slice(0, 10)]));
+  const entry = (u: string) => {
+    const d = dated.get(u);
+    return `  <url><loc>${base}${u}</loc>${d ? `<lastmod>${d}</lastmod>` : ''}</url>`;
+  };
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map(entry).join('\n')}\n</urlset>\n`;
   return new Response(xml, { headers: { 'Content-Type': 'application/xml' } });
 };

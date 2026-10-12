@@ -40,7 +40,7 @@ const related = (() => {
     s += p.data.tags.filter((x) => d.tags.includes(x)).length * 2;
     return { p, s };
   }).sort((a, b) => b.s - a.s).map((x) => x.p);
-  return [...explicit, ...scored].slice(0, 3);
+  return [...explicit, ...scored].slice(0, 6);
 })();
 const toc = [
   { id: 'preview', label: 'Preview', depth: 2 },
@@ -49,10 +49,30 @@ const toc = [
   ...headings.filter((h) => h.depth === 2).map((h) => ({ id: h.slug, label: h.text, depth: 3 })),
 ];
 const isWeb = pm.frame === 'web';
-const og = existsSync(new URL(`../../../public/og/${piece.id}.jpg`, import.meta.url)) ? new URL(`/og/${piece.id}.jpg`, Astro.site).toString() : undefined;
+const og = existsSync(new URL(`../../../public/og/${piece.id}.jpg`, import.meta.url))
+  ? new URL(`/og/${piece.id}.jpg`, Astro.site).toString()
+  : existsSync(new URL(`../../../public/thumbs/${piece.id}.webp`, import.meta.url)) ? new URL(`/thumbs/${piece.id}.webp`, Astro.site).toString() : undefined;
+// Search shows about 60 characters. Say what the page is in the words people search with, and drop the
+// "with live demo" tail when a long title would push the brand off the end.
+const platformWord = d.platform === 'pwa' ? 'PWA' : pm.label.toLowerCase();
+const what = `${d.title}: ${platformWord} ${TYPE_META[d.type].singular.toLowerCase()}`;
+const pageTitle = what.length + 30 <= 64 ? `${what} with live demo · Design Lounge` : `${what} · Design Lounge`;
+const schema = {
+  '@type': 'CreativeWork',
+  '@id': `${new URL(`/p/${piece.id}`, Astro.site)}#piece`,
+  name: d.title,
+  headline: `${d.title}: ${platformWord} ${TYPE_META[d.type].singular.toLowerCase()}`,
+  description: d.summary,
+  url: new URL(`/p/${piece.id}`, Astro.site).toString(),
+  datePublished: d.published.toISOString().slice(0, 10),
+  genre: `${CATEGORY_META[d.category].label} ${TYPE_META[d.type].singular.toLowerCase()}`,
+  keywords: [...new Set([CATEGORY_META[d.category].label, TYPE_META[d.type].singular, pm.label, ...d.styles, ...d.tags])].join(', '),
+  ...(og ? { image: og, thumbnailUrl: og } : {}),
+  isPartOf: { '@type': 'WebSite', name: 'Design Lounge', url: new URL('/', Astro.site).toString() },
+};
 const json = (s: string) => JSON.stringify(s).replace(/</g, '\\u003c');
 ---
-<Base title={`${d.title} · ${CATEGORY_META[d.category].label}`} description={d.summary} ogImage={og} crumbs={[{ name: 'Floor', href: '/browse' }, { name: TYPE_META[d.type].label, href: `/rooms/${d.type}` }, { name: CATEGORY_META[d.category].label, href: `/sections/${d.category}` }, { name: d.title, href: `/p/${piece.id}` }]}>
+<Base fullTitle={pageTitle} description={d.summary} ogImage={og} schema={[schema]} crumbs={[{ name: 'Floor', href: '/browse' }, { name: TYPE_META[d.type].label, href: `/rooms/${d.type}` }, { name: CATEGORY_META[d.category].label, href: `/sections/${d.category}` }, { name: d.title, href: `/p/${piece.id}` }]}>
   <div class="docs wrap" data-docs>
     <DocsSidebar pieces={all} current={piece.id} />
 

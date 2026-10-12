@@ -16,8 +16,9 @@ interface Props {
   noindex?: boolean;
   crumbs?: { name: string; href: string }[];
   faq?: { q: string; a: string }[];
+  schema?: Record<string, unknown>[];
 }
-const { title, description = `A free UI design skill for AI coding agents, with hundreds of live design ideas: sections, app screens, palettes, font pairings and motion.`, ogImage, bodyClass, rail = true, noindex = false, crumbs, faq } = Astro.props;
+const { title, description = `A free UI design skill for AI coding agents, with hundreds of live design ideas: sections, app screens, palettes, font pairings and motion.`, ogImage, bodyClass, rail = true, noindex = false, crumbs, faq, schema } = Astro.props;
 // Search results show about 155 characters: keep whole sentences that fit, else cut at a word.
 const clip = (s: string, max = 158) => {
   if (s.length <= max) return s;
@@ -57,6 +58,7 @@ const graph: Record<string, unknown>[] = [
       }
     : { '@type': 'WebPage', name: fullTitle, url: canonical, description, isPartOf: { '@type': 'WebSite', name: 'Design Lounge', url: `${origin}/` }, author: person },
 ];
+if (schema?.length) graph.push(...schema);
 if (crumbs?.length) graph.push({
   '@type': 'BreadcrumbList',
   itemListElement: [{ name: 'Design Lounge', href: '/' }, ...crumbs].map((c, i) => ({ '@type': 'ListItem', position: i + 1, name: c.name, item: `${origin}${c.href === '/' ? '/' : c.href}` })),
@@ -92,8 +94,8 @@ const count = (await getPieces()).length;
   <meta property="og:description" content={metaDescription} />
   <meta property="og:type" content={path === '/' ? 'website' : 'article'} />
   <meta property="og:image" content={ogImage ?? `${origin}/og/home.jpg`} />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
+  <meta property="og:image:width" content={ogImage?.includes('/thumbs/') ? '640' : '1200'} />
+  <meta property="og:image:height" content={ogImage?.includes('/thumbs/') ? '400' : '630'} />
   <meta property="og:image:alt" content={ogImage ? fullTitle : `Design Lounge, ${count} design ideas`} />
   <meta name="twitter:image" content={ogImage ?? `${origin}/og/home.jpg`} />
   <meta name="twitter:title" content={fullTitle} />
