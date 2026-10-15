@@ -3,11 +3,11 @@ import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
 import { AUTHOR } from '../lib/pieces';
 ---
-<Base title="Privacy" description="Design Lounge runs no analytics and sets no cookies. The only thing it keeps is your day or night choice, in your own browser." crumbs={[{ name: 'Privacy', href: '/privacy' }]}>
+<Base title="Privacy" description="Design Lounge sets no cookies and counts visits without knowing who you are. The only thing kept on your device is your day or night choice." crumbs={[{ name: 'Privacy', href: '/privacy' }]}>
   <PageHead eyebrow="Privacy" title="Privacy" />
   <div class="wrap about">
-    <p class="lead">The library is free to read, and nothing tracks you while you read it.</p>
-    <p>There is no analytics script, no cookie, and no session recording. Copying a brief, a prompt, or an install command stays on your machine.</p>
+    <p class="lead">The library is free to read, and nothing follows you while you read it.</p>
+    <p>The site counts page views with Vercel Web Analytics, so I can see which pages people read. It sets no cookie, stores nothing on your device, and keeps no personal data: a visit is counted with a hash that resets every day, so it cannot follow you from one day to the next or across other sites. There is no session recording. Copying a brief, a prompt, or an install command stays on your machine.</p>
     <p>If you switch between day and night, that choice is saved in your browser's local storage so the next page opens the same way. It never leaves your device. The host, Vercel, keeps the usual server logs for running the site.</p>
     <p>The site's own typeface, Geist, is served from this domain. The demos and the type and theme specimens show many other typefaces, and those load from Google Fonts, so opening them sends your IP address and browser details to Google. Google's <a href="https://developers.google.com/fonts/faq/privacy">Fonts privacy notes</a> explain what it keeps.</p>
     <p>Questions go to <a href={`mailto:${AUTHOR.email}`}>{AUTHOR.email}</a>.</p>

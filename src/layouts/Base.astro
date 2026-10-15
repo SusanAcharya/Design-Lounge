@@ -4,6 +4,7 @@ import Header from '../components/Header.astro';
 import SectionRail from '../components/SectionRail.astro';
 import Footer from '../components/Footer.astro';
 import Palette from '../components/Palette.astro';
+import Analytics from '@vercel/analytics/astro';
 import { getPieces, AUTHOR } from '../lib/pieces';
 
 interface Props {
@@ -117,6 +118,7 @@ const count = (await getPieces()).length;
       } catch (e) { document.documentElement.setAttribute('data-theme', 'day'); }
     })();
   </script>
+  <Analytics />
 </head>
 <body class={bodyClass} data-count={count}>
   <a class="skip" href="#main">Skip to content</a>

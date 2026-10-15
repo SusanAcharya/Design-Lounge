@@ -18,6 +18,7 @@
     "skill:install": "node skills/design-lounge/install.mjs"
   },
   "dependencies": {
+    "@vercel/analytics": "^2.0.1",
     "astro": "^5.13.0"
   },
   "devDependencies": {
