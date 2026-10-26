@@ -46,9 +46,15 @@ const homeBuilt = ['meridian-no-7', 'key-01'].map((id) => SOLO.find((e) => e.id 
 const pair = PAIRS[0];
 const pairSides = pair ? [pair.a, pair.b].map((id) => EXAMPLES.find((e) => e.id === id)).filter((e) => e !== undefined) : [];
 const installCmd = 'npx skills add SusanAcharya/Design-Lounge';
+const mcpCmd = 'claude mcp add -s user design-lounge -- npx -y design-lounge-mcp@latest';
+// The two ways in, for the switch above each install box. The MCP server is first: it is the skill plus tools.
+const installModes = [
+  { key: 'mcp', label: 'MCP server', cmd: mcpCmd, note: 'For Claude Code. It installs the skill too.', link: { href: '/agents', label: 'Cursor, Codex, ChatGPT' } },
+  { key: 'skill', label: 'Skill', cmd: installCmd, note: 'Files your agent reads. Needs Node 22.20 or newer.', link: null },
+];
 const faq = [
   { q: 'What is Design Lounge?', a: `Design Lounge is a free UI design skill for AI coding agents, plus a library of ${all.length} design ideas: website sections, app screens, components and motion. Each one has a live demo and a written brief that an agent can build from.` },
-  { q: 'How do I add the UI design skill to my agent?', a: `Run ${installCmd} in your project (it needs Node 22.20 or newer). It works with Cursor, Claude Code, Codex and other agents that read skills. Then ask for what you are making, such as a portfolio, a shop or a dashboard.` },
+  { q: 'How do I add the UI design skill to my agent?', a: `Add the MCP server, which installs the skill too and adds tools that show your agent each piece and check the page it built. In Claude Code, run ${mcpCmd}. Cursor, Codex, VS Code and Claude Desktop take npx -y design-lounge-mcp@latest in their MCP settings, and Claude.ai or ChatGPT can add https://www.designlounge.live/api/mcp as a connector. For the skill alone, run ${installCmd} in your project (it needs Node 22.20 or newer). Then ask for what you are making, such as a portfolio, a shop or a dashboard.` },
   { q: 'What does the skill do differently?', a: `For a product, it stops the agent from inventing a generic look: it picks a real theme, a font pairing, a radius and motion from the library, builds the screens from piece briefs, then opens the page and checks it for the usual signs of AI-made design. When you ask for spectacle, it builds one centrepiece made for your subject, with real light and depth, and holds the rest of the page to the same craft.` },
   { q: 'Is it free to use in my products?', a: 'Yes. The pieces, themes, type pairings and icons are free to use in your own products and client work. A small credit line is appreciated. Please do not republish the library itself as a library.' },
   { q: 'Where do the design ideas come from?', a: `Every piece is an original design with an invented brand. Some study the craft of public sites, such as Stripe or Linear, and those are listed on the Sources page. No piece copies another site's text, images or logo.` },
@@ -61,11 +67,17 @@ const faq = [
       <h1 class="display h1 reveal">Give your AI agent <i>design taste.</i></h1>
       <p class="lede reveal" style="--d:80ms">A free UI design skill and a library of {all.length} live design ideas. Your agent picks real type, colour and motion, then builds.</p>
       <div class="hero-cta reveal" style="--d:160ms">
-        <span class="cmd big">
-          <span class="prompt mono" aria-hidden="true">$</span>
-          <code id="hero-cmd">{installCmd}</code>
-          <button class="copy" type="button" data-copy="#hero-cmd"><span data-label>Copy</span></button>
-        </span>
+        <div class="install" data-install>
+          <div class="modes" role="group" aria-label="Install as">
+            {installModes.map((m, i) => <button type="button" data-mode={m.key} aria-pressed={i === 0 ? 'true' : 'false'}>{m.label}</button>)}
+          </div>
+          <span class="cmd big">
+            <span class="prompt mono" aria-hidden="true">$</span>
+            <code id="hero-cmd" data-cmds={JSON.stringify(Object.fromEntries(installModes.map((m) => [m.key, m.cmd])))}>{installModes[0].cmd}</code>
+            <button class="copy" type="button" data-copy="#hero-cmd"><span data-label>Copy</span></button>
+          </span>
+          {installModes.map((m, i) => <p class="cmd-note" data-note={m.key} hidden={i !== 0}>{m.note}{m.link && <> <a href={m.link.href}>{m.link.label} →</a></>}</p>)}
+        </div>
         <a class="textlink" href="/browse">Browse the library <span aria-hidden="true">→</span></a>
       </div>
     </div>
@@ -291,15 +303,42 @@ const faq = [
 
   <section class="close wrap" aria-labelledby="close-h">
     <h2 class="display h2" id="close-h">Install once. Ask for anything.</h2>
-    <span class="cmd big">
-      <span class="prompt mono" aria-hidden="true">$</span>
-      <code id="close-cmd">{installCmd}</code>
-      <button class="copy" type="button" data-copy="#close-cmd"><span data-label>Copy</span></button>
-    </span>
-    <p class="cmd-note">Needs Node 22.20 or newer.</p>
+    <div class="install" data-install>
+      <div class="modes" role="group" aria-label="Install as">
+        {installModes.map((m, i) => <button type="button" data-mode={m.key} aria-pressed={i === 0 ? 'true' : 'false'}>{m.label}</button>)}
+      </div>
+      <span class="cmd big">
+        <span class="prompt mono" aria-hidden="true">$</span>
+        <code id="close-cmd" data-cmds={JSON.stringify(Object.fromEntries(installModes.map((m) => [m.key, m.cmd])))}>{installModes[0].cmd}</code>
+        <button class="copy" type="button" data-copy="#close-cmd"><span data-label>Copy</span></button>
+      </span>
+      {installModes.map((m, i) => <p class="cmd-note" data-note={m.key} hidden={i !== 0}>{m.note}{m.link && <> <a href={m.link.href}>{m.link.label} →</a></>}</p>)}
+    </div>
     <a class="textlink" href="/browse">Browse the library <span aria-hidden="true">→</span></a>
   </section>
 </Base>
+
+<script>
+  // The install switch: one choice for both boxes on the page, remembered for the next visit.
+  const boxes = [...document.querySelectorAll<HTMLElement>('[data-install]')];
+  const choose = (mode: string) => {
+    for (const box of boxes) {
+      const code = box.querySelector<HTMLElement>('code[data-cmds]');
+      const cmds = JSON.parse(code?.dataset.cmds || '{}');
+      if (!cmds[mode]) continue;
+      code!.textContent = cmds[mode];
+      box.querySelectorAll<HTMLButtonElement>('[data-mode]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.mode === mode)));
+      box.querySelectorAll<HTMLElement>('[data-note]').forEach((n) => { n.hidden = n.dataset.note !== mode; });
+    }
+  };
+  let saved = null;
+  try { saved = localStorage.getItem('dl-install'); } catch {}
+  if (saved) choose(saved);
+  for (const box of boxes) box.querySelectorAll<HTMLButtonElement>('[data-mode]').forEach((b) => b.addEventListener('click', () => {
+    choose(b.dataset.mode!);
+    try { localStorage.setItem('dl-install', b.dataset.mode!); } catch {}
+  }));
+</script>
 
 <style>
   /* faq + bio */
@@ -340,6 +379,18 @@ const faq = [
   .cmd .copy:hover { opacity: .86; }
   .cmd .copy:active { transform: scale(.97); }
   .cmd .copy[data-done] { background: var(--accent); color: var(--accent-ink); }
+
+  /* install: MCP server or skill */
+  .install { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; width: 100%; max-width: 560px; min-width: 0; }
+  .install .cmd { max-width: none; }
+  .install .cmd code { white-space: normal; line-height: 1.45; text-align: left; }
+  .modes { display: inline-flex; gap: 2px; padding: 3px; border: 1px solid var(--line-2); border-radius: 10px; background: var(--paper-2); }
+  .modes button { height: 30px; padding: 0 12px; border-radius: 7px; font-size: 13px; font-weight: 500; color: var(--ink-2); transition: background-color var(--t-fast), color var(--t-fast); }
+  .modes button:hover { color: var(--ink); }
+  .modes button[aria-pressed='true'] { background: var(--paper); color: var(--ink); box-shadow: 0 1px 2px rgba(24, 24, 27, .08), 0 0 0 1px var(--line); }
+  .install .cmd-note { font-size: 13px; color: var(--ink-3); }
+  .install .cmd-note a { color: var(--ink-2); text-decoration: underline; text-underline-offset: 3px; }
+  .install .cmd-note a:hover { color: var(--accent-text); }
 
   .hero-wall { position: relative; aspect-ratio: 1 / 0.92; }
   .wall-item { position: absolute; border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--paper-2); overflow: hidden; transition: transform var(--t-slow) var(--ease-out), border-color var(--t-med), box-shadow var(--t-med); }
@@ -451,8 +502,7 @@ const faq = [
   /* close */
   .close { display: flex; flex-direction: column; align-items: center; gap: 22px; text-align: center; padding-block: clamp(72px, 9vw, 140px); border-top: 1px solid var(--line); }
   .close .h2 { max-width: 18ch; }
-  .close .cmd { margin-top: 6px; }
-  .close .cmd-note { margin-top: -10px; font-size: 13px; color: var(--ink-3); }
+  .close .install { align-items: center; margin-top: 6px; }
 
   @media (max-width: 1100px) {
     .bento { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: none; }
