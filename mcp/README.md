@@ -55,6 +55,8 @@ args = ["-y", "design-lounge-mcp@latest"]
 
 The rendered checks (screenshots, axe, measured labels and buttons, theme boards and type specimens) need a headless Chromium. Ask your agent to run `install_browser` once (about 100 MB), or run `npx playwright install chromium --only-shell`. Without it, every other check still runs, and the report says it did not look.
 
+**Hosted**, for Claude.ai, ChatGPT, and other clients that cannot run a local program: add `https://www.designlounge.live/api/mcp` as a custom connector (Streamable HTTP, no sign-in). It has the library, `start_design`, the picks, and the static review of public URLs or pasted HTML. It leaves out what needs your machine: file paths, the history file, the skill and browser installs, and the rendered checks. It fetches only public addresses and allows 60 requests a minute per address. Pass your own recent picks as `history` if you keep them.
+
 To run it from a clone of the repo instead: `cd mcp && pnpm install`, then use `node /path/to/designs/mcp/src/server.mjs` as the command.
 
 ## Tools
@@ -87,6 +89,7 @@ The server also offers three prompts, `design`, `review`, and `deslop`, and the 
 - **The skill.** On start, it writes the skill to `~/.agents/skills/design-lounge` and links it into `~/.claude/skills`, `~/.cursor/skills`, and `~/.codex/skills` for the clients you have. A copy it did not make is never replaced. `DESIGN_LOUNGE_SKILL_INSTALL=off` turns this off. To remove it, delete those folders.
 - **Recent picks.** `record_pick` appends a line to `~/.design-lounge/history.jsonl`, so two sites you make do not come out alike. Nothing else reads it.
 - **Cached images.** Theme boards and type specimens are cached in `~/.cache/design-lounge/boards`. Screenshots go to your temp folder, or to `out_dir`.
+- **The hosted endpoint** keeps nothing. Each request gets a fresh server, and the pages it reviews are fetched and dropped.
 - **The network.** A review fetches the page you name, its stylesheets, robots.txt, sitemap.xml, llms.txt, and the share image, from your machine. Google Fonts loads for type specimens. Thumbnails and demos are bundled; designlounge.live is asked only for one that is missing. Nothing is sent to Design Lounge, and there is no tracking.
 
 ## Settings

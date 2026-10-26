@@ -22,7 +22,7 @@ export const GET: APIRoute = async ({ site }) => {
     ``,
     `## Skill`,
     `Install with: npx skills add SusanAcharya/Design-Lounge`,
-    `Or as an MCP server, which installs the skill too and adds library search, pictures of pieces, direction picks, and a page review for AI giveaways, SEO, AEO, and GEO: npx -y design-lounge-mcp@latest (in Claude Code: claude mcp add design-lounge --scope user -- npx -y design-lounge-mcp@latest)`,
+    `Or as an MCP server, which installs the skill too and adds library search, pictures of pieces, direction picks, and a page review for AI giveaways, SEO, AEO, and GEO: npx -y design-lounge-mcp@latest (in Claude Code: claude mcp add design-lounge --scope user -- npx -y design-lounge-mcp@latest). Hosted, for apps that cannot run a local program: https://www.designlounge.live/api/mcp`,
     `The skill ships with the catalogue (palettes, type, briefs). After install, the agent reads those files. It does not need this website to be up.`,
     ``,
     `## How to use this library (agents)`,
