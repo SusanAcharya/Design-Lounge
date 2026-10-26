@@ -1,0 +1,61 @@
+{
+  "name": "design-lounge-mcp",
+  "mcpName": "io.github.SusanAcharya/design-lounge",
+  "version": "0.2.0",
+  "description": "Design Lounge as an MCP server: the library, direction picking, and a review that catches AI giveaways and SEO, AEO and GEO gaps.",
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "design",
+    "design-system",
+    "ui",
+    "skill",
+    "claude-code",
+    "cursor",
+    "codex",
+    "seo",
+    "aeo",
+    "geo",
+    "accessibility",
+    "palette",
+    "typography"
+  ],
+  "type": "module",
+  "license": "SEE LICENSE IN skill/LICENSE",
+  "author": "Susan Acharya (https://acharyasusan.com.np)",
+  "homepage": "https://www.designlounge.live",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SusanAcharya/Design-Lounge.git",
+    "directory": "mcp"
+  },
+  "bugs": "https://github.com/SusanAcharya/Design-Lounge/issues",
+  "bin": {
+    "design-lounge-mcp": "src/server.mjs"
+  },
+  "files": [
+    "src",
+    "skill",
+    "assets",
+    "server.json"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node src/server.mjs",
+    "test": "node --test test/*.test.mjs",
+    "bundle": "node scripts/bundle.mjs",
+    "prepack": "node scripts/bundle.mjs",
+    "release": "node scripts/release.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.32.2",
+    "axe-core": "4.14.0",
+    "node-html-parser": "9.0.5",
+    "zod": "4.6.7"
+  },
+  "optionalDependencies": {
+    "playwright": "1.63.0"
+  }
+}

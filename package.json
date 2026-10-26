@@ -15,7 +15,8 @@
     "test:gates": "node --test scripts/gates/ratchet-guard.test.mjs",
     "examples": "node --experimental-strip-types scripts/examples.mjs",
     "skill:sync": "node --experimental-strip-types scripts/sync-skill.mjs",
-    "skill:install": "node skills/design-lounge/install.mjs"
+    "skill:install": "node skills/design-lounge/install.mjs",
+    "mcp:test": "pnpm --dir mcp test"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",

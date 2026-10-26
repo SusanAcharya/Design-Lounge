@@ -9,8 +9,9 @@ description: >-
   or PWA apps, or to
   make an interface look finished. Also covers what the
   taste-skill pack does: anti-slop pages, minimal, brutalist and high-end
-  looks, redesigns, image-first mockups, logos and brand kits. Also use when
-  they mention Design Lounge, a kit, or a piece brief.
+  looks, redesigns, image-first mockups, logos and brand kits. Also use for
+  SEO, AEO, GEO, or a site being found in AI search, and when they mention
+  Design Lounge, a kit, or a piece brief.
 ---
 
 # Design Lounge
@@ -49,8 +50,13 @@ Everything you need is next to this file. Read only what the job needs.
 10. [flows.md](flows.md) — the app short path, Adopt flow, and Brand flow. Only when What they are asking sends you there.
 11. [taste.md](taste.md) — the taste-skill pack folded in: named looks (minimal, brutalist, high-end), page shape, craft details, image-first mockups, and brand boards. You do not need those skills installed separately.
 12. [styles.md](styles.md) — the style routing table: every named style, its synonyms, and where it goes. Only when they named a style.
+13. [search.md](search.md) — being found and quoted: the head, the share card, questions, structured data, crawlers. Every public website, at step 7.
 
 Do not run scripts from this skill. If `library/map.json` is missing, the install is broken. Say so. Do not design from memory.
+
+## With the Design Lounge MCP
+
+If your tools include `start_design` and `review_page`, the Design Lounge MCP server is connected. It reads this same library, so the rules do not change. Use its tools in place of searching the files and editing the history by hand: `start_design` first, `pick_direction` and `check_pick` for Recent picks, `record_pick` for the history line, `search_pieces` and `get_piece` for briefs. After you build, run `review_page` on the page. It checks the Look fails, the kit, and [search.md](search.md), renders web and phone, and saves the screenshots to open. Fix every fail it lists. Without the server, follow the files as written.
 
 If the open project is the Design Lounge repo itself (`src/demos` and `src/content/pieces` exist) and the user is editing the library, stop using this skill for that edit. Follow `docs/PIECE-SPEC.md` instead.
 
@@ -123,7 +129,7 @@ The full method is long. For a website, these are the steps that matter, in orde
 4. Pick about and contact by what content they have (Sections, one by one in [website.md](website.md)). Work and footer stay on the direction. Write the Hero shape and the Frame (Hero shape and the frame in [website.md](website.md)). Then the uniqueness check in Recent picks: if two of the hero, the work, and the footer match a recent site of this recipe or its related group, or the shape or frame repeats, take the next direction. Write the Unlike line on the sheet. Then append the history line, with `work`, `footer`, `shape`, and `frame` filled in.
 5. Open the brief of every piece you build, including the header, the phone bar, the menu, and any copy button. Read each down to "Optional below this line", and keep its point (Adapting a brief in [practice.md](practice.md)). Before you build any block without a piece, search `pieces.txt` and the routes in [components.md](components.md).
 6. Build with their facts only. The brief's names, prices, and quotes stay in the brief. A sentence that is still true after you swap in another product's name gets rewritten. A button names the action on this screen. Links go where they say. Drawn data says "Example". Missing facts get one line, not rows of placeholders.
-7. Screenshot web and phone, then scroll through each effect (Opening the page in [reference.md](reference.md)). Fix what you see. Make one correction.
+7. Screenshot web and phone, then scroll through each effect (Opening the page in [reference.md](reference.md)). Fix what you see. Make one correction. Then run the checks in [search.md](search.md).
 8. End with the closing block in The reply.
 
 The rules are the floor, not the design. Passing all of them makes a page correct. The Idea and the Signature make it theirs.

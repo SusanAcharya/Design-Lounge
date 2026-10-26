@@ -507,6 +507,7 @@ Look and One correction already checked the screen. These are the things they do
 - The credit line is in the footer and on the token block.
 - Website: Idea, Signature, Avoiding, Sections, Hero shape, and Frame are on the sheet, and the history line has `shape` and `frame`.
 - Every Sources line says whether the piece's point was kept.
+- A public website passes [search.md](search.md): a real title and description, the share card, one h1, the text in the HTML as served, and JSON-LD with only their facts.
 
 ## Say so
 

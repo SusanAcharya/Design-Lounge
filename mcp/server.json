@@ -1,0 +1,39 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.SusanAcharya/design-lounge",
+  "title": "Design Lounge",
+  "description": "A UI design library and skill for agents, with a page review for AI giveaways, SEO, AEO, and GEO.",
+  "websiteUrl": "https://www.designlounge.live",
+  "repository": {
+    "url": "https://github.com/SusanAcharya/Design-Lounge",
+    "source": "github",
+    "subfolder": "mcp"
+  },
+  "version": "0.2.0",
+  "packages": [
+    {
+      "registryType": "npm",
+      "identifier": "design-lounge-mcp",
+      "version": "0.2.0",
+      "transport": {
+        "type": "stdio"
+      },
+      "environmentVariables": [
+        {
+          "name": "DESIGN_LOUNGE_SKILL_INSTALL",
+          "description": "Set to off to stop the server installing the Design Lounge skill into ~/.agents/skills on start.",
+          "isRequired": false,
+          "format": "string",
+          "isSecret": false
+        },
+        {
+          "name": "DESIGN_LOUNGE_HISTORY",
+          "description": "Where recent design picks are kept. Default ~/.design-lounge/history.jsonl.",
+          "isRequired": false,
+          "format": "filepath",
+          "isSecret": false
+        }
+      ]
+    }
+  ]
+}
