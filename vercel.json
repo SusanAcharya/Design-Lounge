@@ -1,6 +1,9 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
+  "functions": {
+    "api/mcp.mjs": { "maxDuration": 30, "memory": 1024, "includeFiles": "{skills/design-lounge/**,mcp/package.json}" }
+  },
   "redirects": [
     { "source": "/c", "destination": "/sections", "permanent": true },
     { "source": "/c/:category", "destination": "/sections/:category", "permanent": true }

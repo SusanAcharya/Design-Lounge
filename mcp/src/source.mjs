@@ -1,5 +1,7 @@
 // Load what a reviewer needs from a page: its HTML as served, its CSS, and the site files a crawler reads first.
+import dns from 'node:dns/promises';
 import fs from 'node:fs';
+import net from 'node:net';
 import path from 'node:path';
 import { parse } from 'node-html-parser';
 
@@ -8,12 +10,71 @@ const UA = 'DesignLoungeReview/0.1 (+https://www.designlounge.live)';
 const MAX_SHEETS = 12;
 const MAX_BYTES = 3_000_000;
 
+/* ---------- the network guard, for the hosted server ---------- */
+// A hosted server that fetches any URL it is given could be pointed at its own network. With the guard on, only
+// http and https on ports 80 and 443 go out, every address the name resolves to must be public, and each redirect
+// is checked again before it is followed. The local server leaves it off, so localhost reviews work.
+let guarded = false;
+export const guardNetwork = (on) => { guarded = Boolean(on); };
+
+function privateAddress(ip) {
+  if (net.isIPv4(ip)) {
+    const [a, b] = ip.split('.').map(Number);
+    return a === 0 || a === 10 || a === 127 || (a === 100 && b >= 64 && b <= 127) || (a === 169 && b === 254)
+      || (a === 172 && b >= 16 && b <= 31) || (a === 192 && b === 168) || (a === 192 && b === 0) || (a === 198 && (b === 18 || b === 19)) || a >= 224;
+  }
+  const v6 = ip.toLowerCase();
+  const mapped = v6.match(/^::ffff:(\d+\.\d+\.\d+\.\d+)$/);
+  if (mapped) return privateAddress(mapped[1]);
+  return v6 === '::' || v6 === '::1' || /^f[cd]/.test(v6) || /^fe[89ab]/.test(v6) || /^ff/.test(v6);
+}
+
+export async function checkPublicUrl(raw) {
+  let u;
+  try { u = new URL(raw); } catch { throw new Error(`Not a URL: ${raw}`); }
+  if (!/^https?:$/.test(u.protocol)) throw new Error(`Only http and https URLs can be reviewed, not ${u.protocol}`);
+  if (u.username || u.password) throw new Error('URLs with a username or password are not fetched.');
+  if (u.port && !['80', '443'].includes(u.port)) throw new Error(`Only ports 80 and 443 are fetched from the hosted server, not ${u.port}.`);
+  const host = u.hostname.replace(/^\[|\]$/g, '');
+  if (/^(?:localhost|.*\.localhost|.*\.local|.*\.internal)$/i.test(host)) throw new Error(`${host} is not a public address.`);
+  const addrs = net.isIP(host) ? [{ address: host }] : await dns.lookup(host, { all: true, verbatim: true }).catch(() => { throw new Error(`Could not resolve ${host}.`); });
+  if (!addrs.length || addrs.some((a) => privateAddress(a.address))) throw new Error(`${host} resolves to a private address, so the hosted server will not fetch it.`);
+  return u.href;
+}
+
+/** Read a body up to a cap, so one huge page cannot fill the function's memory. */
+async function readCapped(res, max) {
+  if (!res.body) return Buffer.alloc(0);
+  const chunks = [];
+  let size = 0;
+  for await (const chunk of res.body) {
+    size += chunk.length;
+    if (size > max) { chunks.push(Buffer.from(chunk).subarray(0, chunk.length - (size - max))); break; }
+    chunks.push(Buffer.from(chunk));
+  }
+  return Buffer.concat(chunks);
+}
+
 async function get(url, { bytes = false, timeout = 15000 } = {}) {
   const t0 = Date.now();
+  const headers = { 'user-agent': UA, accept: bytes ? '*/*' : 'text/html,text/css,text/plain,application/xml;q=0.9,*/*;q=0.8' };
   try {
-    const res = await fetch(url, { headers: { 'user-agent': UA, accept: bytes ? '*/*' : 'text/html,text/css,text/plain,application/xml;q=0.9,*/*;q=0.8' }, redirect: 'follow', signal: AbortSignal.timeout(timeout) });
-    const body = bytes ? Buffer.from(await res.arrayBuffer()) : (await res.text()).slice(0, MAX_BYTES);
-    return { ok: res.ok, status: res.status, url: res.url, redirected: res.redirected, headers: Object.fromEntries(res.headers), body, ms: Date.now() - t0 };
+    let res, at = url, hops = 0;
+    if (!guarded) res = await fetch(url, { headers, redirect: 'follow', signal: AbortSignal.timeout(timeout) });
+    else {
+      // Follow redirects by hand, so each hop passes the guard.
+      for (;;) {
+        at = await checkPublicUrl(at);
+        res = await fetch(at, { headers, redirect: 'manual', signal: AbortSignal.timeout(timeout) });
+        const next = res.status >= 300 && res.status < 400 && res.headers.get('location');
+        if (!next) break;
+        if (++hops > 5) throw new Error('More than 5 redirects.');
+        at = new URL(next, at).href;
+      }
+    }
+    const raw = await readCapped(res, MAX_BYTES);
+    const body = bytes ? raw : raw.toString('utf8');
+    return { ok: res.ok, status: res.status, url: guarded ? at : res.url, redirected: guarded ? hops > 0 : res.redirected, headers: Object.fromEntries(res.headers), body, ms: Date.now() - t0 };
   } catch (err) {
     return { ok: false, status: 0, url, error: err.name === 'TimeoutError' ? `timed out after ${timeout / 1000}s` : err.message, body: bytes ? Buffer.alloc(0) : '', ms: Date.now() - t0 };
   }
