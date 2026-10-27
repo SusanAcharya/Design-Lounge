@@ -46,6 +46,9 @@ run('node', ['--test', ...fs.readdirSync(path.join(mcp, 'test')).filter((f) => f
 
 // 3. One version everywhere.
 const server = readJson(serverFile);
+// Keep the files as they were, so a failed publish can put them back and the next run bumps from the same version.
+const before = { pkg: fs.readFileSync(pkgFile, 'utf8'), server: fs.readFileSync(serverFile, 'utf8') };
+const restore = () => { fs.writeFileSync(pkgFile, before.pkg); fs.writeFileSync(serverFile, before.server); };
 pkg.version = version;
 server.version = version;
 for (const p of server.packages) if (p.identifier === pkg.name) p.version = version;
@@ -53,7 +56,13 @@ if (!dry) { writeJson(pkgFile, pkg); writeJson(serverFile, server); }
 
 // 4. npm. prepack bundles the skill, thumbnails, and demos.
 if (dry) run('npm', ['pack', '--dry-run']);
-else run('npm', ['publish', '--access', 'public', ...(otp ? ['--otp', otp] : [])]);
+else {
+  // npm answers 404, not 401, when the login has expired, so check it first and say so plainly.
+  try { execFileSync('npm', ['whoami'], { cwd: mcp, stdio: 'pipe' }); }
+  catch { restore(); console.error('\nYou are not logged in to npm. Run `npm login`, then run the release again. Nothing was changed.'); process.exit(1); }
+  try { run('npm', ['publish', '--access', 'public', ...(otp ? ['--otp', otp] : [])]); }
+  catch { restore(); console.error(`\nnpm did not publish ${version}. The version is back to ${JSON.parse(before.pkg).version}, so you can run the release again.`); process.exit(1); }
+}
 
 // 5. The MCP Registry reads the package's mcpName, so npm must come first.
 if (!dry) {
