@@ -1,5 +1,6 @@
 ---
 import { existsSync, readFileSync } from 'node:fs';
+import { publicFile } from '../../lib/public';
 import Base from '../../layouts/Base.astro';
 import DeviceFrame from '../../components/DeviceFrame.astro';
 import { EXAMPLES, builtUrl, exampleUrl, type Example } from '../../data/examples';
@@ -24,8 +25,8 @@ const f = familyById(ex.family);
 const start = STARTS.find((s) => s.id === ex.recipe);
 const dir = start?.directions.find((d) => d.id === ex.direction);
 const live = builtUrl(ex);
-const poster = (name: string) => (existsSync(new URL(`../../../public/built/${ex.id}/${name}`, import.meta.url)) ? `/built/${ex.id}/${name}` : undefined);
-const mdPath = new URL(`../../../public/built/${ex.id}/DESIGN.md`, import.meta.url);
+const poster = (name: string) => (existsSync(publicFile(`built/${ex.id}/${name}`)) ? `/built/${ex.id}/${name}` : undefined);
+const mdPath = publicFile(`built/${ex.id}/DESIGN.md`);
 const designMd = existsSync(mdPath) ? readFileSync(mdPath, 'utf8') : null;
 const platform = ex.phone ? 'mobile-app' : 'web';
 const og = poster('cover.jpg') ? new URL(`/built/${ex.id}/cover.jpg`, Astro.site).toString() : undefined;

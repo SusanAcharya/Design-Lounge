@@ -1,7 +1,8 @@
 import { existsSync } from 'node:fs';
+import { publicFile } from './public';
 
 const PHONE = new Set(['mobile-web', 'mobile-app', 'pwa']);
-const has = (file: string) => existsSync(new URL(`../../public/thumbs/${file}`, import.meta.url));
+const has = (file: string) => existsSync(publicFile(`thumbs/${file}`));
 
 // The image a library card shows: a crop around small pieces, the whole screen otherwise.
 // Phone screens are tall, so the card shows them whole instead of cropping to the top.

@@ -1,6 +1,7 @@
 ---
 import { render } from 'astro:content';
 import { existsSync } from 'node:fs';
+import { publicFile } from '../../lib/public';
 import Base from '../../layouts/Base.astro';
 import DeviceFrame from '../../components/DeviceFrame.astro';
 import PieceCard from '../../components/PieceCard.astro';
@@ -49,9 +50,9 @@ const toc = [
   ...headings.filter((h) => h.depth === 2).map((h) => ({ id: h.slug, label: h.text, depth: 3 })),
 ];
 const isWeb = pm.frame === 'web';
-const og = existsSync(new URL(`../../../public/og/${piece.id}.jpg`, import.meta.url))
+const og = existsSync(publicFile(`og/${piece.id}.jpg`))
   ? new URL(`/og/${piece.id}.jpg`, Astro.site).toString()
-  : existsSync(new URL(`../../../public/thumbs/${piece.id}.webp`, import.meta.url)) ? new URL(`/thumbs/${piece.id}.webp`, Astro.site).toString() : undefined;
+  : existsSync(publicFile(`thumbs/${piece.id}.webp`)) ? new URL(`/thumbs/${piece.id}.webp`, Astro.site).toString() : undefined;
 // Search shows about 60 characters. Say what the page is in the words people search with, and drop the
 // "with live demo" tail when a long title would push the brand off the end.
 const platformWord = d.platform === 'pwa' ? 'PWA' : pm.label.toLowerCase();

@@ -1,4 +1,5 @@
 import { defineConfig } from 'astro/config';
+import { unified } from '@astrojs/markdown-remark';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -44,17 +45,33 @@ const absoluteBuiltAssets = () => ({
   },
 });
 
+// Astro 6 reports the home page's pathname as /index.html under build.format 'file'. Vercel Analytics reads it from
+// the data-pathname attribute its component writes, so put the home page back to "/" and keep its page views in one row.
+const homeAnalyticsPath = () => ({
+  name: 'home-analytics-path',
+  hooks: {
+    'astro:build:done': ({ dir }) => {
+      const file = path.join(fileURLToPath(dir), 'index.html');
+      if (!fs.existsSync(file)) return;
+      const html = fs.readFileSync(file, 'utf8');
+      fs.writeFileSync(file, html.replace('data-pathname="/index.html"', 'data-pathname="/"'));
+    },
+  },
+});
+
 export default defineConfig({
-  integrations: [absoluteBuiltAssets()],
+  integrations: [absoluteBuiltAssets(), homeAnalyticsPath()],
   site: 'https://www.designlounge.live',
   output: 'static',
   devToolbar: { enabled: false },
   trailingSlash: 'never',
   build: { format: 'file', inlineStylesheets: 'always' },
+  // Astro 7 drops the whitespace between inline elements by default ('jsx'). Keep the v5 output.
+  compressHTML: true,
   markdown: {
-    remarkPlugins: [dropFirstH1],
-    rehypePlugins: [taskBoxes],
-    shikiConfig: { themes: { light: 'github-light', dark: 'github-dark-dimmed' }, defaultColor: false },
+    // Astro 7's default Markdown processor is Sätteri. The briefs use these two remark and rehype plugins, so keep unified.
+    processor: unified({ remarkPlugins: [dropFirstH1], rehypePlugins: [taskBoxes] }),
+    shikiConfig: { themes: { light: 'github-light', dark: 'github-dark-dimmed' }, defaultColor: false, langAlias: { svg: 'xml' } },
   },
   vite: { build: { assetsInlineLimit: 0 } },
 });
