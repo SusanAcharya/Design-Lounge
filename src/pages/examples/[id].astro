@@ -32,7 +32,7 @@ const platform = ex.phone ? 'mobile-app' : 'web';
 const og = poster('cover.jpg') ? new URL(`/built/${ex.id}/cover.jpg`, Astro.site).toString() : undefined;
 const pad = (k: number) => String(k).padStart(2, '0');
 ---
-<Base rail={false} title={`${ex.title} · Examples`} description={`${ex.what} Built by an agent with the Design Lounge skill from one prompt.`} ogImage={og} crumbs={[{ name: 'Examples', href: '/examples' }, { name: ex.title, href: exampleUrl(ex) }]}>
+<Base ogType="article" rail={false} title={`${ex.title} · Examples`} description={`${ex.what} Built by an agent with the Design Lounge skill from one prompt.`} ogImage={og} crumbs={[{ name: 'Examples', href: '/examples' }, { name: ex.title, href: exampleUrl(ex) }]}>
   <article class="wrap ex">
     <header class="head">
       <div class="toprow">

@@ -1,5 +1,6 @@
 ---
 import { framePoster } from '../lib/posters';
+import { imageSize } from '../lib/public';
 import { PLATFORM_META, demoUrl, type Platform } from '../lib/pieces';
 
 interface Props {
@@ -30,6 +31,8 @@ const hasPhone = frame === 'phone' || switchable;
 const hasTablet = frame === 'tablet' || switchable;
 const hasUrlbar = platform === 'mobile-web' || switchable;
 const poster = Astro.props.poster ?? framePoster(slug);
+// The poster's own size, so the browser reserves its shape before it loads.
+const posterSize = poster ? imageSize(poster) : null;
 ---
 <lounge-frame
   class:list={['lf', `lf-${frame}`, `lf-${platform}`, { interactive }, cls]}
@@ -107,7 +110,7 @@ const poster = Astro.props.poster ?? framePoster(slug);
       </>
     )}
     <i class="lf-glass" aria-hidden="true"></i>
-    {poster && <img class="lf-poster-img" src={poster} alt="" aria-hidden="true" loading={eager ? "eager" : "lazy"} fetchpriority={eager ? "high" : undefined} decoding="async" />}
+    {poster && <img class="lf-poster-img" src={poster} width={posterSize?.width} height={posterSize?.height} alt="" aria-hidden="true" loading={eager ? "eager" : "lazy"} fetchpriority={eager ? "high" : undefined} decoding="async" />}
     <iframe title={`Live preview: ${title}`} sandbox="allow-scripts allow-downloads" loading={eager ? 'eager' : 'lazy'} tabindex={interactive ? undefined : -1} inert={interactive ? undefined : true}></iframe>
   </div>
 </lounge-frame>

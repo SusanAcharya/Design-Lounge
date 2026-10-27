@@ -20,6 +20,7 @@ const next = COLLECTIONS[(i + 1) % COLLECTIONS.length];
 <Base title={`${collection.title} shelf`} description={collection.blurb} crumbs={[{ name: 'Shelves', href: '/collections' }, { name: collection.title, href: `/collections/${collection.slug}` }]}>
   <PageHead eyebrow="Shelf" title={collection.title} count={items.length} />
   <div class="wrap">
+    <h2 class="sr-only">Pieces</h2>
     <div class="grid" style="margin-top:32px">
       {items.map((p, idx) => <PieceCard piece={p!} n={nums.get(p!.id) || '000'} index={idx} />)}
     </div>

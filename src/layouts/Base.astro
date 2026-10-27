@@ -17,9 +17,11 @@ interface Props {
   noindex?: boolean;
   crumbs?: { name: string; href: string }[];
   faq?: { q: string; a: string }[];
+  /** 'article' for a page about one thing (a piece, an example). Catalogue and index pages are 'website'. */
+  ogType?: 'website' | 'article';
   schema?: Record<string, unknown>[];
 }
-const { title, description = `A free UI design skill for AI coding agents, with hundreds of live design ideas: sections, app screens, palettes, font pairings and motion.`, ogImage, bodyClass, rail = true, noindex = false, crumbs, faq, schema } = Astro.props;
+const { title, description = `A free UI design skill for AI coding agents, with hundreds of live design ideas: sections, app screens, palettes, font pairings and motion.`, ogImage, bodyClass, rail = true, noindex = false, crumbs, faq, schema, ogType = 'website' } = Astro.props;
 // Search results show about 155 characters: keep whole sentences that fit, else cut at a word.
 const clip = (s: string, max = 158) => {
   if (s.length <= max) return s;
@@ -93,7 +95,7 @@ const count = (await getPieces()).length;
   <meta property="og:url" content={canonical} />
   <meta property="og:title" content={fullTitle} />
   <meta property="og:description" content={metaDescription} />
-  <meta property="og:type" content={path === '/' ? 'website' : 'article'} />
+  <meta property="og:type" content={ogType} />
   <meta property="og:image" content={ogImage ?? `${origin}/og/home.jpg`} />
   <meta property="og:image:width" content={ogImage?.includes('/thumbs/') ? '640' : '1200'} />
   <meta property="og:image:height" content={ogImage?.includes('/thumbs/') ? '400' : '630'} />

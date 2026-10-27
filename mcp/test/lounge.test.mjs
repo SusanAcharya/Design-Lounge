@@ -245,3 +245,16 @@ test('the server lists its tools and answers over MCP', async () => {
     await client.close();
   }
 });
+
+test('search audit: nested entities, dated creative works, and statement headings are not flagged', async () => {
+  const html = `<!doctype html><html lang="en"><head><title>Kettle and Fold momo counter in Patan</title>
+    <meta property="og:type" content="article">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Tsering"},
+      "isPartOf":{"@type":"WebSite","publisher":{"@type":"Organization","name":"Kettle and Fold","sameAs":["https://instagram.com/x"]}},
+      "mainEntity":{"@type":"CreativeWork","name":"Menu","datePublished":"2026-10-01"}}</script></head>
+    <body><main><h1>Kettle and Fold</h1><p>A twelve-seat momo counter in Patan, open from seven.</p>
+    <h2>What you get</h2><p>Twelve seats.</p><h2>How it works</h2><p>Call ahead.</p><h2>Who folds them</h2><p>Tsering.</p></main></body></html>`;
+  const page = await loadPage({ html });
+  const found = ids((await auditSearch(page, await siteFiles(page))).findings);
+  for (const id of ['entity', 'author', 'date', 'faq-schema', 'answer-first']) assert.ok(!found.includes(id), `${id} should not fire`);
+});

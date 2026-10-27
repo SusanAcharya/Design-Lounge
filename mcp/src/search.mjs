@@ -53,19 +53,33 @@ export function robotsAllows(robots, agent, pathname = '/') {
 
 /** Every JSON-LD block, flattened through @graph, with parse errors kept. */
 export function jsonLd(root) {
-  const items = [], errors = [];
+  const items = [], errors = [], top = new Set();
   for (const s of root.querySelectorAll('script[type="application/ld+json"]')) {
     try {
       const data = JSON.parse(s.text);
-      const walk = (d) => { if (Array.isArray(d)) d.forEach(walk); else if (d && typeof d === 'object') { if (d['@graph']) walk(d['@graph']); if (d['@type']) items.push(d); } };
+      // Entities often sit inside others (a WebSite's publisher, a WebPage's author), so walk every value.
+      const walk = (d) => { if (Array.isArray(d)) d.forEach(walk); else if (d && typeof d === 'object') { if (d['@type']) items.push(d); for (const v of Object.values(d)) if (v && typeof v === 'object') walk(v); } };
+      for (const d of [].concat(data['@graph'] || data)) if (d && d['@type']) top.add(d);
       walk(data);
     } catch (e) { errors.push(clip(e.message, 80)); }
   }
-  return { items, errors, types: items.flatMap((i) => [].concat(i['@type'])) };
+  return { items, errors, top, types: items.flatMap((i) => [].concat(i['@type'])) };
 }
 
 const ENTITY_TYPES = /^(?:Organization|Corporation|LocalBusiness|Restaurant|CafeOrCoffeeShop|Bakery|BarOrPub|Store|ClothingStore|Hotel|LodgingBusiness|MedicalBusiness|MedicalClinic|Dentist|Physician|HealthAndBeautyBusiness|DaySpa|BeautySalon|ExerciseGym|SportsActivityLocation|LegalService|Attorney|ProfessionalService|AccountingService|FinancialService|RealEstateAgent|EducationalOrganization|School|CollegeOrUniversity|NGO|Museum|MusicGroup|Person|Product|SoftwareApplication|WebApplication|MobileApplication|Event|Course|Book|CreativeWork|WebSite|Brand|ProfilePage|AboutPage)$/;
 const LOCAL_TYPES = /^(?:LocalBusiness|Restaurant|CafeOrCoffeeShop|Bakery|BarOrPub|Store|ClothingStore|Hotel|LodgingBusiness|MedicalBusiness|MedicalClinic|Dentist|Physician|HealthAndBeautyBusiness|DaySpa|BeautySalon|ExerciseGym|LegalService|Attorney|ProfessionalService|AccountingService|RealEstateAgent)$/;
+
+/**
+ * The entity a page is about. A business, product, or event beats a person, because a Person is often only the
+ * author of a WebPage. A creative work comes last.
+ */
+function primaryEntity(items) {
+  const rank = (t) => (LOCAL_TYPES.test(t) || /^(?:Organization|Corporation|NGO|EducationalOrganization|School|CollegeOrUniversity|Museum|MusicGroup|Brand)$/.test(t) ? 0
+    : /^(?:SoftwareApplication|WebApplication|MobileApplication|Product|Event|Course|Book)$/.test(t) ? 1
+    : /^(?:Person|ProfilePage|AboutPage)$/.test(t) ? 2
+    : ENTITY_TYPES.test(t) && t !== 'WebSite' ? 3 : 9);
+  return items.map((i) => ({ i, r: Math.min(...[].concat(i['@type']).map(rank)) })).filter((x) => x.r < 9).sort((a, b) => a.r - b.r)[0]?.i;
+}
 
 export async function auditSearch(page, site) {
   const F = [];
@@ -164,7 +178,8 @@ export async function auditSearch(page, site) {
 
   /* ================= AEO ================= */
   // Questions as headings, each answered in the first sentences below it.
-  const qHeads = root.querySelectorAll('h2, h3, h4, summary, dt, button[aria-expanded]').filter((h) => /\?\s*$/.test(textOf(h)) || /^(?:how|what|why|when|where|who|which|can|does|do|is|are|will|should)\b/i.test(textOf(h)));
+  // A question ends in "?". Headings like "What you get" or "How it works" are statements.
+  const qHeads = root.querySelectorAll('h2, h3, h4, summary, dt, button[aria-expanded]').filter((h) => /\?\s*$/.test(textOf(h)));
   const answers = qHeads.map((h) => {
     let n = h.nextElementSibling;
     if (h.tagName === 'SUMMARY') n = h.parentNode?.querySelector('p, div:not(summary)');
@@ -212,7 +227,7 @@ export async function auditSearch(page, site) {
     if (trainingBlocked.length) add('info', 'geo', 'ai-training-blocked', `Training crawlers blocked: ${trainingBlocked.join(', ')}`, [], 'A fair choice. It does not stop AI search answers, which use the answer crawlers.');
   }
   if (ld.errors.length) add('fail', 'geo', 'jsonld-error', `${ld.errors.length} JSON-LD blocks do not parse`, ld.errors, 'Fix the JSON. A broken block is ignored entirely.');
-  const entity = ld.items.find((i) => [].concat(i['@type']).some((t) => ENTITY_TYPES.test(t) && t !== 'WebSite'));
+  const entity = primaryEntity(ld.items);
   if (!entity) add('warn', 'geo', 'entity', 'No structured data that says who or what this is', ld.types.length ? [`has: ${ld.types.join(', ')}`] : [], 'Add JSON-LD for the entity: Organization, LocalBusiness (or Restaurant, Dentist...), Person, Product, or SoftwareApplication, with name, url, logo or image, and sameAs links to its real profiles. Use suggest_schema.');
   else {
     const t = [].concat(entity['@type']);
@@ -222,16 +237,18 @@ export async function auditSearch(page, site) {
       const miss = ['address', 'telephone', 'openingHoursSpecification'].filter((k) => !entity[k] && !(k === 'openingHoursSpecification' && entity.openingHours));
       if (miss.length) add('warn', 'geo', 'local-facts', `${t[0]} is missing ${miss.join(', ')}`, [], 'Add the facts people ask an assistant for: address, phone, hours. Only real ones.');
     }
-    const name = String(entity.name || '').toLowerCase();
+    // Only the entity the page is about has to match its title: not an author nested inside a WebPage.
+    const name = ld.top.has(entity) ? String(entity.name || '').toLowerCase() : '';
     if (name && title && !title.toLowerCase().includes(name.split(/\s+/)[0]) && !(h1s[0] || '').toLowerCase().includes(name.split(/\s+/)[0])) add('warn', 'geo', 'entity-consistency', `The entity name "${entity.name}" is not in the title or h1`, [title, h1s[0]], 'Use one name everywhere: title, h1, JSON-LD, footer. Engines join facts by name.');
   }
   // <article> is often a card. An article page says so in og:type or JSON-LD, or has one long <article>.
   const articles = root.querySelectorAll('article');
   const isArticle = og.type === 'article' || ld.types.some((t) => /Article|BlogPosting|NewsArticle/.test(t)) || (articles.length === 1 && wordCount(textOf(articles[0])) >= 300);
   if (isArticle) {
-    const art = ld.items.find((i) => [].concat(i['@type']).some((t) => /Article|BlogPosting|NewsArticle/.test(t)));
-    const byline = art?.author || head.querySelector('meta[name="author"]') || root.querySelector('[rel="author"], [itemprop="author"], .author, .byline');
-    const date = art?.dateModified || art?.datePublished || root.querySelector('time[datetime]');
+    // Any creative work counts: an Article, a BlogPosting, or a CreativeWork with its own author and dates.
+    const art = ld.items.find((i) => [].concat(i['@type']).some((t) => /Article|BlogPosting|NewsArticle|CreativeWork/.test(t))) || {};
+    const byline = art.author || ld.items.find((i) => i.author)?.author || head.querySelector('meta[name="author"]') || root.querySelector('[rel="author"], [itemprop="author"], .author, .byline');
+    const date = art.dateModified || art.datePublished || ld.items.find((i) => i.datePublished || i.dateModified) || root.querySelector('time[datetime]') || meta('article:published_time');
     if (!byline) add('warn', 'geo', 'author', 'An article with no author', [], 'Name the author, on the page and in Article JSON-LD. Engines weigh who said it.');
     if (!date) add('warn', 'geo', 'date', 'An article with no date', [], 'Show the date in <time datetime="2026-10-27"> and set datePublished and dateModified.');
   }
@@ -258,7 +275,7 @@ export function suggestSchema(page, { type, name, url, extra = {} } = {}) {
   const canonical = head.querySelector('link[rel="canonical"]')?.getAttribute('href') || meta('og:url') || page.url || null;
   // The brand is usually the last part of the title ("Momo counter in Patan · Kettle & Fold"). The h1 is a headline, not a name.
   const titleParts = textOf(head.querySelector('title')).split(/\s+[·|–—-]\s+/).filter(Boolean);
-  const existing = jsonLd(root).items.find((i) => [].concat(i['@type']).some((t) => ENTITY_TYPES.test(t) && t !== 'WebSite')) || {};
+  const existing = primaryEntity(jsonLd(root).items) || {};
   const abs = (u) => { try { return u && canonical ? new URL(u, canonical).href : u; } catch { return u; } };
   const found = {};
   found.name = name || existing.name || meta('og:site_name') || (titleParts.length > 1 ? titleParts.at(-1) : null) || textOf(root.querySelector('h1')) || null;

@@ -73,7 +73,7 @@ const schema = {
 };
 const json = (s: string) => JSON.stringify(s).replace(/</g, '\\u003c');
 ---
-<Base fullTitle={pageTitle} description={d.summary} ogImage={og} schema={[schema]} crumbs={[{ name: 'Floor', href: '/browse' }, { name: TYPE_META[d.type].label, href: `/rooms/${d.type}` }, { name: CATEGORY_META[d.category].label, href: `/sections/${d.category}` }, { name: d.title, href: `/p/${piece.id}` }]}>
+<Base ogType="article" fullTitle={pageTitle} description={d.summary} ogImage={og} schema={[schema]} crumbs={[{ name: 'Floor', href: '/browse' }, { name: TYPE_META[d.type].label, href: `/rooms/${d.type}` }, { name: CATEGORY_META[d.category].label, href: `/sections/${d.category}` }, { name: d.title, href: `/p/${piece.id}` }]}>
   <div class="docs wrap" data-docs>
     <DocsSidebar pieces={all} current={piece.id} />
 
