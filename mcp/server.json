@@ -9,15 +9,18 @@
     "source": "github",
     "subfolder": "mcp"
   },
-  "version": "0.2.0",
+  "version": "0.2.1",
   "remotes": [
-    { "type": "streamable-http", "url": "https://www.designlounge.live/api/mcp" }
+    {
+      "type": "streamable-http",
+      "url": "https://www.designlounge.live/api/mcp"
+    }
   ],
   "packages": [
     {
       "registryType": "npm",
       "identifier": "design-lounge-mcp",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "transport": {
         "type": "stdio"
       },
