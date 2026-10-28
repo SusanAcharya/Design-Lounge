@@ -24,6 +24,12 @@ export const AUTHOR = {
   ],
 } as const;
 
+/**
+ * How many, as public copy says it: rounded down with a plus ("600+", "80+"), so a figure never looks stale the day a
+ * piece is added. Small sets stay exact, since "10+" would undersell sixteen.
+ */
+export const about = (n: number) => (n >= 100 ? `${Math.floor(n / 100) * 100}+` : n >= 20 ? `${Math.floor(n / 10) * 10}+` : String(n));
+
 export const CREDIT_LINE = `Designed using Design Lounge · https://www.designlounge.live`;
 
 const demoFiles = import.meta.glob('/src/demos/*.html', { query: '?raw', import: 'default', eager: true }) as Record<string, string>;

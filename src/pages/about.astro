@@ -1,7 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
-import { getPieces, AUTHOR } from '../lib/pieces';
+import { getPieces, AUTHOR, about } from '../lib/pieces';
 import { PAIRINGS } from '../data/type';
 import { THEMES } from '../data/themes';
 import { ICONS } from '../data/icons';
@@ -13,7 +13,7 @@ const desc = `${AUTHOR.name} is a ${AUTHOR.role.toLowerCase()} in ${AUTHOR.city}
   <div class="wrap about">
     <p class="lead">{AUTHOR.role} in {AUTHOR.city}, Nepal.</p>
     <p>I build products end to end: the research, the interface, and the code. I made Design Lounge because AI coding agents kept shipping the same page. A purple gradient, three feature cards, and a row of logos. The agents could write code, but they had no taste to draw on.</p>
-    <p>Design Lounge is that taste, written down. It is a skill your agent installs, and a library of {pieces.length} designs it can read: website sections, app screens, components and motion. Each piece has a live demo and a brief with the exact sizes, states and timing. Around them sit {THEMES.length} colour themes, {PAIRINGS.length} font pairings and {ICONS.length} icons that agree with each other.</p>
+    <p>Design Lounge is that taste, written down. It is a skill your agent installs, and a library of {about(pieces.length)} designs it can read: website sections, app screens, components and motion. Each piece has a live demo and a brief with the exact sizes, states and timing. Around them sit {THEMES.length} colour themes, {PAIRINGS.length} font pairings and {ICONS.length} icons that agree with each other.</p>
     <p>Every piece is an original design with an invented brand. Some study the craft of public sites, and those are named on the <a href="/sources">Sources</a> page. The library is free to use in your own products.</p>
 
     <h2 class="h4">Find me</h2>
@@ -21,7 +21,7 @@ const desc = `${AUTHOR.name} is a ${AUTHOR.role.toLowerCase()} in ${AUTHOR.city}
       {AUTHOR.links.map((l) => <li><a href={l.href} target="_blank" rel="noopener me">{l.label}</a></li>)}
       <li><a href={`mailto:${AUTHOR.email}`}>Email</a></li>
     </ul>
-    <p class="mono faint">{pieces.length} pieces · {PAIRINGS.length} pairings · {THEMES.length} themes · {ICONS.length} icons</p>
+    <p class="mono faint">{about(pieces.length)} pieces · {about(PAIRINGS.length)} pairings · {about(THEMES.length)} themes · {about(ICONS.length)} icons</p>
   </div>
 </Base>
 

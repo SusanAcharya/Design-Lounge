@@ -1,0 +1,212 @@
+<!-- Design Lounge piece: spatial-glass-windows · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Sill · spatial reading windows</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --wall:#b9a48c;--wall-2:#8f7b66;--floor:#5d4d40;--sun:#f1dcb8;
+  --glass:rgba(30,30,34,.82);--glass-solid:#2f2f34;--glass-hi:rgba(255,255,255,.16);
+  --edge:rgba(255,255,255,.22);--ink:#ffffff;--ink-2:#dcdce2;--ink-3:#cdcdd5;
+  --mark:#f3c96a;--accent:#ffffff;
+  --ui:"Inter Tight",system-ui,sans-serif;--read:"Newsreader",Georgia,serif;
+  --r-win:40px;--r-orn:999px;--r-btn:999px;
+  --sh-win:0 30px 60px -20px rgba(28,18,8,.55),0 8px 18px rgba(28,18,8,.22);
+  --sh-front:0 50px 90px -24px rgba(28,18,8,.7),0 14px 30px rgba(28,18,8,.3);
+  --ease:cubic-bezier(.2,.7,.2,1);--spring:cubic-bezier(.32,.72,0,1);--t:360ms;--t-fast:160ms;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:15px/1.4 var(--ui);color:var(--ink);background:var(--wall-2);overflow:hidden;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;cursor:pointer}
+/* ---- room-light scene ---- */
+.room{position:fixed;inset:0;overflow:hidden;background:
+  radial-gradient(60% 50% at 78% 18%,rgba(241,220,184,.95),rgba(241,220,184,0) 70%),
+  linear-gradient(180deg,#c7b399 0%,var(--wall) 46%,var(--wall-2) 64%,var(--floor) 64.2%,#4a3d33 100%);filter:saturate(1.05)}
+.room i{position:absolute;display:block}
+.pane{left:62%;top:6%;width:30%;height:48%;border-radius:6px;background:linear-gradient(160deg,#fbf0dc,#eedcbd 60%,#e0c9a5);box-shadow:0 0 0 14px #cdb898,0 0 120px 40px rgba(250,232,200,.55);filter:blur(6px)}
+.beam{left:44%;top:64%;width:52%;height:30%;background:linear-gradient(100deg,rgba(255,236,204,0),rgba(255,236,204,.32) 40%,rgba(255,236,204,0));transform:skewX(-28deg);filter:blur(10px)}
+.sofa{left:4%;top:50%;width:46%;height:24%;border-radius:40px 40px 18px 18px;background:linear-gradient(180deg,#6f7a6c,#4f594d);filter:blur(9px);opacity:.9}
+.lamp{left:3%;top:14%;width:14%;height:20%;border-radius:50%;background:radial-gradient(closest-side,rgba(255,214,150,.9),rgba(255,214,150,0));filter:blur(8px)}
+.plant{left:88%;top:40%;width:12%;height:30%;border-radius:50% 50% 40% 40%;background:radial-gradient(60% 60% at 40% 40%,#5f7a4e,#38492e);filter:blur(10px)}
+/* ---- stage ---- */
+.stage{position:relative;height:100%;perspective:1700px;perspective-origin:50% 40%}
+.win{position:absolute;border-radius:var(--r-win);background:var(--glass);
+  -webkit-backdrop-filter:blur(36px) saturate(1.5);backdrop-filter:blur(36px) saturate(1.5);
+  box-shadow:inset 0 1px 0 var(--glass-hi),inset 0 0 0 1px var(--edge),var(--sh-win);
+  transition:transform var(--t) var(--spring),box-shadow var(--t) var(--ease);transform-style:preserve-3d;outline:none}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.win,.orn{background:var(--glass-solid)}}
+.win:is(:hover,:focus-within,.front){box-shadow:inset 0 1px 0 var(--glass-hi),inset 0 0 0 1px rgba(255,255,255,.3),var(--sh-front);z-index:5}
+.win:focus-visible{box-shadow:inset 0 0 0 2px #fff,var(--sh-front)}
+.main{left:404px;top:72px;width:540px;height:520px;transform:translateZ(0);z-index:3}
+.main:is(:hover,:focus-within,.front){transform:translateZ(46px)}
+.left{left:30px;top:150px;width:276px;height:420px;transform:translateZ(-160px) rotateY(18deg);z-index:1}
+.left:is(:hover,:focus-within,.front){transform:translateZ(-40px) rotateY(12deg)}
+.right{left:964px;top:176px;width:280px;height:384px;transform:translateZ(-110px) rotateY(-18deg);z-index:2}
+.right:is(:hover,:focus-within,.front){transform:translateZ(0) rotateY(-12deg)}
+.grab{position:absolute;left:50%;bottom:-26px;width:96px;height:6px;margin-left:-48px;border-radius:3px;background:rgba(255,255,255,.55)}
+.grab::before{content:"";position:absolute;left:-26px;top:-5px;width:16px;height:16px;border-radius:50%;background:rgba(255,255,255,.5)}
+/* ---- gaze-like hover on every button ---- */
+.gz{position:relative;overflow:hidden;border:0;background:transparent;border-radius:var(--r-btn);transition:background var(--t-fast) var(--ease),transform var(--t-fast) var(--ease)}
+.gz::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;transition:opacity var(--t-fast) var(--ease);
+  background:radial-gradient(70px circle at var(--gx,50%) var(--gy,50%),rgba(255,255,255,.26),rgba(255,255,255,0) 70%)}
+.gz:hover{background:rgba(255,255,255,.1)}
+.gz:hover::after{opacity:1}
+.gz:active{transform:scale(.96)}
+.gz:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.gz[aria-pressed=true],.gz[aria-current=page]{background:rgba(255,255,255,.9);color:#1d1d21}
+/* ---- reading window ---- */
+.read{height:100%;padding:34px 44px 56px;overflow:hidden;display:flex;flex-direction:column}
+.bar{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);margin-bottom:22px}
+.bar .ico{width:40px;height:40px;display:grid;place-items:center;background:rgba(255,255,255,.1)}
+.bar .sp{flex:1}
+.kick{font:500 12px/1 var(--ui);letter-spacing:.08em;text-transform:uppercase;color:var(--mark)}
+h1{font:400 44px/1.04 var(--read);letter-spacing:-.015em;margin:10px 0 12px;font-variation-settings:"opsz" 72}
+.by{font-size:13px;color:var(--ink-3);margin-bottom:20px}
+.body{font:400 18px/1.56 var(--read);color:var(--ink-2);max-width:452px}
+.body p{margin:0 0 12px}
+mark{background:rgba(243,201,106,.2);color:var(--ink);border-radius:3px;padding:0 2px}
+.prog{position:absolute;left:44px;right:44px;bottom:58px;height:3px;border-radius:2px;background:rgba(255,255,255,.18)}
+.prog b{display:block;height:100%;width:38%;border-radius:inherit;background:#fff}
+/* ---- ornaments ---- */
+.orn{position:absolute;display:flex;gap:6px;padding:8px;border-radius:var(--r-orn);background:rgba(36,36,40,.84);
+  -webkit-backdrop-filter:blur(30px) saturate(1.5);backdrop-filter:blur(30px) saturate(1.5);box-shadow:inset 0 0 0 1px var(--edge),0 16px 30px -10px rgba(20,12,4,.5);transform:translateZ(28px)}
+.tool{left:50%;bottom:-30px;translate:-50% 0;align-items:center}
+.tool .gz{height:44px;min-width:44px;padding:0 14px;display:flex;align-items:center;gap:8px;font-weight:500;font-size:14px}
+.tool .gz.i{padding:0;justify-content:center}
+.tool .sep{width:1px;height:24px;background:rgba(255,255,255,.2)}
+.tabs{left:-76px;top:50%;translate:0 -50%;flex-direction:column}
+.tabs .gz{width:48px;height:48px;display:grid;place-items:center}
+.tabs .gz:hover+.tl,.tabs .gz:focus-visible+.tl{opacity:1;translate:0 0}
+.tl{position:absolute;left:66px;padding:6px 12px;border-radius:999px;background:#2a2a2e;font-size:13px;font-weight:500;white-space:nowrap;opacity:0;translate:-4px 0;pointer-events:none;transition:opacity var(--t-fast) var(--ease),translate var(--t-fast) var(--ease)}
+.tabs>div{position:relative;display:flex;align-items:center}
+.wave{display:inline-flex;gap:2px;height:14px;align-items:center}
+.wave i{width:2px;height:6px;border-radius:1px;background:currentColor}
+[aria-pressed=true] .wave i{animation:w 900ms var(--ease) infinite alternate}
+.wave i:nth-child(2){animation-delay:-300ms}.wave i:nth-child(3){animation-delay:-600ms}
+@keyframes w{to{height:14px}}
+/* ---- side windows ---- */
+.side{height:100%;padding:28px 22px 24px;display:flex;flex-direction:column}
+.side h2{font:600 20px/1.2 var(--ui);letter-spacing:-.01em;margin:0 6px 4px}
+.side .sub{font-size:13px;color:var(--ink-3);margin:0 6px 16px}
+.row{display:flex;gap:12px;align-items:center;width:100%;text-align:left;padding:10px;border-radius:22px}
+.cov{flex:none;width:52px;height:52px;border-radius:14px}
+.row b{display:block;font-weight:500;font-size:14px;line-height:1.25}
+.row span{font-size:12px;color:var(--ink-3)}
+.q{margin:0 0 10px;padding:12px 14px 12px 16px;border-radius:20px;background:rgba(255,255,255,.05);position:relative}
+.q::before{content:"";position:absolute;left:6px;top:14px;bottom:14px;width:3px;border-radius:2px;background:var(--mark)}
+.q p{margin:0 0 6px;font:italic 400 15px/1.4 var(--read);color:var(--ink)}
+.q small{font-size:12px;color:var(--ink-3)}
+.exp{margin-top:auto;height:44px;background:rgba(255,255,255,.14);font-weight:500;font-size:14px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media (max-width:900px){
+  body{overflow:auto}
+  .room{position:fixed}
+  .stage{perspective:none;height:auto;padding:24px 16px 48px;display:flex;flex-direction:column;gap:56px}
+  .win,.win:is(:hover,:focus-within,.front){position:relative;left:auto;top:auto;width:100%;height:auto;transform:none}
+  .main{order:0}.right{order:1}.left{order:2}
+  .read{padding:26px 22px 64px}
+  h1{font-size:32px}
+  .body{font-size:17px}
+  .prog{left:22px;right:22px;bottom:50px}
+  .tabs{display:none}
+  .tool{bottom:-26px;gap:2px;padding:6px}
+  .tool .gz{padding:0 10px}
+  .tool .hide{display:none}
+  .win{border-radius:32px}
+}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="room" aria-hidden="true"><i class="lamp"></i><i class="pane"></i><i class="sofa"></i><i class="plant"></i><i class="beam"></i></div>
+<main class="stage" id="stage">
+  <section class="win left" tabindex="0" aria-label="Up next window">
+    <div class="side">
+      <h2>Up next</h2>
+      <p class="sub">4 saved · 52 min of reading</p>
+      <button class="gz row"><i class="cov" style="background:linear-gradient(150deg,#d9a566,#7b4a2a)"></i><span><b>A ferry timetable for the dead lagoons</b><span>Inês Calado · 11 min</span></span></button>
+      <button class="gz row"><i class="cov" style="background:radial-gradient(circle at 30% 30%,#a9c4cf,#3d5a66)"></i><span><b>What the tide tables leave out</b><span>Rui Vasconcelos · 18 min</span></span></button>
+      <button class="gz row"><i class="cov" style="background:linear-gradient(200deg,#cfc6a8,#6d6a4e)"></i><span><b>Notes on a moliceiro hull</b><span>Marta Brás · 9 min</span></span></button>
+      <button class="gz row"><i class="cov" style="background:conic-gradient(from 40deg,#b8796a,#5a3340,#b8796a)"></i><span><b>Twelve kilos of fleur de sel</b><span>Joana Pires · 14 min</span></span></button>
+      <span class="grab" aria-hidden="true"></span>
+    </div>
+  </section>
+
+  <article class="win main front" tabindex="0" aria-label="Reading window">
+    <div class="read">
+      <div class="bar">
+        <button class="gz ico" aria-label="Back to library"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <span class="sp">Sill · Saved from The Lagoon Quarterly</span>
+        <span>Page 3 of 8</span>
+      </div>
+      <span class="kick">Essay · 14 min read</span>
+      <h1>The salt roads of Aveiro</h1>
+      <div class="by">Tomás Leitão Rocha · 11 October 2026</div>
+      <div class="body">
+        <p>By four in the afternoon the pans have gone the colour of weak tea, and Dona Albertina is still raking. <mark>She works the crystals toward the edge in long strokes, never twice over the same water.</mark></p>
+        <p>Her grandmother kept sixty pans on this flat. Today there are nine, and a sign the council put up in 2019 that the wind has already half erased.</p>
+      </div>
+      <div class="prog" role="progressbar" aria-label="Reading progress" aria-valuenow="38" aria-valuemin="0" aria-valuemax="100"><b></b></div>
+    </div>
+    <nav class="orn tabs" aria-label="Sections">
+      <div><button class="gz" aria-label="Library"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 4v16M10 4v16M15 5l4 15"/></svg></button><span class="tl" aria-hidden="true">Library</span></div>
+      <div><button class="gz" aria-current="page" aria-label="Reading"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 6c3-1 6-1 9 1 3-2 6-2 9-1v13c-3-1-6-1-9 1-3-2-6-2-9-1zM12 7v13"/></svg></button><span class="tl" aria-hidden="true">Reading</span></div>
+      <div><button class="gz" aria-label="Highlights"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M14 4l6 6-9 9H5v-6zM4 21h16"/></svg></button><span class="tl" aria-hidden="true">Highlights</span></div>
+      <div><button class="gz" aria-label="Search"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/></svg></button><span class="tl" aria-hidden="true">Search</span></div>
+    </nav>
+    <div class="orn tool" role="toolbar" aria-label="Reading tools">
+      <button class="gz i" aria-label="Text settings"><span style="font:500 17px var(--read)">Aa</span></button>
+      <span class="sep" aria-hidden="true"></span>
+      <button class="gz" id="listen" aria-pressed="false"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg><span>Listen</span><span class="wave" aria-hidden="true"><i></i><i></i><i></i></span><span class="hide">14:02</span></button>
+      <button class="gz i" id="hl" aria-pressed="false" aria-label="Highlight selection"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M14 4l6 6-9 9H5v-6z"/></svg></button>
+      <button class="gz i" id="bm" aria-pressed="true" aria-label="Saved"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M6 3h12v18l-6-4-6 4z"/></svg></button>
+      <button class="gz i hide" aria-label="Share"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 3v12M7 8l5-5 5 5M5 14v6h14v-6"/></svg></button>
+    </div>
+  </article>
+
+  <aside class="win right" tabindex="0" aria-label="Highlights window">
+    <div class="side">
+      <h2>Highlights</h2>
+      <p class="sub" id="hcount">6 in this essay</p>
+      <div class="q"><p>Never twice over the same water.</p><small>Page 3</small></div>
+      <div class="q"><p>The salt is sold by the colour of the morning it was raked.</p><small>Page 5</small></div>
+      <div class="q"><p>Nine pans, and a sign the wind has half erased.</p><small>Page 3</small></div>
+      <button class="gz exp">Send to notebook</button>
+      <span class="grab" aria-hidden="true"></span>
+    </div>
+  </aside>
+</main>
+<p class="sr" aria-live="polite" id="live"></p>
+<script>
+(function(){
+  var wins=[].slice.call(document.querySelectorAll('.win')),live=document.getElementById('live');
+  function front(w){wins.forEach(function(x){x.classList.toggle('front',x===w)});}
+  wins.forEach(function(w){
+    w.addEventListener('pointerdown',function(){front(w)});
+    w.addEventListener('focusin',function(){front(w)});
+  });
+  document.addEventListener('pointermove',function(e){
+    var b=e.target.closest&&e.target.closest('.gz');if(!b)return;
+    var r=b.getBoundingClientRect();
+    b.style.setProperty('--gx',(e.clientX-r.left)+'px');b.style.setProperty('--gy',(e.clientY-r.top)+'px');
+  });
+  function toggle(id,on,off){
+    var b=document.getElementById(id);if(!b)return;
+    b.addEventListener('click',function(){
+      var p=b.getAttribute('aria-pressed')!=='true';b.setAttribute('aria-pressed',p);
+      live.textContent=p?on:off;
+    });
+  }
+  toggle('listen','Reading aloud','Paused');
+  toggle('bm','Saved to library','Removed from library');
+  toggle('hl','Highlighter on','Highlighter off');
+})();
+</script>
+</body>
+</html>

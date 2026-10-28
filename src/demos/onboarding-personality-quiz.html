@@ -1,0 +1,132 @@
+<!-- Design Lounge piece: onboarding-personality-quiz · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Leafling plant parent quiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400..700&family=Gochi+Hand&display=swap" rel="stylesheet">
+<style>
+:root{
+  --surface:#f4faf6;--s-high:#e3eee8;--on:#15201c;--on-var:#3f4944;--outline:#6f7a74;
+  --primary:#006a5b;--on-primary:#ffffff;--pc:#a6f0da;--on-pc:#00201a;
+  --tert:#b2401f;--track:#c4d6ce;
+  --sun:#ffddb0;--on-sun:#2a1800;--keep:#b8ead9;--on-keep:#00201a;--sky:#cfe6f2;--on-sky:#0b1e28;--lime:#cdeda3;--on-lime:#102000;
+  --round:"Fredoka",system-ui,sans-serif;--hand:"Gochi Hand",cursive;
+  --spring:cubic-bezier(.42,1.67,.21,.9);--spatial:cubic-bezier(.38,1.21,.22,1);--emph:cubic-bezier(.2,0,0,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:16px/1.4 var(--round);color:var(--on);background:var(--surface);overflow:hidden}
+button{font:inherit;color:inherit;border:0;background:none;padding:0;cursor:pointer;-webkit-tap-highlight-color:transparent}
+:focus-visible{outline:3px solid var(--primary);outline-offset:3px}
+.app{height:100%;display:flex;flex-direction:column;padding:54px 0 34px}
+.bar{display:flex;align-items:center;gap:12px;padding:8px 16px 0;height:64px}
+.icon{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;background:var(--s-high);flex:none;transition:border-radius 250ms var(--spring)}
+.icon:active{border-radius:14px}
+.icon svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.icon[disabled]{opacity:.38;cursor:default}
+.prog{flex:1;min-width:0;height:24px;display:flex;align-items:center}
+.prog svg{width:100%;height:24px;overflow:visible}
+.count{font-weight:600;font-size:14px;color:var(--on-var);min-width:64px;text-align:right;font-variant-numeric:tabular-nums}
+main{flex:1;min-height:0;position:relative;padding:20px 20px 0}
+.kick{font:22px/1 var(--hand);color:var(--tert);transform:rotate(-3deg);display:inline-block;margin:6px 0 8px 2px}
+h1{margin:0 0 22px;font-size:31px;line-height:1.12;font-weight:600;letter-spacing:-.01em}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.ans{position:relative;min-height:214px;padding:16px;text-align:left;display:flex;flex-direction:column;justify-content:space-between;border-radius:28px;transition:border-radius 350ms var(--spring),transform 160ms var(--emph),box-shadow 200ms var(--emph)}
+.ans:nth-child(1){border:2px solid #a0661a;background:var(--sun);color:var(--on-sun);border-radius:28px 28px 28px 8px}
+.ans:nth-child(2){border:2px solid #2e8a72;background:var(--keep);color:var(--on-keep);border-radius:28px 28px 8px 28px}
+.ans:nth-child(3){border:2px solid #3f7ea0;background:var(--sky);color:var(--on-sky);border-radius:28px 8px 28px 28px}
+.ans:nth-child(4){border:2px solid #5e8a1e;background:var(--lime);color:var(--on-lime);border-radius:8px 28px 28px 28px}
+.ans:active{transform:scale(.96)}
+.ans[aria-checked=true]{border-radius:56px;box-shadow:inset 0 0 0 3px currentColor}
+.ans .g{width:52px;height:52px;border-radius:50%;background:rgba(255,255,255,.55);display:grid;place-items:center}
+.ans .g svg{width:28px;height:28px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.ans b{font-size:18px;font-weight:600;line-height:1.15;display:block}
+.ans small{display:block;font-size:14px;margin-top:4px;opacity:.9}
+.tick{position:absolute;right:14px;top:14px;width:30px;height:30px;border-radius:50%;background:var(--on);color:var(--surface);display:grid;place-items:center;transform:scale(0);transition:transform 300ms var(--spring)}
+.tick svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.ans[aria-checked=true] .tick{transform:scale(1)}
+.hint{margin:20px 0 0;text-align:center;font:19px/1.2 var(--hand);color:var(--on-var)}
+.res{display:flex;flex-direction:column;height:100%}
+.hero{position:relative;height:250px;display:grid;place-items:center;margin:-6px 0 6px}
+.hero svg.cookie{position:absolute;width:236px;height:236px;animation:spinin 900ms var(--spatial) both}
+.hero .gl{position:relative;width:88px;height:88px;animation:pop 600ms 200ms var(--spring) both}
+.hero .gl svg{width:88px;height:88px;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.res .kick{margin:0 0 6px}
+.res h1:focus{outline:none}
+.res h1{font-size:38px;margin:2px 0 8px}
+.res p{margin:0 0 16px;color:var(--on-var);font-size:16px}
+.setup{list-style:none;margin:0 0 auto;padding:0;background:var(--s-high);border-radius:24px}
+.setup li{display:flex;gap:12px;align-items:center;padding:12px 14px;font-size:15px;animation:up 400ms var(--emph) both}
+.setup li+li{border-top:1px solid #cfdcd5}
+.setup li:nth-child(2){animation-delay:420ms}.setup li:nth-child(3){animation-delay:480ms}.setup li:nth-child(1){animation-delay:360ms}
+.setup i{width:36px;height:36px;border-radius:12px;background:var(--pc);color:var(--on-pc);display:grid;place-items:center;flex:none}
+.setup i svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.setup b{display:block;font-weight:600}
+.cta{margin-top:16px;height:56px;border-radius:28px;background:var(--primary);color:var(--on-primary);font-size:17px;font-weight:600;transition:border-radius 250ms var(--spring)}
+.cta:active{border-radius:14px}
+.again{height:48px;margin:4px auto 0;padding:0 20px;display:flex;align-items:center;gap:8px;color:var(--primary);font-weight:600;border-radius:24px}
+.again svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+@keyframes spinin{from{transform:rotate(-90deg) scale(.4);opacity:0}to{transform:rotate(0) scale(1);opacity:1}}
+@keyframes pop{from{transform:scale(0)}to{transform:scale(1)}}
+@keyframes up{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@media (max-height:760px){.ans{min-height:150px}.hero{height:200px}}
+@media (min-width:600px){main,.bar{max-width:560px;width:100%;margin:0 auto}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:1ms!important}}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="bar">
+    <button class="icon" id="back" aria-label="Back"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+    <div class="prog" role="progressbar" aria-label="Quiz progress" aria-valuemin="0" aria-valuemax="5" id="prog"><svg viewBox="0 0 260 24" preserveAspectRatio="none" aria-hidden="true"><path id="pt" d="" fill="none" stroke="var(--track)" stroke-width="6" stroke-linecap="round"/><path id="pw" d="" fill="none" stroke="var(--primary)" stroke-width="6" stroke-linecap="round"/><circle cx="257" cy="12" r="3" fill="var(--primary)"/></svg></div>
+    <span class="count" id="count" aria-hidden="true"></span>
+  </div>
+  <main id="main" aria-live="polite"></main>
+</div>
+<script>
+(function(){
+var I={sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M5 19l1.5-1.5M17.5 6.5L19 5"/>',
+drop:'<path d="M12 3c4 5 6 8 6 11a6 6 0 0 1-12 0c0-3 2-6 6-11z"/>',moon:'<path d="M20 14A8 8 0 1 1 10 4a6 6 0 0 0 10 10z"/>',
+leaf:'<path d="M5 19C5 10 10 5 20 4c0 10-5 15-14 15zM5 19l8-8"/>',win:'<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M12 3v18M4 12h16"/>',
+cal:'<rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/>',bag:'<rect x="3" y="7" width="18" height="13" rx="3"/><path d="M9 7V4h6v3"/>',
+home:'<path d="M4 11l8-7 8 7v9H4z"/><path d="M10 20v-5h4v5"/>',shelf:'<path d="M3 8h18M3 16h18M6 8V4h3v4M14 16v-5h4v5"/>',flower:'<circle cx="12" cy="9" r="3"/><path d="M12 12v9M12 6a3 3 0 1 1 3 3M12 6a3 3 0 1 0-3 3M8 17c2 0 4 1 4 4"/>'};
+function ic(k,c){return '<svg viewBox="0 0 24 24"'+(c?' stroke="'+c+'"':'')+'>'+I[k]+'</svg>'}
+var Q=[['be honest','Which way does your brightest window face?',[['South','Sun most of the day','sun','sun'],['East','Soft, bright mornings','win','keep'],['North','Gentle all-day shade','moon','forget'],['Skylight','Light from above','home','jungle']]],
+['no judgement','How do you water, really?',[['A deep soak','Then I wait a while','drop','sun'],['On a schedule','Same day every week','cal','keep'],['When it droops','It tells me, I listen','moon','forget'],['Every time I pass','A little, often','leaf','jungle']]],
+['picture your place','How much room can a plant have?',[['One sill','The sunny one','win','sun'],['A shelf or two','Neat and tidy','shelf','keep'],['A dim corner','By the bookcase','moon','forget'],['Half the room','Go on, take it','home','jungle']]],
+['real life','How often are you away from home?',[['Summers away','Long trips, rare','sun','sun'],['A weekend a month','Short and planned','cal','keep'],['Often, for work','Two nights a week','bag','forget'],['Hardly ever','I work from home','home','jungle']]],
+['last one','What do you want a plant to give you?',[['Flowers','Colour on the sill','flower','sun'],['A calm routine','Ten quiet minutes','cal','keep'],['Zero guilt','It just survives','moon','forget'],['Big drama','Leaves like umbrellas','leaf','jungle']]]];
+var R={sun:['The Sun Chaser','You have the light most people want. Succulents and bloomers will thrive if you water deeply and rarely.','#ffddb0','#7a4a00','sun',[['drop','Water every 12 days','Sundays at 09:00'],['flower','Starter shelf','Jade, aloe, kalanchoe'],['sun','Light check','At the start of each season']]],
+keep:['The Steady Keeper','You like a rhythm, and plants love one. We will match your week with plants that reward routine.','#b8ead9','#006a5b','cal',[['drop','Water every 7 days','Saturdays at 10:00'],['leaf','Starter shelf','Pothos, calathea, peperomia'],['cal','Feeding reminder','First Sunday of the month']]],
+forget:['The Gentle Forgetter','Busy, kind and often away. We will choose plants that forgive you and nudge you only when it matters.','#cfe6f2','#1d4f6a','moon',[['drop','Water every 14 days','One nudge, no nagging'],['leaf','Starter shelf','Snake plant, ZZ, cast iron'],['bag','Holiday mode','Pauses reminders on trips']]],
+jungle:['The Jungle Builder','You are home, generous and ready for big leaves. We will help you grow a room that feels like a greenhouse.','#cdeda3','#2f5a00','leaf',[['drop','Mist and water every 4 days','Mornings at 08:00'],['leaf','Starter shelf','Monstera, bird of paradise, fern'],['home','Humidity tracker','Pinned to your home screen']]]};
+var $=function(i){return document.getElementById(i)},main=$('main'),step=0,picks=[],busy=false,rm=matchMedia('(prefers-reduced-motion: reduce)').matches;
+function wave(w){var d='M3 12';for(var x=3;x<=w;x+=2)d+='L'+x+' '+(12+3.2*Math.sin(x/5)).toFixed(2);return d}
+function progress(n){var w=3+Math.min(n+1,5)/5*244;$('pw').setAttribute('d',wave(w));$('pt').setAttribute('d',n<4?'M'+(w+10)+' 12L247 12':'');
+ $('prog').setAttribute('aria-valuenow',n);$('prog').setAttribute('aria-valuetext',n<5?'Question '+(n+1)+' of 5':'Done');$('count').textContent=n<5?(n+1)+' of 5':'5 of 5';$('back').disabled=n==0}
+function swap(html,dir,after){if(rm||!main.animate){main.innerHTML=html;after&&after();return}
+ main.animate([{opacity:1,transform:'none'},{opacity:0,transform:'translateX('+(-24*dir)+'px)'}],{duration:180,easing:'cubic-bezier(.3,0,.8,.15)'}).onfinish=function(){
+ main.innerHTML=html;after&&after();main.animate([{opacity:0,transform:'translateX('+(32*dir)+'px)'},{opacity:1,transform:'none'}],{duration:360,easing:'cubic-bezier(.05,.7,.1,1)'})}}
+function ask(dir){var q=Q[step];progress(step);
+ swap('<span class="kick">'+q[0]+'</span><h1 id="qh">'+q[1]+'</h1><div class="grid" role="radiogroup" aria-labelledby="qh">'+q[2].map(function(a,i){
+ return '<button class="ans" role="radio" aria-checked="'+(picks[step]==i)+'" data-i="'+i+'"><span class="g">'+ic(a[2])+'</span><span><b>'+a[0]+'</b><small>'+a[1]+'</small></span><span class="tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></span></button>'}).join('')+
+ '</div><p class="hint">tap one, there are no wrong answers</p>',dir,function(){main.querySelectorAll('.ans').forEach(function(b){b.onclick=function(){choose(+b.dataset.i)}})})}
+function choose(i){if(busy)return;busy=true;picks[step]=i;main.querySelectorAll('.ans').forEach(function(b){b.setAttribute('aria-checked',+b.dataset.i==i)});
+ setTimeout(function(){busy=false;step++;step<5?ask(1):result()},rm?120:420)}
+function cookie(){var d='';for(var k=0;k<=96;k++){var a=k/96*Math.PI*2,r=100+7*Math.cos(a*9);d+=(k?'L':'M')+(118+r*Math.cos(a)).toFixed(1)+' '+(118+r*Math.sin(a)).toFixed(1)}return d+'Z'}
+function result(){var c={sun:0,keep:0,forget:0,jungle:0};picks.forEach(function(p,s){c[Q[s][2][p][3]]++});
+ var k=Object.keys(c).sort(function(a,b){return c[b]-c[a]})[0],r=R[k];progress(5);
+ swap('<div class="res"><div class="hero" aria-hidden="true"><svg class="cookie" viewBox="0 0 236 236"><path d="'+cookie()+'" fill="'+r[2]+'"/></svg><span class="gl">'+ic(r[4],r[3])+'</span></div>'+
+ '<span class="kick">so you are</span><h1 tabindex="-1" id="rh">'+r[0]+'</h1><p>'+r[1]+'</p><ul class="setup" aria-label="Leafling will set up">'+
+ r[5].map(function(s){return '<li><i>'+ic(s[0])+'</i><span><b>'+s[1]+'</b>'+s[2]+'</span></li>'}).join('')+'</ul>'+
+ '<button class="cta" type="button">Set up my garden</button><button class="again" id="again" type="button"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 3-6.2M4 4v4h4"/></svg>Retake the quiz</button></div>',1,
+ function(){$('again').onclick=function(){step=0;picks=[];ask(-1)};var h=$('rh');h&&h.focus({preventScroll:true})})}
+$('back').onclick=function(){if(busy)return;if(step>0){step--;ask(-1)}};
+progress(0);main.innerHTML='';ask(0);
+})();
+</script>
+</body>
+</html>

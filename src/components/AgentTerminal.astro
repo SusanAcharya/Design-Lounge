@@ -2,9 +2,9 @@
 import { STARTS } from '../data/starts';
 
 interface Props {
-  pieces: number;
-  pairings: number;
-  themes: number;
+  pieces: string;
+  pairings: string;
+  themes: string;
 }
 const { pieces, pairings, themes } = Astro.props;
 const recipe = STARTS.find((s) => s.id === 'saas');

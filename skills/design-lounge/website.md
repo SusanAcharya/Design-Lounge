@@ -48,7 +48,7 @@ The frame is the set of parts every site of this kind has: the header, the phone
 
 - Header: Website navigation in [components.md](components.md).
 - Phone: `cta-sticky-mobile-bar` (one action with its fact, collapsing at 72px), `mobile-web-bottom-nav` (a site people come back to weekly), or none (the actions stay in the header and the find-us block).
-- Find us: `contact-split-map-form`, `contact-booking-hours`, `profile-contact-card`, or a map drawn in the Signature's own material.
+- Find us: `contact-split-map-form`, `contact-booking-hours`, `profile-contact-card`, or a map drawn in the Signature's own material. A business with several locations: `store-locator-map`.
 
 Recent picks in [practice.md](practice.md) compares both with recent sites.
 

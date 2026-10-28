@@ -599,3 +599,10 @@ parallax-cursor-gallery | web | scroll | Parallax cursor gallery | minimal paper
 scroll-mask-reveal-sequence | web | scroll | Scroll mask reveal sequence | retro kinetic dark | scroll mask clip-path travel sequence
 scroll-exploding-grid | web | scroll | Scroll exploding product grid | playful kinetic swiss | scroll grid ecommerce cards assemble
 scroll-ring-carousel | web | scroll | Scroll ring carousel | dark kinetic retro | carousel 3d scroll drag film
+spatial-glass-windows | web | mockups | Spatial glass windows | glass soft dark | spatial glass windows reading depth
+dashboard-ai-insights | web | dashboard | Dashboard with assistant insights | minimal swiss | dashboard analytics insights charts assistant
+product-configurator-material | web | ecommerce | Lamp configurator with materials | dark luxe minimal | ecommerce configurator product radio pricing
+store-locator-map | web | contact | Store locator with synced map | minimal paper | locator map hours search filters
+vinyl-record-player | web | media | Vinyl record player | dark retro editorial | music player vinyl turntable audio
+onboarding-personality-quiz | mobile-app | onboarding | Onboarding personality quiz | playful material soft | onboarding quiz material personalisation mobile
+ascii-ocean-sharks | web | backgrounds | ASCII ocean with sharks | terminal dark organic | ascii canvas ocean hero generative

@@ -1,0 +1,158 @@
+<!-- Design Lounge piece: vinyl-record-player · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Salt Hours on the turntable</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Outfit:wght@300..700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0f1d1e;--bg2:#142728;--line:#28403f;--ink:#f3e9dc;--ink2:#b9c4bd;--ink3:#93a39d;
+  --coral:#f2785c;--coral-hi:#ff9479;--on-coral:#2a0f08;--paper:#ecdcc4;--sea:#1f4e4f;--sea2:#2c6a69;
+  --vinyl:#121212;--groove:#1d1d1d;--track:#5f7672;
+  --serif:"Instrument Serif",Georgia,serif;--sans:"Outfit",system-ui,sans-serif;
+  --u:1px;--ease:cubic-bezier(.2,.7,.2,1);--expo:cubic-bezier(.16,1,.3,1);--arm:900ms;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:15px/1.45 var(--sans);color:var(--ink);background:var(--bg);overflow:hidden}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer;background:none;border:0;padding:0}
+:focus-visible{outline:2px solid var(--coral-hi);outline-offset:3px}
+.app{display:grid;grid-template-columns:760px 1fr;height:100%}
+.stage{position:relative;overflow:hidden;width:calc(760*var(--u));height:calc(800*var(--u));background:radial-gradient(calc(520*var(--u)) calc(520*var(--u)) at 60% 50%,#173031,transparent 70%)}
+.sleeve{position:absolute;left:calc(40*var(--u));top:calc(210*var(--u));width:calc(360*var(--u));height:calc(360*var(--u));background:var(--paper);overflow:hidden;box-shadow:0 calc(18*var(--u)) calc(40*var(--u)) rgba(0,0,0,.45);transform:rotate(-3deg)}
+.sleeve .sun{position:absolute;left:18%;top:20%;width:64%;height:64%;border-radius:50%;background:var(--coral)}
+.sleeve .sea{position:absolute;left:0;right:0;bottom:0;height:46%;background:repeating-linear-gradient(180deg,var(--sea) 0 calc(14*var(--u)),var(--sea2) calc(14*var(--u)) calc(17*var(--u)))}
+.sleeve .band{position:absolute;left:calc(22*var(--u));top:calc(22*var(--u));font:600 calc(13*var(--u))/1 var(--sans);letter-spacing:.24em;color:#3a2a20}
+.sleeve .ttl{position:absolute;left:calc(22*var(--u));bottom:calc(22*var(--u));font:italic calc(38*var(--u))/1 var(--serif);color:var(--paper)}
+.platter{position:absolute;left:calc(210*var(--u));top:calc(160*var(--u));width:calc(480*var(--u));height:calc(480*var(--u));border-radius:50%;background:#081010;box-shadow:0 0 0 calc(2*var(--u)) #2a3d3d,0 calc(30*var(--u)) calc(60*var(--u)) rgba(0,0,0,.55)}
+.disc,.sheen{position:absolute;inset:calc(10*var(--u));border-radius:50%}
+.disc{background:repeating-radial-gradient(circle,var(--vinyl) 0 calc(2*var(--u)),var(--groove) calc(2*var(--u)) calc(3*var(--u)));animation:spin 1.8s linear infinite;animation-play-state:paused}
+.playing .disc{animation-play-state:running}
+@keyframes spin{to{transform:rotate(360deg)}}
+.sheen{background:conic-gradient(from 20deg,transparent 0 8%,rgba(255,240,220,.09) 13%,transparent 20% 52%,rgba(255,240,220,.07) 60%,transparent 68%);-webkit-mask:radial-gradient(circle,transparent 34%,#000 35%);mask:radial-gradient(circle,transparent 34%,#000 35%);pointer-events:none}
+.label{position:absolute;left:50%;top:50%;width:calc(150*var(--u));height:calc(150*var(--u));margin:calc(-75*var(--u)) 0 0 calc(-75*var(--u));border-radius:50%;background:var(--coral);color:var(--on-coral);text-align:center}
+.label>*{position:absolute;left:0;right:0}
+.label b{top:calc(42*var(--u));font:italic 400 calc(24*var(--u))/1 var(--serif)}
+.label span{top:calc(28*var(--u));font:600 calc(8*var(--u))/1 var(--sans);letter-spacing:.2em}
+.label span+b+span{top:calc(96*var(--u))}
+.label i{top:calc(110*var(--u));font:500 calc(8*var(--u))/1 var(--sans);letter-spacing:.12em;font-style:normal}
+.label::after{content:"";position:absolute;left:50%;top:50%;width:calc(10*var(--u));height:calc(10*var(--u));margin:calc(-5*var(--u));border-radius:50%;background:#d9d4cc;box-shadow:0 0 0 calc(2*var(--u)) #7a3424}
+.arm{position:absolute;left:calc(660*var(--u));top:calc(110*var(--u));width:calc(80*var(--u));height:calc(380*var(--u));transform-origin:50% 10.53%;transform:rotate(var(--a,-2deg));transition:transform var(--arm) var(--expo);filter:drop-shadow(calc(8*var(--u)) calc(14*var(--u)) calc(8*var(--u)) rgba(0,0,0,.5))}
+.arm.track{transition-duration:300ms}
+.base{position:absolute;left:calc(656*var(--u));top:calc(106*var(--u));width:calc(88*var(--u));height:calc(88*var(--u));border-radius:50%;background:radial-gradient(circle at 40% 35%,#3c5352,#1a2a2a);box-shadow:0 0 0 1px #2e4544}
+.rest{position:absolute;left:calc(688*var(--u));top:calc(470*var(--u));width:calc(24*var(--u));height:calc(30*var(--u));border-radius:calc(6*var(--u));background:#243838}
+.side{display:flex;flex-direction:column;padding:52px 56px 32px 8px;min-width:0}
+.eyebrow{font:500 12px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--ink3);display:flex;align-items:center;gap:10px}
+.eyebrow i{width:8px;height:8px;border-radius:50%;background:var(--ink3)}
+.playing .eyebrow i{background:var(--coral);box-shadow:0 0 0 4px rgba(242,120,92,.2)}
+h1{margin:14px 0 0;font:400 clamp(64px,9vw,112px)/.88 var(--serif);letter-spacing:-.02em}
+h1 em{display:block;padding-left:.5em}
+.by{margin:14px 0 0;font-size:20px;font-weight:500}
+.by small{display:block;font-size:13px;font-weight:400;color:var(--ink2);margin-top:2px}
+.now{margin:22px 0 0;display:flex;align-items:center;gap:18px}
+.ctl{width:44px;height:44px;display:grid;place-items:center;border-radius:50%;color:var(--ink);border:1.5px solid var(--track)}
+.ctl:hover{border-color:var(--ink)}
+.ctl svg{width:20px;height:20px}
+.play{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;background:var(--coral);color:var(--on-coral);transition:transform 160ms var(--ease)}
+.play:hover{background:var(--coral-hi)}
+.play:active{transform:scale(.94)}
+.play svg{width:26px;height:26px}
+.play .pa,.playing .play .pl{display:none}.playing .play .pa{display:block}
+.np{min-width:0}
+.np b{display:block;font-weight:600;font-size:17px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.np span{font-size:13px;color:var(--ink2)}
+.scrub{margin:18px 0 0;display:grid;grid-template-columns:44px 1fr 44px;gap:12px;align-items:center;font:500 13px var(--sans);font-variant-numeric:tabular-nums;color:var(--ink2)}
+.scrub span:last-child{text-align:right}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:3px;background-color:var(--track);background-image:linear-gradient(var(--coral),var(--coral));background-size:var(--p,0%) 100%;background-repeat:no-repeat;margin:0;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--ink);border:3px solid var(--coral);transition:transform 120ms var(--ease)}
+input[type=range]:active::-webkit-slider-thumb{transform:scale(1.25)}
+input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:var(--ink);border:3px solid var(--coral)}
+.tabs{margin:26px 0 6px;display:flex;gap:4px;border-bottom:1px solid var(--line)}
+.tabs button{height:40px;padding:0 14px;font-weight:500;color:var(--ink2);border-bottom:2px solid transparent;margin-bottom:-1px}
+.tabs button[aria-selected=true]{color:var(--ink);border-color:var(--coral)}
+.tabs .flip{margin-left:auto;color:var(--coral-hi);font-weight:600;display:none}
+.tabs .flip.on{display:block}
+ol{list-style:none;margin:0;padding:0}
+.t{display:grid;grid-template-columns:36px 1fr auto;align-items:center;gap:8px;width:100%;height:38px;padding:0 8px;border-radius:8px;text-align:left}
+.t:hover{background:var(--bg2)}
+.t .n{font-size:12px;color:var(--ink3);font-variant-numeric:tabular-nums}
+.t .d{font-size:13px;color:var(--ink2);font-variant-numeric:tabular-nums}
+.t[aria-current=true]{color:var(--coral-hi)}
+.t[aria-current=true] .n{color:transparent;position:relative}
+.eq{display:none;gap:2px;align-items:flex-end;height:12px;position:absolute;left:0;top:1px}
+.t[aria-current=true] .eq{display:flex}
+.eq i{width:3px;height:12px;background:var(--coral-hi);transform-origin:bottom;transform:scaleY(.4)}
+.playing .t[aria-current=true] .eq i{animation:eq .9s var(--ease) infinite alternate}
+.eq i:nth-child(2){animation-delay:-.3s!important}.eq i:nth-child(3){animation-delay:-.6s!important}
+@keyframes eq{to{transform:scaleY(1)}}
+@media (max-width:900px){
+  body{overflow:auto}
+  .app{grid-template-columns:1fr;height:auto}
+  .stage{--u:calc(100vw/760);height:calc(680*var(--u))}
+  .side{padding:0 20px 40px}
+  h1{font-size:clamp(56px,17vw,88px)}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:1ms!important}}
+</style>
+</head>
+<body>
+<main class="app" id="app">
+  <div class="stage" aria-hidden="true">
+    <div class="sleeve"><div class="sun"></div><div class="sea"></div><div class="band">MARROW &amp; LUNE</div><div class="ttl">Salt Hours</div></div>
+    <div class="platter"><div class="disc"><div class="label"><span>MARROW &amp; LUNE</span><b>Salt Hours</b><span id="lside">SIDE A · 33⅓</span><i>HRR-031</i></div></div><div class="sheen"></div></div>
+    <div class="base"></div><div class="rest"></div>
+    <svg class="arm" id="arm" viewBox="0 0 80 380"><rect x="26" y="0" width="28" height="26" rx="5" fill="#9aa8a4"/><path d="M40 20V318l-6 26" fill="none" stroke="#d9d4cc" stroke-width="6" stroke-linecap="round"/><circle cx="40" cy="40" r="15" fill="#5c6f6c" stroke="#d9d4cc" stroke-width="3"/><path d="M24 336l22 4-6 34-18-4z" fill="#d9d4cc"/><rect x="28" y="364" width="10" height="8" fill="#f2785c"/></svg>
+  </div>
+  <section class="side" aria-labelledby="ttl">
+    <div class="eyebrow"><i></i><span id="state">Now spinning</span> · LP · 2026</div>
+    <h1 id="ttl">Salt <em>Hours</em></h1>
+    <p class="by">Marrow &amp; Lune<small>Hollow Reed Records, HRR-031 · 10 tracks · 43 min</small></p>
+    <div class="now">
+      <button class="ctl" id="prev" aria-label="Previous track"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h2v14H6zM20 5v14L9 12z"/></svg></button>
+      <button class="play" id="play" aria-label="Pause" aria-pressed="true"><svg class="pl" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4l14 8-14 8z"/></svg><svg class="pa" viewBox="0 0 24 24" fill="currentColor"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg></button>
+      <button class="ctl" id="next" aria-label="Next track"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 5h2v14h-2zM4 5v14l11-7z"/></svg></button>
+      <div class="np" aria-live="polite"><b id="tn"></b><span id="ts"></span></div>
+    </div>
+    <div class="scrub"><span id="cur">0:00</span><input type="range" id="pos" min="0" max="100" value="0" step="1" aria-label="Position in track"><span id="dur">0:00</span></div>
+    <div class="tabs" role="tablist" aria-label="Sides"><button role="tab" id="sa" aria-selected="true">Side A</button><button role="tab" id="sb" aria-selected="false">Side B</button><button class="flip" id="flip">Flip to side B</button></div>
+    <ol id="list" role="tabpanel" aria-labelledby="sa"></ol>
+  </section>
+</main>
+<script>
+(function(){
+var T=[[['Low Water',228],['Salt Hours',252],['The Pier at Nine',201],['Gulls Over Ferrow',302],['Undertow, Slowly',276]],
+       [['Kelp Garden',235],['Lantern Swim',284],['Brine',178],['Nine Fathoms',370],['Last Ferry Home',267]]];
+var $=function(i){return document.getElementById(i)},app=$('app'),arm=$('arm'),pos=$('pos'),list=$('list');
+var side=0,tr=1,t=72,playing=true,view=0,tick=null;
+function fmt(s){s=Math.floor(s);return Math.floor(s/60)+':'+('0'+s%60).slice(-2)}
+function sideLen(k){return T[k].reduce(function(a,x){return a+x[1]},0)}
+function before(){var a=0;for(var i=0;i<tr;i++)a+=T[side][i][1];return a}
+function setArm(){var p=(before()+t)/sideLen(side);arm.style.setProperty('--a',playing?(8+20*p).toFixed(2)+'deg':'-2deg')}
+function draw(){var x=T[side][tr];$('tn').textContent=x[0];$('ts').textContent='Side '+'AB'[side]+', track '+(tr+1)+' of 5';
+ pos.max=x[1];pos.value=Math.floor(t);pos.style.setProperty('--p',(t/x[1]*100)+'%');pos.setAttribute('aria-valuetext',fmt(t)+' of '+fmt(x[1]));
+ $('cur').textContent=fmt(t);$('dur').textContent=fmt(x[1]);$('lside').textContent='SIDE '+'AB'[side]+' · 33⅓';
+ list.querySelectorAll('.t').forEach(function(b,i){b.setAttribute('aria-current',view==side&&i==tr)});setArm()}
+function rows(){$('sa').setAttribute('aria-selected',view==0);$('sb').setAttribute('aria-selected',view==1);list.setAttribute('aria-labelledby',view?'sb':'sa');
+ list.innerHTML=T[view].map(function(x,i){return '<li><button class="t" data-i="'+i+'"><span class="n">'+'AB'[view]+(i+1)+'<span class="eq"><i></i><i></i><i></i></span></span><span>'+x[0]+'</span><span class="d">'+fmt(x[1])+'</span></button></li>'}).join('');
+ list.querySelectorAll('.t').forEach(function(b){b.onclick=function(){jump(view,+b.dataset.i,1)}});draw()}
+function jump(s,i,go){var swap=s!=side;side=s;tr=i;t=0;$('flip').classList.remove('on');if(swap&&playing){set(false);setTimeout(function(){set(true)},700)}else if(go&&!playing)set(true);arm.classList.add('track');draw();setTimeout(function(){arm.classList.remove('track')},320)}
+function set(on){playing=on;app.classList.toggle('playing',on);$('play').setAttribute('aria-label',on?'Pause':'Play');$('play').setAttribute('aria-pressed',on);
+ $('state').textContent=on?'Now spinning':'Arm lifted';clearInterval(tick);if(on)tick=setInterval(step,250);draw()}
+function step(){t+=.25;if(t>=T[side][tr][1]){if(tr<4){tr++;t=0}else{t=T[side][tr][1];set(false);if(!side){$('flip').classList.add('on')}return}}
+ if(view!=side){view=side;rows()}else draw()}
+$('play').onclick=function(){set(!playing)};
+$('next').onclick=function(){tr<4?jump(side,tr+1):side==0&&(view=1,rows(),jump(1,0))};
+$('prev').onclick=function(){t>3?(t=0,draw()):tr>0?jump(side,tr-1):side==1&&(view=0,rows(),jump(0,4))};
+pos.oninput=function(){t=+pos.value;arm.classList.add('track');draw()};pos.onchange=function(){arm.classList.remove('track')};
+$('sa').onclick=function(){view=0;rows()};$('sb').onclick=function(){view=1;rows()};
+$('flip').onclick=function(){view=1;rows();jump(1,0,1)};
+list.parentNode.querySelector('.tabs').onkeydown=function(e){if(e.key=='ArrowRight'||e.key=='ArrowLeft'){view=1-view;rows();$(view?'sb':'sa').focus()}};
+rows();set(true);
+})();
+</script>
+</body>
+</html>

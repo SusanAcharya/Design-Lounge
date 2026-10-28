@@ -7,7 +7,7 @@ import { execFile } from 'node:child_process';
 import { createRequire } from 'node:module';
 import { McpServer, ResourceTemplate } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { z } from 'zod';
-import { Library } from './library.mjs';
+import { Library, about } from './library.mjs';
 import { readHistory, pickDirection, checkPick, recordPick, nameNumber, historyPath, groupOf } from './picks.mjs';
 import { readRequest, readProject } from './route.mjs';
 import { loadPage, siteFiles } from './source.mjs';
@@ -29,7 +29,7 @@ export const { version: VERSION } = JSON.parse(fs.readFileSync(new URL('../packa
  * skillLine says where the local server installed the skill.
  */
 export function createServer({ hosted = false, skillLine = '' } = {}) {
-  const INSTRUCTIONS = `Design Lounge is the design library of Susan Acharya (${lib.site}): ${lib.counts.pieces} piece briefs, ${lib.counts.themes} themes, ${lib.counts.pairings} type pairings, ${lib.counts.starts} recipes with directions, icons, and Sanzo Wada's colour combinations. It also reviews pages for AI giveaways and for SEO, AEO, and GEO.
+  const INSTRUCTIONS = `Design Lounge is the design library of Susan Acharya (${lib.site}): ${about(lib.counts.pieces)} piece briefs, ${about(lib.counts.themes)} themes, ${about(lib.counts.pairings)} type pairings, ${about(lib.counts.starts)} recipes with directions, icons, and Sanzo Wada's colour combinations. It also reviews pages for AI giveaways and for SEO, AEO, and GEO.
 
 For any website, app, screen, or UI: call start_design first with their words. Then lock a recipe direction with get_recipe and pick_direction, and build from get_theme, get_pairing, get_family, and get_piece. Do not invent a palette, a type pairing, a radius, or a component language. Their words win over every default.
 
@@ -192,7 +192,7 @@ ${hosted ? `This is the hosted server. It cannot read files on the person's mach
 
   server.registerTool('search_pieces', {
     title: 'Search pieces',
-    description: `Search ${lib.counts.pieces} piece briefs by words (job, component, style, tag) and filters. Returns ids, summaries, and demo links. Then get_piece for the brief.`,
+    description: `Search ${about(lib.counts.pieces)} piece briefs by words (job, component, style, tag) and filters. Returns ids, summaries, and demo links. Then get_piece for the brief.`,
     inputSchema: {
       query: z.string().optional().describe('Such as "pricing toggle", "sticky mobile cta", "kanban", "footer wordmark"'),
       platform: z.enum(['web', 'mobile-web', 'mobile-app', 'pwa', 'tablet']).optional(),

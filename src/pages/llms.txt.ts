@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { getPieces, AUTHOR, CREDIT_LINE, TYPE_META, CATEGORY_META, STYLE_META } from '../lib/pieces';
+import { getPieces, AUTHOR, CREDIT_LINE, TYPE_META, CATEGORY_META, STYLE_META, about } from '../lib/pieces';
 import { PAIRINGS } from '../data/type';
 import { THEMES } from '../data/themes';
 import { WADA_COMBINATIONS } from '../data/wada';
@@ -58,10 +58,10 @@ export const GET: APIRoute = async ({ site }) => {
     ...SOURCES.map((s) => `- [${s.name}](${s.url}): ${s.line} ${s.studied ? s.take : 'No screen claims this site yet.'}`),
     ``,
     `## Libraries`,
-    `- Type pairings (${PAIRINGS.length}): ${base}/type`,
-    `- Themes (${THEMES.length}): ${base}/themes`,
+    `- Type pairings (${about(PAIRINGS.length)}): ${base}/type`,
+    `- Themes (${about(THEMES.length)}): ${base}/themes`,
     `- Sanzo Wada's colour combinations (${WADA_COMBINATIONS.length}), as printed: ${base}/wada`,
-    `- Lounge Icons (${ICONS.length}): ${base}/icons — ${ICON_CREDIT}`,
+    `- Lounge Icons (${about(ICONS.length)}): ${base}/icons — ${ICON_CREDIT}`,
     `- Motion recipes (${RECIPES.length}): ${base}/motion`,
     ``,
     `## Type pairings`,
@@ -82,7 +82,7 @@ export const GET: APIRoute = async ({ site }) => {
     `## Collections`,
     ...COLLECTIONS.map((c) => `- [${c.title}](${base}/collections/${c.slug}): ${c.blurb} Pieces: ${c.pieces.join(', ')}.`),
     ``,
-    `## Pieces (${pieces.length})`,
+    `## Pieces (${about(pieces.length)})`,
     ...pieces.map((p) => {
       const d = p.data;
       return `- [${d.title}](${base}/p/${p.id}) (${p.id}) — ${d.summary} platform:${d.platform} type:${d.type} category:${d.category} styles:${d.styles.join(',')} motion:${d.motion} source:${studyPiece(p, SOURCES).source.id} brief:${base}/p/${p.id}.md demo:${base}/demo/${p.id}`;

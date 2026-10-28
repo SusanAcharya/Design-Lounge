@@ -1,0 +1,219 @@
+<!-- Design Lounge piece: dashboard-ai-insights · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Tillwell · weekly insights</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hubot+Sans:wdth,wght@100..125,500..800&family=Mona+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#edf0f3;--surface:#ffffff;--surface-2:#f6f8fa;--line:#d8dee5;--line-2:#c3ccd5;
+  --ink:#14181d;--ink-2:#46505b;--ink-3:#5d6873;
+  --c1:#0a7ba6;--c2:#d9622b;--rest:#a9b2bc;--lit:#14181d;--note:#fff4d6;--note-ink:#6b4a00;
+  --display:"Hubot Sans",system-ui,sans-serif;--text:"Mona Sans",system-ui,sans-serif;
+  --r:10px;--r-sm:6px;--pad:28px;--gap:16px;
+  --ease:cubic-bezier(.2,.7,.2,1);--t:200ms;--t-lay:320ms;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:14px/1.45 var(--text);-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.top{height:56px;display:flex;align-items:center;gap:28px;padding:0 var(--pad);background:var(--surface);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font:700 16px/1 var(--display);font-stretch:112%}
+.brand i{width:22px;height:22px;border-radius:6px;background:var(--ink);display:grid;place-items:center}
+.tabs{display:flex;gap:4px;overflow-x:auto}
+.tabs a{padding:8px 12px;border-radius:var(--r-sm);color:var(--ink-2);text-decoration:none;font-weight:500;white-space:nowrap}
+.tabs a[aria-current]{background:var(--surface-2);color:var(--ink);box-shadow:inset 0 0 0 1px var(--line)}
+.top .sp{flex:1}
+.range{display:flex;align-items:center;gap:8px;height:36px;padding:0 12px;border:1px solid var(--line-2);border-radius:var(--r-sm);background:var(--surface);font-weight:500}
+.wrap{padding:20px var(--pad) 28px}
+.head{display:flex;align-items:baseline;gap:14px;margin-bottom:16px;flex-wrap:wrap}
+h1{font:700 30px/1.1 var(--display);font-stretch:118%;letter-spacing:-.01em;margin:0}
+.ex{font-size:12px;font-weight:600;padding:3px 8px;border-radius:4px;background:var(--note);color:var(--note-ink)}
+.head p{margin:0;color:var(--ink-2)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--gap)}
+/* insight cards */
+.ins{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px 14px;display:flex;flex-direction:column;gap:8px;transition:border-color var(--t) var(--ease),box-shadow var(--t) var(--ease)}
+.ins.on{border-color:var(--lit);box-shadow:0 0 0 1px var(--lit)}
+.by{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--ink-3)}
+.by .sw{width:10px;height:10px;border-radius:2px}
+.ins h2{font:650 17px/1.3 var(--display);font-stretch:104%;margin:0;letter-spacing:-.005em}
+.ins h2 b{font-weight:800}
+.acts{display:flex;align-items:center;gap:6px;margin-top:2px;flex-wrap:wrap}
+.show{height:32px;padding:0 12px;border-radius:var(--r-sm);border:1px solid var(--ink);background:var(--surface);font-weight:600;font-size:13px;display:inline-flex;align-items:center;gap:6px;transition:background var(--t) var(--ease),color var(--t) var(--ease)}
+.show:hover{background:var(--surface-2)}
+.show[aria-pressed=true]{background:var(--ink);color:#fff}
+details{font-size:13px}
+summary{list-style:none;height:32px;display:inline-flex;align-items:center;gap:4px;padding:0 8px;border-radius:var(--r-sm);font-weight:600;color:var(--ink-2);cursor:pointer}
+summary::-webkit-details-marker{display:none}
+summary:hover{background:var(--surface-2)}
+summary svg{transition:transform var(--t) var(--ease)}
+details[open] summary svg{transform:rotate(90deg)}
+.why{position:absolute;left:-1px;right:-1px;top:calc(100% - 6px);z-index:4;background:var(--surface);border:1px solid var(--line-2);border-top:0;border-radius:0 0 var(--r) var(--r);padding:4px 18px 14px;color:var(--ink-2);box-shadow:0 14px 24px -12px rgba(20,24,29,.25);animation:drop var(--t) var(--ease)}
+.why p{margin:0}
+details:not([open]) .why{display:none}
+@keyframes drop{from{opacity:0;transform:translateY(-4px)}}
+.fb{margin-left:auto;display:flex;align-items:center;gap:2px;color:var(--ink-3);font-size:12px}
+.fb button{width:32px;height:32px;border:0;background:transparent;border-radius:var(--r-sm);display:grid;place-items:center;color:var(--ink-2)}
+.fb button:hover{background:var(--surface-2)}
+.fb button[aria-pressed=true]{background:var(--ink);color:#fff}
+/* charts */
+.charts{margin-top:var(--gap);grid-template-rows:auto auto}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 18px 10px;transition:border-color var(--t) var(--ease),box-shadow var(--t) var(--ease);scroll-margin:16px}
+.panel.lit{border-color:var(--lit);box-shadow:0 0 0 1px var(--lit)}
+.big{grid-column:span 2;grid-row:span 2}
+.ph{display:flex;align-items:baseline;gap:10px;margin-bottom:6px;flex-wrap:wrap}
+.ph h3{margin:0;font:650 14px/1.3 var(--display);font-stretch:108%}
+.ph .v{font:700 22px/1 var(--display);font-stretch:112%;font-variant-numeric:tabular-nums}
+.ph .sp{flex:1}
+.lg{display:flex;gap:12px;font-size:12px;color:var(--ink-2)}
+.lg span{display:inline-flex;align-items:center;gap:5px}
+.lg i{width:10px;height:10px;border-radius:2px}
+svg.ch{display:block;width:100%;height:auto;overflow:visible}
+.ch text{font:500 11px var(--text);fill:var(--ink-3)}
+.ch .gl{stroke:var(--line);stroke-width:1}
+.ch .m{transition:opacity var(--t-lay) var(--ease)}
+.ch .hit:hover+.m,.ch .m:hover{opacity:.8}
+.lit .ch .m:not(.f){opacity:.28}
+.ch .ann{opacity:0;transition:opacity var(--t-lay) var(--ease)}
+.lit .ch .ann{opacity:1}
+.ch .ann text{fill:var(--ink);font-weight:600}
+.ch .lbl{fill:var(--ink);font-weight:600}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media (max-width:900px){
+  .big{overflow-x:auto}.big .ch{min-width:640px}
+  .grid{grid-template-columns:1fr}
+  .big{grid-column:auto;grid-row:auto}
+  .top{gap:14px;padding:0 16px}.wrap{padding:16px}
+  .range span{display:none}
+  h1{font-size:24px}
+  .tabs a:nth-child(n+3){display:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important;animation:none!important}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="brand"><i aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"><path d="M5 19V9M12 19V5M19 19v-7"/></svg></i>Tillwell</div>
+  <nav class="tabs" aria-label="Reports"><a href="#" aria-current="page">Overview</a><a href="#">Orders</a><a href="#">Refunds</a><a href="#">Customers</a></nav>
+  <span class="sp"></span>
+  <button class="range" aria-label="Date range, 14 to 20 October 2026"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg><span>14 to 20 Oct 2026</span></button>
+</header>
+<main class="wrap">
+  <div class="head">
+    <h1>Ferrow Goods, week 42</h1>
+    <span class="ex">Example data</span>
+    <p>Three things changed this week. Tally wrote these from your orders, refunds and checkout logs.</p>
+  </div>
+  <section class="grid" aria-label="Insights">
+    <article class="ins" data-to="p-ref">
+      <div class="by"><i class="sw" style="background:var(--c2)"></i>Refunds · written by Tally</div>
+      <h2>Refunds rose <b>18%</b> on Tuesday, all from one SKU</h2>
+      <div class="acts">
+        <button class="show" aria-pressed="false" aria-controls="p-ref">Show on chart</button>
+        <details><summary><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>Why</summary><div class="why"><p>LDC-K-OAT, the oat linen duvet cover in King, had 14 refunds on Tuesday against 5 the Tuesday before. 11 of the 14 say "colour not as pictured". Every other SKU held at 44.</p></div></details>
+        <div class="fb" role="group" aria-label="Was this useful?">Useful?<button aria-pressed="false" aria-label="Useful"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M7 10v10H4V10zM7 10l4-7c2 0 3 1 3 3v3h5l-2 11H7"/></svg></button><button aria-pressed="false" aria-label="Not useful"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M7 14V4H4v10zM7 14l4 7c2 0 3-1 3-3v-3h5L17 4H7"/></svg></button></div>
+      </div>
+    </article>
+    <article class="ins" data-to="p-rev">
+      <div class="by"><i class="sw" style="background:var(--c1)"></i>Revenue · written by Tally</div>
+      <h2>Repeat buyers brought <b>41.6%</b> of revenue, up from 37.2% in August</h2>
+      <div class="acts">
+        <button class="show" aria-pressed="false" aria-controls="p-rev">Show on chart</button>
+        <details><summary><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>Why</summary><div class="why"><p>Repeat revenue went from £15.8k to £20.1k over eight weeks while new-buyer revenue stayed between £26.7k and £28.3k. The step up starts the week the reorder reminder email went live, 27 September.</p></div></details>
+        <div class="fb" role="group" aria-label="Was this useful?">Useful?<button aria-pressed="false" aria-label="Useful"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M7 10v10H4V10zM7 10l4-7c2 0 3 1 3 3v3h5l-2 11H7"/></svg></button><button aria-pressed="false" aria-label="Not useful"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M7 14V4H4v10zM7 14l4 7c2 0 3-1 3-3v-3h5L17 4H7"/></svg></button></div>
+      </div>
+    </article>
+    <article class="ins" data-to="p-fun">
+      <div class="by"><i class="sw" style="background:var(--c1)"></i>Checkout · written by Tally</div>
+      <h2>Mobile loses <b>32.6%</b> of shoppers at shipping, desktop 16.6%</h2>
+      <div class="acts">
+        <button class="show" aria-pressed="false" aria-controls="p-fun">Show on chart</button>
+        <details><summary><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>Why</summary><div class="why"><p>Of 3,912 mobile sessions that reached shipping, 1,275 left before payment. The postcode lookup took a median 4.1 s on mobile and 1.2 s on desktop this week.</p></div></details>
+        <div class="fb" role="group" aria-label="Was this useful?">Useful?<button aria-pressed="false" aria-label="Useful"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M7 10v10H4V10zM7 10l4-7c2 0 3 1 3 3v3h5l-2 11H7"/></svg></button><button aria-pressed="false" aria-label="Not useful"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M7 14V4H4v10zM7 14l4 7c2 0 3-1 3-3v-3h5L17 4H7"/></svg></button></div>
+      </div>
+    </article>
+  </section>
+  <section class="grid charts" aria-label="Charts">
+    <figure class="panel big" id="p-ref" style="margin:0">
+      <div class="ph"><h3>Refunds per day</h3><span class="v">322</span><span class="sp"></span><div class="lg"><span><i style="background:var(--c2)"></i>LDC-K-OAT</span><span><i style="background:var(--rest)"></i>All other SKUs</span></div></div>
+      <svg class="ch" id="c-ref" viewBox="0 0 760 392" role="img" aria-label="Refunds per day, 14 to 20 October. Tuesday 58, of which 14 from LDC-K-OAT."></svg>
+    </figure>
+    <figure class="panel" id="p-rev" style="margin:0">
+      <div class="ph"><h3>Weekly revenue</h3><span class="v">£48,312</span><span class="sp"></span><div class="lg"><span><i style="background:var(--c1)"></i>Repeat</span><span><i style="background:var(--rest)"></i>New</span></div></div>
+      <svg class="ch" id="c-rev" viewBox="0 0 380 184" role="img" aria-label="Weekly revenue, repeat buyers rising from 15.8 to 20.1 thousand pounds over eight weeks, new buyers flat near 28 thousand."></svg>
+    </figure>
+    <figure class="panel" id="p-fun" style="margin:0">
+      <div class="ph"><h3>Checkout reach</h3><span class="v">44.1%</span><span class="sp"></span><div class="lg"><span><i style="background:var(--c1)"></i>Mobile</span><span><i style="background:var(--rest)"></i>Desktop</span></div></div>
+      <svg class="ch" id="c-fun" viewBox="0 0 380 184" role="img" aria-label="Share of carts reaching each checkout step. Mobile 100, 71.8, 48.4, 44.1. Desktop 100, 80.2, 66.9, 62.3."></svg>
+    </figure>
+  </section>
+</main>
+<p class="sr" aria-live="polite" id="live"></p>
+<script>
+(function(){
+  var NS='http://www.w3.org/2000/svg';
+  function el(p,t,a,txt){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);if(txt!=null)e.textContent=txt;p.appendChild(e);return e;}
+  function tip(e,s){el(e,'title',{},s);return e;}
+  /* refunds: stacked bars */
+  var r=document.getElementById('c-ref');
+  if(r){var days=['Mon 14','Tue 15','Wed 16','Thu 17','Fri 18','Sat 19','Sun 20'],oth=[39,44,41,38,43,47,40],sku=[2,14,6,3,2,1,2],y=function(v){return 356-v*5.4;};
+    [0,20,40,60].forEach(function(v){el(r,'line',{class:'gl',x1:36,x2:760,y1:y(v),y2:y(v)});el(r,'text',{x:0,y:y(v)+4},v);});
+    days.forEach(function(d,i){var x=60+i*100;
+      tip(el(r,'rect',{class:'m',x:x,y:y(oth[i]),width:56,height:oth[i]*5.4,fill:'var(--rest)',rx:2}),d+': other SKUs '+oth[i]);
+      tip(el(r,'rect',{class:'m f',x:x,y:y(oth[i]+sku[i])-2,width:56,height:sku[i]*5.4,fill:'var(--c2)',rx:3}),d+': LDC-K-OAT '+sku[i]);
+      el(r,'text',{x:x+28,y:382,'text-anchor':'middle'},d);
+    });
+    var a=el(r,'g',{class:'ann'});var tx=160;
+    el(a,'line',{x1:tx-6,x2:tx+62,y1:y(49),y2:y(49),stroke:'var(--ink)','stroke-dasharray':'4 3','stroke-width':1.5});
+    
+    el(a,'text',{x:tx+28,y:y(58)-12,'text-anchor':'middle'},'58');
+    el(a,'path',{d:'M'+(tx+60)+' '+(y(58)+2)+'h14v'+(14*5.4-2)+'h-14',fill:'none',stroke:'var(--ink)','stroke-width':1.5});
+    el(a,'text',{x:tx+82,y:y(54)},'+14 from LDC-K-OAT');el(a,'text',{x:tx+82,y:y(54)+16},'Last Tuesday 49, dashed');
+  }
+  /* revenue: two lines */
+  var v=document.getElementById('c-rev');
+  if(v){var rep=[15.8,16.1,16.9,17.2,17.0,18.4,19.1,20.1],nw=[26.7,27.3,27.9,28.0,27.1,27.6,28.3,28.2],X=function(i){return 30+i*40;},Y=function(k){return 156-(k-12)*7.4;};
+    [15,20,25,30].forEach(function(k){el(v,'line',{class:'gl',x1:26,x2:380,y1:Y(k),y2:Y(k)});el(v,'text',{x:0,y:Y(k)+4},k+'k');});
+    function line(d,c,f,n){el(v,'polyline',{class:'m'+(f?' f':''),points:d.map(function(k,i){return X(i)+','+Y(k);}).join(' '),fill:'none',stroke:c,'stroke-width':2,'stroke-linejoin':'round','stroke-linecap':'round'});
+      d.forEach(function(k,i){tip(el(v,'circle',{class:'m'+(f?' f':''),cx:X(i),cy:Y(k),r:i===7?4:0,fill:c}),n+' '+k+'k');});
+      el(v,'text',{class:'lbl',x:X(7)+8,y:Y(d[7])+4},d[7]+'k');}
+    line(nw,'var(--rest)',0,'New');line(rep,'var(--c1)',1,'Repeat');
+    ['26 Aug','30 Sep','14 Oct'].forEach(function(s,j){el(v,'text',{x:X([0,5,7][j]),y:180,'text-anchor':'middle'},s);});
+    var g=el(v,'g',{class:'ann'});el(g,'line',{x1:X(5)-20,x2:X(5)-20,y1:Y(30),y2:Y(13),stroke:'var(--ink)','stroke-dasharray':'3 3'});el(g,'text',{x:X(5)-74,y:Y(13)-4},'Reminder on');
+  }
+  /* funnel: paired bars */
+  var f=document.getElementById('c-fun');
+  if(f){var st=['Cart','Shipping','Payment','Paid'],mo=[100,71.8,48.4,44.1],de=[100,80.2,66.9,62.3],W=function(p){return p*2.3;};
+    st.forEach(function(s,i){var y0=8+i*44;el(f,'text',{x:0,y:y0+19},s);
+      tip(el(f,'rect',{class:'m f',x:66,y:y0,width:W(mo[i]),height:14,fill:'var(--c1)',rx:2}),'Mobile '+s+' '+mo[i]+'%');
+      tip(el(f,'rect',{class:'m',x:66,y:y0+16,width:W(de[i]),height:14,fill:'var(--rest)',rx:2}),'Desktop '+s+' '+de[i]+'%');
+      el(f,'text',{x:66+W(mo[i])+6,y:y0+11},mo[i]+'%');
+    });
+    var h=el(f,'g',{class:'ann'});var x1=66+W(48.4),x2=66+W(71.8);
+    el(h,'path',{d:'M'+(x2+40)+' 59h6V103h-6',fill:'none',stroke:'var(--ink)','stroke-width':1.5});
+    el(h,'text',{x:x2+52,y:85},'−32.6%');
+  }
+  /* linking */
+  var live=document.getElementById('live'),cards=[].slice.call(document.querySelectorAll('.ins'));
+  function focus(card,on,quiet){
+    cards.forEach(function(c){var b=c.querySelector('.show'),p=document.getElementById(c.dataset.to),me=c===card&&on;
+      c.classList.toggle('on',me);b.setAttribute('aria-pressed',me);if(p)p.classList.toggle('lit',me);});
+    if(on&&!quiet){var p=document.getElementById(card.dataset.to);live.textContent='Highlighted on '+p.querySelector('h3').textContent;
+      if(innerWidth<900&&p.scrollIntoView)p.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});}
+  }
+  cards.forEach(function(c){
+    c.querySelector('.show').addEventListener('click',function(){focus(c,this.getAttribute('aria-pressed')!=='true');});
+    var fb=[].slice.call(c.querySelectorAll('.fb button'));
+    fb.forEach(function(b){b.addEventListener('click',function(){var on=b.getAttribute('aria-pressed')!=='true';
+      fb.forEach(function(o){o.setAttribute('aria-pressed',o===b&&on);});c.querySelector('.fb').firstChild.nodeValue=on?'Thanks':'Useful?';live.textContent=on?'Thanks, Tally will use this next week':'';});});
+  });
+  if(cards[0])focus(cards[0],true,1);
+})();
+</script>
+</body>
+</html>

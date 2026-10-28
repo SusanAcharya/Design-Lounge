@@ -3,7 +3,7 @@ import Base from '../layouts/Base.astro';
 import DeviceFrame from '../components/DeviceFrame.astro';
 import Showcase from '../components/Showcase.astro';
 import AgentTerminal from '../components/AgentTerminal.astro';
-import { getPieces, CATEGORY_META } from '../lib/pieces';
+import { getPieces, CATEGORY_META, about } from '../lib/pieces';
 import { PAIRINGS } from '../data/type';
 import { THEMES } from '../data/themes';
 import { ICONS } from '../data/icons';
@@ -53,7 +53,7 @@ const installModes = [
   { key: 'skill', label: 'Skill', cmd: installCmd, note: 'Files your agent reads. Needs Node 22.20 or newer.', link: null },
 ];
 const faq = [
-  { q: 'What is Design Lounge?', a: `Design Lounge is a free UI design skill for AI coding agents, plus a library of ${all.length} design ideas: website sections, app screens, components and motion. Each one has a live demo and a written brief that an agent can build from.` },
+  { q: 'What is Design Lounge?', a: `Design Lounge is a free UI design skill for AI coding agents, plus a library of ${about(all.length)} design ideas: website sections, app screens, components and motion. Each one has a live demo and a written brief that an agent can build from.` },
   { q: 'How do I add the UI design skill to my agent?', a: `Add the MCP server, which installs the skill too and adds tools that show your agent each piece and check the page it built. In Claude Code, run ${mcpCmd}. Cursor, Codex, VS Code and Claude Desktop take npx -y design-lounge-mcp@latest in their MCP settings, and Claude.ai or ChatGPT can add https://www.designlounge.live/api/mcp as a connector. For the skill alone, run ${installCmd} in your project (it needs Node 22.20 or newer). Then ask for what you are making, such as a portfolio, a shop or a dashboard.` },
   { q: 'What does the skill do differently?', a: `It makes your agent design from a real library instead of its own defaults. For a product, it picks a theme, a font pairing, a radius and motion from the library, builds the screens from piece briefs, then opens the page and checks it for the usual signs of AI-made design. When you ask for spectacle, it builds one centrepiece made for your subject, with real light and depth, and holds the rest of the page to the same craft.` },
   { q: 'Is it free to use in my products?', a: 'Yes. The pieces, themes, type pairings and icons are free to use in your own products and client work. A small credit line is appreciated. Please do not republish the library itself as a library.' },
@@ -61,11 +61,11 @@ const faq = [
   { q: 'Who made Design Lounge?', a: `${AUTHOR.name}, a ${AUTHOR.role.toLowerCase()} based in ${AUTHOR.city}, Nepal.` },
 ];
 ---
-<Base rail={false} fullTitle="Design Lounge: a UI design skill and design ideas for AI agents" description={`A free UI design skill for Cursor, Claude Code and Codex, with ${all.length} live design ideas: sections, app screens, palettes, font pairings and motion.`} faq={faq}>
+<Base rail={false} fullTitle="Design Lounge: a UI design skill and design ideas for AI agents" description={`A free UI design skill for Cursor, Claude Code and Codex, with ${about(all.length)} live design ideas: sections, app screens, palettes, font pairings and motion.`} faq={faq}>
   <section class="hero wrap">
     <div class="hero-text">
       <h1 class="display h1 reveal">Give your AI agent <i>design taste.</i></h1>
-      <p class="lede reveal" style="--d:80ms">A free UI design skill and a library of {all.length} live design ideas. Your agent picks real type, colour and motion, then builds.</p>
+      <p class="lede reveal" style="--d:80ms">A free UI design skill and a library of {about(all.length)} live design ideas. Your agent picks real type, colour and motion, then builds.</p>
       <div class="hero-cta reveal" style="--d:160ms">
         <div class="install" data-install>
           <div class="modes" role="group" aria-label="Install as">
@@ -173,7 +173,7 @@ const faq = [
       <li><b>Ship</b><span>Real code with a palette, a pairing and pieces that fit.</span></li>
     </ol>
     <div class="agent-grid">
-      <AgentTerminal pieces={all.length} pairings={PAIRINGS.length} themes={THEMES.length} />
+      <AgentTerminal pieces={about(all.length)} pairings={about(PAIRINGS.length)} themes={about(THEMES.length)} />
       <div class="agent-result">
         <div class="agent-stage">
           {agentHero && <DeviceFrame slug={agentHero.id} platform={agentHero.data.platform} title={agentHero.data.title} interactive />}
@@ -252,7 +252,7 @@ const faq = [
         <ul>
           <li><a href="/start"><b>Start</b><span>Pick what you're making. Get a theme, a pairing and the pieces that fit.</span></a></li>
           <li><a href="/kit"><b>Kit</b><span>Compose a kind, a palette, a pairing and an icon family into one brief.</span></a></li>
-          <li><a href="/system"><b>System</b><span>{PAIRINGS.length} type pairings, {THEMES.length} themes, icons and motion recipes.</span></a></li>
+          <li><a href="/system"><b>System</b><span>{about(PAIRINGS.length)} type pairings, {about(THEMES.length)} themes, icons and motion recipes.</span></a></li>
           <li><button type="button" data-open-palette><b>Search</b><span>Press <kbd>⌘K</kbd> anywhere to jump to any piece.</span></button></li>
           <li><a href="/llms.txt"><b>For agents</b><span>An llms.txt and a JSON catalogue, so tools can read the library directly.</span></a></li>
         </ul>

@@ -54,7 +54,8 @@
         "dialog-type-to-confirm",
         "fintech-card-controls",
         "fintech-crypto-send",
-        "email-receipt-transactional"
+        "email-receipt-transactional",
+        "product-configurator-material"
       ]
     },
     {
@@ -120,7 +121,8 @@
         "settings-tactile-panel",
         "ascii-style",
         "popup-exit-offer",
-        "fintech-budget-envelopes"
+        "fintech-budget-envelopes",
+        "store-locator-map"
       ]
     },
     {
@@ -471,7 +473,8 @@
         "navbar-vertical-rail",
         "webgl-shader-hero",
         "hero-kinetic-scroll-type",
-        "hero-3d-product-turn"
+        "hero-3d-product-turn",
+        "ascii-ocean-sharks"
       ]
     },
     {
@@ -576,7 +579,8 @@
         "agent-approval-card",
         "media-controls-tactile",
         "retro-os-desktop-portfolio",
-        "board-moodboard-canvas"
+        "board-moodboard-canvas",
+        "vinyl-record-player"
       ]
     },
     {
@@ -704,7 +708,8 @@
         "phone-subscription-manage",
         "prompt-source-model",
         "sticker-board",
-        "features-giant-numeral-steps"
+        "features-giant-numeral-steps",
+        "dashboard-ai-insights"
       ]
     },
     {
@@ -835,7 +840,8 @@
         "taped-photo-grid",
         "sidebar-mail-folders",
         "sidebar-floating-island",
-        "sidebar-chat-history"
+        "sidebar-chat-history",
+        "onboarding-personality-quiz"
       ]
     },
     {
@@ -880,7 +886,8 @@
         "card-confidence-pick",
         "popup-whats-new-slides",
         "game-fantasy-inventory",
-        "game-scifi-loadout"
+        "game-scifi-loadout",
+        "spatial-glass-windows"
       ]
     }
   ]

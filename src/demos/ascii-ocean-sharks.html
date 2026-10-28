@@ -1,0 +1,214 @@
+<!-- Design Lounge piece: ascii-ocean-sharks · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en" data-theme="deep">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Driftline, every tagged shark plotted live</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;--serif:"Instrument Serif",Georgia,serif;
+  --band-0:#0f3b52;--band-4:#061622;
+  --plate:rgba(5,18,28,.92);--plate-line:#2b5468;--ctl:#071a26;--ctl-line:#7fa6b8;
+  --ink:#e8f1f3;--ink-2:#a3bac3;--accent:#f2b45c;--accent-ink:#1d1204;
+  --fs-display:clamp(44px,6.2vw,80px);--fs-body:16px;--fs-label:12px;
+  --r:4px;--pad:48px;
+  --t-micro:160ms;--ease:cubic-bezier(.2,.7,.2,1);
+}
+[data-theme=reef]{--band-0:#137485;--band-4:#0b3e50;--plate:rgba(8,44,56,.92);--plate-line:#3d7f8f;--ctl:#082c38;--ctl-line:#d3eef0;--ink:#f2fbfa;--ink-2:#b2d3d6;--accent:#ff9a6b;--accent-ink:#2a0e04}
+[data-theme=night]{--band-0:#0d1828;--band-4:#04080e;--plate:rgba(4,8,14,.92);--plate-line:#22324a;--ctl:#060c16;--ctl-line:#6b86a6;--ink:#e6edf7;--ink-2:#9aa9c0;--accent:#7cf3d8;--accent-ink:#03120f}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--band-0);color:var(--ink);font:400 var(--fs-body)/1.55 var(--mono);font-variant-ligatures:none;-webkit-font-smoothing:antialiased;overflow-x:hidden;display:flex;flex-direction:column;min-height:100%}
+canvas{position:fixed;inset:0;width:100%;height:100%;display:block;z-index:0}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.top{position:relative;z-index:1;display:flex;align-items:center;gap:32px;padding:22px var(--pad);flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;font:700 16px/1 var(--mono);letter-spacing:-.01em;text-decoration:none}
+.brand svg{width:24px;height:24px;color:var(--accent)}
+.links{display:flex;gap:24px;font-size:14px}
+.links a{text-decoration:none;padding:6px 0;border-bottom:1px solid transparent;transition:border-color var(--t-micro) var(--ease)}
+.links a:hover{border-color:currentColor}
+.ctl{margin-left:auto;display:flex;gap:8px;align-items:center}
+.seg{display:flex;border:1px solid var(--ctl-line);border-radius:var(--r);background:var(--ctl);padding:2px;gap:2px}
+.seg button,.pp{font:500 var(--fs-label)/1 var(--mono);color:var(--ink-2);background:var(--ctl);border:0;border-radius:2px;height:32px;padding:0 12px;cursor:pointer;transition:background var(--t-micro) var(--ease),color var(--t-micro) var(--ease)}
+.seg button:hover{color:var(--ink)}
+.seg button[aria-pressed=true]{background:var(--ink);color:var(--ctl)}
+.pp{width:38px;height:38px;padding:0;display:grid;place-items:center;border:1px solid var(--ctl-line);border-radius:var(--r);color:var(--ink)}
+.pp:hover{background:var(--ink);color:var(--ctl)}
+.pp svg{width:16px;height:16px}
+.pp .play{display:none}.pp[aria-pressed=true] .play{display:block}.pp[aria-pressed=true] .pause{display:none}
+.plate{position:relative;z-index:1;margin:auto 0 var(--pad) var(--pad);width:min(620px,calc(100% - 32px));padding:28px 32px 30px;background:var(--plate);border:1px solid var(--plate-line);border-radius:var(--r)}
+.eyebrow{margin:0;font:500 var(--fs-label)/1.5 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
+.eyebrow b{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--accent);margin-right:10px;vertical-align:1px;animation:ping 2.4s var(--ease) infinite}
+@keyframes ping{0%,100%{opacity:1}50%{opacity:.35}}
+h1{font:400 var(--fs-display)/.96 var(--serif);letter-spacing:-.012em;margin:14px 0 16px;text-wrap:balance}
+h1 em{color:var(--accent)}
+.sub{margin:0 0 24px;color:var(--ink-2);font-size:15px;max-width:50ch}
+.row{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.cta{display:inline-flex;align-items:center;gap:10px;height:48px;padding:0 20px;border-radius:var(--r);background:var(--accent);color:var(--accent-ink);font:700 14px/1 var(--mono);text-decoration:none;transition:background var(--t-micro) var(--ease),transform var(--t-micro) var(--ease)}
+.cta:hover{background:var(--ink)}
+.cta:active{transform:translateY(1px)}
+.cta svg{width:16px;height:16px;transition:transform var(--t-micro) var(--ease)}
+.cta:hover svg{transform:translateX(3px)}
+.stat{font-size:var(--fs-label);color:var(--ink-2)}
+.stat strong{color:var(--ink);font-weight:500}
+.hint{position:fixed;z-index:1;right:var(--pad);bottom:var(--pad);margin:0;font-size:var(--fs-label);color:var(--ink-2)}
+@media (max-width:900px){.links{display:none}}
+@media (max-width:640px){
+  :root{--pad:16px}
+  .top{gap:12px;padding:16px}
+  .ctl{margin-left:0;width:100%}
+  .plate{margin:auto 16px 16px;width:auto;padding:22px 20px 24px}
+  .sub{font-size:14px}
+  .hint,.wide{display:none}
+}
+@media (prefers-reduced-motion:reduce){.eyebrow b{animation:none}}
+</style>
+</head>
+<body>
+<canvas id="sea" aria-hidden="true"></canvas>
+<header class="top">
+  <a class="brand" href="#" data-calm><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M5 15 13 4c.5 4 2 8 6 11"/><path d="M2 19c2.5 0 2.5-1.5 5-1.5s2.5 1.5 5 1.5 2.5-1.5 5-1.5 2.5 1.5 5 1.5"/></svg>Driftline</a>
+  <nav class="links" aria-label="Main" data-calm><a href="#">Receivers</a><a href="#">Field notes</a><a href="#">Pricing</a></nav>
+  <div class="ctl" data-calm>
+    <div class="seg" role="group" aria-label="Water palette">
+      <button type="button" data-p="deep" aria-pressed="true">Deep sea</button>
+      <button type="button" data-p="reef" aria-pressed="false">Reef</button>
+      <button type="button" data-p="night" aria-pressed="false">Night</button>
+    </div>
+    <button type="button" class="pp" id="pp" aria-pressed="false" aria-label="Pause the ocean"><svg class="pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg><svg class="play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 5v14l12-7z"/></svg></button>
+  </div>
+</header>
+<main class="plate" id="plate" data-calm>
+  <p class="eyebrow"><b></b>Live from 214 receivers<span class="wide">, Kestrel Coast</span></p>
+  <h1>Every tagged shark, <em>plotted live.</em></h1>
+  <p class="sub">Driftline turns acoustic pings into a map your field team can read at a glance: who passed which buoy, at what depth, 40 seconds after it happened.</p>
+  <div class="row">
+    <a class="cta" href="#">Open the live map<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    <span class="stat"><strong>1,286</strong> pings in the last hour</span>
+  </div>
+</main>
+<p class="hint" data-calm>Move the pointer: the school parts</p>
+<script>
+(()=>{
+const cv=document.getElementById('sea'),x2=cv.getContext('2d'),root=document.documentElement,pp=document.getElementById('pp'),plateEl=document.getElementById('plate');
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const P={
+ deep:{bg:['#0f3b52','#0c3146','#0a2739','#081e2d','#061622'],w:['#1d4d63','#2c6982','#4b90a9','#91cddd'],cau:'#d6f2f5',bub:'#a3d8e4',sh:['#86a3b1','#b3c7cf','#e1ebee','#f6fafb'],fi:['#8fb0bd','#e4eef1'],kelp:'#3b8170',sand:'#4f6d75',tag:'#f2b45c'},
+ reef:{bg:['#137485','#11677a','#0f596c','#0d4b5e','#0b3e50'],w:['#2a8797','#47a4b1','#7cc8cf','#d2f3f0'],cau:'#f5fffd',bub:'#c6eef0',sh:['#4c6670','#7c97a0','#c9d8dc','#fdfdf8'],fi:['#ffb547','#ffe2a8'],kelp:'#43a066',sand:'#cdbd8e',tag:'#ffd08a'},
+ night:{bg:['#0d1828','#0a1321','#080f1a','#060b14','#04080e'],w:['#14263c','#1d3753','#2c5777','#62abc6'],cau:'#9cc3e6',bub:'#6fe0cf',sh:['#3d536f','#5d7797','#9fb5cf','#7cf3d8'],fi:['#46d6bb','#b8fff0'],kelp:'#1f4d4c',sand:'#283850',tag:'#7cf3d8'}};
+const hx=h=>[1,3,5].map(i=>parseInt(h.slice(i,i+2),16)),mix=(a,b,t)=>{a=hx(a);b=hx(b);return'rgb('+a.map((v,i)=>Math.round(v+(b[i]-v)*t)).join(',')+')'};
+let pal,C=[],W,H,cw,chh,cols,rows,ch8,co8,calm,hash,G=new Uint8Array(12000),V=new Float32Array(12000),bufs=[],plate={l:0,r:0,t:0,b:0};
+let t=14,running=!RM,raf=0,last=0,px=-999,py=-999,pT=-99,sharks=[],fish=[],bub=[],vent=0,seed=7;
+const rnd=()=>{seed=(seed+0x6D2B79F5)|0;let q=Math.imul(seed^seed>>>15,1|seed);q=q+Math.imul(q^q>>>7,61|q)^q;return((q^q>>>14)>>>0)/4294967296};
+function setPal(n){pal=P[n];root.dataset.theme=n;const s=pal.sh;C=[0,...pal.w,pal.cau,pal.bub,...s,...s.map(c=>mix(c,pal.bg[2],.5)),...pal.fi,pal.kelp,pal.sand,pal.tag];
+ document.querySelectorAll('.seg button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.p===n));if(!running)draw()}
+function size(){W=innerWidth;H=innerHeight;const d=Math.min(devicePixelRatio||1,2),fs=W<640?12:14;cv.width=W*d;cv.height=H*d;
+ x2.setTransform(d,0,0,d,0,0);x2.font=fs+'px "JetBrains Mono",ui-monospace,monospace';x2.textBaseline='middle';x2.textRendering='optimizeSpeed';
+ cw=x2.measureText('M').width;chh=Math.round(fs*1.25);cols=Math.ceil(W/cw)+1;rows=Math.ceil(H/chh)+1;const n=cols*rows;
+ ch8=new Uint8Array(n);co8=new Uint8Array(n);calm=new Uint8Array(n);hash=new Float32Array(n);
+ for(let i=0;i<n;i++){const v=Math.sin(i*127.1+311.7)*43758.5453;hash[i]=v-Math.floor(v)}
+ bufs=C.map(()=>new Uint8Array(cols).fill(32));
+ document.querySelectorAll('[data-calm]').forEach(el=>{const r=el.getBoundingClientRect();if(!r.width)return;
+  for(let y=Math.floor(r.top/chh);y<Math.ceil(r.bottom/chh);y++)for(let x=Math.floor(r.left/cw)-1;x<=Math.ceil(r.right/cw);x++)if(y>=0&&y<rows&&x>=0&&x<cols)calm[y*cols+x]=1});
+ const p=plateEl.getBoundingClientRect();plate={l:p.left,r:p.right,t:p.top,b:p.bottom}}
+const wb=()=>plate.l<W*.2&&plate.r>W*.8?plate.t:H*.86;
+function away(x,y,pd){const l=plate.l-pd,r=plate.r+pd,tp=plate.t-pd,b=plate.b+pd;if(x<l||x>r||y<tp||y>b)return[0,0];
+ const m=Math.min(x-l,r-x,y-tp,b-y),k=1+m/pd;return m===y-tp?[0,-k]:m===x-l?[-k,0]:m===r-x?[k,0]:[0,k]}
+function pick(s){for(let i=0;i<14;i++){s.tx=W*(.06+.88*rnd());s.ty=H*.22+(wb()-H*.22-40)*rnd();if(!away(s.tx,s.ty,90)[1]&&!away(s.tx,s.ty,90)[0])return}}
+function init(){const sc=Math.max(.5,Math.min(1.1,W/1280)),y0=H*.22,yr=f=>y0+f*(wb()-y0);
+ sharks=[[44,0,.58,.42,-1,'KC-07 Marlowe'],[30,1,.3,.02,1,'KC-12 Oyster'],[25,1,.88,.8,-1,'']].map(([L,lay,fx,fy,dir,tag])=>{const s={L:Math.round(L*sc),lay,x:W*fx,y:yr(fy),sp:(lay?40:60)*Math.max(.7,sc),f:dir,pi:0,ph:rnd()*6,cur:0,cool:0,bt:1+rnd()*2,tag};s.vx=dir*s.sp;s.vy=0;s.tx=s.x+dir*W*.12;s.ty=lay?s.y:H*.3;return s});
+ fish=[];const n=W<640?26:60;for(let i=0;i<n;i++){const a=rnd()*6.28,r=Math.sqrt(rnd())*110;fish.push({x:W*.5+Math.cos(a)*r*1.6,y:yr(.06)+Math.sin(a)*r*.6,vx:55,vy:0,ph:rnd()*6})}
+ bub=[];for(let i=0;i<45;i++)step(1/30,1)}
+function step(dt,fo){t+=dt;const pa=t-pT<1.6,bot=wb();
+ for(const s of fo?[]:sharks){
+  if(s.cur>0){s.cur-=dt;s.tx=px;s.ty=Math.max(H*.2,Math.min(bot-30,py));if(s.cur<=0){s.cool=6;pick(s)}}
+  else{if(s.cool>0)s.cool-=dt;if(Math.hypot(s.tx-s.x,s.ty-s.y)<70)pick(s)}
+  const dx=s.tx-s.x,dy=s.ty-s.y,d=Math.hypot(dx,dy)||1,sp=s.sp*(s.cur>0?1.5:1),q=away(s.x,s.y,70);
+  s.vx+=((dx/d+q[0]*1.4)*sp-s.vx)*Math.min(1,dt*.9);s.vy+=((dy/d*.35+q[1]*1.4)*sp-s.vy)*Math.min(1,dt*.9);
+  s.x+=s.vx*dt;s.y+=s.vy*dt;s.y=Math.max(H*.18,s.y);
+  const v=Math.hypot(s.vx,s.vy);s.ph+=dt*(2.4+v/s.sp*1.8)*(s.lay?.8:1);
+  if(Math.abs(s.vx)>6)s.f+=(Math.sign(s.vx)-s.f)*Math.min(1,dt*1.6);
+  s.pi+=(Math.max(-.16,Math.min(.16,Math.atan2(s.vy,Math.abs(s.vx)+1)*.6))-s.pi)*Math.min(1,dt*2);
+  if((s.bt-=dt)<0){s.bt=2+rnd()*3;for(let i=0;i<3;i++)bub.push({x:s.x-Math.sign(s.f)*s.L*cw*.2,y:s.y,v:24+rnd()*20,a:i*-.3,w:rnd()*6})}}
+ if(pa&&!sharks.some(s=>s.cur>0)){let b=null,bd=380;for(const s of sharks)if(s.cool<=0){const d=Math.hypot(px-s.x,py-s.y);if(d<bd){bd=d;b=s}}if(b)b.cur=2.6}
+ const gx=W*(.55+.28*Math.sin(t*.06)),gy=Math.min(H*(.3+.08*Math.sin(t*.09+1)),bot-80);
+ for(const a of fish){let sx=0,sy=0,ax=0,ay=0,mx=0,my=0,n=0;
+  for(const b of fish){if(a===b)continue;const dx=b.x-a.x,dy=(b.y-a.y)*1.6,d2=dx*dx+dy*dy;if(d2<3600){n++;ax+=b.vx;ay+=b.vy;mx+=dx;my+=dy;if(d2<700){const k=1/(d2+1);sx-=dx*k;sy-=dy*k}}}
+  let fx=(gx-a.x)*.03+sx*900,fy=(gy-a.y)*.05+sy*900;if(n){fx+=(ax/n-a.vx)*.8+mx/n*.5;fy+=(ay/n-a.vy)*.8+my/n*.3}
+  if(pa){const dx=a.x-px,dy=a.y-py,d=Math.hypot(dx,dy);if(d<140){const k=(140-d)/140*900/(d+1);fx+=dx*k;fy+=dy*k}}
+  for(const s of sharks){const R=s.L*cw*.6,dx=a.x-(s.x-Math.sign(s.f)*R*.5),dy=a.y-s.y,d=Math.hypot(dx,dy);if(d<R){const k=(R-d)/R*500/(d+1);fx+=dx*k;fy+=dy*k}}
+  const q=away(a.x,a.y,36);fx+=q[0]*300;fy+=q[1]*300;if(a.y<H*.14)fy+=(H*.14-a.y)*4;if(a.x<30)fx+=(30-a.x)*3;if(a.x>W-30)fx-=(a.x-W+30)*3;
+  a.vx+=fx*dt;a.vy+=fy*dt;a.vy*=.97;const v=Math.hypot(a.vx,a.vy)||1,c=Math.max(35,Math.min(115,v))/v;a.vx*=c;a.vy*=c;
+  a.x+=a.vx*dt;a.y+=a.vy*dt;a.ph+=dt*(7+v*.04)}
+ if((vent-=dt)<0){vent=.5+rnd()*.6;const x=W*.8;if(!away(x,bot-20,0)[1])bub.push({x,y:H-chh*3,v:30+rnd()*24,a:0,w:rnd()*6})}
+ for(const b of bub){b.a+=dt;b.y-=b.v*dt;b.x+=Math.sin(b.a*2.4+b.w)*18*dt}
+ bub=bub.filter(b=>b.y>chh*1.5).slice(-70)}
+function put(c,r,ch,k){if(c<0||r<0||c>=cols||r>=rows)return;const i=r*cols+c;if(calm[i])return;ch8[i]=ch.charCodeAt(0);co8[i]=k}
+function water(){const R=' ..,:;-~=+*',fh=c=>1.6+.9*Math.sin(c*.09)+.6*Math.sin(c*.031+2);
+ for(let r=0;r<rows;r++){const d=r/(rows-1),dd=1-d,y=r*chh,o=r*cols;
+  for(let c=0;c<cols;c++){const i=o+c;if(calm[i])continue;const x=c*cw,h=hash[i],f=rows-fh(c);
+   if(r>f){ch8[i]=(r-1<f?(h>.5?95:46):(h>.6?58:46));co8[i]=18;continue}
+   if(d<.2){const q=Math.abs(Math.sin(x*.045+Math.sin(y*.09+t*1.1)*1.7+t*.7)+Math.sin(y*.11-t*.6+Math.sin(x*.03-t*.9)*1.4));
+    if(q<.15&&h>d*4){ch8[i]=q<.04?42:126;co8[i]=5;continue}}
+   const sn=Math.sin(c*12.99+(r-Math.floor(t*.8+(c%7)*3.1))*78.23)*43758.5;if(sn-Math.floor(sn)>.994){ch8[i]=46;co8[i]=3;continue}
+   let ray=.5+.5*Math.sin((x+y*.5)*.011+t*.12+Math.sin(x*.0021+t*.05)*2);ray=ray**8*dd*dd;
+   const n=Math.sin(x*.012+t*.25+Math.sin(y*.02+t*.2))*Math.sin(y*.028-t*.15+Math.sin(x*.009));
+   const I=.04+.25*dd*dd+n*.09*(.4+dd)+ray*.45+(h-.5)*.16,k=Math.min(10,Math.floor(I*11));
+   if(k>1){ch8[i]=R.charCodeAt(k);co8[i]=1+Math.min(3,Math.floor(I*4.2))}}}
+ const ks=[.6,.63,.74,.91,.94],kh=[.16,.24,.13,.27,.19];ks.forEach((p,j)=>{if(W<640&&j%2)return;const x0=Math.round(cols*p),base=Math.floor(rows-fh(x0)),hk=Math.round(rows*kh[j]);let po=0;
+  for(let m=0;m<hk;m++){const of=Math.sin(t*.7+m*.18+j*2)*m*.09+Math.sin(t*.31+j)*m*.04,c=Math.round(x0+of),sl=of-po;po=of;
+   put(c,base-m,sl>.25?'/':sl<-.25?'\\':m%4==1?')':m%4==3?'(':'|',17);if(m%6==2)put(c+1,base-m,')',17);if(m%6==5)put(c-1,base-m,'(',17)}})}
+function shark(s){const sg=s.f>=0?1:-1,k=.3+.7*Math.abs(s.f),Lp=s.L*cw,bx=-sg*k*Math.cos(s.pi),by=-Math.sin(s.pi),Hm=.22*Lp,ph=s.ph,base=s.lay?11:7;
+ const X=u=>s.x+bx*Lp*u,Y=u=>s.y+by*Lp*u+.045*Lp*u*u*Math.sin(ph-u*4.2),
+  hh=u=>Hm*(u<.22?.35+.65*Math.sin(u/.22*1.5708):u<.86?1-.8*((u-.22)/.64)**1.3:.2-.4*(u-.86)),
+  top=u=>[X(u),Y(u)-.5*hh(u)],bot=u=>[X(u),Y(u)+.4*hh(u)];
+ const xa=Math.min(s.x,s.x+bx*Lp*1.3)-Lp*.1,xb=Math.max(s.x,s.x+bx*Lp*1.3)+Lp*.1,c0=Math.floor(xa/cw),r0=Math.floor((s.y-Lp*.75)/chh),gw=Math.ceil(xb/cw)-c0+2,gh=Math.ceil((s.y+Lp*.75)/chh)-r0+2;
+ if(gw*gh>G.length)return;G.fill(0,0,gw*gh);
+ const set=(c,r,g,v)=>{c-=c0;r-=r0;if(c<0||r<0||c>=gw||r>=gh)return;const i=r*gw+c;if(g===1||!G[i]){G[i]=g;V[i]=v}};
+ for(let u=0,du=.4/(s.L*k);u<=1;u+=du){const x=X(u),y=Y(u),h=hh(u),c=Math.floor(x/cw);let ra=Math.ceil((y-.55*h)/chh-.5),rb=Math.floor((y+.45*h)/chh-.5);if(rb<ra)ra=rb=Math.floor(y/chh);
+  for(let r=ra;r<=rb;r++)set(c,r,1,(y-(r+.5)*chh)/(.5*h+1))}
+ const tri=(A,B,D,g)=>{for(let r=Math.floor(Math.min(A[1],B[1],D[1])/chh);r<=Math.floor(Math.max(A[1],B[1],D[1])/chh);r++)for(let c=Math.floor(Math.min(A[0],B[0],D[0])/cw);c<=Math.floor(Math.max(A[0],B[0],D[0])/cw);c++){
+  const x=(c+.5)*cw,y=(r+.5)*chh,e=(P,Q)=>(Q[0]-P[0])*(y-P[1])-(Q[1]-P[1])*(x-P[0]),a=e(A,B),b=e(B,D),d=e(D,A);if(!((a<0||b<0||d<0)&&(a>0||b>0||d>0)))set(c,r,g,0)}};
+ const fl=Math.sin(ph-4.2),T=[X(1),Y(1)];
+ tri(top(.29),top(.52),[X(.5),Y(.42)-.5*hh(.42)-.12*Lp*(1+.05*Math.sin(ph))],2);
+ tri(bot(.19),bot(.33),[X(.44+.03*Math.sin(ph*.5)),Y(.3)+.4*hh(.3)+.13*Lp],2);
+ tri(top(.8),[T[0],T[1]+4],[T[0]+bx*Lp*(.15+.06*fl),T[1]-Lp*(.24-.04*fl)+by*Lp*.15],3);
+ tri(bot(.84),[T[0],T[1]-4],[T[0]+bx*Lp*(.1-.04*fl),T[1]+Lp*(.13+.03*fl)+by*Lp*.1],3);
+ for(let r=0;r<gh;r++)for(let c=0;c<gw;c++){const i=r*gw+c,g=G[i];if(!g)continue;
+  const up=!r||!G[i-gw],dn=r==gh-1||!G[i+gw],lf=!c||!G[i-1],rt=c==gw-1||!G[i+1],v=V[i];let ch,tn=0;
+  if(g==1&&!up&&!dn&&(sg>0?rt:lf))ch=sg>0?')':'(';
+  else if(up&&lf&&!rt)ch='/';else if(up&&rt&&!lf)ch='\\';else if(dn&&lf&&!rt){ch='\\';tn=g==1?2:0}else if(dn&&rt&&!lf){ch='/';tn=g==1?2:0}
+  else if(up&&dn)ch='-';else if(up)ch=g==1?'-':'#';else if(dn){ch='_';tn=g==1?2:0}else if(g>1)ch='#';
+  else if(v>.4)ch='#';else if(v>-.2){ch='=';tn=1}else{ch=':';tn=2}
+  put(c+c0,r+r0,ch,base+tn)}
+ put(Math.floor(X(.075)/cw),Math.floor((Y(.075)-.12*hh(.075))/chh),'o',base+3);
+ for(const u of[.18,.205,.23])put(Math.floor(X(u)/cw),Math.floor((Y(u)+.05*hh(u))/chh),sg>0?'(':')',base+2);
+ s.tg=null;if(s.tag&&k>.75){const m=Math.round(4+s.y/H*58),str=s.tag+' '+m+'m';s.tg=[str,Math.round(X(.4)/cw-str.length/2),Math.floor((Y(.45)-.5*hh(.45)-.12*Lp)/chh)-1]}}
+function draw(){if(!ch8)return;ch8.fill(0);co8.fill(0);water();
+ for(const s of[...sharks].sort((a,b)=>b.lay-a.lay))shark(s);
+ for(const a of fish){const c=Math.floor(a.x/cw),r=Math.floor(a.y/chh),sg=a.vx>=0?1:-1,b=Math.sin(a.ph)>0;put(c-sg,r,sg>0?(b?'<':'{'):(b?'>':'}'),15);put(c,r,sg>0?'>':'<',16)}
+ for(const b of bub)put(Math.floor(b.x/cw),Math.floor(b.y/chh),b.a<1.4?'.':b.a<3.5?'o':'O',6);
+ for(const s of sharks)if(s.tg){const[str,c,r]=s.tg;let ok=r>=0&&c>=0&&c+str.length<cols-2;for(let j=0;ok&&j<str.length;j++)if(calm[r*cols+c+j])ok=false;if(ok)for(let j=0;j<str.length;j++)put(c+j,r,str[j],19)}
+ const bh=rows/5;pal.bg.forEach((c,j)=>{x2.fillStyle=c;x2.fillRect(0,Math.round(j*bh)*chh,W,(Math.round((j+1)*bh)-Math.round(j*bh))*chh)});
+ const lo=new Int32Array(C.length),hi=new Int32Array(C.length);
+ for(let r=0;r<rows;r++){const o=r*cols;lo.fill(1e9);hi.fill(-1);
+  for(let c=0;c<cols;c++){const k=co8[o+c];if(!k)continue;bufs[k][c]=ch8[o+c];if(c<lo[k])lo[k]=c;hi[k]=c}
+  for(let k=1;k<C.length;k++)if(hi[k]>=0){x2.fillStyle=C[k];x2.fillText(String.fromCharCode.apply(null,bufs[k].subarray(lo[k],hi[k]+1)),lo[k]*cw,r*chh+chh/2);bufs[k].fill(32,lo[k],hi[k]+1)}}}
+function frame(now){raf=requestAnimationFrame(frame);if(now-last<32)return;const dt=Math.min(.05,(now-last)/1000);last=now;step(dt);draw()}
+function play(on){running=on;pp.setAttribute('aria-pressed',!on);pp.setAttribute('aria-label',on?'Pause the ocean':'Play the ocean');cancelAnimationFrame(raf);if(on&&!document.hidden){last=performance.now();raf=requestAnimationFrame(frame)}}
+document.querySelectorAll('.seg button').forEach(b=>b.addEventListener('click',()=>setPal(b.dataset.p)));
+pp.addEventListener('click',()=>play(!running));
+addEventListener('pointermove',e=>{px=e.clientX;py=e.clientY;pT=t});
+document.addEventListener('visibilitychange',()=>{if(document.hidden)cancelAnimationFrame(raf);else if(running)play(true)});
+let rz=0;addEventListener('resize',()=>{clearTimeout(rz);rz=setTimeout(()=>{size();if(!running)draw()},120)});
+const go=()=>{size();setPal(root.dataset.theme);draw()};
+setPal('deep');size();init();draw();play(running);
+if(document.fonts)document.fonts.load('14px "JetBrains Mono"').then(go,go);
+})();
+</script>
+</body>
+</html>

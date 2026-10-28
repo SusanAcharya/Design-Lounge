@@ -308,6 +308,9 @@ function headingLines(lines) {
   });
 }
 
+/** How many, as copy says it: rounded down with a plus ("600+", "80+"). Small sets stay exact. */
+export const about = (n) => (n >= 100 ? `${Math.floor(n / 100) * 100}+` : n >= 20 ? `${Math.floor(n / 10) * 10}+` : String(n));
+
 export function hexToRgb(hex) {
   const m = String(hex).trim().match(/^#?([0-9a-f]{3}|[0-9a-f]{6})$/i);
   if (!m) return null;

@@ -1,0 +1,203 @@
+<!-- Design Lounge piece: product-configurator-material · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Orla table lamp · Hessle &amp; Vey</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#1b221f;--stage:#27302b;--stage-2:#313b35;--panel:#1b221f;--line:#36403a;--edge:#8d978f;
+  --ink:#efeae0;--ink-2:#c4c2b8;--ink-3:#a5a69c;--brass:#d9ad5f;--brass-ink:#1f1708;--glow:#ffe2a8;
+  --serif:"Fraunces",Georgia,serif;--sans:"Albert Sans",system-ui,sans-serif;
+  --r:10px;--r-sm:6px;--ease:cubic-bezier(.2,.7,.2,1);--out:cubic-bezier(.16,1,.3,1);--t:180ms;--t-lay:420ms;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:15px/1.45 var(--sans);-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--brass);outline-offset:3px}
+.top{height:56px;display:flex;align-items:center;gap:32px;padding:0 32px;border-bottom:1px solid var(--line)}
+.logo{font:500 20px/1 var(--serif);letter-spacing:-.01em}
+.top nav{display:flex;gap:22px;color:var(--ink-2);font-size:14px}
+.top nav a{color:inherit;text-decoration:none}.top nav a[aria-current]{color:var(--ink)}
+.top .sp{flex:1}
+.bag{display:flex;align-items:center;gap:8px;height:38px;padding:0 14px;border:1px solid var(--edge);border-radius:999px;background:transparent;font-weight:600;font-size:14px}
+.bag b{min-width:20px;height:20px;border-radius:10px;background:var(--brass);color:var(--brass-ink);font-size:12px;display:grid;place-items:center}
+.page{display:grid;grid-template-columns:minmax(0,1fr) 520px;height:calc(100% - 56px)}
+/* stage */
+.stage{position:relative;overflow:hidden;background:radial-gradient(42% 38% at 50% 34%,rgba(255,226,168,.2),rgba(255,226,168,0) 70%),linear-gradient(180deg,var(--stage) 0 72%,var(--stage-2) 72% 100%)}
+.stage svg{position:absolute;left:50%;bottom:8%;height:84%;translate:-50% 0;overflow:visible}
+#lamp{transform-origin:200px 500px;transition:transform var(--t-lay) var(--out)}
+.shade,.stem,.base{transition:fill var(--t-lay) var(--ease)}
+.cap{position:absolute;left:32px;bottom:26px;font-size:13px;color:var(--ink-2)}
+.cap b{display:block;font:400 13px/1.4 var(--sans);color:var(--ink);font-weight:600}
+.dims{position:absolute;right:32px;bottom:26px;font-size:13px;color:var(--ink-2);text-align:right;font-variant-numeric:tabular-nums}
+/* panel */
+.panel{padding:26px 36px 24px;border-left:1px solid var(--line);display:flex;flex-direction:column;gap:16px;overflow:auto}
+.crumb{font-size:13px;color:var(--ink-3)}
+h1{font:300 52px/1 var(--serif);letter-spacing:-.02em;margin:2px 0 0;font-variation-settings:"opsz" 144}
+.lede{margin:0;color:var(--ink-2);font-size:14px;max-width:420px}
+fieldset{border:0;margin:0;padding:0;min-width:0}
+legend{padding:0;margin-bottom:8px;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);display:flex;gap:8px;width:100%}
+legend span{font-weight:500;letter-spacing:0;text-transform:none;color:var(--ink)}
+.opts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.opt{position:relative;display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:var(--r);border:1px solid var(--line);cursor:pointer;transition:border-color var(--t) var(--ease),background var(--t) var(--ease)}
+.opt:hover{border-color:var(--edge)}
+.opt:has(:checked){border-color:var(--brass);background:rgba(217,173,95,.08)}
+.opt small{display:block;font-size:12px;color:var(--ink-3)}
+.opt strong{font-weight:600;font-size:14px;line-height:1.2}
+input[type=radio]{appearance:none;-webkit-appearance:none;margin:0;flex:none;cursor:pointer}
+.dot{width:18px;height:18px;border-radius:50%;border:2px solid var(--edge);background:transparent;transition:box-shadow var(--t) var(--ease),border-color var(--t) var(--ease)}
+.dot:checked{border-color:var(--brass);box-shadow:inset 0 0 0 4px var(--bg),inset 0 0 0 9px var(--brass)}
+.dot:focus-visible{outline:2px solid var(--brass);outline-offset:3px}
+.sw{display:flex;gap:12px;align-items:center}
+.chip{width:40px;height:40px;border-radius:50%;border:2px solid var(--edge);transition:transform var(--t) var(--ease)}
+.chip:hover{transform:scale(1.06)}
+.chip:checked{border-color:var(--ink);outline:2px solid var(--brass);outline-offset:3px}
+.chip:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+.sizes .opt{justify-content:flex-start}
+.sum{border-top:1px solid var(--line);padding-top:14px;display:grid;grid-template-columns:1fr auto;gap:12px 16px;align-items:end}
+.lines{margin:0;font-size:13px;color:var(--ink-2);display:grid;grid-template-columns:1fr auto;gap:3px 16px;font-variant-numeric:tabular-nums}
+.lines dd{margin:0;text-align:right;color:var(--ink)}
+.total{font:400 44px/1 var(--serif);letter-spacing:-.02em;font-variant-numeric:tabular-nums;text-align:right}
+.total.tick{animation:tick 360ms var(--out)}
+@keyframes tick{from{opacity:.2;transform:translateY(6px)}}
+.ship{grid-column:1/-1;display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink-2)}
+.ship svg{flex:none;color:var(--brass)}
+.ship b{color:var(--ink);font-weight:600}
+.add{grid-column:1/-1;height:52px;border:0;border-radius:999px;background:var(--brass);color:var(--brass-ink);font-weight:700;font-size:16px;display:flex;align-items:center;justify-content:center;gap:10px;transition:transform var(--t) var(--ease),background var(--t) var(--ease)}
+.add:hover{background:#e4bb72}.add:active{transform:scale(.98)}
+.add[data-done]{background:var(--ink)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media (max-width:1100px){.page{grid-template-columns:minmax(0,1fr) 460px}}
+@media (max-width:860px){
+  .page{grid-template-columns:1fr;height:auto}
+  .stage{height:400px}
+  .panel{border-left:0;padding:22px 16px 32px}
+  .top{padding:0 16px;gap:16px}.top nav{display:none}
+  h1{font-size:40px}
+  .stage svg{bottom:17%;height:76%}
+  .cap{left:16px;bottom:14px}
+  .opt{flex-direction:column;align-items:flex-start;gap:6px;padding:10px}
+  .dims{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important;animation:none!important}}
+</style>
+</head>
+<body>
+<header class="top">
+  <span class="logo">Hessle &amp; Vey</span>
+  <nav aria-label="Shop"><a href="#" aria-current="page">Lighting</a><a href="#">Seating</a><a href="#">Tables</a><a href="#">Workshop</a></nav>
+  <span class="sp"></span>
+  <button class="bag" aria-label="Bag, 0 items"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M5 8h14l-1 12H6zM9 8V6a3 3 0 016 0v2"/></svg>Bag <b id="count">0</b></button>
+</header>
+<main class="page">
+  <section class="stage" aria-label="Preview">
+    <svg viewBox="0 0 400 520" role="img" aria-labelledby="shown">
+      <defs>
+        <linearGradient id="m-alu" x1="0" x2="1"><stop offset="0" stop-color="#7c8285"/><stop offset=".45" stop-color="#e2e4e2"/><stop offset="1" stop-color="#6f7477"/></linearGradient>
+        <pattern id="m-oak" width="10" height="40" patternUnits="userSpaceOnUse"><rect width="10" height="40" fill="#9a6a3e"/><path d="M2 0c1 14-1 26 1 40M7 0c-1 12 1 28 0 40" stroke="#7d522c" stroke-width="1.2" fill="none"/></pattern>
+        <linearGradient id="m-cer" x1="0" x2="1"><stop offset="0" stop-color="#bdb4a2"/><stop offset=".35" stop-color="#f3eee3"/><stop offset="1" stop-color="#b3aa98"/></linearGradient>
+        <linearGradient id="hl" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".38"/><stop offset=".5" stop-color="#fff" stop-opacity="0"/></linearGradient>
+        <radialGradient id="inner"><stop offset="0" stop-color="#fff6dc"/><stop offset="1" stop-color="#f2c97a"/></radialGradient>
+        <radialGradient id="pool"><stop offset="0" stop-color="#ffe2a8" stop-opacity=".45"/><stop offset="1" stop-color="#ffe2a8" stop-opacity="0"/></radialGradient>
+      </defs>
+      <ellipse cx="200" cy="502" rx="150" ry="16" fill="#121714" opacity=".55"/>
+      <g id="lamp">
+        <ellipse cx="200" cy="300" rx="150" ry="70" fill="url(#pool)"/>
+        <rect class="stem" x="191" y="196" width="18" height="268" rx="3" fill="url(#m-oak)"/>
+        <path class="base" d="M128 470a72 14 0 0 1 144 0v18a72 14 0 0 1-144 0z" fill="url(#m-oak)"/>
+        <ellipse cx="200" cy="470" rx="72" ry="14" fill="#fff" opacity=".12"/>
+        <ellipse cx="200" cy="232" rx="118" ry="20" fill="url(#inner)"/>
+        <path class="shade" id="shade" d="M82 230C82 120 140 72 200 72s118 48 118 158c0 8-236 8-236 0z" fill="#6e7a45"/>
+        <path d="M82 230C82 120 140 72 200 72s118 48 118 158c0 8-236 8-236 0z" fill="url(#hl)"/>
+        <circle cx="200" cy="66" r="7" fill="#c9a15a"/>
+      </g>
+    </svg>
+    <p class="cap" id="shown"><b>Shown: Medium, oiled oak, moss glaze</b>Light: 2700 K bulb, 470 lm, included</p>
+    <p class="dims" id="dims">41 cm tall<br>Shade 30 cm across</p>
+  </section>
+
+  <section class="panel" aria-labelledby="t">
+    <span class="crumb">Lighting / Table lamps</span>
+    <h1 id="t">Orla table lamp</h1>
+    <p class="lede">A spun dome shade on a turned stem, made to order in our Hull workshop. Dimmable, with a 2.4 m braided cable.</p>
+
+    <fieldset>
+      <legend>Material <span id="l-mat">Oiled oak</span></legend>
+      <div class="opts">
+        <label class="opt"><input class="dot" type="radio" name="mat" value="alu" data-p="0" data-n="Spun aluminium"><span><strong>Aluminium</strong><small>Included</small></span></label>
+        <label class="opt"><input class="dot" type="radio" name="mat" value="oak" data-p="45" data-n="Oiled oak" checked><span><strong>Oiled oak</strong><small>+£45</small></span></label>
+        <label class="opt"><input class="dot" type="radio" name="mat" value="cer" data-p="60" data-n="Glazed ceramic"><span><strong>Ceramic</strong><small>+£60</small></span></label>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Shade glaze <span id="l-col">Moss</span></legend>
+      <div class="sw">
+        <input class="chip" type="radio" name="col" value="#e7e1d4" data-n="Chalk" data-p="0" aria-label="Chalk" style="background:#e7e1d4">
+        <input class="chip" type="radio" name="col" value="#c98b2e" data-n="Ochre" data-p="0" aria-label="Ochre" style="background:#c98b2e">
+        <input class="chip" type="radio" name="col" value="#6e7a45" data-n="Moss" data-p="0" aria-label="Moss" style="background:#6e7a45" checked>
+        <input class="chip" type="radio" name="col" value="#7a2f2a" data-n="Oxblood" data-p="15" aria-label="Oxblood, plus 15 pounds" style="background:#7a2f2a">
+        <input class="chip" type="radio" name="col" value="#3a4652" data-n="Slate" data-p="0" aria-label="Slate" style="background:#3a4652">
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Size <span id="l-size">Medium</span></legend>
+      <div class="opts sizes">
+        <label class="opt"><input class="dot" type="radio" name="size" value=".8" data-p="185" data-n="Small" data-d="33 cm tall|Shade 24 cm across"><span><strong>Small</strong><small>33 cm</small></span></label>
+        <label class="opt"><input class="dot" type="radio" name="size" value="1" data-p="245" data-n="Medium" data-d="41 cm tall|Shade 30 cm across" checked><span><strong>Medium</strong><small>41 cm</small></span></label>
+        <label class="opt"><input class="dot" type="radio" name="size" value="1.16" data-p="320" data-n="Large" data-d="48 cm tall|Shade 35 cm across"><span><strong>Large</strong><small>48 cm</small></span></label>
+      </div>
+    </fieldset>
+
+    <div class="sum">
+      <dl class="lines" id="lines" aria-label="Price breakdown"></dl>
+      <div class="total" id="total" aria-live="polite">£290</div>
+      <p class="ship" style="margin:0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="17.5" r="1.6"/><circle cx="17" cy="17.5" r="1.6"/></svg><span id="ship"></span></p>
+      <button class="add" id="add">Add to bag</button>
+    </div>
+  </section>
+</main>
+<p class="sr" aria-live="polite" id="live"></p>
+<script>
+(function(){
+  var $=function(s){return document.querySelector(s)};
+  var SHIP={alu:'<b>Arrives Mon 2 to Wed 4 Nov</b> · in stock',oak:'<b>Arrives Mon 9 to Wed 11 Nov</b> · turned to order',cer:'<b>Arrives Wed 18 to Mon 23 Nov</b> · thrown and fired to order'};
+  var FILL={alu:'url(#m-alu)',oak:'url(#m-oak)',cer:'url(#m-cer)'};
+  var count=0,first=true;
+  function val(n){return document.querySelector('input[name='+n+']:checked');}
+  function money(v){return '£'+(v%1?v.toFixed(2):v);}
+  function render(){
+    var m=val('mat'),c=val('col'),s=val('size');if(!m||!c||!s)return;
+    var base=+s.dataset.p,mp=+m.dataset.p,cp=+c.dataset.p,sub=base+mp+cp,del=sub>=250?0:9.5,tot=sub+del;
+    $('#shade').setAttribute('fill',c.value);
+    document.querySelectorAll('.stem,.base').forEach(function(e){e.setAttribute('fill',FILL[m.value]);});
+    $('#lamp').style.transform='scale('+s.value+')';
+    $('#l-mat').textContent=m.dataset.n;$('#l-col').textContent=c.dataset.n;$('#l-size').textContent=s.dataset.n;
+    var rows=[['Orla lamp, '+s.dataset.n.toLowerCase(),money(base)],[m.dataset.n+' stem and base',mp?'+'+money(mp):'Included'],[c.dataset.n+' glaze',cp?'+'+money(cp):'Included'],['Delivery',del?money(del):'Free']];
+    $('#lines').innerHTML=rows.map(function(r){return '<dt>'+r[0]+'</dt><dd>'+r[1]+'</dd>';}).join('');
+    var t=$('#total');t.textContent=money(tot);
+    if(!first){t.classList.remove('tick');void t.offsetWidth;t.classList.add('tick');}
+    $('#ship').innerHTML=SHIP[m.value];
+    var d=s.dataset.d.split('|');$('#dims').innerHTML=d[0]+'<br>'+d[1];
+    $('#shown').innerHTML='<b>Shown: '+s.dataset.n+', '+m.dataset.n.toLowerCase()+', '+c.dataset.n.toLowerCase()+' glaze</b>Light: 2700 K bulb, 470 lm, included';
+    var a=$('#add');a.removeAttribute('data-done');a.textContent='Add to bag · '+money(tot);
+    first=false;
+  }
+  document.addEventListener('change',function(e){if(e.target.matches('input[type=radio]'))render();});
+  $('#add').addEventListener('click',function(){
+    count++;$('#count').textContent=count;$('.bag').setAttribute('aria-label','Bag, '+count+(count>1?' items':' item'));
+    this.setAttribute('data-done','');this.textContent='Added to bag';
+    $('#live').textContent='Orla table lamp, '+val('size').dataset.n+', added to bag';
+  });
+  render();
+})();
+</script>
+</body>
+</html>

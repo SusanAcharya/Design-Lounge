@@ -1,5 +1,5 @@
 ---
-import { getPieces, AUTHOR } from '../lib/pieces';
+import { getPieces, AUTHOR, about } from '../lib/pieces';
 import { SHELF_GROUPS } from '../data/collections';
 const pieces = await getPieces();
 const year = new Date().getFullYear();
@@ -61,7 +61,7 @@ const year = new Date().getFullYear();
     </div>
     <div class="big display" aria-hidden="true">Design <i>Lounge</i></div>
     <div class="legal mono faint">
-      <span>© {year} {AUTHOR.name} · Design Lounge · {pieces.length} pieces</span>
+      <span>© {year} {AUTHOR.name} · Design Lounge · {about(pieces.length)} pieces</span>
       <span><a href={AUTHOR.site}>{AUTHOR.siteLabel}</a></span>
     </div>
   </div>

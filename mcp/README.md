@@ -2,7 +2,7 @@
 
 Design Lounge as an MCP server. Your agent can:
 
-- **Design from the library**: 543 piece briefs, 84 themes, 46 type pairings, 43 recipes with directions, Lounge Icons, and Sanzo Wada's colour combinations. It picks a direction the same way every time and keeps two sites from looking alike.
+- **Design from the library**: 600+ piece briefs, 80+ themes, 40+ type pairings, 40+ recipes with directions, Lounge Icons, and Sanzo Wada's colour combinations. It picks a direction the same way every time and keeps two sites from looking alike.
 - **Remove AI giveaways**: stock copy, em dashes, icon-card trios, gradients, the indigo palette, emoji icons, made-up numbers, and drift from the locked theme, pairing, and family.
 - **Get found and quoted**: SEO, AEO (answer engines), and GEO (ChatGPT, Claude, Perplexity, Gemini). It checks the head, the share card, robots.txt for search and AI crawlers, server-rendered text, and JSON-LD.
 - **Look at the page**: Chromium at 1280×800 and 390×844 with reduced motion. It runs axe, measures faces, labels, primaries, and tap targets, and saves the screenshots.

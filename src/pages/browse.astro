@@ -1,13 +1,13 @@
 ---
 import Base from '../layouts/Base.astro';
 import Catalog from '../components/Catalog.astro';
-import { getPieces } from '../lib/pieces';
+import { getPieces, about } from '../lib/pieces';
 const pieces = await getPieces();
 ---
 <Base title="Browse the library" description="Search the Design Lounge library. Filter every screen, component, animation and pattern by word, at /browse?q= followed by what you are looking for." rail={false}>
   <header class="bh wrap">
     <h1 class="display h3">Library</h1>
-    <p class="muted">{pieces.length} live pieces. Narrow by type, platform, section or style, then open one to see it live and copy its brief.</p>
+    <p class="muted">{about(pieces.length)} live pieces. Narrow by type, platform, section or style, then open one to see it live and copy its brief.</p>
   </header>
   <div class="wrap">
     <Catalog pieces={pieces} all={pieces} sidebar />

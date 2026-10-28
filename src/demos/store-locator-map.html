@@ -1,0 +1,246 @@
+<!-- Design Lounge piece: store-locator-map · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Halden workshops</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Space+Grotesk:wght@400..700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fbfaf6;--panel:#ffffff;--line:#e4dfd3;--line2:#8a8577;
+  --ink:#16233f;--ink2:#4a5267;--ink3:#5f6470;
+  --navy:#1b2a4a;--on-navy:#ffffff;--tomato:#e5482d;--tomato-dk:#b8321b;--on-tomato:#ffffff;
+  --open:#1e7a46;--soon:#8a5300;--shut:#5f6470;--you:#2563c9;
+  --land:#efe8da;--water:#b9d3df;--park:#cadfbf;--road:#ffffff;--casing:#dcd2bf;
+  --display:"Bricolage Grotesque",system-ui,sans-serif;--data:"Space Grotesk",ui-monospace,sans-serif;
+  --r:10px;--r-card:16px;--shadow:0 1px 2px rgba(22,35,63,.08),0 12px 32px -8px rgba(22,35,63,.28);
+  --ease:cubic-bezier(.2,.7,.2,1);--expo:cubic-bezier(.16,1,.3,1);--t:160ms;--t-l:320ms;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:15px/1.45 var(--display);color:var(--ink);background:var(--bg);display:flex;flex-direction:column;overflow:hidden}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--tomato);outline-offset:2px}
+.top{height:64px;flex:none;display:flex;align-items:center;gap:28px;padding:0 24px;border-bottom:1px solid var(--line);background:var(--panel)}
+.mark{display:flex;align-items:center;gap:10px;font-weight:800;font-size:22px;letter-spacing:-.03em;text-decoration:none;color:var(--ink)}
+.mark svg{width:30px;height:30px}
+.mark small{font:500 11px var(--data);letter-spacing:.14em;text-transform:uppercase;color:var(--ink2)}
+.top nav{display:flex;gap:4px;margin-left:12px}
+.top nav a{padding:8px 12px;border-radius:8px;text-decoration:none;color:var(--ink2);font-weight:500}
+.top nav a:hover{color:var(--ink);background:#f1eee6}
+.top nav a[aria-current]{color:var(--ink);box-shadow:inset 0 -2px var(--tomato);border-radius:0}
+.book{margin-left:auto;height:40px;padding:0 18px;border-radius:999px;border:0;background:var(--navy);color:var(--on-navy);font-weight:600}
+.book:hover{background:#26396b}
+.wrap{flex:1;min-height:0;display:grid;grid-template-columns:440px 1fr}
+.side{display:flex;flex-direction:column;min-height:0;border-right:1px solid var(--line);background:var(--panel)}
+.head{padding:24px 24px 16px}
+h1{margin:0 0 4px;font-size:40px;line-height:1;font-weight:800;letter-spacing:-.04em;font-variation-settings:"opsz" 96}
+h1 em{font-style:normal;color:var(--tomato-dk)}
+.lede{margin:0 0 18px;color:var(--ink2);font-size:14px}
+.search{display:flex;gap:8px}
+.field{flex:1;min-width:0;position:relative}
+.field svg{position:absolute;left:12px;top:12px;width:20px;height:20px;color:var(--ink2);pointer-events:none}
+.field input{width:100%;height:44px;border:1.5px solid var(--line2);border-radius:var(--r);padding:0 12px 0 40px;background:#fff;font-size:15px}
+.field input:focus{outline:none;border-color:var(--navy);box-shadow:0 0 0 3px rgba(27,42,74,.15)}
+.loc{height:44px;flex:none;display:flex;align-items:center;gap:6px;padding:0 14px;border:1.5px solid var(--navy);border-radius:var(--r);background:#fff;font-weight:600;font-size:14px;white-space:nowrap}
+.loc svg{width:18px;height:18px}
+.loc:hover{background:#eef1f8}
+.loc[aria-busy=true] svg{animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.chip{height:32px;padding:0 12px;border-radius:999px;border:1.5px solid var(--line2);background:#fff;font-size:13px;font-weight:500;display:flex;align-items:center;gap:6px}
+.chip[aria-pressed=true]{background:var(--navy);border-color:var(--navy);color:var(--on-navy)}
+.chip .dot{width:8px;height:8px;border-radius:50%;background:var(--open)}
+.chip[aria-pressed=true] .dot{background:#7ee2a6}
+.meta{display:flex;justify-content:space-between;padding:10px 24px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);font:500 12px var(--data);color:var(--ink2);letter-spacing:.02em}
+.list{list-style:none;margin:0;padding:6px 12px 16px;overflow:auto;flex:1;min-height:0}
+.store{display:grid;grid-template-columns:32px 1fr auto;gap:2px 12px;width:100%;text-align:left;padding:14px 12px;border:0;border-radius:12px;background:none;position:relative}
+.store:hover,.store.hot{background:#f6f3ec}
+.store[aria-current=true]{background:#fdf0ec}
+.store[aria-current=true]::before{content:"";position:absolute;left:0;top:14px;bottom:14px;width:3px;border-radius:2px;background:var(--tomato)}
+.num{grid-row:span 3;width:28px;height:28px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;font:700 13px var(--data)}
+.store[aria-current=true] .num,.store.hot .num{background:var(--tomato-dk)}
+.name{font-weight:700;font-size:16px;letter-spacing:-.01em}
+.km{font:500 13px var(--data);color:var(--ink2);text-align:right}
+.addr{grid-column:2/4;font-size:13px;color:var(--ink2)}
+.st{grid-column:2/4;display:flex;flex-wrap:wrap;gap:4px 10px;align-items:center;font:500 13px var(--data)}
+.st b{font-weight:600}
+.st i{width:7px;height:7px;border-radius:50%;background:currentColor;display:inline-block;margin-right:6px}
+.open{color:var(--open)}.soon{color:var(--soon)}.shut{color:var(--shut)}
+.svc{color:var(--ink2);font-weight:400}
+.empty{padding:28px 16px;color:var(--ink2);font-size:14px}
+.empty b{display:block;color:var(--ink);font-size:16px;margin-bottom:4px}
+.mapwrap{position:relative;min-width:0;min-height:0;overflow:hidden;background:var(--land)}
+#map{width:100%;height:100%;display:block}
+.lbl{font:600 11px var(--data);letter-spacing:.18em;fill:#5a5243}
+.wl{font:italic 500 13px var(--display);fill:#2c5163;letter-spacing:.04em}
+.pl{font:500 12px var(--display);fill:#35552f}
+.pin{cursor:pointer}.pi{transform-origin:0 0;transition:transform var(--t) var(--ease)}
+.pin path{fill:var(--navy);stroke:#fff;stroke-width:2.5}
+.pin text{font:700 13px var(--data);fill:#fff;text-anchor:middle}
+.pin.hot path,.pin.sel path{fill:var(--tomato-dk)}
+.pin.sel .pi{transform:scale(1.22)}
+.pin.dim{opacity:.28}
+.pin:focus{outline:none}.pin:focus-visible path{stroke:var(--tomato);stroke-width:4}
+.you{display:none}.you.on{display:block}
+.you circle:first-child{fill:var(--you);opacity:.18;transform-box:fill-box;transform-origin:center;animation:pulse 2.4s var(--ease) infinite}
+@keyframes pulse{0%{transform:scale(.4);opacity:.35}100%{transform:scale(1.6);opacity:0}}
+#route{fill:none;stroke:var(--you);stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1 11}
+#route.draw{animation:draw .7s var(--expo)}
+@keyframes draw{from{stroke-dashoffset:300;opacity:0}to{stroke-dashoffset:0;opacity:1}}
+.card{position:absolute;width:300px;background:var(--panel);border-radius:var(--r-card);box-shadow:var(--shadow);padding:18px 18px 16px;transition:left var(--t-l) var(--expo),top var(--t-l) var(--expo),opacity var(--t) var(--ease)}
+.card[hidden]{display:block;opacity:0;visibility:hidden}
+.card h2{margin:0;font-size:22px;letter-spacing:-.03em;line-height:1.1}
+.card .addr{margin:2px 0 10px}
+.hours{width:100%;border-collapse:collapse;font:400 13px var(--data);margin:10px 0 14px}
+.hours td{padding:3px 0;border-top:1px solid #f0ece3;color:var(--ink2)}
+.hours td:last-child{text-align:right}
+.hours tr.today td{color:var(--ink);font-weight:700}
+.acts{display:flex;gap:8px}
+.dir{flex:1;height:40px;display:flex;align-items:center;justify-content:center;gap:6px;border-radius:999px;background:var(--tomato-dk);color:var(--on-tomato);text-decoration:none;font-weight:600}
+.dir:hover{background:#9c2913}
+.call{height:40px;padding:0 14px;display:flex;align-items:center;border-radius:999px;border:1.5px solid var(--navy);color:var(--ink);text-decoration:none;font-weight:600;font-size:14px}
+.ride{margin:10px 0 0;font:500 13px var(--data);color:var(--you)}
+.scale{position:absolute;left:20px;bottom:18px;font:500 11px var(--data);color:#4a4537;background:rgba(239,232,218,.9);padding:4px 8px;border-radius:6px}
+.scale i{display:block;width:125px;height:6px;border:1.5px solid #4a4537;border-top:0;margin-top:2px}
+.seg{display:none}
+@media (max-width:860px){
+  .top nav,.mark small{display:none}
+  .top{gap:12px;padding:0 16px}
+  .wrap{grid-template-columns:1fr;grid-template-rows:auto 1fr}
+  .side{border-right:0;min-height:0}
+  .head{padding:18px 16px 12px}
+  h1{font-size:32px}
+  .meta{padding:10px 16px}
+  .list{padding:6px 4px 16px}
+  .seg{display:flex;margin:12px 0 0;border:1.5px solid var(--navy);border-radius:999px;padding:3px}
+  .seg button{flex:1;height:38px;border:0;border-radius:999px;background:none;font-weight:600}
+  .seg button[aria-pressed=true]{background:var(--navy);color:#fff}
+  .wrap.show-map .side{grid-row:1}
+  .wrap.show-map .meta,.wrap.show-map .list,.wrap.show-map .chips,.wrap.show-map .lede{display:none}
+  .wrap:not(.show-map) .mapwrap{display:none}
+  .card{left:12px!important;right:12px;top:auto!important;bottom:12px;width:auto}
+  .hours tr:not(.today),.scale{display:none}
+}
+@media (max-width:400px){.loc span{display:none}.loc{width:44px;padding:0;justify-content:center}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:1ms!important}}
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="mark" href="#"><svg viewBox="0 0 30 30" aria-hidden="true"><circle cx="15" cy="15" r="15" fill="#1b2a4a"/><circle cx="10" cy="17" r="4.5" fill="none" stroke="#fff" stroke-width="2"/><circle cx="20" cy="17" r="4.5" fill="none" stroke="#fff" stroke-width="2"/><path d="M10 17l4-7h5l1 7M13 10h3" fill="none" stroke="#e5482d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Halden <small>Cycle Works</small></a>
+  <nav aria-label="Main"><a href="#">Bikes</a><a href="#">Servicing</a><a href="#">Hire</a><a href="#" aria-current="page">Workshops</a></nav>
+  <button class="book" type="button">Book a service</button>
+</header>
+<div class="wrap" id="wrap">
+  <section class="side" aria-labelledby="h">
+    <div class="head">
+      <h1 id="h"><em id="count">7</em> workshops in Aske</h1>
+      <p class="lede">Walk-in repairs, hire bikes and e-bike charging. Hours update live.</p>
+      <div class="search" role="search">
+        <label class="field"><span hidden>Search workshops</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><input id="q" type="search" placeholder="Area or postcode" aria-label="Search workshops by street, area or postcode"></label>
+        <button class="loc" id="loc" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg><span>Use my location</span></button>
+      </div>
+      <div class="chips" role="group" aria-label="Filter">
+        <button class="chip" data-f="open" aria-pressed="false"><i class="dot"></i>Open now</button>
+        <button class="chip" data-f="R" aria-pressed="false">Repairs</button>
+        <button class="chip" data-f="H" aria-pressed="false">Hire</button>
+        <button class="chip" data-f="C" aria-pressed="false">E-bike charging</button>
+        <button class="chip" data-f="F" aria-pressed="false">Bike fit</button>
+      </div>
+      <div class="seg" role="group" aria-label="View"><button id="vl" aria-pressed="true">List</button><button id="vm" aria-pressed="false">Map</button></div>
+    </div>
+    <div class="meta"><span id="res" aria-live="polite">7 of 7 workshops</span><span id="sort">From Aske Cross</span></div>
+    <ul class="list" id="list"></ul>
+  </section>
+  <section class="mapwrap" id="mw" aria-label="Map of workshops">
+    <svg id="map" viewBox="0 0 840 736" preserveAspectRatio="xMidYMid slice">
+      <rect width="840" height="736" fill="var(--land)"/>
+      <path d="M0 330 C160 300 230 420 360 430 S560 360 640 440 S760 640 840 610" fill="none" stroke="var(--water)" stroke-width="54"/>
+      <path d="M560 380 C600 300 620 200 700 0" fill="none" stroke="var(--water)" stroke-width="14"/>
+      <path d="M560 210 l130 -30 40 110 -120 40z" fill="var(--park)" rx="20"/>
+      <path d="M60 600 q80 -40 150 10 t40 110 h-200z" fill="var(--park)"/>
+      <circle cx="120" cy="140" r="64" fill="var(--park)"/>
+      <g fill="#e5dcc8"><rect x="470" y="190" width="40" height="60" rx="4"/><rect x="470" y="262" width="40" height="30" rx="4"/><rect x="560" y="170" width="50" height="40" rx="4"/><rect x="150" y="250" width="40" height="60" rx="4"/><rect x="340" y="250" width="70" height="40" rx="4"/><rect x="340" y="300" width="40" height="90" rx="4"/><rect x="470" y="320" width="60" height="50" rx="4"/><rect x="690" y="320" width="60" height="80" rx="4"/><rect x="120" y="410" width="50" height="50" rx="4"/><rect x="360" y="470" width="60" height="40" rx="4"/><rect x="520" y="530" width="70" height="50" rx="4"/><rect x="640" y="520" width="90" height="40" rx="4"/><rect x="250" y="580" width="80" height="60" rx="4"/><rect x="560" y="640" width="40" height="60" rx="4"/><rect x="480" y="40" width="70" height="70" rx="4"/><rect x="620" y="40" width="90" height="60" rx="4"/><rect x="260" y="60" width="80" height="40" rx="4"/><rect x="30" y="520" width="60" height="40" rx="4"/><rect x="760" y="620" width="60" height="60" rx="4"/></g>
+      <path d="M0 375 C160 345 230 465 360 475 S560 405 640 485 S760 685 840 655" fill="none" stroke="#3d8a5e" stroke-width="3" stroke-dasharray="7 6"/>
+      <g fill="none" stroke-linecap="round">
+        <g stroke="var(--casing)" stroke-width="16"><path d="M440 0 L440 736"/><path d="M0 230 L840 150"/><path d="M0 700 L840 520"/><path d="M90 0 L330 736"/></g>
+        <g stroke="var(--road)" stroke-width="11"><path d="M440 0 L440 736"/><path d="M0 230 L840 150"/><path d="M0 700 L840 520"/><path d="M90 0 L330 736"/></g>
+        <g stroke="var(--road)" stroke-width="5"><path d="M0 90 L440 60"/><path d="M200 230 L250 410M300 220 L330 420M520 160 L540 380M620 150 L660 420"/><path d="M440 300 L840 290"/><path d="M100 480 L440 520 L840 470"/><path d="M220 560 L250 700M480 510 L500 640M600 490 L620 600"/><path d="M0 400 L180 380"/><path d="M760 140 L780 520"/></g>
+        <g stroke="#cfc6b2" stroke-width="3" stroke-dasharray="2 6"><path d="M0 50 L840 20"/></g>
+      </g>
+            <text class="lbl" x="250" y="300">MILLRACE</text><text class="lbl" x="470" y="100">NORTHGATE</text>
+      <text class="lbl" x="120" y="470">TANNERY ROW</text><text class="lbl" x="540" y="560">QUAYSIDE</text>
+      <text class="lbl" x="640" y="660">ASHBY HILL</text><text class="lbl" x="300" y="600">OLD HARBOUR</text>
+      <text class="wl" x="40" y="320">River Aske</text><text class="pl" x="590" y="300">Kestrel Park</text><text class="pl" x="88" y="145">Gallows Green</text>
+      <path id="route" d=""/>
+      <g class="you" id="you"><circle cx="250" cy="420" r="26"/><circle cx="250" cy="420" r="8" fill="var(--you)" stroke="#fff" stroke-width="3"/></g>
+      <g id="pins"></g>
+    </svg>
+    <article class="card" id="card" hidden aria-live="polite"></article>
+    <div class="scale" aria-hidden="true">500 m<i></i></div>
+  </section>
+</div>
+<script>
+(function(){
+var S=[
+ {n:'Millrace',a:'14 Millrace Lane, AK2 7RT',x:300,y:250,s:'RHC',h:['10:00-16:00','08:00-18:30','08:00-18:30','08:00-18:30','08:00-20:00','08:00-18:30','09:00-17:00'],p:'0161 496 0731'},
+ {n:'Quayside',a:'2 Harbour Steps, AK1 3QS',x:560,y:470,s:'RH',h:['09:00-15:00','07:30-19:00','07:30-19:00','07:30-19:00','07:30-19:00','07:30-19:00','08:00-18:00'],p:'0161 496 0412'},
+ {n:'Tannery Row',a:'88 Tannery Row, AK3 1TN',x:180,y:520,s:'RF',h:[null,null,'10:00-18:00','10:00-18:00','10:00-20:00','10:00-18:00','09:00-17:00'],p:'0161 496 0885'},
+ {n:'Northgate',a:'31 Northgate Road, AK6 2NG',x:470,y:120,s:'RC',h:[null,'08:30-18:00','08:30-18:00','08:30-18:00','08:30-18:00','08:30-17:00','09:00-14:00'],p:'0161 496 0190'},
+ {n:'Kestrel Park',a:'The Pavilion, Kestrel Park, AK6 9KP',x:650,y:240,s:'H',h:['09:00-19:00','10:00-18:00','10:00-18:00','10:00-18:00','10:00-18:00','10:00-19:00','09:00-19:00'],p:'0161 496 0622'},
+ {n:'Ashby Hill',a:'5 Ashby Parade, AK4 8AH',x:710,y:600,s:'RCF',h:[null,'09:00-18:00','09:00-18:00','09:00-18:00','09:00-18:00','09:00-18:00','09:00-16:00'],p:'0161 496 0357'},
+ {n:'Old Harbour',a:'Shed 3, Pier Road, AK1 6OH',x:380,y:650,s:'RHC',h:['10:00-17:00','08:00-18:00','08:00-18:00','08:00-18:00','08:00-18:00','08:00-18:00','09:00-17:00'],p:'0161 496 0948'}];
+var SV={R:'Repairs',H:'Hire',C:'Charging',F:'Bike fit'},D=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+var $=function(i){return document.getElementById(i)},list=$('list'),pins=$('pins'),card=$('card'),mw=$('mw'),ns='http://www.w3.org/2000/svg';
+var from={x:440,y:420,l:'From Aske Cross'},f={},sel=0;
+function mins(t){var p=t.split(':');return +p[0]*60+ +p[1]}
+function status(st){var n=new Date(),d=n.getDay(),m=n.getHours()*60+n.getMinutes(),h=st.h[d];
+ if(h){var o=mins(h.slice(0,5)),c=mins(h.slice(6));
+  if(m>=o&&m<c)return c-m<=60?{k:'soon',t:'Closes soon',w:'at '+h.slice(6),o:1}:{k:'open',t:'Open',w:'until '+h.slice(6),o:1};
+  if(m<o)return{k:'shut',t:'Closed',w:'opens '+h.slice(0,5)}}
+ for(var i=1;i<8;i++){var x=st.h[(d+i)%7];if(x)return{k:'shut',t:'Closed',w:'opens '+(i==1?'tomorrow ':D[(d+i)%7]+' ')+x.slice(0,5)}}}
+function km(st){return Math.hypot(st.x-from.x,st.y-from.y)*0.004}
+S.forEach(function(st,i){st.i=i;
+ var g=document.createElementNS(ns,'g');g.setAttribute('class','pin');g.setAttribute('tabindex','0');g.setAttribute('role','button');
+ g.setAttribute('aria-label',st.n+' workshop');g.setAttribute('transform','translate('+st.x+' '+st.y+')');
+ g.innerHTML='<g class="pi"><path d="M0 0C-4-9-15-14-15-25a15 15 0 1 1 30 0C15-14 4-9 0 0z"/><text y="-20">'+(i+1)+'</text></g>';
+ g.onclick=function(){pick(i,1)};g.onkeydown=function(e){if(e.key=='Enter'||e.key==' '){e.preventDefault();pick(i,1)}};
+ g.onmouseenter=function(){hot(i,1)};g.onmouseleave=function(){hot(i,0)};st.g=g;pins.appendChild(g)});
+function hot(i,on){S[i].g.classList.toggle('hot',on);var b=list.querySelector('[data-i="'+i+'"]');if(b)b.classList.toggle('hot',on)}
+function render(){var q=$('q').value.trim().toLowerCase(),out=[];
+ S.forEach(function(st){var s=status(st),ok=(!q||(st.n+' '+st.a).toLowerCase().indexOf(q)>-1)&&(!f.open||s.o);
+  for(var k in f)if(f[k]&&k!='open'&&st.s.indexOf(k)<0)ok=false;st.ok=ok;st.st=s;st.g.classList.toggle('dim',!ok);if(ok)out.push(st)});
+ out.sort(function(a,b){return km(a)-km(b)});
+ list.innerHTML=out.length?out.map(function(st){return '<li><button class="store" data-i="'+st.i+'" aria-current="'+(st.i==sel)+'"><span class="num">'+(st.i+1)+'</span><span class="name">Halden '+st.n+'</span><span class="km">'+km(st).toFixed(1)+' km</span><span class="addr">'+st.a+'</span><span class="st"><span class="'+st.st.k+'"><i></i><b>'+st.st.t+'</b> · '+st.st.w+'</span><span class="svc">'+st.s.split('').map(function(c){return SV[c]}).join(' · ')+'</span></span></button></li>'}).join('')
+  :'<li class="empty"><b>No workshops match</b>Clear a filter or search a nearby area. Every workshop takes bookings online around the clock.</li>';
+ $('count').textContent=out.length;$('res').textContent=out.length+' of 7 workshops';$('sort').textContent=from.l;
+ list.querySelectorAll('.store').forEach(function(b){var i=+b.dataset.i;b.onclick=function(){pick(i)};b.onmouseenter=function(){hot(i,1)};b.onmouseleave=function(){hot(i,0)}});
+ if(!S[sel].ok){card.hidden=true;S[sel].g.classList.remove('sel')}else pick(sel)}
+function pick(i,fromMap){sel=i;var st=S[i],s=st.st||status(st),d=new Date().getDay();
+ S.forEach(function(x){x.g.classList.toggle('sel',x.i==i)});pins.appendChild(st.g);
+ list.querySelectorAll('.store').forEach(function(b){b.setAttribute('aria-current',+b.dataset.i==i)});
+ var b=list.querySelector('[data-i="'+i+'"]');if(b&&fromMap)b.scrollIntoView({block:'nearest'});
+ var rows=[1,2,3,4,5,6,0].map(function(k){return '<tr'+(k==d?' class="today"':'')+'><td>'+D[k]+'</td><td>'+(st.h[k]?st.h[k].replace('-',' to '):'Closed')+'</td></tr>'}).join('');
+ card.innerHTML='<h2>Halden '+st.n+'</h2><div class="addr">'+st.a+'</div><div class="st"><span class="'+s.k+'"><i></i><b>'+s.t+'</b> · '+s.w+'</span></div><table class="hours" aria-label="Opening hours">'+rows+'</table><div class="acts"><a class="dir" href="#route" id="go"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 11l18-8-8 18-2-8z"/></svg>Directions</a><a class="call" href="#call">Call</a></div><p class="ride" id="ride" hidden></p>';
+ card.hidden=false;$('go').onclick=function(e){e.preventDefault();route(st)};$('route').setAttribute('d','');place(st)}
+function place(st){var r=mw.getBoundingClientRect(),p=st.g.getBoundingClientRect(),w=300,h=card.offsetHeight||330;
+ var x=p.right+18;if(x+w>r.right-16)x=p.left-18-w;var y=p.top+p.height/2-h/2;y=Math.max(r.top+16,Math.min(y,r.bottom-h-16));
+ card.style.left=(x-r.left)+'px';card.style.top=(y-r.top)+'px'}
+function route(st){var p=$('route'),dx=Math.abs(st.x-from.x)+Math.abs(st.y-from.y),k=dx*0.004;
+ p.setAttribute('d','M'+from.x+' '+from.y+'L'+st.x+' '+from.y+'L'+st.x+' '+(st.y-4));p.classList.remove('draw');void p.getBBox();p.classList.add('draw');
+ var r=$('ride');r.hidden=false;r.textContent=Math.max(2,Math.round(k/15*60))+' min by bike · '+k.toFixed(1)+' km on cycle lanes'}
+$('q').oninput=render;
+document.querySelectorAll('.chip').forEach(function(c){c.onclick=function(){var on=c.getAttribute('aria-pressed')!='true';c.setAttribute('aria-pressed',on);f[c.dataset.f]=on;render()}});
+$('loc').onclick=function(){var b=this;b.setAttribute('aria-busy','true');setTimeout(function(){b.removeAttribute('aria-busy');from={x:250,y:420,l:'From you, Aske Bridge'};$('you').classList.add('on');render()},700)};
+function view(m){$('wrap').classList.toggle('show-map',m);$('vl').setAttribute('aria-pressed',!m);$('vm').setAttribute('aria-pressed',m);if(m&&S[sel].ok)pick(sel)}
+$('vl').onclick=function(){view(false)};$('vm').onclick=function(){view(true)};
+addEventListener('resize',function(){if(!card.hidden)place(S[sel])});
+render();
+})();
+</script>
+</body>
+</html>

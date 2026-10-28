@@ -1,7 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
-import { getPieces, AUTHOR, CATEGORY_META, TYPE_META } from '../lib/pieces';
+import { getPieces, AUTHOR, CATEGORY_META, TYPE_META, about } from '../lib/pieces';
 import { PAIRINGS } from '../data/type';
 import { THEMES } from '../data/themes';
 import { ICONS } from '../data/icons';
@@ -80,7 +80,7 @@ const pieces = await getPieces();
           <li><a href="/sections"><code>/sections</code> — index by the name a designer would use (hero, footer, portfolio).</a></li>
           <li><a href="/collections"><code>/collections</code> — shelves by problem, not by type.</a></li>
           <li><a href="/kit"><code>/kit</code> — compose: kind → palette → type → components. Live web + phone. Ends in a brief.</a></li>
-          <li><a href="/start"><code>/start</code> — {STARTS.length} recipes, split into websites and apps. Pick one, then assemble.</a></li>
+          <li><a href="/start"><code>/start</code> — {about(STARTS.length)} recipes, split into websites and apps. Pick one, then assemble.</a></li>
           <li><a href="/sources"><code>/sources</code> — public sites the screens study. One product, one site.</a></li>
         </ul>
       </div>
@@ -111,9 +111,9 @@ const pieces = await getPieces();
         <h2 class="display h3">Steal tokens from the libraries</h2>
         <p>Type, themes, icons and motion are first-class, not leftovers. When a human says “make it feel like a hotel” or “use a quiet grotesk”, open these before inventing a palette.</p>
         <ul class="links">
-          <li><a href="/type">{PAIRINGS.length} type pairings</a> — display + text, with copy-ready CSS</li>
-          <li><a href="/themes">{THEMES.length} themes</a> — full token sets, not five hex chips</li>
-          <li><a href="/icons">{ICONS.length} Lounge Icons</a> — 24px stroke, sprite or single SVG</li>
+          <li><a href="/type">{about(PAIRINGS.length)} type pairings</a> — display + text, with copy-ready CSS</li>
+          <li><a href="/themes">{about(THEMES.length)} themes</a> — full token sets, not five hex chips</li>
+          <li><a href="/icons">{about(ICONS.length)} Lounge Icons</a> — 24px stroke, sprite or single SVG</li>
           <li><a href="/motion">{RECIPES.length} motion recipes</a> — curves, durations, reduced-motion fallbacks</li>
         </ul>
       </div>
@@ -129,7 +129,7 @@ const pieces = await getPieces();
       <div class="gn display">09</div>
       <div>
         <h2 class="display h3">What is on the floor</h2>
-        <p>{pieces.length} live pieces across {Object.keys(TYPE_META).length} rooms and {Object.keys(CATEGORY_META).length} named categories, plus the four libraries above. {STARTS.length} start recipes. If a category is empty, say so — do not hallucinate a piece that is not here.</p>
+        <p>{about(pieces.length)} live pieces across {Object.keys(TYPE_META).length} rooms and {Object.keys(CATEGORY_META).length} named categories, plus the four libraries above. {STARTS.length} start recipes. If a category is empty, say so — do not hallucinate a piece that is not here.</p>
         <p class="mono faint">Library of {AUTHOR.name} · {AUTHOR.role} · {AUTHOR.city}</p>
       </div>
     </section>
