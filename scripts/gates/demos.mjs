@@ -347,6 +347,7 @@ async function openStill(page, url) {
 // pieces it can list keep that renderer until it is re-measured; switching them now would read as "now passes".
 const LCD_OFF = ['--disable-lcd-text'];
 const browsersFor = async () => ({ legacy: await chromium.launch(), current: await chromium.launch({ args: LCD_OFF }) });
+const NO_SIGNATURE = `customElements.define('lounge-signature', class extends HTMLElement { connectedCallback() { this.style.setProperty('display', 'none', 'important'); } })`;
 const pick = (b, id) => ((NUMBERS[id] ?? Infinity) > LEGACY_MAX ? b.current : b.legacy);
 
 async function gateOne(browser, id) {
@@ -356,6 +357,10 @@ async function gateOne(browser, id) {
   const desktop = await browser.newContext({ viewport: { width: 1280, height: 800 }, reducedMotion: 'reduce' });
   try {
     for (const ctx of [phone, desktop]) { await ctx.addInitScript(REAL_TIMERS); await ctx.addInitScript(SEED_SCRIPT); }
+    // The built page adds the Lounge signature when it is opened on its own, and the gate opens it that way. The library
+    // shows pieces in a frame, where the signature never appears, so judge new pieces without it. Legacy pieces keep it
+    // until the ratchet is re-measured.
+    if ((NUMBERS[id] ?? Infinity) > LEGACY_MAX) for (const ctx of [phone, desktop]) await ctx.addInitScript(NO_SIGNATURE);
     const p = await phone.newPage();
     await openStill(p, url);
     result.phone390 = await p.evaluate(PHONE_SCRIPT);

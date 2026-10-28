@@ -57,7 +57,6 @@ button{font:inherit;color:inherit}
 .box svg{width:16px;height:16px;opacity:0;transform:scale(.4);transition:transform 300ms var(--spring),opacity 200ms}
 li.done .box svg{opacity:1;transform:none}
 li.done .t{text-decoration:line-through;text-decoration-thickness:2px;color:var(--ink-3)}
-.t b{color:var(--water);font-weight:800}
 .reward{margin-top:10px;font:700 14px/1.3 var(--font);color:var(--ink-2)}
 /* hotbar */
 .bar{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:10px;width:max-content;max-width:calc(100% - 24px)}
@@ -131,7 +130,7 @@ li.done .t{text-decoration:line-through;text-decoration-thickness:2px;color:var(
   <h2 id="qh">Granny Odile&rsquo;s list</h2>
   <div class="from">Left on the gate, Thursday morning</div>
   <ul>
-    <li id="q1"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span><span class="t">Water the turnip beds (<b id="qn">5</b> of 8)</span></li>
+    <li id="q1"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span><span class="t" id="qn">Water the turnip beds (5 of 8)</span></li>
     <li class="done"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span><span class="t">Feed the hens before noon</span></li>
     <li><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span><span class="t">Take 3 honey jars to the mill</span></li>
   </ul>
@@ -187,7 +186,7 @@ li.done .t{text-decoration:line-through;text-decoration-thickness:2px;color:var(
     const r = g.querySelector('rect'), d = document.createElementNS('http://www.w3.org/2000/svg', 'g');
     d.setAttribute('class', 'drop'); d.innerHTML = [0, 1, 2].map(k => `<path d="M${+r.getAttribute('x') + 30 + k * 34} ${+r.getAttribute('y') - 6}c-5 7-5 12 0 12s5-5 0-12z" fill="#9fd3ee"/>`).join('');
     P.appendChild(d); setTimeout(() => d.remove(), 800);
-    water--; energy = Math.max(0, energy - 2); done = Math.min(8, done + 1); $('qn').textContent = done; tag();
+    water--; energy = Math.max(0, energy - 2); done = Math.min(8, done + 1); $('qn').textContent = `Water the turnip beds (${done} of 8)`; tag();
     $('eb').style.width = energy / 120 * 100 + '%'; $('ev').textContent = `${energy}/120`; $('em').setAttribute('aria-valuenow', energy);
     if (done === 8) { $('q1').classList.add('done'); hint('All eight beds watered. Granny Odile will be pleased.'); }
   };
