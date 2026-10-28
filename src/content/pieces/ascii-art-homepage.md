@@ -188,6 +188,8 @@ Set `font-variant-ligatures: none` on `body`. Plex Mono ligates nothing by defau
 
 ## Implementation notes
 
+- Measure the character cell in the face that is actually showing, and measure again on `document.fonts.ready` and on resize. The web font can arrive after the first draw, and some platforms (Linux) draw mono glyphs wider, so a column count taken once at start can run off a 390px screen. Keep one column of slack.
+
 **Measure the character cell, then generate to fit.** Never hard-code columns; fonts differ by a fraction of a pixel and the right edge ragged-breaks.
 
 ```js

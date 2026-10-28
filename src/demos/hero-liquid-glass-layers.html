@@ -80,7 +80,8 @@ h1{font-weight:600;font-size:76px;line-height:.96;letter-spacing:-.035em;margin:
   .stage{height:auto;min-height:100%;padding:96px 16px 24px;display:flex;flex-direction:column;gap:16px}
   nav ul,.sign{display:none}
   nav.glass{top:22px;position:absolute}.hero,.card,.tag{position:relative;left:auto;right:auto;top:auto;bottom:auto;width:100%}
-  .card{order:2;background:var(--frost-solid)}.tag{order:3;align-self:flex-start}
+  /* On phones the card is solid, so it needs no blur. A blurred layer also composites differently across renderers. */
+  .card{order:2;background:var(--frost-solid);backdrop-filter:none;-webkit-backdrop-filter:none}.tag{order:3;align-self:flex-start}
   .hero{margin-top:150px;padding:26px 22px 24px}
   h1{font-size:clamp(40px,11vw,64px)}
   .lede{font-size:16px}

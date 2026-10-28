@@ -215,13 +215,16 @@ h1 em{font-style:normal;color:var(--rust)}
 
   // generative art
   const art=$('art');
-  const probe=document.createElement('span');probe.textContent='0000000000';probe.style.visibility='hidden';art.appendChild(probe);
-  let cw=probe.getBoundingClientRect().width/10||7.8;probe.remove();
+  // Measure a cell in the face actually showing. The web font can arrive after the first draw, and some platforms
+  // draw mono glyphs wider, so measure again when fonts load and on resize.
+  let cw=7.8;
+  const measure=()=>{const probe=document.createElement('span');probe.textContent='0000000000';probe.style.visibility='hidden';art.appendChild(probe);cw=probe.getBoundingClientRect().width/10||cw;probe.remove();};
+  measure();
   const hash=(x,y)=>{let h=x*374761393+y*668265263;h=(h^(h>>>13))*1274126177;return ((h^(h>>>16))>>>0)/4294967296;};
   const ramp='@%#*+=-:. ';
   let cols=0,rows=0,ph=0;
   function draw(){
-    cols=Math.max(30,Math.floor(art.clientWidth/cw));rows=innerWidth<640?18:24;
+    cols=Math.max(30,Math.floor(art.clientWidth/cw)-1);rows=innerWidth<640?18:24;
     const lh=parseFloat(getComputedStyle(art).lineHeight)||15,asp=cw/lh;
     const cx=cols*.58,cy=rows*.42,R=rows*.3;
     const ridge=[(u)=>rows*.6+3.2*Math.sin(u*4.6+2.2)+1.1*Math.sin(u*12),(u)=>rows*.74+2.6*Math.sin(u*3.3+4.1)+.8*Math.sin(u*15+1),(u)=>rows*.85+1.4*Math.sin(u*2.4+.3)+.6*Math.sin(u*19)];
@@ -246,7 +249,8 @@ h1 em{font-style:normal;color:var(--rust)}
     art.innerHTML=html;
     $('pct').textContent='relay eu-2 · packet '+String(Math.round(ph*100)).padStart(3,' ')+'%';
   }
-  draw();addEventListener('resize',draw);
+  draw();addEventListener('resize',()=>{measure();draw();});
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{measure();draw();});
   if(!reduce)setInterval(()=>{ph=(ph+.025)%1;draw();},120);
 })();
 </script>
