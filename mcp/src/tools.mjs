@@ -18,6 +18,7 @@ import { formatReport } from './report.mjs';
 import { pieceAsset, imageContent } from './assets.mjs';
 import { themeBoard, pairingSpecimen } from './visual.mjs';
 import { ensureUserSkill, installProjectSkill } from './skill-install.mjs';
+import { measureUrl, readMeasure, readScreenshot, matchReference, formatMatch } from './reference.mjs';
 
 
 export const lib = new Library();
@@ -33,6 +34,8 @@ export function createServer({ hosted = false, skillLine = '' } = {}) {
 For any website, app, screen, or UI: call start_design first with their words. Then lock a recipe direction with get_recipe and pick_direction, and build from get_theme, get_pairing, get_family, and get_piece. Do not invent a palette, a type pairing, a radius, or a component language. Their words win over every default.
 
 After you build or change a page, call review_page on the ${hosted ? 'URL (or its HTML)' : 'file or URL'}. Fix every fail${hosted ? '' : ', look at the frames it attaches,'} and run it again.${hosted ? '' : ' Before you finish a website, record_pick with status "finished".'}
+
+When they show a site or a screenshot they like: match_reference first, then build from the kit it names. Match the feel, never copy the site.
 
 To clean up an existing page: review_page (or audit_slop for design only, audit_search for search only), then fix in the order it lists. read_guide gives any section of the method.
 
@@ -409,6 +412,43 @@ ${hosted ? `This is the hosted server. It cannot read files on the person's mach
     try { page = await load(args); } catch (e) { return fail(e.message); }
     const s = suggestSchema(page, args);
     return text(`${s.note}\nMissing: ${s.missing.join(', ') || 'none'}\n\n${s.jsonLd.map((b) => `<script type="application/ld+json">\n${JSON.stringify(b, null, 2)}\n</script>`).join('\n\n')}`);
+  });
+
+  if (!hosted) server.registerTool('match_reference', {
+    title: 'Match a reference site',
+    description: 'They showed a site or a screenshot and want that feel. Measures its design language (colour roles, type, corners, shadows, density, hero shape, sections, motion) and returns the closest Lounge theme, pairing, family, and pieces per section, with what does not match. Matches the feel only: never copy the reference\'s logo, name, words, or photos. For a screenshot, also describe the type you see (`type`) and anything else you can tell (corners, shadows, sections).',
+    inputSchema: {
+      url: z.string().optional().describe('The reference site'),
+      image_path: z.string().optional().describe('A screenshot file'),
+      image: z.string().optional().describe('A screenshot as base64, when there is no file'),
+      mime_type: z.string().optional().describe('image/png, image/jpeg, or image/webp (default png)'),
+      type: z.string().optional().describe('For a screenshot: the faces you see, such as "high-contrast serif headline, neutral grotesk body"'),
+      corners: z.enum(['sharp', 'small', 'medium', 'large', 'pill']).optional(),
+      shadows: z.enum(['none', 'soft', 'hard']).optional(),
+      buttons: z.enum(['solid', 'outline']).optional(),
+      shape: z.enum(['split', 'object', 'type', 'band']).optional().describe('The hero shape you see'),
+      sections: z.array(z.string()).optional().describe('Section kinds you see: features, pricing, testimonials, faq, logos, stats, team, gallery, blog, cta, contact, newsletter'),
+    },
+    annotations: { readOnlyHint: true, openWorldHint: true },
+  }, async (args) => {
+    try {
+      let m = null, input, source, shot = null;
+      if (args.url) {
+        source = /^https?:\/\//.test(args.url) ? args.url : `https://${args.url}`;
+        m = await measureUrl(source);
+        if (!m) return fail('Chromium is not installed, so the page cannot be measured. Ask the person, then run install_browser and try again.');
+        input = readMeasure(m);
+        shot = m.shot;
+      } else if (args.image_path || args.image) {
+        const buf = args.image_path ? fs.readFileSync(args.image_path) : Buffer.from(args.image, 'base64');
+        const mime = args.mime_type || (/\.jpe?g$/i.test(args.image_path || '') ? 'image/jpeg' : /\.webp$/i.test(args.image_path || '') ? 'image/webp' : 'image/png');
+        input = await readScreenshot(buf, mime, args);
+        if (!input) return fail('Chromium is not installed, so the screenshot cannot be read. Ask the person, then run install_browser and try again.');
+        source = args.image_path || 'pasted screenshot';
+      } else return fail('Give url, image_path, or image.');
+      const match = matchReference(lib, input);
+      return text(formatMatch(lib, { source, m, match, input }), [shot && imageContent(shot, 'image/jpeg')]);
+    } catch (e) { return fail(e.message); }
   });
 
   if (!hosted) server.registerTool('install_skill', {

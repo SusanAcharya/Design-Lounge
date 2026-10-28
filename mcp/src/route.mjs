@@ -13,6 +13,7 @@ export function readRequest(request, lib) {
   signals.spectacle = has(/\b(?:go wild|unforgettable|awwwards|site of the day|award[- ]level|award[- ]winning|an experience|immersive|mind[- ]blowing|jaw[- ]dropping|wow factor)\b|\byou scroll and\b|\blet people play\b/, s);
   signals.calm = CALM_WORDS.filter((w) => new RegExp(`\\b${w}\\b`).test(s));
   signals.redesign = has(/\b(?:redesign|revamp|refresh|re-skin|reskin|modernise|modernize|make (?:it|my|our|this) (?:site |website |app )?(?:look )?better|improve (?:my|our|the) (?:site|website|app|landing))\b/, s);
+  signals.reference = has(/https?:\/\/\S+|\b[a-z0-9-]+\.(?:com|io|app|co|dev|design|studio|live|org|net)\b(?!\s*(?:domain|address))|\b(?:screenshot|like this (?:site|website|page|one)|this reference|in the style of this)\b/, s);
   signals.brand = has(/\b(?:look|feel)s? like (?:stripe|linear|apple|notion|vercel|airbnb|figma|github|spotify|framer|arc|raycast|[a-z]+\.(?:com|io|app))\b|\bin the style of [a-z]+\b|\blike (?:stripe|linear|apple|notion|vercel)'?s?\b/, s);
   signals.platform = has(/\b(?:react native|expo|flutter|swiftui|jetpack compose|compose)\b/, s) || has(/\b(?:ios|android|iphone|phone app|mobile app)\b/, s) || has(/\bpwa\b|progressive web app/, s) || has(/\b(?:electron|tauri|desktop app|mac app)\b/, s);
   signals.app = has(/\b(?:dashboard|admin|back ?office|ops|internal tool|crm|web app|logged[- ]in|saas app|portal)\b/, s);
@@ -33,7 +34,8 @@ export function readRequest(request, lib) {
 
   // The first row of the table that matches wins.
   let flow, why;
-  if (signals.redesign) { flow = 'Adopt flow, then Redesign (the audit). Run review_page on the current site first'; why = signals.redesign; }
+  if (signals.reference && !signals.redesign) { flow = 'Reference flow (flows.md): match_reference on the site or screenshot first, then the flow for what they are making'; why = signals.reference; }
+  else if (signals.redesign) { flow = 'Adopt flow, then Redesign (the audit). Run review_page on the current site first'; why = signals.redesign; }
   else if (signals.brand) { flow = 'Brand flow (flows.md)'; why = signals.brand; }
   else if (signals.libraryOnly) { flow = 'Library flow: browse_library, get_theme, get_pairing, search_wada, get_icons'; why = signals.libraryOnly; }
   else if (signals.piece) { flow = 'Piece flow: search_pieces, then get_piece, inside the locked kit if one exists'; why = signals.piece; }

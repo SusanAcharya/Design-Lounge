@@ -26,6 +26,16 @@ Use this when a design system is already in the project.
 
 For a redesign, first decide which kind it is: keep the brand, or start the look again. If you can't tell, follow When to ask in [SKILL.md](SKILL.md). Then follow Redesign in [practice.md](practice.md), which is the audit. Keeping the brand stays in this flow: no new theme, and no brief unless the product itself changes, but read the files for its kind (for a site, [website.md](website.md) and Page shape and Craft in [taste.md](taste.md)). Starting the look again is a new build: write the brief and take the website or app short path, keeping the content. Look at the site before you change it. Never change the URLs, the nav labels, the form field names, the logo, or the legal text unless they asked.
 
+## Reference flow
+
+Use this when they show a site or a screenshot and want that feel, and it is not a brand in Brand files.
+
+1. Read the reference's design language: the ground, the ink, and the accent; the kind of display and text face; the corner radius and how shadows are made; the hero shape; the sections it has; how much moves. With the Design Lounge MCP, `match_reference` measures all of it and names the closest theme, pairing, family, and pieces.
+2. Lock the closest Lounge theme, pairing, and family, and say which ones and why. If no theme is close, say so. A product keeps the nearest theme. A site in Show mode, Free, may take the reference's colours as Free colour.
+3. Build each part from the piece that matches it, as Piece flow says. Keep the reference's structure and rhythm: what comes first, how big the headline is, how dense the sections are.
+4. Never copy the reference's logo, name, wordmark, photos, illustrations, or words. The product keeps its own. The result has the feel, not the site.
+5. Write `Reference: <url or screenshot> (feel only)` in `DESIGN.md` under Sources. Then the usual Look and review. A giveaway the reference had, such as gradient text, is still a fail.
+
 ## Brand flow
 
 Use this when they want the product to look like a brand they named.

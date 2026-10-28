@@ -56,7 +56,7 @@ Do not run scripts from this skill. If `library/map.json` is missing, the instal
 
 ## With the Design Lounge MCP
 
-If your tools include `start_design` and `review_page`, the Design Lounge MCP server is connected. It reads this same library, so the rules do not change. Use its tools in place of searching the files and editing the history by hand: `start_design` first, `pick_direction` and `check_pick` for Recent picks, `record_pick` for the history line, `search_pieces` and `get_piece` for briefs. After you build, run `review_page` on the page. It checks the Look fails, the kit, and [search.md](search.md), renders web and phone, and saves the screenshots to open. Fix every fail it lists. Without the server, follow the files as written.
+If your tools include `start_design` and `review_page`, the Design Lounge MCP server is connected. It reads this same library, so the rules do not change. Use its tools in place of searching the files and editing the history by hand: `start_design` first, `match_reference` when they show a site or a screenshot, `pick_direction` and `check_pick` for Recent picks, `record_pick` for the history line, `search_pieces` and `get_piece` for briefs. After you build, run `review_page` on the page. It checks the Look fails, the kit, and [search.md](search.md), renders web and phone, and saves the screenshots to open. Fix every fail it lists. Without the server, follow the files as written.
 
 If the open project is the Design Lounge repo itself (`src/demos` and `src/content/pieces` exist) and the user is editing the library, stop using this skill for that edit. Follow `docs/PIECE-SPEC.md` instead.
 
@@ -68,6 +68,7 @@ If the open project is the Design Lounge repo itself (`src/demos` and `src/conte
 | The project already has a design system, DESIGN.md, tokens, or styled screens | Adopt flow |
 | A redesign of a site that already exists | Adopt flow, then Redesign (the audit) in [practice.md](practice.md) |
 | "Make it look like Stripe" (or Linear, Apple, Notion, any named brand) | Brand flow |
+| "Like this site" or a screenshot, for a site that is not in Brand files | Reference flow in [flows.md](flows.md), then the flow for what they are making |
 | A style by name (any row in [styles.md](styles.md), including -ism forms and misspellings) | Read [styles.md](styles.md) and set the Named aesthetic line from its row, then keep reading rows for the flow: the next row that matches decides it (Kit flow for a new product, the app short path for an app, Show mode for spectacle) |
 | A new product, site, app, or design system | Kit flow |
 | Spectacle, as Reading the request in [brief.md](brief.md) decides it (the brief says `Mode: Show`) | Kit flow, then Show mode in [show.md](show.md). Free colour and type, unless they named a theme, colour, or brand. Otherwise it is Kit mode, even for a show, a launch, or a world you could draw |

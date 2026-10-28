@@ -27,7 +27,7 @@ test('the hosted endpoint speaks MCP over HTTP, without the tools that touch a m
     const { tools } = await client.listTools();
     const names = tools.map((t) => t.name);
     for (const n of ['start_design', 'search_pieces', 'get_piece', 'review_page', 'audit_search', 'suggest_schema']) assert.ok(names.includes(n), n);
-    for (const n of ['record_pick', 'install_skill', 'install_browser']) assert.ok(!names.includes(n), `${n} must not be hosted`);
+    for (const n of ['record_pick', 'install_skill', 'install_browser', 'match_reference']) assert.ok(!names.includes(n), `${n} must not be hosted`);
     const review = tools.find((t) => t.name === 'review_page');
     assert.ok(!('path' in review.inputSchema.properties), 'no file paths on the hosted server');
     assert.match(client.getInstructions(), /hosted server/);

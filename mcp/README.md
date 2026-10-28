@@ -74,6 +74,7 @@ To run it from a clone of the repo instead: `cd mcp && pnpm install`, then use `
 | `get_icons` / `search_wada` | Lounge Icons as SVG. Wada's combinations by word or by nearest hex |
 | `read_guide` | Any method file, or one section of it |
 | `review_page` | Everything at once: design, accessibility, SEO, AEO, GEO. Fails come first, each with its evidence and fix. The web and phone frames come back as images |
+| `match_reference` | They show a site or a screenshot and want that feel. Measures its colour roles, type, corners, shadows, density, hero shape, sections, and motion, and names the closest theme, pairing, family, and pieces. It matches the feel; it never copies the site |
 | `install_skill` | Install the skill in a project, or replace a user copy installed another way |
 | `install_browser` | Download the headless Chromium the rendered checks use, once |
 | `audit_slop` | Design only: AI giveaways and kit drift |

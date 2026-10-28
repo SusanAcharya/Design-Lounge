@@ -223,7 +223,7 @@ test('the server lists its tools and answers over MCP', async () => {
   const client = await connect({ DESIGN_LOUNGE_HISTORY: path.join(os.tmpdir(), `lounge-none-${Date.now()}.jsonl`) });
   try {
     const { tools } = await client.listTools();
-    for (const name of ['start_design', 'pick_direction', 'check_pick', 'record_pick', 'search_pieces', 'get_piece', 'get_theme', 'review_page', 'audit_slop', 'audit_search', 'suggest_schema', 'install_skill', 'install_browser']) {
+    for (const name of ['start_design', 'pick_direction', 'check_pick', 'record_pick', 'search_pieces', 'get_piece', 'get_theme', 'review_page', 'audit_slop', 'audit_search', 'suggest_schema', 'install_skill', 'install_browser', 'match_reference']) {
       assert.ok(tools.some((t) => t.name === name), name);
     }
     const theme = await client.callTool({ name: 'get_theme', arguments: { id: 'kiln' } });
