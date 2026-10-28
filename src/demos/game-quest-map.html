@@ -1,0 +1,183 @@
+<!-- Design Lounge piece: game-quest-map · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>The Wayfarer Isles · Map</title>
+<link href="https://fonts.googleapis.com/css2?family=Righteous&family=Nunito:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sea:#1f5d66; --sea-2:#2a7079; --shallow:#4b9aa0; --sand:#f1d9a7; --grass:#8bb86f; --grass-2:#6e9f58; --wood:#4f8a52; --rock:#c4805e; --rock-2:#9b5f45; --snow:#fbf3e4;
+  --paper:#fdf6e8; --paper-2:#f4e9d2; --ink:#1f2b33; --ink-2:#4c5a63; --ink-3:#5e6b73; --line:#e2d4b8;
+  --active:#c8401a; --done:#3f7d5a; --open:#fdf6e8; --locked:#7d8a90; --gold:#8a5a12;
+  --display:"Righteous",sans-serif; --text:"Nunito",sans-serif;
+  --ease:cubic-bezier(.2,.7,.2,1); --ease-out:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--sea);color:var(--ink);font:600 15px/1.45 var(--text);display:grid;grid-template-columns:minmax(0,1fr) 380px;overflow-x:hidden}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--active);outline-offset:3px}
+.map{position:relative;min-height:0;overflow:hidden}
+.map>svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+.region{font:20px var(--display);letter-spacing:.22em;text-transform:uppercase;fill:#2d3b2f;opacity:.75}
+.region.sea{fill:#d6ecee;opacity:.8;font-size:16px;letter-spacing:.4em}
+.node{cursor:pointer}
+.node circle.b{transition:r 200ms var(--ease)}
+.node:hover circle.b{r:19}
+.node:focus{outline:none}.node:focus-visible circle.ring{stroke:var(--active);stroke-width:3;opacity:1}
+.node circle.ring{fill:none;stroke:var(--ink);stroke-width:2;opacity:0}
+.node.sel circle.ring{opacity:1}
+.pulse{fill:none;stroke:var(--active);stroke-width:2;animation:pulse 2.4s var(--ease-out) infinite;transform-box:fill-box;transform-origin:center}
+@keyframes pulse{from{transform:scale(.6);opacity:.9}to{transform:scale(1.9);opacity:0}}
+#route{fill:none;stroke:var(--paper);stroke-width:4;stroke-linecap:round;stroke-dasharray:.1 11}
+#routeMask{fill:none;stroke:#fff;stroke-width:12}
+.drawing{animation:draw 900ms var(--ease-out) both}
+@keyframes draw{from{stroke-dashoffset:var(--len)}to{stroke-dashoffset:0}}
+.tagbg{fill:var(--paper);stroke:var(--ink);stroke-width:1.5}
+.tagtx{font:800 13px var(--text);fill:var(--ink)}
+.top{position:absolute;left:24px;top:22px;right:24px;display:flex;justify-content:space-between;align-items:flex-start;gap:16px;pointer-events:none}
+.title{background:var(--paper);border:2px solid var(--ink);border-radius:14px;padding:12px 18px;box-shadow:4px 4px 0 var(--ink);pointer-events:auto}
+.title h1{font:26px/1 var(--display);margin:0;letter-spacing:.02em}
+.title p{margin:4px 0 0;color:var(--ink-2);font-size:14px}
+.filters{display:flex;gap:6px;background:var(--paper);border:2px solid var(--ink);border-radius:99px;padding:4px;box-shadow:4px 4px 0 var(--ink);pointer-events:auto}
+.filters button{border:0;background:none;border-radius:99px;padding:6px 14px;font:800 13px/1.2 var(--text)}
+.filters button[aria-pressed=true]{background:var(--ink);color:var(--paper)}
+.legend{position:absolute;left:24px;bottom:22px;display:flex;gap:14px;background:var(--paper);border:2px solid var(--ink);border-radius:12px;padding:8px 14px;font:700 13px/1 var(--text);box-shadow:4px 4px 0 var(--ink);flex-wrap:wrap}
+.legend span{display:flex;align-items:center;gap:6px}
+.legend i{width:12px;height:12px;border-radius:50%;border:2px solid var(--ink)}
+/* panel */
+aside{background:var(--paper);border-left:3px solid var(--ink);display:flex;flex-direction:column;min-height:0;overflow:auto}
+.ph{padding:26px 26px 18px;border-bottom:2px dashed var(--line)}
+.kind{display:flex;gap:8px;align-items:center;font:800 12px/1 var(--text);letter-spacing:.14em;text-transform:uppercase}
+.pill{padding:5px 9px 4px;border-radius:99px;border:2px solid var(--ink)}
+.pill.st{color:#fff;border-color:transparent}
+.ph h2{font:clamp(26px,2.6vw,32px)/1.05 var(--display);margin:14px 0 6px}
+.meta{color:var(--ink-2);font-size:14px}
+.desc{margin:12px 0 0;font:600 15px/1.55 var(--text);color:var(--ink)}
+.sec{padding:16px 26px;border-bottom:2px dashed var(--line)}
+.sec h3{font:800 12px/1 var(--text);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3);margin:0 0 12px}
+.obj{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.obj li{display:grid;grid-template-columns:22px 1fr auto;gap:10px;align-items:start}
+.ck{width:22px;height:22px;border-radius:6px;border:2px solid var(--ink);display:grid;place-items:center;background:var(--paper)}
+.ck svg{width:14px;height:14px}
+.obj li.d .ck{background:var(--done);border-color:var(--done);color:#fff}
+.obj li.d .tx{color:var(--ink-3);text-decoration:line-through}
+.obj .pr{font:800 13px/22px var(--text);color:var(--ink-2)}
+.prog{grid-column:2/4;height:6px;border-radius:99px;background:var(--paper-2);overflow:hidden;margin-top:-4px}
+.prog i{display:block;height:100%;background:var(--active);border-radius:99px;transition:width 500ms var(--ease-out)}
+.rw{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.rw div{border:2px solid var(--ink);border-radius:10px;padding:8px 10px;background:#fff}
+.rw b{display:block;font:20px/1.1 var(--display)}.rw small{font:700 12px/1.2 var(--text);color:var(--ink-2)}
+.rw .it b{font-size:15px;line-height:1.2;color:var(--gold)}
+.nextstep{margin:0 26px;padding:12px 14px;border-radius:12px;background:var(--ink);color:var(--paper);font:700 14px/1.4 var(--text)}.nextstep b{display:block;font:800 11px/1 var(--text);letter-spacing:.16em;text-transform:uppercase;color:#f6b49c;margin-bottom:6px}
+.lock{display:flex;gap:10px;align-items:flex-start;background:var(--paper-2);border-radius:10px;padding:10px 12px;font-size:14px}
+.lock svg{flex:none;width:18px;height:18px;margin-top:2px}
+.acts{margin-top:auto;padding:18px 26px 58px;display:flex;gap:10px;align-items:center}
+.btn{border:2px solid var(--ink);border-radius:12px;padding:12px 16px;font:800 15px/1 var(--text);background:var(--paper);box-shadow:3px 3px 0 var(--ink);transition:transform 120ms var(--ease),box-shadow 120ms var(--ease)}
+.btn:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--ink)}
+.btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+.btn.primary{background:var(--active);color:#fff;flex:1}
+.btn[disabled]{background:var(--paper-2);color:var(--ink-3);box-shadow:none;transform:none;cursor:not-allowed;border-color:var(--locked)}
+.dist{font:700 13px/1.3 var(--text);color:var(--ink-2)}
+@media (max-width:900px){
+  html,body{height:auto}
+  body{grid-template-columns:minmax(0,1fr);min-height:100%}
+  .edge{display:none}
+  .map{height:480px}
+  aside{border-left:0;border-top:3px solid var(--ink);overflow:visible}
+  .top{flex-direction:column;left:12px;right:12px;top:12px}.title{padding:10px 14px}.title h1{font-size:22px}
+  .legend{left:12px;right:12px;bottom:12px;gap:10px}
+  .ph,.sec,.acts{padding-left:18px;padding-right:18px}
+  .rw{grid-template-columns:1fr 1fr}.rw .it{grid-column:1/-1}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:1ms!important}}
+</style>
+</head>
+<body>
+<section class="map" aria-label="World map">
+  <svg viewBox="0 0 900 800" preserveAspectRatio="xMidYMid slice" id="svg">
+    <defs>
+      <pattern id="waves" width="60" height="34" patternUnits="userSpaceOnUse"><path d="M4 20q8-8 16 0t16 0" fill="none" stroke="#2f7880" stroke-width="2.5" stroke-linecap="round"/></pattern>
+      <mask id="m" maskUnits="userSpaceOnUse" x="0" y="0" width="900" height="800"><path id="routeMask"/></mask>
+      <path id="isle" d="M150 300c20-90 130-140 230-120s130-50 220-30 170 90 150 190-10 140-90 190-180 30-250 60-170 20-220-50-60-150-40-240z"/>
+    </defs>
+    <rect width="900" height="800" fill="var(--sea)"/><rect width="900" height="800" fill="url(#waves)" opacity=".6"/>
+    <g stroke="var(--shallow)" stroke-width="28" stroke-linejoin="round" fill="var(--shallow)">
+      <use href="#isle"/><path d="M690 560c40-30 110-20 130 30s-20 100-80 100-90-80-50-130z"/><path d="M90 610c30-30 90-20 100 20s-30 70-70 60-60-50-30-80z"/><path d="M760 150c30-20 70-10 76 20s-24 50-54 44-44-44-22-64z"/>
+    </g>
+    <g fill="var(--sand)"><use href="#isle"/><path d="M690 560c40-30 110-20 130 30s-20 100-80 100-90-80-50-130z"/><path d="M90 610c30-30 90-20 100 20s-30 70-70 60-60-50-30-80z"/><path d="M760 150c30-20 70-10 76 20s-24 50-54 44-44-44-22-64z"/></g>
+    <path d="M190 310c20-70 120-110 200-96s120-40 200-24 140 70 124 150-30 110-100 150-160 20-220 46-140 10-180-46-44-110-24-180z" fill="var(--grass)"/>
+    <path d="M520 230c60-10 140 20 170 80s0 120-60 130-110-30-130-80-30-120 20-130z" fill="var(--grass-2)"/>
+    <g fill="var(--wood)"><circle cx="300" cy="470" r="16"/><circle cx="322" cy="482" r="14"/><circle cx="282" cy="488" r="13"/><circle cx="342" cy="500" r="15"/><circle cx="310" cy="506" r="12"/><circle cx="262" cy="458" r="11"/><circle cx="740" cy="600" r="12"/><circle cx="760" cy="614" r="10"/><circle cx="120" cy="636" r="10"/></g>
+    <g><path d="M560 300l40-70 40 70z" fill="var(--rock)"/><path d="M600 230l-14 24h28z" fill="var(--snow)"/><path d="M610 310l50-90 50 90z" fill="var(--rock-2)"/><path d="M660 220l-17 30h34z" fill="var(--snow)"/><path d="M640 330l34-58 34 58z" fill="var(--rock)"/></g>
+    <path d="M250 300c40 10 60 40 110 40s80-30 130-10" fill="none" stroke="#7db0b6" stroke-width="6" stroke-linecap="round"/>
+    <text class="region" x="176" y="226">Saltmere</text><text class="region" x="214" y="552">Mirrowood</text><text class="region" x="476" y="212">Emberreach</text><text class="region" x="420" y="600">Thornvale</text><text class="region edge" x="640" y="724">Hollow Isles</text><text class="region sea edge" x="40" y="120">The Glass Sea</text>
+    <g fill="var(--paper)" stroke="var(--ink)" stroke-width="2" stroke-linejoin="round"><path d="M200 286v-13l10-9 10 9v13z"/><path d="M228 300v-11l9-8 9 8v11z"/><path d="M178 304v-10l8-7 8 7v10z"/></g><g fill="#f2a33a" stroke="var(--ink)" stroke-width="2"><path d="M532 478l6-14 6 14z"/><path d="M574 462l6-14 6 14z"/><path d="M616 450l6-14 6 14z"/></g><path d="M180 640C300 700 520 720 690 640" fill="none" stroke="#d6ecee" stroke-width="2.5" stroke-dasharray="2 9" stroke-linecap="round" opacity=".8"/><path d="M368 330l20 6" stroke="var(--ink)" stroke-width="5" stroke-linecap="round"/><path id="route" mask="url(#m)"/>
+    <g id="camp" transform="translate(236 380)"><path d="M-14 10l14-26 14 26z" fill="var(--paper)" stroke="var(--ink)" stroke-width="2.5" stroke-linejoin="round"/><path d="M0-16v26" stroke="var(--ink)" stroke-width="2"/></g>
+    <g id="nodes"></g><g id="tag"></g>
+    <g class="edge" transform="translate(64 480)" aria-hidden="true"><circle r="34" fill="var(--paper)" stroke="var(--ink)" stroke-width="2"/><path d="M0-26l7 26-7 26-7-26z" fill="var(--ink)"/><path d="M0-26l7 26H-7z" fill="var(--active)"/><text y="-38" text-anchor="middle" style="font:16px var(--display);fill:var(--paper)">N</text></g>
+  </svg>
+  <div class="top">
+    <div class="title"><h1>The Wayfarer Isles</h1><p>Day 23 · 5 of 8 quests open</p></div>
+    <div class="filters" role="group" aria-label="Show quests"><button type="button" aria-pressed="true" data-f="all">All</button><button type="button" aria-pressed="false" data-f="main">Main story</button><button type="button" aria-pressed="false" data-f="side">Side</button></div>
+  </div>
+  <div class="legend" aria-hidden="true"><span><i style="background:var(--active)"></i>Active</span><span><i style="background:var(--open)"></i>Available</span><span><i style="background:var(--done)"></i>Done</span><span><i style="background:var(--locked);border-style:dashed"></i>Locked</span></div>
+</section>
+<aside aria-live="polite" id="panel"></aside>
+<script>
+(() => {
+  const ck = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>';
+  const lk = '<path d="M7 11V8a5 5 0 0 1 10 0v3M5 11h14v10H5z" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/>';
+  // title, type, state, x, y, region, level, giver, desc, objectives [text, done, n, of], rewards [xp, coin, item], requires
+  const Q = [
+    ['A Lantern for Saltmere','main','done',290,250,'Saltmere',6,'Harbourmaster Ide','Relight the harbour lantern so the fishing boats come home.',[['Fetch lamp oil from the cooper',1],['Climb the lantern tower',1]],[600,120,'Oilcloth Hood']],
+    ['The Drowned Bell','side','done',150,330,'Saltmere',8,'Old Wenna','Dive for the chapel bell that rang the night the cliffs fell.',[['Find the bell in the shallows',1]],[450,90,'Diver’s Charm']],
+    ['Beacons of Thornvale','main','active',470,520,'Thornvale',12,'Captain Rook Ashby','Raiders slip through the valley by night. Light the old beacon fires along the ridge so the watch can see them coming.',[['Speak with Captain Ashby at the toll gate',1],['Light the beacon fires',0,1,3],['Report back before nightfall',0]],[1200,340,'Wayfarer’s Compass'],null,'Light the two remaining fires on the ridge north of the toll gate. They burn out at dusk.'],
+    ['Goats of the High Pass','side','open',560,420,'Emberreach',11,'Shepherd Mael','Seven goats wandered up the pass after the rockfall. Bring them down before the frost.',[['Find the lost goats',0,2,7],['Clear the path at the cairn',0]],[520,140,'Wool-lined Boots'],null,'Two goats were last seen grazing near the cairn on the east trail.'],
+    ['The Mirrowood Choir','side','open',330,460,'Mirrowood',10,'Sister Ottilie','Something in the wood is singing back. Find out who taught it the hymn.',[['Listen at the three stones',0,0,3],['Follow the echo',0]],[700,160,'Reed Flute'],null,'Go to the first standing stone at the edge of Mirrowood after dark.'],
+    ['Embers Under Glass','main','locked',640,300,'Emberreach',15,'The Glassmaker','The forge-city beneath the peaks has gone quiet.',[['Reach the sealed gate',0]],[1600,420,'Ashglass Lens'],'Beacons of Thornvale'],
+    ['Tidecaller’s Debt','side','locked',750,600,'Hollow Isles',14,'Mother Saran','An old promise to the sea is due.',[['Sail to the Hollow Isles',0]],[900,260,'Tide Pearl'],'Charter a boat in Saltmere'],
+    ['Heart of Emberreach','main','locked',690,240,'Emberreach',18,'Unknown','The mountain is waking.',[['Unknown',0]],[3000,800,'Unknown'],'Embers Under Glass'],
+  ];
+  const C = {active:'var(--active)', done:'var(--done)', open:'var(--open)', locked:'var(--locked)'}, L = {active:'Active', done:'Done', open:'Available', locked:'Locked'};
+  const NS = 'http://www.w3.org/2000/svg', $ = (id) => document.getElementById(id), camp = [236, 380];
+  let sel = 2, filter = 'all';
+  Q.forEach((q, i) => {
+    const g = document.createElementNS(NS, 'g'); g.setAttribute('class', 'node'); g.setAttribute('tabindex', '0'); g.setAttribute('role', 'button'); g.dataset.i = i;
+    g.setAttribute('transform', `translate(${q[3]} ${q[4]})`); g.setAttribute('aria-label', `${q[0]}, ${L[q[2]]}, ${q[1] === 'main' ? 'main story' : 'side quest'}`);
+    g.innerHTML = (q[2] === 'active' ? '<circle class="pulse" r="16"/>' : '') + `<circle class="ring" r="24"/><circle class="b" r="16" fill="${C[q[2]]}" stroke="var(--ink)" stroke-width="2.5" ${q[2] === 'locked' ? 'stroke-dasharray="4 3"' : ''}/>` +
+      (q[2] === 'done' ? `<path d="M-6 1l4 4 8-9" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>` : q[2] === 'locked' ? `<g transform="translate(-7 -8) scale(.6)" color="#fff">${lk}</g>` : q[1] === 'main' ? `<path d="M0-7l2 5h5l-4 3 2 6-5-4-5 4 2-6-4-3h5z" fill="${q[2] === 'active' ? '#fff' : 'var(--ink)'}"/>` : `<circle r="4" fill="${q[2] === 'active' ? '#fff' : 'var(--ink)'}"/>`);
+    $('nodes').appendChild(g);
+  });
+  const route = (q) => {
+    const [x0, y0] = camp, [x1, y1] = [q[3], q[4]], mx = (x0 + x1) / 2, my = (y0 + y1) / 2, dx = x1 - x0, dy = y1 - y0;
+    const d = `M${x0} ${y0}Q${(mx - dy * .25).toFixed(0)} ${(my + dx * .25).toFixed(0)} ${x1} ${y1}`;
+    const r = $('route'), m = $('routeMask'); r.setAttribute('d', d); m.setAttribute('d', d);
+    const len = m.getTotalLength(); m.style.setProperty('--len', len); m.style.strokeDasharray = len; m.classList.remove('drawing'); m.getBoundingClientRect(); m.classList.add('drawing');
+    return len;
+  };
+  const tag = (q) => { const w = q[0].length * 7.4 + 24, left = q[3] + w + 30 > 900;
+    const x = left ? q[3] - 30 - w : q[3] + 30;
+    $('tag').innerHTML = `<rect class="tagbg" x="${x}" y="${q[4] - 15}" width="${w}" height="30" rx="15"/><text class="tagtx" x="${x + 12}" y="${q[4] + 5}">${q[0]}</text>`; };
+  const panel = (q, len) => {
+    const lock = q[2] === 'locked', km = (len * .011).toFixed(1);
+    $('panel').innerHTML = `<div class="ph"><div class="kind"><span class="pill">${q[1] === 'main' ? 'Main story' : 'Side quest'}</span><span class="pill st" style="background:${q[2] === 'open' ? 'var(--ink)' : C[q[2]]}">${L[q[2]]}</span></div>
+      <h2>${q[0]}</h2><div class="meta">${q[5]} · Level ${q[6]} · From ${q[7]}</div><p class="desc">${q[8]}</p></div>
+      <div class="sec"><h3>Objectives</h3>${lock ? `<div class="lock"><svg viewBox="0 0 24 24" aria-hidden="true" color="var(--ink-2)">${lk}</svg><span>Requires: ${q[11]}</span></div>` : `<ul class="obj">${q[9].map(o => `<li class="${o[1] ? 'd' : ''}"><span class="ck" aria-hidden="true">${o[1] ? ck : ''}</span><span class="tx">${o[0]}</span>${o[3] ? `<span class="pr">${o[2]}/${o[3]}</span><span class="prog" aria-hidden="true"><i style="width:${o[2] / o[3] * 100}%"></i></span>` : '<span></span>'}</li>`).join('')}</ul>`}</div>
+      <div class="sec"><h3>Rewards</h3><div class="rw"><div><b>${q[6] >= 18 ? '?' : q[10][0].toLocaleString('en-GB')}</b><small>XP</small></div><div><b>${q[6] >= 18 ? '?' : q[10][1]}</b><small>Silver</small></div><div class="it"><b>${q[10][2]}</b><small>Item</small></div></div></div>
+      ${q[12] ? `<div class="nextstep"><b>Next step</b>${q[12]}</div>` : ''}<div class="acts"><button class="btn primary" type="button" ${lock || q[2] === 'done' ? 'disabled' : ''}>${q[2] === 'active' ? 'Tracking' : q[2] === 'done' ? 'Completed' : lock ? 'Locked' : 'Track quest'}</button><span class="dist">${km} km from camp<br>about ${Math.round(km * 12)} min on foot</span></div>`;
+  };
+  const select = (i) => { sel = i; const q = Q[i]; document.querySelectorAll('.node').forEach(n => n.classList.toggle('sel', +n.dataset.i === i)); tag(q); panel(q, route(q)); };
+  $('nodes').addEventListener('click', e => { const n = e.target.closest('.node'); if (n) select(+n.dataset.i); });
+  $('nodes').addEventListener('keydown', e => { const n = e.target.closest('.node'); if (n && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); select(+n.dataset.i); } });
+  document.querySelectorAll('.filters button').forEach(b => b.addEventListener('click', () => {
+    filter = b.dataset.f; document.querySelectorAll('.filters button').forEach(x => x.setAttribute('aria-pressed', x === b));
+    document.querySelectorAll('.node').forEach(n => { const on = filter === 'all' || Q[n.dataset.i][1] === filter; n.style.opacity = on ? 1 : .25; n.style.pointerEvents = on ? '' : 'none'; n.setAttribute('tabindex', on ? 0 : -1); });
+  }));
+  select(2);
+})();
+</script>
+</body>
+</html>

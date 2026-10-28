@@ -1,0 +1,146 @@
+<!-- Design Lounge piece: hero-kinetic-scroll-type · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Pacekeeper: race timing, split by split</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@50..150,100..900&display=swap" rel="stylesheet">
+<style>
+@property --s{syntax:"<number>";inherits:true;initial-value:0}
+@property --pw{syntax:"<number>";inherits:false;initial-value:0}
+:root{
+  --bg:#0e1013;--bg-2:#16191d;--line:#2a2e34;--ink:#f1efe8;--ink-2:#a9a79f;--ink-3:#8a8880;
+  --accent:#c8f25a;--accent-ink:#141a05;
+  --font:"Anybody",system-ui,sans-serif;
+  --fs-display:clamp(64px,13.6vw,184px);
+  --ease:cubic-bezier(.2,.7,.2,1);--expo:cubic-bezier(.16,1,.3,1);--t-micro:160ms;--t-weight:420ms;
+}
+*{box-sizing:border-box}
+html{background:var(--bg)}
+html,body{margin:0}
+body{font:400 15px/1.55 var(--font);font-stretch:100%;color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+nav{position:sticky;top:0;z-index:5;height:64px;display:flex;align-items:center;gap:28px;padding:0 48px;background:var(--bg);border-bottom:1px solid var(--line)}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-stretch:125%;font-size:17px;letter-spacing:.01em;margin-right:auto}
+.logo svg{width:22px;height:22px}
+nav ul{display:flex;gap:26px;list-style:none;margin:0;padding:0;font-size:14px;color:var(--ink-2)}
+nav ul a:hover{color:var(--ink)}
+.btn{display:inline-flex;align-items:center;gap:10px;height:44px;padding:0 20px;border-radius:4px;font:700 14px var(--font);font-stretch:110%;letter-spacing:.01em;background:var(--accent);color:var(--accent-ink);border:0;cursor:pointer;transition:transform var(--t-micro) var(--ease),filter var(--t-micro)}
+.btn:hover{filter:brightness(1.08)}.btn:active{transform:translateY(1px)}
+.btn svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.btn.sm{height:36px;padding:0 14px;font-size:13px}
+.btn.ghost{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--ink-3)}
+.btn.ghost:hover{box-shadow:inset 0 0 0 1.5px var(--ink)}
+.pin{height:calc(100vh - 64px + 560px);min-height:1296px}
+.hero{position:sticky;top:64px;height:calc(100vh - 64px);min-height:736px;padding:28px 48px 36px;display:flex;flex-direction:column;overflow:hidden}
+.meta{display:flex;justify-content:space-between;font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)}
+.meta span:first-child{display:flex;align-items:center;gap:8px}
+.meta i{width:8px;height:8px;border-radius:50%;background:var(--accent);animation:pulse 1.6s var(--ease) infinite}
+@keyframes pulse{50%{opacity:.35}}
+h1{margin:18px 0 0;font-size:var(--fs-display);line-height:.84;letter-spacing:-.01em;text-transform:uppercase;cursor:default}
+h1 .ln{display:block;white-space:nowrap;--pw:0;transition:--pw var(--t-weight) var(--expo)}
+.l1{font-stretch:calc((150 - var(--s) * 95) * 1%);font-weight:calc(820 - var(--s) * 520 + var(--pw) * 80);transform:translateX(calc(var(--s) * 30vw))}
+.l2{font-stretch:calc((62 + var(--s) * 88) * 1%);font-weight:calc(300 + var(--s) * 560 + var(--pw) * 500);transform:translateX(calc(14vw - var(--s) * 14vw))}
+.l3{font-stretch:calc((112 - var(--s) * 60) * 1%);font-weight:calc(880 - var(--s) * 200 - var(--pw) * 300);transform:translateX(calc(var(--s) * -4vw));text-align:right}
+.l3 em{font-style:normal;color:var(--accent)}
+.product{margin-top:auto;padding-top:28px;display:grid;grid-template-columns:minmax(0,440px) 1fr auto;gap:40px;align-items:end;border-top:1px solid var(--line)}
+.product p{margin:0;font-size:16px;line-height:1.55;color:var(--ink-2)}
+.product p b{color:var(--ink);font-weight:600}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.clock{text-align:right;font-variant-numeric:tabular-nums}
+.clock small{display:block;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)}
+.clock strong{display:block;font-size:34px;font-weight:600;font-stretch:80%;letter-spacing:-.01em;line-height:1.1}
+.results{padding:72px 48px 120px;border-top:1px solid var(--line);background:var(--bg-2)}
+.results h2{margin:0 0 24px;font-size:40px;font-weight:800;font-stretch:120%;letter-spacing:-.01em;text-transform:uppercase}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;font-size:15px}
+th{text-align:left;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);padding:0 0 10px;border-bottom:1px solid var(--line)}
+td{padding:14px 0;border-bottom:1px solid var(--line)}
+td:last-child,th:last-child{text-align:right}
+/* scroll-driven: --s goes 0 to 1 over the first 560px of page scroll */
+@keyframes squeeze{to{--s:1}}
+@supports (animation-timeline:scroll()){
+  h1{animation:squeeze linear both;animation-timeline:scroll(root block);animation-range:0 560px}
+}
+@media (max-width:900px){
+  nav{padding:0 16px;gap:16px}nav ul{display:none}
+  .pin{height:auto;min-height:0}.hero{position:relative;top:0;height:auto;padding:20px 16px 48px;min-height:0}
+  .meta span:last-child{display:none}
+  h1{margin-top:28px;font-size:clamp(48px,17vw,120px)}
+  .product{grid-template-columns:1fr;gap:20px;margin-top:40px}
+  .clock{text-align:left}
+  .results{padding:48px 16px 80px}.results h2{font-size:28px}
+  .hide-s{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  h1{animation:none!important}h1 .ln{transition:none}.meta i{animation:none}
+}
+</style>
+</head>
+<body>
+<nav aria-label="Primary">
+  <a class="logo" href="#" aria-label="Pacekeeper home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="13" r="8"/><path d="M12 13l4-3M10 2h4"/></svg>Pacekeeper</a>
+  <ul><li><a href="#">Timing</a></li><li><a href="#">Live results</a></li><li><a href="#">Race directors</a></li><li><a href="#">Pricing</a></li></ul>
+  <a class="btn sm" href="#">Book a demo</a>
+</nav>
+<main>
+<div class="pin">
+<section class="hero" aria-labelledby="h">
+  <div class="meta"><span><i aria-hidden="true"></i>Live now: Lisbon Half, 11,402 on course</span><span>Chip timing since 2014</span></div>
+  <h1 id="h" aria-label="Split every second.">
+    <span class="ln l1" aria-hidden="true">Split</span>
+    <span class="ln l2" aria-hidden="true">every</span>
+    <span class="ln l3" aria-hidden="true">second<em>.</em></span>
+  </h1>
+  <div class="product">
+    <p><b>Pacekeeper times road races from the start mat to the results page.</b> Chip splits every 5 km reach runners' phones within 3 seconds, and the final results post before the last finisher crosses.</p>
+    <div class="row">
+      <a class="btn" href="#">Book a demo<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <a class="btn ghost" href="#">See Lisbon Half results</a>
+    </div>
+    <div class="clock" aria-live="off"><small>Race clock, Lisbon Half</small><strong id="clock">01:12:44.3</strong></div>
+  </div>
+</section>
+</div>
+<section class="results" aria-labelledby="r">
+  <h2 id="r">Lisbon Half, leaders at 15 km</h2>
+  <table>
+    <thead><tr><th>Pos</th><th>Runner</th><th class="hide-s">Club</th><th>15 km split</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Inês Varela</td><td class="hide-s">AC Belém</td><td>00:47:12</td></tr>
+      <tr><td>2</td><td>Tomas Okafor</td><td class="hide-s">Porto Harriers</td><td>00:47:15</td></tr>
+      <tr><td>3</td><td>Mira Haldane</td><td class="hide-s">Leith Road Club</td><td>00:47:31</td></tr>
+      <tr><td>4</td><td>Ruy Santamaria</td><td class="hide-s">Sintra Trail</td><td>00:47:58</td></tr>
+      <tr><td>5</td><td>Ada Lindqvist</td><td class="hide-s">Göteborg FK</td><td>00:48:04</td></tr>
+    </tbody>
+  </table>
+</section>
+</main>
+<script>
+(function(){
+  var h1=document.getElementById('h');if(!h1)return;
+  var lines=[].slice.call(h1.querySelectorAll('.ln')),reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var cssScroll=window.CSS&&CSS.supports&&CSS.supports('animation-timeline','scroll()');
+  if(!cssScroll&&!reduce){
+    var t=0;addEventListener('scroll',function(){if(t)return;t=requestAnimationFrame(function(){t=0;h1.style.setProperty('--s',Math.min(1,scrollY/560).toFixed(3));});},{passive:true});
+  }
+  var hero=h1.closest('.hero');
+  function point(e){
+    lines.forEach(function(l){
+      var b=l.getBoundingClientRect(),cy=b.top+b.height/2,d=Math.abs(e.clientY-cy)/(b.height*1.4);
+      var v=Math.max(0,1-d);l.style.setProperty('--pw',v.toFixed(3));
+    });
+  }
+  if(!reduce&&hero){
+    hero.addEventListener('pointermove',point);
+    hero.addEventListener('pointerleave',function(){lines.forEach(function(l){l.style.setProperty("--pw",0);});});
+  }
+  var el=document.getElementById('clock'),start=Date.now(),base=4364.3;
+  function fmt(s){var h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=(s%60).toFixed(1);return(h<10?'0':'')+h+':'+(m<10?'0':'')+m+':'+(x<10?'0':'')+x;}
+  if(el&&!reduce)setInterval(function(){el.textContent=fmt(base+(Date.now()-start)/1000);},100);
+})();
+</script>
+</body>
+</html>

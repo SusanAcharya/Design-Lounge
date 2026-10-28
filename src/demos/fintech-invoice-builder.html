@@ -1,0 +1,261 @@
+<!-- Design Lounge piece: fintech-invoice-builder · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Invoice builder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;500;600;700&family=Gloock&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink-bg:#18202B;--panel:#1F2935;--field:#243040;--line:#2F3B4A;--edge:#6B7A8C;--desk:#2B3542;
+  --text:#EEF1F4;--text-2:#B4BECA;--text-3:#94A0AE;
+  --accent:#FF8A6B;--accent-ink:#1E120D;--accent-dim:#3A2A27;
+  --paper:#FBFAF6;--p-ink:#1D2026;--p-ink-2:#555B66;--p-rule:#E3E0D8;--p-accent:#C2462B;
+  --display:"Gloock",Georgia,serif;--serif:"Crimson Pro",Georgia,serif;
+  --r:8px;--r-sm:6px;--h-ctl:40px;
+  --ease:cubic-bezier(.2,.7,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);--t-fast:160ms;--t-mid:280ms;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--ink-bg);color:var(--text);font:17px/1.35 var(--serif);-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums lining-nums;display:flex;flex-direction:column}
+button,input,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.top{height:60px;flex:none;display:flex;align-items:center;gap:16px;padding:0 28px;border-bottom:1px solid var(--line)}
+.crumb{color:var(--text-2);font-size:16px}
+.crumb b{color:var(--text);font-weight:600}
+.saved{display:flex;align-items:center;gap:6px;color:var(--text-3);font-size:15px}
+.saved svg{width:16px;height:16px}
+.sp{flex:1}
+.btn{height:var(--h-ctl);padding:0 16px;border-radius:var(--r);border:1px solid var(--edge);background:none;font-weight:600;font-size:16px;display:inline-flex;align-items:center;gap:8px;white-space:nowrap;transition:background var(--t-fast) var(--ease),transform var(--t-fast) var(--ease)}
+.btn:hover{background:var(--field)}
+.btn svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.btn.pri{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.pri:hover{background:#FF9F86}
+.btn.pri:active{transform:scale(.97)}
+.btn.pri[data-state=sent]{background:var(--accent-dim);border-color:var(--accent-dim);color:var(--accent)}
+.wrap{flex:1;min-height:0;display:grid;grid-template-columns:600px minmax(0,1fr)}
+.form{overflow:auto;padding:24px 32px 32px;border-right:1px solid var(--line)}
+h1{font:400 34px/1.1 var(--display);margin:0 0 4px;letter-spacing:-.01em}
+.lede{color:var(--text-2);margin:0 0 22px}
+fieldset{border:0;padding:0;margin:0 0 22px}
+legend{font-size:13px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:10px;padding:0}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+label.f span{display:block;font-size:15px;color:var(--text-2);margin-bottom:5px}
+input,textarea{width:100%;height:var(--h-ctl);border:1px solid var(--edge);background:var(--field);border-radius:var(--r-sm);padding:0 10px;font-size:17px;transition:border-color var(--t-fast) var(--ease)}
+input:hover,textarea:hover{border-color:var(--text-3)}
+input:focus,textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(255,138,107,.22)}
+textarea{height:64px;padding:8px 10px;resize:none;line-height:1.35}
+.num{text-align:right}
+.client{position:relative}
+.pick{width:100%;display:flex;align-items:center;gap:12px;text-align:left;border:1px solid var(--edge);background:var(--field);border-radius:var(--r);padding:8px 12px;min-height:56px}
+.pick:hover{border-color:var(--text-3)}
+.av{width:36px;height:36px;border-radius:50%;flex:none;display:grid;place-items:center;font-weight:700;font-size:15px;color:#1D2026}
+.pick b{display:block;font-weight:600}
+.pick small{display:block;color:var(--text-2);font-size:15px}
+.pick .chev{margin-left:auto;width:18px;height:18px;fill:none;stroke:var(--text-2);stroke-width:2;transition:transform var(--t-fast) var(--ease)}
+.pick[aria-expanded=true] .chev{transform:rotate(180deg)}
+.list{position:absolute;left:0;right:0;top:calc(100% + 6px);z-index:5;background:var(--panel);border:1px solid var(--edge);border-radius:var(--r);padding:6px;margin:0;list-style:none;box-shadow:0 16px 40px rgba(0,0,0,.45);opacity:0;transform:translateY(-4px);pointer-events:none;transition:opacity var(--t-fast) var(--ease),transform var(--t-fast) var(--ease)}
+.list.on{opacity:1;transform:none;pointer-events:auto}
+.list li{display:flex;align-items:center;gap:12px;padding:8px;border-radius:var(--r-sm);cursor:pointer}
+.list li:hover,.list li:focus{background:var(--field);outline:none}
+.list li[aria-selected=true]{box-shadow:inset 2px 0 0 var(--accent)}
+.list li small{color:var(--text-2);font-size:15px;display:block}
+.terms{display:flex;gap:6px;margin-top:0}
+.terms button{flex:1;height:var(--h-ctl);border-radius:var(--r-sm);border:1px solid var(--edge);background:none;font-size:16px;font-weight:600}
+.terms button[aria-pressed=true]{background:var(--text);color:var(--ink-bg);border-color:var(--text)}
+.items .hd,.item{display:grid;grid-template-columns:minmax(0,1fr) 62px 96px 98px 32px;gap:8px;align-items:center}
+.items .hd{font-size:14px;color:var(--text-3);margin-bottom:6px}
+.items .hd span:nth-child(n+2){text-align:right}
+.item{margin-bottom:8px;animation:in var(--t-mid) var(--ease-out)}
+@keyframes in{from{opacity:0;transform:translateY(-6px)}}
+.item output{text-align:right;font-weight:600}
+.x{width:32px;height:32px;border-radius:var(--r-sm);border:0;background:none;color:var(--text-3);display:grid;place-items:center}
+.x:hover{background:var(--field);color:var(--text)}
+.x svg{width:16px;height:16px;stroke:currentColor;stroke-width:2;fill:none}
+.add{margin-top:4px;border-style:dashed}
+.adj{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.seg{display:flex}
+.seg input{border-radius:var(--r-sm) 0 0 var(--r-sm)}
+.seg button{width:44px;height:var(--h-ctl);border:1px solid var(--edge);border-left:0;background:none;font-weight:700}
+.seg button:last-child{border-radius:0 var(--r-sm) var(--r-sm) 0}
+.seg button[aria-pressed=true]{background:var(--text);color:var(--ink-bg)}
+.desk{overflow:auto;background:var(--desk);display:flex;justify-content:center;align-items:flex-start;padding:28px}
+.sheet{container-type:inline-size;width:min(100%,492px);aspect-ratio:1/1.414;background:var(--paper);color:var(--p-ink);border-radius:2px;box-shadow:0 1px 2px rgba(0,0,0,.3),0 24px 50px -20px rgba(0,0,0,.6);flex:none}
+.pg{height:100%;padding:7.3cqw 7.3cqw 6cqw;font-size:2.44cqw;line-height:1.4;position:relative}
+.sheet header{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:.4cqw solid var(--p-accent);padding-bottom:3.2cqw}
+.mono{width:9cqw;height:9cqw;border-radius:50%;background:var(--p-ink);color:var(--paper);display:grid;place-items:center;font:400 4.4cqw/1 var(--display)}
+.from{display:flex;gap:2.8cqw;align-items:center}
+.from b{display:block;font-weight:700;font-size:3cqw}
+.from span:not(.mono){color:var(--p-ink-2)}
+.sheet h2{font:400 8.4cqw/1 var(--display);margin:0;letter-spacing:-.01em;text-align:right}
+.sheet h2 + div{text-align:right;color:var(--p-ink-2);margin-top:1cqw}
+.meta{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:3cqw;margin:4.4cqw 0}
+.meta i{display:block;font-style:normal;font-size:2cqw;letter-spacing:.12em;text-transform:uppercase;color:var(--p-ink-2);margin-bottom:.6cqw}
+.meta b{font-weight:600}
+.sheet table{width:100%;border-collapse:collapse}
+.sheet th{font-size:2cqw;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--p-ink-2);text-align:right;padding:0 0 1.4cqw;border-bottom:1px solid var(--p-rule)}
+.sheet td{padding:1.6cqw 0;border-bottom:1px solid var(--p-rule);text-align:right;vertical-align:top}
+.sheet th:first-child,.sheet td:first-child{text-align:left;padding-right:3cqw}
+.tot{margin-left:auto;width:52%;margin-top:3cqw}
+.tot div{display:flex;justify-content:space-between;padding:.6cqw 0}
+.tot .due{border-top:.4cqw solid var(--p-ink);margin-top:1.4cqw;padding-top:2cqw;align-items:baseline}
+.tot .due b{font:400 6.4cqw/1 var(--display)}
+.pay{position:absolute;left:7.3cqw;right:7.3cqw;bottom:6cqw;display:grid;grid-template-columns:1fr 1fr;gap:4cqw;color:var(--p-ink-2);border-top:1px solid var(--p-rule);padding-top:2.6cqw}
+.pay b{color:var(--p-ink);font-weight:600;display:block}
+.flash{animation:flash 700ms var(--ease-out)}
+@keyframes flash{from{background:#FFE1D6}}
+.stamp{position:absolute;left:9cqw;top:64%;border:.6cqw solid var(--p-accent);color:var(--p-accent);font:400 6cqw/1 var(--display);padding:1.4cqw 3cqw;border-radius:1.4cqw;transform:rotate(-9deg) scale(1.6);opacity:0;transition:transform 420ms var(--ease-out),opacity 200ms var(--ease);pointer-events:none;text-align:center}
+.stamp small{display:block;font:600 1.9cqw/1.2 var(--serif);letter-spacing:.1em;margin-top:.6cqw}
+.sent .stamp{opacity:1;transform:rotate(-9deg) scale(1)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media (max-width:1100px){.wrap{grid-template-columns:minmax(0,1fr)}.form{overflow:visible;border-right:0}.desk{overflow:visible}body{display:block}.wrap{display:block}}
+@media (max-width:640px){
+  .top{padding:0 16px;gap:10px}.crumb,.saved,.top .btn:not(.pri){display:none}.sp{display:block}
+  .form{padding:20px 16px}.desk{padding:20px 16px}
+  .row2,.adj{grid-template-columns:1fr}
+  .items .hd{display:none}
+  .meta{grid-template-columns:1fr 1fr}.meta>div:first-child{grid-column:1/-1}.tot{width:72%}
+  .sheet{aspect-ratio:auto}.pg{font-size:12px;padding:24px 20px}.meta b{font-size:13px}.meta i,.sheet th,.stamp small{font-size:10px}.pay{position:static;margin-top:24px}
+  .item{grid-template-columns:1fr 1fr 32px;grid-template-areas:"d d x" "q r r" "a a a";padding:10px;border:1px solid var(--line);border-radius:var(--r)}
+  .item .d{grid-area:d}.item .q{grid-area:q}.item .r{grid-area:r}.item output{grid-area:a}.item .x{grid-area:x}
+}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition-duration:1ms!important}}
+</style>
+</head>
+<body>
+<header class="top">
+  <span class="crumb">Invoices / <b>Draft 2026-041</b></span>
+  <span class="saved" id="saved"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>Saved 2:41 pm</span>
+  <span class="sp"></span>
+  <button class="btn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11m-5-5l5 5 5-5M5 20h14"/></svg>Download PDF</button>
+  <button class="btn pri" id="send"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12l16-8-6 16-3-7z"/></svg><span id="sendT">Send to Marlow &amp; Pike</span></button>
+</header>
+<div class="wrap">
+  <form class="form" id="form" onsubmit="return false">
+    <h1>New invoice</h1>
+    <p class="lede">Everything on the right is what your client receives.</p>
+    <fieldset>
+      <legend>Bill to</legend>
+      <div class="client">
+        <button type="button" class="pick" id="pick" aria-haspopup="listbox" aria-expanded="false" aria-controls="list"></button>
+        <ul class="list" id="list" role="listbox" aria-label="Clients" tabindex="-1"></ul>
+      </div>
+    </fieldset>
+    <fieldset>
+      <legend>Dates</legend>
+      <div class="row2">
+        <label class="f"><span>Issued</span><input id="issued" value="Oct 28, 2026" readonly></label>
+        <div><span style="display:block;font-size:15px;color:var(--text-2);margin-bottom:5px" id="termsL">Due, <b id="dueT" style="color:var(--text)">Nov 27, 2026</b></span>
+          <div class="terms" role="group" aria-labelledby="termsL" id="terms"><button type="button" data-d="15" aria-pressed="false">Net 15</button><button type="button" data-d="30" aria-pressed="true">Net 30</button><button type="button" data-d="45" aria-pressed="false">Net 45</button></div></div>
+      </div>
+    </fieldset>
+    <fieldset class="items">
+      <legend>Line items</legend>
+      <div class="hd" aria-hidden="true"><span>Description</span><span>Qty</span><span>Rate</span><span>Amount</span><span></span></div>
+      <div id="items"></div>
+      <button type="button" class="btn add" id="add"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Add line</button>
+    </fieldset>
+    <fieldset>
+      <legend>Adjustments</legend>
+      <div class="adj">
+        <div><label class="f" for="disc"><span>Discount</span></label><div class="seg"><input id="disc" class="num" inputmode="decimal" value="5"><button type="button" data-u="%" aria-pressed="true" aria-label="Percent">%</button><button type="button" data-u="$" aria-pressed="false" aria-label="Dollars">$</button></div></div>
+        <label class="f"><span>Sales tax, %</span><input id="tax" class="num" inputmode="decimal" value="6.25"></label>
+      </div>
+    </fieldset>
+    <fieldset>
+      <legend>Note to client</legend>
+      <label class="f"><span class="sr">Note</span><textarea id="note">Thank you, Ada. The licence covers the first print run of up to 20,000 copies.</textarea></label>
+    </fieldset>
+  </form>
+  <section class="desk" aria-label="PDF preview">
+    <article class="sheet" id="sheet"><div class="pg">
+      <header>
+        <div class="from"><span class="mono">O</span><div><b>Okafor Letterworks</b><span>Wren Okafor<br>14 Calder Row, Leeds LS6 2QP</span></div></div>
+        <div><h2>Invoice</h2><div>No. 2026-041</div></div>
+      </header>
+      <div class="meta">
+        <div><i>Bill to</i><b id="pName"></b><br><span id="pAddr"></span></div>
+        <div><i>Issued</i><b>Oct 28, 2026</b></div>
+        <div><i>Due</i><b id="pDue"></b></div>
+      </div>
+      <table><thead><tr><th>Description</th><th>Qty</th><th>Rate</th><th>Amount</th></tr></thead><tbody id="pRows"></tbody></table>
+      <div class="tot">
+        <div><span>Subtotal</span><span id="pSub"></span></div>
+        <div><span id="pDiscL">Discount</span><span id="pDisc"></span></div>
+        <div><span id="pTaxL">Sales tax</span><span id="pTax"></span></div>
+        <div class="due"><span>Total due</span><b id="pTot"></b></div>
+      </div>
+      <div class="stamp" aria-hidden="true">Sent<small id="stampT">OCT 28, 2:41 PM</small></div>
+      <div class="pay"><div><b>Pay by bank transfer</b>Okafor Letterworks<br>Sort 40-18-22 &middot; Acct 61730294</div><div><b>Note</b><span id="pNote"></span></div></div>
+    </div></article>
+    <p class="sr" aria-live="polite" id="live"></p>
+  </section>
+</div>
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  const money = v => (v < 0 ? '−' : '') + '$' + Math.abs(v).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const num = v => { const n = parseFloat(String(v).replace(/[^0-9.]/g, '')); return isFinite(n) ? n : 0; };
+  const esc = s => s.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const CLIENTS = [
+    ['Marlow & Pike Books', 'Ada Brennan, ada@marlowpike.co.uk', '3 Weaver St, Manchester M4 6HS', '#F2C6A0', 'Marlow & Pike'],
+    ['Fieldhouse Coffee Co.', 'Sam Iqbal, sam@fieldhouse.coffee', '88 Mill Lane, Bristol BS3 4DX', '#B9D8C2', 'Fieldhouse'],
+    ['Saltmarsh Records', 'Juno Hale, juno@saltmarsh.fm', 'Unit 9, Quayside, Hull HU1 1PS', '#C6CDEB', 'Saltmarsh'],
+    ['Thimble Theatre Trust', 'Priya Ruiz, office@thimble.org.uk', '21 Abbey Rd, York YO30 6BN', '#EBD38C', 'Thimble Theatre']
+  ];
+  let client = 0, terms = 30, unit = '%';
+  let items = [['Cover lettering, "The Lantern Year"', 1, 2400], ['Revisions, hourly', 6, 95], ['Spine and back-cover titles', 1, 650], ['Print licence, up to 20,000 copies', 1, 800]];
+  const pick = $('pick'), list = $('list');
+  const chev = '<svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>';
+  const face = c => `<span class="av" style="background:${c[3]}">${c[0].split(' ').filter(w => /^[A-Z]/.test(w)).slice(0, 2).map(w => w[0]).join('')}</span><span><b>${esc(c[0])}</b><small>${esc(c[1])}</small></span>`;
+  list.innerHTML = CLIENTS.map((c, i) => `<li role="option" tabindex="-1" data-i="${i}">${face(c)}</li>`).join('');
+  const opts = [...list.children];
+  function setClient(i) { client = i; pick.innerHTML = face(CLIENTS[i]) + chev; opts.forEach((o, k) => o.setAttribute('aria-selected', k === i));
+    $('pName').textContent = CLIENTS[i][0]; $('pAddr').textContent = CLIENTS[i][2]; $('sendT').textContent = 'Send to ' + CLIENTS[i][4]; resetSend(); }
+  const openList = on => { list.classList.toggle('on', on); pick.setAttribute('aria-expanded', on); if (on) opts[client].focus(); };
+  pick.addEventListener('click', () => openList(pick.getAttribute('aria-expanded') !== 'true'));
+  list.addEventListener('click', e => { const o = e.target.closest('li'); if (o) { setClient(+o.dataset.i); openList(false); pick.focus(); } });
+  list.addEventListener('keydown', e => { const i = opts.indexOf(document.activeElement);
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); opts[(i + (e.key === 'ArrowDown' ? 1 : -1) + opts.length) % opts.length].focus(); }
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setClient(i); openList(false); pick.focus(); }
+    if (e.key === 'Escape') { openList(false); pick.focus(); } });
+  document.addEventListener('click', e => { if (!e.target.closest('.client')) openList(false); });
+  const box = $('items');
+  function drawItems() {
+    box.innerHTML = items.map((it, i) => `<div class="item" data-i="${i}"><input class="d" aria-label="Description, line ${i + 1}" value="${esc(it[0])}"><input class="q num" aria-label="Quantity, line ${i + 1}" inputmode="decimal" value="${it[1]}"><input class="r num" aria-label="Rate, line ${i + 1}" inputmode="decimal" value="${it[2].toFixed(2)}"><output>${money(it[1] * it[2])}</output><button type="button" class="x" aria-label="Remove line ${i + 1}"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>`).join('');
+  }
+  box.addEventListener('input', e => { const row = e.target.closest('.item'); if (!row) return; const i = +row.dataset.i, c = e.target.classList;
+    if (c.contains('d')) items[i][0] = e.target.value; if (c.contains('q')) items[i][1] = num(e.target.value); if (c.contains('r')) items[i][2] = num(e.target.value);
+    row.querySelector('output').textContent = money(items[i][1] * items[i][2]); calc(); });
+  box.addEventListener('click', e => { const x = e.target.closest('.x'); if (!x) return; items.splice(+x.closest('.item').dataset.i, 1); drawItems(); calc(); $('live').textContent = 'Line removed'; });
+  $('add').addEventListener('click', () => { items.push(['', 1, 0]); drawItems(); calc(); box.lastElementChild.querySelector('.d').focus(); });
+  $('terms').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; terms = +b.dataset.d;
+    $('terms').querySelectorAll('button').forEach(k => k.setAttribute('aria-pressed', k === b)); calc(); });
+  document.querySelector('.seg').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; unit = b.dataset.u;
+    document.querySelectorAll('.seg button').forEach(k => k.setAttribute('aria-pressed', k === b)); calc(); });
+  ['disc', 'tax', 'note'].forEach(id => $(id).addEventListener('input', calc));
+  let prevTot = null;
+  function calc() {
+    const sub = items.reduce((s, it) => s + it[1] * it[2], 0), dv = num($('disc').value), disc = Math.min(sub, unit === '%' ? sub * dv / 100 : dv);
+    const tr = num($('tax').value), tax = Math.round((sub - disc) * tr) / 100, tot = sub - disc + tax;
+    const due = new Date(2026, 9, 28 + terms).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    $('dueT').textContent = due; $('pDue').textContent = due + ` (net ${terms})`;
+    $('pRows').innerHTML = items.filter(it => it[0] || it[2]).map(it => `<tr><td>${esc(it[0] || 'Untitled line')}</td><td>${it[1]}</td><td>${money(it[2])}</td><td>${money(it[1] * it[2])}</td></tr>`).join('');
+    $('pSub').textContent = money(sub); $('pDiscL').textContent = unit === '%' ? `Discount, ${dv}%` : 'Discount'; $('pDisc').textContent = money(-disc);
+    $('pTaxL').textContent = `Sales tax, ${tr}%`; $('pTax').textContent = money(tax); $('pNote').textContent = $('note').value;
+    const t = $('pTot'); t.textContent = money(tot);
+    if (prevTot !== null && prevTot !== tot) { t.classList.remove('flash'); void t.offsetWidth; t.classList.add('flash'); $('live').textContent = 'Total due ' + money(tot); resetSend(); }
+    prevTot = tot;
+  }
+  const send = $('send');
+  function resetSend() { if (send.dataset.state) { send.dataset.state = ''; $('sheet').classList.remove('sent'); send.disabled = false; setClient(client); } }
+  send.addEventListener('click', () => { if (send.dataset.state) return; send.dataset.state = 'sent'; $('sheet').classList.add('sent');
+    $('sendT').textContent = 'Sent, Oct 28 at 2:41 pm'; $('live').textContent = 'Invoice 2026-041 sent to ' + CLIENTS[client][1].split(',')[1].trim(); });
+  setClient(0); drawItems(); calc();
+})();
+</script>
+</body>
+</html>

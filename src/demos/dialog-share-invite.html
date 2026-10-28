@@ -1,0 +1,216 @@
+<!-- Design Lounge piece: dialog-share-invite · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Share Winter menu costing · Larder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f3efe7;--paper:#fbf9f4;--surface:#ffffff;--sunk:#f5f1ea;--line:#e6dfd3;--line-2:#d3cabb;--edge:#8c8273;
+  --ink:#1f1c17;--ink-2:#4f493f;--ink-3:#6b6457;
+  --accent:#1f6f4a;--accent-hover:#185a3c;--accent-ink:#ffffff;--accent-soft:#e3f0e8;
+  --error:#a8382a;--error-soft:#fbe8e4;--scrim:rgba(31,28,23,.44);
+  --font:"Red Hat Display",system-ui,sans-serif;
+  --w:540px;--r:18px;--r-ctl:10px;--h-ctl:42px;
+  --t-micro:160ms;--t-open:320ms;--t-flash:1200ms;--ease:cubic-bezier(.2,.7,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);--ease-sheet:cubic-bezier(.32,.72,0,1);
+  --shadow:0 1px 2px rgba(31,28,23,.06),0 40px 80px -30px rgba(31,28,23,.5);
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{height:100%;margin:0}
+body{font:14px/1.5 var(--font);color:var(--ink);background:var(--bg);overflow:hidden;-webkit-font-smoothing:antialiased}
+svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.top{height:56px;display:flex;align-items:center;gap:14px;padding:0 24px;border-bottom:1px solid var(--line);background:var(--paper)}
+.top b{font-weight:800;font-size:17px;letter-spacing:-.02em}
+.top .doc{color:var(--ink-2);font-weight:500}
+.top .sp{flex:1}
+.btn{height:var(--h-ctl);padding:0 16px;border-radius:var(--r-ctl);border:1px solid var(--edge);background:var(--surface);font-weight:700;font-size:14px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;white-space:nowrap;transition:background var(--t-micro) var(--ease),opacity var(--t-micro) var(--ease)}
+.btn:hover{background:var(--sunk)}
+.btn.pri{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.pri:hover:not([disabled]){background:var(--accent-hover)}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.top .btn{height:36px}
+.sheet{max-width:980px;margin:28px auto;padding:0 24px}
+.sheet h1{font-size:34px;font-weight:800;letter-spacing:-.03em;margin:0 0 4px}
+.sheet .sub{color:var(--ink-2);margin:0 0 20px}
+table{width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden;font-size:13.5px}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line)}
+th{font-weight:700;color:var(--ink-2);font-size:12.5px;background:var(--paper)}
+td.n{text-align:right;font-variant-numeric:tabular-nums}
+/* dialog */
+dialog{width:min(var(--w),calc(100vw - 32px));max-height:calc(100dvh - 32px);border:0;padding:0;border-radius:var(--r);background:var(--surface);color:var(--ink);box-shadow:var(--shadow);overflow:auto;opacity:0;transform:scale(.97);transition:opacity var(--t-open) var(--ease),transform var(--t-open) var(--ease-out),overlay var(--t-open) allow-discrete,display var(--t-open) allow-discrete}
+dialog[open]{opacity:1;transform:none}
+@starting-style{dialog[open]{opacity:0;transform:scale(.97)}}
+dialog::backdrop{background:transparent;transition:background var(--t-open) var(--ease),overlay var(--t-open) allow-discrete,display var(--t-open) allow-discrete}
+dialog[open]::backdrop{background:var(--scrim)}
+@starting-style{dialog[open]::backdrop{background:transparent}}
+.hd{display:flex;align-items:center;gap:12px;padding:20px 22px 0}
+.hd h2{margin:0;font-size:19px;font-weight:700;letter-spacing:-.015em;flex:1;min-width:0}
+.x{width:34px;height:34px;border:0;border-radius:9px;background:none;color:var(--ink-3);display:grid;place-items:center;cursor:pointer;margin-right:-8px}
+.x:hover{background:var(--sunk);color:var(--ink)}
+.inv{padding:16px 22px 0;display:flex;gap:8px;align-items:center}
+.field{flex:1;min-width:0;height:var(--h-ctl);border:1px solid var(--edge);border-radius:var(--r-ctl);padding:0 12px;font-size:14px;background:var(--surface);outline:none;transition:border-color var(--t-micro) var(--ease),box-shadow var(--t-micro) var(--ease)}
+.field:hover{border-color:var(--ink-3)}
+.field:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.field::placeholder{color:var(--ink-3)}
+.tray{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:10px 22px 0}
+.tray:not(:has(.chip)){display:none}
+.tray .hint{font-size:12.5px;color:var(--ink-3);margin-left:4px}
+.chip{display:inline-flex;align-items:center;gap:4px;height:30px;padding:0 4px 0 10px;border-radius:15px;background:var(--sunk);border:1px solid var(--line-2);font-size:13px;font-weight:600;max-width:100%;animation:pop var(--t-micro) var(--ease-out)}
+.chip span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.chip.bad{background:var(--error-soft);border-color:var(--error);color:var(--error)}
+.chip button{width:22px;height:22px;border:0;border-radius:50%;background:none;display:grid;place-items:center;cursor:pointer;color:inherit}
+.chip button:hover{background:rgba(31,28,23,.08)}
+.chip svg{width:12px;height:12px;stroke-width:2.4}
+@keyframes pop{from{transform:scale(.85);opacity:0}}
+.sel{height:var(--h-ctl);border:1px solid var(--edge);border-radius:var(--r-ctl);padding:0 30px 0 12px;font-size:13.5px;font-weight:600;background:var(--surface) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234f493f' stroke-width='2.2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 9px center/14px;appearance:none;cursor:pointer}
+.sel:hover{background-color:var(--sunk)}
+.sel.q{height:34px;color:var(--ink-2);font-size:13px}
+.msg{margin:8px 22px 0;font-size:12.5px;font-weight:600;color:var(--error);min-height:0}
+.msg:empty{display:none}
+h3{margin:20px 22px 8px;font-size:12.5px;font-weight:700;color:var(--ink-2);display:flex;justify-content:space-between}
+h3 span{font-weight:500;color:var(--ink-3)}
+.ppl{list-style:none;margin:0;padding:0 12px}
+.ppl li{display:flex;align-items:center;gap:12px;padding:7px 10px;border-radius:12px;transition:background var(--t-flash) var(--ease)}
+.ppl li.new{background:var(--accent-soft);transition:none}
+.av{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:13px;color:#1f1c17;flex:none}
+.av.pend{background:none;border:1.5px dashed var(--edge);color:var(--ink-3)}
+.who{flex:1;min-width:0}.who b{display:block;font-weight:600;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.who>span{font-size:12.5px;color:var(--ink-3);display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tag{font-size:11.5px;font-weight:700;color:var(--ink-2);background:var(--sunk);border:1px solid var(--line-2);border-radius:6px;padding:1px 6px;margin-left:6px}
+.resend{border:0;background:none;color:var(--accent);font-weight:700;font-size:13px;cursor:pointer;padding:4px 6px;border-radius:6px}
+.resend:hover{text-decoration:underline}
+.own{font-size:13.5px;font-weight:600;color:var(--ink-3);padding:0 10px}
+.link{margin:18px 22px 22px;padding:14px;border:1px solid var(--line);border-radius:14px;background:var(--paper);display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center}
+.globe{width:36px;height:36px;border-radius:50%;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;transition:background var(--t-micro) var(--ease),color var(--t-micro) var(--ease)}
+.link.off .globe{background:var(--sunk);color:var(--ink-3)}
+.link b{display:block;font-weight:600;font-size:14px}.link small{display:block;font-size:12.5px;color:var(--ink-3)}
+.sw{width:44px;height:26px;border-radius:13px;border:0;background:var(--accent);position:relative;cursor:pointer;transition:background var(--t-micro) var(--ease)}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.2);transform:translateX(18px);transition:transform 240ms var(--ease-out)}
+.sw[aria-checked="false"]{background:var(--edge)}
+.sw[aria-checked="false"]::after{transform:none}
+.lrow{grid-column:1/-1;display:flex;gap:8px;align-items:center}
+.url{flex:1;min-width:0;height:38px;border:1px solid var(--edge);border-radius:var(--r-ctl);background:var(--surface);padding:0 12px;display:flex;align-items:center;font-size:13.5px;font-weight:500;color:var(--ink-2);overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.link.off .lrow{display:none}
+.copy{height:38px;min-width:112px}
+.copy.done{background:var(--accent-soft);border-color:var(--accent);color:var(--accent-hover)}
+.reopen{position:fixed;right:24px;bottom:24px}
+@media (max-width:640px){
+  .top .doc{display:none}.sheet h1{font-size:26px}
+  dialog{width:100%;max-width:100%;margin:auto 0 0;border-radius:20px 20px 0 0;max-height:calc(100dvh - 16px);transform:translateY(100%);transition-timing-function:var(--ease),var(--ease-sheet)}
+  dialog[open]{transform:none}
+  @starting-style{dialog[open]{transform:translateY(100%)}}
+  .hd{padding:18px 16px 0}.inv{padding:14px 16px 0;flex-wrap:wrap}.field{flex-basis:100%}.inv .sel{flex:1}.inv .btn{flex:1;height:44px}.tray{margin:10px 16px 0}
+  h3{margin:18px 16px 8px}.ppl{padding:0 6px}.msg{margin:8px 16px 0}
+  .link{margin:16px 16px 26px}.copy{min-width:96px}
+  .ppl .sel.q{padding:0 26px 0 6px;font-size:13px}.who>span{white-space:normal}
+}
+@media (prefers-reduced-motion:reduce){*,*::backdrop{transition-duration:1ms!important;animation:none!important}}
+</style>
+</head>
+<body>
+<header class="top"><b>Larder</b><span class="doc">/ Kiln Street / Winter menu costing</span><span class="sp"></span><button class="btn pri" type="button" id="open"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0113 0M19 8v6M16 11h6"/></svg>Share</button></header>
+<main class="sheet">
+  <h1>Winter menu costing</h1>
+  <p class="sub">Edited by Hana Lindqvist 18 minutes ago. Prices from the 21 Oct supplier sheet.</p>
+  <table><thead><tr><th>Dish</th><th>Portion cost</th><th>Menu price</th><th>Margin</th></tr></thead>
+  <tbody><tr><td>Braised short rib, celeriac</td><td class="n">£6.84</td><td class="n">£24.00</td><td class="n">71.5%</td></tr><tr><td>Roast squash, brown butter, sage</td><td class="n">£2.17</td><td class="n">£16.50</td><td class="n">86.8%</td></tr><tr><td>Cod, mussels, leek velouté</td><td class="n">£7.92</td><td class="n">£26.00</td><td class="n">69.5%</td></tr><tr><td>Treacle tart, clotted cream</td><td class="n">£1.38</td><td class="n">£9.00</td><td class="n">84.7%</td></tr><tr><td>Pickled pear, walnut, Stichelton</td><td class="n">£2.61</td><td class="n">£11.50</td><td class="n">77.3%</td></tr></tbody></table>
+</main>
+
+<dialog id="dlg" aria-labelledby="st">
+  <div class="hd"><h2 id="st">Share “Winter menu costing”</h2><button class="x" type="button" aria-label="Close" data-close><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+  <div class="inv">
+    <input class="field" id="email" type="text" inputmode="email" autocomplete="off" spellcheck="false" placeholder="Add emails, separated by commas" aria-label="Invite by email" aria-describedby="hint msg">
+    <select class="sel" id="role" aria-label="Role for new people"><option>Can edit</option><option selected>Can comment</option><option>Can view</option></select>
+    <button class="btn pri" type="button" id="invite">Invite</button>
+  </div>
+  <div class="tray" id="chips" aria-label="People to invite"><span class="hint" id="hint"></span></div>
+  <p class="msg" id="msg" aria-live="polite"></p>
+  <h3 id="ph">People with access <span id="pc">5</span></h3>
+  <ul class="ppl" id="ppl" aria-labelledby="ph">
+    <li><span class="av" style="background:#e8d3b6">HL</span><span class="who"><b>Hana Lindqvist <span class="tag">You</span></b><span>hana@kilnst.co</span></span><span class="own">Owner</span></li>
+    <li><span class="av" style="background:#c9dccf">JO</span><span class="who"><b>Joel Okonkwo</b><span>Head chef, joel@kilnst.co</span></span><select class="sel q" aria-label="Role for Joel Okonkwo"><option selected>Can edit</option><option>Can comment</option><option>Can view</option><option>Remove</option></select></li>
+    <li><span class="av" style="background:#d5d3e8">MB</span><span class="who"><b>Mireille Baptiste</b><span>Finance, mireille@kilnst.co</span></span><select class="sel q" aria-label="Role for Mireille Baptiste"><option>Can edit</option><option selected>Can comment</option><option>Can view</option><option>Remove</option></select></li>
+    <li><span class="av" style="background:#efc9c0">SR</span><span class="who"><b>Sam Reyes</b><span>Sous chef, sam@kilnst.co</span></span><select class="sel q" aria-label="Role for Sam Reyes"><option>Can edit</option><option>Can comment</option><option selected>Can view</option><option>Remove</option></select></li>
+    <li><span class="av pend" aria-hidden="true">@</span><span class="who"><b>priya@ashdownfarm.co.uk</b><span>Invited 2 days ago, not opened</span></span><button class="resend" type="button">Resend</button><select class="sel q" aria-label="Role for priya@ashdownfarm.co.uk"><option>Can edit</option><option>Can comment</option><option selected>Can view</option><option>Remove</option></select></li>
+  </ul>
+  <div class="link" id="link">
+    <span class="globe" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M10 14a4 4 0 005.7 0l3-3a4 4 0 00-5.7-5.7l-1 1M14 10a4 4 0 00-5.7 0l-3 3a4 4 0 005.7 5.7l1-1"/></svg></span>
+    <span><b id="lt">Anyone at Kiln Street with the link</b><small id="ls">Can view. Signed-in staff only.</small></span>
+    <button class="sw" role="switch" aria-checked="true" aria-labelledby="lt" id="sw" type="button"></button>
+    <div class="lrow"><span class="url" id="url">larder.app/kiln-street/d/winter-costing-7Kq2</span><button class="btn copy" type="button" id="copy"><svg viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 00-1-1H5a1 1 0 00-1 1v10a1 1 0 001 1h3"/></svg><span>Copy link</span></button></div>
+  </div>
+</dialog>
+<button class="btn reopen" type="button" id="reopen" hidden>Open share dialog</button>
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const dlg = $('dlg'), chips = $('chips'), email = $('email'), msg = $('msg'), ppl = $('ppl');
+  const RE = /^[^\s@,;]+@[^\s@,;]+\.[a-z]{2,}$/i;
+  const X = '<svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+  const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const list = () => [...chips.querySelectorAll('.chip')];
+  function sync() {
+    const bad = list().filter((c) => c.classList.contains('bad'));
+    msg.textContent = bad.length ? bad[0].dataset.v + ' is missing its domain ending. Fix it or remove it to invite.' : '';
+    $('invite').disabled = !list().length || bad.length > 0;
+    const n = list().length - bad.length;
+    $('hint').textContent = n ? n + (n === 1 ? ' person gets' : ' people get') + ' an email with a link.' : 'Press Enter or comma after each address.';
+  }
+  function add(raw) {
+    raw.split(/[\s,;]+/).map((s) => s.trim()).filter(Boolean).forEach((v) => {
+      if (list().some((c) => c.dataset.v.toLowerCase() === v.toLowerCase())) return;
+      const c = document.createElement('span');
+      c.className = 'chip' + (RE.test(v) ? '' : ' bad'); c.dataset.v = v;
+      c.innerHTML = '<span>' + esc(v) + '</span><button type="button" aria-label="Remove ' + esc(v) + '">' + X + '</button>';
+      chips.insertBefore(c, $('hint'));
+    });
+    sync();
+  }
+  email.addEventListener('keydown', (e) => {
+    if (['Enter', ',', ' ', 'Tab'].includes(e.key) && email.value.trim()) { if (e.key !== 'Tab') e.preventDefault(); add(email.value); email.value = ''; }
+    else if (e.key === 'Enter' && !$('invite').disabled) { e.preventDefault(); $('invite').click(); }
+    else if (e.key === 'Backspace' && !email.value && list().length) { list().pop().remove(); sync(); }
+  });
+  email.addEventListener('paste', (e) => { const t = (e.clipboardData || {}).getData ? e.clipboardData.getData('text') : ''; if (/[\s,;]/.test(t)) { e.preventDefault(); add(t); } });
+  email.addEventListener('blur', () => { if (email.value.trim()) { add(email.value); email.value = ''; } });
+  chips.addEventListener('click', (e) => { const b = e.target.closest('.chip button'); if (b) { b.parentElement.remove(); sync(); email.focus(); } });
+  $('invite').addEventListener('click', () => {
+    const role = $('role').value, opts = ['Can edit', 'Can comment', 'Can view', 'Remove'];
+    list().forEach((c) => {
+      const v = esc(c.dataset.v), li = document.createElement('li');
+      li.innerHTML = '<span class="av pend" aria-hidden="true">@</span><span class="who"><b>' + v + '</b><span>Invite sent just now</span></span><select class="sel q" aria-label="Role for ' + v + '">' + opts.map((o) => '<option' + (o === role ? ' selected' : '') + '>' + o + '</option>').join('') + '</select>';
+      li.className = 'new'; ppl.appendChild(li); requestAnimationFrame(() => requestAnimationFrame(() => li.classList.remove('new')));
+      c.remove();
+    });
+    sync(); count(); msg.textContent = ''; email.focus();
+  });
+  function count() { $('pc').textContent = ppl.children.length; }
+  ppl.addEventListener('change', (e) => { if (e.target.value === 'Remove') { e.target.closest('li').remove(); count(); email.focus(); } });
+  ppl.addEventListener('click', (e) => { const b = e.target.closest('.resend'); if (b) { b.textContent = 'Sent'; b.disabled = true; b.closest('li').querySelector('.who > span').textContent = 'Reminder sent just now'; } });
+  $('sw').addEventListener('click', () => {
+    const on = $('sw').getAttribute('aria-checked') !== 'true';
+    $('sw').setAttribute('aria-checked', on); $('link').classList.toggle('off', !on);
+    $('ls').textContent = on ? 'Can view. Signed-in staff only.' : 'Off. Only the people above can open it.';
+  });
+  let t;
+  $('copy').addEventListener('click', () => {
+    try { navigator.clipboard && navigator.clipboard.writeText($('url').textContent).catch(() => {}); } catch (e) {}
+    const b = $('copy'); b.classList.add('done'); b.lastChild.textContent = 'Copied';
+    clearTimeout(t); t = setTimeout(() => { b.classList.remove('done'); b.lastChild.textContent = 'Copy link'; }, 1800);
+  });
+  dlg.querySelectorAll('[data-close]').forEach((b) => b.addEventListener('click', () => dlg.close()));
+  dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
+  dlg.addEventListener('close', () => { $('reopen').hidden = false; $('open').focus(); });
+  const open = () => { $('reopen').hidden = true; dlg.showModal(); email.focus(); };
+  $('open').addEventListener('click', open); $('reopen').addEventListener('click', open);
+  add('dara.whitlock@kilnst.co ines@harbourfish.co.uk'); count(); open();
+})();
+</script>
+</body>
+</html>

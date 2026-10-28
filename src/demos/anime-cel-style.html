@@ -1,0 +1,225 @@
+<!-- Design Lounge piece: anime-cel-style · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Anime cel design language kit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Chakra+Petch:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#fff7e8;--ink:#1b1530;--ink-2:#4a4160;
+  --red:#ff4d5e;--red-sh:#c42a44;--sun:#ffd23f;--sun-sh:#e3a600;--sky:#4fc3ee;--sky-sh:#2385b8;--mint:#5fe0a8;--mint-sh:#22a874;
+  --white:#ffffff;
+  --disp:"Bungee",Impact,sans-serif;--body:"Chakra Petch",system-ui,sans-serif;
+  --o:3px;--hard:4px 4px 0 var(--ink);--hard-lg:6px 6px 0 var(--ink);
+  --r:14px;
+  --t-pop:320ms;--spring:cubic-bezier(.34,1.56,.64,1);--ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--paper);color:var(--ink);font:500 15px/1.45 var(--body);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+:focus-visible{outline:3px solid var(--ink);outline-offset:3px;box-shadow:0 0 0 6px var(--sun)}
+.top{height:56px;display:flex;align-items:center;gap:20px;padding:0 24px;border-bottom:var(--o) solid var(--ink);background:var(--white)}
+.mark{width:28px;height:28px;border-radius:50%;background:var(--sun);border:var(--o) solid var(--ink);box-shadow:inset -6px -5px 0 var(--sun-sh)}
+.brand{font:400 18px/1 var(--disp);letter-spacing:.02em;white-space:nowrap}.brand span{font:600 13px var(--body);color:var(--ink-2);margin-left:8px;letter-spacing:.06em}
+.top nav{display:flex;gap:18px;margin-left:auto}
+.top nav a{font-weight:700;text-decoration:none;color:var(--ink);font-size:14px;padding:4px 0;border-bottom:3px solid transparent}
+.top nav a:hover{border-color:var(--red)}
+.ver{font:700 12px var(--body);background:var(--ink);color:var(--sun);padding:4px 10px;border-radius:99px;white-space:nowrap}
+.sheet{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:16px;padding:16px}
+.cell{grid-column:span 4;background:var(--white);border:var(--o) solid var(--ink);border-radius:var(--r);box-shadow:var(--hard);padding:20px;min-width:0;position:relative;overflow:hidden}
+.lbl{font:400 13px/1 var(--disp);margin:0 0 16px;display:inline-block;background:var(--ink);color:var(--paper);padding:6px 10px 5px;border-radius:6px;transform:rotate(-1.5deg)}
+
+/* hero */
+.hero{grid-column:span 7;min-height:440px;padding:0;background:var(--sky);display:grid;grid-template-columns:1.05fr 1fr}
+.speed{position:absolute;inset:0;background:repeating-conic-gradient(from 0deg at 72% 48%,rgba(255,255,255,.55) 0 2deg,transparent 2deg 7deg);}
+.speed::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 72% 48%,var(--sky) 0 22%,transparent 23%)}
+.copy{position:relative;z-index:2;padding:28px 0 28px 28px;display:flex;flex-direction:column;justify-content:flex-end;gap:14px}
+.copy .eyebrow{align-self:flex-start;font:700 13px var(--body);letter-spacing:.08em;text-transform:uppercase;background:var(--white);border:var(--o) solid var(--ink);padding:4px 10px;border-radius:99px}
+.copy h1{font:400 clamp(40px,5.2vw,68px)/.92 var(--disp);margin:0;color:var(--ink);-webkit-text-stroke:10px var(--white);paint-order:stroke fill;filter:drop-shadow(5px 5px 0 var(--ink))}
+.copy p{margin:0;background:var(--white);border:var(--o) solid var(--ink);border-radius:12px;padding:10px 14px;font-weight:600;max-width:34ch;position:relative}
+.copy p::after{content:"";position:absolute;right:28px;top:-14px;width:22px;height:22px;background:var(--white);border-left:var(--o) solid var(--ink);border-top:var(--o) solid var(--ink);transform:rotate(45deg) skew(10deg,10deg)}
+.stage{position:relative;z-index:1}
+.pip{position:absolute;left:50%;top:48%;width:min(300px,90%);transform:translate(-50%,-50%) rotate(-8deg);animation:bob 2.4s var(--ease) infinite alternate}
+@keyframes bob{to{transform:translate(-50%,-54%) rotate(-5deg)}}
+.pip .eye{transform-box:fill-box;transform-origin:center;animation:blink 4.2s infinite}
+@keyframes blink{0%,94%,100%{transform:scaleY(1)}97%{transform:scaleY(.1)}}
+.burst{position:absolute;right:6%;top:6%;width:132px;z-index:3;transform:rotate(10deg)}
+.burst text{font:400 30px var(--disp)}
+.streak{position:absolute;right:7%;bottom:8%;z-index:3}
+
+/* buttons, stickers */
+.btn{font:400 16px/1 var(--disp);letter-spacing:.02em;height:52px;padding:0 26px;border:var(--o) solid var(--ink);border-radius:12px;background:var(--red);color:var(--ink);box-shadow:var(--hard);cursor:pointer;position:relative;transition:transform 90ms var(--ease),box-shadow 90ms var(--ease);box-shadow:inset 0 -7px 0 var(--red-sh),var(--hard)}
+.btn:hover{transform:translate(-2px,-2px);box-shadow:inset 0 -7px 0 var(--red-sh),6px 6px 0 var(--ink)}
+.btn:active{transform:translate(3px,3px) scale(1.04,.9);box-shadow:inset 0 -4px 0 var(--red-sh),1px 1px 0 var(--ink)}
+.btn.pop{animation:pop var(--t-pop) var(--spring)}
+@keyframes pop{0%{transform:scale(1)}30%{transform:scale(1.14,.82)}60%{transform:scale(.94,1.08)}100%{transform:scale(1)}}
+.btn.y{background:var(--sun);box-shadow:inset 0 -7px 0 var(--sun-sh),var(--hard)}
+.btn.g{background:var(--white);box-shadow:var(--hard)}
+.btn[disabled]{background:#ece6d8;color:var(--ink-2);box-shadow:none;border-style:dashed;cursor:not-allowed;transform:none}
+.row{display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-bottom:16px}
+.sticker{display:inline-flex;align-items:center;gap:6px;font:700 14px var(--body);padding:6px 14px;border-radius:99px;background:var(--sun);border:var(--o) solid var(--ink);box-shadow:0 0 0 4px var(--white),0 0 0 7px var(--ink),5px 6px 0 7px var(--ink);transform:rotate(-4deg);margin:8px}
+.sticker.r{background:var(--mint);transform:rotate(3deg)}.sticker.b{background:var(--sky);transform:rotate(-2deg)}
+.sticker svg{width:16px;height:16px}
+.fld{display:flex;flex-direction:column;gap:6px;font-weight:700;font-size:13px;flex:1 1 200px}
+.fld input{font:600 16px var(--body);color:var(--ink);height:46px;padding:0 14px;border:var(--o) solid var(--ink);border-radius:10px;background:var(--white);box-shadow:inset 0 4px 0 #f1ead9}
+.fld input:focus{outline:0;box-shadow:inset 0 4px 0 #f1ead9,4px 4px 0 var(--sky)}
+.tog{width:64px;height:36px;border-radius:99px;border:var(--o) solid var(--ink);background:#ece6d8;position:relative;cursor:pointer;padding:0;flex:none}
+.tog::after{content:"";position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:var(--white);border:var(--o) solid var(--ink);transition:transform 260ms var(--spring)}
+.tog[aria-checked=true]{background:var(--mint)}.tog[aria-checked=true]::after{transform:translateX(28px)}
+.tl{display:flex;align-items:center;gap:10px;font-weight:700}
+
+/* cel shading */
+.cel{display:flex;gap:18px;flex-wrap:wrap;margin-bottom:12px}
+.ball{width:64px;height:64px;border-radius:50%;border:var(--o) solid var(--ink);position:relative}
+.ball::after{content:"";position:absolute;width:12px;height:8px;border-radius:50%;background:var(--white);left:14px;top:12px;transform:rotate(-30deg)}
+.cap{font-size:13px;color:var(--ink-2);margin:6px 0 0;font-weight:600}
+.cap b{color:var(--ink)}
+.sw{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.sw div{border:var(--o) solid var(--ink);border-radius:10px;overflow:hidden;font-size:12px;font-weight:700}
+.sw i{display:block;height:34px}.sw i+i{height:16px}
+.sw span{display:block;padding:4px 6px;background:var(--white)}
+
+/* backgrounds */
+.bgs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.tile{height:110px;border:var(--o) solid var(--ink);border-radius:10px;position:relative;overflow:hidden}
+.tile b{position:absolute;left:8px;bottom:8px;background:var(--white);border:2px solid var(--ink);border-radius:6px;padding:2px 8px;font-size:12px}
+.t1{background:var(--red) repeating-conic-gradient(from 0deg at 50% 50%,var(--sun) 0 4deg,transparent 4deg 12deg)}
+.t2{background-color:var(--sky);background-image:radial-gradient(circle,var(--ink) 34%,transparent 36%);background-size:10px 10px;-webkit-mask:linear-gradient(120deg,#000 0,#000 30%,transparent 90%);mask:linear-gradient(120deg,#000 0,#000 30%,transparent 90%)}
+.t2wrap{background:var(--sun)}
+.t3{background:var(--paper) repeating-linear-gradient(-8deg,transparent 0 9px,var(--ink) 9px 11px,transparent 11px 22px)}
+.t3::after{content:"";position:absolute;inset:18% 10%;background:radial-gradient(ellipse at center,var(--paper) 50%,transparent 72%)}
+
+/* type */
+.type{grid-column:span 5}
+.aa{font:400 88px/1 var(--disp);color:var(--ink);-webkit-text-stroke:10px var(--sun);paint-order:stroke fill;text-shadow:7px 7px 0 var(--red);margin:0 0 10px}
+.scale{list-style:none;margin:0;padding:0}
+.scale li{display:flex;align-items:baseline;gap:12px;border-top:2px solid var(--ink);padding:7px 0;white-space:nowrap;overflow:hidden}
+.scale em{font-style:normal;font-size:12px;font-weight:700;color:var(--ink-2);width:86px;flex:none}
+.bub{margin-top:22px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.bub p{margin:0 0 0 10px;font:700 17px/1.3 var(--body);background:var(--white);border:var(--o) solid var(--ink);border-radius:16px;padding:12px 16px;position:relative;box-shadow:var(--hard);max-width:26ch}
+.bub p::before{content:"";position:absolute;left:-13px;bottom:14px;width:20px;height:20px;background:var(--white);border-left:var(--o) solid var(--ink);border-bottom:var(--o) solid var(--ink);transform:skewY(-30deg) rotate(20deg)}
+.bub span{font-size:12px;font-weight:700;color:var(--ink-2)}
+.rules{grid-column:span 12;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;background:none;border:0;box-shadow:none;padding:0}
+.rules div{background:var(--white);border:var(--o) solid var(--ink);border-radius:var(--r);padding:16px 18px;box-shadow:var(--hard)}
+.rules b{font:400 16px var(--disp);display:block;margin-bottom:4px}
+.rules p{margin:0;color:var(--ink-2);font-weight:600}
+.rules div:nth-child(1){background:var(--sun)}.rules div:nth-child(1) p,.rules div:nth-child(3) p{color:var(--ink)}
+.rules div:nth-child(3){background:var(--mint)}
+.w5{grid-column:span 5}.w7{grid-column:span 7}.w6{grid-column:span 6}
+@media (max-width:1000px){.hero,.type,.w5,.w7,.w6{grid-column:span 12}.rules{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:640px){
+  .top nav{display:none}.top{padding:0 16px}.ver{display:none}
+  .sheet{padding:12px;gap:14px}
+  .hero{grid-template-columns:minmax(0,1fr);grid-template-rows:300px auto}
+  .stage{grid-row:1}.copy{grid-row:2;padding:0 18px 22px}
+  .speed{background:repeating-conic-gradient(from 0deg at 50% 26%,rgba(255,255,255,.55) 0 2deg,transparent 2deg 7deg)}
+  .speed::after{background:radial-gradient(circle at 50% 26%,var(--sky) 0 18%,transparent 19%)}
+  .burst{width:104px;right:4%}
+  .bgs{grid-template-columns:minmax(0,1fr)}
+  .sw{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .rules{grid-template-columns:minmax(0,1fr)}
+  .aa{font-size:64px}
+  .copy h1{font-size:36px;-webkit-text-stroke:8px var(--white)}
+  .streak{right:auto;left:4%;top:244px;bottom:auto}
+  .scale li{white-space:normal}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:1ms!important}}
+</style>
+</head>
+<body>
+<header class="top">
+  <span class="mark" aria-hidden="true"></span>
+  <span class="brand">COMET CLUB<span>CEL KIT 2.0</span></span>
+  <nav aria-label="Kit sections"><a href="#type">Type</a><a href="#cel">Cel</a><a href="#bg">Backgrounds</a><a href="#controls">Controls</a></nav>
+  <span class="ver">3px ink · 2 tones</span>
+</header>
+<main class="sheet">
+  <section class="cell hero" aria-label="Composition: streak screen with Pip the comet">
+    <div class="speed" aria-hidden="true"></div>
+    <div class="copy">
+      <span class="eyebrow">Episode 47 · Tuesday run</span>
+      <h1>Don't break the tail!</h1>
+      <p>Pip has burned for 47 mornings straight. One 2 km run before midnight keeps the streak alive.</p>
+      <div class="row" style="margin:0"><button class="btn y" type="button" id="go">START RUN</button><button class="btn g" type="button">Snooze 1h</button></div>
+    </div>
+    <div class="stage" aria-hidden="true">
+      <svg class="burst" viewBox="0 0 140 140"><polygon points="70,2 84,40 122,18 104,56 138,70 104,84 122,122 84,100 70,138 56,100 18,122 36,84 2,70 36,56 18,18 56,40" fill="#ffd23f" stroke="#1b1530" stroke-width="4" stroke-linejoin="round"/><text x="70" y="82" text-anchor="middle" fill="#1b1530">47!</text></svg>
+      <svg class="pip" viewBox="0 0 240 200" id="pip">
+        <path d="M120 70 C90 40 40 40 6 58 C40 64 58 74 70 86 C40 86 22 100 4 122 C40 112 66 114 86 122 Z" fill="#ff4d5e" stroke="#1b1530" stroke-width="4" stroke-linejoin="round"/>
+        <path d="M70 86 C52 90 36 100 26 112 C50 106 68 108 86 116 Z" fill="#c42a44"/>
+        <path d="M110 76 C84 62 54 62 34 70 C58 74 72 80 82 90 Z" fill="#ffd23f" stroke="#1b1530" stroke-width="3" stroke-linejoin="round"/>
+        <circle cx="160" cy="100" r="62" fill="#ffd23f" stroke="#1b1530" stroke-width="4"/>
+        <path d="M212 72 A62 62 0 0 1 132 156 A70 70 0 0 0 212 72 Z" fill="#e3a600"/>
+        <circle cx="160" cy="100" r="62" fill="none" stroke="#1b1530" stroke-width="4"/>
+        <g class="eye"><ellipse cx="142" cy="94" rx="11" ry="16" fill="#1b1530"/><ellipse cx="138" cy="87" rx="4" ry="5" fill="#fff"/></g>
+        <g class="eye"><ellipse cx="184" cy="94" rx="11" ry="16" fill="#1b1530"/><ellipse cx="180" cy="87" rx="4" ry="5" fill="#fff"/></g>
+        <ellipse cx="124" cy="118" rx="10" ry="6" fill="#ff8fa0"/><ellipse cx="200" cy="118" rx="10" ry="6" fill="#ff8fa0"/>
+        <path d="M154 120 Q163 130 172 120" fill="none" stroke="#1b1530" stroke-width="4" stroke-linecap="round"/>
+        <path d="M176 52 l6 -16 M192 58 l12 -12" stroke="#1b1530" stroke-width="4" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <span class="sticker streak"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l3 6.5 7 1-5 5 1.3 7L12 18l-6.3 3.5L7 14.5l-5-5 7-1z"/></svg>Best: 61 days</span>
+  </section>
+  <section class="cell type" id="type" aria-labelledby="l-ty">
+    <h2 class="lbl" id="l-ty">TYPE</h2>
+    <p class="aa" aria-hidden="true">Aa!</p>
+    <ul class="scale">
+      <li><em>Bungee 40</em><span style="font:400 34px/1 var(--disp)">DAY 47</span></li>
+      <li><em>Bungee 18</em><span style="font:400 18px var(--disp)">START RUN</span></li>
+      <li><em>Chakra 700 / 20</em><span style="font:700 20px var(--body)">2.4 km before midnight</span></li>
+      <li><em>Chakra 500 / 15</em><span>Pip is proud of you. Tail length +1.</span></li>
+      <li><em>Chakra 700 / 12</em><span style="font:700 12px var(--body);letter-spacing:.08em;text-transform:uppercase">Episode 47 · Tuesday</span></li>
+    </ul>
+    <div class="bub"><p>You came back! Day 48 starts at 06:30.</p><span>Bubble: 3px ink, 16px radius, 20px tail</span></div>
+  </section>
+  <section class="cell w5" id="cel" aria-labelledby="l-cel">
+    <h2 class="lbl" id="l-cel">CEL SHADING</h2>
+    <div class="cel" aria-hidden="true">
+      <div class="ball" style="background:var(--sun);box-shadow:inset -14px -12px 0 var(--sun-sh)"></div>
+      <div class="ball" style="background:var(--red);box-shadow:inset -14px -12px 0 var(--red-sh)"></div>
+      <div class="ball" style="background:var(--sky);box-shadow:inset -14px -12px 0 var(--sky-sh)"></div>
+      <div class="ball" style="background:var(--mint);box-shadow:inset -14px -12px 0 var(--mint-sh)"></div>
+    </div>
+    <div class="sw">
+      <div><i style="background:var(--sun)"></i><i style="background:var(--sun-sh)"></i><span>#FFD23F / E3A600</span></div>
+      <div><i style="background:var(--red)"></i><i style="background:var(--red-sh)"></i><span>#FF4D5E / C42A44</span></div>
+      <div><i style="background:var(--sky)"></i><i style="background:var(--sky-sh)"></i><span>#4FC3EE / 2385B8</span></div>
+      <div><i style="background:var(--mint)"></i><i style="background:var(--mint-sh)"></i><span>#5FE0A8 / 22A874</span></div>
+    </div>
+    <p class="cap"><b>Two tones, one hard edge.</b> Shadow sits bottom right as an inset with zero blur. Never a gradient.</p>
+  </section>
+  <section class="cell w7" id="controls" aria-labelledby="l-ct">
+    <h2 class="lbl" id="l-ct">CONTROLS AND STICKERS</h2>
+    <div class="row"><button class="btn" type="button" data-pop>LOG RUN</button><button class="btn y" type="button" data-pop>+1 DAY</button><button class="btn g" type="button" data-pop>Share</button><button class="btn" type="button" disabled>Locked</button></div>
+    <div class="row"><label class="fld">Run name<input value="Canal loop, 2.4 km" aria-label="Run name"></label><label class="fld">Crew code<input placeholder="e.g. TAIL-88" aria-label="Crew code"></label></div>
+    <div class="row"><span class="tl"><button class="tog" type="button" role="switch" aria-checked="true" aria-label="Morning reminder" id="tog"></button>Morning reminder</span>
+      <span class="sticker"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg>Done today</span><span class="sticker r">Crew of 6</span><span class="sticker b">New PB 11:42</span></div>
+  </section>
+  <section class="cell w6" id="bg" aria-labelledby="l-bg" style="grid-column:span 12">
+    <h2 class="lbl" id="l-bg">BACKGROUNDS</h2>
+    <div class="bgs">
+      <div class="tile t1"><b>Speed burst, conic 4/12deg</b></div>
+      <div class="tile t2wrap"><div class="tile t2" style="position:absolute;inset:0;border:0;border-radius:0"></div><b>Halftone 10px, fades 120deg</b></div>
+      <div class="tile t3"><b>Speed lines, -8deg, 2px</b></div>
+    </div>
+  </section>
+  <section class="cell rules" aria-label="Grammar">
+    <div><b>Ink 3px</b><p>Every shape gets a 3px #1B1530 outline. Text on art gets a 3px stroke and a 5px hard shadow.</p></div>
+    <div><b>Two tones</b><p>Base plus one shadow tone, hard edged, bottom right. No blur, no gradient.</p></div>
+    <div><b>Squash</b><p>Press squashes to 1.14 by 0.82 and springs back in 320ms. Nothing else bounces.</p></div>
+    <div><b>Invent it</b><p>Characters are simple shapes made for the product. Never borrow a show's look.</p></div>
+  </section>
+</main>
+<script>
+(()=>{
+  document.querySelectorAll('[data-pop],#go').forEach(b=>b.addEventListener('click',()=>{b.classList.remove('pop');void b.offsetWidth;b.classList.add('pop');}));
+  document.querySelectorAll('.btn').forEach(b=>b.addEventListener('animationend',()=>b.classList.remove('pop')));
+  const t=document.getElementById('tog');t.addEventListener('click',()=>t.setAttribute('aria-checked',t.getAttribute('aria-checked')!=='true'));
+  const go=document.getElementById('go');go.addEventListener('click',()=>{go.textContent=go.textContent==='START RUN'?'RUNNING 00:01':'START RUN';});
+})();
+</script>
+</body>
+</html>

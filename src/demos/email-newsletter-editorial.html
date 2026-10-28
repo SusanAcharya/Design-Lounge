@@ -1,0 +1,145 @@
+<!-- Design Lounge piece: email-newsletter-editorial · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<meta name="color-scheme" content="light dark">
+<meta name="supported-color-schemes" content="light dark">
+<title>The Long Table, issue 112</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light dark;supported-color-schemes:light dark}
+/* simple selectors only (class, or class + element) so an inliner can move each rule onto the element */
+html,body{height:100%;margin:0}
+body{background:#e8e4dc;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+.view{height:100%;overflow-y:auto}
+.strip{max-width:600px;margin:0 auto;padding:22px 0 14px;font:13px/1.4 Georgia,"Times New Roman",serif;color:#4f4b44;display:flex;gap:12px;align-items:baseline}
+.strip b{color:#1b1a17;font-weight:700}
+.strip .d{margin-left:auto;white-space:nowrap}
+table{border-collapse:collapse;mso-table-lspace:0;mso-table-rspace:0}
+td{padding:0}
+.wrap{width:600px;max-width:600px;background:#fffdf8}
+.pre{display:none;max-height:0;overflow:hidden;opacity:0;font-size:1px;line-height:1px;color:#fffdf8}
+.serif{font-family:Georgia,"Times New Roman",Times,serif}
+.disp{font-family:"Playfair Display",Georgia,"Times New Roman",serif}
+.top{padding:14px 40px;border-bottom:1px solid #e3ddd1;font:12px/1.4 Georgia,serif;color:#5e5a52;letter-spacing:.02em}
+.top a{color:#5e5a52}
+.mast{padding:34px 40px 8px;text-align:center}
+.mast h1{margin:0;font:900 64px/0.95 "Playfair Display",Georgia,serif;letter-spacing:-.02em;color:#1b1a17}
+.mast p{margin:12px 0 0;font:italic 17px/1.4 Georgia,serif;color:#5e5a52}
+.rule{padding:20px 40px 0}
+.rule div{border-top:3px double #1b1a17;height:0;line-height:0;font-size:0}
+.kick{font:700 11px/1 Georgia,serif;letter-spacing:.18em;text-transform:uppercase;color:#7a1f2b}
+.lead{padding:28px 40px 0}
+.art{height:280px;background:#1f2a3a;position:relative;overflow:hidden}
+.art svg{display:block;width:100%;height:100%}
+.cap{padding:8px 40px 0;font:italic 13px/1.4 Georgia,serif;color:#5e5a52}
+.story{padding:24px 40px 8px}
+.story h2{margin:12px 0 0;font:700 38px/1.08 "Playfair Display",Georgia,serif;letter-spacing:-.01em;color:#1b1a17}
+.story .deck{margin:12px 0 0;font:italic 20px/1.4 Georgia,serif;color:#3a3732}
+.story .by{margin:14px 0 0;font:12px/1.4 Georgia,serif;letter-spacing:.06em;text-transform:uppercase;color:#5e5a52}
+.story p.body{margin:16px 0 0;font:17px/1.62 Georgia,serif;color:#2a2824}
+.more{display:inline-block;margin-top:18px;font:700 15px/1 Georgia,serif;color:#7a1f2b;text-decoration:none;border-bottom:2px solid #7a1f2b;padding-bottom:3px}
+.sec{padding:34px 40px 6px}
+.sec h3{margin:0;padding-bottom:10px;border-bottom:1px solid #1b1a17;font:700 22px/1.1 "Playfair Display",Georgia,serif;color:#1b1a17}
+.item td{padding:18px 0;border-bottom:1px solid #e3ddd1;vertical-align:top}
+.thumb{width:84px;height:84px}
+.thumb div{width:84px;height:84px}
+.item .tx{padding-left:18px}
+.item h4{margin:6px 0 4px;font:700 19px/1.2 "Playfair Display",Georgia,serif;color:#1b1a17}
+.item h4 a{color:inherit;text-decoration:none}
+.item p{margin:0;font:15px/1.5 Georgia,serif;color:#3a3732}
+.quote{padding:34px 40px 4px}
+.quote td.q{border-left:4px solid #7a1f2b;padding:4px 0 4px 22px}
+.quote p{margin:0;font:italic 400 28px/1.25 "Playfair Display",Georgia,serif;color:#1b1a17}
+.quote span{display:block;margin-top:12px;font:13px/1.4 Georgia,serif;letter-spacing:.06em;text-transform:uppercase;color:#5e5a52}
+.sign{padding:30px 40px 34px;font:17px/1.6 Georgia,serif;color:#2a2824}
+.sign b{font:italic 700 22px/1 "Playfair Display",Georgia,serif;color:#1b1a17}
+.foot{padding:26px 40px 40px;background:#f3efe6;font:13px/1.6 Georgia,serif;color:#4f4b44;text-align:center}
+.foot a{color:#1b1a17}
+.after{height:48px}
+a:focus-visible{outline:2px solid #7a1f2b;outline-offset:2px}
+@media (max-width:640px){
+  .strip{padding:16px 16px 10px;flex-wrap:wrap;gap:2px 10px}.strip .d{margin-left:0}
+  .wrap{width:100%!important}
+  .top,.mast,.rule,.lead,.cap,.story,.sec,.quote,.sign,.foot{padding-left:20px!important;padding-right:20px!important}
+  .mast h1{font-size:44px!important}.story h2{font-size:30px!important}.art{height:200px!important}.quote p{font-size:23px!important}
+  .thumb,.thumb div{width:64px!important;height:64px!important}.item .tx{padding-left:14px!important}
+}
+@media (prefers-color-scheme:dark){
+  body{background:#0f0e0c!important}.strip{color:#b3ac9f!important}.strip b{color:#ede7dc!important}
+  .wrap{background:#1c1a17!important}.top{border-color:#34302a!important;color:#b3ac9f!important}.top a{color:#b3ac9f!important}
+  .mast h1,.story h2,.sec h3,.item h4,.quote p,.sign b{color:#ede7dc!important}
+  .mast p,.cap,.story .by,.quote span{color:#b3ac9f!important}.story .deck,.item p{color:#d4cdc0!important}.story p.body,.sign{color:#e2dccf!important}
+  .rule div{border-color:#ede7dc!important}.sec h3{border-color:#ede7dc!important}.item td{border-color:#34302a!important}
+  .kick,.more{color:#e6a3ab!important;border-color:#e6a3ab!important}.quote td.q{border-color:#e6a3ab!important}
+  .foot{background:#151411!important;color:#b3ac9f!important}.foot a{color:#ede7dc!important}
+}
+</style>
+</head>
+<body>
+<div class="view">
+  <div class="strip" aria-label="Message details"><span><b>The Long Table</b> &lt;letters@longtable.press&gt;</span><span>Who still cooks on Harbour Row</span><span class="d">Sun 2 Nov, 07:00</span></div>
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+    <tr><td align="center">
+      <div class="pre">Eleven stalls, one generator and a rice cooker older than the market. Plus: the bakery that opens at 4am.</div>
+      <table role="presentation" class="wrap" width="600" cellpadding="0" cellspacing="0">
+        <tr><td class="top">
+          <table role="presentation" width="100%"><tr><td class="serif">Issue 112 · Sunday 2 November 2026</td><td align="right" class="serif"><a href="#browser">View in browser</a></td></tr></table>
+        </td></tr>
+        <tr><td class="mast"><h1>The Long Table</h1><p>A weekly letter about who feeds a city</p></td></tr>
+        <tr><td class="rule"><div>&nbsp;</div></td></tr>
+
+        <tr><td class="lead"><div class="art" role="img" aria-label="Illustration: lanterns strung over night-market stalls by the water">
+          <svg viewBox="0 0 520 280" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#18202e"/><stop offset=".62" stop-color="#3b3446"/><stop offset="1" stop-color="#7a4b3c"/></linearGradient>
+            <radialGradient id="glow" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ffd58a" stop-opacity=".9"/><stop offset="1" stop-color="#ffd58a" stop-opacity="0"/></radialGradient></defs>
+            <rect width="520" height="280" fill="url(#sky)"/>
+            <rect y="214" width="520" height="66" fill="#141a24"/>
+            <path d="M0 222h520" stroke="#ffcf87" stroke-opacity=".25" stroke-width="2" stroke-dasharray="14 10"/>
+            <path d="M-10 46Q130 120 270 60T540 70" fill="none" stroke="#c9b59a" stroke-opacity=".5"/>
+            <g fill="url(#glow)"><circle cx="40" cy="62" r="26"/><circle cx="110" cy="88" r="26"/><circle cx="190" cy="86" r="26"/><circle cx="270" cy="62" r="26"/><circle cx="350" cy="58" r="26"/><circle cx="430" cy="66" r="26"/><circle cx="500" cy="70" r="26"/></g>
+            <g fill="#ffcf87"><circle cx="40" cy="62" r="6"/><circle cx="110" cy="88" r="6"/><circle cx="190" cy="86" r="6"/><circle cx="270" cy="62" r="6"/><circle cx="350" cy="58" r="6"/><circle cx="430" cy="66" r="6"/><circle cx="500" cy="70" r="6"/></g>
+            <g fill="#0f141c"><path d="M20 214v-62l50-18 50 18v62z"/><path d="M140 214v-74l56-20 56 20v74z"/><path d="M270 214v-58l46-16 46 16v58z"/><path d="M380 214v-70l52-18 52 18v70z"/></g>
+            <g fill="#ffb965"><rect x="34" y="170" width="72" height="30" rx="2"/><rect x="156" y="164" width="80" height="36" rx="2"/><rect x="284" y="172" width="64" height="28" rx="2"/><rect x="396" y="166" width="72" height="34" rx="2"/></g>
+            <g fill="#0a0d13"><g transform="translate(56 214) scale(1)"><circle cy="-34" r="8"/><path d="M-14 0c0-16 6-24 14-24s14 8 14 24z"/></g><g transform="translate(86 214) scale(0.9)"><circle cy="-34" r="8"/><path d="M-14 0c0-16 6-24 14-24s14 8 14 24z"/></g><g transform="translate(176 214) scale(1.05)"><circle cy="-34" r="8"/><path d="M-14 0c0-16 6-24 14-24s14 8 14 24z"/></g><g transform="translate(214 214) scale(0.95)"><circle cy="-34" r="8"/><path d="M-14 0c0-16 6-24 14-24s14 8 14 24z"/></g><g transform="translate(312 214) scale(0.9)"><circle cy="-34" r="8"/><path d="M-14 0c0-16 6-24 14-24s14 8 14 24z"/></g><g transform="translate(424 214) scale(1)"><circle cy="-34" r="8"/><path d="M-14 0c0-16 6-24 14-24s14 8 14 24z"/></g><g transform="translate(454 214) scale(0.92)"><circle cy="-34" r="8"/><path d="M-14 0c0-16 6-24 14-24s14 8 14 24z"/></g></g>
+            <path d="M196 150c-4-10 6-14 2-24M210 150c-4-10 6-14 2-24" stroke="#e8dccb" stroke-opacity=".5" stroke-width="2" fill="none" stroke-linecap="round"/>
+          </svg></div></td></tr>
+        <tr><td class="cap">Harbour Row at 11pm. Drawing by Lio Marsh for The Long Table.</td></tr>
+
+        <tr><td class="story">
+          <span class="kick">This week · Markets</span>
+          <h2>The last night-market cooks of Harbour Row</h2>
+          <p class="deck">Eleven stalls, one shared generator and a rice cooker older than the market itself.</p>
+          <p class="by">By Mairead Quinlan · 9 minute read</p>
+          <p class="body">At ten past eleven, Mrs Adeyemi lifts the lid on a pot she has kept going since 1998, and the queue, which has been patient for twenty minutes, leans forward as one. Harbour Row has fed the late shift at the docks for forty years. The council's lease ends in March.</p>
+          <p class="body">We spent three nights with the cooks who are staying, the two who have already left, and the dock workers who say they will not eat anywhere else.</p>
+          <a class="more" href="#story">Keep reading on the site</a>
+        </td></tr>
+
+        <tr><td class="sec"><h3>Also on the table</h3>
+          <table role="presentation" width="100%">
+            <tr class="item"><td class="thumb"><div style="background:radial-gradient(circle at 50% 58%,#f2c46d 0 20px,#d79a3d 21px 26px,transparent 27px),#e9dcc5"></div></td><td class="tx"><span class="kick">Bakeries</span><h4><a href="#a">The bakery that opens at 4am, for nurses</a></h4><p>Six loaves, two kinds of roll, and a staff discount nobody asked for.</p></td></tr>
+            <tr class="item"><td class="thumb"><div style="background:repeating-linear-gradient(0deg,#4d6b4f 0 10px,#5f8160 10px 20px)"></div></td><td class="tx"><span class="kick">Growing</span><h4><a href="#b">A rooftop farm on a multistorey car park</a></h4><p>Level 6 grows 400kg of salad a month. Level 5 still charges £2.80 an hour.</p></td></tr>
+            <tr class="item"><td class="thumb"><div style="background:linear-gradient(135deg,#7a1f2b 0 50%,#f0e6d6 50%)"></div></td><td class="tx"><span class="kick">Letters</span><h4><a href="#c">Your answers: the dish you would save</a></h4><p>214 of you wrote in. Soup won, narrowly, over your grandmother's anything.</p></td></tr>
+          </table>
+        </td></tr>
+
+        <tr><td class="quote"><table role="presentation" width="100%"><tr><td class="q"><p>&ldquo;You do not close a market. You close forty years of people knowing where to find each other.&rdquo;</p><span>Tomas Brennan, crane driver, 31 years on the night shift</span></td></tr></table></td></tr>
+
+        <tr><td class="sign">See you at the table next Sunday.<br><b>Mairead</b></td></tr>
+
+        <tr><td class="foot">
+          You get this because you signed up at longtable.press. It comes once a week, on Sunday morning.<br>
+          <a href="#prefs">Manage preferences</a> &nbsp;·&nbsp; <a href="#unsub">Unsubscribe</a> &nbsp;·&nbsp; <a href="#fwd">Forward to a friend</a><br>
+          The Long Table, 18 Calder Street, Glasgow G42 7RE
+        </td></tr>
+      </table>
+      <div class="after"></div>
+    </td></tr>
+  </table>
+</div>
+</body>
+</html>

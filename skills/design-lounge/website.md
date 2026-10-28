@@ -143,7 +143,7 @@ The lists, for a website:
 - Work (builders, products, case studies): `features-sticky-scroll-steps`, `stacking-cards-scroll`, `bento-feature-grid`, `case-file-horizontal-scroll`, `process-step-dossier`, `scroll-lens-card-ticker`, `features-tabbed-preview`, `features-alternating-rows`, `features-vertical-label-columns`, `portfolio-case-study-long`, `card-article-mix`. With real images: `portfolio-index-hover-preview`, `portfolio-photographer-horizontal`, `portfolio-motion-showreel`, `landing-agency-case-wall`, `gallery-film-strip`, `gallery-contact-sheet`, `gallery-wall-frames`, `gallery-photo-album`, `masonry-gallery-captions`.
 - About: `profile-creator-masthead`, `sticky-split-story`, `profile-editorial-staff`, `text-rise-underline-whisper`, `scroll-word-highlight`. A team of three or more: `team-hover-portrait-grid`.
 - Contact: `contact-giant-email-copy`, `contact-project-brief-steps`, `profile-contact-card`, `cta-giant-email-band`, `contact-conversational-form`. A place people visit: `contact-split-map-form` or `contact-booking-hours`.
-- Footer: `footer-giant-wordmark-reveal`, `footer-centered-colophon`, `footer-newsletter-split`, `footer-engraved-caravan-strip`. A product with many pages: `footer-sitemap-columns` or `footer-enterprise-sitemap`.
+- Footer: `footer-giant-wordmark-reveal`, `footer-centered-colophon`, `footer-newsletter-split`, `footer-engraved-caravan-strip`, `footer-curtain-reveal`. A local business: `footer-local-hours-map`. A developer tool: `footer-terminal-prompt`. A product with many pages: `footer-sitemap-columns` or `footer-enterprise-sitemap`.
 
 The lists, for a course or lessons site. `course-landing-curriculum` is one option for the lesson list, not the whole site.
 
@@ -197,6 +197,7 @@ A portfolio, a launch, a product page, or a refine they described as motion is i
 - A studio or agency that wants the site to feel made: `smooth-scroll-inertia`, `page-transition-tile-wipe`, `preloader-counter-intro`, or `text-mask-scroll-reveal`. A preloader never runs longer than the real load.
 - A tech, science, or cold brand that wants depth: `webgl-shader-hero`. A hotel, film, or food brand that wants footage: `hero-video-loop`.
 - A show, a launch, or a science night that is a journey: `scroll-space-voyage`. A label, venue, or hotel tied to a city and an hour: `moonlit-ridge-hero`. A product people can use on the page: `playable-product-hero`. Use these only once Show mode is on; they never turn it on.
+- A long read in chapters: `scroll-driven-chapters`. A playlist, album, or profile header that shrinks into a sticky bar: `scroll-morphing-header`. A gallery, museum, or artist: `parallax-cursor-gallery`. A route, a journey, or scenes revealed one by one: `scroll-mask-reveal-sequence`. A product range that assembles: `scroll-exploding-grid`. A programme of films, talks, or events: `scroll-ring-carousel`.
 - An about or manifesto block: `scroll-word-highlight`.
 - A headline that moves: `kinetic-type-marquee` or `variable-font-proximity`.
 - A phone: `ios-pull-to-refresh`, `shared-element-expand`, or `m3-container-transform`. Not a web cursor. A phone web story: `mobile-scroll-story`.

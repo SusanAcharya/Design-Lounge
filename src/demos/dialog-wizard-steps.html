@@ -1,0 +1,235 @@
+<!-- Design Lounge piece: dialog-wizard-steps · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>New desk · Galley</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#e9eeec;--surface:#ffffff;--sunk:#f4f7f6;--line:#dbe2df;--line-2:#c5cfcb;--edge:#7f8f89;
+  --ink:#13201c;--ink-2:#44534e;--ink-3:#5f6e69;
+  --accent:#0d6670;--accent-hover:#0a535b;--accent-ink:#ffffff;--accent-soft:#e1efee;
+  --error:#b0362b;--scrim:rgba(19,32,28,.42);
+  --font:"Plus Jakarta Sans",system-ui,sans-serif;--num:"Plus Jakarta Sans",system-ui,sans-serif;
+  --w:560px;--r:16px;--r-ctl:10px;--h-ctl:42px;
+  --t-micro:160ms;--t-step:360ms;--t-open:320ms;--ease:cubic-bezier(.2,.7,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);--ease-sheet:cubic-bezier(.32,.72,0,1);
+  --shadow:0 1px 2px rgba(19,32,28,.08),0 36px 72px -28px rgba(19,32,28,.45);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.5 var(--font);color:var(--ink);background:var(--bg);overflow:hidden;-webkit-font-smoothing:antialiased}
+svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.top{height:60px;display:flex;align-items:center;gap:28px;padding:0 28px;background:var(--surface);border-bottom:1px solid var(--line)}
+.top b{font:800 18px var(--num);letter-spacing:-.03em}
+.top nav{display:flex;gap:20px;font-size:13.5px;color:var(--ink-2)}.top nav span:first-child{color:var(--ink);font-weight:600}
+.btn{height:var(--h-ctl);padding:0 18px;border-radius:var(--r-ctl);border:1px solid var(--edge);background:var(--surface);font-weight:600;font-size:14px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;white-space:nowrap;transition:background var(--t-micro) var(--ease)}
+.btn:hover{background:var(--sunk)}
+.btn.pri{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.pri:hover{background:var(--accent-hover)}
+.btn.ghost{border-color:transparent;background:none;color:var(--ink-2)}
+.btn.ghost:hover{background:var(--sunk);color:var(--ink)}
+.top .btn{margin-left:auto;height:38px}
+.board{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;padding:24px 28px}
+.col h3{margin:0 0 10px;font:700 11.5px var(--num);letter-spacing:.07em;text-transform:uppercase;color:var(--ink-2)}
+.story{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:10px}
+.story b{display:block;font-size:13.5px;font-weight:600;line-height:1.35}
+.story span{font-size:12px;color:var(--ink-3)}
+/* dialog */
+dialog{width:min(var(--w),calc(100vw - 32px));max-height:calc(100dvh - 32px);border:0;padding:0;border-radius:var(--r);background:var(--surface);color:var(--ink);box-shadow:var(--shadow);overflow:hidden;opacity:0;transform:translateY(10px);transition:opacity var(--t-open) var(--ease),transform var(--t-open) var(--ease-out),overlay var(--t-open) allow-discrete,display var(--t-open) allow-discrete}
+dialog[open]{opacity:1;transform:none;display:flex;flex-direction:column}
+@starting-style{dialog[open]{opacity:0;transform:translateY(10px)}}
+dialog::backdrop{background:transparent;transition:background var(--t-open) var(--ease),overlay var(--t-open) allow-discrete,display var(--t-open) allow-discrete}
+dialog[open]::backdrop{background:var(--scrim)}
+@starting-style{dialog[open]::backdrop{background:transparent}}
+.hd{padding:22px 24px 0;display:flex;align-items:flex-start;gap:12px}
+.hd h2:focus{outline:none}.hd h2{margin:0;font-size:20px;font-weight:700;letter-spacing:-.02em;flex:1}
+.hd p{margin:2px 0 0;color:var(--ink-2);font-size:13.5px}
+.x{width:34px;height:34px;border:0;border-radius:9px;background:none;color:var(--ink-3);display:grid;place-items:center;cursor:pointer;margin:-4px -8px 0 0}
+.x:hover{background:var(--sunk);color:var(--ink)}
+.stepwrap{position:relative;margin:20px 24px 0}
+.steps{display:flex;margin:0;padding:0;list-style:none}
+.steps li{flex:1;display:flex;flex-direction:column;align-items:flex-start;gap:6px;font-size:13px;font-weight:600;color:var(--ink-3)}
+.steps li:nth-child(2){align-items:center}.steps li:last-child{align-items:flex-end}
+.track{position:absolute;left:14px;right:14px;top:13px;height:2px;background:var(--line-2);border-radius:2px}
+.track i{display:block;height:100%;width:50%;background:var(--accent);border-radius:2px;transition:width var(--t-step) var(--ease)}
+.dot{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--surface);border:2px solid var(--line-2);font:700 13px var(--num);font-variant-numeric:tabular-nums;color:var(--ink-3);position:relative;transition:background var(--t-micro) var(--ease),border-color var(--t-micro) var(--ease),color var(--t-micro) var(--ease),box-shadow var(--t-micro) var(--ease)}
+.dot svg{width:14px;height:14px;stroke-width:2.6;display:none}
+.steps li[data-s="cur"]{color:var(--ink)}
+.steps li[data-s="cur"] .dot{border-color:var(--accent);color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.steps li[data-s="done"]{color:var(--ink-2)}
+.steps li[data-s="done"] .dot{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.steps li[data-s="done"] .dot b{display:none}.steps li[data-s="done"] .dot svg{display:block}
+.stage{position:relative;overflow:hidden;transition:height var(--t-step) var(--ease)}
+.panel{padding:22px 24px 8px;transition:opacity var(--t-step) var(--ease),transform var(--t-step) var(--ease-out),visibility var(--t-step)}
+.panel[hidden]{display:block;position:absolute;inset:0 0 auto;visibility:hidden;opacity:0;transform:translateX(24px)}
+.panel.left[hidden]{transform:translateX(-24px)}
+.panel h3{margin:0 0 4px;font-size:15px;font-weight:700}
+.panel>p{margin:0 0 16px;color:var(--ink-2);font-size:13px}
+.f{display:flex;flex-direction:column;gap:6px;margin-bottom:14px;font-size:12.5px;font-weight:600;color:var(--ink-2)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.in{height:var(--h-ctl);border:1px solid var(--edge);border-radius:var(--r-ctl);padding:0 12px;background:var(--surface);font-size:14px;font-weight:500;color:var(--ink);width:100%}
+select.in{appearance:none;background:var(--surface) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344534e' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 10px center/16px;padding-right:34px}
+.in:hover{border-color:var(--ink-3)}
+.in:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.in[aria-invalid="true"]{border-color:var(--error)}
+.panel .err{color:var(--error);font-size:12.5px;font-weight:600;margin:-6px 0 14px}
+.panel .err:empty{display:none}
+.beats{display:flex;flex-wrap:wrap;gap:8px}
+.beats label{position:relative}
+.beats input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.beats span{display:inline-flex;align-items:center;height:34px;padding:0 14px;border-radius:17px;border:1px solid var(--edge);font-size:13px;font-weight:600;color:var(--ink-2);transition:all var(--t-micro) var(--ease)}
+.beats input:checked+span{background:var(--accent-soft);border-color:var(--accent);color:var(--accent-hover)}
+.beats input:focus-visible+span{outline:2px solid var(--accent);outline-offset:2px}
+.people{margin:0;padding:0;list-style:none;border:1px solid var(--line);border-radius:12px}
+.people li{display:flex;align-items:center;gap:12px;padding:9px 12px;min-height:56px}
+.people li+li{border-top:1px solid var(--line)}
+.people input[type=checkbox]{appearance:none;width:20px;height:20px;border-radius:6px;border:1.5px solid var(--edge);margin:0;display:grid;place-items:center;cursor:pointer;flex:none;background:var(--surface)}
+.people input[type=checkbox]:checked{background:var(--accent);border-color:var(--accent)}
+.people input[type=checkbox]:checked::after{content:"";width:10px;height:5px;border:2.4px solid #fff;border-width:0 0 2.4px 2.4px;transform:translateY(-1px) rotate(-45deg)}
+.av{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font:700 12px var(--num);color:#13201c;flex:none}
+.who{flex:1;min-width:0}.who b{display:block;font-size:13.5px;font-weight:600}.who span{font-size:12px;color:var(--ink-3)}
+.people select.in{width:118px;height:34px;font-size:13px;flex:none}
+.people li:not(.on) select{visibility:hidden}
+.sum{margin:0;border:1px solid var(--line);border-radius:12px}
+.sum>div{display:grid;grid-template-columns:110px 1fr auto;gap:12px;padding:12px 14px;align-items:start}
+.sum>div+div{border-top:1px solid var(--line)}
+.sum dt{font-size:12.5px;font-weight:600;color:var(--ink-3)}.sum dd{margin:0;font-weight:500}
+.sum dd small{display:block;color:var(--ink-3);font-size:12px}
+.edit{border:0;background:none;color:var(--accent);font-weight:600;font-size:13px;cursor:pointer;padding:2px 4px;border-radius:6px}
+.edit:hover{text-decoration:underline}
+.done{text-align:center;padding:34px 24px 18px}
+.done .ok{width:56px;height:56px;border-radius:50%;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;margin:0 auto 14px}
+.done .ok svg{width:26px;height:26px;stroke-width:2.4}
+.done h3{font-size:18px}
+.ft{display:flex;align-items:center;gap:10px;padding:16px 24px 20px;border-top:1px solid var(--line);margin-top:14px}
+.ft .sp{flex:1}
+@media (max-width:900px){.board{grid-template-columns:repeat(2,1fr)}.top nav{display:none}}
+@media (max-width:640px){
+  .board{grid-template-columns:1fr;padding:16px}
+  .top{padding:0 16px}
+  dialog{width:100%;max-width:100%;margin:auto 0 0;border-radius:20px 20px 0 0;max-height:calc(100dvh - 20px);transform:translateY(100%);transition-timing-function:var(--ease),var(--ease-sheet)}
+  dialog[open]{transform:none}
+  @starting-style{dialog[open]{transform:translateY(100%)}}
+  .hd,.panel{padding-left:16px;padding-right:16px}.stepwrap{margin:18px 16px 0}.ft{padding:14px 16px 26px}
+  .row2{grid-template-columns:1fr}
+  .steps span.l{font-size:12px}
+  .stage{overflow-y:auto}
+  .sum>div{grid-template-columns:1fr auto}.sum dt{grid-column:1/-1}
+  .ft .btn{height:46px}
+}
+@media (prefers-reduced-motion:reduce){*,*::backdrop{transition-duration:1ms!important}}
+</style>
+</head>
+<body>
+<header class="top"><b>Galley</b><nav><span>Planning</span><span>Wires</span><span>Archive</span></nav><button class="btn pri" id="open" type="button"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>New desk</button></header>
+<main class="board" aria-label="This week">
+  <section class="col"><h3>Mon 26 Oct</h3><div class="story"><b>Ferry fares rise 6.8% from January</b><span>Transport · 640 words</span></div><div class="story"><b>Council budget vote, live</b><span>City hall · rolling</span></div></section>
+  <section class="col"><h3>Tue 27 Oct</h3><div class="story"><b>Riverside flood wall, year two</b><span>Climate · 1,120 words</span></div><div class="story"><b>Night bus routes under review</b><span>Transport · 480 words</span></div></section>
+  <section class="col"><h3>Wed 28 Oct</h3><div class="story"><b>Hospital wait times by ward</b><span>Health · data</span></div><div class="story"><b>Who owns the empty shops on Mill St</b><span>Business · 900 words</span></div></section>
+  <section class="col"><h3>Thu 29 Oct</h3><div class="story"><b>Heat pump grants: who applied</b><span>Climate · 760 words</span></div></section>
+</main>
+
+<dialog id="dlg" aria-labelledby="wt">
+  <div class="hd"><div style="flex:1"><h2 id="wt" tabindex="-1">New desk</h2><p>A desk groups reporters, a beat and a daily filing deadline.</p></div><button class="x" type="button" aria-label="Close" data-close><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+  <div class="stepwrap"><div class="track" aria-hidden="true"><i id="track"></i></div>
+  <ol class="steps" id="steps" aria-label="Progress">
+    <li><span class="dot"><b>1</b><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="l">Details</span></li>
+    <li><span class="dot"><b>2</b><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="l">Members</span></li>
+    <li><span class="dot"><b>3</b><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="l">Review</span></li>
+  </ol></div>
+  <div class="stage" id="stage">
+    <section class="panel" data-step="0" aria-label="Details">
+      <h3>Name the desk</h3><p>Reporters see this name on every assignment.</p>
+      <label class="f">Desk name<input class="in" id="dname" value="Climate and energy" autocomplete="off" aria-describedby="e0"></label>
+      <p class="err" id="e0" role="alert"></p>
+      <div class="f" role="group" aria-label="Beat">Beat<div class="beats">
+        <label><input type="checkbox" checked><span>Climate</span></label><label><input type="checkbox" checked><span>Energy</span></label><label><input type="checkbox"><span>Transport</span></label><label><input type="checkbox"><span>Planning</span></label><label><input type="checkbox"><span>Agriculture</span></label></div></div>
+      <div class="row2"><label class="f">Timezone<select class="in" id="tz"><option value="">Choose one</option><option selected>Europe/London</option><option>Europe/Dublin</option><option>America/Halifax</option></select></label>
+      <label class="f">Daily filing deadline<select class="in"><option>16:00</option><option selected>17:30</option><option>19:00</option></select></label></div>
+    </section>
+    <section class="panel" data-step="1" aria-label="Members" hidden>
+      <h3>Who works this desk</h3><p>Pick at least one editor. Reporters can file; copy editors can approve.</p>
+      <ul class="people" id="people">
+        <li class="on"><input type="checkbox" checked aria-label="Add Priya Raman"><span class="av" style="background:#cfe3df">PR</span><span class="who"><b>Priya Raman</b><span>Environment correspondent</span></span><select class="in" aria-label="Role for Priya Raman"><option>Reporter</option><option selected>Editor</option><option>Copy editor</option></select></li>
+        <li class="on"><input type="checkbox" checked aria-label="Add Tom Achterberg"><span class="av" style="background:#e6dcc8">TA</span><span class="who"><b>Tom Achterberg</b><span>Data reporter</span></span><select class="in" aria-label="Role for Tom Achterberg"><option selected>Reporter</option><option>Editor</option><option>Copy editor</option></select></li>
+        <li><input type="checkbox" aria-label="Add Sinead Morrow"><span class="av" style="background:#dcd6e6">SM</span><span class="who"><b>Sinead Morrow</b><span>Night editor</span></span><select class="in" aria-label="Role for Sinead Morrow"><option>Reporter</option><option>Editor</option><option selected>Copy editor</option></select></li>
+        <li class="on"><input type="checkbox" checked aria-label="Add Kwame Boateng"><span class="av" style="background:#d6e4cd">KB</span><span class="who"><b>Kwame Boateng</b><span>Energy reporter</span></span><select class="in" aria-label="Role for Kwame Boateng"><option selected>Reporter</option><option>Editor</option><option>Copy editor</option></select></li>
+      </ul>
+      <p class="err" id="e1" role="alert" style="margin:10px 0 0"></p>
+    </section>
+    <section class="panel" data-step="2" aria-label="Review" hidden>
+      <h3>Check and create</h3><p>You can change all of this later in desk settings.</p>
+      <dl class="sum" id="sum"></dl>
+    </section>
+    <section class="panel done" data-step="3" aria-label="Created" hidden>
+      <div class="ok"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+      <h3 id="doneT">Climate and energy is ready</h3><p id="doneP">3 people were added. Their first deadline is today at 17:30.</p>
+    </section>
+  </div>
+  <div class="ft"><button class="btn ghost" type="button" id="back">Back</button><span class="sp"></span><button class="btn" type="button" data-close id="cancel">Cancel</button><button class="btn pri" type="button" id="next">Next</button></div>
+</dialog>
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const dlg = $('dlg'), stage = $('stage'), next = $('next'), back = $('back');
+  const panels = [...stage.querySelectorAll('.panel')], dots = [...$('steps').querySelectorAll('li')];
+  const LABELS = ['Next', 'Next', 'Create desk', 'Open desk'];
+  let step = 1;
+  const people = () => [...$('people').children].filter((li) => li.querySelector('input').checked);
+  function validate(i) {
+    if (i === 0) {
+      const n = $('dname'), bad = n.value.trim().length < 3;
+      n.setAttribute('aria-invalid', bad); $('e0').textContent = bad ? 'Give the desk a name of at least 3 characters.' : (!$('tz').value ? 'Choose the timezone deadlines run on.' : '');
+      if (bad) n.focus(); return !$('e0').textContent;
+    }
+    if (i === 1) {
+      const ok = people().some((li) => li.querySelector('select').value === 'Editor');
+      $('e1').textContent = ok ? '' : 'Someone has to approve copy. Make one person an Editor.'; return ok;
+    }
+    return true;
+  }
+  function summary() {
+    const ppl = people().map((li) => li.querySelector('b').textContent.split(' ')[0] + ' (' + li.querySelector('select').value.toLowerCase() + ')');
+    const beats = [...panels[0].querySelectorAll('.beats input:checked')].map((b) => b.nextElementSibling.textContent);
+    const sel = panels[0].querySelectorAll('select');
+    const rows = [['Desk', $('dname').value.trim(), beats.join(', ') || 'No beat yet', 0], ['Deadline', sel[1].value + ' daily', sel[0].value, 0], ['Members', ppl.length + ' people', ppl.join(', '), 1]];
+    $('sum').innerHTML = rows.map((r) => `<div><dt>${r[0]}</dt><dd>${esc(r[1])}<small>${esc(r[2])}</small></dd><button class="edit" type="button" data-go="${r[3]}">Edit</button></div>`).join('');
+    $('doneT').textContent = $('dname').value.trim() + ' is ready';
+    $('doneP').textContent = ppl.length + ' people were added. Their first deadline is today at ' + sel[1].value + '.';
+  }
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  function go(to, instant) {
+    const from = panels[step];
+    if (to === 2) summary();
+    const h0 = stage.offsetHeight;
+    panels.forEach((p, i) => { p.hidden = i !== to; p.classList.toggle('left', i < to); });
+    const h1 = panels[to].offsetHeight;
+    if (!instant && from !== panels[to]) { stage.style.height = h0 + 'px'; void stage.offsetHeight; stage.style.height = h1 + 'px'; }
+    step = to;
+    dots.forEach((d, i) => { d.dataset.s = i < to ? 'done' : i === to ? 'cur' : 'next'; if (i === to) d.setAttribute('aria-current', 'step'); else d.removeAttribute('aria-current'); });
+    $('track').style.width = Math.min(to, 2) * 50 + '%';
+    back.style.visibility = to > 0 && to < 3 ? 'visible' : 'hidden';
+    $('cancel').hidden = to === 3;
+    next.textContent = LABELS[to];
+    const f = panels[to].querySelector('input,select,button'); if (!instant && f && to < 3) f.focus({ preventScroll: true });
+  }
+  stage.addEventListener('transitionend', (e) => { if (e.target === stage && e.propertyName === 'height') stage.style.height = ''; });
+  next.addEventListener('click', () => { if (step === 3) return dlg.close(); if (validate(step)) go(step + 1); });
+  back.addEventListener('click', () => step > 0 && go(step - 1));
+  stage.addEventListener('click', (e) => { const b = e.target.closest('[data-go]'); if (b) go(+b.dataset.go); });
+  $('people').addEventListener('change', (e) => { const li = e.target.closest('li'); li.classList.toggle('on', li.querySelector('input').checked); $('e1').textContent = ''; });
+  $('dname').addEventListener('input', () => { $('dname').removeAttribute('aria-invalid'); $('e0').textContent = ''; });
+  dlg.querySelectorAll('[data-close]').forEach((b) => b.addEventListener('click', () => dlg.close()));
+  dlg.addEventListener('close', () => $('open').focus());
+  $('open').addEventListener('click', () => { go(0, true); dlg.showModal(); $('dname').focus(); });
+  go(1, true); dlg.showModal(); $('wt').focus();
+})();
+</script>
+</body>
+</html>

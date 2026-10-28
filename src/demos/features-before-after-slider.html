@@ -1,0 +1,185 @@
+<!-- Design Lounge piece: features-before-after-slider · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Morrow: before and after restoration</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Schibsted+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+@property --x{syntax:'<percentage>';inherits:true;initial-value:50%}
+:root{
+  --bg:#131110; --panel:#1C1917; --panel-2:#24201D; --line:#34302B; --line-2:#5A534B;
+  --ink:#EDE6DA; --ink-2:#B9B0A2; --ink-3:#958B7D;
+  --accent:#EF5A43; --accent-ink:#1A0B07;
+  --sans:"Schibsted Grotesk",system-ui,sans-serif; --mono:"JetBrains Mono",ui-monospace,monospace;
+  --r:4px; --ease:cubic-bezier(.2,.7,.2,1); --expo:cubic-bezier(.16,1,.3,1); --t:160ms;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:var(--bg);color:var(--ink);font:400 15px/1.5 var(--sans);-webkit-font-smoothing:antialiased}
+.wrap{max-width:1200px;margin:0 auto;padding:36px 44px 48px}
+header{display:grid;grid-template-columns:1fr 360px;gap:40px;align-items:end;margin-bottom:26px}
+.kicker{font:500 12px/1 var(--mono);color:var(--ink-3);letter-spacing:.08em;text-transform:uppercase;margin:0 0 14px}
+h1{font-size:clamp(36px,5vw,60px);line-height:.98;letter-spacing:-.035em;font-weight:800;margin:0}
+h1 span{color:var(--accent)}
+.intro p{margin:0 0 16px;color:var(--ink-2)}
+.btn{font:600 15px/1 var(--sans);height:44px;padding:0 18px;border-radius:var(--r);border:0;background:var(--accent);color:var(--accent-ink);cursor:pointer}
+.btn:hover{background:#FF6E57}
+.meta{font:400 12px/1.4 var(--mono);color:var(--ink-3);margin-left:12px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.stage{display:grid;grid-template-columns:1fr 300px;gap:24px}
+.compare{position:relative;height:520px;border-radius:var(--r);overflow:hidden;background:#000;cursor:ew-resize;touch-action:pan-y;user-select:none;-webkit-user-select:none;outline:1px solid var(--line)}
+.compare svg.pic{position:absolute;inset:0;width:100%;height:100%;display:block}
+.before{clip-path:inset(0 calc(100% - var(--x)) 0 0)}
+.before .pic{filter:sepia(.8) saturate(1.5) contrast(.7) brightness(1.04) hue-rotate(-6deg)}
+.after.cast .pic{filter:sepia(.7) saturate(1.4) contrast(.76) brightness(1.04) hue-rotate(-6deg)}
+.layer{position:absolute;inset:0}
+.def{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:0;transition:opacity 240ms var(--ease)}
+.before .def,.after.dust .def.d,.after.crease .def.c{opacity:1}
+.grain{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;mix-blend-mode:overlay;opacity:.55}
+.tag{position:absolute;top:14px;font:500 11px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;background:rgba(19,17,16,.82);color:var(--ink);padding:7px 9px;border-radius:3px;pointer-events:none}
+.tag.l{left:14px}.tag.r{right:14px}
+.handle{position:absolute;top:0;bottom:0;left:var(--x);width:0;pointer-events:none}
+.handle::before{content:"";position:absolute;top:0;bottom:0;left:-1px;width:2px;background:var(--ink);box-shadow:0 0 0 1px rgba(0,0,0,.25)}
+.knob{position:absolute;top:50%;left:-22px;width:44px;height:44px;margin-top:-22px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;pointer-events:auto;cursor:ew-resize;box-shadow:0 2px 10px rgba(0,0,0,.4);transition:transform var(--t) var(--ease)}
+.knob:hover,.compare.drag .knob{transform:scale(1.08)}
+.knob:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+.compare.hint{animation:hint 1600ms var(--expo) 400ms 1}
+@keyframes hint{0%{--x:50%}35%{--x:30%}70%{--x:64%}100%{--x:50%}}
+.caption{display:flex;justify-content:space-between;gap:12px;margin-top:10px;font:400 12px/1.4 var(--mono);color:var(--ink-3)}
+aside{display:flex;flex-direction:column;gap:12px}
+aside h2{font:500 12px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin:2px 0 4px}
+.chip{display:block;width:100%;text-align:left;font:inherit;color:inherit;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:16px 16px 14px;cursor:pointer;transition:border-color var(--t) var(--ease),background var(--t) var(--ease)}
+.chip:hover{background:var(--panel-2);border-color:var(--line-2)}
+.chip .top{display:flex;justify-content:space-between;align-items:center;gap:8px;font-weight:600;font-size:15px}
+.sw{width:32px;height:18px;border-radius:9px;background:#5A534B;position:relative;flex:none;transition:background var(--t) var(--ease)}
+.sw::after{content:"";position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:var(--ink);transition:transform var(--t) var(--ease)}
+.chip[aria-pressed=true] .sw{background:var(--accent)}
+.chip[aria-pressed=true] .sw::after{transform:translateX(14px);background:var(--accent-ink)}
+.num{display:block;font-size:30px;font-weight:700;letter-spacing:-.03em;margin:10px 0 2px;font-variant-numeric:tabular-nums}
+.num small{font-size:15px;color:var(--ink-3);font-weight:500;letter-spacing:0}
+.chip .d{font-size:13px;color:var(--ink-2);display:block}
+.chip[aria-pressed=false] .num{color:var(--ink-3);text-decoration:line-through;text-decoration-thickness:1px}
+.time{margin-top:auto;font:400 12px/1.5 var(--mono);color:var(--ink-3);border-top:1px solid var(--line);padding-top:12px}
+.time b{color:var(--ink);font-weight:500}
+@media (prefers-reduced-motion:reduce){.compare.hint{animation:none}*{transition-duration:1ms!important}}
+@media (max-width:1023px){.stage{grid-template-columns:1fr}aside{display:grid;grid-template-columns:repeat(3,1fr)}aside h2,.time{grid-column:1/-1}}
+@media (max-width:760px){
+  .wrap{padding:28px 16px 40px}
+  header{grid-template-columns:1fr;gap:18px}
+  .compare{height:auto;aspect-ratio:4/3.4}
+  aside{grid-template-columns:1fr}
+  .meta{display:block;margin:10px 0 0}
+  .caption{flex-direction:column;gap:2px}
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5E9FD0"/><stop offset=".62" stop-color="#B9D7E6"/><stop offset="1" stop-color="#F5D9B0"/></linearGradient>
+    <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2E7392"/><stop offset="1" stop-color="#1C4A63"/></linearGradient>
+    <linearGradient id="sand" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E9CB9C"/><stop offset="1" stop-color="#C99D69"/></linearGradient>
+    <radialGradient id="sun" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#FFF6DC"/><stop offset=".55" stop-color="#FFE7AE"/><stop offset="1" stop-color="#FFE7AE" stop-opacity="0"/></radialGradient>
+    <pattern id="stripe" width="14" height="10" patternUnits="userSpaceOnUse"><rect width="7" height="10" fill="#C8463A"/><rect x="7" width="7" height="10" fill="#F4EEE4"/></pattern>
+    <filter id="noise"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 .5  0 0 0 0 .5  0 0 0 0 .5  0 0 0 .9 0"/></filter>
+    <symbol id="scene" viewBox="0 0 800 520" preserveAspectRatio="xMidYMid slice">
+      <rect width="800" height="300" fill="url(#sky)"/>
+      <circle cx="610" cy="118" r="96" fill="url(#sun)"/><circle cx="610" cy="118" r="30" fill="#FFF8E6"/>
+      <path d="M0 96c60-12 120 4 170-6s90-22 150-8 70 14 120 4v18H0z" fill="#fff" opacity=".55"/>
+      <path d="M380 60c40-8 90 2 130-4s70-12 100-2v12H380z" fill="#fff" opacity=".4"/>
+      <path d="M0 262c90-14 170-22 240-10 50 8 80 22 140 26v22H0z" fill="#6E8C7B"/>
+      <rect y="286" width="800" height="104" fill="url(#sea)"/>
+      <path d="M0 300h800M0 318h800M0 341h800M0 366h800" stroke="#7FB5CC" stroke-width="1.4" stroke-dasharray="26 18 60 30" opacity=".5"/>
+      <path d="M420 286h380v8H436z" fill="#4E5A5F"/><path d="M450 294v40M500 294v44M550 294v46M600 294v48M650 294v50M700 294v52M750 294v54" stroke="#3B4549" stroke-width="5"/>
+      <path d="M210 330l40-10 14 22-48 8z" fill="#F4EEE4"/><path d="M240 296v28" stroke="#3A2F28" stroke-width="2"/><path d="M241 298l22 22h-22z" fill="#E59F3F"/>
+      <path d="M0 384c120-20 260-8 400-4s300 14 400 0v140H0z" fill="url(#sand)"/>
+      <g><rect x="64" y="334" width="62" height="58" fill="url(#stripe)"/><path d="M58 336l37-26 37 26z" fill="#2F4A5A"/><rect x="86" y="356" width="18" height="36" fill="#2F4A5A"/>
+      <rect x="140" y="340" width="58" height="54" fill="#E7C34B"/><path d="M134 342l35-24 35 24z" fill="#8A3D32"/><rect x="160" y="360" width="17" height="34" fill="#3D2E26"/>
+      <rect x="212" y="346" width="54" height="50" fill="#6FA6B8"/><path d="M206 348l33-22 33 22z" fill="#F4EEE4"/><rect x="230" y="364" width="16" height="32" fill="#2F4A5A"/></g>
+      <ellipse cx="470" cy="470" rx="70" ry="10" fill="#A87C4D" opacity=".5"/>
+      <g fill="#2B2420"><circle cx="452" cy="378" r="9"/><path d="M442 388h20l4 44h-8l-3 34h-6l-3-34h-8z"/><circle cx="492" cy="392" r="7"/><path d="M484 400h16l3 32h-6l-2 26h-6l-2-26h-6z"/></g>
+      <path d="M452 392l-24 14 2 4 26-12z" fill="#2B2420"/><path d="M425 404c-6-14 2-30 18-34" stroke="#C8463A" stroke-width="3" fill="none"/>
+      <path d="M560 470c40-30 80-36 140-30s70 20 100 10v70H560z" fill="#D9B27D"/>
+      <path d="M600 470l4-30M640 462l-2-34M680 460l6-30" stroke="#8C7A4E" stroke-width="2"/>
+    </symbol>
+    <symbol id="dust" viewBox="0 0 800 520" preserveAspectRatio="xMidYMid slice"><g id="specks" fill="#F8F1E2"></g>
+      <path d="M182 0c4 120-6 240 2 380M612 40c-6 90 4 210-2 300M330 120c60 30 90 32 150 22" stroke="#F8F1E2" stroke-width="1.3" fill="none" opacity=".75"/>
+      <path d="M120 470c20-8 50-6 70 0" stroke="#2B2420" stroke-width="1.2" fill="none" opacity=".6"/></symbol>
+    <symbol id="crease" viewBox="0 0 800 520" preserveAspectRatio="xMidYMid slice">
+      <path d="M-20 140L820 410" stroke="#000" stroke-opacity=".35" stroke-width="7"/><path d="M-20 136L820 406" stroke="#FFF8EC" stroke-opacity=".7" stroke-width="2.2"/>
+      <path d="M-20 136L820 406L820 430L-20 160z" fill="#FFF3DE" opacity=".1"/></symbol>
+  </defs>
+</svg>
+<main class="wrap">
+  <header>
+    <div>
+      <p class="kicker">Morrow · print restoration</p>
+      <h1>Fifty years of dust, gone in <span>3.8 seconds</span>.</h1>
+    </div>
+    <div class="intro">
+      <p>Morrow finds dust, scratches, folds and the orange cast of old prints, and fixes each one as its own layer you can switch off.</p>
+      <button class="btn" type="button">Restore 20 scans free</button><span class="meta">then £4 a month</span>
+    </div>
+  </header>
+
+  <section class="stage" aria-label="Before and after comparison">
+    <div>
+      <div class="compare hint" id="cmp" style="--x:50%">
+        <div class="layer after" id="after">
+          <svg class="pic" aria-hidden="true"><use href="#scene"/></svg>
+          <svg class="def d" aria-hidden="true"><use href="#dust"/></svg>
+          <svg class="def c" aria-hidden="true"><use href="#crease"/></svg>
+        </div>
+        <div class="layer before" aria-hidden="true">
+          <svg class="pic"><use href="#scene"/></svg>
+          <svg class="def"><use href="#dust"/></svg>
+          <svg class="def"><use href="#crease"/></svg>
+          <svg class="grain"><rect width="100%" height="100%" filter="url(#noise)"/></svg>
+        </div>
+        <span class="tag l">Scan, 1974</span><span class="tag r">Morrow</span>
+        <div class="handle"><div class="knob" id="knob" role="slider" tabindex="0" aria-label="Before and after divider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" aria-valuetext="50 percent original scan">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l-6 6 6 6M15 6l6 6-6 6"/></svg></div></div>
+      </div>
+      <div class="caption"><span>whitby_aug1974_box3.tif, 6000 × 4000 px at 600 dpi</span><span>Drag, or focus the handle and use the arrow keys</span></div>
+    </div>
+
+    <aside aria-label="Fixes applied to this scan">
+      <h2>Fixes on this scan</h2>
+      <button class="chip" type="button" aria-pressed="true" data-fix="dust"><span class="top">Dust and scratches<i class="sw" aria-hidden="true"></i></span><span class="num">214 <small>marks</small></span><span class="d">Healed from the grain around them, not blurred.</span></button>
+      <button class="chip" type="button" aria-pressed="true" data-fix="cast"><span class="top">Colour cast<i class="sw" aria-hidden="true"></i></span><span class="num">18.4 <small>to 2.1 ΔE</small></span><span class="d">Skin and sky matched to 112 reference prints.</span></button>
+      <button class="chip" type="button" aria-pressed="true" data-fix="crease"><span class="top">Fold line<i class="sw" aria-hidden="true"></i></span><span class="num">31 <small>cm rebuilt</small></span><span class="d">The crease across the sea, filled in two passes.</span></button>
+      <p class="time" aria-live="polite" id="live"><b>3 of 3 fixes on.</b> Switch one off to see what it did.</p>
+    </aside>
+  </section>
+</main>
+<script>
+(function(){
+  var cmp=document.getElementById('cmp'),knob=document.getElementById('knob'),after=document.getElementById('after'),x=50;
+  // dust specks, seeded so every load matches
+  var g=document.getElementById('specks'),s=7,rnd=function(){s=(s*9301+49297)%233280;return s/233280};
+  for(var i=0;i<70;i++){var c=document.createElementNS('http://www.w3.org/2000/svg','circle');c.setAttribute('cx',(rnd()*800).toFixed(1));c.setAttribute('cy',(rnd()*520).toFixed(1));c.setAttribute('r',(rnd()*1.8+.4).toFixed(2));c.setAttribute('opacity',(rnd()*.5+.4).toFixed(2));g.appendChild(c);}
+  function set(v){x=Math.max(0,Math.min(100,v));cmp.classList.remove('hint');cmp.style.setProperty('--x',x+'%');
+    knob.setAttribute('aria-valuenow',Math.round(x));knob.setAttribute('aria-valuetext',Math.round(x)+' percent original scan');}
+  function fromEvent(e){var r=cmp.getBoundingClientRect();set((e.clientX-r.left)/r.width*100);}
+  cmp.addEventListener('pointerdown',function(e){if(e.button)return;cmp.setPointerCapture(e.pointerId);cmp.classList.add('drag');fromEvent(e);knob.focus({preventScroll:true});});
+  cmp.addEventListener('pointermove',function(e){if(cmp.classList.contains('drag'))fromEvent(e);});
+  ['pointerup','pointercancel'].forEach(function(t){cmp.addEventListener(t,function(){cmp.classList.remove('drag');});});
+  knob.addEventListener('keydown',function(e){var step=e.shiftKey?10:2,m={ArrowLeft:-step,ArrowDown:-step,ArrowRight:step,ArrowUp:step};
+    if(e.key in m){e.preventDefault();set(x+m[e.key]);}else if(e.key==='Home'){e.preventDefault();set(0);}else if(e.key==='End'){e.preventDefault();set(100);}});
+  cmp.addEventListener('animationend',function(){cmp.classList.remove('hint');});
+  // fix layers: pressed means the fix is applied on the after side
+  var chips=document.querySelectorAll('.chip'),live=document.getElementById('live');
+  [].forEach.call(chips,function(b){b.addEventListener('click',function(){
+    var on=b.getAttribute('aria-pressed')!=='true',f=b.dataset.fix;b.setAttribute('aria-pressed',on);
+    if(f==='cast')after.classList.toggle('cast',!on);else after.classList.toggle(f,!on);
+    var n=[].filter.call(chips,function(c){return c.getAttribute('aria-pressed')==='true'}).length;
+    live.innerHTML='<b>'+n+' of 3 fixes on.</b> '+(n===3?'Switch one off to see what it did.':'The right side now shows the scan without '+(3-n===1?'that fix.':'those fixes.'));
+  });});
+})();
+</script>
+</body>
+</html>

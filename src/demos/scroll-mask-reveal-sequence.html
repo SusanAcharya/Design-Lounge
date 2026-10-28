@@ -1,0 +1,152 @@
+<!-- Design Lounge piece: scroll-mask-reveal-sequence · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Meridian Night Line · Four stops, one night</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Monoton&display=swap" rel="stylesheet">
+<style>
+@property --t{syntax:'<number>';inherits:true;initial-value:0}
+:root{
+  --night:#0f1b25;--night-2:#172837;--cream:#f4e9d8;--dim:#c2b6a4;--signal:#e8553f;--signal-ink:#1d0b07;
+  --mono:"Monoton",system-ui,sans-serif;--serif:"Lora",Georgia,serif;
+  --ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{background:var(--night);color:var(--cream);font:400 17px/1.55 var(--serif);overflow-x:clip;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--signal);outline-offset:3px}
+
+.bar{position:fixed;z-index:6;top:0;left:0;right:0;height:64px;display:flex;align-items:center;gap:40px;padding:0 32px;background:var(--night);border-bottom:1px solid #263746}
+.brand{font:400 24px/1 var(--mono);letter-spacing:.02em;text-decoration:none;color:var(--cream)}
+.route{flex:1;max-width:620px;margin:0 auto;position:relative;display:grid;grid-template-columns:repeat(4,1fr);list-style:none;padding:0;margin-block:0}
+.route::before,.route::after{content:"";position:absolute;left:12.5%;right:12.5%;top:7px;height:2px;background:#33475a}
+.route::after{background:var(--signal);transform-origin:left;transform:scaleX(var(--t))}
+.route li{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:6px;font-size:12px;letter-spacing:.06em;color:var(--dim)}
+.route li::before{content:"";width:12px;height:12px;border-radius:50%;background:var(--night);border:2px solid #5d7286;box-sizing:border-box;margin-top:1px}
+.route li.on{color:var(--cream)}
+.route li.on::before{background:var(--signal);border-color:var(--signal)}
+.book{height:40px;padding:0 18px;display:inline-flex;align-items:center;border-radius:20px;background:var(--signal);color:var(--signal-ink);font:500 14px/1 var(--serif);text-decoration:none;white-space:nowrap}
+.book:hover{background:#f06a54}
+
+.seq{position:relative;height:420vh;animation:run linear both;animation-timeline:view();animation-range:contain 0% contain 100%}
+@keyframes run{from{--t:0}to{--t:1}}
+.stage{position:sticky;top:0;height:100vh;min-height:560px;overflow:hidden}
+.scene{position:absolute;inset:0;overflow:hidden}
+.scene svg{position:absolute;inset:0;width:100%;height:100%}
+.s2{--a:.08}.s3{--a:.40}.s4{--a:.72}
+.s2,.s3,.s4{--k:clamp(0,calc((var(--t) - var(--a)) / .24),1);clip-path:circle(calc(var(--k) * var(--k) * 150vmax) at var(--ox) var(--oy))}
+.sun{position:absolute;left:var(--sx);top:var(--sy);width:var(--sr);aspect-ratio:1;border-radius:50%;background:var(--sc);transform:translate(-50%,-50%) scale(calc(1 + var(--k2,0) * .35));box-shadow:0 0 0 calc(var(--sr) * .18) var(--halo)}
+.glint{position:absolute;left:var(--sx);top:66%;width:min(10vw,120px);height:28%;transform:translateX(-50%);background:repeating-linear-gradient(transparent 0 10px,rgba(244,233,216,.55) 10px 12px);-webkit-mask:linear-gradient(#000,transparent);mask:linear-gradient(#000,transparent)}
+.s1{--k2:clamp(0,calc((var(--t) - .02) / .1),1)}
+.s2{--k2:clamp(0,calc((var(--t) - .34) / .1),1)}
+.s3{--k2:clamp(0,calc((var(--t) - .66) / .1),1)}
+
+.card{position:absolute;left:48px;bottom:48px;width:440px;padding:24px 28px 26px;background:var(--night);border-left:3px solid var(--signal)}
+.card .when{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
+.card h2{margin:10px 0 12px;font:400 64px/1 var(--mono);letter-spacing:.01em;color:var(--cream)}
+.card p{margin:0 0 14px;font-style:italic;font-size:18px;line-height:1.45}
+.card .meta{display:flex;gap:20px;font-size:13px;color:var(--dim)}
+.right{left:auto;right:48px}
+
+.fares{padding:96px 48px 112px;display:grid;grid-template-columns:1fr 1.4fr;gap:64px;background:var(--night)}
+.fares h2{margin:0 0 16px;font:400 56px/1.05 var(--mono)}
+.fares p{margin:0;max-width:420px;color:var(--dim)}
+.fares table{width:100%;border-collapse:collapse;font-size:16px}
+.fares th{font-weight:400;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);text-align:left;padding:0 0 12px;border-bottom:1px solid #2d4152}
+.fares td{padding:18px 0;border-bottom:1px solid #22344400;border-bottom-color:#22323f}
+.fares td:last-child,.fares th:last-child{text-align:right}
+.fares td b{font-weight:500;font-size:20px}
+
+@media (max-width:820px){
+  .bar{gap:16px;padding:0 16px}.brand{font-size:18px}
+  .route li span{display:none}.route::before,.route::after{top:6px}
+  .book{height:40px;padding:0 14px;font-size:13px}
+  .card,.right{left:16px;right:16px;bottom:24px;width:auto;padding:18px 18px 20px}
+  .card h2{font-size:40px}.card p{font-size:16px}
+  .fares{grid-template-columns:1fr;padding:72px 16px 88px;gap:32px}.fares h2{font-size:38px}
+}
+@media (prefers-reduced-motion: reduce){
+  .seq{height:auto;animation:none}
+  .stage{position:static;height:auto;overflow:visible}
+  .scene{position:relative;height:100vh;min-height:560px;clip-path:none!important}
+  .sun{transform:translate(-50%,-50%)}
+}
+</style>
+</head>
+<body>
+<header class="bar">
+  <a class="brand" href="#top">Meridian</a>
+  <ol class="route" aria-label="Route">
+    <li class="on" data-at="0"><span>Qasr Amel</span></li>
+    <li data-at=".2"><span>Port Ivanne</span></li>
+    <li data-at=".52"><span>Hallen Pass</span></li>
+    <li data-at=".84"><span>Vael</span></li>
+  </ol>
+  <a class="book" href="#fares">Book a cabin</a>
+</header>
+<main id="top">
+  <section class="seq" id="seq" aria-label="The route, stop by stop">
+    <div class="stage">
+      <div class="scene s1" style="--sx:72%;--sy:40%;--sr:clamp(90px,11vw,150px);--sc:#fbe3b8;--halo:rgba(251,227,184,.25)">
+        <svg viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><defs><linearGradient id="d1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e88b6f"/><stop offset=".6" stop-color="#f4c08f"/></linearGradient></defs><rect width="1600" height="1000" fill="url(#d1)"/><path d="M0 620 C260 560 420 600 640 580 S1100 520 1600 600V1000H0Z" fill="#d68456"/><path d="M0 720 C300 640 560 700 820 660 S1300 620 1600 690V1000H0Z" fill="#bb6440"/><path d="M0 820 C380 760 700 830 1000 780 S1400 760 1600 800V1000H0Z" fill="#8d432b"/><path d="M0 766h1600" stroke="#5c2a1b" stroke-width="3"/><path d="M180 748h220v18H180zM410 750h120v16H410z" fill="#2f1610"/></svg>
+        <i class="sun"></i>
+        <div class="card"><span class="when">Departs 19:40 · Platform 2</span><h2>Qasr Amel</h2><p>The train leaves the oasis as the dunes go copper. Dinner is served in the dining car until the light is gone.</p><span class="meta"><span>Day one</span><span>1,180 km to Vael</span></span></div>
+      </div>
+      <div class="scene s2" style="--ox:72%;--oy:40%;--sx:26%;--sy:30%;--sr:clamp(64px,7vw,104px);--sc:#eef1e6;--halo:rgba(238,241,230,.12)">
+        <svg viewBox="0 0 1600 1000" preserveAspectRatio="xMaxYMax slice" aria-hidden="true"><defs><linearGradient id="d2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0d2c3a"/><stop offset=".64" stop-color="#1b4a5b"/></linearGradient></defs><rect width="1600" height="1000" fill="url(#d2)"/><g fill="#d8e3e0"><circle cx="700" cy="120" r="2"/><circle cx="980" cy="200" r="2"/><circle cx="1240" cy="90" r="2.5"/><circle cx="1420" cy="260" r="2"/><circle cx="560" cy="280" r="1.5"/></g><rect y="640" width="1600" height="360" fill="#0a2532"/><path d="M0 640 C200 600 420 610 700 626 V640H0Z" fill="#0d3140"/><path d="M1000 640 L1040 520 1090 470 1130 400 1200 372 1260 318 1420 296 1600 284V1000H1100Z" fill="#06171f"/><path d="M1140 392h460" stroke="#2b5466" stroke-width="3"/><path d="M1372 300v-70h16v70z" fill="#d8e0dc"/><path d="M1368 230h24v-14h-24z" fill="#06171f"/><path d="M1380 222 L900 170 900 260Z" fill="#f3e2b0" opacity=".14"/><circle cx="1380" cy="222" r="6" fill="#f3c46b"/></svg>
+        <i class="sun"></i><i class="glint"></i>
+        <div class="card right"><span class="when">Arrives 23:15 · 12 min stop</span><h2>Port Ivanne</h2><p>The line runs along the cliff for nine kilometres. Ask the attendant to dim the corridor; the harbour lights are worth it.</p><span class="meta"><span>Night one</span><span>Sea side: left</span></span></div>
+      </div>
+      <div class="scene s3" style="--ox:26%;--oy:30%;--sx:58%;--sy:52%;--sr:clamp(120px,15vw,220px);--sc:#fff1d2;--halo:rgba(255,241,210,.35)">
+        <svg viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><defs><linearGradient id="d3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d4dfcc"/><stop offset=".7" stop-color="#f1e5c4"/></linearGradient><pattern id="p1" width="70" height="140" patternUnits="userSpaceOnUse"><path d="M35 0L70 140H0Z" fill="#9fb39a"/></pattern><pattern id="p2" width="70" height="140" patternUnits="userSpaceOnUse"><path d="M35 0L70 140H0Z" fill="#5f7d61"/></pattern><pattern id="p3" width="70" height="140" patternUnits="userSpaceOnUse"><path d="M35 0L70 140H0Z" fill="#2c4433"/></pattern></defs><rect width="1600" height="1000" fill="url(#d3)"/><rect y="560" width="1600" height="140" fill="url(#p1)"/><rect y="690" width="1600" height="310" fill="#8aa085"/><g transform="translate(20 640) scale(1.6)"><rect width="1000" height="140" fill="url(#p2)"/></g><rect y="860" width="1600" height="140" fill="#3f5c46"/><g transform="translate(-30 800) scale(2.4)"><rect width="700" height="140" fill="url(#p3)"/></g></svg>
+        <i class="sun"></i>
+        <div class="card"><span class="when">Arrives 04:50 · 20 min stop</span><h2>Hallen Pass</h2><p>The highest point on the line, 1,412 metres. Coffee on the platform, and the mist sitting in the pines below the track.</p><span class="meta"><span>Dawn</span><span>Altitude 1,412 m</span></span></div>
+      </div>
+      <div class="scene s4" style="--ox:58%;--oy:52%;--sx:80%;--sy:26%;--sr:clamp(70px,8vw,120px);--sc:#f7e7b2;--halo:rgba(247,231,178,.3)">
+        <svg viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><defs><linearGradient id="d4" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b9d0dd"/><stop offset=".6" stop-color="#e8eff2"/></linearGradient></defs><rect width="1600" height="1000" fill="url(#d4)"/><path d="M0 640 L240 420 380 520 560 360 760 560 960 400 1180 580 1360 440 1600 600V1000H0Z" fill="#a8bccb"/><path d="M560 360l-60 60 40-10 20 30 30-40 40 20zM960 400l-50 50 40-6 30 24 30-30z" fill="#f7fafb"/><rect y="640" width="1600" height="360" fill="#f6f8f9"/><path d="M0 760h1600" stroke="#7f95a3" stroke-width="3"/><g transform="translate(-340 0)"><path d="M620 736h260v24H620zM890 738h150v22H890zM1050 738h150v22h-150z" fill="#c63a2d"/><path d="M640 744h40M700 744h40M760 744h40M910 744h30M960 744h30M1070 744h30M1120 744h30" stroke="#f6d9a6" stroke-width="6"/></g></svg>
+        <i class="sun"></i>
+        <div class="card right"><span class="when">Arrives 11:30 · Terminus</span><h2>Vael</h2><p>Sixteen hours, four climates and one bed made twice. The station café keeps a table for the night train until noon.</p><span class="meta"><span>Day two</span><span>Last stop</span></span></div>
+      </div>
+    </div>
+  </section>
+  <section class="fares" id="fares" aria-labelledby="fh">
+    <div><h2 id="fh">Fares</h2><p>Every ticket includes dinner, breakfast at Hallen Pass, and a window. Departures every Tuesday, Friday and Sunday from 4 November.</p></div>
+    <table><thead><tr><th>Berth</th><th>Sleeps</th><th>From</th></tr></thead><tbody>
+      <tr><td><b>Reclining seat</b></td><td>1</td><td>€89</td></tr>
+      <tr><td><b>Couchette, six berths</b></td><td>1</td><td>€139</td></tr>
+      <tr><td><b>Private cabin</b></td><td>2</td><td>€189 pp</td></tr>
+      <tr><td><b>Cabin with shower</b></td><td>2</td><td>€264 pp</td></tr>
+    </tbody></table>
+  </section>
+</main>
+<script>
+(() => {
+  const seq = document.getElementById('seq'), lis = [...document.querySelectorAll('.route li')];
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const native = window.CSS && CSS.supports('animation-timeline: view()');
+  let raf = 0;
+  const tick = () => {
+    raf = 0;
+    let t;
+    if (reduce) {
+      const mid = innerHeight / 2, sc = [...document.querySelectorAll('.scene')];
+      const i = Math.max(0, sc.findLastIndex((s) => s.getBoundingClientRect().top <= mid));
+      t = [0, .2, .52, .84][i]; if (seq.getBoundingClientRect().bottom < mid) t = 1;
+    } else {
+      const r = seq.getBoundingClientRect();
+      t = Math.min(1, Math.max(0, -r.top / (r.height - innerHeight)));
+      if (!native) seq.style.setProperty('--t', t.toFixed(4));
+    }
+    document.querySelector('.route').style.setProperty('--t', t);
+    lis.forEach((l) => l.classList.toggle('on', t >= +l.dataset.at - .001));
+  };
+  addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(tick); }, { passive: true });
+  addEventListener('resize', tick); tick();
+})();
+</script>
+</body>
+</html>

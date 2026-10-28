@@ -161,6 +161,7 @@ Use the `game` recipe. Coin-op is the dark cabinet. Ticket booth is the daylight
 - Chrome over a running game: `game-hud`. Score, lives, and pause. Not a second game.
 - Friends: `game-lobby`. A room code, ready states, then the table. Script the other players. Do not leave a spinner that never resolves.
 - Scores: `game-leaderboard`. The player's own row is marked. Ranks are computed, not typed in as a picture.
+- Other game languages, not pixel: an RPG inventory with rarity frames is `game-fantasy-inventory`. A sci-fi loadout is `game-scifi-loadout`. A cozy sim HUD is `game-cozy-farm-hud`. A race results board is `game-racing-results`. A world map of quests is `game-quest-map`. A collectible pull or reveal is `game-gacha-pull-reveal`. Invent the world and characters; never a real game or franchise.
 - Motion snaps. Pixel work uses `steps()`, a 4px grid, and no blur. The Arcade pairing's caution still applies: that mono is for the game, not for a long article.
 
 Three.js is for a scene: a camera, lights, and meshes. It is not for a gradient.

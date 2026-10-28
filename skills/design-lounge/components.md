@@ -183,20 +183,28 @@ Website navigation. Pick one header per site, by the brand, not by habit:
 - A SaaS, docs or tool site: `navbar-hide-on-scroll`. Many products to explain: `mega-menu-product-grid`.
 - A portfolio, studio or agency: `navbar-vertical-rail`, `navbar-island-morph`, or `navbar-floating-pill-shrink`.
 - On a phone the header becomes a menu button. An open menu or drawer keeps keyboard focus inside it, closes on Escape, and puts focus back on the button when it closes. A studio or brand site uses `hamburger-circle-reveal`. A shop or a site with many sections uses `hamburger-drawer-accordion`. A site people come back to every week, like a gym, a restaurant or a PWA, may use `mobile-web-bottom-nav` instead. A marketing page does not.
-- An app shell: `sidebar-workspace-switcher`, or `collapsing-sidebar-rail` when the work needs room. Docs: `sidebar-docs-toc` or `docs-three-column`.
+- An app shell: `sidebar-workspace-switcher`, or `collapsing-sidebar-rail` when the work needs room. A shell that floats off the window edge: `sidebar-floating-island`. Mail: `sidebar-mail-folders`. An AI chat app's history: `sidebar-chat-history`. Docs: `sidebar-docs-toc` or `docs-three-column`.
 
 Website sections. Each block below has a piece. Use it, restyled onto the theme, before you build a generic block:
 
-- Hero: a tool with a real interface uses `hero-split-ui-stack`. A marketplace, travel, or booking site leads with search, `hero-search-marketplace`.
-- Features: `features-alternating-rows`, `features-tabbed-preview`, or `bento-feature-grid`. Never three equal icon cards.
+- Hero: a tool with a real interface uses `hero-split-ui-stack`. A marketplace, travel, or booking site leads with search, `hero-search-marketplace`. An AI agent product shows it working, `hero-agent-at-work`. A physical product turns in 3D, `hero-3d-product-turn`. A product with several live parts is a bento, `hero-bento-intro`. Glass, when the family is glass, is `hero-liquid-glass-layers`. A calm editorial brand that wants light in motion: `hero-dither-light-field`. Type-led and fast, like sport or timing: `hero-kinetic-scroll-type`. Comics, stories, or a playful app: `hero-manga-panels`.
+- Features: `features-alternating-rows`, `features-tabbed-preview`, or `bento-feature-grid`. Never three equal icon cards. A tool whose parts can be tried on the page: `features-scroll-driven-cards`. A result you show against its input (cleanup, colour, audio): `features-before-after-slider`. Four features with a large screen each: `features-accordion-media-swap`. How it works, in three or four real artefacts: `features-giant-numeral-steps`. Several surfaces of one product: `features-stacked-3d-tabs`. An assistant: `features-ai-chat-demo`, labelled as an example.
 - Proof: many short voices go in `testimonials-masonry-wall`. Customers with numbers go in `testimonials-metric-tabs`. Client names go in `logos-grid-case-hover` or `logos-mono-marquee`. Figures go in `stats-count-up-band`.
 - Price: a price that grows with use is `pricing-usage-slider`. Fixed plans are `pricing-annual-toggle-roll`.
 - Questions: more than eight questions use `faq-category-accordion`.
 - Close: a signup ask is `cta-giant-email-band`. An agency or freelancer inquiry is `contact-project-brief-steps`.
-- Footer: a product with many pages uses `footer-sitemap-columns`. A portfolio or personal site picks from the footer list in Sections, one by one in [website.md](website.md). Do not reach for the same footer every time.
+- Footer: a product with many pages uses `footer-sitemap-columns`. A developer tool may use `footer-terminal-prompt`. A shop, café, or clinic people visit uses `footer-local-hours-map`, with open or closed computed live. A studio's big closing line: `footer-curtain-reveal`. A portfolio or personal site picks from the footer list in Sections, one by one in [website.md](website.md). Do not reach for the same footer every time.
 - Work, about, and contact on a website also pick from the lists in Sections, one by one in [website.md](website.md).
 
 App screens on the web. An AI assistant or chat tool is `ai-chat-workspace`: answers stream, sources are numbered, Stop is visible while it streams. Team and seats are `settings-team-members`. Uploads are `file-upload-manager`: every row shows progress, and a failed row has Retry. A week of bookings or shifts is `calendar-week-planner`. A first run that creates something is `onboarding-workspace-setup`, with a live preview of what they are making. A missing page is `error-404-editorial` or `terminal-404`: it has search and four real links, never only "Go home".
+
+Dialogs and popups. A plain confirm is `modal-dialog-focus-trap`. A destructive act that cannot be undone, like deleting a project, is `dialog-type-to-confirm`: the name is typed before Delete enables. Creating something in steps inside one modal: `dialog-wizard-steps`. Sharing with people and roles: `dialog-share-invite`. Release notes: `popup-whats-new-slides`. A first-run tour: `popup-onboarding-tour`, four stops at most. A marketing popup only when they asked for one: `popup-exit-offer`, once per visit, with a real reason and a real No thanks. Never on a tool people use daily.
+
+Money. Investing: `fintech-portfolio-dashboard`. Card settings: `fintech-card-controls`. Budgets: `fintech-budget-envelopes`. Invoices: `fintech-invoice-builder`. Sending crypto: `fintech-crypto-send`, with review and hold to send. A premium card's landing page: `fintech-metal-card-landing`. Amounts use tabular figures; money is never decoration.
+
+Boards. A planning board is `kanban-board`. A roadmap across time is `board-roadmap-swimlanes`. A moodboard or reference wall is `board-moodboard-canvas`. A year in review is `card-wrapped-story`. A link-in-bio page is `card-link-in-bio-bento`.
+
+Email. An email is not a web page: it is 600px tables, inline CSS, a web-safe font stack, and images as PNGs in a real send, because mail clients drop SVG and gradients. A newsletter is `email-newsletter-editorial`. A launch is `email-product-launch`. A receipt is `email-receipt-transactional`. Each brief says how it handles dark mode.
 
 Tablet. A shop or cafe till is `tablet-pos-register`. Writing is `tablet-notes-three-pane`. A screen read from across a room, like a kitchen, is `tablet-cook-mode`. A front desk is `tablet-kiosk-checkin`, with 64px keys and an automatic reset. PWA offline: saved items are `pwa-offline-library`. Work done offline that must send later is `pwa-outbox-sync`.
 

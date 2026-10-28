@@ -1,0 +1,214 @@
+<!-- Design Lounge piece: board-roadmap-swimlanes · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Roadmap swimlanes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#121413;--panel:#181b19;--panel-2:#202421;--line:#2a2e2b;--line-2:#3a3f3b;
+  --ink:#ecefea;--ink-2:#b4bbb3;--ink-3:#8f978f;
+  --today:#d8f25a;--today-ink:#121413;
+  --shipped:#6fc28b;--shipped-ink:#0d1f14;--progress:#f0b44c;--progress-ink:#2a1b00;--risk:#f07a63;--risk-ink:#2a0e08;--planned:#6e766f;
+  --display:"Bebas Neue",Impact,sans-serif;--ui:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --lane-w:184px;--row-h:46px;--bar-h:34px;--r:6px;
+  --sh-drag:0 14px 30px -10px rgba(0,0,0,.7),0 0 0 2px var(--ink);
+  --t-micro:140ms;--t-layout:280ms;--ease:cubic-bezier(.2,.7,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:13px/1.4 var(--ui);display:flex;flex-direction:column;overflow:hidden;-webkit-font-smoothing:antialiased}
+header{display:flex;align-items:flex-end;gap:28px;padding:22px 28px 16px;flex-wrap:wrap}
+h1{margin:0;font:400 64px/.84 var(--display);letter-spacing:.01em}
+h1 span{color:var(--today)}
+.sub{color:var(--ink-3);font-size:12px;margin-top:6px}
+.filters{display:flex;gap:6px;margin-left:auto;overflow-x:auto;scrollbar-width:none;max-width:100%}
+.chip{flex:none;height:36px;padding:0 14px;border-radius:18px;border:1px solid var(--line-2);background:transparent;color:var(--ink-2);font:500 13px var(--ui);cursor:pointer;display:flex;align-items:center;gap:8px;transition:background var(--t-micro) var(--ease),color var(--t-micro) var(--ease),border-color var(--t-micro) var(--ease)}
+.chip:hover{border-color:var(--ink-3);color:var(--ink)}
+.chip[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.chip b{font-weight:600;font-variant-numeric:tabular-nums;opacity:.7}
+button:focus-visible{outline:2px solid var(--today);outline-offset:2px}
+.legend{display:flex;gap:16px;padding:0 28px 12px;color:var(--ink-2);font-size:12px;flex-wrap:wrap}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.legend .hint{margin-left:auto;color:var(--ink-3)}
+.scroll{flex:1;min-height:0;overflow:auto;margin:0 28px 24px;border:1px solid var(--line);border-radius:10px;background:var(--panel)}
+.grid{min-width:1000px;position:relative}
+.head,.lane{display:grid;grid-template-columns:var(--lane-w) 1fr}
+.head{position:sticky;top:0;z-index:5;background:var(--panel);border-bottom:1px solid var(--line)}
+.corner{position:sticky;left:0;z-index:2;background:var(--panel);border-right:1px solid var(--line);padding:12px 16px;color:var(--ink-3);font-size:11px;letter-spacing:.08em;text-transform:uppercase;display:flex;align-items:flex-end}
+.qs{display:grid;grid-template-columns:repeat(4,1fr)}
+.q{border-left:1px solid var(--line);padding:10px 0 0}
+.q:first-child{border-left:0}
+.q h2{margin:0 0 4px 12px;font:400 28px/1 var(--display);letter-spacing:.02em}
+.q h2 small{font:500 11px var(--ui);color:var(--ink-3);letter-spacing:.02em;margin-left:6px}
+.ms{display:grid;grid-template-columns:repeat(3,1fr);font-size:11px;color:var(--ink-3);padding-bottom:8px}
+.ms span{padding-left:12px}
+.lane{border-bottom:1px solid var(--line);transition:opacity var(--t-layout) var(--ease)}
+.lane:last-child{border-bottom:0}
+.lane[hidden]{display:none}
+.lane.in{animation:in var(--t-layout) var(--ease-out)}
+@keyframes in{from{opacity:0;transform:translateY(-6px)}}
+.who{position:sticky;left:0;z-index:2;background:var(--panel);border-right:1px solid var(--line);padding:12px 16px;display:flex;flex-direction:column;gap:4px}
+.who h3{margin:0;font:400 22px/1 var(--display);letter-spacing:.03em}
+.who p{margin:0;color:var(--ink-3);font-size:12px}
+.track{position:relative;padding:8px 0;background:repeating-linear-gradient(90deg,transparent 0 calc(100%/12 - 1px),rgba(255,255,255,.035) calc(100%/12 - 1px) calc(100%/12))}
+.row{position:relative;height:var(--row-h)}
+.bar{position:absolute;top:5px;height:var(--bar-h);border-radius:var(--r);border:0;padding:0 10px;display:flex;align-items:center;gap:8px;font:600 12.5px/1 var(--ui);text-align:left;white-space:nowrap;overflow:hidden;cursor:grab;touch-action:none;user-select:none;transition:box-shadow var(--t-micro) var(--ease),transform var(--t-micro) var(--ease)}
+.bar .t{overflow:hidden;text-overflow:ellipsis;min-width:0}
+.bar .o{margin-left:auto;flex:none;width:20px;height:20px;border-radius:50%;font:700 9px/20px var(--ui);text-align:center;background:rgba(0,0,0,.18)}
+.bar:hover{transform:translateY(-1px);box-shadow:0 6px 14px -6px rgba(0,0,0,.6)}
+.s-shipped{background:var(--shipped);color:var(--shipped-ink)}
+.s-progress{background:var(--progress);color:var(--progress-ink)}
+.s-risk{background:var(--risk);color:var(--risk-ink)}
+.s-planned{background:var(--panel-2);color:var(--ink);box-shadow:inset 0 0 0 1px var(--planned)}
+.s-planned .o{background:var(--line-2)}
+.bar.drag{cursor:grabbing;z-index:6;box-shadow:var(--sh-drag);transform:translateY(-2px);transition:none}
+.tip{position:absolute;z-index:7;transform:translate(-50%,-100%);margin-top:-8px;background:var(--ink);color:var(--bg);font:600 12px var(--ui);padding:6px 9px;border-radius:6px;white-space:nowrap;pointer-events:none;opacity:0;transition:opacity var(--t-micro) var(--ease)}
+.tip.on{opacity:1}
+.overlay{position:absolute;top:0;bottom:0;left:var(--lane-w);right:0;pointer-events:none;z-index:1}
+.row{z-index:2}
+.who{z-index:3}
+.freeze{position:absolute;top:0;bottom:0;background:repeating-linear-gradient(135deg,rgba(240,180,76,.07) 0 6px,transparent 6px 12px);border-left:1px dashed rgba(240,180,76,.4);border-right:1px dashed rgba(240,180,76,.4)}
+.fz{position:absolute;bottom:-9px;z-index:5;font:600 10px var(--ui);letter-spacing:.08em;text-transform:uppercase;color:var(--progress);background:var(--panel);padding:2px 6px;border-radius:4px}
+.today{position:absolute;top:0;bottom:0;width:2px;margin-left:-1px;background:var(--today)}
+.qs{position:relative}
+.pill{position:absolute;bottom:-11px;transform:translateX(-50%);z-index:5;background:var(--today);color:var(--today-ink);font:400 15px/1 var(--display);letter-spacing:.06em;padding:4px 7px 3px;border-radius:4px;white-space:nowrap}
+@media (max-width:760px){header{padding:18px 16px 12px;gap:14px}h1{font-size:48px}.filters{margin-left:0}.legend{padding:0 16px 10px}.legend .hint{display:none}.scroll{margin:0 16px 16px}:root{--lane-w:120px}.who h3{font-size:18px}}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important;animation:none!important}}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>Wayfare roadmap <span>FY27</span></h1>
+    <div class="sub">Jul 2026 to Jun 2027 · 21 initiatives · updated Oct 28 by Priya Venkat</div>
+  </div>
+  <div class="filters" role="group" aria-label="Filter by team" id="filters"></div>
+</header>
+<div class="legend" aria-hidden="true">
+  <span><i style="background:var(--shipped)"></i>Shipped</span>
+  <span><i style="background:var(--progress)"></i>In progress</span>
+  <span><i style="background:var(--risk)"></i>At risk</span>
+  <span><i style="background:var(--panel-2);box-shadow:inset 0 0 0 1px var(--planned)"></i>Planned</span>
+  <span class="hint">Drag a bar to move it by weeks · arrow keys work too</span>
+</div>
+<div class="scroll" id="scroll">
+  <div class="grid" id="grid">
+    <div class="head">
+      <div class="corner">Team</div>
+      <div class="qs">
+        <div class="q"><h2>Q1<small>Jul to Sep 2026</small></h2><div class="ms"><span>Jul</span><span>Aug</span><span>Sep</span></div></div>
+        <div class="q"><h2>Q2<small>Oct to Dec 2026</small></h2><div class="ms"><span>Oct</span><span>Nov</span><span>Dec</span></div></div>
+        <div class="q"><h2>Q3<small>Jan to Mar 2027</small></h2><div class="ms"><span>Jan</span><span>Feb</span><span>Mar</span></div></div>
+        <span class="pill" style="left:calc(3.87/12*100%)">Today Oct 28</span>
+        <span class="fz" style="left:calc(4.63/12*100% + 6px)">Peak freeze</span>
+        <div class="q"><h2>Q4<small>Apr to Jun 2027</small></h2><div class="ms"><span>Apr</span><span>May</span><span>Jun</span></div></div>
+      </div>
+    </div>
+    <div id="lanes"></div>
+    <div class="overlay" aria-hidden="true">
+      <div class="freeze" style="left:calc(4.63/12*100%);width:calc(1.53/12*100%)"></div>
+      <div class="today" style="left:calc(3.87/12*100%)"></div>
+    </div>
+    <div class="tip" id="tip" role="status" aria-live="polite"></div>
+  </div>
+</div>
+<script>
+(() => {
+  const TEAMS = [
+    ['platform', 'Platform', 'Lead · Joon Park', [
+      [['Event bus v2', 0, 2.5, 'shipped', 'JP'], ['Multi-region failover', 3, 6.2, 'progress', 'AM'], ['SOC 2 Type II', 8.6, 11.6, 'planned', 'JP']],
+      [['Rate limiter rewrite', 1.5, 3.5, 'shipped', 'LS'], ['Audit log export', 6.5, 8.75, 'planned', 'LS']]]],
+    ['mobile', 'Mobile', 'Lead · Ana Ruiz', [
+      [['Offline scan mode', .5, 3, 'shipped', 'AR'], ['Driver app 4.0', 3.25, 6.5, 'risk', 'AR'], ['Android tablets', 7, 10, 'planned', 'TB']],
+      [['Proof of delivery photos', 2, 4.5, 'progress', 'TB'], ['Route replay', 5.25, 7.5, 'planned', 'MK']]]],
+    ['payments', 'Payments', 'Lead · Femi Ade', [
+      [['Carrier payouts', .75, 3.5, 'shipped', 'FA'], ['Invoice disputes', 3.5, 5.75, 'progress', 'FA'], ['Instant settle', 8.75, 12, 'planned', 'CL']],
+      [['EU VAT engine', 5, 8.5, 'planned', 'CL']]]],
+    ['growth', 'Growth', 'Lead · Sam Oyelaran', [
+      [['Self-serve trial', 0, 2, 'shipped', 'SO'], ['Usage-based pricing', 2.5, 5, 'progress', 'SO'], ['Partner directory', 8, 11, 'planned', 'RN']],
+      [['Referral credits', 5.5, 7.5, 'planned', 'RN']]]],
+    ['design', 'Design systems', 'Lead · Mira Holm', [
+      [['Tokens 2.0', .5, 2.75, 'shipped', 'MH'], ['Console dark mode', 3.25, 5.5, 'progress', 'MH'], ['Map components', 6, 9.5, 'planned', 'EK']]]]
+  ];
+  const LABEL = { shipped: 'Shipped', progress: 'In progress', risk: 'At risk', planned: 'Planned' };
+  const MON = ['Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
+  const DAYS = [31, 31, 30, 31, 30, 31, 31, 28, 31, 30, 31, 30];
+  const WEEK = .25;
+  const fmt = (m) => { m = Math.min(11.999, Math.max(0, m)); const i = Math.floor(m); return MON[i] + ' ' + (Math.floor((m - i) * DAYS[i]) + 1); };
+  const range = (s, e) => fmt(s) + ' to ' + fmt(e - .01);
+  const lanes = document.getElementById('lanes'), tip = document.getElementById('tip'), grid = document.getElementById('grid'), filters = document.getElementById('filters');
+  let count = 0;
+  TEAMS.forEach(([id, name, lead, rows]) => {
+    const n = rows.flat().length; count += n;
+    const lane = document.createElement('section');
+    lane.className = 'lane'; lane.dataset.team = id; lane.setAttribute('aria-label', name);
+    lane.innerHTML = `<div class="who"><h3>${name}</h3><p>${lead}</p><p>${n} items</p></div><div class="track"></div>`;
+    const track = lane.querySelector('.track');
+    rows.forEach((items) => {
+      const row = document.createElement('div'); row.className = 'row';
+      items.forEach(([t, s, e, st, o]) => {
+        const b = document.createElement('button');
+        b.type = 'button'; b.className = 'bar s-' + st; b.dataset.s = s; b.dataset.len = e - s;
+        b.innerHTML = `<span class="t">${t}</span><span class="o" aria-hidden="true">${o}</span>`;
+        b.dataset.name = t; b.dataset.st = LABEL[st];
+        place(b); row.appendChild(b);
+      });
+      track.appendChild(row);
+    });
+    lanes.appendChild(lane);
+  });
+  function place(b) {
+    const s = +b.dataset.s, len = +b.dataset.len;
+    b.style.left = `calc(${s / 12 * 100}% + 2px)`; b.style.width = `calc(${len / 12 * 100}% - 4px)`;
+    b.setAttribute('aria-label', `${b.dataset.name}, ${b.dataset.st}, ${range(s, s + len)}. Left and right arrows move by a week.`);
+  }
+  function showTip(b) {
+    const g = grid.getBoundingClientRect(), r = b.getBoundingClientRect();
+    tip.textContent = range(+b.dataset.s, +b.dataset.s + +b.dataset.len);
+    tip.style.left = (r.left - g.left + r.width / 2) + 'px'; tip.style.top = (r.top - g.top) + 'px';
+    tip.classList.add('on');
+  }
+  const move = (b, s) => { b.dataset.s = Math.max(0, Math.min(12 - +b.dataset.len, Math.round(s / WEEK) * WEEK)); place(b); showTip(b); };
+  let drag = null;
+  lanes.addEventListener('pointerdown', (e) => {
+    const b = e.target.closest('.bar'); if (!b || e.button !== 0) return;
+    const track = b.closest('.track');
+    drag = { b, x: e.clientX, s: +b.dataset.s, per: track.getBoundingClientRect().width / 12 };
+    b.classList.add('drag'); b.setPointerCapture(e.pointerId); showTip(b);
+  });
+  lanes.addEventListener('pointermove', (e) => { if (drag) move(drag.b, drag.s + (e.clientX - drag.x) / drag.per); });
+  const end = () => { if (!drag) return; drag.b.classList.remove('drag'); tip.classList.remove('on'); drag = null; };
+  lanes.addEventListener('pointerup', end); lanes.addEventListener('pointercancel', end);
+  lanes.addEventListener('keydown', (e) => {
+    const b = e.target.closest('.bar'); if (!b) return;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { e.preventDefault(); move(b, +b.dataset.s + (e.key === 'ArrowRight' ? WEEK : -WEEK)); }
+  });
+  lanes.addEventListener('focusout', () => { if (!drag) tip.classList.remove('on'); });
+  const chips = [['all', 'All teams', count], ...TEAMS.map(([id, name, , rows]) => [id, name, rows.flat().length])];
+  chips.forEach(([id, name, n]) => {
+    const c = document.createElement('button');
+    c.type = 'button'; c.className = 'chip'; c.dataset.team = id; c.setAttribute('aria-pressed', String(id === 'all'));
+    c.innerHTML = `${name}<b>${n}</b>`;
+    filters.appendChild(c);
+  });
+  filters.addEventListener('click', (e) => {
+    const c = e.target.closest('.chip'); if (!c) return;
+    const id = c.dataset.team;
+    filters.querySelectorAll('.chip').forEach((o) => o.setAttribute('aria-pressed', String(o === c)));
+    lanes.querySelectorAll('.lane').forEach((l) => {
+      const show = id === 'all' || l.dataset.team === id;
+      if (show && l.hidden) { l.classList.remove('in'); void l.offsetWidth; l.classList.add('in'); }
+      l.hidden = !show;
+    });
+  });
+  // phones: open the scroller at today
+  const sc = document.getElementById('scroll');
+  if (sc.scrollWidth > sc.clientWidth) sc.scrollLeft = 3 * (sc.scrollWidth - 120) / 12 - 8;
+})();
+</script>
+</body>
+</html>

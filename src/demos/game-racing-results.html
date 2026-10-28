@@ -1,0 +1,182 @@
+<!-- Design Lounge piece: game-racing-results · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Valtera Grand Prix · Final classification</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#e8eaed; --sheet:#ffffff; --row-alt:#f5f6f8; --line:#d5d9de; --ink:#0f1216; --ink-2:#4a525c; --ink-3:#5f6873;
+  --bar:#0f1216; --on-bar:#f3f4f6; --red:#d7261e; --purple:#7a2fc4; --green:#14804a; --yellow:#e8b800; --up:#14804a; --down:#c0281f;
+  --font:"Oswald",Impact,sans-serif; --ease:cubic-bezier(.2,.7,.2,1); --ease-out:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:400 15px/1.3 var(--font);overflow-x:hidden}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--red);outline-offset:2px}
+.top{display:flex;align-items:stretch;background:var(--bar);color:var(--on-bar);height:84px;position:relative}
+.rnd{background:var(--red);display:flex;flex-direction:column;justify-content:center;padding:0 34px 0 28px;clip-path:polygon(0 0,100% 0,calc(100% - 22px) 100%,0 100%)}
+.rnd b{font:700 34px/1 var(--font)}.rnd span{font:500 12px/1 var(--font);letter-spacing:.2em;text-transform:uppercase;margin-top:4px}
+.race{display:flex;flex-direction:column;justify-content:center;padding:0 24px}
+.race h1{font:600 30px/1 var(--font);margin:0;text-transform:uppercase;letter-spacing:.01em}
+.race p{margin:6px 0 0;font:400 14px/1 var(--font);color:#b9c0c8;letter-spacing:.06em;text-transform:uppercase}
+.flag{margin-left:auto;width:160px;background:conic-gradient(#f3f4f6 25%,#0f1216 0 50%,#f3f4f6 0 75%,#0f1216 0) 0 0/20px 20px;-webkit-mask:linear-gradient(90deg,transparent,#000 70%);mask:linear-gradient(90deg,transparent,#000 70%)}
+.status{display:flex;align-items:center;gap:14px;padding:0 24px 0 18px;font:500 13px/1 var(--font);letter-spacing:.2em;text-transform:uppercase;border-left:1px solid #2a3038}
+.replay{background:none;border:1px solid #6b747f;color:var(--on-bar);padding:9px 14px;font:500 12px/1 var(--font);letter-spacing:.16em;text-transform:uppercase;display:flex;gap:8px;align-items:center}
+.replay:hover{border-color:var(--on-bar)}
+.replay svg{width:14px;height:14px}
+main{display:grid;grid-template-columns:392px minmax(0,1fr);gap:22px;padding:22px 28px 24px;height:calc(100% - 84px)}
+.left{display:flex;flex-direction:column;gap:18px;min-height:0}
+/* podium */
+.podium{background:var(--sheet);flex:1;display:flex;flex-direction:column;padding:18px 20px 0;min-height:0;overflow:hidden}
+.lbl{font:500 12px/1 var(--font);letter-spacing:.22em;text-transform:uppercase;color:var(--ink-3)}
+.pods{flex:1;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;align-items:end;margin-top:12px}
+.pod{display:flex;flex-direction:column;align-items:center;text-align:center}
+.pod svg{width:62px;height:52px;margin-bottom:6px}
+.pod .cd{font:700 22px/1 var(--font);letter-spacing:.04em}
+.pod .nm{font:400 13px/1.2 var(--font);color:var(--ink-2);margin-top:2px}
+.pod .tm{font:500 14px/1 var(--font);margin:6px 0 10px;font-variant-numeric:tabular-nums}
+.blk{width:100%;background:var(--bar);color:var(--on-bar);display:flex;align-items:flex-start;justify-content:center;position:relative;transform-origin:50% 100%;animation:rise 640ms var(--ease-out) both}
+.blk::before{content:"";position:absolute;left:0;right:0;top:0;height:6px;background:var(--tc)}
+.blk b{font:700 clamp(64px,9vw,128px)/1 var(--font);margin-top:10px;letter-spacing:-.02em}
+.p1 .blk{height:230px;animation-delay:240ms}.p2 .blk{height:170px;animation-delay:120ms}.p3 .blk{height:130px;animation-delay:360ms}
+.p1 .blk b{color:#fff}
+@keyframes rise{from{transform:scaleY(0)}}
+/* next race */
+.next{background:var(--bar);color:var(--on-bar);display:grid;grid-template-columns:1fr 128px;gap:4px 16px;padding:18px 20px;position:relative;overflow:hidden}
+.next .lbl{color:#b9c0c8;grid-column:1/-1}
+.next h2{font:600 26px/1.05 var(--font);margin:6px 0 2px;text-transform:uppercase}
+.next p{margin:0;color:#c9cfd6;font-size:14px;letter-spacing:.04em}
+.cdn{display:flex;gap:14px;margin-top:12px}
+.cdn div{font:600 28px/1 var(--font);font-variant-numeric:tabular-nums}.cdn small{display:block;font:500 11px/1 var(--font);letter-spacing:.2em;color:#b9c0c8;margin-top:4px}
+.trk{grid-row:2/5;grid-column:2;align-self:center;width:128px;height:auto}
+.trk path{fill:none;stroke:var(--on-bar);stroke-width:5;stroke-linejoin:round;stroke-linecap:round}
+/* table */
+.sheet{background:var(--sheet);display:flex;flex-direction:column;min-height:0}
+.thead{display:flex;align-items:center;justify-content:space-between;padding:14px 18px 12px;gap:16px;border-bottom:2px solid var(--ink)}
+.thead h2{font:600 20px/1 var(--font);margin:0;text-transform:uppercase;letter-spacing:.02em}
+.seg{display:flex;border:1px solid var(--ink);transform:skewX(-12deg)}
+.seg button{border:0;background:none;padding:8px 14px;font:500 12px/1 var(--font);letter-spacing:.16em;text-transform:uppercase}
+.seg button span{display:inline-block;transform:skewX(12deg)}
+.seg button[aria-pressed=true]{background:var(--ink);color:#fff}
+.wrap{overflow-x:auto;flex:1;min-height:0}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;min-width:720px}
+th{font:500 11px/1 var(--font);letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3);text-align:left;padding:10px 8px 8px;white-space:nowrap}
+td{padding:0 8px;height:46px;border-bottom:1px solid var(--line);white-space:nowrap}
+tbody tr{animation:wipe 460ms var(--ease-out) both;animation-delay:calc(var(--i) * 45ms + 200ms)}
+@keyframes wipe{from{clip-path:inset(0 100% 0 0);transform:translateX(-24px)}to{clip-path:inset(0 0 0 0)}}
+tbody tr:nth-child(even){background:var(--row-alt)}
+tbody tr:hover{background:#eceef1}
+tbody tr[aria-selected=true]{background:#fff2c2}
+.pos{font:700 20px/1 var(--font);width:40px;text-align:center}
+.chg{width:44px;font:500 13px/1 var(--font)}
+.chg svg{width:9px;height:9px;margin-right:3px;vertical-align:1px}
+.chg.up{color:var(--up)}.chg.dn{color:var(--down)}.chg.eq{color:var(--ink-3)}
+.drv{display:flex;align-items:center;gap:10px}
+.drv i{width:4px;height:30px;background:var(--tc);flex:none}
+.drv b{font:700 17px/1 var(--font);letter-spacing:.04em;width:42px}
+.drv span{font:400 14px/1.15 var(--font)}.drv small{display:block;color:var(--ink-3);font-size:12px;letter-spacing:.04em;text-transform:uppercase}
+.gap{font:500 16px/1 var(--font)}
+.best{font:400 15px/1 var(--font)}
+.sec{display:inline-block;min-width:54px;text-align:center;padding:5px 6px 4px;font:500 13px/1 var(--font)}
+.s-p{background:var(--purple);color:#fff}.s-g{background:var(--green);color:#fff}.s-y{background:var(--yellow);color:#1a1400}
+.fl{display:inline-block;background:var(--purple);color:#fff;font:500 10px/1 var(--font);letter-spacing:.14em;padding:3px 5px 2px;margin-left:6px;vertical-align:2px}
+.pts{font:600 16px/1 var(--font);text-align:right}
+.dnf td{color:var(--ink-3)}
+.legend{display:flex;gap:18px;padding:10px 18px 12px;font:400 13px/1 var(--font);color:var(--ink-2);border-top:1px solid var(--line);flex-wrap:wrap}
+.legend span{display:flex;align-items:center;gap:6px}.legend i{width:14px;height:10px}
+@media (max-width:1100px){main{grid-template-columns:minmax(0,1fr);height:auto}.left{flex-direction:row}.podium{flex:1.4}.next{flex:1}}
+@media (max-width:760px){
+  .top{height:auto;flex-wrap:wrap}.rnd{padding:12px 30px 12px 16px}.race{padding:12px 16px;flex:1;min-width:0}.race h1{font-size:22px}.race p{line-height:1.3;white-space:normal}
+  .flag{display:none}.status{width:100%;border-left:0;border-top:1px solid #2a3038;padding:10px 16px;justify-content:space-between}
+  main{padding:16px;gap:16px}.left{flex-direction:column}.podium{min-height:380px}
+  .thead{flex-wrap:wrap}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:1ms!important}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="rnd"><b>R9</b><span>of 14</span></div>
+  <div class="race"><h1>Valtera Grand Prix</h1><p>Meridian GT Series · Autodromo Costa Valtera · 5.214 km · 58 laps</p></div>
+  <div class="flag" aria-hidden="true"></div>
+  <div class="status"><span>Final classification</span><button class="replay" id="replay" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 12a8 8 0 1 0 3-6.2M4 4v4h4"/></svg>Replay</button></div>
+</header>
+<main id="stage">
+  <div class="left">
+    <section class="podium" aria-labelledby="ph">
+      <div class="lbl" id="ph">Podium</div>
+      <div class="pods" id="pods"></div>
+    </section>
+    <section class="next" aria-labelledby="nh">
+      <div class="lbl">Next race · Round 10</div>
+      <div><h2 id="nh">Harrowgate Park</h2><p>8 to 9 November · 4.402 km<br>Forecast: rain, 60%</p></div>
+      <svg class="trk" viewBox="0 0 120 90" aria-hidden="true"><path d="M14 64c-8-14 2-30 16-30h24c8 0 10-10 18-14s22 0 26 10-4 16 2 24 12 14 2 22-24 2-34 2H34c-10 0-16-2-20-14z"/><circle cx="34" cy="78" r="4" fill="#d7261e"/></svg>
+      <div class="cdn" aria-label="Lights out in 11 days 4 hours 22 minutes"><div>11<small>Days</small></div><div>04<small>Hrs</small></div><div>22<small>Min</small></div></div>
+    </section>
+  </div>
+  <section class="sheet" aria-labelledby="th">
+    <div class="thead"><h2 id="th">Results · 58 laps</h2>
+      <div class="seg" role="group" aria-label="Time column"><button type="button" aria-pressed="true" data-m="gap"><span>Gap to leader</span></button><button type="button" aria-pressed="false" data-m="int"><span>Interval</span></button></div></div>
+    <div class="wrap" tabindex="0" aria-label="Results table, scrolls sideways on small screens">
+      <table><thead><tr><th>Pos</th><th>+/−</th><th>Driver</th><th>Laps</th><th id="gh">Gap</th><th>Best lap</th><th>S1</th><th>S2</th><th>S3</th><th>Pit</th><th style="text-align:right">Pts</th></tr></thead><tbody id="rows"></tbody></table>
+    </div>
+    <div class="legend"><span><i style="background:var(--purple)"></i>Fastest overall</span><span><i style="background:var(--green)"></i>Personal best</span><span><i style="background:var(--yellow)"></i>Slower than personal best</span></div>
+  </section>
+</main>
+<script>
+(() => {
+  const TC = {Halden:'#0b7a73', 'Velo Rosso':'#d7261e', Kaito:'#1f3f99', Arc:'#e07800', Northline:'#56606b', Ferrum:'#8a8f96'};
+  // code, name, team, grid, laps, gap (s from leader, or text), best, s1 s2 s3 [time, class], pits, pts
+  const R = [
+    ['ARE','Mila Arendt','Halden',3,58,0,'1:34.511',[['30.388','g'],['33.902','p'],['30.221','g']],2,25],
+    ['OKA','Ruth Okafor','Velo Rosso',1,58,3.417,'1:34.207',[['30.301','p'],['33.948','g'],['29.958','p']],2,19],
+    ['LIN','Tove Lindqvist','Kaito',2,58,7.902,'1:34.660',[['30.412','g'],['34.010','y'],['30.238','g']],2,15],
+    ['FER','Sol Ferreira','Halden',6,58,12.66,'1:34.893',[['30.520','y'],['34.105','g'],['30.268','g']],2,12],
+    ['MOR','Jules Moreau','Arc',4,58,18.115,'1:35.002',[['30.611','y'],['34.090','g'],['30.301','y']],3,10],
+    ['ISH','Kei Ishida','Kaito',9,58,24.43,'1:35.118',[['30.588','g'],['34.226','y'],['30.304','g']],2,8],
+    ['BRA','Dario Brandt','Northline',5,58,31.007,'1:35.240',[['30.702','y'],['34.198','g'],['30.340','y']],2,6],
+    ['CAS','Pia Castell','Arc',11,58,39.882,'1:35.371',[['30.655','g'],['34.402','y'],['30.314','g']],1,4],
+    ['NOV','Anton Novak','Velo Rosso',8,58,44.215,'1:35.506',[['30.810','y'],['34.311','y'],['30.385','g']],2,2],
+    ['WHI','Esme Whitlock','Northline',12,57,'+1 lap','1:35.904',[['30.902','y'],['34.560','g'],['30.442','y']],2,1],
+    ['SAN','Luca Santoro','Ferrum',7,33,'DNF','1:35.660',[['30.744','g'],['34.481','y'],['30.435','y']],1,0],
+  ];
+  let mode = 'gap', sel = -1;
+  const fmt = (s) => '+' + s.toFixed(3);
+  const tri = (up) => `<svg viewBox="0 0 10 10" aria-hidden="true"><path d="${up ? 'M5 1l4 7H1z' : 'M5 9L1 2h8z'}" fill="currentColor"/></svg>`;
+  const helmet = (c) => `<svg viewBox="0 0 64 54" aria-hidden="true"><path d="M6 36C6 16 20 4 36 4c14 0 24 10 24 24v12H30l-6 8H10c-3 0-4-2-4-5z" fill="${c}"/><path d="M30 22h28v12H30c-3 0-5-2-5-6s2-6 5-6z" fill="#0f1216"/><path d="M8 30c8-2 16-10 22-22" stroke="#fff" stroke-width="4" fill="none" opacity=".85"/></svg>`;
+  const pods = document.getElementById('pods');
+  pods.innerHTML = [1, 0, 2].map(i => { const r = R[i];
+    return `<div class="pod p${i + 1}" style="--tc:${TC[r[2]]}">${helmet(TC[r[2]])}<div class="cd">${r[0]}</div><div class="nm">${r[1]}</div><div class="tm">${i ? fmt(r[5]) : '1:31:48.302'}</div><div class="blk"><b>${i + 1}</b></div></div>`; }).join('');
+  const rows = document.getElementById('rows');
+  const draw = () => {
+    document.getElementById('gh').textContent = mode === 'gap' ? 'Gap' : 'Interval';
+    rows.innerHTML = R.map((r, i) => { const d = r[3] - (i + 1), prev = R[i - 1];
+      const g = i === 0 ? '1:31:48.302' : typeof r[5] === 'string' ? r[5] : mode === 'gap' ? fmt(r[5]) : fmt(r[5] - prev[5]);
+      return `<tr style="--i:${i};--tc:${TC[r[2]]}" class="${r[5] === 'DNF' ? 'dnf' : ''}" aria-selected="${i === sel}" tabindex="0">
+        <td class="pos">${r[5] === 'DNF' ? 'DNF' : i + 1}</td>
+        <td class="chg ${r[5] === 'DNF' ? 'eq' : d > 0 ? 'up' : d < 0 ? 'dn' : 'eq'}">${r[5] === 'DNF' || !d ? '<span aria-label="no change">0</span>' : tri(d > 0) + Math.abs(d)}</td>
+        <td><div class="drv"><i></i><b>${r[0]}</b><span>${r[1]}<small>${r[2]}</small></span></div></td>
+        <td>${r[4]}</td><td class="gap">${g}</td>
+        <td class="best">${r[6]}${r[6] === '1:34.207' ? '<span class="fl">FL</span>' : ''}</td>
+        ${r[7].map(([t, c]) => `<td><span class="sec s-${c}" title="${{p: 'Fastest overall', g: 'Personal best', y: 'Slower than personal best'}[c]}">${t}</span></td>`).join('')}
+        <td>${r[8]}</td><td class="pts">${r[9]}</td></tr>`; }).join('');
+  };
+  rows.addEventListener('click', e => { const tr = e.target.closest('tr'); if (!tr) return; sel = [...rows.children].indexOf(tr); [...rows.children].forEach((t, i) => t.setAttribute('aria-selected', i === sel)); });
+  rows.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); e.target.click(); } });
+  document.querySelectorAll('.seg button').forEach(b => b.addEventListener('click', () => {
+    document.querySelectorAll('.seg button').forEach(x => x.setAttribute('aria-pressed', x === b)); mode = b.dataset.m; draw();
+    rows.querySelectorAll('tr').forEach(t => t.style.animation = 'none');
+  }));
+  document.getElementById('replay').addEventListener('click', () => {
+    const els = [...rows.children, ...document.querySelectorAll('.blk')];
+    els.forEach(el => { el.style.animation = 'none'; }); void document.body.offsetWidth; els.forEach(el => { el.style.animation = ''; });
+  });
+  draw();
+})();
+</script>
+</body>
+</html>

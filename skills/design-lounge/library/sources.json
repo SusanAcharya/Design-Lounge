@@ -50,7 +50,11 @@
         "phone-orders",
         "phone-cart",
         "chart-share-bar",
-        "form-brutal-signup"
+        "form-brutal-signup",
+        "dialog-type-to-confirm",
+        "fintech-card-controls",
+        "fintech-crypto-send",
+        "email-receipt-transactional"
       ]
     },
     {
@@ -113,7 +117,10 @@
         "contact-project-brief-steps",
         "phone-delete-account",
         "pricing-brutal-tiers",
-        "settings-tactile-panel"
+        "settings-tactile-panel",
+        "ascii-style",
+        "popup-exit-offer",
+        "fintech-budget-envelopes"
       ]
     },
     {
@@ -175,7 +182,12 @@
         "pwa-offline-library",
         "handwritten-letter",
         "phone-privacy-data",
-        "selection-rewrite"
+        "selection-rewrite",
+        "dialog-share-invite",
+        "game-racing-results",
+        "card-link-in-bio-bento",
+        "email-newsletter-editorial",
+        "email-product-launch"
       ]
     },
     {
@@ -255,7 +267,11 @@
         "stage-passes-compare",
         "widget-pomodoro",
         "three-room-look",
-        "phone-notification-settings"
+        "phone-notification-settings",
+        "hero-bento-intro",
+        "features-accordion-media-swap",
+        "features-ai-chat-demo",
+        "dialog-wizard-steps"
       ]
     },
     {
@@ -286,7 +302,8 @@
         "time-field",
         "mockup-watch-faces",
         "widget-world-clocks",
-        "hero-brutal-stack"
+        "hero-brutal-stack",
+        "game-cozy-farm-hud"
       ]
     },
     {
@@ -321,7 +338,13 @@
         "input-otp-underline",
         "chart-bar-week",
         "handwritten-homepage",
-        "m3-settings-list"
+        "m3-settings-list",
+        "ascii-art-homepage",
+        "hero-agent-at-work",
+        "features-scroll-driven-cards",
+        "footer-terminal-prompt",
+        "game-quest-map",
+        "fintech-portfolio-dashboard"
       ]
     },
     {
@@ -412,7 +435,8 @@
         "switch-row",
         "trail-type",
         "label-roll-button",
-        "playable-product-hero"
+        "playable-product-hero",
+        "scroll-exploding-grid"
       ]
     },
     {
@@ -445,7 +469,9 @@
         "navbar-section-tagline-pill",
         "navbar-split-centered-logo",
         "navbar-vertical-rail",
-        "webgl-shader-hero"
+        "webgl-shader-hero",
+        "hero-kinetic-scroll-type",
+        "hero-3d-product-turn"
       ]
     },
     {
@@ -480,7 +506,12 @@
         "winding-ribbon-scroll-story",
         "m3-top-app-bar-scroll",
         "dashboard-glass-home",
-        "stat-tile-tactile"
+        "stat-tile-tactile",
+        "anime-cel-style",
+        "cartoon-sticker-landing",
+        "hero-liquid-glass-layers",
+        "game-gacha-pull-reveal",
+        "card-wrapped-story"
       ]
     },
     {
@@ -506,7 +537,9 @@
         "table-orders-status",
         "stats-count-up-band",
         "card-stacked-deck",
-        "table-tasks-inline"
+        "table-tasks-inline",
+        "fintech-invoice-builder",
+        "board-roadmap-swimlanes"
       ]
     },
     {
@@ -541,7 +574,9 @@
         "card-stamped-document",
         "game-playfield",
         "agent-approval-card",
-        "media-controls-tactile"
+        "media-controls-tactile",
+        "retro-os-desktop-portfolio",
+        "board-moodboard-canvas"
       ]
     },
     {
@@ -567,7 +602,12 @@
         "text-mask-scroll-reveal",
         "game-title-screen",
         "moonlit-ridge-hero",
-        "scroll-space-voyage"
+        "scroll-space-voyage",
+        "features-before-after-slider",
+        "features-stacked-3d-tabs",
+        "scroll-morphing-header",
+        "scroll-mask-reveal-sequence",
+        "scroll-ring-carousel"
       ]
     },
     {
@@ -586,7 +626,8 @@
         "hero-chaptered-scenes",
         "hero-video-loop",
         "law-firm-home",
-        "scroll-scrub-product-sequence"
+        "scroll-scrub-product-sequence",
+        "fintech-metal-card-landing"
       ]
     },
     {
@@ -625,7 +666,8 @@
         "phone-permission-prompt",
         "phone-account-edit",
         "m3-modal-bottom-sheet",
-        "chart-scrub-readout"
+        "chart-scrub-readout",
+        "popup-onboarding-tour"
       ]
     },
     {
@@ -661,7 +703,8 @@
         "features-vertical-label-columns",
         "phone-subscription-manage",
         "prompt-source-model",
-        "sticker-board"
+        "sticker-board",
+        "features-giant-numeral-steps"
       ]
     },
     {
@@ -703,7 +746,13 @@
         "background-sunrise-horizon",
         "background-terrazzo",
         "three-scroll-world",
-        "collage-hero"
+        "collage-hero",
+        "hero-manga-panels",
+        "hero-dither-light-field",
+        "footer-curtain-reveal",
+        "footer-local-hours-map",
+        "scroll-driven-chapters",
+        "parallax-cursor-gallery"
       ]
     },
     {
@@ -783,7 +832,10 @@
         "toolbar-selection-swap",
         "agent-tool-chip",
         "card-grid-brutal",
-        "taped-photo-grid"
+        "taped-photo-grid",
+        "sidebar-mail-folders",
+        "sidebar-floating-island",
+        "sidebar-chat-history"
       ]
     },
     {
@@ -825,7 +877,10 @@
         "week-schedule",
         "game-lobby",
         "three-orbit-object",
-        "card-confidence-pick"
+        "card-confidence-pick",
+        "popup-whats-new-slides",
+        "game-fantasy-inventory",
+        "game-scifi-loadout"
       ]
     }
   ]

@@ -1,0 +1,223 @@
+<!-- Design Lounge piece: fintech-crypto-send · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Send crypto</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#121315;--surf:#1B1D20;--surf-2:#24272B;--line:#2C2F33;--edge:#6E737A;
+  --text:#F3EFEA;--text-2:#AFAAA3;--text-3:#8F8A84;
+  --accent:#F2A0B0;--accent-ink:#2A0F16;--accent-soft:#3A2329;--bad:#FF9C8A;--ok:#9ED9B0;
+  --font:"Roboto Slab",Rockwell,serif;
+  --r:16px;--r-key:18px;--r-pill:28px;
+  --spring:cubic-bezier(.32,.72,0,1);--ease:cubic-bezier(.2,.7,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);
+  --t-fast:160ms;--t-step:380ms;--t-hold:1200ms;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--text);font:16px/1.35 var(--font);-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums;overflow:hidden}
+button,input{font:inherit;color:inherit}
+button{border:0;background:none;cursor:pointer;padding:0}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.nav{position:absolute;top:0;left:0;right:0;padding:54px 12px 0;z-index:3}
+.nav .in{height:44px;display:grid;grid-template-columns:44px 1fr 44px;align-items:center}
+.ib{width:44px;height:44px;border-radius:22px;display:grid;place-items:center;color:var(--text)}
+.ib svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ib[hidden]{display:grid;visibility:hidden}
+.crumbs{display:flex;justify-content:center;gap:18px;font-size:13px;font-weight:500;color:var(--text-3);list-style:none;margin:0;padding:0}
+.crumbs li{position:relative;padding-bottom:6px}
+.crumbs li[aria-current]{color:var(--text)}
+.crumbs li[aria-current]::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;border-radius:1px;background:var(--accent)}
+.steps{position:absolute;inset:0;display:flex;width:300%;transform:translateX(calc(var(--s,0) * -33.3333%));transition:transform var(--t-step) var(--spring)}
+.view{position:absolute;inset:0;overflow:hidden}
+.step{visibility:hidden;transition:visibility 0s linear var(--t-step);width:33.3333%;height:100%;padding:110px 20px 34px;display:flex;flex-direction:column;overflow:hidden}
+.step.cur{visibility:visible;transition-delay:0s}
+.coin{display:flex;align-items:center;gap:10px;justify-content:center;color:var(--text-2);font-size:15px}
+.mark{width:28px;height:28px;border-radius:50%;background:conic-gradient(from 30deg,#F2A0B0,#F7D3C8,#C9798B,#F2A0B0);display:grid;place-items:center;box-shadow:inset 0 0 0 1px rgba(0,0,0,.25)}
+.mark i{width:10px;height:10px;transform:rotate(45deg);background:#2A0F16;border-radius:2px}
+.amt{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;min-height:0}
+.big{font-weight:300;letter-spacing:-.03em;line-height:1;font-size:var(--fs,72px);white-space:nowrap;transition:color var(--t-fast) var(--ease)}
+.big .u{font-weight:400;color:var(--text-2)}
+.big .caret{display:inline-block;width:2px;height:.8em;background:var(--accent);margin-left:4px;vertical-align:-.04em;animation:blink 1.1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.over .big{color:var(--bad)}
+.swap{margin-top:16px;display:flex;align-items:center;gap:8px;height:40px;padding:0 14px;border-radius:20px;background:var(--surf);color:var(--text-2);font-size:16px}
+.swap svg{width:18px;height:18px;fill:none;stroke:var(--accent);stroke-width:2;stroke-linecap:round;transition:transform var(--t-step) var(--spring)}
+.swap b{color:var(--text);font-weight:500}
+.flip .swap svg{transform:rotate(180deg)}
+.rate{margin:12px 0 0;font-size:13px;color:var(--text-3)}
+.bal{display:flex;justify-content:space-between;align-items:center;margin:0 4px 14px;font-size:14px;color:var(--text-2)}
+.bal b{color:var(--text);font-weight:500}
+.chip{height:32px;padding:0 12px;border-radius:16px;border:1px solid var(--edge);font-size:13px;font-weight:600;color:var(--text)}
+.keys{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.keys button{height:60px;border-radius:var(--r-key);font-size:26px;font-weight:400;transition:background var(--t-fast) var(--ease),transform var(--t-fast) var(--spring)}
+.keys button:active{background:var(--surf-2);transform:scale(.94)}
+.keys svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round}
+.cta{height:56px;border-radius:var(--r-pill);background:var(--accent);color:var(--accent-ink);font-size:17px;font-weight:600;width:100%;flex:none;transition:transform var(--t-fast) var(--spring),opacity var(--t-fast) var(--ease)}
+.cta:active{transform:scale(.98)}
+.cta:disabled{background:var(--surf-2);color:var(--text-2);cursor:default}
+h2{font-size:28px;font-weight:600;letter-spacing:-.02em;margin:0 0 4px}
+.sub{color:var(--text-2);margin:0 0 20px;font-size:15px}
+.lab{font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3);margin:0 0 8px}
+.addr{display:flex;align-items:center;gap:6px;background:var(--surf);border:1px solid var(--edge);border-radius:var(--r);padding:6px 6px 6px 14px;min-height:60px;transition:border-color var(--t-fast) var(--ease)}
+.addr:focus-within{border-color:var(--accent)}
+.addr input{flex:1;min-width:0;border:0;background:none;font-size:15px;height:44px;outline:none;font-weight:500}
+.addr input::placeholder{color:var(--text-3)}
+.addr button{height:44px;padding:0 12px;border-radius:12px;background:var(--surf-2);font-size:14px;font-weight:600;display:flex;align-items:center;gap:6px}
+.addr button svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round}
+.check{font-size:13px;margin:8px 4px 0;min-height:18px;color:var(--text-2)}
+.check.ok{color:var(--ok)}
+.recent{display:flex;gap:8px;margin:14px 0 26px}
+.recent button{display:flex;align-items:center;gap:8px;height:40px;padding:0 14px 0 6px;border-radius:20px;background:var(--surf);font-size:14px;font-weight:500}
+.recent i{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-size:12px;font-weight:700;color:#121315}
+.fees{display:grid;gap:8px}
+.fee{display:grid;grid-template-columns:22px 1fr auto;align-items:center;gap:12px;padding:12px 14px;border-radius:var(--r);border:1px solid var(--edge);background:var(--surf);text-align:left;transition:border-color var(--t-fast) var(--ease),background var(--t-fast) var(--ease)}
+.fee .dot{width:20px;height:20px;border-radius:50%;border:2px solid var(--edge);display:grid;place-items:center}
+.fee[aria-checked=true]{border-color:var(--accent);background:var(--accent-soft)}
+.fee[aria-checked=true] .dot{border-color:var(--accent)}
+.fee[aria-checked=true] .dot::after{content:"";width:10px;height:10px;border-radius:50%;background:var(--accent)}
+.fee b{display:block;font-weight:600}
+.fee small{color:var(--text-2);font-size:13px}
+.fee span:last-child{text-align:right;font-weight:500}
+.fee span:last-child small{display:block}
+.grow{flex:1}
+.rev{background:var(--surf);border-radius:20px;padding:4px 18px;margin-bottom:16px}
+.rev div{display:flex;justify-content:space-between;gap:12px;padding:14px 0;border-bottom:1px solid var(--line);font-size:15px}
+.rev div:last-child{border:0}
+.rev dt{color:var(--text-2)}.rev dd{margin:0;text-align:right;font-weight:500}
+.rev dd small{display:block;color:var(--text-2);font-weight:400;font-size:13px;margin-top:2px}
+.rev .tot dd{font-size:18px;font-weight:600}
+.hero{text-align:center;margin:8px 0 22px}
+.hero .big{font-size:52px}
+.hero p{margin:8px 0 0;color:var(--text-2)}
+.hold{position:relative;overflow:hidden;height:64px;border-radius:32px;background:var(--surf-2);color:var(--text);font-size:17px;font-weight:600;width:100%;flex:none;user-select:none;-webkit-user-select:none;touch-action:none;box-shadow:inset 0 0 0 1px var(--edge)}
+.hold span{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:10px}
+.hold .fillT{background:var(--accent);color:var(--accent-ink);clip-path:inset(0 100% 0 0);transition:clip-path 220ms var(--ease)}
+.hold.on .fillT{clip-path:inset(0 0 0 0);transition:clip-path var(--t-hold) linear}
+.hold svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.note{text-align:center;font-size:13px;color:var(--text-2);margin:10px 0 0}
+.done{position:absolute;inset:0;z-index:5;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 28px 34px;text-align:center;opacity:0;pointer-events:none;transition:opacity 300ms var(--ease)}
+.sent .done{opacity:1;pointer-events:auto}
+.tick{width:88px;height:88px;border-radius:50%;background:var(--accent);display:grid;place-items:center;transform:scale(.6);transition:transform 520ms var(--spring) 80ms}
+.sent .tick{transform:none}
+.tick svg{width:44px;height:44px;fill:none;stroke:var(--accent-ink);stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:40;stroke-dashoffset:40;transition:stroke-dashoffset 420ms var(--ease-out) 300ms}
+.sent .tick svg{stroke-dashoffset:0}
+.done h2{margin-top:22px}
+.done .tx{font-size:13px;color:var(--text-2);margin:6px 0 28px}
+.done .cta{max-width:334px}
+.scan{position:absolute;inset:0;z-index:6;background:rgba(10,10,11,.94);display:grid;place-items:center;opacity:0;pointer-events:none;transition:opacity 240ms var(--ease)}
+.scan.on{opacity:1;pointer-events:auto}
+.vf{width:240px;height:240px;position:relative;border-radius:24px;background:repeating-linear-gradient(90deg,#1E2023 0 12px,#191B1E 12px 24px)}
+.vf::before{content:"";position:absolute;inset:-10px;background:linear-gradient(var(--accent),var(--accent)) 0 0/36px 3px no-repeat,linear-gradient(var(--accent),var(--accent)) 0 0/3px 36px no-repeat,linear-gradient(var(--accent),var(--accent)) 100% 0/36px 3px no-repeat,linear-gradient(var(--accent),var(--accent)) 100% 0/3px 36px no-repeat,linear-gradient(var(--accent),var(--accent)) 0 100%/36px 3px no-repeat,linear-gradient(var(--accent),var(--accent)) 0 100%/3px 36px no-repeat,linear-gradient(var(--accent),var(--accent)) 100% 100%/36px 3px no-repeat,linear-gradient(var(--accent),var(--accent)) 100% 100%/3px 36px no-repeat}
+.vf i{position:absolute;left:16px;right:16px;height:2px;background:var(--accent);top:16px;box-shadow:0 0 12px var(--accent);animation:sweep 1.1s var(--ease) infinite alternate}
+@keyframes sweep{to{top:222px}}
+.scan p{position:absolute;bottom:120px;left:0;right:0;text-align:center;color:var(--text-2);margin:0}
+@media (max-height:740px){.keys button{height:52px}.rate{display:none}}
+@media (max-width:370px){.keys button{height:56px}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition-duration:1ms!important;transition-delay:0ms!important}.hold.on .fillT{transition-duration:var(--t-hold)!important}}
+</style>
+</head>
+<body>
+<header class="nav"><div class="in">
+  <button class="ib" id="back" aria-label="Back" hidden><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+  <ol class="crumbs" id="crumbs"><li aria-current="step">Amount</li><li>Recipient</li><li>Review</li></ol>
+  <button class="ib" aria-label="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+</div></header>
+<div class="view"><main class="steps" id="steps">
+  <section class="step" id="s0" aria-label="Amount">
+    <div class="coin"><span class="mark" aria-hidden="true"><i></i></span>Send Halite</div>
+    <div class="amt" id="amtBox">
+      <div class="big" id="big" aria-live="polite"></div>
+      <button class="swap" id="swap" aria-label="Switch between dollars and Halite"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4v16m0 0l-3-3m3 3l3-3M17 20V4m0 0l-3 3m3-3l3 3"/></svg><b id="alt"></b></button>
+      <p class="rate">1 HLT = $3,967.42, quoted 12 s ago</p>
+    </div>
+    <div class="bal"><span>Available <b>0.48213 HLT</b> &middot; $1,912.81</span><button class="chip" id="max">Max</button></div>
+    <div class="keys" id="keys"></div>
+    <button class="cta" id="next0">Choose recipient</button>
+  </section>
+  <section class="step" id="s1" aria-label="Recipient">
+    <h2>Send to</h2><p class="sub">Halite network only. Other networks lose the coins.</p>
+    <p class="lab"><label for="addr">Address</label></p>
+    <div class="addr"><input id="addr" placeholder="hlt1… or a .salt name" autocomplete="off" spellcheck="false"><button id="paste"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="4" width="10" height="4" rx="1"/><path d="M7 6H5v14h14V6h-2"/></svg>Paste</button><button id="qr" aria-label="Scan QR code"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5M9 9h2v2H9zM13 13h2v2h-2z"/></svg></button></div>
+    <p class="check" id="chk" aria-live="polite"></p>
+    <div class="recent"><button data-a="hlt1qv7k2m9x4rj8fz0d5w3ny6tc0pe8ua2lh4s" data-n="Mira Castell"><i style="background:#F7D3C8">MC</i>Mira Castell</button><button data-a="hlt1q3zpa0w7v2c8kq5ht9mn4ry6xj1fe0gdl7u" data-n="Old Pier Studio"><i style="background:#B8D4C8">OP</i>Old Pier Studio</button></div>
+    <p class="lab" id="feeL">Network fee</p>
+    <div class="fees" role="radiogroup" aria-labelledby="feeL" id="fees"></div>
+    <div class="grow"></div>
+    <button class="cta" id="next1" disabled>Review</button>
+  </section>
+  <section class="step" id="s2" aria-label="Review">
+    <div class="hero"><div class="big" id="rBig"></div><p id="rFiat"></p></div>
+    <dl class="rev" id="rev"></dl>
+    <div class="grow"></div>
+    <button class="hold" id="hold" aria-describedby="holdNote"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12l16-8-6 16-3-7z"/></svg><em class="ht" style="font-style:normal">Hold to send</em></span><span class="fillT" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 12l16-8-6 16-3-7z"/></svg><em class="ht" style="font-style:normal">Hold to send</em></span></button>
+    <p class="note" id="holdNote">Press and hold for 1.2 seconds. Sends cannot be reversed.</p>
+  </section>
+</main></div>
+<div class="scan" id="scan" role="dialog" aria-label="Scanning QR code"><div class="vf"><i></i></div><p>Point at a Halite address code</p></div>
+<div class="done" id="done" role="status"><div class="tick"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div><h2 id="dT">Sent</h2><p class="tx" id="dTx"></p><button class="cta" id="again">Done</button></div>
+<script>
+(() => {
+  const $ = id => document.getElementById(id), PRICE = 3967.42, BAL = 0.48213;
+  const FEES = [['Slow', 'About 30 min', 0.00011], ['Normal', 'About 10 min', 0.0003], ['Fast', 'Under 2 min', 0.00077]];
+  let buf = '250', coin = false, step = 0, fee = 1, to = null;
+  const usd = v => '$' + v.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const hlt = v => v.toFixed(5) + ' HLT';
+  const coins = () => coin ? +buf || 0 : (+buf || 0) / PRICE;
+  $('keys').innerHTML = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '.', '0', 'del'].map(k => `<button data-k="${k}" aria-label="${k === 'del' ? 'Delete' : k === '.' ? 'Decimal point' : k}">${k === 'del' ? '<svg viewBox="0 0 24 24"><path d="M9 5h11v14H9l-6-7z"/><path d="M12 9.5l5 5m0-5l-5 5"/></svg>' : k}</button>`).join('');
+  function paint() {
+    const c = coins(), over = c + FEES[fee][2] > BAL + 1e-9, empty = !(+buf);
+    const shown = buf || '0', len = shown.length + (coin ? 4 : 1);
+    $('big').style.setProperty('--fs', Math.min(72, Math.floor(300 / len * 1.45)) + 'px');
+    $('big').innerHTML = coin ? `${shown}<span class="caret"></span> <span class="u">HLT</span>` : `<span class="u">$</span>${shown}<span class="caret"></span>`;
+    $('alt').textContent = coin ? '≈ ' + usd(c * PRICE) : '≈ ' + hlt(c);
+    $('amtBox').classList.toggle('over', over);
+    const n = $('next0'); n.disabled = over || empty; n.textContent = over ? 'Not enough HLT' : empty ? 'Enter an amount' : 'Choose recipient';
+  }
+  $('keys').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; const k = b.dataset.k, dp = coin ? 5 : 2;
+    if (k === 'del') buf = buf.slice(0, -1);
+    else if (k === '.') { if (!buf.includes('.')) buf = (buf || '0') + '.'; }
+    else { const [i, d] = buf.split('.'); if (d !== undefined && d.length >= dp) return; if (i.length >= 7 && d === undefined) return; buf = buf === '0' ? k : buf + k; }
+    paint(); });
+  addEventListener('keydown', e => { if (step || document.activeElement.tagName === 'INPUT') return; const k = /^[0-9.]$/.test(e.key) ? e.key : e.key === 'Backspace' ? 'del' : null; if (k) $('keys').querySelector(`[data-k="${k}"]`).click(); });
+  $('swap').addEventListener('click', () => { const c = coins(); coin = !coin; buf = coin ? (c ? c.toFixed(5).replace(/\.?0+$/, '') : '') : (c ? (c * PRICE).toFixed(2).replace(/\.00$/, '') : ''); document.body.classList.toggle('flip', coin); paint(); });
+  $('max').addEventListener('click', () => { const c = BAL - FEES[fee][2]; buf = coin ? c.toFixed(5) : (Math.floor(c * PRICE * 100) / 100).toFixed(2); paint(); });
+  function go(s) { step = s; $('steps').style.setProperty('--s', s); $('back').hidden = !s;
+    [...$('crumbs').children].forEach((li, i) => i === s ? li.setAttribute('aria-current', 'step') : li.removeAttribute('aria-current'));
+    document.querySelectorAll('.step').forEach((el, i) => { el.inert = i !== s; el.classList.toggle('cur', i === s); }); if (s === 2) review(); }
+  $('next0').addEventListener('click', () => go(1)); $('next1').addEventListener('click', () => go(2)); $('back').addEventListener('click', () => go(step - 1));
+  const addr = $('addr'), short = a => a.slice(0, 9) + '…' + a.slice(-6);
+  function check(name) { const a = addr.value.trim(), ok = /^hlt1[0-9a-z]{30,40}$/.test(a), c = $('chk');
+    to = ok ? { a, name } : null; c.className = 'check' + (ok ? ' ok' : ''); c.textContent = !a ? '' : ok ? `Valid Halite address${name ? ', ' + name : ''}` : 'That is not a Halite address yet';
+    $('next1').disabled = !ok; }
+  addr.addEventListener('input', () => check());
+  $('paste').addEventListener('click', () => { addr.value = 'hlt1qx9d4w2k7m0s5vz8ej3rt6hn2pa4cy7fu0lg8'; check(); });
+  document.querySelector('.recent').addEventListener('click', e => { const b = e.target.closest('button'); if (b) { addr.value = b.dataset.a; check(b.dataset.n); } });
+  $('qr').addEventListener('click', () => { $('scan').classList.add('on'); setTimeout(() => { $('scan').classList.remove('on'); addr.value = 'hlt1qv7k2m9x4rj8fz0d5w3ny6tc0pe8ua2lh4s'; check('Mira Castell'); $('qr').focus(); }, 1400); });
+  $('fees').innerHTML = FEES.map((f, i) => `<button class="fee" role="radio" data-i="${i}"><span class="dot"></span><span><b>${f[0]}</b><small>${f[1]}</small></span><span>${usd(f[2] * PRICE)}<small>${f[2]} HLT</small></span></button>`).join('');
+  const feeBtns = [...$('fees').children];
+  const setFee = i => { fee = i; feeBtns.forEach((b, k) => { b.setAttribute('aria-checked', k === i); b.tabIndex = k === i ? 0 : -1; }); paint(); };
+  $('fees').addEventListener('click', e => { const b = e.target.closest('.fee'); if (b) setFee(+b.dataset.i); });
+  $('fees').addEventListener('keydown', e => { const d = { ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1 }[e.key]; if (d) { e.preventDefault(); setFee((fee + d + 3) % 3); feeBtns[fee].focus(); } });
+  function review() { const c = coins(), f = FEES[fee];
+    $('rBig').innerHTML = `${c.toFixed(5)} <span class="u">HLT</span>`; $('rFiat').textContent = usd(c * PRICE) + ' at ' + usd(PRICE) + ' per HLT';
+    $('rev').innerHTML = `<div><dt>From</dt><dd>Main wallet<small>hlt1qm4r…7wz2c</small></dd></div><div><dt>To</dt><dd>${to ? (to.name || 'New address') : ''}<small>${to ? short(to.a) : ''}</small></dd></div><div><dt>Network fee</dt><dd>${usd(f[2] * PRICE)}<small>${f[0]}, ${f[1].toLowerCase()}</small></dd></div><div class="tot"><dt>Total</dt><dd>${(c + f[2]).toFixed(5)} HLT<small>${usd((c + f[2]) * PRICE)}</small></dd></div>`; }
+  const hold = $('hold'); let timer = null;
+  const start = () => { if (timer) return; hold.classList.add('on'); timer = setTimeout(finish, 1200); };
+  const stop = () => { if (!timer) return; clearTimeout(timer); timer = null; hold.classList.remove('on'); };
+  function finish() { timer = null; const c = coins(); $('dT').textContent = `Sent ${c.toFixed(5)} HLT`; $('dTx').textContent = `To ${to ? to.name || short(to.a) : ''}. Confirms in about ${FEES[fee][1].replace(/^\w+ /, '')}. Ref 7f3a…9c21`; document.body.classList.add('sent'); setTimeout(() => $('again').focus(), 400); }
+  hold.addEventListener('pointerdown', e => { hold.setPointerCapture(e.pointerId); start(); });
+  ['pointerup', 'pointercancel', 'lostpointercapture'].forEach(ev => hold.addEventListener(ev, stop));
+  hold.addEventListener('keydown', e => { if ((e.key === ' ' || e.key === 'Enter') && !e.repeat) { e.preventDefault(); start(); } });
+  hold.addEventListener('keyup', e => { if (e.key === ' ' || e.key === 'Enter') stop(); });
+  hold.addEventListener('contextmenu', e => e.preventDefault());
+  $('again').addEventListener('click', () => { document.body.classList.remove('sent'); hold.classList.remove('on'); buf = '250'; coin = false; document.body.classList.remove('flip'); paint(); go(0); });
+  setFee(1); go(0); paint();
+})();
+</script>
+</body>
+</html>

@@ -89,7 +89,7 @@ The kind map names the product. This names the machine. Read one row, then the f
 | React Native, Expo, Flutter, SwiftUI, Compose | The app short path, then [native.md](native.md). Translate the brief. Do not ship the HTML demo in a WebView. |
 | A tablet | Recipe `tablet`. Do not stretch a phone screen. |
 | A desktop window | `web-app` or `dashboard`. No phone tab bar. |
-| Email, a watch, a TV, a car screen | No recipe. Say so. An email is not a page. A watch is one phone screen and nothing else. A TV is the tablet recipe, with no hover. |
+| Email, a watch, a TV, a car screen | No recipe. Say so. An email is not a page: use the Email pieces in [components.md](components.md) (`email-newsletter-editorial`, `email-product-launch`, `email-receipt-transactional`). A watch is one phone screen and nothing else. A TV is the tablet recipe, with no hover. |
 
 ## Sources
 

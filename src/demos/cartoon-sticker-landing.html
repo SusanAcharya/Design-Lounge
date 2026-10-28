@@ -1,0 +1,178 @@
+<!-- Design Lounge piece: cartoon-sticker-landing · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Mopsy, chores everyone actually does</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#fff1d6;--card:#fffaf0;--ink:#2a1a12;--ink-2:#5c4335;
+  --orange:#ff7a2f;--mint:#7ed6b5;--pink:#ffa8c5;--butter:#ffd75e;
+  --disp:"Bagel Fat One",system-ui,sans-serif;--body:"Fredoka",system-ui,sans-serif;
+  --o:4px;--hard:6px 6px 0 var(--ink);--r:22px;
+  --t-micro:140ms;--spring:cubic-bezier(.34,1.56,.64,1);--ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--cream);color:var(--ink);font:500 17px/1.5 var(--body);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;background-image:radial-gradient(circle,#f3dcb0 2px,transparent 2.5px);background-size:28px 28px;pointer-events:none;z-index:-1}
+:focus-visible{outline:4px solid var(--ink);outline-offset:4px;border-radius:12px}
+a{color:inherit}
+.wrap{max-width:1180px;margin:0 auto;padding:0 40px}
+.nav{display:flex;align-items:center;gap:28px;height:84px}
+.logo{font:400 32px/1 var(--disp);text-decoration:none;display:flex;align-items:center;gap:10px;letter-spacing:-.01em}
+.logo i{width:34px;height:34px;border-radius:50% 50% 46% 54%/60% 58% 42% 40%;background:var(--orange);border:var(--o) solid var(--ink);display:block}
+.nav nav{margin-left:auto}
+.nav ul{display:flex;gap:26px;list-style:none;margin:0;padding:0;font-weight:600}
+.nav ul a{text-decoration:none}.nav ul a:hover{text-decoration:underline wavy var(--orange) 3px;text-underline-offset:6px}
+.btn{display:inline-flex;align-items:center;gap:10px;height:60px;padding:0 28px;font:600 19px/1 var(--body);text-decoration:none;border:var(--o) solid var(--ink);border-radius:18px;background:var(--orange);color:var(--ink);box-shadow:var(--hard);cursor:pointer;transition:transform var(--t-micro) var(--spring),box-shadow var(--t-micro) var(--ease)}
+.btn:hover{transform:translate(-3px,-3px) rotate(-1.5deg);box-shadow:9px 9px 0 var(--ink)}
+.btn:active{transform:translate(4px,4px);box-shadow:2px 2px 0 var(--ink)}
+.btn.sm{height:48px;padding:0 20px;font-size:16px;border-radius:14px;box-shadow:4px 4px 0 var(--ink)}
+.btn.w{background:var(--card)}
+.btn svg{width:22px;height:22px}
+
+.hero{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:24px;align-items:center;padding:20px 0 56px}
+.chip{display:inline-flex;align-items:center;gap:8px;background:var(--mint);border:3px solid var(--ink);border-radius:99px;padding:5px 14px 5px 8px;font-weight:600;font-size:15px;transform:rotate(-2deg)}
+.chip b{background:var(--ink);color:var(--mint);border-radius:99px;padding:1px 9px;font-weight:600}
+h1{font:400 clamp(44px,6.1vw,78px)/.95 var(--disp);margin:18px 0 20px;letter-spacing:-.02em}
+h1 .u{position:relative;white-space:nowrap}
+h1 .u svg{position:absolute;left:-2%;bottom:-.12em;width:104%;height:.32em;overflow:visible}
+.lede{font-size:20px;max-width:34ch;margin:0 0 28px;color:var(--ink-2)}
+.ctas{display:flex;flex-wrap:wrap;gap:18px 22px;align-items:center}
+.proof{display:flex;align-items:center;gap:12px;margin-top:26px;font-size:15px;color:var(--ink-2);font-weight:500}
+.faces{display:flex}.faces span{width:36px;height:36px;border-radius:50%;border:3px solid var(--ink);margin-left:-5px;display:grid;place-items:center;font-weight:700;font-size:13px;color:var(--ink)}
+.faces span:first-child{margin-left:0}
+.stage{position:relative;aspect-ratio:1/0.92;min-width:0}
+.blob{position:absolute;inset:2% 4% 4% 2%;animation:boil 1.2s steps(2) infinite}
+@keyframes boil{50%{transform:rotate(1.2deg) scale(1.01,.99)}}
+.mop{position:absolute;left:14%;top:8%;width:72%;overflow:visible}
+.mop .lid{transform-box:fill-box;transform-origin:50% 0;transform:scaleY(0);animation:blink 4s infinite}
+@keyframes blink{0%,92%,100%{transform:scaleY(0)}95%{transform:scaleY(1)}}
+.mop .arm{transform-box:view-box;transform-origin:226px 168px;transition:transform 380ms var(--spring)}
+.mop .smile2{opacity:0}.mop .smile1,.mop .smile2{transition:opacity 120ms}
+.mop .eyes{transition:transform 120ms var(--ease)}
+body.hey .mop .arm{transform:rotate(24deg)}
+body.hey .mop .smile1{opacity:0}body.hey .mop .smile2{opacity:1}
+.stick{position:absolute;border:var(--o) solid var(--ink);font-weight:700;box-shadow:4px 4px 0 var(--ink);background:var(--card);border-radius:16px;padding:8px 14px;font-size:15px;line-height:1.25}
+.s1{right:0;top:12%;transform:rotate(6deg);background:var(--butter)}
+.s2{left:0;bottom:16%;transform:rotate(-5deg);background:var(--pink)}
+.s1 small,.s2 small{display:block;font-weight:500;font-size:13px}
+
+/* board */
+.band{background:var(--card);border-top:var(--o) solid var(--ink);border-bottom:var(--o) solid var(--ink);padding:64px 0}
+.band .wrap{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:56px;align-items:center}
+h2{font:400 clamp(34px,4.6vw,56px)/1 var(--disp);margin:0 0 16px;letter-spacing:-.01em}
+.band p{margin:0 0 14px;color:var(--ink-2);max-width:36ch}
+.board{background:var(--cream);border:var(--o) solid var(--ink);border-radius:var(--r);box-shadow:var(--hard);padding:22px;transform:rotate(1deg)}
+.bh{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;font-weight:700}
+.bh span{font-weight:500;color:var(--ink-2);font-size:15px}
+.chore{display:grid;grid-template-columns:auto 44px minmax(0,1fr) auto;gap:14px;align-items:center;background:var(--card);border:3px solid var(--ink);border-radius:16px;padding:10px 14px;margin-bottom:10px}
+.chore input{appearance:none;-webkit-appearance:none;width:30px;height:30px;border:var(--o) solid var(--ink);border-radius:9px;background:var(--card);margin:0;cursor:pointer;display:grid;place-items:center;transition:background var(--t-micro)}
+.chore input:checked{background:var(--mint)}
+.chore input:checked::after{content:"";width:12px;height:7px;border-left:4px solid var(--ink);border-bottom:4px solid var(--ink);transform:translateY(-2px) rotate(-45deg)}
+.av{width:44px;height:44px;border-radius:50%;border:3px solid var(--ink);display:grid;place-items:center;font-weight:700}
+.chore b{font-weight:600;display:block;line-height:1.2}.chore small{color:var(--ink-2);font-size:14px}
+.chore.done b{text-decoration:line-through 3px var(--orange)}
+.pts{font:400 20px/1 var(--disp)}
+.bar{height:22px;border:3px solid var(--ink);border-radius:99px;background:var(--card);overflow:hidden;margin-top:14px}
+.bar i{display:block;height:100%;background:var(--orange);border-right:3px solid var(--ink);transition:width 500ms var(--spring)}
+.bf{display:flex;justify-content:space-between;font-size:14px;font-weight:600;margin-top:6px}
+.foot{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;align-items:center;padding:36px 0 44px;font-weight:500;color:var(--ink-2)}
+.foot strong{font:400 26px var(--disp);color:var(--ink)}
+@media (max-width:900px){.hero,.band .wrap{grid-template-columns:minmax(0,1fr)}.nav ul{display:none}.nav .btn{margin-left:auto}.stage{max-width:520px;width:100%;margin:0 auto}}
+@media (max-width:640px){
+  .wrap{padding:0 16px}.nav{height:72px}.logo{font-size:26px}
+  .nav .btn{height:44px;padding:0 16px;font-size:15px;box-shadow:3px 3px 0 var(--ink)}
+  .lede{font-size:18px}
+  .btn{height:56px}
+  .stick{font-size:13px;padding:6px 10px}.s1 small,.s2 small{font-size:12px}
+  .band{padding:44px 0}
+  .board{padding:14px;transform:none}
+  .chore{grid-template-columns:auto 36px minmax(0,1fr) auto;gap:10px;padding:8px 10px}
+  .av{width:36px;height:36px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:1ms!important}.mop .lid{transform:scaleY(0)}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="nav">
+    <a class="logo" href="#top" aria-label="Mopsy home"><i aria-hidden="true"></i>mopsy</a>
+    <nav aria-label="Primary"><ul><li><a href="#board">How it works</a></li><li><a href="#price">Pricing</a></li><li><a href="#faq">Questions</a></li></ul></nav>
+    <a class="btn sm w" href="#get">Get the app</a>
+  </header>
+  <main id="top">
+    <section class="hero" aria-labelledby="h">
+      <div>
+        <span class="chip"><b>New</b> Shared shopping list, synced live</span>
+        <h1 id="h">Chores, but everyone <span class="u">actually<svg viewBox="0 0 200 20" preserveAspectRatio="none" aria-hidden="true"><path d="M3 12 C30 2 50 18 80 9 S140 4 197 11" fill="none" stroke="#ff7a2f" stroke-width="7" stroke-linecap="round"/></svg></span> does them.</h1>
+        <p class="lede">Mopsy splits the dishes, bins and bathroom fairly, rotates them every Sunday, and pings whoever is up next. Points settle the arguments.</p>
+        <div class="ctas">
+          <a class="btn" href="#get" id="cta">Start a household<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <a class="btn w" href="#board">See the chore board</a>
+        </div>
+        <div class="proof"><div class="faces" aria-hidden="true"><span style="background:#ffa8c5">PR</span><span style="background:#7ed6b5">TO</span><span style="background:#ffd75e">AD</span><span style="background:#ff9b63">JK</span></div>41,800 households, 4.8 on 12,400 reviews</div>
+      </div>
+      <div class="stage" id="stage" aria-hidden="true">
+        <svg class="blob" viewBox="0 0 400 370"><path d="M200 18 C292 10 380 70 384 168 C388 268 318 352 206 354 C96 356 18 290 16 186 C14 84 104 26 200 18Z" fill="#7ed6b5" stroke="#2a1a12" stroke-width="5"/><path d="M60 120 C80 80 120 56 160 48" fill="none" stroke="#fffaf0" stroke-width="10" stroke-linecap="round"/></svg>
+        <svg class="mop" viewBox="0 0 300 300">
+          <ellipse cx="150" cy="276" rx="78" ry="12" fill="#2a1a12" opacity=".18"/>
+          <g class="arm"><path d="M226 168 C262 160 270 120 258 96" fill="none" stroke="#2a1a12" stroke-width="9" stroke-linecap="round"/><circle cx="256" cy="92" r="17" fill="#fffaf0" stroke="#2a1a12" stroke-width="6"/></g>
+          <path d="M74 170 C40 180 34 214 48 234" fill="none" stroke="#2a1a12" stroke-width="9" stroke-linecap="round"/>
+          <path d="M150 64 C214 64 240 120 236 178 C232 236 196 258 150 258 C104 258 66 236 64 178 C62 120 86 64 150 64Z" fill="#ff7a2f" stroke="#2a1a12" stroke-width="7"/>
+          <path d="M180 236 C210 228 226 206 230 182" fill="none" stroke="#d9561a" stroke-width="12" stroke-linecap="round"/>
+          <path d="M70 120 C78 70 120 40 150 42 C182 40 222 70 230 120 C218 104 210 112 204 96 C196 112 186 100 178 88 C170 104 160 92 150 82 C140 94 130 102 122 88 C114 102 104 110 96 96 C90 112 80 104 70 120Z" fill="#fffaf0" stroke="#2a1a12" stroke-width="7" stroke-linejoin="round"/>
+          <g class="eyes" id="eyes"><path d="M112 146 a14 20 0 1 0 28 0 a14 20 0 1 0 -28 0Z" fill="#2a1a12"/><path d="M160 146 a14 20 0 1 0 28 0 a14 20 0 1 0 -28 0Z" fill="#2a1a12"/><path d="M128 132 l8 8 l4 -10Z M176 132 l8 8 l4 -10Z" fill="#fffaf0"/></g>
+          <rect class="lid" x="108" y="124" width="84" height="44" rx="20" fill="#ff7a2f"/>
+          <path class="smile1" d="M130 190 C142 202 160 202 172 190" fill="none" stroke="#2a1a12" stroke-width="7" stroke-linecap="round"/>
+          <path class="smile2" d="M124 184 C134 222 168 222 178 184Z" fill="#2a1a12" stroke="#2a1a12" stroke-width="5" stroke-linejoin="round"/>
+                    <circle cx="48" cy="238" r="17" fill="#fffaf0" stroke="#2a1a12" stroke-width="6"/>
+          <ellipse cx="104" cy="184" rx="11" ry="7" fill="#ffa8c5"/><ellipse cx="198" cy="184" rx="11" ry="7" fill="#ffa8c5"/>
+        </svg>
+        <span class="stick s1">Bins out tonight<small>Tom, 8:00 pm</small></span>
+        <span class="stick s2">+40 points<small>Priya did the dishes</small></span>
+      </div>
+    </section>
+  </main>
+</div>
+<section class="band" id="board" aria-labelledby="h2">
+  <div class="wrap">
+    <div>
+      <h2 id="h2">One board for the whole flat.</h2>
+      <p>Every chore has a size in points. Mopsy rotates them so nobody gets bathrooms three weeks running, and the board shows who is carrying the week.</p>
+      <p id="price"><strong>Free</strong> for two people. <strong>£3 a month</strong> for a household of up to eight.</p>
+    </div>
+    <div class="board">
+      <div class="bh">This week at Flat 4B <span>Sun 26 Oct to Sat 1 Nov</span></div>
+      <label class="chore done"><input type="checkbox" checked data-p="40" aria-label="Dishes, Priya, done"><span class="av" style="background:#ffa8c5">PR</span><span><b>Dishes, every night</b><small>Priya · done Tue</small></span><span class="pts">40</span></label>
+      <label class="chore"><input type="checkbox" data-p="20" aria-label="Bins and recycling, Tom"><span class="av" style="background:#7ed6b5">TO</span><span><b>Bins and recycling</b><small>Tom · due tonight</small></span><span class="pts">20</span></label>
+      <label class="chore"><input type="checkbox" data-p="60" aria-label="Bathroom, Ada"><span class="av" style="background:#ffd75e">AD</span><span><b>Bathroom, deep clean</b><small>Ada · due Sat</small></span><span class="pts">60</span></label>
+      <div class="bar" role="progressbar" aria-label="Week done" aria-valuemin="0" aria-valuemax="120" aria-valuenow="40"><i id="fill" style="width:33%"></i></div>
+      <div class="bf"><span id="done">40 of 120 points done</span><span>resets Sunday</span></div>
+    </div>
+  </div>
+</section>
+<footer class="wrap foot"><strong>mopsy</strong><span>Made in Bristol by a team of six who also hate the bathroom rota.</span><span>iOS · Android · web</span></footer>
+<script>
+(()=>{
+  const body=document.body,cta=document.getElementById('cta'),stage=document.getElementById('stage'),eyes=document.getElementById('eyes');
+  const on=()=>body.classList.add('hey'),off=()=>body.classList.remove('hey');
+  [cta,stage].forEach(el=>{el.addEventListener('mouseenter',on);el.addEventListener('mouseleave',off);});
+  cta.addEventListener('focus',on);cta.addEventListener('blur',off);
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!reduce)addEventListener('pointermove',e=>{const r=eyes.getBoundingClientRect();if(!r.width)return;
+    const dx=e.clientX-(r.left+r.width/2),dy=e.clientY-(r.top+r.height/2),d=Math.hypot(dx,dy)||1,k=Math.min(6,d/40);
+    eyes.style.transform='translate('+(dx/d*k).toFixed(1)+'px,'+(dy/d*k).toFixed(1)+'px)';});
+  const boxes=[...document.querySelectorAll('.chore input')],fill=document.getElementById('fill'),done=document.getElementById('done'),bar=fill.parentElement;
+  boxes.forEach(b=>b.addEventListener('change',()=>{b.closest('.chore').classList.toggle('done',b.checked);
+    const p=boxes.filter(x=>x.checked).reduce((s,x)=>s+ +x.dataset.p,0);
+    fill.style.width=(p/120*100)+'%';done.textContent=p+' of 120 points done';bar.setAttribute('aria-valuenow',p);
+    if(b.checked){on();setTimeout(off,900);}}));
+})();
+</script>
+</body>
+</html>

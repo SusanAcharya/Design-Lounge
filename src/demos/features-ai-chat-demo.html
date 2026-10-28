@@ -1,0 +1,157 @@
+<!-- Design Lounge piece: features-ai-chat-demo · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Shelfwise: ask your shop</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#DCE5E1; --panel:#FBFCFA; --sunk:#EEF3F0; --line:#C9D6D0; --line-2:#7E918A;
+  --ink:#142220; --ink-2:#3E504B; --ink-3:#4F605B;
+  --accent:#A63B27; --accent-ink:#FFFFFF; --accent-tint:#F6E3DD; --series-2:#9DB5AC;
+  --serif:"DM Serif Display",Georgia,serif; --sans:"DM Sans",system-ui,sans-serif;
+  --r:14px; --r-sm:8px; --ease:cubic-bezier(.2,.7,.2,1); --expo:cubic-bezier(.16,1,.3,1); --t:160ms;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:var(--bg);color:var(--ink);font:400 15px/1.55 var(--sans);-webkit-font-smoothing:antialiased}
+.wrap{max-width:1200px;margin:0 auto;padding:44px 44px 36px;display:grid;grid-template-columns:360px 1fr;gap:56px;align-items:start}
+.kicker{font-size:13px;font-weight:600;color:var(--accent);margin:0 0 16px}
+h2{font:400 clamp(40px,4.6vw,58px)/1 var(--serif);letter-spacing:-.015em;margin:0 0 18px}
+h2 em{font-style:italic;color:var(--accent)}
+.lede{color:var(--ink-2);margin:0 0 24px;font-size:16px}
+.facts{margin:0;padding:0;list-style:none;border-top:1px solid var(--line-2)}
+.facts li{display:grid;grid-template-columns:92px 1fr;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);font-size:14px;color:var(--ink-2)}
+.facts b{font:400 26px/1 var(--serif);color:var(--ink)}
+.note{font-size:13px;color:var(--ink-3);margin:18px 0 0}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+/* chat */
+.chat{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);display:flex;flex-direction:column;height:712px;overflow:hidden}
+.top{display:flex;align-items:center;gap:10px;height:62px;line-height:1.3;padding:0 18px;border-bottom:1px solid var(--line);flex:none}
+.mark{width:28px;height:28px;border-radius:7px;background:var(--accent);color:#fff;display:grid;place-items:center;font:400 18px/1 var(--serif)}
+.top b{font-weight:700;font-size:15px}
+.top small{font-size:13px;color:var(--ink-3)}
+.ex{margin-left:auto;font-size:12px;font-weight:700;color:var(--ink-2);border:1px solid var(--line-2);border-radius:999px;padding:4px 10px}
+.log{flex:1;overflow-y:auto;padding:22px 22px 8px;scroll-behavior:smooth}
+.u{margin:0 0 18px auto;max-width:72%;width:fit-content;background:var(--ink);color:#F2F6F4;padding:10px 14px;border-radius:14px 14px 4px 14px;font-weight:500}
+.a{display:grid;grid-template-columns:28px 1fr;gap:12px;margin-bottom:22px}
+.a .mark{margin-top:2px}
+.a p{margin:0 0 12px;max-width:62ch}
+.a p strong{font-weight:700}
+.think{display:flex;align-items:center;gap:8px;color:var(--ink-3);font-size:14px;height:28px}
+.think i{width:6px;height:6px;border-radius:50%;background:var(--ink-3);animation:blink 1s var(--ease) infinite}
+.think i:nth-child(2){animation-delay:.15s}.think i:nth-child(3){animation-delay:.3s}
+@keyframes blink{0%,100%{opacity:.25}50%{opacity:1}}
+.art{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff;animation:rise 420ms var(--expo) both}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.art h4{margin:0;padding:10px 14px;font-size:13px;font-weight:700;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:12px}
+.art h4 span{font-weight:500;color:var(--ink-3)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;font-weight:600;color:var(--ink-3);padding:8px 14px;font-size:12px;background:var(--sunk)}
+td{padding:8px 14px;border-top:1px solid var(--sunk);font-variant-numeric:tabular-nums}
+.n{text-align:right}
+td.hot{color:var(--accent);font-weight:700}
+.chart{display:block;width:100%;height:auto;padding:6px 8px 2px}
+.lg{display:flex;gap:16px;padding:0 14px 10px;font-size:12px;color:var(--ink-2)}
+.lg i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+.src{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.src button{all:unset;display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--ink-2);border:1px solid var(--line-2);border-radius:6px;padding:5px 9px;cursor:pointer;background:var(--panel)}
+.src button:hover{background:var(--sunk)}
+.src button[aria-expanded=true]{border-color:var(--accent);color:var(--accent)}
+.src sup{font-size:11px;color:var(--accent);font-weight:700}
+.srcbox{font-size:12px;color:var(--ink-2);background:var(--sunk);border-radius:6px;padding:8px 10px;margin-top:8px}
+.dock{flex:none;border-top:1px solid var(--line);padding:12px 16px 14px;background:var(--panel)}
+.sugs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.sug{font:500 13px/1.2 var(--sans);color:var(--ink);background:var(--panel);border:1px solid var(--line-2);border-radius:999px;padding:8px 13px;cursor:pointer;transition:background var(--t) var(--ease),border-color var(--t) var(--ease)}
+.sug:hover{background:var(--accent-tint);border-color:var(--accent)}
+.sug[disabled]{opacity:.55;cursor:default}
+.sug.done{color:var(--ink-2);border-style:dashed}
+.sug.done svg{vertical-align:-2px;margin-right:4px}
+form{display:flex;gap:8px}
+input{flex:1;min-width:0;font:400 15px var(--sans);height:44px;padding:0 14px;border-radius:10px;border:1px solid var(--line-2);background:#fff;color:var(--ink)}
+input::placeholder{color:var(--ink-3)}
+.send{height:44px;padding:0 16px;border-radius:10px;border:0;background:var(--accent);color:var(--accent-ink);font:700 14px var(--sans);cursor:pointer;display:flex;align-items:center;gap:6px}
+.send:hover{background:#9A3522}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media (prefers-reduced-motion:reduce){.think i,.art{animation:none}.log{scroll-behavior:auto}*{transition-duration:1ms!important}}
+@media (max-width:1023px){.wrap{grid-template-columns:1fr;gap:28px}}
+@media (max-width:760px){.wrap{padding:32px 16px}.chat{height:680px}.log{padding:16px 14px 6px}.u{max-width:88%}.a{grid-template-columns:1fr}.a > .mark{display:none}th,td{padding:7px 8px}.hide-s{display:none}.art h4{flex-direction:column;gap:0}.top small{font-size:12px}.chart text{font-size:21px}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div>
+    <p class="kicker">Shelfwise for independent bookshops</p>
+    <h2>Ask the till. It shows <em>its working.</em></h2>
+    <p class="lede">Shelfwise reads your sales, stock counts and supplier orders, and answers in plain words, with the table or chart behind the answer and a link to every source.</p>
+    <ul class="facts">
+      <li><b>1,140</b>shops on the morning question round</li>
+      <li><b>9 s</b>median time from question to cited answer</li>
+      <li><b>0</b>answers without a source. If it cannot find one, it says so.</li>
+    </ul>
+    <p class="note">Example conversation with a demo shop, Hartley's Books in Hebden Bridge. Figures are illustrative.</p>
+  </div>
+
+  <section class="chat" aria-label="Example Shelfwise conversation">
+    <div class="top"><span class="mark" aria-hidden="true">S</span><div><b>Shelfwise</b><br><small>Till and stock data to Mon 27 Oct</small></div><span class="ex">Example</span></div>
+    <div class="log" id="log" role="log" aria-live="polite"></div>
+    <div class="dock">
+      <div class="sugs" id="sugs" aria-label="Suggested questions" role="group"></div>
+      <form id="f"><label class="sr" for="q">Ask Shelfwise</label><input id="q" placeholder="Ask about sales, stock or suppliers" autocomplete="off"><button class="send" type="submit">Ask<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></form>
+    </div>
+  </section>
+</main>
+<script>
+(function(){
+  var S=[
+    {q:'Which titles should I reorder before Thursday?',k:/reorder|stock|run out|order/i,
+     a:'Five titles will sell out before Thursday\'s 14:00 order cutoff at the current rate. <strong>Fen Light</strong> and <strong>A Year of Small Bread</strong> sold through over half-term and are worth doubling.',
+     t:{h:'Reorder before Thu 30 Oct',s:'5 of 3,204 titles',cols:['Title','On hand','Sold, 14 days','Runs out','Order'],
+        rows:[['Fen Light','2','19','Tue','12'],['A Year of Small Bread','3','17','Wed','10'],['The Lantern Keeper\'s Daughter','4','11','Thu','6'],['Moorland Birds of the North','1','5','Thu','4'],['The Quiet Engine','2','6','Fri','4']]},
+     src:[['Till export, 14 to 27 Oct','4,212 lines, exported 27 Oct 18:02'],['Stock count, 26 Oct','Counted by Priya, 3,204 titles']]},
+    {q:'How did the poetry table do in October?',k:/poetry|table|october/i,
+     a:'<strong>£1,846</strong> from the poetry table in October, up 31% on last year. Week three carried it: the open-mic night on the 16th sold 42 books in one evening.',
+     c:{h:'Poetry table, weekly sales',s:'Oct 2026 against Oct 2025',labels:['1 to 5','6 to 12','13 to 19','20 to 26','27 to 31'],a:[312,348,694,402,90],b:[290,301,330,336,152],hi:2},
+     src:[['Till export, October','Category: Poetry, 211 sales'],['Events calendar','Open mic, Thu 16 Oct, 38 booked']]},
+    {q:'What is my best hour on a Saturday?',k:/hour|saturday|busy|staff/i,
+     a:'<strong>11:00 to 12:00.</strong> Over the last eight Saturdays that hour averaged £412 across 23 sales, 19% of the day. Open the second till from 10:45.',
+     c:{h:'Average Saturday takings by hour',s:'Last 8 Saturdays',labels:['9','10','11','12','13','14','15','16','17'],a:[84,231,412,356,268,301,247,176,98],hi:2},
+     src:[['Till export, 8 Saturdays','6 Sep to 25 Oct, 1,486 sales'],['Rota, Sep to Oct','Second till staffed from 12:00']]}
+  ];
+  var log=document.getElementById('log'),sugs=document.getElementById('sugs'),busy=false,
+      RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function el(t,c,h){var e=document.createElement(t);if(c)e.className=c;if(h!=null)e.innerHTML=h;return e;}
+  function table(t){var h='<h4>'+t.h+'<span>'+t.s+'</span></h4><table><thead><tr>'+t.cols.map(function(c,i){return '<th class="'+(i?'n':'')+(i===2?' hide-s':'')+'">'+c+'</th>'}).join('')+'</tr></thead><tbody>';
+    t.rows.forEach(function(r){h+='<tr>'+r.map(function(c,i){return '<td class="'+(i?'n':'')+(i===2?' hide-s':'')+(i===3&&/Tue|Wed/.test(c)?' hot':'')+'">'+c+'</td>'}).join('')+'</tr>'});return h+'</tbody></table>';}
+  function chart(c){var W=560,H=170,n=c.labels.length,max=Math.max.apply(0,c.a.concat(c.b||[])),bw=(W-40)/n,g='';
+    for(var i=0;i<n;i++){var x=30+i*bw,y;if(c.b){y=H-26-c.b[i]/max*(H-50);g+='<rect x="'+(x+bw*.18)+'" y="'+y+'" width="'+bw*.3+'" height="'+(H-26-y)+'" rx="2" fill="#9DB5AC"/>';}
+      y=H-26-c.a[i]/max*(H-50);var w=c.b?bw*.3:bw*.6,x2=c.b?x+bw*.5:x+bw*.2;g+='<rect x="'+x2+'" y="'+y+'" width="'+w+'" height="'+(H-26-y)+'" rx="2" fill="'+(i===c.hi?'#A63B27':'#3E504B')+'"/>';
+      if(i===c.hi)g+='<text x="'+(x2+w/2)+'" y="'+(y-6)+'" text-anchor="middle" font-size="12" font-weight="700" fill="#A63B27">£'+c.a[i]+'</text>';
+      g+='<text x="'+(x+bw/2)+'" y="'+(H-8)+'" text-anchor="middle" font-size="11" fill="#4F605B">'+c.labels[i]+'</text>';}
+    var lg=c.b?'<div class="lg"><span><i style="background:#3E504B"></i>2026</span><span><i style="background:#9DB5AC"></i>2025</span><span><i style="background:#A63B27"></i>Open-mic week</span></div>':'';
+    return '<h4>'+c.h+'<span>'+c.s+'</span></h4><svg class="chart" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+c.h+': '+c.labels.map(function(l,i){return l+' £'+c.a[i]}).join(', ')+'"><path d="M30 '+(H-26)+'H'+(W-10)+'" stroke="#C9D6D0"/>'+g+'</svg>'+lg;}
+  function sources(list,wrap){var row=el('div','src');list.forEach(function(s,i){var b=el('button','','<sup>'+(i+1)+'</sup>'+s[0]);b.type='button';b.setAttribute('aria-expanded','false');
+    b.addEventListener('click',function(){var open=b.getAttribute('aria-expanded')==='true';[].forEach.call(row.querySelectorAll('button'),function(x){x.setAttribute('aria-expanded','false')});var old=wrap.querySelector('.srcbox');if(old)old.remove();
+      if(!open){b.setAttribute('aria-expanded','true');wrap.appendChild(el('div','srcbox','Source '+(i+1)+': '+s[1]));}});row.appendChild(b);});wrap.appendChild(row);}
+  function answer(s,instant){var a=el('div','a'),m=el('span','mark','S'),body=el('div');m.setAttribute('aria-hidden','true');a.appendChild(m);a.appendChild(body);log.appendChild(a);
+    function finish(p){p.innerHTML=s.a;var art=el('div','art',s.t?table(s.t):chart(s.c));body.appendChild(art);sources(s.src,body);busy=false;paint();log.scrollTop=instant?0:log.scrollHeight;}
+    if(instant||RM){var p0=el('p');body.appendChild(p0);finish(p0);return;}
+    var th=el('div','think','<i></i><i></i><i></i><span>Reading '+s.src[0][0].charAt(0).toLowerCase()+s.src[0][0].slice(1)+'</span>');body.appendChild(th);log.scrollTop=log.scrollHeight;
+    setTimeout(function(){th.remove();var p=el('p');body.appendChild(p);var words=s.a.replace(/<[^>]+>/g,'').split(' '),i=0;
+      var iv=setInterval(function(){i++;p.textContent=words.slice(0,i).join(' ');log.scrollTop=log.scrollHeight;if(i>=words.length){clearInterval(iv);finish(p);}},38);},900);}
+  var asked={};
+  function ask(s,instant){if(busy)return;busy=!instant;if(s.id!=null)asked[s.id]=1;log.appendChild(el('p','u',s.q));paint();answer(s,instant);}
+  function paint(){sugs.innerHTML='';S.slice().sort(function(x,y){return (asked[x.id]||0)-(asked[y.id]||0)}).forEach(function(s){var d=asked[s.id],b=el('button','sug'+(d?' done':''),(d?'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>':'')+s.q);if(d)b.setAttribute('aria-label',s.q+', asked already');b.type='button';b.disabled=busy;b.addEventListener('click',function(){ask(s)});sugs.appendChild(b);});}
+  document.getElementById('f').addEventListener('submit',function(e){e.preventDefault();var v=this.q.value.trim();if(!v||busy)return;this.q.value='';
+    var hit=S.filter(function(s){return s.k.test(v)})[0];
+    if(hit){ask({q:v.replace(/</g,'&lt;'),a:hit.a,t:hit.t,c:hit.c,src:hit.src});}else{log.appendChild(el('p','u',v.replace(/</g,'&lt;')));var a=el('div','a','<span class="mark" aria-hidden="true">S</span><div><p>This example only knows three questions. Try one of the suggestions below, or ask about reorders, the poetry table or Saturdays.</p></div>');log.appendChild(a);log.scrollTop=log.scrollHeight;}});
+  S.forEach(function(s,i){s.id=i});
+  ask(S[0],true);
+})();
+</script>
+</body>
+</html>

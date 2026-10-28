@@ -1,0 +1,143 @@
+<!-- Design Lounge piece: email-product-launch · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<meta name="color-scheme" content="light dark">
+<meta name="supported-color-schemes" content="light dark">
+<title>Lathe 3.0 is out</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light dark;supported-color-schemes:light dark}
+/* simple selectors only (class, or class + element) so an inliner can move each rule onto the element */
+html,body{height:100%;margin:0}
+body{background:#ecebe7;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+.view{height:100%;overflow-y:auto}
+.strip{max-width:600px;margin:0 auto;padding:22px 0 14px;font:13px/1.4 Helvetica,Arial,sans-serif;color:#4c4d52;display:flex;gap:12px}
+.strip b{color:#17181b}
+.strip .d{margin-left:auto;white-space:nowrap}
+table{border-collapse:collapse}
+td{padding:0}
+.wrap{width:600px;max-width:600px;background:#fbfaf7}
+.pre{display:none;max-height:0;overflow:hidden;opacity:0;font-size:1px;line-height:1px}
+.sans{font-family:Helvetica,Arial,sans-serif}
+.logo{padding:24px 40px;font:700 15px/1 Helvetica,Arial,sans-serif;color:#17181b;letter-spacing:-.01em}
+.logo span{display:inline-block;width:18px;height:18px;border-radius:5px;background:#c2410c;vertical-align:-3px;margin-right:8px}
+.hero{background:#15171b;padding:44px 40px 0}
+.kick{font:700 11px/1 Helvetica,Arial,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#f3a37a}
+.hero h1{margin:14px 0 0;font:500 50px/1.02 "EB Garamond",Georgia,"Times New Roman",serif;letter-spacing:-.015em;color:#f4f2ec}
+.hero p{margin:16px 0 0;font:16px/1.55 Helvetica,Arial,sans-serif;color:#c4c6cc;max-width:440px}
+.shot{margin-top:32px;border-radius:10px 10px 0 0;background:#24272d;padding:10px 10px 0;border:1px solid #33363d;border-bottom:0}
+.dots{height:14px;padding-left:4px}
+.dots i{display:inline-block;width:8px;height:8px;border-radius:50%;background:#4a4e57;margin-right:5px}
+.app{background:#1b1d22;border-radius:6px 6px 0 0;height:226px;overflow:hidden}
+.side{width:128px;border-right:1px solid #2c2f36;vertical-align:top;padding:12px 10px}
+.side div{height:8px;border-radius:4px;background:#2f333b;margin-bottom:10px}
+.side div.on{background:#c2410c;width:70%}
+.diff{vertical-align:top;padding:12px 14px;font:11px/1.9 Menlo,Consolas,"Courier New",monospace;color:#9aa0aa}
+.diff b{display:block;font-weight:400;padding-left:8px;border-radius:2px;white-space:nowrap;overflow:hidden}
+.diff .add{background:#173a2a;color:#9fe0b8}
+.diff .del{background:#3d1d1b;color:#f0aaa2}
+.diff .hd{color:#e7e8eb;font:700 12px/2 Helvetica,Arial,sans-serif;padding-left:0}
+.cm{margin:6px 0 4px 8px;background:#2a2d34;border-left:3px solid #c2410c;padding:6px 8px;font:11px/1.4 Helvetica,Arial,sans-serif;color:#e7e8eb;border-radius:0 4px 4px 0;white-space:normal}
+.intro{padding:40px 40px 8px;font:16px/1.6 Helvetica,Arial,sans-serif;color:#2c2d31}
+.intro h2{margin:0 0 10px;font:500 28px/1.15 "EB Garamond",Georgia,serif;color:#17181b}
+.ch td{padding:22px 0;border-top:1px solid #e2e0da;vertical-align:top}
+.chs{padding:8px 40px 0}
+.vis{width:112px}
+.vis div{width:96px;height:72px;border-radius:8px;background:#f0eee8;border:1px solid #e2e0da;position:relative;overflow:hidden}
+.ch .tx{padding-left:18px}
+.ch h3{margin:0 0 6px;font:600 21px/1.2 "EB Garamond",Georgia,serif;color:#17181b}
+.ch p{margin:0;font:15px/1.55 Helvetica,Arial,sans-serif;color:#45474d}
+.ch p b{color:#17181b}
+.cta{padding:30px 40px 8px}
+.btn{display:inline-block;background:#c2410c;color:#ffffff;font:700 16px/1 Helvetica,Arial,sans-serif;text-decoration:none;padding:17px 28px;border-radius:8px}
+.cta p{margin:14px 0 0;font:13px/1.5 Helvetica,Arial,sans-serif;color:#5a5c62}
+.note{padding:30px 40px 40px}
+.note td.box{border-top:1px solid #e2e0da;padding-top:28px}
+.note p{margin:0 0 14px;font:16px/1.6 Helvetica,Arial,sans-serif;color:#2c2d31}
+.av{width:48px;height:48px;border-radius:50%;background:#2c3e50;color:#f4f2ec;font:500 19px/48px "EB Garamond",Georgia,serif;text-align:center}
+.who{padding-left:14px;font:14px/1.4 Helvetica,Arial,sans-serif;color:#5a5c62}
+.who b{display:block;font:italic 500 21px/1.2 "EB Garamond",Georgia,serif;color:#17181b}
+.foot{padding:24px 40px 36px;background:#f1efea;font:12px/1.6 Helvetica,Arial,sans-serif;color:#55575c}
+.foot a{color:#17181b}
+.after{height:48px}
+a:focus-visible{outline:2px solid #c2410c;outline-offset:3px}
+@media (max-width:640px){
+  .strip{padding:16px 16px 10px;flex-wrap:wrap;gap:2px 10px}.strip .d{margin-left:0}
+  .wrap{width:100%!important}
+  .logo,.hero,.intro,.chs,.cta,.note,.foot{padding-left:20px!important;padding-right:20px!important}
+  .hero h1{font-size:38px!important}.side{width:72px!important}.vis{width:100px!important}.ch .tx{padding-left:6px!important}
+  .btn{display:block!important;text-align:center}
+}
+@media (prefers-color-scheme:dark){
+  body{background:#0e0f11!important}.strip{color:#a9abb1!important}.strip b{color:#f4f2ec!important}
+  .wrap{background:#17181b!important}.logo{color:#f4f2ec!important}
+  .intro,.note p{color:#d8d9dd!important}.intro h2,.ch h3,.ch p b,.who b{color:#f4f2ec!important}.ch p,.who,.cta p{color:#b4b6bc!important}
+  .ch td,.note td.box{border-color:#2c2e33!important}.vis div{background:#202227!important;border-color:#2c2e33!important}
+  .foot{background:#121316!important;color:#a9abb1!important}.foot a{color:#f4f2ec!important}
+}
+</style>
+</head>
+<body>
+<div class="view">
+  <div class="strip" aria-label="Message details"><span><b>Ada at Lathe</b> &lt;ada@lathe.dev&gt;</span><span>Lathe 3.0: review a week of work in one sitting</span><span class="d">Tue 28 Oct, 16:02</span></div>
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td align="center">
+    <div class="pre">Stacked reviews, a phone app that is not an afterthought, and diffs that open in 0.4 seconds.</div>
+    <table role="presentation" class="wrap" width="600" cellpadding="0" cellspacing="0">
+      <tr><td class="logo"><span></span>Lathe</td></tr>
+      <tr><td class="hero">
+        <span class="kick">Lathe 3.0 · out today</span>
+        <h1>Review a week of work in one sitting.</h1>
+        <p>Three changes, all of them asked for by you. They are live in your workspace now; nothing to install.</p>
+        <div class="shot" role="img" aria-label="Lathe 3.0 window: a stacked review open on a diff with one inline comment">
+          <div class="dots"><i></i><i></i><i></i></div>
+          <table role="presentation" width="100%" class="app"><tr>
+            <td class="side"><div class="on"></div><div style="width:84%"></div><div style="width:62%"></div><div style="width:76%"></div><div style="width:54%"></div><div style="width:68%"></div></td>
+            <td class="diff">
+              <b class="hd">billing/invoice.ts · 3 of 5 in stack</b>
+              <b>  export function total(lines: Line[]) {</b>
+              <b class="del">-   return lines.reduce((s, l) =&gt; s + l.amount, 0)</b>
+              <b class="add">+   const net = lines.reduce((s, l) =&gt; s + l.net, 0)</b>
+              <b class="add">+   return round(net * (1 + taxRate(region)), 2)</b>
+              <div class="cm">Priya: should round() happen per line? Finance does it per line.</div>
+              <b>  }</b>
+            </td>
+          </tr></table>
+        </div>
+      </td></tr>
+
+      <tr><td class="intro"><h2>What changed</h2>Most reviews are not one pull request. They are four, built on top of each other, by someone who wants to go home. Lathe 3.0 is built for that.</td></tr>
+
+      <tr><td class="chs"><table role="presentation" width="100%">
+        <tr class="ch"><td class="vis"><div aria-hidden="true">
+          <span style="position:absolute;left:18px;top:30px;width:60px;height:30px;border-radius:5px;background:#d9d5cc"></span>
+          <span style="position:absolute;left:14px;top:22px;width:68px;height:30px;border-radius:5px;background:#e7e3da;border:1px solid #cfcac0"></span>
+          <span style="position:absolute;left:10px;top:12px;width:76px;height:32px;border-radius:5px;background:#fbfaf7;border:1px solid #c2410c"></span>
+        </div></td><td class="tx"><h3>Stacked reviews</h3><p>Open a stack of up to <b>12 dependent pull requests</b> as one review. Approve them together or one at a time; Lathe rebases the rest.</p></td></tr>
+        <tr class="ch"><td class="vis"><div aria-hidden="true">
+          <span style="position:absolute;left:34px;top:8px;width:28px;height:56px;border-radius:6px;border:2px solid #17181b;background:#fbfaf7"></span>
+          <span style="position:absolute;left:40px;top:20px;width:16px;height:3px;background:#2f7d4f"></span><span style="position:absolute;left:40px;top:27px;width:12px;height:3px;background:#b4372f"></span><span style="position:absolute;left:40px;top:34px;width:16px;height:3px;background:#2f7d4f"></span>
+        </div></td><td class="tx"><h3>Review from your phone</h3><p>Real diffs, threaded comments and approvals in the new app. <b>Swipe right to approve</b>, left to request changes.</p></td></tr>
+        <tr class="ch"><td class="vis"><div aria-hidden="true">
+          <span style="position:absolute;left:12px;top:22px;width:72px;height:8px;border-radius:4px;background:#d9d5cc"></span><span style="position:absolute;left:12px;top:22px;width:20px;height:8px;border-radius:4px;background:#c2410c"></span>
+          <span style="position:absolute;left:12px;top:40px;width:72px;height:8px;border-radius:4px;background:#d9d5cc"></span><span style="position:absolute;left:12px;top:40px;width:62px;height:8px;border-radius:4px;background:#8a8c92"></span>
+        </div></td><td class="tx"><h3>Faster by half</h3><p>A 4,000-line diff now opens in <b>0.4 seconds</b>, down from 0.9. Syntax highlighting no longer blocks scrolling.</p></td></tr>
+      </table></td></tr>
+
+      <tr><td class="cta"><a class="btn" href="#open">Open Lathe 3.0</a><p>Already on 3.0? The full changelog has 41 smaller fixes.</p></td></tr>
+
+      <tr><td class="note"><table role="presentation" width="100%"><tr><td class="box">
+        <p>One more thing. If anything in 3.0 gets in your way, reply to this email. It comes to me, not to a ticket queue, and I read every one before lunch.</p>
+        <table role="presentation"><tr><td><div class="av" aria-hidden="true">AL</div></td><td class="who"><b>Ada Lindqvist</b>Cofounder, Lathe</td></tr></table>
+      </td></tr></table></td></tr>
+
+      <tr><td class="foot">You get product news because you have a Lathe account on the team Harbourline. <a href="#prefs">Email preferences</a> · <a href="#unsub">Unsubscribe from product news</a><br>Lathe Software Ltd, 4th floor, 22 Ropewalk Lane, Bristol BS1 6QD</td></tr>
+    </table>
+    <div class="after"></div>
+  </td></tr></table>
+</div>
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!-- Design Lounge piece: footer-curtain-reveal · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Curtain reveal footer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --page:#F1EEE6;--page-2:#E4DFD2;--ink:#1A1C18;--ink-2:#55574F;--line-page:#CFC9BA;
+  --foot:#13261D;--foot-2:#1C3328;--foot-line:#2F4A3C;--bone:#EDEFE6;--bone-2:#A9B8AC;--lime:#D4F35A;--lime-ink:#13261D;
+  --display:"Archivo Black",Impact,sans-serif;--font:"Archivo",system-ui,sans-serif;
+  --foot-h:600px;--curtain-r:36px;--gutter:56px;
+  --shadow-curtain:0 24px 40px -16px rgba(8,20,14,.55),0 2px 0 rgba(8,20,14,.25);
+  --t-fast:160ms;--t-mid:320ms;--ease:cubic-bezier(.2,.7,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+html{background:var(--foot)}
+body{font:15px/1.5 var(--font);color:var(--ink);-webkit-font-smoothing:antialiased;height:auto;min-height:100%}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--lime);outline-offset:3px;border-radius:4px}
+main :focus-visible{outline-color:var(--ink)}
+/* the curtain: page content sits above the footer and carries the rounded bottom edge */
+main{position:relative;z-index:1;background:var(--page);border-radius:0 0 var(--curtain-r) var(--curtain-r);box-shadow:var(--shadow-curtain);padding:0 var(--gutter) 40px}
+.bar{display:flex;align-items:center;justify-content:space-between;height:72px;border-bottom:1px solid var(--line-page);font-weight:500;font-size:13px}
+.bar b{font:16px var(--display);letter-spacing:-.01em}
+.bar nav{display:flex;gap:28px}
+.bar nav a{text-decoration:none}.bar nav a:hover{text-decoration:underline;text-underline-offset:4px}
+.intro{display:grid;grid-template-columns:1fr 1fr;gap:40px;padding:56px 0 40px}
+.intro h2{margin:0;font:clamp(34px,4.4vw,56px)/.98 var(--display);letter-spacing:-.025em}
+.intro p{margin:6px 0 0;max-width:46ch;color:var(--ink-2);font-size:16px}
+.work{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:20px}
+.tile{margin:0}
+.ph{height:300px;border-radius:6px;position:relative;overflow:hidden}
+/* gradient "photographs" of three buildings */
+.p1{background:linear-gradient(180deg,#B9C7C9 0 38%,transparent 38%),repeating-linear-gradient(90deg,#D8CFBF 0 34px,#C6BBA6 34px 36px),#D8CFBF}
+.p1::after{content:"";position:absolute;left:12%;right:12%;top:46%;bottom:0;background:repeating-linear-gradient(90deg,#2C3A33 0 22px,transparent 22px 52px),repeating-linear-gradient(180deg,transparent 0 30px,#D8CFBF 30px 44px);opacity:.85}
+.p2{background:radial-gradient(120% 80% at 70% 0%,#F4D9A8 0,#E3A86A 40%,#9C5B3A 100%)}
+.p2::after{content:"";position:absolute;left:18%;width:46%;bottom:0;height:72%;background:#F1EEE6;clip-path:polygon(0 30%,50% 0,100% 30%,100% 100%,0 100%);box-shadow:inset 0 0 0 1px #0000}
+.p2::before{content:"";position:absolute;left:34%;width:14%;bottom:0;height:26%;background:#3B2A20;z-index:1;border-radius:40px 40px 0 0}
+.p3{background:linear-gradient(180deg,#24382E 0 55%,#3F5C49 55% 100%)}
+.p3::after{content:"";position:absolute;inset:22% 14% 0;background:repeating-linear-gradient(180deg,#E9E2D2 0 4px,transparent 4px 26px),linear-gradient(90deg,transparent 0 48%,#E9E2D2 48% 52%,transparent 52%)}
+.tile figcaption{display:flex;justify-content:space-between;gap:12px;padding-top:12px;font-size:13px;border-top:1px solid var(--ink);margin-top:14px}
+.tile figcaption b{font-weight:600}
+.tile figcaption span{color:var(--ink-2)}
+.endnote{display:flex;justify-content:space-between;align-items:center;margin-top:28px;font-size:13px;color:var(--ink-2)}
+.endnote a{font-weight:600;color:var(--ink);text-underline-offset:4px}
+/* the footer waits underneath */
+footer{position:sticky;bottom:0;z-index:0;min-height:var(--foot-h);background:var(--foot);color:var(--bone);padding:calc(var(--curtain-r) + 40px) var(--gutter) 28px;margin-top:calc(var(--curtain-r) * -1);display:flex;flex-direction:column}
+.reveal{display:flex;flex-direction:column;flex:1}
+@supports (animation-timeline:scroll()){
+  .reveal{animation:rise linear both;animation-timeline:scroll(root);animation-range:calc(100% - var(--foot-h)) 100%}
+  @keyframes rise{from{opacity:.25;transform:translateY(48px) scale(.97)}to{opacity:1;transform:none}}
+}
+.kick{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--bone-2);letter-spacing:.02em}
+.kick .open{display:inline-flex;align-items:center;gap:8px;color:var(--bone)}
+.kick .open i{width:8px;height:8px;border-radius:50%;background:var(--lime);box-shadow:0 0 0 4px rgba(212,243,90,.16)}
+.contact{display:grid;grid-template-columns:1fr 300px;gap:40px;align-items:end;margin:22px 0 44px}
+.contact h2{margin:0;font:clamp(46px,8.8vw,116px)/.9 var(--display);letter-spacing:-.035em}
+.contact h2 em{font-style:normal;color:var(--lime)}
+.contact h2 a{text-decoration:none}
+.contact h2 a:hover em{text-decoration:underline;text-decoration-thickness:6px;text-underline-offset:10px}
+.reach{display:grid;gap:14px;font-size:14px}
+.reach a.mail{display:flex;align-items:center;justify-content:space-between;gap:10px;height:52px;padding:0 18px;border-radius:999px;background:var(--lime);color:var(--lime-ink);font-weight:600;text-decoration:none;font-size:15px;transition:transform var(--t-fast) var(--ease)}
+.reach a.mail svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;transition:transform var(--t-mid) var(--ease-out)}
+.reach a.mail:hover svg{transform:translateX(4px) rotate(-45deg)}
+.reach a.mail:active{transform:scale(.98)}
+.reach p{margin:0;color:var(--bone-2);line-height:1.45}.reach p a{color:var(--bone);text-decoration:none;font-weight:500}
+.reach p a:hover{text-decoration:underline}
+.map{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;border-top:1px solid var(--foot-line);padding-top:24px}
+.map h3{margin:0 0 12px;font:600 11px/1 var(--font);letter-spacing:.14em;text-transform:uppercase;color:var(--bone-2)}
+.map ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.map a{text-decoration:none;font-size:15px}
+.map a:hover{color:var(--lime)}
+.map sup{font-size:10px;color:var(--lime);margin-left:4px;vertical-align:4px}
+.legal{margin-top:auto;padding-top:28px;display:flex;flex-wrap:wrap;gap:8px 24px;align-items:center;font-size:12px;color:var(--bone-2)}
+.legal a{text-decoration:none}.legal a:hover{color:var(--bone);text-decoration:underline}
+.kr{display:inline-flex;align-items:center;gap:20px}
+.replay{display:inline-flex;align-items:center;gap:8px;height:32px;padding:0 14px;border-radius:999px;border:1px solid var(--bone-2);background:transparent;color:var(--bone);font:500 12px var(--font);cursor:pointer;transition:background var(--t-fast) var(--ease),color var(--t-fast) var(--ease)}
+.replay:hover{background:var(--bone);color:var(--foot)}
+.replay svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+@media (max-width:900px){.contact{grid-template-columns:1fr}.work{grid-template-columns:1fr 1fr}.work .tile:first-child{grid-column:1/-1}}
+@media (max-width:640px){
+  :root{--gutter:20px;--curtain-r:24px}
+  footer{position:relative;min-height:0}
+  .reveal{animation:none!important}
+  .bar nav{display:none}
+  .intro{grid-template-columns:1fr;gap:12px;padding:36px 0 28px}
+  .work{grid-template-columns:1fr}.ph{height:200px}
+  .map{grid-template-columns:1fr 1fr;row-gap:28px}
+  .kick{flex-direction:column;align-items:flex-start;gap:8px}.kr{flex-direction:column;align-items:flex-start;gap:12px}
+  .endnote{flex-direction:column;align-items:flex-start;gap:8px}
+}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important;scroll-behavior:auto!important}.reveal{animation:none!important}}
+</style>
+</head>
+<body>
+<main id="top">
+  <header class="bar"><b>Harbour Row</b><nav aria-label="Main"><a href="#">Work</a><a href="#">Studio</a><a href="#">Journal</a><a href="#">Contact</a></nav></header>
+  <section class="intro">
+    <h2>Twelve buildings, one street at a time.</h2>
+    <p>Housing, schools and a ferry terminal on the Tejo. Every project starts with a week of walking the site before anyone opens a drawing.</p>
+  </section>
+  <section class="work" aria-label="Recent work">
+    <figure class="tile"><div class="ph p1" role="img" aria-label="Facade of a five-storey housing block with timber shutters"></div><figcaption><b>Vila Ferroviária, 64 homes</b><span>Barreiro · 2025</span></figcaption></figure>
+    <figure class="tile"><div class="ph p2" role="img" aria-label="Whitewashed chapel at dusk"></div><figcaption><b>Capela do Sal</b><span>Comporta · 2024</span></figcaption></figure>
+    <figure class="tile"><div class="ph p3" role="img" aria-label="Slatted timber school pavilion"></div><figcaption><b>Escola das Hortas</b><span>Porto · 2026</span></figcaption></figure>
+  </section>
+  <p class="endnote"><span>Showing 12 of 12 projects</span><a href="#">Download the 2026 portfolio, PDF 14 MB</a></p>
+</main>
+<footer id="foot">
+  <div class="reveal">
+    <div class="kick"><span class="open"><i></i>Taking on new work from March 2027</span><span class="kr"><span>Studio open Mon to Fri, 9:30 to 18:30 WET</span><button class="replay" id="replay" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 108-8M4 4v5h5"/></svg>Replay the curtain</button></span></div>
+    <div class="contact">
+      <h2><a href="#">Got a site?<br><em>Let's walk it.</em></a></h2>
+      <div class="reach">
+        <a class="mail" href="#">studio@harbourrow.pt<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <p><a href="#">+351 21 340 7718</a><br>Rua das Janelas Verdes 38<br>1200-691 Lisboa, Portugal</p>
+      </div>
+    </div>
+    <nav class="map" aria-label="Sitemap">
+      <div><h3>Studio</h3><ul><li><a href="#">About</a></li><li><a href="#">People</a></li><li><a href="#">How we work</a></li><li><a href="#">Press</a></li></ul></div>
+      <div><h3>Work</h3><ul><li><a href="#">Housing</a></li><li><a href="#">Civic</a></li><li><a href="#">Interiors</a></li><li><a href="#">Landscape</a></li></ul></div>
+      <div><h3>Join</h3><ul><li><a href="#">Open roles<sup>2</sup></a></li><li><a href="#">Internships</a></li><li><a href="#">Visit the studio</a></li></ul></div>
+      <div><h3>Read</h3><ul><li><a href="#">Journal</a></li><li><a href="#">Monthly letter</a></li><li><a href="#">Site notes</a></li></ul></div>
+    </nav>
+    <div class="legal">
+      <span>© 2026 Harbour Row Arquitectos, Lda.</span><span>NIF 515 204 118</span><a href="#">Privacy</a><a href="#">Accessibility</a>
+    </div>
+  </div>
+</footer>
+<script>
+(function(){
+  var se=document.scrollingElement||document.documentElement;
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function toEnd(smooth){se.scrollTo({top:se.scrollHeight,behavior:smooth&&!reduce?'smooth':'auto'});}
+  // open on the hero state: page end above, footer revealed
+  if('scrollRestoration' in history)history.scrollRestoration='manual';
+  addEventListener('load',function(){toEnd(false);});
+  toEnd(false);
+  var btn=document.getElementById('replay');
+  if(btn)btn.addEventListener('click',function(){
+    se.scrollTo({top:Math.max(0,se.scrollHeight-innerHeight-640),behavior:'auto'});
+    setTimeout(function(){toEnd(true);},reduce?0:420);
+  });
+})();
+</script>
+</body>
+</html>

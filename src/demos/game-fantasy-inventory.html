@@ -1,0 +1,245 @@
+<!-- Design Lounge piece: game-fantasy-inventory · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Satchel of Maren Vey</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Marcellus&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#120e0b; --panel:#1b1511; --well:#15100c; --line:#3a2e22; --gold:#c9a45c; --gold-dim:#7d6338; --gold-hi:#e8c987;
+  --ink:#eadfc8; --ink-2:#b3a68e; --ink-3:#8f826c;
+  --common:#a39b8e; --uncommon:#7fbf68; --rare:#6aa6ec; --epic:#bb8ee8; --legendary:#ec9a4a;
+  --good:#8fcf72; --bad:#e2775f;
+  --display:"Cinzel",Georgia,serif; --text:"Marcellus",Georgia,serif;
+  --slot-r:3px; --ease:cubic-bezier(.2,.7,.2,1); --ease-out:cubic-bezier(.16,1,.3,1); --t:160ms;
+  --orn:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' fill='none' stroke='%23c9a45c' stroke-width='1.2'%3E%3Cpath d='M1 31V9Q1 1 9 1h22'/%3E%3Cpath d='M5 31V12q0-7 7-7h19' opacity='.6'/%3E%3Cpath d='M10 12c4-2 8 0 8 4s-4 5-6 2 1-4 3-2'/%3E%3Cpath d='M1 1l5 5'/%3E%3Ccircle cx='25' cy='5' r='1.4' fill='%23c9a45c'/%3E%3Ccircle cx='5' cy='25' r='1.4' fill='%23c9a45c'/%3E%3C/svg%3E");
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:radial-gradient(120% 90% at 50% 0%,#211812 0%,var(--bg) 60%);background-color:var(--bg);color:var(--ink);font:15px/1.45 var(--text);padding:26px 36px 24px;overflow-x:hidden}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--gold-hi);outline-offset:2px}
+.top{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;border-bottom:1px solid var(--line);padding-bottom:14px;margin-bottom:20px}
+.who{font:600 12px/1 var(--display);letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+h1{font:600 clamp(34px,5vw,58px)/1 var(--display);margin:8px 0 0;letter-spacing:.02em;color:var(--ink)}
+h1 small{font:500 .38em/1 var(--display);color:var(--ink-2);letter-spacing:.14em;margin-left:14px;vertical-align:middle}
+.purse{display:flex;gap:28px;align-items:flex-end}
+.purse dt{font:600 11px/1 var(--display);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3);margin-bottom:6px}
+.purse dd{margin:0;font:600 24px/1 var(--display);display:flex;align-items:center;gap:8px}
+.purse dd span{font:15px var(--text);color:var(--ink-2)}
+.coin{width:18px;height:18px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#f6dc9a,#c9a45c 55%,#7d6338);box-shadow:inset 0 0 0 1px #5a4424}
+.wbar{width:150px;height:6px;background:var(--well);border:1px solid var(--line);margin-top:8px}
+.wbar i{display:block;height:100%;width:65%;background:linear-gradient(90deg,var(--gold-dim),var(--gold))}
+main{display:grid;grid-template-columns:272px minmax(0,1fr) 330px;gap:26px;align-items:stretch;min-height:calc(100vh - 182px)}
+.frame{position:relative;background:var(--panel);border:1px solid var(--gold-dim);box-shadow:inset 0 0 0 4px var(--panel),inset 0 0 0 5px #3d3020,0 18px 40px rgba(0,0,0,.45);padding:22px 20px}
+.frame::before,.frame::after,.fc::before,.fc::after{content:"";position:absolute;width:30px;height:30px;background:var(--orn) no-repeat center/contain;pointer-events:none}
+.frame::before{top:-3px;left:-3px}.frame::after{bottom:-3px;right:-3px;transform:rotate(180deg)}
+.fc::before{top:-3px;right:-3px;transform:scaleX(-1)}.fc::after{bottom:-3px;left:-3px;transform:scaleY(-1)}
+h2{font:600 13px/1 var(--display);letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin:0 0 16px;display:flex;align-items:center;gap:10px}
+h2::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--gold-dim),transparent)}
+/* slots */
+.slot{position:relative;aspect-ratio:1;border:1px solid var(--line);border-radius:var(--slot-r);background:var(--well);display:grid;place-items:center;cursor:pointer;padding:0;transition:transform var(--t) var(--ease),border-color var(--t) var(--ease),opacity 240ms var(--ease)}
+.slot svg{width:52%;height:52%;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.slot.empty{cursor:default;background:repeating-linear-gradient(45deg,transparent 0 6px,rgba(201,164,92,.03) 6px 7px),var(--well)}
+.slot[data-r]{border-color:color-mix(in srgb,var(--rc) 55%,transparent);background:radial-gradient(circle at 50% 62%,color-mix(in srgb,var(--rc) 20%,transparent),transparent 70%),var(--well);color:var(--rc)}
+.slot[data-r=epic],.slot[data-r=legendary]{box-shadow:inset 0 0 0 2px var(--well),inset 0 0 0 3px color-mix(in srgb,var(--rc) 35%,transparent)}
+.slot[data-r=legendary]{box-shadow:inset 0 0 0 2px var(--well),inset 0 0 0 3px color-mix(in srgb,var(--rc) 45%,transparent),inset 0 0 14px color-mix(in srgb,var(--rc) 35%,transparent)}
+.slot[data-r]:hover{transform:translateY(-2px);border-color:var(--rc)}
+.slot[aria-pressed=true]{border-color:var(--gold-hi);outline:1px solid var(--gold-hi);outline-offset:2px}
+.slot .n{position:absolute;right:4px;bottom:2px;font:600 11px/1 var(--display);color:var(--ink)}
+.slot.dim{opacity:.22}
+[data-r=common]{--rc:var(--common)}[data-r=uncommon]{--rc:var(--uncommon)}[data-r=rare]{--rc:var(--rare)}[data-r=epic]{--rc:var(--epic)}[data-r=legendary]{--rc:var(--legendary)}
+/* paper doll */
+.doll{display:grid;grid-template-columns:52px 1fr 52px;gap:9px 10px}
+.doll .col{display:grid;gap:9px}
+.fig{display:grid;place-items:center}
+.fig svg{width:100%;max-width:120px;height:auto;stroke:var(--gold-dim);fill:none;stroke-width:1.1}
+.weap{grid-column:1/-1;display:flex;justify-content:center;gap:12px}
+.weap .slot{width:60px}
+.attrs{display:grid;grid-template-columns:1fr 1fr;gap:0 18px;margin:18px 0 0;padding-top:14px;border-top:1px solid var(--line)}
+.attrs div{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px dotted #3a2e22;font-size:14px}
+.attrs dt{color:var(--ink-2)}.attrs dd{margin:0;font:600 14px var(--display)}
+/* bag */
+.tabs{display:flex;gap:4px;margin-bottom:14px;flex-wrap:wrap}
+.tabs button{background:none;border:1px solid transparent;padding:8px 12px;font:600 12px/1 var(--display);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2);cursor:pointer;border-radius:2px}
+.tabs button:hover{color:var(--ink)}
+.tabs button[aria-selected=true]{color:var(--gold-hi);border-color:var(--gold-dim);background:rgba(201,164,92,.08)}
+.grid{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:6px}
+.bagfoot{display:flex;justify-content:space-between;align-items:center;margin-top:16px;font-size:14px;color:var(--ink-2);gap:12px;flex-wrap:wrap}
+.btn{border:1px solid var(--gold);background:transparent;color:var(--gold-hi);font:600 12px/1 var(--display);letter-spacing:.12em;text-transform:uppercase;padding:11px 16px;cursor:pointer;border-radius:2px;transition:background var(--t) var(--ease)}
+.btn:hover{background:rgba(201,164,92,.12)}
+.btn.primary{background:var(--gold);color:#1a120a;border-color:var(--gold)}
+.btn.primary:hover{background:var(--gold-hi)}
+.bag{display:flex;flex-direction:column}.bag .bagfoot{margin-top:auto;padding-top:16px}
+/* tooltip */
+.tip .rar{font:600 11px/1 var(--display);letter-spacing:.2em;text-transform:uppercase;color:var(--rc)}
+.tip h3{font:700 24px/1.12 var(--display);margin:8px 0 4px;color:var(--rc)}
+.tip .kind{color:var(--ink-2);font-size:14px;display:flex;justify-content:space-between}
+.tip .big{font:600 30px/1 var(--display);margin:16px 0 2px}
+.tip .big small{font:14px var(--text);color:var(--ink-2);margin-left:6px}
+.tip .sub{color:var(--ink-3);font-size:13px}
+.tip ul{list-style:none;padding:12px 0;margin:12px 0;border-block:1px solid var(--line)}
+.tip li{padding:3px 0;color:var(--good)}
+.tip li.ench{color:var(--rare)}
+.lore{color:var(--ink-2);font-size:14px;line-height:1.55;margin:0 0 14px;padding-left:12px;border-left:2px solid var(--gold-dim)}
+.cmp{font-size:13px;color:var(--ink-2);margin:0 0 16px}
+.cmp b{font-weight:400}.cmp .up{color:var(--good)}.cmp .dn{color:var(--bad)}
+.tfoot{display:flex;justify-content:space-between;align-items:center;font-size:14px;color:var(--ink-2);margin-bottom:16px}
+.tfoot span{display:flex;align-items:center;gap:6px}
+.acts{display:flex;gap:8px}.acts .btn{flex:1}
+.tip .body{animation:in 240ms var(--ease-out)}
+@keyframes in{from{opacity:0;transform:translateY(4px)}}
+@media (max-width:1100px){main{grid-template-columns:240px minmax(0,1fr);min-height:0}.tip{grid-column:1/-1}}
+@media (max-width:760px){
+  body{padding:20px 16px}
+  .top{flex-direction:column;align-items:flex-start}
+  h1 small{display:block;margin:8px 0 0}
+  main{grid-template-columns:minmax(0,1fr)}
+  .bag{order:1}.tip{order:2}.eq{order:3}
+  .grid{gap:4px}.frame{padding:18px 14px}
+  .tabs button{padding:8px 9px;letter-spacing:.08em}
+}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important;animation:none!important}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="sword" viewBox="0 0 24 24"><path d="M20 4l-9.5 9.5M20 4h-4.5M20 4v4.5M7.5 12.5l4 4M9.5 14.5L4 20"/></symbol>
+  <symbol id="shield" viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6zM12 7v10"/></symbol>
+  <symbol id="potion" viewBox="0 0 24 24"><path d="M10 3h4M10.5 3v5L6 15a4 4 0 0 0 3.5 6h5a4 4 0 0 0 3.5-6l-4.5-7V3M7.5 14h9"/></symbol>
+  <symbol id="ring" viewBox="0 0 24 24"><circle cx="12" cy="15" r="6"/><path d="M9 7l3-4 3 4-3 2z"/></symbol>
+  <symbol id="amulet" viewBox="0 0 24 24"><path d="M6 3c0 6 3 8.5 6 8.5S18 9 18 3"/><path d="M12 12l4 4.5-4 4.5-4-4.5z"/></symbol>
+  <symbol id="helm" viewBox="0 0 24 24"><path d="M5 19v-7a7 7 0 0 1 14 0v7h-5v-5h-4v5zM12 5v4"/></symbol>
+  <symbol id="boots" viewBox="0 0 24 24"><path d="M8 3h5v10l6 3v4H6V3zM6 16h7"/></symbol>
+  <symbol id="glove" viewBox="0 0 24 24"><path d="M8 21v-7L5.5 10.5 7 9.5l2 2V5a1 1 0 0 1 2 0v5V4a1 1 0 0 1 2 0v6V5a1 1 0 0 1 2 0v6l1-2.5a1 1 0 0 1 2 .5l-2 7.5V21z"/></symbol>
+  <symbol id="scroll" viewBox="0 0 24 24"><path d="M7 4h11a2 2 0 0 1 0 4H7M7 4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h11V8M9 12h6M9 16h4"/></symbol>
+  <symbol id="gem" viewBox="0 0 24 24"><path d="M6 4h12l3 5-9 11L3 9zM3 9h18M9 4l3 5 3-5M12 9v11"/></symbol>
+  <symbol id="bow" viewBox="0 0 24 24"><path d="M5 3c9 1 15 7 16 16M5 3l16 16M3 21l8-8M3 21h3M3 21v-3"/></symbol>
+  <symbol id="staff" viewBox="0 0 24 24"><circle cx="12" cy="5.5" r="3"/><path d="M12 8.5V21M9 13h6"/></symbol>
+  <symbol id="herb" viewBox="0 0 24 24"><path d="M12 21V10M12 15c-4 0-6-3-6-7 4 0 6 3 6 7zM12 11c0-4 2-7 6-7 0 4-2 7-6 7z"/></symbol>
+  <symbol id="key" viewBox="0 0 24 24"><circle cx="8" cy="8" r="4"/><path d="M11 11l9 9M17 17l2-2M14.5 14.5l2-2"/></symbol>
+  <symbol id="pouch" viewBox="0 0 24 24"><path d="M9 4h6l-1 3h-4zM8.5 7C5 10 4 13 4 16a5 5 0 0 0 5 5h6a5 5 0 0 0 5-5c0-3-1-6-4.5-9z"/></symbol>
+  <symbol id="chest" viewBox="0 0 24 24"><path d="M8 3l4 3 4-3 4 3-2 4v11H6V10L4 6zM12 6v15"/></symbol>
+  <symbol id="legs" viewBox="0 0 24 24"><path d="M7 3h10l1 18h-4l-2-11-2 11H6zM7 7h10"/></symbol>
+  <symbol id="tome" viewBox="0 0 24 24"><path d="M5 5a2 2 0 0 1 2-2h11v15H7a2 2 0 0 0-2 2zM5 20a2 2 0 0 0 2 1h11v-3M10 8h5"/></symbol>
+  <symbol id="cloak" viewBox="0 0 24 24"><path d="M9 3h6l1 3 4 15H4L8 6zM9 3l3 5 3-5M12 8v13"/></symbol>
+  <symbol id="axe" viewBox="0 0 24 24"><path d="M6 21L16 7M13 4c4 0 7 3 7 7-3 0-5-1-6.5-2.5S13 6 13 4z"/></symbol>
+</svg>
+
+<header class="top">
+  <div>
+    <div class="who">Maren Vey · Lantern-Warden of Ostrecht · Level 34</div>
+    <h1>Satchel<small>48 slots · 31 carried</small></h1>
+  </div>
+  <dl class="purse">
+    <div><dt>Crowns</dt><dd><i class="coin" aria-hidden="true"></i>12,480</dd></div>
+    <div><dt>Burden</dt><dd>48.6<span>/75 st</span></dd><div class="wbar" aria-hidden="true"><i></i></div></div>
+  </dl>
+</header>
+
+<main>
+  <section class="frame eq" aria-labelledby="eqh"><span class="fc"></span>
+    <h2 id="eqh">Equipped</h2>
+    <div class="doll" id="doll">
+      <div class="col" data-side="l"></div>
+      <div class="fig" aria-hidden="true"><svg viewBox="0 0 120 260"><circle cx="60" cy="34" r="17"/><path d="M60 51v10M30 70q30-12 60 0l8 70-12 4-6-46-4 52H44l-4-52-6 46-12-4z"/><path d="M44 150l-4 96h16l4-80 4 80h16l-4-96"/><path d="M60 8v-6M40 20l-5-4M80 20l5-4" opacity=".5"/></svg></div>
+      <div class="col" data-side="r"></div>
+      <div class="weap" data-side="w"></div>
+    </div>
+    <dl class="attrs">
+      <div><dt>Armour</dt><dd>412</dd></div><div><dt>Ward</dt><dd>186</dd></div>
+      <div><dt>Might</dt><dd>74</dd></div><div><dt>Grace</dt><dd>51</dd></div>
+      <div><dt>Wit</dt><dd>38</dd></div><div><dt>Resolve</dt><dd>60</dd></div>
+    </dl>
+  </section>
+
+  <section class="frame bag" aria-labelledby="bagh"><span class="fc"></span>
+    <h2 id="bagh">Pack</h2>
+    <div class="tabs" role="tablist" aria-label="Filter pack">
+      <button role="tab" aria-controls="grid" aria-selected="true" data-f="all">All</button>
+      <button role="tab" aria-controls="grid" aria-selected="false" data-f="arms">Arms</button>
+      <button role="tab" aria-controls="grid" aria-selected="false" data-f="armour">Armour</button>
+      <button role="tab" aria-controls="grid" aria-selected="false" data-f="trinket">Trinkets</button>
+      <button role="tab" aria-controls="grid" aria-selected="false" data-f="reagent">Reagents</button>
+    </div>
+    <div class="grid" id="grid" role="group" aria-label="Pack slots, 8 by 6. Arrow keys move between slots"></div>
+    <div class="bagfoot"><span>17 empty slots · 4 marked as junk</span><button class="btn" type="button">Sell junk for 86 crowns</button></div>
+  </section>
+
+  <aside class="frame tip" aria-live="polite" aria-label="Item details"><span class="fc"></span><div class="body" id="tip"></div></aside>
+</main>
+
+<script>
+(() => {
+  // icon, rarity, name, kind, tab, big line, stats, lore, value, weight, count
+  const I = {
+    brand:['sword','legendary','Vigil-Brand of Ostrecht','One-handed sword','arms','148 to 203|Damage · 1.4 per second',['+38 Might','+22 Resolve','+9% Critical strike','Ember-ward: burns the unhallowed'],'Forged from the last lantern-iron of the drowned chapel. It is warm in the hand, and warmer near the dead.',4250,3.8,0,'+77 to +101 damage, +0.2 per second'],
+    aegis:['shield','epic','Bulwark of the Salt March','Shield','armour','964|Armour',['+41 Resolve','+12 Ward','Blocks 18% of spell damage'],'Its rim is notched once for every tide the March held.',2180,6.2],
+    flask:['potion','rare','Draught of Second Wind','Potion','reagent','420|Stamina restored',['Over 6 seconds','Shared cooldown 30 s'],'Bitter as willow bark. Drink it anyway.',45,0.3,7],
+    rowan:['ring','rare','Rowan Signet','Ring','trinket','+24|Wit',['+11 Grace','+4% Haste'],'Pressed into wax, it leaves the mark of a house nobody remembers.',640,0.1],
+    tear:['amulet','epic','Tear of the Gloam Abbess','Amulet','trinket','+46|Ward',['+19 Wit','Mana regains 6% faster'],'She wept once, at the end. The sisters kept the drop.',1920,0.2],
+    helm:['helm','uncommon','Fenward Kettle Helm','Head','armour','188|Armour',['+9 Resolve'],'Dented, honest, and stamped with a toll-bridge seal.',210,2.4],
+    boots:['boots','common','Drover’s Boots','Feet','armour','64|Armour',['+3 Grace'],'Well broken in by someone else.',22,1.6],
+    gloves:['glove','rare','Gauntlets of the Ninth Bell','Hands','armour','142|Armour',['+14 Might','+6% Parry'],'Each knuckle rings a different note when struck.',780,1.9],
+    scroll:['scroll','uncommon','Scroll of Lantern Recall','Scroll','reagent','1|Use',['Returns you to the last lit shrine'],'The ink smells of tallow and pine resin.',60,0.1,3],
+    gem:['gem','epic','Unset Duskstone','Gem','reagent','+18|Any attribute',['Socket into Epic or higher'],'Hold it to the light and it shows you the light leaving.',1400,0.1],
+    bow:['bow','rare','Heronwood Longbow','Two-handed bow','arms','92 to 141|Damage · 0.9 per second',['+19 Grace','+12% Range'],'Strung with gut from the marsh-elk of Lowmere.',990,2.2],
+    staff:['staff','uncommon','Ashwalker’s Staff','Staff','arms','61 to 88|Damage · 1.1 per second',['+12 Wit'],'Charred at the tip, from a fire that was not lit by hand.',180,2.8],
+    herb:['herb','common','Gravemoss','Herb','reagent','1|Reagent',['Used in tinctures and wards'],'Grows only where the ground was dug twice.',4,0.1,14],
+    key:['key','rare','Key to the Lower Ossuary','Quest item','trinket','1|Key',['Cannot be sold','Quest: The Bell Beneath'],'Cold enough to ache. The teeth are bone, not iron.',0,0.1],
+    pouch:['pouch','common','Tinker’s Pouch','Container','reagent','+4|Slots',['Holds reagents only'],'Stitched with three kinds of thread, none of them matching.',35,0.4],
+    chest:['chest','legendary','Mantle of the Last Lamplighter','Chest','armour','612|Armour',['+44 Resolve','+30 Ward','Lit: allies near you see 20% further'],'Her lamp went out on the causeway. The mantle never did.',5600,8.4],
+    legs:['legs','uncommon','Ringmail Chausses','Legs','armour','236|Armour',['+8 Might'],'Every third ring is a replacement.',140,5.1],
+    tome:['tome','rare','Almanac of Low Tides','Tome','trinket','+21|Wit',['Reveals hidden fords on the map'],'The tides in it are wrong for this century.',820,1.2],
+    cloak:['cloak','common','Oilskin Cloak','Back','armour','41|Armour',['Resists rain'],'Smells of the harbour no matter how often it is washed.',18,1.4],
+    axe:['axe','uncommon','Woodsman’s Bearded Axe','One-handed axe','arms','71 to 102|Damage · 1.2 per second',['+7 Might'],'There is a name carved in the haft, scratched out.',150,3.4],
+    ember:['potion','epic','Ember Tincture','Potion','reagent','+60|Fire ward for 10 min',['Shared cooldown 30 s'],'Glows faintly orange through the cork.',260,0.3,2],
+    junk:['ring','common','Tarnished Brass Band','Ring','trinket','+2|Grace',['Marked as junk'],'Green on the finger by morning.',6,0.1],
+  };
+  const bag = ['brand','aegis','flask','rowan','tear','bow','gloves','scroll','gem','helm','herb','staff','ember','tome','key','pouch','chest','axe','legs','boots','junk','cloak','herb','flask','junk','scroll','boots','junk','junk','gem','herb'];
+  const equip = {l:['helm','tear','cloak','chest','gloves'], r:['legs','boots','rowan','junk','tome'], w:['axe','aegis']};
+  const grid = document.getElementById('grid'), tip = document.getElementById('tip');
+  const cell = (k, label) => {
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'slot';
+    if (k) { const it = I[k]; b.dataset.r = it[1]; b.dataset.k = k; b.dataset.tab = it[4];
+      b.innerHTML = `<svg aria-hidden="true"><use href="#${it[0]}"/></svg>` + (it[10] ? `<b class="n">${it[10]}</b>` : '');
+      b.setAttribute('aria-label', `${it[2]}, ${it[1]}${it[10] ? ', ' + it[10] + ' in stack' : ''}`);
+    } else { b.classList.add('empty'); b.setAttribute('aria-label', label || 'Empty slot'); }
+    return b;
+  };
+  for (let i = 0; i < 48; i++) { const c = cell(bag[i]); c.tabIndex = i ? -1 : 0; c.dataset.i = i; grid.appendChild(c); }
+  for (const s in equip) { const col = document.querySelector(`[data-side="${s}"]`); equip[s].forEach(k => { const c = cell(k); c.dataset.eq = 1; col.appendChild(c); }); }
+  const show = (k) => {
+    const it = I[k]; if (!it) return; const [v, u] = it[5].split('|');
+    tip.style.setProperty('--rc', `var(--${it[1]})`);
+    tip.innerHTML = `<div class="rar">${it[1]}</div><h3>${it[2]}</h3><div class="kind"><span>${it[3]}</span><span>Item level ${120 + it[2].length * 3}</span></div>
+      <div class="big">${v}<small>${u.split(' · ')[0]}</small></div><div class="sub">${u.split(' · ')[1] || '&nbsp;'}</div>
+      <ul>${it[6].map((s, j) => `<li class="${j === 3 ? 'ench' : ''}">${s}</li>`).join('')}</ul>
+      <p class="lore">${it[7]}</p>${it[11] ? `<p class="cmp">Compared with your Woodsman&rsquo;s Bearded Axe: <b class="up">${it[11]}</b></p>` : ''}
+      <div class="tfoot"><span><i class="coin" aria-hidden="true"></i>${it[8] ? it[8].toLocaleString('en-GB') + ' crowns' : 'No sale value'}</span><span>${it[9]} st</span></div>
+      <div class="acts"><button class="btn primary" type="button">${it[4] === 'reagent' ? 'Use' : 'Equip'}</button><button class="btn" type="button">Discard</button></div>`;
+    tip.style.animation = 'none'; tip.offsetWidth; tip.style.animation = '';
+  };
+  let pinned = grid.children[0];
+  const pin = (b) => { if (!b.dataset.k) return; pinned.setAttribute('aria-pressed', 'false'); pinned = b; b.setAttribute('aria-pressed', 'true'); show(b.dataset.k); };
+  document.addEventListener('mouseover', e => { const b = e.target.closest('.slot[data-k]'); if (b) show(b.dataset.k); });
+  document.addEventListener('mouseout', e => { const b = e.target.closest('.slot[data-k]'); if (b && !b.contains(e.relatedTarget)) show(pinned.dataset.k); });
+  document.addEventListener('focusin', e => { const b = e.target.closest('.slot[data-k]'); if (b) show(b.dataset.k); });
+  document.addEventListener('click', e => { const b = e.target.closest('.slot'); if (b) pin(b); });
+  grid.addEventListener('keydown', e => {
+    const i = +e.target.dataset.i, d = {ArrowRight:1, ArrowLeft:-1, ArrowDown:8, ArrowUp:-8}[e.key];
+    if (d === undefined || isNaN(i)) return; e.preventDefault();
+    const n = grid.children[Math.min(47, Math.max(0, i + d))]; e.target.tabIndex = -1; n.tabIndex = 0; n.focus();
+  });
+  document.querySelectorAll('.tabs button').forEach(t => t.addEventListener('click', () => {
+    document.querySelectorAll('.tabs button').forEach(x => x.setAttribute('aria-selected', x === t));
+    [...grid.children].forEach(c => c.classList.toggle('dim', t.dataset.f !== 'all' && c.dataset.tab !== t.dataset.f));
+  }));
+  [...grid.children].forEach(c => c.setAttribute('aria-pressed', 'false'));
+  pin(grid.children[0]);
+})();
+</script>
+</body>
+</html>

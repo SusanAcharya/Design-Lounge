@@ -1,0 +1,217 @@
+<!-- Design Lounge piece: game-scifi-loadout · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Loadout · Kestrel-4</title>
+<link href="https://fonts.googleapis.com/css2?family=Michroma&family=Barlow+Condensed:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b0e11; --panel:#11161b; --panel-2:#161d24; --line:#26323c; --line-2:#3a4955;
+  --ink:#e4ebf0; --ink-2:#9aa9b5; --ink-3:#7d8d99;
+  --holo:#5fdcf5; --holo-dim:#2b6f80; --loss:#ff8a66;
+  --wide:"Michroma",sans-serif; --cond:"Barlow Condensed",sans-serif;
+  --cut:14px; --ease:cubic-bezier(.2,.7,.2,1); --ease-out:cubic-bezier(.16,1,.3,1); --t-bar:420ms;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:500 16px/1.35 var(--cond);overflow-x:hidden}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--holo);outline-offset:3px}
+.ang{position:relative;background:var(--line);clip-path:polygon(0 0,calc(100% - var(--cut)) 0,100% var(--cut),100% 100%,var(--cut) 100%,0 calc(100% - var(--cut)))}
+.ang::before{content:"";position:absolute;inset:1px;background:var(--panel);clip-path:inherit;z-index:0}
+.ang>*{position:relative;z-index:1}
+.app{display:grid;grid-template-columns:296px minmax(0,1fr) 320px;grid-template-rows:auto minmax(0,1fr);gap:18px 22px;height:100%;padding:22px 28px 26px}
+header{grid-column:1/-1;display:flex;align-items:center;gap:28px;border-bottom:1px solid var(--line);padding-bottom:16px}
+.brand{font:13px/1 var(--wide);letter-spacing:.24em}
+.brand small{display:block;font:500 14px/1 var(--cond);letter-spacing:.08em;color:var(--ink-2);margin-top:8px}
+.cats{display:flex;gap:6px;margin-left:auto}
+.cats button{background:none;border:1px solid var(--line-2);padding:10px 16px;font:600 14px/1 var(--cond);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2);clip-path:polygon(8px 0,100% 0,calc(100% - 8px) 100%,0 100%);transition:color 160ms var(--ease),background 160ms var(--ease)}
+.cats button:hover{color:var(--ink)}
+.cats button[aria-selected=true]{background:var(--holo);border-color:var(--holo);color:#04161b}
+.scrip{font:600 15px/1 var(--cond);letter-spacing:.1em;color:var(--ink-2);text-transform:uppercase}
+.scrip b{font:15px var(--wide);color:var(--ink);margin-left:8px;letter-spacing:0}
+/* list */
+.list{display:flex;flex-direction:column;gap:10px;min-height:0}
+.lbl{font:600 13px/1 var(--cond);letter-spacing:.22em;text-transform:uppercase;color:var(--ink-3);display:flex;justify-content:space-between}
+.item{display:grid;grid-template-columns:1fr auto;grid-template-rows:auto auto auto;gap:2px 12px;text-align:left;border:0;padding:14px 18px 14px 20px;background:var(--line);--cut:12px;transition:background 160ms var(--ease)}
+.item::before{background:var(--panel)}
+.item:hover::before{background:var(--panel-2)}
+.item[aria-pressed=true]{background:var(--holo)}
+.item[aria-pressed=true]::before{background:linear-gradient(90deg,#15323b,var(--panel) 75%)}
+.item .nm{font:14px/1.2 var(--wide);letter-spacing:.04em}
+.item .cl{font:500 15px/1.2 var(--cond);color:var(--ink-2);grid-column:1}
+.item .th{grid-column:1/-1;height:34px;margin-top:8px;opacity:.75}.item .th path{fill:none;stroke:var(--ink-2);stroke-width:2.4}.item[aria-pressed=true] .th path{stroke:var(--holo)}
+.item .tr{grid-row:1/3;grid-column:2;align-self:center;font:600 13px/1 var(--cond);letter-spacing:.14em;color:var(--ink-2);border:1px solid var(--line-2);padding:6px 8px}
+.item .eq{color:var(--holo);font:600 12px/1 var(--cond);letter-spacing:.18em;text-transform:uppercase;margin-left:8px}
+/* stage */
+.stage{position:relative;min-height:0;overflow:hidden;--cut:22px}
+.stage::before{background:radial-gradient(70% 60% at 50% 62%,#10232b 0%,var(--panel) 70%)}
+.floor{position:absolute;left:-20%;right:-20%;bottom:-6%;height:46%;background:repeating-linear-gradient(90deg,rgba(95,220,245,.13) 0 1px,transparent 1px 48px),repeating-linear-gradient(0deg,rgba(95,220,245,.13) 0 1px,transparent 1px 48px);transform:perspective(420px) rotateX(62deg);transform-origin:50% 100%;-webkit-mask:linear-gradient(transparent,#000 60%);mask:linear-gradient(transparent,#000 60%);z-index:0}
+.scan{position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(95,220,245,.04) 0 1px,transparent 1px 4px);pointer-events:none;z-index:2}
+.title{position:absolute;left:30px;top:26px;z-index:3}
+.title .k{font:600 13px/1 var(--cond);letter-spacing:.22em;text-transform:uppercase;color:var(--holo)}
+.title h1{font:clamp(26px,3.4vw,44px)/1.05 var(--wide);margin:10px 0 6px;letter-spacing:.02em;text-transform:uppercase}
+.title p{margin:0;color:var(--ink-2);font-size:17px;max-width:420px}
+.holo{position:absolute;left:3%;top:31%;width:94%;height:64%;z-index:1;overflow:visible}
+.rig{transform-origin:210px 100px;animation:turn 9s var(--ease) infinite alternate}
+@keyframes turn{from{transform:perspective(600px) rotateY(-10deg)}to{transform:perspective(600px) rotateY(10deg)}}
+.part{fill:rgba(95,220,245,.07);stroke:var(--holo);stroke-width:1.2;stroke-dasharray:1;stroke-dashoffset:0}
+.draw .part{animation:draw 700ms var(--ease-out) both}
+@keyframes draw{from{stroke-dashoffset:1;fill:transparent;opacity:.4}}
+.flick{animation:flick 380ms steps(2) 1}
+@keyframes flick{0%{opacity:.2}40%{opacity:1}60%{opacity:.5}100%{opacity:1}}
+.pad{fill:none;stroke:var(--holo-dim);stroke-width:1}
+.call line{stroke:var(--holo-dim);stroke-width:1}
+.call text{font:600 12px var(--cond);letter-spacing:.14em;fill:var(--ink-2);text-transform:uppercase}
+.call text.v{fill:var(--ink);font-size:14px;letter-spacing:.04em;text-transform:none}
+.dim line{stroke:var(--ink-3);stroke-width:1}.dim text{font:600 11px var(--cond);letter-spacing:.18em;fill:var(--ink-2);text-anchor:middle}
+/* stats */
+.side{display:flex;flex-direction:column;gap:14px;min-height:0}
+.stats{padding:20px 22px 18px}
+.row{display:grid;grid-template-columns:1fr auto auto;align-items:baseline;gap:10px;margin-bottom:14px}
+.row:last-child{margin-bottom:0}
+.row .s{font:600 14px/1 var(--cond);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
+.row .n{font:15px/1 var(--wide)}
+.row .d{font:600 15px/1 var(--cond);min-width:40px;text-align:right}
+.d.up{color:var(--holo)}.d.dn{color:var(--loss)}.d.eq{color:var(--ink-3)}
+.bar{grid-column:1/-1;position:relative;height:8px;background:repeating-linear-gradient(90deg,var(--line) 0 calc(10% - 2px),transparent calc(10% - 2px) 10%);margin-top:2px}
+.bar i{position:absolute;left:0;top:0;bottom:0;transition:width var(--t-bar) var(--ease-out)}
+.bar .cur{background:var(--ink);opacity:.85}
+.bar .gain{background:var(--holo)}
+.bar .hatch{background:repeating-linear-gradient(135deg,var(--holo) 0 2px,transparent 2px 5px);border:1px solid var(--holo)}
+.bar .lose{background:repeating-linear-gradient(135deg,var(--loss) 0 2px,transparent 2px 5px);border:1px solid var(--loss)}
+.mods{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.mod{padding:12px 12px 10px;--cut:10px}
+.mod .s{font:600 12px/1 var(--cond);letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3)}
+.mod .v{font:600 16px/1.15 var(--cond);margin-top:6px;display:block}
+.load{padding:16px 20px}.load .top{display:flex;justify-content:space-between;align-items:baseline}.load .n{font:600 17px var(--cond);letter-spacing:.02em}.load .bar{margin-top:10px}
+.cur-l{margin-top:auto;padding:16px 20px}.cur-l div{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-top:1px solid var(--line);font-size:16px}.cur-l div:first-of-type{border-top:0}.cur-l span:first-child{color:var(--ink-2);text-transform:uppercase;letter-spacing:.14em;font-weight:600;font-size:13px}
+.equip{margin-top:auto;border:0;background:var(--holo);color:#04161b;font:12px/1 var(--wide);letter-spacing:.1em;white-space:nowrap;gap:12px;text-transform:uppercase;padding:18px 20px;clip-path:polygon(0 0,calc(100% - 16px) 0,100% 16px,100% 100%,16px 100%,0 calc(100% - 16px));display:flex;justify-content:space-between;align-items:center;transition:background 160ms var(--ease)}
+.equip:hover{background:#8ce8fa}
+.equip[disabled]{background:var(--panel-2);color:var(--ink-2);cursor:default;box-shadow:inset 0 0 0 1px var(--line-2)}
+.equip small{font:600 14px/1 var(--cond);letter-spacing:.12em}
+@media (max-width:1100px){.app{grid-template-columns:280px minmax(0,1fr);height:auto}.side{grid-column:1/-1}.stage{min-height:420px}}
+@media (max-width:760px){
+  .app{grid-template-columns:minmax(0,1fr);padding:18px 16px 28px;gap:14px}
+  header{flex-wrap:wrap;gap:14px}.cats{margin-left:0;order:3;width:100%}.cats button{flex:1;padding:10px 6px;letter-spacing:.1em}
+  .stage{order:1;min-height:440px}.list{order:2}.side{order:3}
+  .title{left:20px;top:20px;right:20px}.title p{font-size:15px}
+  .holo{left:5%;width:90%;top:38%;height:58%}
+  .call text{font-size:14px}.call text.v{font-size:16px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:1ms!important}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <div class="brand">KESTREL-4<small>Frame Vanta Mk II · Hangar 3, Corvel Station</small></div>
+    <div class="cats" role="tablist" aria-label="Slot">
+      <button role="tab" aria-selected="true" data-c="primary" aria-controls="list">Primary</button>
+      <button role="tab" aria-selected="false" data-c="sidearm" aria-controls="list">Sidearm</button>
+      <button role="tab" aria-selected="false" data-c="module" aria-controls="list">Module</button>
+    </div>
+    <div class="scrip">Scrip<b>8,240</b></div>
+  </header>
+
+  <section class="list" aria-label="Available gear">
+    <div class="lbl"><span id="cnt">4 in armoury</span><span>Tier</span></div>
+    <div id="list" style="display:flex;flex-direction:column;gap:10px"></div>
+    <div class="cur-l ang" id="curl" aria-label="Current loadout"></div>
+  </section>
+
+  <section class="stage ang" aria-label="Preview">
+    <div class="floor" aria-hidden="true"></div>
+    <div class="title" aria-live="polite"><div class="k" id="cls">Assault carbine</div><h1 id="nm">Halcyon AR-7</h1><p id="ds"></p></div>
+    <svg class="holo" id="holo" viewBox="14 24 392 182" aria-hidden="true">
+      <g class="rig"><g id="parts"></g></g>
+      <ellipse class="pad" cx="210" cy="166" rx="150" ry="12"/><ellipse class="pad" cx="210" cy="166" rx="110" ry="8" stroke-dasharray="3 5"/>
+      <g class="call" id="call"></g><g class="dim" id="dim"></g>
+    </svg>
+    <div class="scan" aria-hidden="true"></div>
+  </section>
+
+  <aside class="side">
+    <div class="stats ang"><div class="lbl" style="margin-bottom:16px"><span>Performance</span><span>vs equipped</span></div><div id="stats"></div></div>
+    <div class="mods" id="mods"></div>
+    <div class="load ang"><div class="top"><span class="lbl">Frame load</span><span class="n" id="ld"></span></div><div class="bar" id="ldb"><i class="cur"></i><i></i></div></div>
+    <button class="equip" id="equip" type="button"><span id="eqt">Equipped</span><small id="eqc"></small></button>
+  </aside>
+</div>
+<script>
+(() => {
+  const W = ['Damage','Fire rate','Range','Stability','Handling','Magazine'], WU = ['','rpm','m','','',''], WM = [130,1200,150,100,100,50];
+  const M = ['Duration','Radius','Cooldown','Charges','Output'], MU = ['s','m','s','',''], MM = [20,50,60,4,800];
+  // name, class, tier, desc, stats, attachments [label,value]x3, shape, cost
+  const G = {
+    primary:[
+      ['Halcyon AR-7','Assault carbine','III','Short-stroke gas carbine. Forgiving at mid range, flat recoil curve.',[42,720,48,61,70,32],[['Optic','Lumen 3x'],['Barrel','410 mm'],['Mag','32 rnd']],{bw:150,ba:96,st:78,mg:40,op:1},0,3.4],
+      ['Mire Lance','Rail rifle','IV','Two-stage coil accelerator. Charge for 0.6 s, one shot through hull plate.',[118,40,140,38,22,5],[['Optic','Strake 8x'],['Rail','780 mm'],['Cell','5 slug']],{bw:120,ba:150,st:92,mg:22,op:2},2400,7.9],
+      ['Corvid SMG-12','Submachine gun','II','Compact blowback SMG. Wins rooms, loses corridors.',[24,1100,22,48,91,45],[['Optic','Open dot'],['Barrel','180 mm'],['Mag','45 rnd']],{bw:110,ba:40,st:44,mg:52,op:0},900,2.6],
+      ['Talon Breacher','Pump shotgun','III','Eight flechettes per shell. Opens doors and arguments.',[96,90,12,40,58,8],[['Optic','Ghost ring'],['Barrel','460 mm'],['Tube','8 shell']],{bw:130,ba:84,st:70,mg:0,op:0},1350,4.1]],
+    sidearm:[
+      ['Wick P-9','Service pistol','I','Issued to every Vanta frame. Never jams, never impresses.',[30,400,25,72,95,15],[['Sight','Iron'],['Slide','Ported'],['Mag','15 rnd']],{bw:112,ba:40,st:0,mg:0,op:0,pistol:1},0,0.9],
+      ['Ferro Hand Cannon','Heavy revolver','III','Six chambers of tungsten. Recoil you feel in the frame.',[74,140,35,44,66,6],[['Sight','Fibre post'],['Barrel','150 mm'],['Cyl','6 rnd']],{bw:116,ba:92,st:0,mg:0,op:0,pistol:1},1100,1.8]],
+    module:[
+      ['Wren Recon Drone','Support module','II','Quad-rotor spotter. Marks targets for the whole squad.',[12,40,45,2,180],[['Firmware','4.2.1'],['Battery','Li-S 6c'],['Payload','Lidar']],{drone:1},0,2.2],
+      ['Aegis Shell','Deployable barrier','III','Hard-light dome. Holds a doorway long enough to reload.',[8,6,30,1,640],[['Emitter','Hex array'],['Cell','Ion 9'],['Mount','Wrist']],{dome:1},1800,3.0]],
+  };
+  const eq = {primary:0, sidearm:0, module:0};
+  let cat = 'primary', sel = 0;
+  const $ = (id) => document.getElementById(id);
+  const draw = (s) => {
+    const p = [], bx = s.pistol ? 120 : 110;
+    if (s.drone) { p.push('M180 92h60v16h-60z','M150 84l30 10M270 84l-30 10M150 116l30-8M270 116l-30-8');
+      [[140,82],[280,82],[140,118],[280,118]].forEach(([x,y]) => p.push(`M${x-22} ${y}a22 5 0 1 0 44 0a22 5 0 1 0-44 0`));
+      p.push('M200 108l-6 22h32l-6-22'); return { p, c: [[210,92,'Firmware',120,40],[140,118,'Rotor',60,150],[210,130,'Lidar',300,160]] }; }
+    if (s.dome) { p.push('M110 160a100 100 0 0 1 200 0','M140 160a70 70 0 0 1 140 0','M175 160a35 35 0 0 1 70 0','M110 160h200','M150 108l30 18-30 18M270 108l-30 18 30 18M210 60v100');
+      return { p, c: [[210,60,'Emitter',120,30],[310,160,'Radius 6 m',330,120]] }; }
+    const rx = bx + s.bw, b = rx + 10;
+    p.push(`M${bx} 82h${s.bw}l10 10v20H${bx}z`, `M${b} 86h${Math.round(s.ba * .55)}v18h-${Math.round(s.ba * .55)}z`, `M${b} 92h${s.ba}v6h-${s.ba}z`, `M${b + s.ba} 89h12v12h-12z`);
+    if (s.st) p.push(`M${bx} 86L${bx - s.st} 90v26h24L${bx} 108z`);
+    p.push(s.pistol ? `M${bx + 8} 112h34l-8 52h-34z` : `M${bx + 24} 112h22l-10 38h-20z`);
+    if (s.mg) p.push(`M${bx + 66} 112h24l8 ${s.mg}h-24z`);
+    if (s.op) p.push(`M${bx + 34} ${s.op > 1 ? 60 : 64}h${s.op > 1 ? 84 : 58}v14h-${s.op > 1 ? 84 : 58}z`, `M${bx + 52} 78h10v4h-10z`);
+    return { p, c: [[bx + (s.op ? 60 : 40), s.op ? 62 : 82, 0, 96, 40], [b + s.ba + 6, 89, 1, b + s.ba - 30, 46], s.pistol ? [bx + 20, 138, 2, 84, 128] : [bx + 78, s.mg ? 112 + s.mg : 112, 2, 300, 170]] };
+  };
+  const render = (anim) => {
+    const it = G[cat][sel], cur = G[cat][eq[cat]], isW = cat !== 'module';
+    const L = isW ? W : M, U = isW ? WU : MU, X = isW ? WM : MM;
+    $('nm').textContent = it[0]; $('cls').textContent = `${it[1]} · Tier ${it[2]}`; $('ds').textContent = it[3];
+    const d = draw(it[6]);
+    $('parts').innerHTML = d.p.map(x => `<path class="part" pathLength="1" d="${x}"/>`).join('');
+    $('call').innerHTML = d.c.map(([x, y, k, tx, ty]) => { const a = typeof k === 'number' ? it[5][k] : [k, '']; const r = tx > x;
+      return `<line x1="${x}" y1="${y}" x2="${tx}" y2="${ty}"/><line x1="${tx}" y1="${ty}" x2="${tx + (r ? 64 : -64)}" y2="${ty}"/><text x="${tx + (r ? 4 : -64)}" y="${ty - 18}">${a[0]}</text><text class="v" x="${tx + (r ? 4 : -64)}" y="${ty - 5}">${a[1]}</text>`; }).join('');
+    const xs = d.p.join(' ').match(/M(\d+)/g).map(m => +m.slice(1)), x0 = it[6].bw ? (it[6].pistol ? 120 : 110) - it[6].st : Math.min(...xs), x1 = it[6].dome ? Math.max(...xs) : it[6].drone ? Math.max(...xs) + 44 : 110 + (it[6].pistol ? 10 : 0) + it[6].bw + 22 + it[6].ba, mm = Math.round((x1 - x0) * (it[6].pistol ? 1.3 : 3.2) / 10) * 10;
+    $('dim').innerHTML = `<line x1="${x0}" y1="186" x2="${x1}" y2="186"/><line x1="${x0}" y1="181" x2="${x0}" y2="191"/><line x1="${x1}" y1="181" x2="${x1}" y2="191"/><text x="${(x0 + x1) / 2}" y="201">${mm.toLocaleString('en-GB')} MM OVERALL</text>`;
+    const h = $('holo'); if (anim) { h.classList.remove('draw', 'flick'); h.getBoundingClientRect(); h.classList.add('draw', 'flick'); }
+    $('stats').innerHTML = L.map((s, i) => { const v = it[4][i], c = cur[4][i], dv = v - c, lowGood = !isW && i === 2;
+      const good = lowGood ? dv < 0 : dv > 0, pc = (n) => Math.min(100, n / X[i] * 100);
+      return `<div class="row"><span class="s">${s}</span><span class="n">${v.toLocaleString('en-GB')}${U[i] ? ' ' + U[i] : ''}</span><span class="d ${dv === 0 ? 'eq' : good ? 'up' : 'dn'}">${dv === 0 ? '0' : (dv > 0 ? '+' : '−') + Math.abs(dv)}</span>
+        <div class="bar" role="img" aria-label="${s} ${v}${dv ? ', ' + (dv > 0 ? 'up ' : 'down ') + Math.abs(dv) : ''}"><i class="cur" data-w="${pc(Math.min(v, c))}"></i><i class="${good ? (dv > 0 ? 'gain' : 'gain hatch') : 'lose'}" data-l="${pc(Math.min(v, c))}" data-w="${pc(Math.abs(dv))}"></i></div></div>`; }).join('');
+    requestAnimationFrame(() => document.querySelectorAll('.bar i').forEach(b => { b.style.width = b.dataset.w + '%'; if (b.dataset.l) b.style.left = b.dataset.l + '%'; }));
+    $('mods').innerHTML = it[5].map(([s, v]) => `<div class="mod ang"><span class="s">${s}</span><span class="v">${v}</span></div>`).join('');
+    const on = sel === eq[cat], e = $('equip'); e.disabled = on;
+    $('eqt').textContent = on ? 'Equipped' : 'Equip to ' + cat;
+    const base = 22.5, sum = (o) => Object.keys(eq).reduce((t, k) => t + G[k][k === cat ? o : eq[k]][8], base), now = sum(eq[cat]), nx = sum(sel);
+    $('ld').textContent = (on ? now.toFixed(1) : `${now.toFixed(1)} to ${nx.toFixed(1)}`) + ' / 40 kg';
+    const lb = $('ldb').children; lb[0].style.width = Math.min(now, nx) / 40 * 100 + '%'; lb[1].className = nx > now ? 'gain' : 'lose'; lb[1].style.left = Math.min(now, nx) / 40 * 100 + '%'; lb[1].style.width = Math.abs(nx - now) / 40 * 100 + '%';
+    $('curl').innerHTML = '<span class="lbl" style="display:block;margin-bottom:8px">Current loadout</span>' + Object.keys(eq).map(k => `<div><span>${k}</span><span>${G[k][eq[k]][0]}</span></div>`).join(''); $('eqc').textContent = on ? 'In slot' : it[7] ? it[7].toLocaleString('en-GB') + ' scrip' : 'Owned';
+    $('list').querySelectorAll('.item').forEach((b, i) => b.setAttribute('aria-pressed', i === sel));
+  };
+  const list = () => {
+    $('list').innerHTML = G[cat].map((it, i) => `<button class="item ang" type="button" aria-pressed="false" data-i="${i}"><span class="nm">${it[0]}</span><span class="cl">${it[1]}${i === eq[cat] ? '<span class="eq">Equipped</span>' : ''}</span><span class="tr">${it[2]}</span><svg class="th" viewBox="0 24 420 172" preserveAspectRatio="xMinYMid meet" aria-hidden="true">${draw(it[6]).p.map(x => `<path d="${x}"/>`).join('')}</svg></button>`).join('');
+    $('cnt').textContent = `${G[cat].length} in armoury`;
+  };
+  $('list').addEventListener('click', e => { const b = e.target.closest('.item'); if (!b) return; sel = +b.dataset.i; render(true); });
+  document.querySelectorAll('.cats button').forEach(t => t.addEventListener('click', () => {
+    document.querySelectorAll('.cats button').forEach(x => x.setAttribute('aria-selected', x === t)); cat = t.dataset.c; sel = eq[cat]; list(); render(true);
+  }));
+  $('equip').addEventListener('click', () => { eq[cat] = sel; list(); render(false); });
+  sel = 1; list(); render(false);
+})();
+</script>
+</body>
+</html>

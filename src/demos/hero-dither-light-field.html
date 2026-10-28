@@ -1,0 +1,127 @@
+<!-- Design Lounge piece: hero-dither-light-field · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Clerestory: daylight, measured before the concrete</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f2efe8;--paper-2:#e8e4da;--ink:#1b1a17;--ink-2:#4a4740;--line:#cfc9bc;--accent:#c93d14;--on-accent:#fff8f2;
+  --serif:"Instrument Serif",Georgia,serif;--sans:"Familjen Grotesk",system-ui,sans-serif;
+  --cell:4px;--ease:cubic-bezier(.2,.7,.2,1);--t-micro:160ms;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:400 15px/1.55 var(--sans);color:var(--ink);background:var(--paper);-webkit-font-smoothing:antialiased;overflow:hidden}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.page{position:relative;height:100%;min-height:680px;display:flex;flex-direction:column}
+nav{position:relative;z-index:2;height:68px;display:flex;align-items:center;gap:32px;padding:0 56px;border-bottom:1px solid var(--line);background:var(--paper)}
+.logo{font:400 26px/1 var(--serif);letter-spacing:-.01em;margin-right:auto;display:flex;align-items:center;gap:10px}
+.logo svg{width:20px;height:20px}
+nav ul{display:flex;gap:28px;list-style:none;margin:0;padding:0;font-size:14px;color:var(--ink-2)}
+nav ul a:hover{color:var(--ink)}
+.btn{display:inline-flex;align-items:center;gap:10px;height:46px;padding:0 22px;border-radius:2px;font:500 14px var(--sans);background:var(--ink);color:var(--paper);border:0;cursor:pointer;transition:background var(--t-micro) var(--ease)}
+.btn:hover{background:var(--accent);color:var(--on-accent)}
+.btn.sm{height:38px;padding:0 16px;font-size:13px}
+.link{font-weight:500;font-size:14px;border-bottom:1.5px solid var(--ink);padding-bottom:2px}
+.link:hover{color:var(--accent);border-color:var(--accent)}
+.btn svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.hero{position:relative;flex:1;display:grid;grid-template-columns:minmax(0,560px) 1fr;padding:0 56px}
+.field{position:absolute;inset:0 0 0 38%;overflow:hidden;cursor:crosshair}
+.field canvas{position:absolute;inset:0;width:100%;height:100%;image-rendering:pixelated;image-rendering:crisp-edges}
+.copy{position:relative;z-index:1;align-self:center;padding:40px 0}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2);display:flex;align-items:center;gap:10px}
+.eyebrow i{width:18px;height:1.5px;background:var(--accent)}
+h1{font:400 112px/.9 var(--serif);letter-spacing:-.025em;margin:22px 0 26px}
+h1 em{font-style:italic}
+.lede{font-size:17px;line-height:1.55;color:var(--ink-2);margin:0 0 30px;max-width:420px}
+.row{display:flex;align-items:center;gap:26px;flex-wrap:wrap}
+.chip{position:absolute;z-index:1;background:var(--paper);border:1px solid var(--ink);padding:8px 12px;font-size:12px;line-height:1.35;pointer-events:none}
+.chip b{display:block;font-weight:600;font-size:13px}
+.chip.lux{right:56px;top:40px}
+.chip.lux b{color:var(--accent);font:400 30px/1 var(--serif);margin-top:2px}
+.cap{position:absolute;right:56px;bottom:28px;z-index:1;background:var(--paper);padding:6px 10px;font-size:12px;color:var(--ink-2);max-width:340px}
+.cap em{font:italic 15px var(--serif);color:var(--ink)}
+@media (max-width:1100px){h1{font-size:100px}.field{left:44%}}
+@media (max-width:860px){
+  body{overflow:auto}.page{height:auto}
+  nav{padding:0 16px}nav ul{display:none}
+  .hero{display:block;padding:0 16px 32px}
+  .field{position:relative;inset:auto;height:300px;margin:0 -16px}
+  .copy{padding:28px 0 0}
+  h1{font-size:clamp(54px,15vw,96px)}
+  .chip.lux{right:16px;top:16px}.cap{position:relative;right:auto;bottom:auto;margin:28px 0 0;padding:0;max-width:none}
+}
+@media (prefers-reduced-motion:reduce){.btn{transition:none}}
+</style>
+</head>
+<body>
+<div class="page">
+<nav aria-label="Primary">
+  <a class="logo" href="#" aria-label="Clerestory home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 20V9l8-5 8 5v11M8 20v-7h8v7"/></svg>Clerestory</a>
+  <ul><li><a href="#">Product</a></li><li><a href="#">Case studies</a></li><li><a href="#">Method</a></li><li><a href="#">Pricing</a></li></ul>
+  <a class="btn sm" href="#">Start a study</a>
+</nav>
+<section class="hero" aria-labelledby="h">
+  <div class="field" id="field" aria-hidden="true"><canvas id="cv"></canvas></div>
+  <div class="copy">
+    <p class="eyebrow"><i></i>Daylight simulation for architects</p>
+    <h1 id="h">Daylight, <em>measured</em> before the concrete.</h1>
+    <p class="lede">Clerestory traces every hour of sun through your model and reports lux, glare and sky view room by room, so the light is settled at schematic design, not on site.</p>
+    <div class="row">
+      <a class="btn" href="#">Run a free study<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <a class="link" href="#">Read the Halden Library case</a>
+    </div>
+  </div>
+  <p class="chip lux" aria-hidden="true">Studio 4, 21 June, 14:20<b>1,840 lux</b></p>
+  <p class="cap"><em>Fig. 1</em>&ensp;Afternoon sun through a north clerestory, dithered at 4px. Move the pointer to add a lamp.</p>
+</section>
+</div>
+<script>
+(function(){
+  var field=document.getElementById('field'),cv=document.getElementById('cv');if(!field||!cv||!cv.getContext)return;
+  var ctx=cv.getContext('2d'),W=0,H=0,img=null,px=-1e3,py=-1e3,glow=0,target=0,t0=performance.now(),last=0,raf=0;
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches,CELL=4;
+  var B=[0,32,8,40,2,34,10,42,48,16,56,24,50,18,58,26,12,44,4,36,14,46,6,38,60,28,52,20,62,30,54,22,3,35,11,43,1,33,9,41,51,19,59,27,49,17,57,25,15,47,7,39,13,45,5,37,63,31,55,23,61,29,53,21];
+  var INK=[27,26,23],ACC=[201,61,20],PAP=[242,239,232];
+  function size(){
+    var r=field.getBoundingClientRect();W=Math.max(1,Math.round(r.width/CELL));H=Math.max(1,Math.round(r.height/CELL));
+    cv.width=W;cv.height=H;img=ctx.createImageData(W,H);draw(performance.now());
+  }
+  function sm(a,b,x){var t=Math.max(0,Math.min(1,(x-a)/(b-a)));return t*t*(3-2*t);}
+  function draw(now){
+    var t=(now-t0)/1000,d=img.data,i=0,drift=Math.sin(t*.09)*.08,narrow=W<140;
+    glow+=(target-glow)*.08;
+    var gx=px/CELL,gy=py/CELL,gr=(narrow?22:32);
+    for(var y=0;y<H;y++){
+      var v=y/H;
+      for(var x=0;x<W;x++){
+        var u=x/W;
+        // window patch: three skewed panes, soft edges
+        var s=u-v*.42-.32-drift,pane=0;
+        if(s>0&&s<.58){var k=(s/.58)*3,f=k-Math.floor(k);pane=sm(.06,.16,f)*sm(.94,.84,f);}
+        pane*=sm(.05,.28,v)*sm(1.02,.7,v);
+        var amb=.36+.24*(1-v)+.07*Math.sin(u*5+v*3+t*.22);
+        var val=amb+pane*.6;
+        var gd=0;if(glow>.01){var dx=x-gx,dy=y-gy;gd=Math.max(0,1-Math.sqrt(dx*dx+dy*dy)/gr)*glow;val+=gd*.7;}
+        var fade=narrow?sm(1,.72,v):sm(0,.3,u);val=1-(1-val)*fade;
+        var th=(B[(y&7)*8+(x&7)]+.5)/64,c=val<th?(gd>.1&&gd<.2?ACC:INK):PAP;
+        d[i]=c[0];d[i+1]=c[1];d[i+2]=c[2];d[i+3]=255;i+=4;
+      }
+    }
+    ctx.putImageData(img,0,0);
+  }
+  function loop(now){raf=requestAnimationFrame(loop);if(now-last<42)return;last=now;draw(now);}
+  field.addEventListener('pointermove',function(e){var r=field.getBoundingClientRect();px=e.clientX-r.left;py=e.clientY-r.top;target=1;if(reduce){glow=1;draw(performance.now());}});
+  field.addEventListener('pointerleave',function(){target=0;if(reduce){glow=0;draw(performance.now());}});
+  addEventListener('resize',size);
+  document.addEventListener('visibilitychange',function(){if(reduce)return;if(document.hidden){cancelAnimationFrame(raf);raf=0;}else if(!raf)raf=requestAnimationFrame(loop);});
+  size();if(!reduce)raf=requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,252 @@
+<!-- Design Lounge piece: board-moodboard-canvas · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Moodboard canvas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Italiana&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ground:#e4dfd4;--dot:#c4bcac;--panel:#fbfaf6;--line:#d6d0c3;--line-2:#8f8879;
+  --ink:#1f1d1a;--ink-2:#58534a;--ink-3:#6b6558;
+  --marker:#c4461f;--note:#f6e27a;--note-2:#f4c9b4;--note-3:#cfe0d2;--tape:rgba(240,232,210,.78);
+  --kelp:#2f4a3a;--brine:#6e8c86;--crust:#c9894b;--flour:#f1eadb;--char:#2a2622;
+  --display:"Italiana",Georgia,serif;--hand:"Caveat","Bradley Hand",cursive;--ui:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --r-panel:12px;--r-item:4px;
+  --sh-item:0 1px 2px rgba(31,29,26,.10),0 6px 14px -6px rgba(31,29,26,.18);
+  --sh-lift:0 2px 4px rgba(31,29,26,.10),0 22px 40px -14px rgba(31,29,26,.38);
+  --sh-panel:0 1px 0 rgba(31,29,26,.04),0 8px 24px -10px rgba(31,29,26,.25);
+  --t-micro:160ms;--t-lift:240ms;--ease:cubic-bezier(.2,.7,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--ground);color:var(--ink);font:13px/1.4 var(--ui);overflow:hidden;-webkit-font-smoothing:antialiased}
+.vp{position:absolute;inset:0;overflow:auto;cursor:grab;scrollbar-width:none;touch-action:none}
+.vp::-webkit-scrollbar{display:none}
+.vp.panning{cursor:grabbing}
+.sizer{position:relative}
+.world{position:absolute;left:0;top:0;width:2200px;height:1400px;transform-origin:0 0;
+  background:radial-gradient(circle at 1px 1px,var(--dot) 1.2px,transparent 1.6px) 0 0/24px 24px}
+.it{position:absolute;transform:rotate(var(--r,0deg));box-shadow:var(--sh-item);border-radius:var(--r-item);background:var(--panel);
+  transition:transform var(--t-lift) var(--ease-out),box-shadow var(--t-lift) var(--ease-out);cursor:default}
+.it:hover,.it:focus-visible{transform:translateY(-6px) rotate(calc(var(--r,0deg) * .4)) scale(1.015);box-shadow:var(--sh-lift);z-index:5}
+.it:focus-visible{outline:2px solid var(--marker);outline-offset:4px}
+.cap{font:600 11px/1.3 var(--ui);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+.label{position:absolute;font:700 44px/1 var(--hand);color:var(--ink-2);pointer-events:none}
+/* swatches */
+.sw{left:560px;top:300px;width:420px;padding:14px;display:grid;grid-template-columns:repeat(5,1fr);gap:8px;--r:-1.2deg}
+.sw .chip{height:132px;border-radius:2px;padding:8px;display:flex;flex-direction:column;justify-content:flex-end;font:500 11px/1.35 var(--ui)}
+.sw .chip b{display:block;font:600 12px var(--ui)}
+.sw .cap{grid-column:1/-1;margin-top:4px;display:flex;justify-content:space-between}
+/* photos */
+.ph{padding:10px 10px 34px;background:#fdfcf8}
+.ph .img{width:100%;height:100%;border-radius:1px}
+.ph figcaption{position:absolute;left:12px;right:12px;bottom:8px;font:600 22px/1 var(--hand);color:var(--ink-2)}
+.ph::before{content:"";position:absolute;top:-12px;left:50%;width:84px;height:24px;margin-left:-42px;background:var(--tape);transform:rotate(-4deg);box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.p1{left:1010px;top:250px;width:300px;height:300px;--r:2.4deg}
+.p1 .img{background:radial-gradient(60% 30% at 70% 38%,#f7dcae 0,rgba(247,220,174,0) 70%),linear-gradient(180deg,#9fb6b8 0,#d9cdb4 46%,#7d9894 47%,#3e5d5a 72%,#2c4440 100%)}
+.p2{left:1340px;top:330px;width:230px;height:270px;--r:-3deg}
+.p2 .img{background:radial-gradient(14px 10px at 30% 30%,#e9d3ad 60%,transparent 64%),radial-gradient(18px 12px at 64% 52%,#f0dcb8 60%,transparent 64%),radial-gradient(10px 8px at 42% 72%,#ead2a8 60%,transparent 64%),radial-gradient(12px 9px at 78% 24%,#efd9b2 60%,transparent 64%),radial-gradient(120% 90% at 50% 40%,#d9b680 0,#b98a4e 60%,#7a5228 100%)}
+.p3{left:1000px;top:600px;width:250px;height:200px;--r:-1.5deg}
+.p3 .img{background:repeating-linear-gradient(104deg,rgba(255,255,255,.08) 0 3px,transparent 3px 11px),repeating-linear-gradient(76deg,#2f4a3a 0 6px,#3d5c48 6px 14px,#264034 14px 19px)}
+.p4{left:1590px;top:250px;width:210px;height:250px;--r:3.5deg}
+.p4 .img{background:linear-gradient(180deg,#efe6d4 0 62%,#c9894b 62% 64%,#efe6d4 64%);position:relative}
+.p4 .img::after{content:"1962";position:absolute;left:0;right:0;top:26%;text-align:center;font:44px/1 var(--display);color:#5a3a1c;letter-spacing:.08em}
+/* type */
+.ty{left:240px;top:250px;width:290px;padding:18px 20px 16px;--r:-2deg}
+.ty .aa{font:150px/.9 var(--display);margin:0 0 4px;letter-spacing:-.02em}
+.ty .line{font:28px/1.15 var(--display);margin:0 0 14px}
+.ty .row{display:flex;justify-content:space-between;border-top:1px solid var(--line);padding-top:8px}
+.ty2{left:250px;top:620px;width:300px;padding:16px 20px;--r:1.6deg;background:#f3ecdd}
+.ty2 p{margin:0;font:700 40px/1 var(--hand);color:var(--kelp)}
+.ty2 .price{display:flex;align-items:baseline;gap:10px;margin:10px 0 12px;font:500 26px/1 var(--hand);color:var(--ink-2)}
+.ty2 .price s{color:var(--ink-3)}
+/* logo sketch */
+.lg{left:600px;top:520px;width:340px;padding:26px 20px 16px;text-align:center;--r:.8deg;background:var(--kelp);color:var(--flour)}
+.lg .wm{font:46px/1 var(--display);letter-spacing:.18em;margin:0}
+.lg svg{display:block;margin:10px auto 12px;color:var(--crust)}
+.lg .cap{color:#c9d6cd}
+/* notes */
+.nt{padding:16px 16px 18px;font:600 26px/1.08 var(--hand);color:#2a2418;background:var(--note);border-radius:2px}
+.n1{left:1330px;top:640px;width:200px;--r:-4deg}
+.n2{left:700px;top:690px;width:220px;--r:3deg;background:var(--note-2)}
+.n3{left:1600px;top:560px;width:200px;--r:2deg;background:var(--note-3)}
+.nt small{display:block;margin-top:8px;font:500 11px/1.3 var(--ui);color:#5c5340;letter-spacing:.02em}
+.arrow{position:absolute;pointer-events:none;color:var(--marker);overflow:visible}
+.pin{position:absolute;display:flex;align-items:center;gap:6px;transform:translate(-4px,-28px)}
+.pin i{width:28px;height:28px;border-radius:14px 14px 14px 2px;background:var(--marker);color:#fff;font:600 12px/28px var(--ui);text-align:center;font-style:normal}
+.pin span{min-width:140px;white-space:nowrap;background:var(--panel);box-shadow:var(--sh-panel);border-radius:8px;padding:5px 9px;font-size:12px;color:var(--ink)}
+/* packaging */
+.bag{left:250px;top:900px;width:220px;height:270px;--r:-2.5deg;border-radius:3px;background:linear-gradient(180deg,#b88a52 0 34px,#9c7242 34px 36px,#c79a62 36px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:#2e2114}
+.bag::after{content:"";position:absolute;left:50%;top:-20px;width:70px;height:30px;margin-left:-35px;border:3px solid #8a6236;border-bottom:0;border-radius:36px 36px 0 0}
+.ring{width:118px;height:118px;border-radius:50%;border:3px solid currentColor;display:grid;place-items:center;text-align:center;font:22px/1 var(--display);letter-spacing:.14em;text-indent:.14em}
+.ring small{display:block;font:600 9px/1.4 var(--ui);letter-spacing:.16em;margin-top:6px}
+.bag .cap{color:#2e2114;margin-top:10px;text-align:center;padding:0 16px}
+.st{left:520px;top:960px;width:300px;padding:18px;--r:1.2deg}
+.st .row{display:flex;align-items:flex-end;gap:18px;color:var(--kelp);margin-bottom:14px}
+.st .ring{border-width:2px}
+.n4{left:880px;top:900px;width:210px;--r:-2deg;background:var(--note)}
+/* chrome */
+.top,.tools{position:fixed;z-index:20;background:var(--panel);border:1px solid var(--line);border-radius:var(--r-panel);box-shadow:var(--sh-panel)}
+.top{left:16px;top:16px;display:flex;align-items:center;gap:14px;padding:8px 10px 8px 14px}
+.top h1{margin:0;font:400 22px/1 var(--display);letter-spacing:.02em;white-space:nowrap}
+.top h1 span{color:var(--ink-3)}
+.meta{font-size:12px;color:var(--ink-3);white-space:nowrap}
+.avs{display:flex}
+.avs i{width:28px;height:28px;border-radius:50%;border:2px solid var(--panel);margin-left:-5px;font:600 11px/24px var(--ui);text-align:center;font-style:normal;color:#fff}
+.share{position:fixed;z-index:20;right:16px;top:16px;height:40px;padding:0 16px;border:0;border-radius:10px;background:var(--ink);color:var(--panel);font:600 13px var(--ui);cursor:pointer}
+.tools{left:50%;bottom:20px;transform:translateX(-50%);display:flex;align-items:center;gap:2px;padding:5px}
+.tb{width:40px;height:40px;border:0;border-radius:8px;background:transparent;color:var(--ink-2);display:grid;place-items:center;cursor:pointer;transition:background var(--t-micro) var(--ease),color var(--t-micro) var(--ease)}
+.tb:hover{background:#ece7dc;color:var(--ink)}
+.tb[aria-pressed=true]{background:var(--ink);color:var(--panel)}
+.tb svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+.sep{width:1px;height:24px;background:var(--line);margin:0 6px}
+.pct{min-width:56px;height:40px;border:0;background:transparent;font:600 13px var(--ui);color:var(--ink);font-variant-numeric:tabular-nums;cursor:pointer;border-radius:8px}
+.pct:hover{background:#ece7dc}
+button:focus-visible{outline:2px solid var(--marker);outline-offset:2px}
+.hint{position:fixed;z-index:20;left:16px;bottom:24px;font-size:12px;color:var(--ink-2);background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:6px 10px}
+.hint kbd{font:600 11px var(--ui);border:1px solid var(--line-2);border-radius:4px;padding:0 4px}
+@media (max-width:760px){.meta,.hint,.opt,.top h1 span{display:none}.top h1{font-size:19px}.top{gap:10px}.share{height:40px;padding:0 12px}}
+@media (prefers-reduced-motion:reduce){.it,.tb{transition:none}.it:hover,.it:focus-visible{transform:rotate(var(--r,0deg))}}
+</style>
+</head>
+<body>
+<header class="top">
+  <h1>Tidewater <span>/ Spring identity</span></h1>
+  <span class="meta">Board 3 of 5 · edited 12 min ago</span>
+  <div class="avs" aria-label="3 people on this board"><i style="background:#2f4a3a;margin-left:0">IM</i><i style="background:#9a5a2b">OR</i><i style="background:#56677d">KT</i></div>
+</header>
+<button class="share" type="button">Share board</button>
+
+<div class="vp" id="vp" aria-label="Moodboard canvas. Drag to pan." tabindex="0">
+ <div class="sizer" id="sizer">
+  <div class="world" id="world">
+   <span class="label" style="left:248px;top:180px">type</span>
+   <span class="label" style="left:566px;top:226px">colour</span>
+   <span class="label" style="left:1020px;top:168px">the harbour, not a café</span>
+
+   <article class="it ty" tabindex="0" aria-label="Type specimen, Italiana">
+    <p class="aa">Aa</p>
+    <p class="line">Morning loaves, salted at the harbour.</p>
+    <div class="row cap"><span>Italiana 400</span><span>Display only</span></div>
+   </article>
+
+   <article class="it ty2" tabindex="0" aria-label="Hand-lettered price card">
+    <p>Seaweed sourdough</p>
+    <div class="price"><s>£6.20</s><span>£5.40 before 9</span></div>
+    <div class="cap">Caveat 700 · price cards, chalkboard</div>
+   </article>
+
+   <article class="it sw" tabindex="0" aria-label="Palette, five colours">
+    <div class="chip" style="background:#2f4a3a;color:#f1eadb"><b>Kelp</b>#2F4A3A</div>
+    <div class="chip" style="background:#6e8c86;color:#0f1817"><b>Brine</b>#6E8C86</div>
+    <div class="chip" style="background:#c9894b;color:#2a1a0b"><b>Crust</b>#C9894B</div>
+    <div class="chip" style="background:#f1eadb;color:#2a2622;box-shadow:inset 0 0 0 1px #d6d0c3"><b>Flour</b>#F1EADB</div>
+    <div class="chip" style="background:#2a2622;color:#f1eadb"><b>Char</b>#2A2622</div>
+    <div class="cap"><span>Palette v4</span><span>Kelp leads, Crust only for bread</span></div>
+   </article>
+
+   <article class="it lg" tabindex="0" aria-label="Wordmark sketch">
+    <p class="wm">TIDEWATER</p>
+    <svg width="220" height="14" viewBox="0 0 220 14" aria-hidden="true"><path d="M2 8c18-10 36 10 54 0s36 10 54 0 36 10 54 0 36 10 54 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    <div class="cap">Wordmark sketch 07 · bakehouse est. 1962</div>
+   </article>
+
+   <figure class="it ph p1" tabindex="0" style="margin:0"><div class="img" role="img" aria-label="Harbour at first light"></div><figcaption>harbour, 6:10am</figcaption></figure>
+   <figure class="it ph p2" tabindex="0" style="margin:0"><div class="img" role="img" aria-label="Open crumb close-up"></div><figcaption>open crumb</figcaption></figure>
+   <figure class="it ph p3" tabindex="0" style="margin:0"><div class="img" role="img" aria-label="Kelp texture"></div><figcaption>kelp, low tide</figcaption></figure>
+   <figure class="it ph p4" tabindex="0" style="margin:0"><div class="img" role="img" aria-label="Old shop sign"></div><figcaption>the 1962 sign</figcaption></figure>
+
+   <aside class="it nt n1" tabindex="0">Less beige. More tide.<small>Ines · Tue</small></aside>
+   <aside class="it nt n2" tabindex="0">Mark has to survive a rubber stamp on a paper bag<small>Omar · Mon</small></aside>
+   <aside class="it nt n3" tabindex="0">Steal the spacing of the old sign letters<small>Kit · today</small></aside>
+
+   <svg class="arrow" style="left:1240px;top:540px" width="120" height="120" viewBox="0 0 120 120" aria-hidden="true"><path d="M104 108C84 96 62 70 40 26" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M28 40l11-16 14 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+   <svg class="arrow" style="left:1690px;top:490px" width="60" height="80" viewBox="0 0 60 80" aria-hidden="true"><path d="M30 76C18 56 20 30 32 6" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M22 16l10-12 10 13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+   <svg class="arrow" style="left:900px;top:640px" width="90" height="70" viewBox="0 0 90 70" aria-hidden="true"><path d="M6 64C30 58 52 40 70 10" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M56 14l15-5 3 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+
+   <span class="label" style="left:262px;top:832px">packaging</span>
+   <article class="it bag" tabindex="0" aria-label="Paper bag mock-up"><div class="ring">TW<small>EST. 1962</small></div><div class="cap">Kraft 90gsm · one-colour stamp</div></article>
+   <article class="it st" tabindex="0" aria-label="Stamp size test">
+    <div class="row"><div class="ring">TW</div><div class="ring" style="width:68px;height:68px;font-size:15px">TW</div><div class="ring" style="width:40px;height:40px;font-size:11px;letter-spacing:.06em">TW</div></div>
+    <div class="cap">Stamp test · 32, 18, 10 mm · the 10 still reads</div>
+   </article>
+   <aside class="it nt n4" tabindex="0">Bags first, website later. Opening is 14 March.<small>Ines · Wed</small></aside>
+   <div class="pin" style="left:1270px;top:280px"><i>KT</i><span>This blue, exactly</span></div>
+  </div>
+ </div>
+</div>
+
+<nav class="tools" aria-label="Canvas tools">
+  <button class="tb" type="button" aria-pressed="false" aria-label="Select (V)" data-tool="select"><svg viewBox="0 0 24 24"><path d="M5 3l14 8-6 2-3 6z"/></svg></button>
+  <button class="tb" type="button" aria-pressed="true" aria-label="Hand, pan the board (H)" data-tool="hand"><svg viewBox="0 0 24 24"><path d="M8 13V5.5a1.5 1.5 0 013 0V11m0-6.5a1.5 1.5 0 013 0V11m0-5a1.5 1.5 0 013 0v7c0 4-2.5 8-7 8-3 0-4.5-1.5-6-4l-2-3.5a1.5 1.5 0 012.6-1.5L8 13"/></svg></button>
+  <button class="tb opt" type="button" aria-pressed="false" aria-label="Note (N)" data-tool="note"><svg viewBox="0 0 24 24"><path d="M5 4h14v10l-6 6H5z"/><path d="M13 20v-6h6"/></svg></button>
+  <button class="tb opt" type="button" aria-pressed="false" aria-label="Arrow (A)" data-tool="arrow"><svg viewBox="0 0 24 24"><path d="M5 19L19 5M10 5h9v9"/></svg></button>
+  <span class="sep" aria-hidden="true"></span>
+  <button class="tb" type="button" id="zout" aria-label="Zoom out"><svg viewBox="0 0 24 24"><path d="M6 12h12"/></svg></button>
+  <button class="pct" type="button" id="pct" aria-label="Reset zoom to 100%" aria-live="polite">100%</button>
+  <button class="tb" type="button" id="zin" aria-label="Zoom in"><svg viewBox="0 0 24 24"><path d="M6 12h12M12 6v12"/></svg></button>
+  <button class="tb" type="button" id="fit" aria-label="Fit board"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5"/></svg></button>
+</nav>
+<div class="hint">Drag to pan · <kbd>Ctrl</kbd> + scroll to zoom</div>
+
+<script>
+(() => {
+  const vp = document.getElementById('vp'), sizer = document.getElementById('sizer'), world = document.getElementById('world'), pct = document.getElementById('pct');
+  const W = 2200, H = 1400, STEPS = [.33, .5, .67, .8, 1, 1.25, 1.5, 2];
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let z = 1, anim = 0;
+  function apply(nz, cx, cy) {
+    const wx = (vp.scrollLeft + cx) / z, wy = (vp.scrollTop + cy) / z;
+    z = nz;
+    world.style.transform = 'scale(' + z + ')';
+    sizer.style.width = W * z + 'px'; sizer.style.height = H * z + 'px';
+    vp.scrollLeft = wx * z - cx; vp.scrollTop = wy * z - cy;
+    pct.textContent = Math.round(z * 100) + '%';
+  }
+  function zoomTo(target, cx = vp.clientWidth / 2, cy = vp.clientHeight / 2) {
+    target = Math.min(2, Math.max(.33, target));
+    cancelAnimationFrame(anim);
+    if (reduce) return apply(target, cx, cy);
+    const from = z, t0 = performance.now(), D = 220;
+    const step = (t) => { const k = Math.min(1, (t - t0) / D), e = 1 - Math.pow(1 - k, 3); apply(from + (target - from) * e, cx, cy); if (k < 1) anim = requestAnimationFrame(step); };
+    anim = requestAnimationFrame(step);
+  }
+  const next = (dir) => { const s = dir > 0 ? STEPS.find(v => v > z + .01) : [...STEPS].reverse().find(v => v < z - .01); return s ?? z; };
+  document.getElementById('zin').onclick = () => zoomTo(next(1));
+  document.getElementById('zout').onclick = () => zoomTo(next(-1));
+  pct.onclick = () => zoomTo(1);
+  function frame(x0, y0, x1, y1, max) {
+    const nz = Math.min(max, (vp.clientWidth - 32) / (x1 - x0), (vp.clientHeight - 150) / (y1 - y0));
+    apply(nz, 0, 0); vp.scrollLeft = x0 * nz - (vp.clientWidth - (x1 - x0) * nz) / 2; vp.scrollTop = y0 * nz - 80;
+  }
+  document.getElementById('fit').onclick = () => frame(230, 160, 1820, 1190, 1);
+  // pan by dragging empty board
+  let drag = null;
+  vp.addEventListener('pointerdown', (e) => {
+    if (e.button !== 0 || e.target.closest('.it')) return;
+    drag = { x: e.clientX, y: e.clientY, l: vp.scrollLeft, t: vp.scrollTop };
+    vp.classList.add('panning'); vp.setPointerCapture(e.pointerId);
+  });
+  vp.addEventListener('pointermove', (e) => { if (!drag) return; vp.scrollLeft = drag.l - (e.clientX - drag.x); vp.scrollTop = drag.t - (e.clientY - drag.y); });
+  const end = () => { drag = null; vp.classList.remove('panning'); };
+  vp.addEventListener('pointerup', end); vp.addEventListener('pointercancel', end);
+  vp.addEventListener('wheel', (e) => { if (!e.ctrlKey && !e.metaKey) return; e.preventDefault(); const r = vp.getBoundingClientRect(); cancelAnimationFrame(anim); apply(Math.min(2, Math.max(.33, z * Math.exp(-e.deltaY / 300))), e.clientX - r.left, e.clientY - r.top); }, { passive: false });
+  document.querySelectorAll('[data-tool]').forEach((b) => b.addEventListener('click', () => {
+    document.querySelectorAll('[data-tool]').forEach((o) => o.setAttribute('aria-pressed', String(o === b)));
+  }));
+  addEventListener('keydown', (e) => {
+    if (e.target.closest && e.target.closest('input,textarea')) return;
+    if (e.key === '+' || e.key === '=') zoomTo(next(1));
+    else if (e.key === '-') zoomTo(next(-1));
+    else if (e.key === '0') zoomTo(1);
+  });
+  // first frame: the cluster, centred
+  if (innerWidth < 760) { apply(.5, 0, 0); vp.scrollLeft = 112; vp.scrollTop = 30; }
+  else { apply(1, 0, 0); vp.scrollLeft = 200; vp.scrollTop = 100; }
+})();
+</script>
+</body>
+</html>

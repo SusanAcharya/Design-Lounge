@@ -1,0 +1,181 @@
+<!-- Design Lounge piece: sidebar-chat-history · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Chat history sidebar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --main:#FBFAF8;--side:#F1EFEB;--hover:#E6E3DD;--sel:#DCEBE8;--line:#DDD9D2;--line-2:#85817A;
+  --ink:#1A1D1C;--ink-2:#575B58;--ink-3:#686C69;--teal:#0F6B6B;--teal-ink:#F2FBFA;--mark:#F6E3A6;--danger:#A3302A;
+  --font:"Public Sans",system-ui,sans-serif;
+  --w:280px;--row:36px;--r:9px;
+  --t-fast:150ms;--t-mid:240ms;--ease:cubic-bezier(.2,.7,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);
+  --shadow-toast:0 12px 28px -10px rgba(26,29,28,.35);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.45 var(--font);color:var(--ink);background:var(--main);display:flex;overflow:hidden;-webkit-font-smoothing:antialiased}
+button,input{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+svg.i{width:18px;height:18px;flex:none;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.side{width:var(--w);flex:none;height:100%;background:var(--side);border-right:1px solid var(--line);display:flex;flex-direction:column;padding:14px 10px 10px;z-index:20}
+.brand{display:flex;align-items:center;gap:10px;height:36px;padding:0 6px 0 8px}
+.brand b{font-weight:700;font-size:17px;letter-spacing:-.02em}
+.mk{width:26px;height:26px;border-radius:8px;background:var(--ink);display:grid;place-items:center;flex:none}
+.mk i{width:10px;height:10px;border-radius:50% 50% 50% 2px;background:var(--side)}
+.new{display:flex;align-items:center;gap:10px;height:42px;margin:12px 0 10px;padding:0 12px;border:0;border-radius:11px;background:var(--teal);color:var(--teal-ink);font-weight:600;cursor:pointer;transition:background var(--t-fast) var(--ease),transform var(--t-fast) var(--ease)}
+.new:hover{background:#0B5858}.new:active{transform:scale(.98)}.new:focus-visible{outline-color:var(--ink)}
+.new kbd{margin-left:auto;font:500 11px var(--font);opacity:.85;letter-spacing:.04em}
+.find{display:flex;align-items:center;gap:8px;height:38px;padding:0 10px;position:relative;color:var(--ink-2)}
+.find input{all:unset;box-sizing:border-box;position:absolute;inset:0;padding:0 40px 0 36px;border-radius:10px;background:var(--main);border:1px solid var(--line-2);color:var(--ink)}
+.find svg,.find kbd{position:relative;z-index:1;pointer-events:none}.find kbd{margin-left:auto}
+.find input::placeholder{color:var(--ink-2)}
+.find kbd{font:500 11px var(--font);color:var(--ink-2)}
+.list{flex:1;overflow-y:auto;margin:10px -4px 0;padding:0 4px 8px;scrollbar-width:thin}
+.grp h2{margin:14px 0 4px;padding:0 10px;font:600 11px/1 var(--font);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);display:flex;align-items:center;gap:6px}
+.grp h2 svg{width:12px;height:12px}
+.grp ul{list-style:none;margin:0;padding:0}
+.it{position:relative;display:grid;grid-template-rows:1fr;transition:grid-template-rows var(--t-mid) var(--ease),opacity var(--t-mid) var(--ease)}
+.it.gone{grid-template-rows:0fr;opacity:0}
+.it>div{overflow:hidden}
+.row{display:flex;align-items:center;height:var(--row);border-radius:var(--r);position:relative}
+.row:hover,.row:focus-within{background:var(--hover)}
+.it[aria-current] .row{background:var(--sel)}
+.go{all:unset;flex:1;min-width:0;height:100%;display:flex;align-items:center;padding:0 10px;cursor:pointer;border-radius:var(--r)}
+.go span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.go:focus-visible{outline:2px solid var(--teal);outline-offset:-2px}
+.it[aria-current] .go{font-weight:600}
+mark{background:var(--mark);color:var(--ink);border-radius:3px;padding:0 1px}
+.acts{display:none;gap:2px;padding-right:4px}
+.row:hover .acts,.row:focus-within .acts{display:flex}
+.acts button{width:28px;height:28px;border:0;border-radius:7px;background:none;color:var(--ink-2);display:grid;place-items:center;cursor:pointer}
+.acts button:hover{background:var(--main);color:var(--ink)}
+.acts button.del:hover{color:var(--danger)}
+.acts svg{width:16px;height:16px}
+.ren{all:unset;flex:1;min-width:0;height:28px;margin:0 4px;padding:0 8px;border-radius:7px;background:var(--main);box-shadow:inset 0 0 0 1.5px var(--teal);font-weight:500}
+.empty{margin:28px 10px;font-size:13px;color:var(--ink-2)}
+.empty b{display:block;color:var(--ink);font-weight:600;margin-bottom:6px;word-break:break-word}
+.empty button{border:1px solid var(--line-2);background:var(--main);border-radius:8px;height:32px;padding:0 12px;cursor:pointer;font-weight:500;margin-top:10px}
+.me{display:flex;align-items:center;gap:10px;height:56px;padding:0 6px 0 8px;border-top:1px solid var(--line);margin-top:6px}
+.av{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font:600 12px var(--font);background:#CFE0D8;color:#1E4A3F;flex:none}
+.me b{display:block;font-weight:600;font-size:13px}.me small{display:block;font-size:12px;color:var(--ink-2)}
+.me small i{font-style:normal;color:var(--teal);font-weight:600}
+.me button{margin-left:auto;width:36px;height:36px;border:0;border-radius:9px;background:none;color:var(--ink-2);display:grid;place-items:center;cursor:pointer}
+.me button:hover{background:var(--hover);color:var(--ink)}
+.toast{position:fixed;left:16px;bottom:72px;width:248px;display:flex;align-items:center;gap:10px;padding:10px 10px 10px 14px;border-radius:11px;background:var(--ink);color:var(--main);font-size:13px;box-shadow:var(--shadow-toast);opacity:0;transform:translateY(8px);pointer-events:none;transition:opacity var(--t-fast) var(--ease),transform var(--t-mid) var(--ease-out);z-index:40}
+.toast.on{opacity:1;transform:none;pointer-events:auto}
+.toast span{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.toast button{border:0;background:none;color:#8FDCD3;font-weight:700;cursor:pointer;height:28px;padding:0 6px;border-radius:6px}
+/* chat, hinted */
+main{flex:1;min-width:0;display:flex;flex-direction:column}
+.bar{height:56px;display:flex;align-items:center;gap:10px;padding:0 24px;border-bottom:1px solid var(--line)}
+.bar h1{margin:0;font-size:15px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar small{color:var(--ink-2);font-size:12px;white-space:nowrap}
+.menu{display:none;width:40px;height:40px;border:0;border-radius:10px;background:none;place-items:center;cursor:pointer;flex:none}
+.thread{flex:1;overflow:hidden;padding:36px 24px 0;display:flex;flex-direction:column;align-items:center}
+.msgs{width:100%;max-width:680px;display:grid;gap:22px}
+.u{justify-self:end;max-width:78%;background:var(--side);border-radius:16px 16px 4px 16px;padding:12px 16px}
+.a p{margin:0 0 10px;line-height:1.6;font-size:15px}
+.a ol{margin:0 0 10px;padding-left:20px;line-height:1.6;font-size:15px}
+.a b{font-weight:600}
+.comp{width:100%;max-width:680px;margin:auto auto 22px;display:flex;align-items:center;gap:10px;min-height:52px;padding:6px 6px 6px 18px;border:1px solid var(--line-2);border-radius:16px;background:#fff0;color:var(--ink-2)}
+.comp span{flex:1}
+.comp b{width:38px;height:38px;border-radius:11px;background:var(--ink);color:var(--main);display:grid;place-items:center}
+.scrim{display:none}
+@media (max-width:760px){
+  .side{position:fixed;inset:0 auto 0 0;transform:translateX(-100%);visibility:hidden;transition:transform var(--t-mid) var(--ease-out),visibility 0s linear var(--t-mid)}
+  body.drawer .side{transform:none;visibility:visible;transition-delay:0s;box-shadow:0 0 40px rgba(26,29,28,.3)}
+  .scrim{display:block;position:fixed;inset:0;background:rgba(26,29,28,.4);opacity:0;pointer-events:none;transition:opacity var(--t-mid) var(--ease);z-index:15}
+  body.drawer .scrim{opacity:1;pointer-events:auto}
+  .menu{display:grid}.bar{padding:0 10px 0 6px}.bar small{display:none}
+  .thread{padding:24px 16px 0}.u{max-width:88%}.comp{margin-bottom:16px}
+  .it[aria-current] .acts{display:flex}
+}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important}}
+</style>
+</head>
+<body>
+<aside class="side" id="side" aria-label="Chat history">
+  <div class="brand"><span class="mk" aria-hidden="true"><i></i></span><b>Wren</b></div>
+  <button class="new" id="new" type="button"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>New chat<kbd>⌘⇧O</kbd></button>
+  <label class="find"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><input id="q" placeholder="Search chats" aria-label="Search chats" aria-controls="list"><kbd>⌘K</kbd></label>
+  <nav class="list" id="list" aria-label="Chats"></nav>
+  <div class="me"><span class="av" aria-hidden="true">AO</span><span><b>Amara Osei</b><small><i>Plus</i> · renews 2 Dec</small></span><button type="button" aria-label="Settings"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></svg></button></div>
+</aside>
+<div class="scrim" id="scrim"></div>
+<div class="toast" id="toast" role="status" aria-live="polite"><span id="toastT"></span><button type="button" id="undo">Undo</button></div>
+<main>
+  <div class="bar"><button class="menu" id="menu" type="button" aria-label="Open chat history" aria-expanded="false" aria-controls="side"><svg class="i" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button><h1 id="title">Sourdough starter smells like acetone</h1><small>Started 8:12 · 6 messages</small></div>
+  <div class="thread">
+    <div class="msgs">
+      <div class="u">My starter has smelled like nail polish remover for two days. Is it dead?</div>
+      <div class="a"><p>Almost certainly not. An acetone smell means the yeast and bacteria have eaten through their flour and are <b>hungry</b>, not dying.</p>
+        <ol><li>Discard all but 50 g.</li><li>Feed 1:2:2, so 50 g starter, 100 g flour, 100 g water at about 26°C.</li><li>Repeat every 12 hours for two days.</li></ol>
+        <p>If it doubles within 6 hours of a feed, it is ready to bake with again.</p></div>
+    </div>
+    <div class="comp"><span>Reply to Wren</span><b aria-hidden="true"><svg class="i" viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6"/></svg></b></div>
+  </div>
+</main>
+<script>
+(function(){
+  var G=[['pinned','Pinned'],['today','Today'],['yday','Yesterday'],['w','Previous 7 days'],['m','Previous 30 days']];
+  var D=[['Kitchen renovation budget','pinned','w'],['Thesis outline, chapter 3','pinned','m'],
+  ['Sourdough starter smells like acetone','today'],['Rewrite cover letter for Halden','today'],['SQL running total by week','today'],['Names for a ceramics studio','today'],
+  ['Train route Lyon to Turin','yday'],['Explain p-values like I am a chef','yday'],['Fix flexbox gap in an old Safari','yday'],
+  ['Birthday menu for 8, one vegan','w'],['Translate lease clause 4.2','w'],['Compare two heat pumps','w'],['Regex for UK postcodes','w'],
+  ['Marathon plan, 16 weeks','m'],['Draft a reply to the landlord','m'],['Pitch deck outline for Fennel','m']];
+  var C=D.map(function(d,i){return{id:i,t:d[0],g:d[1],was:d[2]||d[1]}}),active=2,q='',editing=-1,last=null,T;
+  var list=document.getElementById('list'),qi=document.getElementById('q'),title=document.getElementById('title');
+  var I={pin:'<path d="M9 4h6l-1 6 3 3H7l3-3zM12 13v7"/>',ren:'<path d="M4 20h4L19 9l-4-4L4 16z"/>',del:'<path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/>'};
+  function esc(s){return s.replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+  function hl(t){if(!q)return esc(t);var i=t.toLowerCase().indexOf(q);return esc(t.slice(0,i))+'<mark>'+esc(t.slice(i,i+q.length))+'</mark>'+esc(t.slice(i+q.length))}
+  function ic(k){return '<svg class="i" viewBox="0 0 24 24" aria-hidden="true">'+I[k]+'</svg>'}
+  function render(){
+    var html='',n=0;
+    G.forEach(function(g){
+      var rows=C.filter(function(c){return c.g===g[0]&&(!q||c.t.toLowerCase().indexOf(q)>-1)});if(!rows.length)return;n+=rows.length;
+      html+='<section class="grp"><h2>'+(g[0]==='pinned'?ic('pin'):'')+g[1]+'</h2><ul>'+rows.map(function(c){
+        var cur=c.id===active?' aria-current="page"':'',pin=c.g==='pinned';
+        var main=c.id===editing?'<input class="ren" data-id="'+c.id+'" value="'+esc(c.t)+'" aria-label="Rename chat" maxlength="80">':'<button class="go" data-id="'+c.id+'"><span>'+hl(c.t)+'</span></button>';
+        return '<li class="it" data-li="'+c.id+'"'+cur+'><div><div class="row">'+main+'<span class="acts"><button data-a="pin" data-id="'+c.id+'" aria-label="'+(pin?'Unpin ':'Pin ')+esc(c.t)+'" title="'+(pin?'Unpin':'Pin')+'">'+ic('pin')+'</button><button data-a="ren" data-id="'+c.id+'" aria-label="Rename '+esc(c.t)+'" title="Rename">'+ic('ren')+'</button><button class="del" data-a="del" data-id="'+c.id+'" aria-label="Delete '+esc(c.t)+'" title="Delete">'+ic('del')+'</button></span></div></div></li>'}).join('')+'</ul></section>';
+    });
+    list.innerHTML=n?html:'<div class="empty" role="status"><b>No chats match "'+esc(q)+'"</b>Search looks at titles only.<br><button type="button" data-a="clear">Clear search</button></div>';
+    var r=list.querySelector('.ren');if(r){r.focus();r.select()}
+  }
+  function byId(id){return C.filter(function(c){return c.id===+id})[0]}
+  function open(c){active=c.id;title.textContent=c.t;drawer(false);render()}
+  function save(inp,keep){var c=byId(inp.dataset.id),v=inp.value.trim();if(keep&&v)c.t=v;if(c.id===active)title.textContent=c.t;editing=-1;render();var b=list.querySelector('[data-li="'+c.id+'"] .go');b&&b.focus()}
+  list.addEventListener('click',function(e){
+    var b=e.target.closest('button');if(!b)return;var c=byId(b.dataset.id),a=b.dataset.a;
+    if(a==='clear'){qi.value='';q='';render();qi.focus();return}
+    if(!a){open(c);return}
+    if(a==='pin'){c.g=c.g==='pinned'?c.was:'pinned';render()}
+    else if(a==='ren'){editing=c.id;render()}
+    else if(a==='del'){var li=b.closest('.it');li.classList.add('gone');setTimeout(function(){last={c:c,g:c.g};c.g='x';render();toast('Deleted "'+c.t+'"')},240)}
+  });
+  list.addEventListener('keydown',function(e){if(e.target.classList.contains('ren')){if(e.key==='Enter'){save(e.target,true);e.preventDefault()}else if(e.key==='Escape'){save(e.target,false);e.stopPropagation()}}});
+  list.addEventListener('focusout',function(e){if(e.target.classList&&e.target.classList.contains('ren')&&editing>-1)save(e.target,true)});
+  var tEl=document.getElementById('toast');
+  function toast(m){document.getElementById('toastT').textContent=m;tEl.classList.add('on');clearTimeout(T);T=setTimeout(function(){tEl.classList.remove('on');last=null},5000)}
+  document.getElementById('undo').addEventListener('click',function(){if(last){last.c.g=last.g;last=null;render()}tEl.classList.remove('on')});
+  qi.addEventListener('input',function(){q=qi.value.trim().toLowerCase();render()});
+  document.getElementById('new').addEventListener('click',function(){var c={id:C.length,t:'New chat',g:'today',was:'today'};C.splice(2,0,c);qi.value='';q='';open(c)});
+  var menu=document.getElementById('menu');
+  function drawer(on){document.body.classList.toggle('drawer',on);menu.setAttribute('aria-expanded',String(on))}
+  menu.addEventListener('click',function(){drawer(true);qi.focus({preventScroll:true})});
+  document.getElementById('scrim').addEventListener('click',function(){drawer(false)});
+  addEventListener('keydown',function(e){
+    var m=e.metaKey||e.ctrlKey;
+    if(m&&e.key.toLowerCase()==='k'){e.preventDefault();if(innerWidth<=760)drawer(true);qi.focus()}
+    else if(m&&e.shiftKey&&e.key.toLowerCase()==='o'){e.preventDefault();document.getElementById('new').click()}
+    else if(e.key==='Escape'){if(document.activeElement===qi&&qi.value){qi.value='';q='';render()}else drawer(false)}
+  });
+  render();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,196 @@
+<!-- Design Lounge piece: parallax-cursor-gallery · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Weather Studies · Hall 4 · Varde Art Hall</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tenor+Sans&display=swap" rel="stylesheet">
+<style>
+:root{
+  --wall:#ece6db;--wall-2:#e3dccf;--ink:#2e2924;--dim:#62584e;--red:#9b2a23;
+  --walnut:#2b2420;--oak:#b4966b;--mat:#f7f3ec;--scrim:rgba(236,230,219,.94);
+  --font:"Tenor Sans",Optima,Candara,sans-serif;
+  --ease-out:cubic-bezier(.16,1,.3,1);--ease:cubic-bezier(.2,.7,.2,1);
+  --mx:0;--my:0;--sy:0;
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{background:var(--wall);color:var(--ink);font:400 15px/1.55 var(--font);overflow-x:clip;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--red);outline-offset:4px}
+.kick{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--dim)}
+
+.top{height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;border-bottom:1px solid #d4ccbe}
+.brand{font-size:15px;letter-spacing:.24em;text-transform:uppercase}
+.top nav{display:flex;gap:32px;font-size:13px;letter-spacing:.08em}
+.top nav a{text-decoration:none;padding:8px 0}
+.top nav a:hover{box-shadow:inset 0 -1px var(--ink)}
+.top nav a[aria-current]{color:var(--red)}
+
+.hall{display:grid;grid-template-columns:360px 1fr;gap:32px;padding:56px 48px 64px;min-height:736px}
+.intro h1{margin:16px 0 20px;font:400 84px/.98 var(--font);letter-spacing:-.02em}
+.intro p{margin:0 0 16px;max-width:300px;color:var(--ink)}
+.intro .by{display:block;margin-top:28px;padding-top:16px;border-top:1px solid #cfc6b7;max-width:300px;font-size:13px;color:var(--dim)}
+.hint{display:flex;gap:10px;align-items:center;margin-top:40px;font-size:12px;letter-spacing:.06em;color:var(--dim)}
+.hint svg{flex:none}
+
+.salon{position:relative;height:620px}
+.work{position:absolute;left:var(--x);top:var(--y);width:var(--w);
+  transform:translate3d(calc(var(--mx) * var(--d) * 1px),calc(var(--my) * var(--d) * 1px + var(--sy) * var(--d) * -.004px),0);
+  transition:transform 900ms var(--ease-out)}
+.frame{display:block;width:100%;padding:var(--b,9px);background:var(--fr,var(--walnut));text-align:left;
+  box-shadow:calc(var(--mx) * -8px) calc(16px + var(--my) * -6px) 28px rgba(46,32,20,.22),0 1px 0 rgba(255,255,255,.08) inset;
+  transition:box-shadow 900ms var(--ease-out),transform 320ms var(--ease);cursor:zoom-in}
+.frame:hover{transform:translateY(-4px)}
+.mat{display:block;padding:var(--m,18px);background:var(--mat);box-shadow:inset 0 0 0 1px rgba(0,0,0,.05),inset 2px 3px 6px rgba(0,0,0,.08)}
+.art{display:block;width:100%;aspect-ratio:var(--ar);overflow:hidden;background:#ddd}
+.art svg{display:block;width:100%;height:100%}
+.art g{transform:translate(calc(var(--mx) * var(--z) * 1px),calc(var(--my) * var(--z) * 1px));transition:transform 900ms var(--ease-out)}
+.label{display:block;margin-top:14px;font-size:12px;line-height:1.45;color:var(--dim)}
+.label b{display:block;font-weight:400;font-size:13px;color:var(--ink)}
+
+.room2{padding:72px 48px 96px;border-top:1px solid #d4ccbe;background:var(--wall-2)}
+.room2 h2{margin:12px 0 48px;font:400 44px/1.05 var(--font);max-width:720px}
+.row{display:grid;grid-template-columns:1fr 1.25fr;gap:64px;align-items:start;max-width:1000px}
+.row .work{position:relative;left:auto;top:auto;width:auto}
+.note{margin:56px 0 0;max-width:560px;color:var(--ink)}
+
+.focus{position:fixed;inset:0;z-index:10;display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:56px;align-items:center;padding:64px 72px;background:var(--scrim);opacity:0;visibility:hidden;transition:opacity 320ms var(--ease),visibility 0s 320ms}
+.focus.open{opacity:1;visibility:visible;transition:opacity 320ms var(--ease)}
+.stage{display:grid;place-items:center;height:100%;min-height:0}
+.big{width:min(100%,calc((100vh - 128px - 56px) * var(--ar)));will-change:transform}
+.big .frame{cursor:default;--b:14px}.big .mat{--m:32px}
+.big .frame:hover{transform:none}
+.big .art g{transform:translate(calc(var(--mx) * var(--z) * 2.2px),calc(var(--my) * var(--z) * 2.2px))}
+.panel h3{margin:10px 0 6px;font:400 34px/1.1 var(--font)}
+.panel .meta{margin:0 0 20px;color:var(--dim);font-size:13px}
+.panel p{margin:0 0 28px}
+.ctl{display:flex;gap:8px;align-items:center}
+.ctl button{width:44px;height:44px;border:1px solid #7f7467;display:grid;place-items:center;border-radius:50%}
+.ctl button:hover{border-color:var(--ink)}
+.ctl span{margin-left:12px;font-size:12px;letter-spacing:.14em;color:var(--dim)}
+.close{position:absolute;top:20px;right:24px;height:40px;padding:0 16px;border:1px solid #7f7467;border-radius:20px;font-size:12px;letter-spacing:.16em;text-transform:uppercase}
+
+@media (max-width:900px){
+  .top{padding:0 16px}.top nav{gap:16px}.top nav a:not([aria-current]){display:none}
+  .hall{grid-template-columns:1fr;padding:40px 16px 48px;gap:40px;min-height:0}
+  .intro h1{font-size:56px}.intro p,.intro .by{max-width:none}.hint{margin-top:24px}
+  .salon{height:auto;display:grid;grid-template-columns:1fr 1fr;gap:40px 20px;align-items:start}
+  .salon .work{position:relative;left:auto;top:auto;width:auto}
+  .salon .work:first-child{grid-column:1/-1}
+  .room2{padding:56px 16px 72px}.room2 h2{font-size:34px}
+  .row{grid-template-columns:1fr;gap:40px}
+  .focus{grid-template-columns:1fr;align-content:start;gap:24px;padding:80px 16px 24px;overflow:auto}
+  .stage{height:auto}.big{width:100%}.big .mat{--m:16px}.big .frame{--b:9px}
+}
+@media (prefers-reduced-motion: reduce){
+  .work,.frame,.art g,.focus{transition:none!important}
+  .work,.art g{transform:none!important}
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <span class="brand">Varde Art Hall</span>
+  <nav aria-label="Museum"><a href="#">Collection</a><a href="#" aria-current="page">Hall 4</a><a href="#">Visit</a><a href="#">Tickets</a></nav>
+</header>
+<main>
+  <section class="hall" aria-labelledby="ht">
+    <div class="intro">
+      <span class="kick">Hall 4 · Until 1 March 2027</span>
+      <h1 id="ht">Weather Studies</h1>
+      <p>Twenty-six gouaches Agnes Ruoho painted on the northern coast between 1962 and 1971, most of them in under an hour, most of them outdoors.</p>
+      <p>The hang follows her notebooks: low cloud first, then the fields, then the harbour in winter.</p>
+      <span class="by">Agnes Ruoho, 1931–2004 · Gift of the Ruoho family, 2019</span>
+      <p class="hint"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 3v4M12 17v4M3 12h4M17 12h4"/><circle cx="12" cy="12" r="3"/></svg>Move to look closer. Select a work to stand in front of it.</p>
+    </div>
+    <div class="salon" id="salon"></div>
+  </section>
+  <section class="room2" aria-labelledby="r2">
+    <span class="kick">Further along the wall</span>
+    <h2 id="r2">The harbour years, 1968 to 1971</h2>
+    <div class="row" id="row"></div>
+    <p class="note">Ruoho painted from a rented net loft on the east pier. The windows faced north, so her light never changed, only the weather in it.</p>
+  </section>
+</main>
+<div class="focus" id="focus" role="dialog" aria-modal="true" aria-labelledby="ft" aria-hidden="true">
+  <button class="close" id="close">Close</button>
+  <div class="stage"><div class="big" id="big"></div></div>
+  <div class="panel">
+    <span class="kick" id="fk"></span>
+    <h3 id="ft"></h3>
+    <p class="meta" id="fm"></p>
+    <p id="fp"></p>
+    <div class="ctl"><button id="prev" aria-label="Previous work"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M15 6l-6 6 6 6"/></svg></button><button id="next" aria-label="Next work"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg></button><span id="fc"></span></div>
+  </div>
+</div>
+<script>
+(() => {
+  const S = (a, b, c) => `<g style="--z:${a}">${b}</g>`;
+  const W = [
+    { t:'Low cloud, Hailuoto', y:1964, m:'Gouache on paper · 31 × 46 cm', ar:'3/2', p:'Painted from the ferry ramp. The pencil line of the island is still visible under the grey.', x:'0px', yy:'28px', w:'360px', d:6,
+      s: S(2,'<rect x="-20" y="-20" width="340" height="140" fill="#c9d3d6"/>') + S(6,'<ellipse cx="110" cy="70" rx="120" ry="26" fill="#9aa6ab"/><ellipse cx="230" cy="54" rx="90" ry="18" fill="#b2bcc0"/>') + S(12,'<rect x="-20" y="130" width="340" height="90" fill="#59665c"/><rect x="-20" y="124" width="340" height="10" fill="#7b8a7d"/>'), vb:'0 0 300 200' },
+    { t:'Three birches', y:1966, m:'Gouache and graphite · 52 × 34 cm', ar:'2/3', p:'Ruoho returned to these trees eleven times. This is the only version with the sun in it.', x:'392px', yy:'0px', w:'224px', d:10, fr:'var(--oak)',
+      s: S(2,'<rect x="-20" y="-20" width="240" height="340" fill="#efe7d6"/><circle cx="140" cy="120" r="26" fill="#e07b3c"/>') + S(7,'<rect x="40" y="30" width="12" height="270" fill="#fbf8f1" stroke="#c4baa8"/><path d="M40 90h8M44 150h8M40 210h6" stroke="#2b2420" stroke-width="3"/>') + S(14,'<rect x="96" y="0" width="16" height="300" fill="#fff" stroke="#c4baa8"/><rect x="150" y="60" width="10" height="240" fill="#fbf8f1" stroke="#c4baa8"/><path d="M96 120h10M100 200h12M150 150h7" stroke="#2b2420" stroke-width="3"/><rect x="-20" y="250" width="240" height="60" fill="#b9b48f"/>'), vb:'0 0 200 300' },
+    { t:'Night heron', y:1965, m:'Gouache on card · 18 × 13 cm', ar:'3/4', p:'A study the size of a postcard, found folded inside a tide almanac.', x:'648px', yy:'44px', w:'144px', d:14, b:'7px', m2:'12px',
+      s: S(2,'<rect x="-20" y="-20" width="160" height="200" fill="#1f3a33"/>') + S(8,'<path d="M30 110c20-40 50-50 70-40-10 10-20 30-40 40z" fill="#c9cfc4"/><circle cx="84" cy="70" r="3" fill="#e9b949"/>') + S(14,'<path d="M58 118v38M64 118l8 38" stroke="#c9cfc4" stroke-width="3"/>'), vb:'0 0 120 160' },
+    { t:'Rapeseed, before rain', y:1967, m:'Gouache on paper · 28 × 38 cm', ar:'4/3', p:'The yellow is unmixed from the tube. Everything else is mixed with it.', x:'44px', yy:'372px', w:'296px', d:9,
+      s: S(2,'<rect x="-20" y="-20" width="280" height="130" fill="#4a5560"/>') + S(6,'<rect x="150" y="84" width="40" height="22" fill="#f4f1ea"/><path d="M146 86l24-16 24 16z" fill="#8c3b2a"/>') + S(12,'<rect x="-20" y="104" width="280" height="110" fill="#e6c437"/><path d="M-20 140h280M-20 170h280" stroke="#c9a524" stroke-width="3"/>'), vb:'0 0 240 180' },
+    { t:'Harbour, February', y:1969, m:'Gouache on paper · 40 × 40 cm', ar:'1/1', p:'The boats are frozen in. She painted them from memory the next morning, which is why there are four and not five.', x:'380px', yy:'392px', w:'220px', d:7,
+      s: S(2,'<rect x="-20" y="-20" width="240" height="240" fill="#8fa3b0"/><rect x="-20" y="-20" width="240" height="90" fill="#c3cfd5"/>') + S(7,'<path d="M20 120h60l-8 12H28zM100 110h50l-6 10h-38zM160 126h36l-5 9h-26z" fill="#1d2226"/><path d="M48 120V84M124 110V80" stroke="#1d2226" stroke-width="3"/>') + S(13,'<path d="M-20 150c60-12 120 8 240-6V220H-20z" fill="#eef2f3"/>'), vb:'0 0 200 200' },
+    { t:'Net loft window', y:1968, m:'Gouache and chalk · 36 × 28 cm', ar:'4/5', p:'Her only interior. The square of sea is painted last, over the frame.', x:'640px', yy:'330px', w:'152px', d:12, b:'7px', m2:'12px', fr:'var(--oak)',
+      s: S(2,'<rect x="-20" y="-20" width="220" height="260" fill="#8a5a3c"/>') + S(6,'<rect x="40" y="40" width="100" height="130" fill="#d9e2e2"/><path d="M90 40v130M40 105h100" stroke="#8a5a3c" stroke-width="6"/>') + S(12,'<rect x="40" y="120" width="100" height="50" fill="#5c7a86" opacity=".9"/><rect x="-20" y="196" width="220" height="40" fill="#5b3a26"/>'), vb:'0 0 180 225' },
+    { t:'East pier, sleet', y:1970, m:'Gouache on paper · 30 × 42 cm', ar:'7/5', p:'Sleet scratched in with the back of the brush while the paint was wet.', d:5,
+      s: S(2,'<rect x="-20" y="-20" width="320" height="240" fill="#6f7c84"/>') + S(7,'<rect x="40" y="96" width="200" height="16" fill="#2a2f33"/><path d="M60 112v60M120 112v60M180 112v60M230 112v60" stroke="#2a2f33" stroke-width="6"/>') + S(12,'<path d="M10 10l16 40M60 0l14 36M130 20l18 44M200 4l14 40M250 30l12 32" stroke="#dfe5e8" stroke-width="2"/>'), vb:'0 0 280 200' },
+    { t:'Ice road at noon', y:1971, m:'Gouache on paper · 26 × 44 cm', ar:'17/10', p:'Painted on the day the ice road opened. Ruoho noted the temperature in the corner: minus 19.', d:6,
+      s: S(2,'<rect x="-20" y="-20" width="360" height="100" fill="#e8d7b8"/><circle cx="240" cy="44" r="18" fill="#f6efe0"/>') + S(7,'<rect x="-20" y="76" width="360" height="140" fill="#dfe7ea"/>') + S(13,'<path d="M150 200L176 78h6l40 122z" fill="#b8c6cc"/><path d="M20 100h40M260 110h50" stroke="#6b7a80" stroke-width="3"/>'), vb:'0 0 320 190' }
+  ];
+  const card = (w, i) => `<div class="work" style="--x:${w.x || 0};--y:${w.yy || 0};--w:${w.w || 'auto'};--d:${w.d}"><button class="frame" data-i="${i}" style="${w.fr ? '--fr:' + w.fr + ';' : ''}${w.b ? '--b:' + w.b + ';' : ''}" aria-label="Focus ${w.t}, ${w.y}"><span class="mat" style="${w.m2 ? '--m:' + w.m2 : ''}"><span class="art" style="--ar:${w.ar}"><svg viewBox="${w.vb}" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${w.s}</svg></span></span></button><span class="label"><b>${w.t}, ${w.y}</b>${w.m}</span></div>`;
+  document.getElementById('salon').innerHTML = W.slice(0, 6).map((w, i) => card(w, i)).join('');
+  document.getElementById('row').innerHTML = W.slice(6).map((w, i) => card(w, i + 6)).join('');
+  const root = document.documentElement, reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let raf = 0, mx = 0, my = 0;
+  const paint = () => { raf = 0; root.style.setProperty('--mx', mx.toFixed(3)); root.style.setProperty('--my', my.toFixed(3)); root.style.setProperty('--sy', Math.min(scrollY, 1600).toFixed(0)); };
+  const req = () => { if (!raf && !reduce) raf = requestAnimationFrame(paint); };
+  addEventListener('pointermove', (e) => { if (e.pointerType === 'touch') return; mx = (e.clientX / innerWidth - .5) * 2; my = (e.clientY / innerHeight - .5) * 2; req(); }, { passive: true });
+  addEventListener('scroll', req, { passive: true });
+  document.addEventListener('pointerleave', () => { mx = my = 0; req(); });
+  const focus = document.getElementById('focus'), big = document.getElementById('big');
+  let cur = -1, opener = null;
+  const fill = (i) => {
+    const w = W[i]; cur = i;
+    big.style.setProperty('--ar', w.ar.replace('/', ' / '));
+    big.innerHTML = `<span class="frame" style="${w.fr ? '--fr:' + w.fr : ''}"><span class="mat"><span class="art" style="--ar:${w.ar}"><svg viewBox="${w.vb}" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${w.s}</svg></span></span></span>`;
+    document.getElementById('fk').textContent = 'Agnes Ruoho · ' + w.y;
+    document.getElementById('ft').textContent = w.t;
+    document.getElementById('fm').textContent = w.m;
+    document.getElementById('fp').textContent = w.p;
+    document.getElementById('fc').textContent = (i + 1) + ' of ' + W.length;
+  };
+  const flip = (from, back) => {
+    if (reduce || !from || !big.animate) return Promise.resolve();
+    const a = from.getBoundingClientRect(), b = big.getBoundingClientRect();
+    const k = `translate(${a.left - b.left}px,${a.top - b.top}px) scale(${a.width / b.width})`;
+    const an = big.animate([{ transform: k, transformOrigin: '0 0' }, { transform: 'none', transformOrigin: '0 0' }], { duration: 560, easing: 'cubic-bezier(.16,1,.3,1)', direction: back ? 'reverse' : 'normal' });
+    return an.finished.catch(() => {});
+  };
+  const open = (btn) => { opener = btn; fill(+btn.dataset.i); focus.classList.add('open'); focus.setAttribute('aria-hidden', 'false'); flip(btn); document.getElementById('close').focus({ preventScroll: true }); };
+  const close = () => { if (cur < 0) return; const t = document.querySelector(`.frame[data-i="${cur}"]`); focus.classList.remove('open'); focus.setAttribute('aria-hidden', 'true'); flip(t, true); cur = -1; (t || opener) && (t || opener).focus({ preventScroll: true }); };
+  const step = (n) => fill((cur + n + W.length) % W.length);
+  document.addEventListener('click', (e) => { const b = e.target.closest('button.frame'); if (b) open(b); });
+  document.getElementById('close').onclick = close;
+  document.getElementById('prev').onclick = () => step(-1);
+  document.getElementById('next').onclick = () => step(1);
+  focus.addEventListener('click', (e) => { if (e.target === focus) close(); });
+  addEventListener('keydown', (e) => {
+    if (cur < 0) return;
+    if (e.key === 'Escape') close(); else if (e.key === 'ArrowRight') step(1); else if (e.key === 'ArrowLeft') step(-1);
+    else if (e.key === 'Tab') { const f = [...focus.querySelectorAll('button')]; const i = f.indexOf(document.activeElement); if (e.shiftKey && i <= 0) { e.preventDefault(); f[f.length - 1].focus(); } else if (!e.shiftKey && i === f.length - 1) { e.preventDefault(); f[0].focus(); } }
+  });
+})();
+</script>
+</body>
+</html>

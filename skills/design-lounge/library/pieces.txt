@@ -544,3 +544,58 @@ sunset-grid-hero | web | hero | Sunset grid hero | cyber retro dark | synthwave 
 collage-hero | web | hero | Collage hero | paper playful | hero scrapbook collage tape handwritten
 taped-photo-grid | web | gallery | Taped photo grid | paper playful | gallery scrapbook photos tape grid
 sticker-board | web | profile | Sticker board | paper playful | scrapbook stickers board notes personal
+ascii-art-homepage | web | landing | ASCII art homepage | terminal paper minimal | ascii monospace homepage generative plain-text
+ascii-style | web | design-language | ASCII design language kit | terminal dark minimal | ascii monospace kit style-guide chart
+anime-cel-style | web | design-language | Anime cel design language kit | playful retro | anime cel-shading kit stickers illustration
+hero-manga-panels | web | hero | Manga page hero | editorial playful paper | manga comics hero screentone panels
+cartoon-sticker-landing | web | landing | Cartoon sticker landing page | playful retro soft | cartoon mascot landing stickers playful
+retro-os-desktop-portfolio | web | portfolio | Retro desktop portfolio | retro y2k pixel | portfolio desktop windows y2k draggable
+hero-liquid-glass-layers | web | hero | Liquid glass hero layers | glass soft organic | hero glass landing pointer landscape
+hero-kinetic-scroll-type | web | hero | Kinetic scroll type hero | kinetic dark swiss | hero variable-font scroll typography landing
+hero-dither-light-field | web | hero | Dither light field hero | editorial paper retro | hero dither canvas editorial generative
+hero-3d-product-turn | web | hero | 3D product turn hero | dark industrial luxe | hero 3d product ecommerce pointer
+hero-bento-intro | web | hero | Bento intro hero | soft swiss minimal | hero bento grid energy live-ui
+hero-agent-at-work | web | hero | Agent at work hero | dark terminal minimal | hero ai agent saas fintech
+features-scroll-driven-cards | web | features | Scroll-driven feature cards | kinetic minimal | features scroll cards fintech controls
+features-before-after-slider | web | features | Before and after restoration slider | dark editorial | features comparison slider photo restoration
+features-accordion-media-swap | web | features | Accordion with media swap | soft minimal | features accordion tour autoplay scheduling
+features-giant-numeral-steps | web | features | Giant numeral steps | swiss editorial | features steps how-it-works numerals backup
+features-stacked-3d-tabs | web | features | Stacked 3D tabs | dark kinetic | features tabs 3d stack travel
+features-ai-chat-demo | web | features | AI chat demo as the features section | editorial soft | features ai chat assistant retail
+footer-curtain-reveal | web | footer | Curtain reveal footer | editorial dark | footer sticky scroll contact sitemap
+footer-terminal-prompt | web | footer | Terminal prompt footer | terminal dark minimal | footer terminal developer cli status
+footer-local-hours-map | web | footer | Local hours and map footer | editorial organic paper | footer local hours map contact
+sidebar-mail-folders | web | navigation | Mail folders sidebar | minimal soft | navigation sidebar email shortcuts counts
+sidebar-floating-island | web | navigation | Floating island sidebar | dark soft minimal | navigation sidebar workspace rail search
+sidebar-chat-history | web | navigation | Chat history sidebar | minimal soft | navigation sidebar chat search history
+dialog-type-to-confirm | web | overlays | Type-to-confirm delete dialog | dark minimal | dialog modal delete confirm destructive
+dialog-wizard-steps | web | overlays | Three-step wizard dialog | minimal soft | dialog modal wizard stepper form
+dialog-share-invite | web | overlays | Share and invite dialog | minimal paper | dialog modal share invite permissions
+popup-exit-offer | web | overlays | Honest exit-intent offer popup | editorial paper | popup modal marketing ecommerce email
+popup-whats-new-slides | web | overlays | What's new slides modal | dark minimal | modal carousel announcement onboarding calendar
+popup-onboarding-tour | web | overlays | Spotlight onboarding tour | minimal swiss | onboarding tour coachmark popover spotlight
+game-fantasy-inventory | web | widgets | Fantasy RPG inventory | luxe dark deco | game inventory rpg fantasy tooltip grid
+game-scifi-loadout | web | widgets | Sci-fi loadout screen | cyber dark industrial | game loadout sci-fi hologram stats comparison
+game-cozy-farm-hud | web | widgets | Cozy farm HUD | soft playful organic | game hud farming hotbar quest cozy
+game-racing-results | web | widgets | Motorsport race results | swiss industrial kinetic | game racing results table podium broadcast
+game-quest-map | web | widgets | Adventure quest map | playful organic brutalist | game map quest adventure svg journal
+game-gacha-pull-reveal | mobile-app | widgets | Gacha pull reveal | playful kinetic riso | game gacha reveal anime card summon
+fintech-portfolio-dashboard | web | dashboard | Portfolio dashboard | minimal editorial | fintech investing chart table portfolio
+fintech-card-controls | mobile-app | settings | Card controls with frost freeze | minimal soft | fintech banking card toggle slider
+fintech-budget-envelopes | mobile-app | dashboard | Budget envelopes | material playful | fintech budgeting drag bottom-sheet material
+fintech-invoice-builder | web | data | Invoice builder with live PDF | editorial dark paper | fintech invoice form preview freelancer
+fintech-crypto-send | mobile-app | ecommerce | Send crypto with hold to send | dark minimal | fintech crypto keypad flow hold-to-confirm
+fintech-metal-card-landing | web | landing | Metal card landing | luxe dark editorial | fintech credit-card landing pointer luxury
+board-moodboard-canvas | web | cards | Moodboard canvas | paper organic editorial | moodboard canvas whiteboard branding pan zoom
+board-roadmap-swimlanes | web | data | Roadmap swimlanes | dark industrial swiss | roadmap timeline gantt planning drag
+card-wrapped-story | mobile-app | cards | Year-in-review story cards | kinetic playful bauhaus | stories year-in-review stats share onboarding
+card-link-in-bio-bento | mobile-web | profile | Link-in-bio bento | organic soft editorial | link-in-bio bento creator profile podcast
+email-newsletter-editorial | web | newsletter | Editorial newsletter email | editorial paper | email newsletter editorial html-email dark-mode
+email-product-launch | web | newsletter | Product launch email | minimal editorial | email launch announcement html-email dark-mode
+email-receipt-transactional | web | newsletter | Receipt email | minimal swiss | email receipt transactional ecommerce html-email
+scroll-driven-chapters | web | scroll | Scroll-driven chapters | editorial paper | scroll longform editorial timeline chapters
+scroll-morphing-header | web | scroll | Scroll-morphing playlist header | dark kinetic | scroll header sticky music playlist
+parallax-cursor-gallery | web | scroll | Parallax cursor gallery | minimal paper luxe | gallery parallax pointer museum lightbox
+scroll-mask-reveal-sequence | web | scroll | Scroll mask reveal sequence | retro kinetic dark | scroll mask clip-path travel sequence
+scroll-exploding-grid | web | scroll | Scroll exploding product grid | playful kinetic swiss | scroll grid ecommerce cards assemble
+scroll-ring-carousel | web | scroll | Scroll ring carousel | dark kinetic retro | carousel 3d scroll drag film

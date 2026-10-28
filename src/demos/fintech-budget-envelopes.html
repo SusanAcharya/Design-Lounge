@@ -1,0 +1,193 @@
+<!-- Design Lounge piece: fintech-budget-envelopes · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Budget envelopes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --surface:#FFF8F1;--sc:#F6ECDF;--sch:#EFE3D3;--on:#1F1B14;--on-v:#4E4639;--outline:#807567;--outline-v:#D6C9B8;
+  --primary:#775A0B;--on-primary:#FFFFFF;--fill:#F6C863;--primary-c:#FFDEA1;--on-primary-c:#261900;
+  --err:#8C1D18;--err-fill:#FFB4AB;--err-c:#FFDAD6;--paid:#C9E3C0;--inverse:#352F27;--on-inverse:#F9EFE4;--inverse-p:#F2C25A;
+  --font:"Zilla Slab",Rockwell,serif;
+  --r-xl:28px;--r-lg:20px;--r-pill:999px;
+  --emph:cubic-bezier(.2,0,0,1);--emph-de:cubic-bezier(.3,0,.8,.15);--emph-ac:cubic-bezier(.05,.7,.1,1);
+  --t-fill:640ms;--t-sheet:500ms;--t-fast:200ms;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--surface);color:var(--on);font:16px/1.3 var(--font);-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums lining-nums;overflow-x:hidden}
+button,select{font:inherit;color:inherit}
+button{border:0;background:none;cursor:pointer;padding:0}
+:focus-visible{outline:3px solid var(--primary);outline-offset:2px}
+.app{padding:54px 16px 120px}
+.bar{display:flex;align-items:center;justify-content:space-between;height:64px}
+.ib{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;transition:background var(--t-fast) var(--emph)}
+.ib:hover{background:var(--sch)}
+.ib svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.month{font-size:22px;font-weight:600;letter-spacing:-.01em;text-align:center}
+.month small{display:block;font-size:13px;font-weight:500;color:var(--on-v);letter-spacing:.02em}
+.sum{background:var(--inverse);color:var(--on-inverse);border-radius:var(--r-xl);padding:20px 22px;display:flex;justify-content:space-between;align-items:flex-end;margin:4px 0 16px}
+.sum p{margin:0;font-size:14px;font-weight:500;opacity:.9}
+.sum .big{font-size:44px;font-weight:700;letter-spacing:-.02em;line-height:1;margin-top:6px}
+.sum .big span{font-size:24px;vertical-align:.55em;margin-right:2px}
+.un{background:var(--inverse-p);color:#2A1E00;border-radius:var(--r-pill);padding:8px 14px;font-weight:600;font-size:14px;text-align:center;line-height:1.1}
+.un small{display:block;font-size:12px;font-weight:500}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;list-style:none;margin:0;padding:0}
+.env{position:relative;height:150px;border-radius:var(--r-lg);background:var(--sc);overflow:hidden;touch-action:manipulation;user-select:none;-webkit-touch-callout:none;-webkit-user-select:none;cursor:grab;
+  transition:transform 300ms var(--emph),box-shadow 300ms var(--emph),border-radius 300ms var(--emph)}
+.env:nth-child(4n+1),.env:nth-child(4n+4){border-radius:var(--r-lg) var(--r-lg) var(--r-lg) 44px}
+.env .fl{position:absolute;left:0;right:0;bottom:0;height:var(--h);background:var(--fill);transition:height var(--t-fill) var(--emph)}
+.env .fl::before{content:"";position:absolute;left:0;right:0;top:-6px;height:6px;background:radial-gradient(6px 6px at 6px 6px,var(--fill) 5.5px,transparent 6px) 0 0/12px 12px repeat-x}
+.env.over .fl{background:var(--err-fill)}.env.over .fl::before{background-image:radial-gradient(6px 6px at 6px 6px,var(--err-fill) 5.5px,transparent 6px)}
+.env.paid .fl{background:var(--paid)}.env.paid .fl::before{background-image:radial-gradient(6px 6px at 6px 6px,var(--paid) 5.5px,transparent 6px)}
+.flap{position:absolute;left:0;top:0;width:100%;height:44px;z-index:1}
+.flap path{fill:none;stroke:var(--outline-v);stroke-width:1.5}
+.env.over .flap path,.env.paid .flap path{stroke:rgba(31,27,20,.25)}
+.env .in{position:absolute;inset:0;z-index:2;padding:14px 14px 12px;display:flex;flex-direction:column;justify-content:space-between}
+.env .nm{font-size:17px;font-weight:600;display:flex;justify-content:space-between;align-items:center}
+.env .nm svg{width:18px;height:18px;stroke:var(--on-v);fill:none;stroke-width:2}
+.env .amt{font-size:26px;font-weight:700;letter-spacing:-.02em;line-height:1}
+.env .of{font-size:13px;color:var(--on-v);margin-top:4px;font-weight:500}
+.env.over .amt,.env.over .of{color:var(--err)}
+.tag{position:absolute;right:12px;top:42px;z-index:2;background:var(--err);color:#fff;font-size:12px;font-weight:600;padding:3px 9px;border-radius:var(--r-pill)}
+.env.drag{z-index:10;box-shadow:0 12px 28px rgba(31,27,20,.28);cursor:grabbing;transition:box-shadow 300ms var(--emph)}
+.env.target{transform:scale(.95);box-shadow:0 0 0 3px var(--primary)}
+.grid.dragging .env:not(.drag):not(.target){transform:scale(.98)}
+.fab{position:fixed;right:16px;bottom:34px;height:64px;padding:0 24px 0 20px;border-radius:var(--r-lg);background:var(--primary);color:var(--on-primary);display:flex;align-items:center;gap:10px;font-size:17px;font-weight:600;box-shadow:0 4px 10px rgba(31,27,20,.25);z-index:20;transition:border-radius var(--t-fast) var(--emph),transform var(--t-fast) var(--emph)}
+.fab:active{border-radius:32px;transform:scale(.97)}
+.fab svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.hint{font-size:14px;color:var(--on-v);margin:14px 4px 0;font-weight:500}
+.scrim{position:fixed;inset:0;background:rgba(31,27,20,.42);opacity:0;pointer-events:none;transition:opacity var(--t-sheet) var(--emph);z-index:30}
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:31;background:var(--surface);border-radius:var(--r-xl) var(--r-xl) 0 0;padding:10px 20px 40px;transform:translateY(105%);transition:transform 360ms var(--emph-de)}
+.open .scrim{opacity:1;pointer-events:auto}
+.open .sheet{transform:none;transition:transform var(--t-sheet) var(--emph-ac)}
+.handle{width:32px;height:4px;border-radius:2px;background:var(--outline);margin:0 auto 18px}
+.sheet h2{margin:0 0 16px;font-size:24px;font-weight:700}
+.ft{display:grid;grid-template-columns:1fr 40px 1fr;align-items:end;gap:6px}
+.ft label{font-size:13px;font-weight:600;color:var(--on-v);display:block;margin:0 0 6px 4px}
+select{width:100%;height:56px;border-radius:16px;border:1.5px solid var(--outline);background:var(--surface);padding:0 34px 0 12px;font-size:17px;font-weight:600;-webkit-appearance:none;appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--on-v) 50%),linear-gradient(-45deg,transparent 50%,var(--on-v) 50%);background-size:6px 6px;background-position:calc(100% - 20px) 50%,calc(100% - 14px) 50%;background-repeat:no-repeat}
+.ft .arrow{height:56px;display:grid;place-items:center;color:var(--primary)}
+.ft .arrow svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2.2}
+.ft p{grid-column:1/-1;margin:2px 4px 0;font-size:13px;color:var(--on-v);display:flex;justify-content:space-between}
+.howmuch{display:flex;align-items:center;justify-content:space-between;margin:22px 0 14px}
+.howmuch output{font-size:52px;font-weight:700;letter-spacing:-.03em;line-height:1}
+.step{width:56px;height:56px;border-radius:50%;background:var(--sch);display:grid;place-items:center;font-size:28px;font-weight:600}
+.chips{display:flex;gap:8px;margin-bottom:22px;flex-wrap:wrap}
+.chips button{height:40px;padding:0 16px;border-radius:12px;border:1.5px solid var(--outline);font-weight:600;font-size:15px}
+.chips button[aria-pressed=true]{background:var(--primary-c);border-color:var(--primary-c);color:var(--on-primary-c)}
+.go{width:100%;height:56px;border-radius:var(--r-pill);background:var(--primary);color:var(--on-primary);font-size:18px;font-weight:600;transition:border-radius var(--t-fast) var(--emph)}
+.go:active{border-radius:16px}
+.snack{position:fixed;left:16px;right:16px;bottom:110px;z-index:25;background:var(--inverse);color:var(--on-inverse);border-radius:12px;padding:0 8px 0 16px;min-height:48px;display:flex;align-items:center;justify-content:space-between;font-size:15px;transform:translateY(20px);opacity:0;pointer-events:none;transition:transform 300ms var(--emph),opacity 300ms var(--emph)}
+.snack.on{transform:none;opacity:1;pointer-events:auto}
+.snack button{color:var(--inverse-p);font-weight:700;height:40px;padding:0 12px}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:1ms!important}}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+  <header class="bar">
+    <button class="ib" id="prev" aria-label="Previous month"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+    <div class="month" aria-live="polite"><span id="mName">October 2026</span><small id="mSub">4 days left</small></div>
+    <button class="ib" id="next" aria-label="Next month"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+  </header>
+  <section class="sum" aria-label="Month summary">
+    <div><p id="sLab">Left in envelopes</p><div class="big" id="sBig"></div></div>
+    <div class="un" id="un"></div>
+  </section>
+  <ul class="grid" id="grid" aria-label="Envelopes"></ul>
+  <p class="hint" id="hint">Drag one envelope onto another to move money.</p>
+</div>
+<button class="fab" id="fab"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h13l-3-3M20 16H7l3 3"/></svg>Move money</button>
+<div class="snack" id="snack" role="status"><span id="snackT"></span><button id="undo">Undo</button></div>
+<div id="layer">
+  <div class="scrim" id="scrim"></div>
+  <section class="sheet" role="dialog" aria-modal="true" aria-labelledby="shT" id="sheet" aria-hidden="true" inert>
+    <div class="handle"></div>
+    <h2 id="shT">Move money</h2>
+    <div class="ft">
+      <div><label for="from">From</label><select id="from"></select></div>
+      <span class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14m-5-5l5 5-5 5"/></svg></span>
+      <div><label for="to">To</label><select id="to"></select></div>
+      <p><span id="fromLeft"></span><span id="toLeft"></span></p>
+    </div>
+    <div class="howmuch"><button class="step" id="minus" aria-label="Five dollars less">&minus;</button><output id="amt" aria-live="polite">$40</output><button class="step" id="plus" aria-label="Five dollars more">+</button></div>
+    <div class="chips" id="chips"></div>
+    <button class="go" id="go"></button>
+  </section>
+</div>
+<script>
+(() => {
+  const NAMES = ['Rent', 'Groceries', 'Dining out', 'Transit', 'Utilities', 'Fun money', 'Gifts', 'Car repair'];
+  const MONTHS = [
+    { n: 'September 2026', s: 'Closed, $42.18 rolled over', b: [1650, 520, 180, 96, 210, 120, 60, 150], x: [1650, 488.9, 171.4, 92, 198.33, 117.5, 54.99, 0], u: 0 },
+    { n: 'October 2026', s: '4 days left', b: [1650, 520, 180, 96, 210, 120, 80, 150], x: [1650, 318.46, 218.2, 61.5, 143.12, 44, 12.99, 0], u: 146 },
+    { n: 'November 2026', s: 'Starts in 4 days', b: [1650, 520, 180, 96, 210, 120, 140, 150], x: [0, 0, 0, 0, 0, 0, 0, 0], u: 0 }
+  ];
+  let m = 1, from = 1, to = 2, amt = 40, last = null;
+  const $ = id => document.getElementById(id), grid = $('grid');
+  const f = v => (v < 0 ? '−' : '') + '$' + Math.abs(v).toLocaleString('en-US', { minimumFractionDigits: v % 1 ? 2 : 0, maximumFractionDigits: 2 });
+  grid.innerHTML = NAMES.map((n, i) => `<li class="env" tabindex="0" data-i="${i}" role="button" aria-describedby="hint"><div class="fl"></div><svg class="flap" viewBox="0 0 170 44" preserveAspectRatio="none" aria-hidden="true"><path d="M0 1 L85 40 L170 1"/></svg><span class="tag" hidden></span><div class="in"><div class="nm">${n}</div><div><div class="amt"></div><div class="of"></div></div></div></li>`).join('');
+  const cards = [...grid.children];
+  function render() {
+    const M = MONTHS[m]; $('mName').textContent = M.n; $('mSub').textContent = M.s;
+    let left = 0;
+    cards.forEach((c, i) => { const b = M.b[i], x = M.x[i], l = b - x, over = l < 0; left += l;
+      c.style.setProperty('--h', Math.min(x / b, 1) * 100 + '%');
+      c.classList.toggle('over', over); c.classList.toggle('paid', x >= b && !over);
+      c.querySelector('.amt').textContent = x >= b && !over ? 'Paid' : f(l);
+      c.querySelector('.of').textContent = over ? `over a ${f(b)} budget` : x >= b ? `all ${f(b)} spent` : `left of ${f(b)}`;
+      const t = c.querySelector('.tag'); t.hidden = !over; t.textContent = 'Over';
+      c.setAttribute('aria-label', `${NAMES[i]}: ${c.querySelector('.amt').textContent} ${c.querySelector('.of').textContent}`); });
+    $('sBig').innerHTML = '<span>$</span>' + left.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    $('un').innerHTML = M.u ? `${f(M.u)}<small>to assign</small>` : 'All assigned';
+    $('prev').disabled = m === 0; $('next').disabled = m === 2; $('fab').hidden = m !== 1;
+  }
+  const opts = () => NAMES.map((n, i) => `<option value="${i}">${n}</option>`).join('');
+  $('from').innerHTML = opts(); $('to').innerHTML = opts();
+  $('chips').innerHTML = [10, 25, 40, 80].map(v => `<button data-v="${v}" aria-pressed="false">$${v}</button>`).join('');
+  function sync() { const M = MONTHS[m]; from = +$('from').value; to = +$('to').value;
+    $('fromLeft').textContent = f(M.b[from] - M.x[from]) + ' left'; $('toLeft').textContent = f(M.b[to] - M.x[to]) + ' left';
+    $('amt').textContent = '$' + amt; $('chips').querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', +b.dataset.v === amt));
+    const go = $('go'); go.disabled = from === to; go.textContent = from === to ? 'Pick two envelopes' : `Move $${amt} to ${NAMES[to]}`; }
+  function openSheet(a, b) { $('from').value = a; $('to').value = b; sync(); document.body.classList.add('open'); $('sheet').setAttribute('aria-hidden', 'false'); $('sheet').inert = false; setTimeout(() => $('from').focus(), 60); }
+  function closeSheet() { document.body.classList.remove('open'); $('sheet').setAttribute('aria-hidden', 'true'); $('sheet').inert = true; }
+  function move(a, b, v) { const M = MONTHS[m]; M.b[a] -= v; M.b[b] += v; render(); }
+  $('go').addEventListener('click', () => { move(from, to, amt); last = [from, to, amt]; closeSheet();
+    $('snackT').textContent = `Moved $${amt} from ${NAMES[from]}`; $('snack').classList.add('on'); clearTimeout(window.__st); window.__st = setTimeout(() => $('snack').classList.remove('on'), 5000); });
+  $('undo').addEventListener('click', () => { if (last) move(last[1], last[0], last[2]); last = null; $('snack').classList.remove('on'); });
+  ['from', 'to'].forEach(id => $(id).addEventListener('change', sync));
+  $('chips').addEventListener('click', e => { const b = e.target.closest('button'); if (b) { amt = +b.dataset.v; sync(); } });
+  $('minus').addEventListener('click', () => { amt = Math.max(5, amt - 5); sync(); });
+  $('plus').addEventListener('click', () => { amt += 5; sync(); });
+  $('scrim').addEventListener('click', closeSheet);
+  addEventListener('keydown', e => { if (e.key === 'Escape') closeSheet(); });
+  $('fab').addEventListener('click', () => openSheet(1, 2));
+  $('prev').addEventListener('click', () => { m = Math.max(0, m - 1); render(); });
+  $('next').addEventListener('click', () => { m = Math.min(2, m + 1); render(); });
+  // drag one envelope onto another
+  let d = null;
+  cards.forEach(c => {
+    c.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); if (m === 1) openSheet(+c.dataset.i, +c.dataset.i === 2 ? 1 : 2); } });
+    const lift = () => { d.on = true; c.classList.add('drag'); grid.classList.add('dragging'); };
+    c.addEventListener('pointerdown', e => { if (m !== 1) return; d = { c, x: e.clientX, y: e.clientY, on: false, t: null, touch: e.pointerType !== 'mouse', moved: false };
+      c.setPointerCapture(e.pointerId); if (d.touch) d.lp = setTimeout(() => { if (d && !d.moved) lift(); }, 280); });
+    c.addEventListener('pointercancel', () => { if (d) clearTimeout(d.lp); d = null; c.classList.remove('drag'); grid.classList.remove('dragging'); c.style.transform = ''; });
+    c.addEventListener('pointermove', e => { if (!d || d.c !== c) return; const dx = e.clientX - d.x, dy = e.clientY - d.y;
+      if (!d.on && Math.hypot(dx, dy) > 8) { d.moved = true; if (!d.touch) lift(); }
+      if (!d.on) return; c.style.transform = `translate(${dx}px,${dy}px) scale(1.04) rotate(${dx / 40}deg)`;
+      c.style.pointerEvents = 'none'; const t = document.elementFromPoint(e.clientX, e.clientY); c.style.pointerEvents = '';
+      const env = t && t.closest('.env'); cards.forEach(k => k.classList.toggle('target', k === env && k !== c)); d.t = env && env !== c ? env : null; });
+    c.addEventListener('pointerup', () => { if (!d || d.c !== c) return; clearTimeout(d.lp); const { on, t, moved } = d; d = null; if (!on && moved) return;
+      c.classList.remove('drag'); grid.classList.remove('dragging'); c.style.transform = ''; cards.forEach(k => k.classList.remove('target'));
+      if (!on) openSheet(+c.dataset.i, +c.dataset.i === 2 ? 1 : 2); else if (t) openSheet(+c.dataset.i, +t.dataset.i); });
+  });
+  grid.addEventListener('touchmove', e => { if (d && d.on) e.preventDefault(); }, { passive: false });
+  render();
+})();
+</script>
+</body>
+</html>

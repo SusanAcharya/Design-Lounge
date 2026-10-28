@@ -1,0 +1,228 @@
+<!-- Design Lounge piece: ascii-style · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>ASCII design language kit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Major+Mono+Display&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#1a1612;--cell:#211c17;--grid:#2e2720;--ink:#efe6d2;--ink-2:#b3a68f;--line:#8c806b;
+  --cyan:#63d2c6;--cyan-ink:#0c1a18;--amber:#f2a65a;--red:#ff8a7a;
+  --mono:"Space Mono",ui-monospace,Menlo,monospace;--disp:"Major Mono Display","Space Mono",monospace;
+  --fs:14px;--lh:22px;
+  --t-micro:120ms;--ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:400 var(--fs)/var(--lh) var(--mono);font-variant-ligatures:none;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+::selection{background:var(--cyan);color:var(--cyan-ink)}
+pre{margin:0;font:inherit;white-space:pre;overflow:hidden}
+:focus-visible{outline:1px dashed var(--cyan);outline-offset:3px}
+.c{color:var(--cyan)}.a{color:var(--amber)}.d{color:var(--ink-2)}.rd{color:var(--red)}
+.top{height:48px;display:flex;align-items:center;gap:3ch;padding:0 3ch;border-bottom:1px dashed var(--line)}
+.top .mark{font:400 22px/1 var(--disp);color:var(--cyan)}
+.top .brand{font-weight:700;white-space:nowrap}.top .brand span{color:var(--ink-2);font-weight:400}
+.top nav{display:flex;gap:2ch;margin-left:auto}
+.top nav a{color:var(--ink-2);text-decoration:none}.top nav a:hover{color:var(--ink)}
+.top nav a::before{content:"/";color:var(--line)}
+.ver{color:var(--ink-2);white-space:nowrap}
+.sheet{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:1px;background:var(--grid);border-bottom:1px solid var(--grid)}
+.cellx{background:var(--bg);padding:22px 3ch;min-width:0}
+.lbl{font:700 12px/22px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2);margin:0 0 11px}
+.lbl::before{content:"-- ";color:var(--line)}
+.hero{grid-column:span 7;display:grid;grid-template-rows:auto 1fr;gap:16px}
+.word{font:400 clamp(48px,7.4vw,96px)/1 var(--disp);margin:0;color:var(--ink);letter-spacing:-.02em}
+.word span{color:var(--cyan)}
+.hero p{margin:0;color:var(--ink-2);max-width:56ch}
+.ledger{color:var(--ink)}
+.ledger .row{cursor:default}
+.spec{grid-column:span 5;background-color:var(--bg);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:1ch 22px;background-position:-1px 21px}
+.scale{list-style:none;margin:0;padding:0}
+.scale li{display:grid;grid-template-columns:10ch minmax(0,1fr);align-items:baseline;white-space:nowrap;overflow:hidden}
+.scale em{font-style:normal;color:var(--ink-2);font-size:12px}
+.scale span{overflow:hidden}
+.s4{font-size:56px;line-height:88px;font-weight:700;letter-spacing:0}
+.s2{font-size:28px;line-height:44px;font-weight:700}
+.s1{font-size:14px;line-height:22px}
+.s1b{font-size:14px;line-height:22px;font-weight:700;color:var(--cyan)}
+.note{color:var(--ink-2);font-size:12px;margin:11px 0 0}
+.frames{grid-column:span 5}
+.fgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px 2ch}
+.fgrid figure{margin:0}.fgrid figcaption{color:var(--ink-2);font-size:12px}
+.ctrls{grid-column:span 7}
+.crow{display:flex;flex-wrap:wrap;gap:11px 2ch;align-items:center;margin-bottom:11px}
+.tag{color:var(--ink-2);font-size:12px;width:9ch;flex:none}
+.btn{font:inherit;color:var(--ink);background:var(--bg);border:0;padding:0;height:36px;cursor:pointer;white-space:pre;transition:color var(--t-micro) var(--ease),background var(--t-micro) var(--ease)}
+.btn b{font-weight:400;color:var(--cyan)}
+.btn:hover,.btn.hov{background:var(--ink);color:var(--bg)}.btn:hover b,.btn.hov b{color:var(--bg)}
+.btn.pri{background:var(--cyan);color:var(--cyan-ink);font-weight:700}.btn.pri b{color:var(--cyan-ink)}
+.btn.pri:hover{background:var(--ink)}
+.btn.act{transform:translateY(1px)}.btn:active{transform:translateY(1px)}
+.btn.foc{outline:1px dashed var(--cyan);outline-offset:3px}
+.btn[disabled]{color:var(--ink-2);cursor:not-allowed;background:var(--bg);text-decoration:line-through}.btn[disabled] b{color:var(--ink-2)}
+.fld{display:flex;align-items:center;gap:1ch;white-space:pre}
+.fld input{font:inherit;color:var(--ink);background:var(--cell);border:1px dashed var(--line);height:32px;padding:0 1ch;width:14ch;caret-color:var(--cyan)}
+.fld input:focus{border-style:solid;border-color:var(--cyan);outline:0}
+.fld input[aria-invalid=true]{border-color:var(--red)}
+.fld input::placeholder{color:var(--ink-2)}
+.chk{display:inline-flex;gap:1ch;cursor:pointer;white-space:pre;position:relative}
+.chk input{position:absolute;opacity:0;width:0;height:0}
+.chk .g::before{content:"[ ]";color:var(--ink-2)}
+.chk input:checked+.g::before{content:"[x]";color:var(--cyan)}
+.chk input[type=radio]+.g::before{content:"( )"}
+.chk input[type=radio]:checked+.g::before{content:"(*)";color:var(--cyan)}
+.chk input:focus-visible+.g{outline:1px dashed var(--cyan);outline-offset:2px}
+.sw{font:inherit;background:var(--cell);border:1px dashed var(--line);color:var(--ink-2);height:32px;padding:0 1ch;cursor:pointer;white-space:pre}
+.sw[aria-checked=true]{color:var(--cyan-ink);background:var(--cyan);border-color:var(--cyan)}
+.err{color:var(--red);font-size:12px}
+.chart{grid-column:span 7}
+.bars{display:flex;align-items:flex-end;gap:1ch;height:198px;border-bottom:1px dashed var(--line);padding-left:6ch;position:relative}
+.bars .ax{position:absolute;left:0;top:0;bottom:0;color:var(--ink-2);font-size:12px;display:flex;flex-direction:column;justify-content:space-between}
+.col{display:flex;flex-direction:column;align-items:center;flex:1;min-width:0;cursor:default}
+.col pre{color:var(--ink-2);line-height:11px;text-align:center}
+.col:hover pre,.col.on pre{color:var(--cyan)}
+.months{display:flex;gap:1ch;padding-left:6ch;color:var(--ink-2);font-size:12px}
+.months span{flex:1;text-align:center;min-width:0}
+.readout{margin:11px 0 0;color:var(--ink-2)}.readout b{color:var(--ink)}
+.colour{grid-column:span 5}
+.roles{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+.roles li{display:grid;grid-template-columns:7ch minmax(0,1fr) auto;gap:2ch;align-items:center}
+.roles pre{line-height:11px;font-size:14px}
+.roles code{font:inherit;color:var(--ink-2);font-size:12px}
+.rules{grid-column:span 12;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--grid);padding:0}
+.rules div{background:var(--bg);padding:22px 3ch}
+.rules b{display:block;color:var(--cyan)}
+.rules p{margin:4px 0 0;color:var(--ink-2)}
+@media (max-width:1000px){
+  .hero,.spec,.frames,.ctrls,.chart,.colour{grid-column:span 12}
+  .rules{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:640px){
+  .top{padding:0 2ch;gap:2ch}.top nav{display:none}
+  .cellx,.rules div{padding:22px 16px}
+  .ledger{font-size:10.5px;line-height:17px}
+  .s4{font-size:42px;line-height:66px}
+  .fgrid{grid-template-columns:minmax(0,1fr)}
+  .rules{grid-template-columns:minmax(0,1fr)}
+  .tag{width:100%}
+  .bars{padding-left:5ch;gap:2px}.months{padding-left:5ch;gap:2px}.col pre{font-size:9px}
+}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important;animation:none!important}}
+</style>
+</head>
+<body>
+<header class="top">
+  <span class="mark" aria-hidden="true">t</span>
+  <span class="brand">Tally <span>/ ascii kit 1.4</span></span>
+  <nav aria-label="Kit sections"><a href="#type">type</a><a href="#frames">frames</a><a href="#controls">controls</a><a href="#chart">chart</a><a href="#colour">colour</a></nav>
+  <span class="ver">grid 1ch x 22px</span>
+</header>
+<main class="sheet">
+  <section class="cellx hero" aria-label="Composition: Tally ledger screen">
+    <div>
+      <h1 class="word">ta<span>ll</span>y</h1>
+      <p>A ledger you keep in a text file. This kit draws every frame, control and chart with the 95 printable ASCII characters, so it holds on any monospace font.</p>
+    </div>
+    <pre class="ledger" id="ledger" role="img" aria-label="Ledger for March 2026: six entries and a balance of 2,318.44"></pre>
+  </section>
+  <section class="cellx spec" id="type" aria-labelledby="l-type">
+    <h2 class="lbl" id="l-type">type on the grid</h2>
+    <ul class="scale">
+      <li><em>x4 56/88</em><span class="s4">2,318</span></li>
+      <li><em>x2 28/44</em><span class="s2">March 2026</span></li>
+      <li><em>x1 14/22</em><span class="s1">Lidl Leith, groceries</span></li>
+      <li><em>x1 bold</em><span class="s1b">balance carried</span></li>
+      <li><em>label 12</em><span class="s1 d" style="font-size:12px">EUR · 31 days · 48 entries</span></li>
+    </ul>
+    <p class="note">Sizes are 1x, 2x, 4x of 14px, so a 4x glyph covers exactly 4 cells by 4 rows.</p>
+  </section>
+  <section class="cellx frames" id="frames" aria-labelledby="l-fr">
+    <h2 class="lbl" id="l-fr">frames</h2>
+    <div class="fgrid">
+      <figure><pre data-frame="single" data-w="22">entry 03-14|-  41.20</pre><figcaption>single: + - |, panels</figcaption></figure>
+      <figure><pre data-frame="double" data-w="22">budget|  600.00</pre><figcaption>double: + = ||, totals</figcaption></figure>
+      <figure><pre data-frame="round" data-w="22">tip|press n to add</pre><figcaption>rounded: . ' , hints</figcaption></figure>
+      <figure><pre data-frame="shadow" data-w="22">over budget|eating out</pre><figcaption>shadow: # offset, alerts</figcaption></figure>
+    </div>
+  </section>
+  <section class="cellx ctrls" id="controls" aria-labelledby="l-ct">
+    <h2 class="lbl" id="l-ct">buttons and inputs</h2>
+    <div class="crow"><span class="tag">rest</span><button class="btn pri" type="button" id="save"><b>[ </b>Save entry<b> ]</b></button><button class="btn" type="button"><b>[ </b>Split<b> ]</b></button><button class="btn" type="button"><b>[ </b>Export .txt<b> ]</b></button></div>
+    <div class="crow"><span class="tag">states</span><span class="btn hov" aria-hidden="true"><b>[ </b>hover<b> ]</b></span><span class="btn foc" aria-hidden="true"><b>[ </b>focus<b> ]</b></span><span class="btn act" aria-hidden="true"><b>[[</b>active<b>]]</b></span><button class="btn" type="button" disabled><b>[ </b>locked<b> ]</b></button><span class="btn" aria-hidden="true" id="spin"><b>[ </b>saving -<b> ]</b></span></div>
+    <div class="crow"><span class="tag">fields</span>
+      <label class="fld"><span class="d">amount&gt;</span><input id="amt" value="41.20" inputmode="decimal" aria-describedby="amt-e"></label>
+      <label class="fld"><span class="d">payee&gt;</span><input placeholder="who, where" aria-label="Payee"></label>
+      <span class="err" id="amt-e" aria-live="polite"></span></div>
+    <div class="crow"><span class="tag">choices</span>
+      <label class="chk"><input type="checkbox" checked><span class="g"></span>recurring</label>
+      <label class="chk"><input type="checkbox"><span class="g"></span>shared</label>
+      <label class="chk"><input type="radio" name="cur" checked><span class="g"></span>EUR</label>
+      <label class="chk"><input type="radio" name="cur"><span class="g"></span>GBP</label>
+      <button class="sw" type="button" role="switch" aria-checked="true" id="sw">&lt; on  |  off &gt;</button></div>
+  </section>
+  <section class="cellx colour" id="colour" aria-labelledby="l-co">
+    <h2 class="lbl" id="l-co">colour roles</h2>
+    <ul class="roles">
+      <li><pre style="color:var(--ink)" aria-hidden="true">######
+######</pre><span>Ink, text and frames</span><code>#EFE6D2</code></li>
+      <li><pre style="color:var(--ink-2)" aria-hidden="true">######
+######</pre><span>Ink 2, labels, axes</span><code>#B3A68F</code></li>
+      <li><pre style="color:var(--cyan)" aria-hidden="true">######
+######</pre><span>Signal, the one accent</span><code>#63D2C6</code></li>
+      <li><pre style="color:var(--amber)" aria-hidden="true">######
+######</pre><span>Warn, near a budget</span><code>#F2A65A</code></li>
+      <li><pre style="color:var(--red)" aria-hidden="true">######
+######</pre><span>Over, errors</span><code>#FF8A7A</code></li>
+      <li><pre style="color:var(--line)" aria-hidden="true">+----+
++----+</pre><span>Ground, the page</span><code>#1A1612</code></li>
+    </ul>
+  </section>
+  <section class="cellx chart" id="chart" aria-labelledby="l-ch">
+    <h2 class="lbl" id="l-ch">block chart, spend per month</h2>
+    <div class="bars" id="bars" role="img" aria-label="Monthly spend, April 2025 to March 2026, peaking at 2,940 in December"><div class="ax" aria-hidden="true"><span>3,000</span><span>1,500</span><span>0</span></div></div>
+    <div class="months" aria-hidden="true" id="months"></div>
+    <p class="readout" id="ro" aria-live="polite">hover a column · <b>Mar 2026  1,684.10</b></p>
+  </section>
+  <section class="rules" aria-label="Grammar">
+    <div><b>One cell</b><p>Everything is 1ch wide and 22px tall. Gaps are 1ch or 2ch, never 10px.</p></div>
+    <div><b>95 glyphs</b><p>Printable ASCII only. Web font subsets drop box drawing, and one fallback glyph tears a frame.</p></div>
+    <div><b>Brackets act</b><p>Text in [ brackets ] is a button. Parentheses pick one, square marks pick many.</p></div>
+    <div><b>One signal</b><p>Cyan means act or selected. Amber and red only report money.</p></div>
+  </section>
+</main>
+<script>
+(()=>{
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const sets={single:['+','+','+','+','-','|'],double:['+','+','+','+','=','||'],round:['.','.',"'","'",'-','|'],shadow:['+','+','+','+','-','|']};
+  document.querySelectorAll('[data-frame]').forEach(el=>{
+    const k=el.dataset.frame,w=+el.dataset.w,[tl,tr,bl,br,h,v]=sets[k],rows=el.textContent.split('|');
+    const inner=w-2*v.length,pad=s=>(' '+s).padEnd(inner).slice(0,inner);
+    let out=[tl+h.repeat(w-2)+tr,...rows.map(r=>v+pad(r)+v),bl+h.repeat(w-2)+br];
+    if(k==='shadow')out=out.map((l,i)=>i?l+'#':l+' ').concat(' '+'#'.repeat(w));
+    el.textContent=out.join('\n');el.setAttribute('aria-label',rows.join(', '));el.setAttribute('role','img');
+  });
+  const L=[['03-02','groceries','Lidl Leith','- 41.20'],['03-04','salary','Halden & Co','+2,950.00'],['03-07','rent','Marwick Lets','- 875.00'],['03-11','transport','Lothian card','- 64.00'],['03-14','eating out','Pinto, Broughton','- 38.60'],['03-19','utilities','Northlight Power','- 112.76']];
+  const W=50,row=(a)=>'| '+a[0]+'  '+a[1].padEnd(11)+a[2].padEnd(18)+a[3].padStart(10)+' |';
+  document.getElementById('ledger').innerHTML=['.-- <span class="c">tally</span> / march 2026 '+'-'.repeat(W-24)+'.',...L.map((a,i)=>i===4?'<span class="a">'+row(a)+'</span>':row(a)),'|'+' '.repeat(W-2)+'|','| balance carried'+' '.repeat(W-31)+'<span class="c">2,318.44</span> EUR |',"'"+'-'.repeat(W-2)+"'"].join('\n');
+  const data=[1420,1388,1512,1460,1610,1702,1530,2940,1294,1350,1580,1684.1],mon='AMJJASONDJFM'.split(''),names=['Apr 2025','May 2025','Jun 2025','Jul 2025','Aug 2025','Sep 2025','Oct 2025','Nov 2025','Dec 2025','Jan 2026','Feb 2026','Mar 2026'];
+  const bars=document.getElementById('bars'),ms=document.getElementById('months'),ro=document.getElementById('ro');
+  data.forEach((v,i)=>{const n=v/3000*18,full=Math.floor(n),part=n-full;
+    const c=document.createElement('div');c.className='col'+(i===11?' on':'');
+    const p=document.createElement('pre');p.innerHTML=(part>.15?[part>.5?':::':'...']:[]).concat(Array(full).fill('###')).map(r=>'<span>'+r+'</span>').join('\n');p.setAttribute('aria-hidden','true');
+    c.appendChild(p);bars.appendChild(c);const s=document.createElement('span');s.textContent=mon[i];ms.appendChild(s);
+    c.addEventListener('mouseenter',()=>{bars.querySelectorAll('.col').forEach(x=>x.classList.toggle('on',x===c));ro.innerHTML='hover a column · <b>'+names[i]+'  '+v.toLocaleString('en-GB',{minimumFractionDigits:2})+'</b>'+(v>2000?' <span class="rd">over</span>':'');});});
+  const spin=document.getElementById('spin').childNodes[1],fr='-\\|/';let si=0;
+  if(!reduce)setInterval(()=>{spin.textContent='saving '+fr[si=(si+1)%4];},140);
+  const sw=document.getElementById('sw');
+  sw.addEventListener('click',()=>{const on=sw.getAttribute('aria-checked')!=='true';sw.setAttribute('aria-checked',on);sw.textContent=on?'< on  |  off >':'< off |  on  >';});
+  const amt=document.getElementById('amt'),ae=document.getElementById('amt-e');
+  amt.addEventListener('input',()=>{const bad=!/^-?\d{1,6}(\.\d{0,2})?$/.test(amt.value.trim());amt.setAttribute('aria-invalid',bad);ae.textContent=bad?'! amount like 41.20':'';});
+  const save=document.getElementById('save');
+  save.addEventListener('click',()=>{save.lastChild.previousSibling.textContent='Saved 03-14';setTimeout(()=>{save.lastChild.previousSibling.textContent='Save entry';},1600);});
+})();
+</script>
+</body>
+</html>

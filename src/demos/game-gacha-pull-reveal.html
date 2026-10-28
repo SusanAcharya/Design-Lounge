@@ -1,0 +1,165 @@
+<!-- Design Lounge piece: game-gacha-pull-reveal · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Starfall Summons</title>
+<link href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f3ede1; --paper-2:#e7dfcf; --ink:#15161a; --ink-2:#4a4b52; --white:#fffdf8;
+  --ssr:#f5a700; --sr:#19b5d6; --r:#9aa3ad; --rc:var(--ssr); --skin:#ffe6d4; --blush:#ff8fa3;
+  --font:"Rubik Mono One",system-ui,sans-serif; --ease:cubic-bezier(.2,.7,.2,1); --ease-out:cubic-bezier(.16,1,.3,1); --spring:cubic-bezier(.34,1.56,.64,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--paper);color:var(--ink);font:12px/1.3 var(--font);overflow:hidden;-webkit-tap-highlight-color:transparent}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+.app{position:relative;height:100%;display:flex;flex-direction:column;padding:54px 18px 34px;overflow:hidden}
+.tone{position:absolute;inset:0;background:radial-gradient(circle,rgba(21,22,26,.13) 1.1px,transparent 1.4px) 0 0/7px 7px;-webkit-mask:radial-gradient(70% 55% at 50% 45%,transparent 35%,#000 90%);mask:radial-gradient(70% 55% at 50% 45%,transparent 35%,#000 90%);pointer-events:none}
+.top{position:relative;display:flex;justify-content:space-between;align-items:center;padding:10px 0 0;z-index:3}
+.ban{font-size:15px;line-height:1.1}.ban small{display:block;font-size:9px;letter-spacing:.06em;color:var(--ink-2);margin-top:4px}
+.gem{display:flex;align-items:center;gap:6px;background:var(--white);border:2px solid var(--ink);border-radius:99px;padding:6px 12px 6px 8px;font-size:12px;box-shadow:2px 2px 0 var(--ink)}
+.gem svg{width:16px;height:16px}
+.stage{position:relative;flex:1;display:grid;place-items:center;min-height:0}
+.focus{position:absolute;inset:-40% -60%;background:repeating-conic-gradient(from 0deg,var(--ink) 0 .9deg,transparent .9deg 5deg);-webkit-mask:radial-gradient(circle,transparent 22%,#000 60%);mask:radial-gradient(circle,transparent 22%,#000 60%);opacity:0}
+.rays{position:absolute;width:760px;height:760px;border-radius:50%;background:repeating-conic-gradient(from 0deg,var(--rc) 0 6deg,transparent 6deg 18deg);-webkit-mask:radial-gradient(circle,#000 10%,transparent 68%);mask:radial-gradient(circle,#000 10%,transparent 68%);opacity:0;transform:scale(.3)}
+.dots{position:absolute;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,var(--rc) 2px,transparent 2.6px) 0 0/12px 12px;-webkit-mask:radial-gradient(circle,transparent 40%,#000 46%,#000 56%,transparent 62%);mask:radial-gradient(circle,transparent 40%,#000 46%,#000 56%,transparent 62%);opacity:0}
+.seal{position:absolute;width:250px;height:250px;opacity:0}
+.seal circle,.seal path{fill:none;stroke:var(--ink);stroke-width:3}
+.seal .glow{stroke:var(--rc);stroke-width:8}
+.flash{position:absolute;inset:0;background:var(--white);opacity:0;pointer-events:none;z-index:4}
+/* card */
+.card{position:relative;width:264px;height:392px;border:3px solid var(--ink);border-radius:16px;background:var(--white);box-shadow:0 0 0 5px var(--rc),0 0 0 8px var(--ink),8px 12px 0 8px rgba(21,22,26,.9);overflow:hidden;opacity:0;z-index:2}
+.art{position:absolute;inset:0 0 96px;background:radial-gradient(circle at 50% 40%,var(--white) 0 12%,transparent 60%),repeating-conic-gradient(from 8deg at 50% 40%,color-mix(in srgb,var(--rc) 55%,#fff) 0 4deg,color-mix(in srgb,var(--rc) 25%,#fff) 4deg 12deg);border-bottom:3px solid var(--ink)}
+.art svg{position:absolute;left:50%;bottom:0;width:236px;height:auto;transform:translateX(-50%)}
+.art svg *{stroke:var(--ink);stroke-width:3;stroke-linejoin:round;stroke-linecap:round}
+.sheen{position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.75) 48%,transparent 60%);transform:translateX(-120%);pointer-events:none}
+.badge{position:absolute;left:12px;top:12px;background:var(--ink);color:var(--rc);font-size:24px;line-height:1;padding:8px 10px 7px;border-radius:8px;transform:rotate(-6deg);z-index:2}
+.new{position:absolute;right:10px;top:14px;background:var(--white);border:2px solid var(--ink);font-size:11px;padding:5px 8px 4px;transform:rotate(8deg);z-index:2}
+.plate{position:absolute;left:0;right:0;bottom:0;height:96px;padding:12px 14px 0;text-align:center}
+.plate h1{font-size:17px;line-height:1.1;margin:0;font-weight:400;letter-spacing:.01em}
+.plate p{margin:5px 0 0;font-size:10px;letter-spacing:.08em;color:var(--ink-2)}
+.stars{display:flex;justify-content:center;gap:4px;margin-top:8px}
+.stars svg{width:20px;height:20px;opacity:0}
+.stars path{fill:var(--rc);stroke:var(--ink);stroke-width:2;stroke-linejoin:round}
+.added{position:absolute;bottom:4px;left:0;right:0;text-align:center;margin:0;font-size:10px;letter-spacing:.08em;color:var(--ink-2);opacity:0;z-index:2}
+.s-reveal .added{animation:up 400ms var(--ease-out) 900ms both}.s-done .added{opacity:1}
+@keyframes up{from{opacity:0;transform:translateY(8px)}to{opacity:1}}
+/* controls */
+.bot{position:relative;z-index:3;display:grid;grid-template-columns:56px 1fr;gap:12px;align-items:center}
+.pity{grid-column:1/-1;text-align:center;font-size:10px;letter-spacing:.06em;color:var(--ink-2);margin-bottom:2px}
+.pity b{color:var(--ink);font-weight:400}
+.replay{width:56px;height:56px;border-radius:50%;border:2px solid var(--ink);background:var(--white);display:grid;place-items:center;box-shadow:2px 3px 0 var(--ink)}
+.replay svg{width:22px;height:22px}
+.pull{height:56px;border-radius:99px;border:2px solid var(--ink);background:var(--ink);color:var(--white);display:flex;align-items:center;justify-content:center;gap:12px;font-size:15px;box-shadow:2px 3px 0 color-mix(in srgb,var(--rc) 80%,var(--ink));transition:transform 120ms var(--ease)}
+.pull:active,.replay:active{transform:translate(2px,3px);box-shadow:none}
+.pull span{display:flex;align-items:center;gap:5px;background:var(--white);color:var(--ink);border-radius:99px;padding:6px 10px 5px;font-size:11px}
+.pull span svg{width:13px;height:13px}
+.pull[disabled]{background:var(--ink-2);border-color:var(--ink-2);cursor:default}
+/* sequence */
+.s-charge .focus{animation:focus 900ms steps(6) both}
+.s-charge .seal{animation:seal 900ms cubic-bezier(.5,0,.9,.4) both}
+.s-charge .rays{animation:rayin 900ms ease-in both}
+@keyframes focus{0%{opacity:0}30%,100%{opacity:.9}20%{transform:rotate(1deg)}40%{transform:rotate(-1deg)}60%{transform:rotate(1.5deg)}80%{transform:rotate(-1deg)}}
+@keyframes seal{from{opacity:0;transform:scale(1.4) rotate(0)}30%{opacity:1}to{opacity:1;transform:scale(.55) rotate(320deg)}}
+@keyframes rayin{from{opacity:0;transform:scale(.3) rotate(0)}to{opacity:.6;transform:scale(.6) rotate(-40deg)}}
+.s-burst .flash{animation:flash 380ms var(--ease) both}
+.s-burst .rays,.s-reveal .rays{animation:rayout 1400ms var(--ease-out) both}
+.s-burst .dots,.s-reveal .dots{animation:dots 900ms var(--ease-out) both}
+@keyframes flash{0%{opacity:0}25%{opacity:1}100%{opacity:0}}
+@keyframes rayout{from{opacity:1;transform:scale(.4)}to{opacity:.55;transform:scale(1.15) rotate(12deg)}}
+@keyframes dots{from{opacity:1;transform:scale(.3)}to{opacity:0;transform:scale(1.6)}}
+.s-reveal .card{animation:card 620ms var(--spring) both}
+.s-reveal .sheen{animation:sheen 900ms var(--ease) 520ms both}
+.s-reveal .stars svg{animation:star 320ms var(--spring) both;animation-delay:calc(560ms + var(--i) * 80ms)}
+.s-reveal .badge,.s-reveal .new{animation:stamp 360ms var(--spring) 440ms both}
+@keyframes card{from{opacity:0;transform:perspective(800px) rotateY(160deg) scale(.3)}to{opacity:1;transform:none}}
+@keyframes sheen{to{transform:translateX(120%)}}
+@keyframes star{from{opacity:0;transform:scale(0) rotate(-40deg)}to{opacity:1;transform:none}}
+@keyframes stamp{from{opacity:0;transform:scale(2.2) rotate(-6deg)}}
+.s-done .rays{opacity:.55;transform:scale(1.15) rotate(12deg);animation:spin 40s linear infinite}
+.s-done .card,.s-done .stars svg{opacity:1}
+@keyframes spin{from{transform:scale(1.15) rotate(12deg)}to{transform:scale(1.15) rotate(372deg)}}
+@media (prefers-reduced-motion:reduce){*,*::before{animation:none!important;transition:none!important}.s-done .rays{opacity:.55;transform:scale(1.15)}}
+@media (min-height:900px){.card{transform:scale(1.1)}}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+  <div class="tone" aria-hidden="true"></div>
+  <header class="top">
+    <div class="ban">Starfall<br>Summons<small>Rate up until 14 Nov</small></div>
+    <div class="gem" aria-label="3,240 prisms"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l8 7-8 13L4 9z" fill="#19b5d6" stroke="#15161a" stroke-width="2" stroke-linejoin="round"/><path d="M4 9h16M12 2v20" stroke="#15161a" stroke-width="1.5"/></svg><span id="gems">3,240</span></div>
+  </header>
+  <main class="stage s-done" id="stage" aria-live="polite">
+    <div class="focus" aria-hidden="true"></div>
+    <div class="rays" aria-hidden="true"></div>
+    <div class="dots" aria-hidden="true"></div>
+    <svg class="seal" viewBox="0 0 200 200" aria-hidden="true"><circle class="glow" cx="100" cy="100" r="92"/><circle cx="100" cy="100" r="92"/><circle cx="100" cy="100" r="70" stroke-dasharray="4 8"/><path d="M100 20l23 56 57 24-57 24-23 56-23-56-57-24 57-24z"/><circle cx="100" cy="100" r="26"/></svg>
+    <article class="card" id="card" aria-label="Summon result">
+      <div class="art"><svg viewBox="0 0 200 240" aria-hidden="true" id="hero"></svg><div class="sheen"></div></div>
+      <div class="badge" id="badge">SSR</div><div class="new">NEW</div>
+      <div class="plate"><h1 id="nm">Mirei Asagiri</h1><p id="ti">Dawn Lancer · Light</p><div class="stars" id="stars"></div></div>
+    </article>
+    <div class="flash" aria-hidden="true"></div>
+    <p class="added" id="added">Added to roster · Lv 1</p>
+  </main>
+  <footer class="bot">
+    <div class="pity">SSR guaranteed in <b id="pity">62</b> pulls</div>
+    <button class="replay" id="replay" type="button" aria-label="Replay reveal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12a8 8 0 1 0 3-6.2M4 4v4h4"/></svg></button>
+    <button class="pull" id="pull" type="button">Pull x1 <span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l8 7-8 13L4 9z" fill="#19b5d6" stroke="#15161a" stroke-width="2"/></svg>160</span></button>
+  </footer>
+</div>
+<script>
+(() => {
+  // rarity, light, stars, name, title, hair, hair shade, iris, outfit, accent
+  const P = [
+    ['SSR','var(--ssr)',5,'Mirei Asagiri','Dawn Lancer · Light','#c8323a','#8f1f2a','#e08a00','#22305a','#f5a700'],
+    ['R','var(--r)',3,'Pip Mochizuki','Lamplighter · Earth','#7a4a2c','#553220','#3f7d5a','#5f6b4a','#c9b48a'],
+    ['SR','var(--sr)',4,'Touya Kiryu','Tide Duelist · Water','#1f3f7a','#132a55','#19b5d6','#e8e2d4','#19b5d6'],
+  ];
+  const $ = (id) => document.getElementById(id), stage = $('stage');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let k = 0, gems = 3240, pity = 62, timers = [];
+  const draw = (p) => {
+    $('hero').innerHTML = `<path d="M38 128C28 64 60 26 100 26s74 38 62 102l10 62H28z" fill="${p[5]}"/>
+      <path d="M26 240c4-40 32-60 74-60s70 20 74 60z" fill="${p[8]}"/><path d="M76 184l24 28 24-28" fill="none" stroke-width="5" style="stroke:${p[9]}"/>
+      <path d="M88 156h24v30H88z" fill="#f3c9b0"/>
+      <path d="M58 106c0-30 18-50 42-50s42 20 42 50c0 30-18 56-42 64-24-8-42-34-42-64z" fill="var(--skin)"/>
+      <path d="M54 112C48 64 72 38 100 38s54 24 48 72l-12-28-8 22-12-30-10 28-12-30-8 26-14-24z" fill="${p[5]}"/>
+      <path d="M78 52c-10 10-16 24-16 40M122 52c8 8 14 18 16 30" fill="none" style="stroke:${p[6]}" stroke-width="4"/>
+      <ellipse cx="82" cy="118" rx="9" ry="12" fill="${p[7]}"/><ellipse cx="118" cy="118" rx="9" ry="12" fill="${p[7]}"/>
+      <ellipse cx="82" cy="122" rx="4" ry="6" fill="var(--ink)" style="stroke:none"/><ellipse cx="118" cy="122" rx="4" ry="6" fill="var(--ink)" style="stroke:none"/>
+      <circle cx="79" cy="112" r="3.2" fill="#fff" style="stroke:none"/><circle cx="115" cy="112" r="3.2" fill="#fff" style="stroke:none"/>
+      <path d="M70 106q12-9 24 0M106 106q12-9 24 0" fill="none" stroke-width="4.5"/>
+      <ellipse cx="72" cy="137" rx="7" ry="3" fill="var(--blush)" opacity=".7" style="stroke:none"/><ellipse cx="128" cy="137" rx="7" ry="3" fill="var(--blush)" opacity=".7" style="stroke:none"/>
+      <path d="M95 148q5 4 10 0" fill="none" stroke-width="2.5"/>
+      <path d="M140 52l4 9 10 1-8 6 3 10-9-6-9 6 3-10-8-6 10-1z" fill="${p[9]}" stroke-width="2.5"/>`;
+    $('nm').textContent = p[3]; $('ti').textContent = p[4]; $('badge').textContent = p[0];
+    document.documentElement.style.setProperty('--rc', p[1]);
+    $('stars').innerHTML = Array.from({length: p[2]}, (_, i) => `<svg viewBox="0 0 24 24" style="--i:${i}" aria-hidden="true"><path d="M12 2l3 7 7 .6-5.4 4.6 1.7 7.3L12 17.6 5.7 21.5l1.7-7.3L2 9.6 9 9z"/></svg>`).join('');
+    $('card').setAttribute('aria-label', `${p[0]}, ${p[2]} stars: ${p[3]}, ${p[4]}`);
+  };
+  const run = () => {
+    timers.forEach(clearTimeout); timers = [];
+    const p = P[k]; draw(p);
+    if (reduce) { stage.className = 'stage s-done'; return; }
+    stage.className = 'stage'; void stage.offsetWidth; stage.className = 'stage s-charge';
+    const at = (ms, c) => timers.push(setTimeout(() => { stage.className = 'stage ' + c; }, ms));
+    at(900, 's-burst'); at(1180, 's-burst s-reveal'); at(2600, 's-done');
+  };
+  $('replay').addEventListener('click', run);
+  $('pull').addEventListener('click', () => {
+    if (gems < 160) return;
+    gems -= 160; k = (k + 1) % P.length; pity = P[k][0] === 'SSR' ? 90 : pity - 1;
+    $('gems').textContent = gems.toLocaleString('en-GB'); $('pity').textContent = pity;
+    $('pull').disabled = gems < 160; run();
+  });
+  run();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,194 @@
+<!-- Design Lounge piece: footer-local-hours-map · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Local hours and map footer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Karla:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --crust:#2B1A10;--crust-2:#4A3020;--cream:#F6EBDB;--cream-2:#D9C3A5;
+  --flour:#F4E9D8;--flour-2:#EADBC4;--card:#FBF4E9;--ink:#2B1A10;--ink-2:#674B36;--line:#D8C2A3;--line-2:#9E7F62;
+  --tomato:#B8321F;--tomato-ink:#FFF7EE;--open:#2F6B3A;--block:#E1CBA9;--street:#FBF5EC;--park:#C9CDA2;
+  --serif:"Libre Caslon Text",Georgia,serif;--font:"Karla",system-ui,sans-serif;
+  --r:14px;--t-fast:160ms;--t-mid:320ms;--ease:cubic-bezier(.2,.7,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:15px/1.5 var(--font);color:var(--ink);background:var(--flour);-webkit-font-smoothing:antialiased}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--tomato);outline-offset:3px;border-radius:4px}
+.end{background:var(--crust);color:var(--cream);padding:44px 56px 38px;display:flex;align-items:flex-end;justify-content:space-between;gap:32px}
+.end h2{margin:0;font:italic 400 clamp(34px,5vw,64px)/1 var(--serif);letter-spacing:-.02em}
+.end p{margin:0;max-width:34ch;color:var(--cream-2);font-size:15px}
+.end p a{color:var(--cream);font-weight:700;text-underline-offset:4px}
+.end :focus-visible{outline-color:var(--cream)}
+footer{padding:44px 56px 26px;display:grid;grid-template-columns:330px minmax(0,1fr) 250px;gap:40px}
+.name{margin:0;font:700 46px/1 var(--serif);letter-spacing:-.03em}
+.name i{font-weight:400;color:var(--tomato)}
+.est{margin:8px 0 22px;font-size:13px;color:var(--ink-2)}
+.now{display:flex;align-items:center;gap:10px;height:40px;padding:0 14px 0 12px;border-radius:999px;background:var(--card);border:1px solid var(--line);font-size:14px;width:max-content;max-width:100%}
+.now b{font-weight:700}
+.now .d{width:10px;height:10px;border-radius:50%;background:var(--open);flex:none}
+.now.closed .d{background:var(--tomato)}
+.now.open .d{box-shadow:0 0 0 4px rgba(47,107,58,.18)}
+.clock{font-size:12px;color:var(--ink-2);margin:10px 0 18px}
+.hours{width:100%;border-collapse:collapse;font-size:14px}
+.hours th,.hours td{text-align:left;font-weight:400;padding:0 10px;height:34px;border-bottom:1px solid var(--line)}
+.hours td{text-align:right;font-variant-numeric:tabular-nums}
+.hours tr.today th,.hours tr.today td{font-weight:700;background:var(--card)}
+.hours tr.today th{box-shadow:inset 3px 0 0 var(--tomato)}
+.hours tr.today th::after{content:"Today";margin-left:8px;font:700 10px/1 var(--font);letter-spacing:.1em;text-transform:uppercase;color:var(--tomato)}
+.hours .shut td{color:var(--ink-2)}
+.day{margin-top:16px;position:relative;height:28px}
+.day .track{position:absolute;left:0;right:0;top:8px;height:6px;border-radius:3px;background:var(--flour-2)}
+.day .win{position:absolute;top:8px;height:6px;border-radius:3px;background:var(--crust)}
+.day .tick{position:absolute;top:2px;width:2px;height:18px;background:var(--tomato);border-radius:1px;transition:left var(--t-mid) var(--ease)}
+.day .lab{position:absolute;top:24px;left:0;right:0;display:flex;justify-content:space-between;font-size:11px;color:var(--ink-2)}
+.map{position:relative;margin:0;border-radius:var(--r);overflow:hidden;border:1px solid var(--line);background:var(--flour-2);min-height:0}
+.map svg{display:block;width:100%;height:100%;position:absolute;inset:0}
+.map figcaption{position:absolute;left:14px;bottom:12px;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:6px 10px;font-size:12px;color:var(--ink-2)}
+.map figcaption b{color:var(--ink)}
+.pin{transform-box:fill-box;transform-origin:50% 100%;animation:drop 700ms var(--ease-out) 200ms both}
+@keyframes drop{from{transform:translateY(-26px);opacity:0}60%{opacity:1}to{transform:none}}
+.side h3{margin:0 0 10px;font:700 11px/1 var(--font);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
+address{font-style:normal;font-size:16px;line-height:1.45;margin-bottom:12px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:40px;padding:0 14px;border-radius:999px;border:1px solid var(--line-2);background:transparent;color:var(--ink);font:700 13px var(--font);cursor:pointer;text-decoration:none;transition:background var(--t-fast) var(--ease),border-color var(--t-fast) var(--ease)}
+.btn:hover{background:var(--card);border-color:var(--ink)}
+.btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.btn.primary{background:var(--tomato);border-color:var(--tomato);color:var(--tomato-ink)}
+.btn.primary:hover{background:#9E2A19;border-color:#9E2A19}
+.row{display:flex;flex-wrap:wrap;gap:8px}
+.blk{padding:18px 0;border-top:1px solid var(--line)}
+.blk:first-child{padding-top:0;border-top:0}
+.tel{font:400 26px/1.1 var(--serif);text-decoration:none;display:inline-block;margin-bottom:4px}
+.tel:hover{color:var(--tomato)}
+.small{font-size:13px;color:var(--ink-2);margin:0}
+.copied{font-size:12px;color:var(--open);font-weight:700;min-height:18px;margin:8px 0 0}
+.legal{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:6px 22px;font-size:12px;color:var(--ink-2);border-top:1px solid var(--line);padding-top:16px}
+.legal a{text-decoration:none}.legal a:hover{color:var(--ink);text-decoration:underline}
+@media (max-width:1100px){footer{grid-template-columns:300px 1fr}.side{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,1fr);gap:24px}.blk{border-top:0;padding:0}.map{min-height:340px}}
+@media (max-width:720px){
+  .end{flex-direction:column;align-items:flex-start;padding:28px 20px 24px;gap:12px}
+  footer{grid-template-columns:1fr;padding:28px 20px 24px;gap:28px}
+  .side{display:block}.blk{padding:18px 0;border-top:1px solid var(--line)}.blk:first-child{border-top:0;padding-top:0}
+  .map{min-height:0;aspect-ratio:560/470}
+  .name{font-size:40px}
+  .map .vlab,.map .plab{display:none}
+  .map figcaption b{display:block}
+}
+@media (prefers-reduced-motion:reduce){.pin{animation:none}*{transition-duration:1ms!important}}
+</style>
+</head>
+<body>
+<section class="end" aria-label="Pre-orders">
+  <h2>Sourdough is gone by eleven.</h2>
+  <p>Pre-order by 8 pm and we hold your loaf at the counter until close. <a href="#">Order for tomorrow</a></p>
+</section>
+<footer>
+  <div>
+    <p class="name">Pell <i>&amp;</i> Rye</p>
+    <p class="est">Bakehouse on Lark Street since 2014</p>
+    <div class="now" id="now" role="status" aria-live="polite"><span class="d" aria-hidden="true"></span><span id="nowText"><b>Open now</b> until 3 pm</span></div>
+    <p class="clock" id="clock">It is 9:14 am in Fitzroy</p>
+    <table class="hours" aria-label="Opening hours">
+      <tbody id="hours"></tbody>
+    </table>
+    <div class="day" aria-hidden="true"><div class="track"></div><div class="win" id="win"></div><div class="tick" id="tick"></div><div class="lab"><span>6 am</span><span>noon</span><span>6 pm</span></div></div>
+  </div>
+  <figure class="map">
+    <svg viewBox="0 0 560 470" role="img" aria-labelledby="mapT"><title id="mapT">Map of Lark Street, Fitzroy. Pell and Rye is on the corner of Lark Street and Napier Lane, two minutes' walk from tram stop 17 on Brunswick Street.</title>
+      <rect width="560" height="470" fill="#EADBC4"/>
+      <path d="M402 0h158v150H460z" fill="#C9CDA2"/>
+      <g fill="#E1CBA9">
+        <rect x="20" y="20" width="110" height="88" rx="6"/><rect x="150" y="20" width="120" height="88" rx="6"/><rect x="290" y="20" width="96" height="88" rx="6"/>
+        <rect x="20" y="132" width="110" height="104" rx="6"/><rect x="150" y="132" width="52" height="104" rx="6"/><rect x="222" y="132" width="48" height="104" rx="6"/><rect x="290" y="132" width="120" height="104" rx="6"/>
+        <rect x="20" y="260" width="110" height="120" rx="6"/><rect x="150" y="260" width="120" height="56" rx="6"/><rect x="150" y="334" width="120" height="46" rx="6"/><rect x="290" y="260" width="140" height="120" rx="6"/>
+        <rect x="452" y="186" width="88" height="80" rx="6"/><rect x="452" y="290" width="88" height="90" rx="6"/>
+        <rect x="20" y="404" width="110" height="80" rx="6"/><rect x="150" y="404" width="120" height="80" rx="6"/><rect x="290" y="404" width="140" height="80" rx="6"/>
+      </g>
+      <g stroke="#FBF5EC" stroke-linecap="round" fill="none">
+        <path d="M140 0v470M280 0v470" stroke-width="12"/><path d="M0 392h560" stroke-width="10"/>
+        <path d="M0 120h560M0 248h560" stroke-width="14"/>
+        <path d="M212 120v128M440 160v310" stroke-width="7"/>
+        <path d="M396 0L470 172l91 298" stroke-width="16"/>
+      </g>
+      <path d="M396 0L470 172l91 298" stroke="#2B1A10" stroke-width="2" stroke-dasharray="2 8" fill="none" opacity=".55"/>
+      <path d="M466 176C420 220 330 246 236 244" stroke="#B8321F" stroke-width="3" stroke-dasharray="1 7" stroke-linecap="round" fill="none"/>
+      <circle cx="470" cy="172" r="9" fill="#FBF4E9" stroke="#2B1A10" stroke-width="2"/><text x="470" y="176" font-family="Karla" font-size="10" font-weight="700" text-anchor="middle" fill="#2B1A10">17</text>
+      <g font-family="Karla" font-size="11" font-weight="700" fill="#5E4331" letter-spacing="1.4">
+        <text x="30" y="252" dy="-8">LARK ST</text><text x="30" y="124" dy="-8">GERTRUDE ST</text>
+        <text class="vlab" transform="translate(136 376) rotate(-90)">KING ST</text><text class="vlab" transform="translate(276 376) rotate(-90)">NAPIER LN</text>
+        <text transform="translate(488 120) rotate(72)">BRUNSWICK ST</text>
+        <text x="470" y="40" fill="#4C5530">EDINBURGH</text><text x="470" y="56" fill="#4C5530">GARDENS</text>
+      </g>
+      <g class="pin"><path d="M236 248c-15-17-22-29-22-40a22 22 0 1144 0c0 11-7 23-22 40z" fill="#B8321F"/><circle cx="236" cy="208" r="8" fill="#FFF7EE"/></g>
+      <g class="plab" transform="translate(160 160)"><rect width="78" height="24" rx="12" fill="#2B1A10"/><text x="39" y="16" font-family="Karla" font-size="12" font-weight="700" text-anchor="middle" fill="#F6EBDB">Pell &amp; Rye</text></g>
+      <g transform="translate(500 446)" fill="none" stroke="#2B1A10" stroke-width="1.6"><path d="M0 0v-22M-6 -14l6-10 6 10"/></g>
+      <g transform="translate(330 452)"><path d="M0 0h60" stroke="#2B1A10" stroke-width="2"/><path d="M0-4v4M60-4v4" stroke="#2B1A10" stroke-width="2"/><text x="30" y="-8" font-family="Karla" font-size="11" text-anchor="middle" fill="#5E4331">100 m</text></g>
+    </svg>
+    <figcaption><b>2 min walk</b> from tram stop 17, Brunswick St</figcaption>
+  </figure>
+  <div class="side">
+    <div class="blk">
+      <h3>Find us</h3>
+      <address id="addr">42 Lark Street<br>Fitzroy VIC 3065</address>
+      <div class="row"><button class="btn" id="copy" type="button" aria-describedby="addr"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 00-1-1H5a1 1 0 00-1 1v10a1 1 0 001 1h3"/></svg>Copy address</button><a class="btn primary" href="#">Directions</a></div>
+      <p class="copied" id="copied" aria-live="polite"></p>
+    </div>
+    <div class="blk">
+      <h3>Call the counter</h3>
+      <a class="tel" href="tel:+61394170286">(03) 9417 0286</a>
+      <p class="small">Answered 7 am to 2 pm. Cakes need two days' notice.</p>
+    </div>
+    <div class="blk">
+      <h3>Wholesale</h3>
+      <p class="small">Cafés within 5 km, delivered by 6:30 am. <a href="#">Ask for the list</a></p>
+    </div>
+  </div>
+  <div class="legal"><span>© 2026 Pell &amp; Rye Bakehouse Pty Ltd</span><span>ABN 31 604 118 220</span><a href="#">Allergen guide</a><a href="#">Jobs at the bakery</a><a href="#">Privacy</a></div>
+</footer>
+<script>
+(function(){
+  var TZ='Australia/Melbourne',NAMES=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+  // minutes from midnight, null = closed
+  var H=[null,[420,900],[420,900],[420,900],[420,900],[450,840],[480,780]];
+  var body=document.getElementById('hours');if(!body)return;
+  function fmt(m){var h=Math.floor(m/60),mm=m%60,ap=h<12?'am':'pm',h12=h%12||12;return h12+(mm?':'+String(mm).padStart(2,'0'):'')+' '+ap}
+  H.forEach(function(r,i){var tr=document.createElement('tr');if(!r)tr.className='shut';tr.innerHTML='<th scope="row">'+NAMES[i]+'</th><td>'+(r?fmt(r[0])+' to '+fmt(r[1]):'Closed')+'</td>';body.appendChild(tr)});
+  var rows=body.querySelectorAll('tr'),now=document.getElementById('now'),txt=document.getElementById('nowText'),clock=document.getElementById('clock'),tick=document.getElementById('tick'),win=document.getElementById('win');
+  var DAYS={Mon:0,Tue:1,Wed:2,Thu:3,Fri:4,Sat:5,Sun:6},F;
+  try{F=new Intl.DateTimeFormat('en-AU',{timeZone:TZ,weekday:'short',hour:'numeric',minute:'numeric',hourCycle:'h23'})}catch(e){F=null}
+  function local(){
+    var d=new Date();if(!F)return{day:(d.getDay()+6)%7,min:d.getHours()*60+d.getMinutes()};
+    var p={};F.formatToParts(d).forEach(function(x){p[x.type]=x.value});
+    return{day:DAYS[p.weekday]==null?(d.getDay()+6)%7:DAYS[p.weekday],min:(+p.hour%24)*60+(+p.minute)};
+  }
+  var pct=function(m){return Math.max(0,Math.min(100,(m-360)/720*100))+'%'};
+  function update(){
+    var t=local(),r=H[t.day],open=r&&t.min>=r[0]&&t.min<r[1],s;
+    rows.forEach(function(el,i){el.classList.toggle('today',i===t.day);if(i===t.day)el.setAttribute('aria-current','date');else el.removeAttribute('aria-current')});
+    if(open){var left=r[1]-t.min;s=left<=30?'<b>Closing soon</b>, last loaves at '+fmt(r[1]):'<b>Open now</b> until '+fmt(r[1])}
+    else{
+      var k=0,nd,when;
+      if(r&&t.min<r[0]){nd=t.day;when='today'}else{for(k=1;k<8;k++){nd=(t.day+k)%7;if(H[nd])break}when=k===1?'tomorrow':NAMES[nd]}
+      s='<b>Closed</b>, opens '+when+' at '+fmt(H[nd][0]);
+    }
+    now.className='now '+(open?'open':'closed');if(txt.innerHTML!==s)txt.innerHTML=s;
+    clock.textContent='It is '+fmt(t.min)+' in Fitzroy, '+NAMES[t.day];
+    if(r){win.style.left=pct(r[0]);win.style.width=(r[1]-r[0])/720*100+'%';win.style.display=''}else win.style.display='none';
+    tick.style.left='calc('+pct(t.min)+' - 1px)';tick.style.display=t.min<360||t.min>1080?'none':'';
+  }
+  update();setInterval(update,30000);
+  var copy=document.getElementById('copy'),msg=document.getElementById('copied'),T;
+  copy.addEventListener('click',function(){
+    var a='42 Lark Street, Fitzroy VIC 3065';
+    var done=function(){msg.textContent='Copied: '+a;clearTimeout(T);T=setTimeout(function(){msg.textContent=''},2400)};
+    try{if(navigator.clipboard)navigator.clipboard.writeText(a).then(done,function(){msg.textContent='Select the address above to copy it'});else done()}catch(e){done()}
+  });
+})();
+</script>
+</body>
+</html>

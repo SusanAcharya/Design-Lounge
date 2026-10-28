@@ -1,0 +1,223 @@
+<!-- Design Lounge piece: sidebar-mail-folders · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Mail folders sidebar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FAFAF7;--side:#F0EFEA;--hover:#E5E4DD;--sel:#F6E3EA;--line:#DEDCD4;--line-2:#8C897F;
+  --ink:#1D1C1A;--ink-2:#5A5852;--ink-3:#6E6B64;--accent:#9F1D4A;--accent-ink:#FFF5F8;--accent-soft:#F6E3EA;
+  --l1:#2F7D6D;--l2:#C0782A;--l3:#3F6FB5;--l4:#B04A8C;--l5:#7A7A70;
+  --font:"Work Sans",system-ui,sans-serif;--w:272px;--r:8px;--row:34px;
+  --t-fast:150ms;--t-mid:280ms;--ease:cubic-bezier(.2,.7,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);
+  --shadow-pop:0 12px 32px -8px rgba(29,28,26,.22),0 0 0 1px rgba(29,28,26,.08);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.4 var(--font);color:var(--ink);background:var(--bg);display:flex;overflow:hidden;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+svg.i{width:18px;height:18px;flex:none;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.side{width:var(--w);flex:none;background:var(--side);border-right:1px solid var(--line);display:flex;flex-direction:column;height:100%;padding:12px 12px 10px;z-index:20}
+.acct{display:flex;align-items:center;gap:10px;height:48px;padding:0 8px;border-radius:var(--r);border:0;background:none;width:100%;text-align:left;cursor:pointer}
+.acct:hover{background:var(--hover)}
+.av{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font:600 12px var(--font);flex:none;background:#E9C9D5;color:#5E0F2B}
+.acct b{display:block;font-weight:600;font-size:14px}
+.acct small{display:block;font-size:12px;color:var(--ink-2)}
+.acct .chev{margin-left:auto;color:var(--ink-3)}
+.compose{display:flex;align-items:center;gap:10px;height:48px;margin:10px 0 14px;padding:0 14px 0 16px;border:0;border-radius:14px;background:var(--accent);color:var(--accent-ink);font-weight:600;font-size:15px;cursor:pointer;box-shadow:0 1px 0 rgba(29,28,26,.12);transition:transform var(--t-fast) var(--ease),background var(--t-fast) var(--ease)}
+.compose:hover{background:#86163D}.compose:active{transform:scale(.98)}
+.compose kbd{margin-left:auto;font:500 11px var(--font);border:1px solid rgba(255,245,248,.45);border-radius:5px;padding:2px 6px}
+.compose:focus-visible{outline-color:var(--ink)}
+.scroll{flex:1;overflow-y:auto;margin:0 -4px;padding:0 4px;scrollbar-width:thin}
+ul{list-style:none;margin:0;padding:0}
+.f{display:flex;align-items:center;gap:12px;width:100%;height:var(--row);padding:0 10px 0 12px;border:0;border-radius:var(--r);background:none;cursor:pointer;text-align:left;color:var(--ink-2)}
+.f:hover{background:var(--hover);color:var(--ink)}
+.f[aria-current="page"]{background:var(--sel);color:var(--accent);font-weight:600}
+.f .n{margin-left:auto;font-size:12px;font-variant-numeric:tabular-nums;color:var(--ink-2)}
+.f.unread{color:var(--ink);font-weight:600}
+.f.unread .n{font-weight:700;color:var(--ink)}
+.f[aria-current="page"] .n{color:var(--accent)}
+.dot{width:10px;height:10px;border-radius:3px;flex:none;margin:0 4px}
+.sec{margin-top:14px}
+.sh{display:flex;align-items:center;height:30px;padding:0 6px 0 12px}
+.sh button{display:flex;align-items:center;gap:6px;border:0;background:none;padding:4px 0;cursor:pointer;font:600 11px var(--font);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+.sh button:hover{color:var(--ink)}
+.sh .car{width:14px;height:14px;transition:transform var(--t-mid) var(--ease)}
+.sh button[aria-expanded="false"] .car{transform:rotate(-90deg)}
+.sh .add{margin-left:auto;width:28px;height:28px;border-radius:7px;display:grid;place-items:center;padding:0;color:var(--ink-2)}
+.sh .add:hover{background:var(--hover)}
+.fold{display:grid;grid-template-rows:1fr;transition:grid-template-rows var(--t-mid) var(--ease)}
+.fold>ul{overflow:hidden}
+.fold.shut{grid-template-rows:0fr}
+.store{border-top:1px solid var(--line);margin-top:8px;padding:12px 8px 4px}
+.store p{margin:0 0 8px;display:flex;justify-content:space-between;font-size:12px;color:var(--ink-2)}
+.store p b{color:var(--ink);font-weight:600}
+.meter{display:flex;gap:2px;height:6px;border-radius:3px;overflow:hidden;background:var(--hover)}
+.meter i{display:block}
+.legend{display:flex;gap:12px;margin-top:8px;font-size:11px;color:var(--ink-2)}
+.legend span::before{content:"";display:inline-block;width:7px;height:7px;border-radius:2px;margin-right:5px;background:var(--c);vertical-align:0}
+.store a{display:inline-block;margin-top:8px;font-size:12px;font-weight:600;color:var(--accent);text-underline-offset:3px}
+.keys{display:flex;align-items:center;gap:6px;margin-top:10px;padding:0 8px;font-size:12px;color:var(--ink-2)}
+.keys kbd,.pop kbd{font:500 11px var(--font);color:var(--ink);background:var(--bg);border:1px solid var(--line-2);border-bottom-width:2px;border-radius:5px;padding:1px 6px;min-width:20px;text-align:center}
+.keys button{border:0;background:none;padding:2px;cursor:pointer;color:var(--ink-2);text-decoration:underline;text-underline-offset:3px;font-size:12px}
+.pop{position:fixed;left:calc(var(--w) + 12px);bottom:14px;width:260px;background:var(--bg);border-radius:12px;box-shadow:var(--shadow-pop);padding:14px 16px;opacity:0;transform:translateY(6px);pointer-events:none;transition:opacity var(--t-fast) var(--ease),transform var(--t-mid) var(--ease-out);z-index:30}
+.pop.on{opacity:1;transform:none;pointer-events:auto}
+.pop h2{margin:0 0 10px;font-size:13px;font-weight:600}
+.pop dl{margin:0;display:grid;grid-template-columns:1fr auto;gap:8px 12px;font-size:13px;color:var(--ink-2)}
+.pop dd{margin:0;display:flex;gap:4px}
+/* the inbox, only hinted */
+main{flex:1;min-width:0;display:flex;flex-direction:column}
+.top{height:64px;display:flex;align-items:center;gap:12px;padding:0 24px;border-bottom:1px solid var(--line)}
+.menu{display:none;width:40px;height:40px;border:0;border-radius:10px;background:none;place-items:center;cursor:pointer}
+.search{flex:1;max-width:560px;height:40px;display:flex;align-items:center;gap:10px;padding:0 12px;position:relative;color:var(--ink-2)}
+.search input{all:unset;box-sizing:border-box;position:absolute;inset:0;padding:0 44px 0 40px;border-radius:10px;background:var(--side);border:1px solid var(--line-2);color:var(--ink);font-size:14px}
+.search svg,.search kbd{position:relative;z-index:1;pointer-events:none}.search kbd{margin-left:auto}
+.search input::placeholder{color:var(--ink-2)}
+.search kbd{font:500 11px var(--font);border:1px solid var(--line-2);border-radius:5px;padding:1px 6px}
+.lh{display:flex;align-items:baseline;gap:12px;padding:18px 24px 10px}
+.lh h1{margin:0;font-size:22px;font-weight:600;letter-spacing:-.02em}
+.lh span{font-size:13px;color:var(--ink-2)}
+.panes{flex:1;min-height:0;display:flex}
+.col{width:520px;flex:none;display:flex;flex-direction:column;border-right:1px solid var(--line);min-width:0}
+.list{flex:1;overflow:hidden;padding:0 12px}
+.m{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 12px;padding:12px 12px 13px 22px;border-radius:var(--r);border-bottom:1px solid var(--line);font-size:13px;color:var(--ink-2);position:relative}
+.m:hover{background:var(--side)}
+.m b{font-weight:500;font-size:14px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.m .s{grid-column:1/-1;color:var(--ink);font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.m .t{grid-column:1/-1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.m.u b,.m.u .s{font-weight:700}
+.m.u::before{content:"";position:absolute;left:8px;top:19px;width:7px;height:7px;border-radius:50%;background:var(--accent)}
+.m time{font-size:12px;font-variant-numeric:tabular-nums}
+.m.u time{color:var(--ink);font-weight:600}
+.read{flex:1;min-width:0;display:grid;place-content:center;text-align:center;gap:6px;color:var(--ink-2);font-size:13px}
+.read svg{width:40px;height:40px;margin:0 auto 6px;stroke:var(--line-2);fill:none;stroke-width:1.3}
+.read b{color:var(--ink);font-size:15px;font-weight:600}
+.empty{padding:40px 24px;color:var(--ink-2);font-size:14px}
+.empty b{display:block;color:var(--ink);font-size:16px;font-weight:600;margin-bottom:4px}
+.scrim{display:none}
+@media (max-width:1100px){.col{width:400px}}
+@media (max-width:760px){
+  .side{position:fixed;left:0;top:0;bottom:0;transform:translateX(-100%);visibility:hidden;transition:transform var(--t-mid) var(--ease-out),visibility 0s linear var(--t-mid)}
+  body.drawer .side{transform:none;visibility:visible;transition-delay:0s;box-shadow:var(--shadow-pop)}
+  .scrim{display:block;position:fixed;inset:0;background:rgba(29,28,26,.4);opacity:0;pointer-events:none;transition:opacity var(--t-mid) var(--ease);z-index:15}
+  body.drawer .scrim{opacity:1;pointer-events:auto}
+  .menu{display:grid}.top{padding:0 12px;gap:8px}
+  .search kbd{display:none}
+  .lh{padding:16px 16px 8px}.list{padding:0 4px}
+  .col{width:auto;flex:1;border-right:0}.read{display:none}
+  .m .s,.m .t{white-space:normal;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2}.m .s{-webkit-line-clamp:1;overflow-wrap:anywhere}
+  .pop{left:12px;right:12px;width:auto}
+}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important}}
+</style>
+</head>
+<body>
+<aside class="side" id="side" aria-label="Mail folders">
+  <button class="acct" type="button" aria-label="Switch account, signed in as Nadia Brennan"><span class="av" aria-hidden="true">NB</span><span><b>Nadia Brennan</b><small>nadia@brennan.studio</small></span><svg class="i chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 10l4 4 4-4"/></svg></button>
+  <button class="compose" type="button" id="compose"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13 7l4 4"/></svg>Compose<kbd>C</kbd></button>
+  <div class="scroll">
+    <nav aria-label="Folders"><ul id="folders">
+      <li><button class="f unread" data-k="inbox" aria-current="page"><svg class="i" viewBox="0 0 24 24"><path d="M3 13l3-8h12l3 8v6H3z"/><path d="M3 13h5l1 3h6l1-3h5"/></svg>Inbox<span class="n">24</span></button></li>
+      <li><button class="f" data-k="starred"><svg class="i" viewBox="0 0 24 24"><path d="M12 3l2.7 5.6 6.1.8-4.4 4.3 1 6.1L12 17l-5.5 2.8 1-6.1L3.2 9.4l6.1-.8z"/></svg>Starred</button></li>
+      <li><button class="f unread" data-k="snoozed"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M5 3L2 6M19 3l3 3"/></svg>Snoozed<span class="n">3</span></button></li>
+      <li><button class="f" data-k="sent"><svg class="i" viewBox="0 0 24 24"><path d="M21 3L10 14M21 3l-7 18-4-7-7-4z"/></svg>Sent</button></li>
+      <li><button class="f" data-k="drafts"><svg class="i" viewBox="0 0 24 24"><path d="M14 3H6v18h12V7z"/><path d="M14 3v4h4M9 13h6M9 17h4"/></svg>Drafts<span class="n">2</span></button></li>
+      <li><button class="f" data-k="scheduled"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Scheduled<span class="n">1</span></button></li>
+      <li><button class="f" data-k="spam"><svg class="i" viewBox="0 0 24 24"><path d="M12 3l9 16H3z"/><path d="M12 10v4M12 17v.5"/></svg>Spam<span class="n">12</span></button></li>
+      <li><button class="f" data-k="trash"><svg class="i" viewBox="0 0 24 24"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg>Trash</button></li>
+    </ul></nav>
+    <div class="sec">
+      <div class="sh"><button type="button" aria-expanded="true" aria-controls="labels"><svg class="i car" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10l5 5 5-5"/></svg>Labels</button><button class="add" type="button" aria-label="New label"><svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button></div>
+      <div class="fold" id="labels"><ul>
+        <li><button class="f unread" data-k="clients"><i class="dot" style="background:var(--l1)"></i>Clients<span class="n">6</span></button></li>
+        <li><button class="f" data-k="invoices"><i class="dot" style="background:var(--l2)"></i>Invoices<span class="n">2</span></button></li>
+        <li><button class="f" data-k="travel"><i class="dot" style="background:var(--l3)"></i>Travel</button></li>
+        <li><button class="f" data-k="family"><i class="dot" style="background:var(--l4)"></i>Family</button></li>
+        <li><button class="f" data-k="letters"><i class="dot" style="background:var(--l5)"></i>Newsletters<span class="n">31</span></button></li>
+      </ul></div>
+    </div>
+    <div class="sec">
+      <div class="sh"><button type="button" aria-expanded="false" aria-controls="more"><svg class="i car" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10l5 5 5-5"/></svg>More</button></div>
+      <div class="fold shut" id="more" inert><ul>
+        <li><button class="f" data-k="all"><svg class="i" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>All mail</button></li>
+        <li><button class="f" data-k="archive"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="5" rx="1"/><path d="M5 9v11h14V9M10 13h4"/></svg>Archive</button></li>
+        <li><button class="f" data-k="muted"><svg class="i" viewBox="0 0 24 24"><path d="M11 5L6 9H3v6h3l5 4zM22 9l-6 6M16 9l6 6"/></svg>Muted</button></li>
+      </ul></div>
+    </div>
+  </div>
+  <div class="store">
+    <p><span><b>11.4 GB</b> of 15 GB</span><span>76%</span></p>
+    <div class="meter" role="meter" aria-valuemin="0" aria-valuemax="15" aria-valuenow="11.4" aria-label="Storage used, 11.4 of 15 GB"><i style="width:45%;background:var(--accent)"></i><i style="width:21%;background:#C97D97"></i><i style="width:10%;background:#8C897F"></i></div>
+    <div class="legend"><span style="--c:var(--accent)">Files 6.8</span><span style="--c:#C97D97">Mail 3.1</span><span style="--c:#8C897F">Photos 1.5</span></div>
+    <a href="#">Get 100 GB for $1.99 a month</a>
+  </div>
+  <div class="keys"><kbd>?</kbd>for shortcuts, or <button type="button" id="keysBtn" aria-expanded="false" aria-controls="pop">show them</button></div>
+</aside>
+<div class="scrim" id="scrim"></div>
+<div class="pop" id="pop" role="dialog" aria-label="Keyboard shortcuts">
+  <h2>Keyboard shortcuts</h2>
+  <dl><dt>Compose</dt><dd><kbd>C</kbd></dd><dt>Go to Inbox</dt><dd><kbd>G</kbd><kbd>I</kbd></dd><dt>Go to Starred</dt><dd><kbd>G</kbd><kbd>S</kbd></dd><dt>Go to Drafts</dt><dd><kbd>G</kbd><kbd>D</kbd></dd><dt>Search mail</dt><dd><kbd>/</kbd></dd><dt>Close this</dt><dd><kbd>Esc</kbd></dd></dl>
+</div>
+<main>
+  <div class="top"><button class="menu" id="menu" type="button" aria-label="Open folders" aria-expanded="false" aria-controls="side"><svg class="i" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button><label class="search"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><input id="q" placeholder="Search mail" aria-label="Search mail"><kbd>/</kbd></label></div>
+  <div class="panes"><div class="col">
+  <div class="lh"><h1 id="title">Inbox</h1><span id="sub">24 unread</span></div>
+  <div class="list" id="list"></div></div>
+  <div class="read"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="6" y="11" width="36" height="26" rx="3"/><path d="M6 14l18 13 18-13"/></svg><b>No conversation open</b><span>Pick one from the list to read it here.</span></div></div>
+</main>
+<script>
+(function(){
+  var M=[['Halden Ceramics','Revised quote for the lobby tiles','Attached is v3 with the glaze change we discussed on site.','9:42',1,'inbox clients'],
+  ['Ruth Okafor','Saturday','Are we still on for the market at 10? I can bring the van.','9:08',1,'inbox family starred'],
+  ['Northbound Rail','Your tickets: Leeds to York, 4 Nov','Coach C, seat 42. Show this email or the code at the gate.','8:51',1,'inbox travel'],
+  ['Teo Marsh','Re: brand sheet, round two','Love the second colourway. Can we try the serif one size up?','Yesterday',1,'inbox clients starred'],
+  ['Ledgerly','Invoice INV-2291 paid','Halden Ceramics paid £4,860.00. Funds arrive in 2 working days.','Yesterday',0,'inbox invoices'],
+  ['The Slow Letter','Issue 118: on keeping a commonplace book','This week, three readers on the notebooks they never stopped using.','Mon',0,'inbox letters'],
+  ['Priya Venkat','Studio keys','Left them with the café downstairs, ask for Jonah.','Mon',0,'inbox'],
+  ['Halden Ceramics','Site visit photos','Twelve photos from Thursday, including the north wall samples.','Sun',0,'inbox clients'],
+  ['Nadia Brennan','Proposal for Ostler Hall','Draft, last edited 7:14 this morning','Draft',0,'drafts'],
+  ['Nadia Brennan','Re: Saturday','Yes! I will bring','Draft',0,'drafts']];
+  var E={sent:['Nothing new sent today','Your last message went to Teo Marsh yesterday at 18:20.'],snoozed:['3 snoozed conversations','They come back tomorrow at 8:00.'],scheduled:['1 message scheduled','Monthly report to Halden Ceramics, Friday 09:00.'],spam:['12 messages in Spam','Deleted automatically after 30 days.'],trash:['Trash is empty','Nice and tidy.']};
+  var list=document.getElementById('list'),title=document.getElementById('title'),sub=document.getElementById('sub'),btns=[].slice.call(document.querySelectorAll('.f'));
+  function esc(s){return String(s).replace(/[&<>]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;'}[c]})}
+  function show(k,label){
+    var rows=M.filter(function(r){return(' '+r[5]+' ').indexOf(' '+k+' ')>-1||k==='all'});
+    title.textContent=label;
+    var un=rows.filter(function(r){return r[4]}).length;
+    sub.textContent=rows.length?(k==='inbox'?'24 unread':rows.length+' conversation'+(rows.length>1?'s':'')+(un?', '+un+' unread':'')):'';
+    if(!rows.length){var e=E[k]||['No conversations with this label','Add the label from any message, or drag one here.'];list.innerHTML='<div class="empty"><b>'+esc(e[0])+'</b>'+esc(e[1])+'</div>';return}
+    list.innerHTML=rows.map(function(r){return '<div class="m'+(r[4]?' u':'')+'"><b>'+esc(r[0])+'</b><time>'+esc(r[3])+'</time><span class="s">'+esc(r[1])+'</span><span class="t">'+esc(r[2])+'</span></div>'}).join('');
+  }
+  function go(k){var b=btns.filter(function(x){return x.dataset.k===k})[0];if(!b)return;btns.forEach(function(x){x.removeAttribute('aria-current')});b.setAttribute('aria-current','page');show(k,b.childNodes[1]?b.textContent.replace(/\d+$/,'').trim():k);drawer(false)}
+  btns.forEach(function(b){b.addEventListener('click',function(){go(b.dataset.k)})});
+  [].forEach.call(document.querySelectorAll('.sh button[aria-controls]'),function(t){t.addEventListener('click',function(){
+    var f=document.getElementById(t.getAttribute('aria-controls')),open=t.getAttribute('aria-expanded')!=='true';
+    t.setAttribute('aria-expanded',String(open));f.classList.toggle('shut',!open);if(open)f.removeAttribute('inert');else f.setAttribute('inert','');
+  })});
+  var pop=document.getElementById('pop'),kb=document.getElementById('keysBtn');
+  function keys(on){pop.classList.toggle('on',on);kb.setAttribute('aria-expanded',String(on))}
+  kb.addEventListener('click',function(){keys(!pop.classList.contains('on'))});
+  var menu=document.getElementById('menu'),scrim=document.getElementById('scrim');
+  function drawer(on){document.body.classList.toggle('drawer',on);menu.setAttribute('aria-expanded',String(on))}
+  menu.addEventListener('click',function(){drawer(true);var c=document.querySelector('.f[aria-current]');c&&c.focus()});
+  scrim.addEventListener('click',function(){drawer(false)});
+  var compose=document.getElementById('compose');
+  compose.addEventListener('click',function(){title.textContent='New message';sub.textContent='Draft saved to Drafts';list.innerHTML='<div class="empty"><b>To: </b>Start typing a name. Drafts save every 5 seconds.</div>'});
+  var g=0;
+  addEventListener('keydown',function(e){
+    if(e.key==='Escape'){keys(false);drawer(false);return}
+    if(/INPUT|TEXTAREA/.test(e.target.tagName)||e.metaKey||e.ctrlKey||e.altKey)return;
+    var k=e.key.toLowerCase();
+    if(g&&Date.now()-g<900){g=0;var map={i:'inbox',s:'starred',d:'drafts'};if(map[k]){go(map[k]);e.preventDefault()}return}
+    if(k==='g'){g=Date.now()}else if(k==='c'){compose.click()}else if(e.key==='?'){keys(!pop.classList.contains('on'))}else if(k==='/'){e.preventDefault();document.getElementById('q').focus()}
+  });
+  show('inbox','Inbox');
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,201 @@
+<!-- Design Lounge piece: hero-bento-intro · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Wattle: run your house on this afternoon's sun</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Mona+Sans:wdth,wght@75..125,300..800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f1f0ea;--cell:#fff;--cell-2:#f7f6f1;--line:#e0ded5;--ink:#17181a;--ink-2:#55575a;--ink-3:#6b6d70;
+  --accent:#0d7350;--accent-2:#d9efe4;--on-accent:#fff;--warn:#b54a1b;
+  --font:"Mona Sans",system-ui,sans-serif;
+  --r:20px;--gap:12px;
+  --ease:cubic-bezier(.2,.7,.2,1);--expo:cubic-bezier(.16,1,.3,1);--t-micro:160ms;--t-layout:320ms;--t-draw:1600ms;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:400 15px/1.5 var(--font);color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased;overflow:hidden}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.page{height:100%;min-height:700px;display:flex;flex-direction:column}
+nav{height:64px;flex:none;display:flex;align-items:center;gap:28px;padding:0 32px}
+.logo{display:flex;align-items:center;gap:9px;font-weight:700;font-stretch:115%;font-size:18px;margin-right:auto}
+.logo svg{width:22px;height:22px}
+nav ul{display:flex;gap:24px;list-style:none;margin:0;padding:0;font-size:14px;color:var(--ink-2)}
+nav ul a:hover{color:var(--ink)}
+.btn{display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 20px;border-radius:999px;border:0;background:var(--ink);color:#fff;font:600 14px var(--font);cursor:pointer;transition:background var(--t-micro) var(--ease),transform var(--t-micro) var(--ease)}
+.btn:hover{background:var(--accent)}.btn:active{transform:scale(.97)}
+.btn.sm{height:38px;padding:0 16px;font-size:13px}
+.btn.ghost{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1.5px #8a8c8f}
+.btn.ghost:hover{box-shadow:inset 0 0 0 1.5px var(--ink);background:transparent}
+.btn svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.bento{flex:1;min-height:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:repeat(3,minmax(0,1fr));grid-auto-flow:dense;gap:var(--gap);padding:0 32px 32px}
+.c{position:relative;background:var(--cell);border:1px solid var(--line);border-radius:var(--r);padding:20px 22px;display:flex;flex-direction:column;min-width:0;overflow:hidden}
+.w2{grid-column:span 2}.h2{grid-row:span 2}
+.lab{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);display:flex;justify-content:space-between;align-items:center;gap:8px;margin:0}
+.lab .live{display:inline-flex;align-items:center;gap:6px;color:var(--accent);letter-spacing:.04em}
+.lab .live i{width:7px;height:7px;border-radius:50%;background:var(--accent);animation:blink 2s var(--ease) infinite}
+@keyframes blink{50%{opacity:.3}}
+/* headline cell */
+.head{background:var(--ink);color:#f3f2ec;border-color:var(--ink);padding:32px 34px 30px;justify-content:space-between}
+.head .lab{color:#b9bab4}
+h1{font-weight:700;font-stretch:112%;font-size:58px;line-height:.98;letter-spacing:-.035em;margin:0}
+h1 span{color:#9fe0bf}
+.head p.lede{font-size:16px;line-height:1.55;color:#c9cac4;margin:16px 0 22px;max-width:440px}
+.head .row{display:flex;gap:10px;flex-wrap:wrap}
+.head .btn{background:#f3f2ec;color:var(--ink)}.head .btn:hover{background:#9fe0bf}
+.head .btn.ghost{background:transparent;color:#f3f2ec;box-shadow:inset 0 0 0 1.5px #8b8c87}
+.head .btn.ghost:hover{box-shadow:inset 0 0 0 1.5px #f3f2ec}
+/* chart */
+.chart svg{flex:1;width:100%;min-height:0;margin-top:8px;overflow:visible}
+.chart .big{font-weight:650;font-size:30px;letter-spacing:-.02em;font-stretch:105%;margin:6px 0 0;font-variant-numeric:tabular-nums}
+.chart .big small{font-size:13px;font-weight:500;color:var(--ink-2);letter-spacing:0;margin-left:6px}
+.curve{fill:none;stroke:var(--accent);stroke-width:2.5;stroke-linecap:round;stroke-dasharray:var(--len,900);stroke-dashoffset:var(--len,900);animation:draw var(--t-draw) var(--expo) .2s forwards}
+.area{fill:var(--accent-2);opacity:0;animation:fade .6s var(--ease) 1.1s forwards}
+@keyframes draw{to{stroke-dashoffset:0}}@keyframes fade{to{opacity:1}}
+.axis{font:500 10px var(--font);fill:var(--ink-3)}
+.replay{position:absolute;right:14px;top:14px;height:30px;padding:0 10px;border-radius:999px;border:1px solid #8a8c8f;background:var(--cell);font-size:12px;font-weight:500;cursor:pointer;color:var(--ink-2)}
+.replay:hover{color:var(--ink);border-color:var(--ink)}
+/* counter */
+.count .num{color:var(--ink);font-weight:700;font-stretch:90%;font-size:46px;letter-spacing:-.03em;line-height:1;margin:auto 0 6px;font-variant-numeric:tabular-nums}
+.count .num small{font-size:16px;font-weight:600;margin-left:4px;letter-spacing:0}
+.count p{margin:0;font-size:13px;color:var(--ink-2)}
+.count .earn{color:var(--accent);font-weight:600}
+.tick{position:absolute;right:20px;bottom:56px;font-size:12px;font-weight:600;color:var(--accent);opacity:0}
+.tick.go{animation:up .9s var(--expo)}
+@keyframes up{0%{opacity:0;transform:translateY(6px)}30%{opacity:1}100%{opacity:0;transform:translateY(-10px)}}
+/* battery */
+.batt{background:var(--cell-2)}
+.cellwrap{flex:1;display:flex;align-items:flex-end;justify-content:center;margin:14px 0 12px}
+.bat{position:relative;width:96px;height:100%;max-height:260px;border-radius:18px;border:2px solid var(--ink);padding:6px;display:flex;align-items:flex-end}
+.bat::before{content:"";position:absolute;top:-9px;left:34px;right:34px;height:7px;border-radius:3px 3px 0 0;background:var(--ink)}
+.lvl{width:100%;height:var(--pct,82%);border-radius:11px;background:repeating-linear-gradient(135deg,var(--accent) 0 10px,#118a61 10px 20px);background-size:28px 28px;animation:flow 1.2s linear infinite;transition:height var(--t-layout) var(--expo)}
+@keyframes flow{to{background-position:0 -28px}}
+.target{position:absolute;left:-8px;right:-8px;top:8px;border-top:1.5px dashed var(--warn);opacity:0;transition:opacity var(--t-layout)}
+.storm .target{opacity:1}
+.batt .read{display:flex;justify-content:space-between;align-items:baseline;font-variant-numeric:tabular-nums}
+.batt .read b{font-weight:700;font-stretch:90%;font-size:34px;letter-spacing:-.02em}
+.batt .read span{font-size:13px;color:var(--ink-2);text-align:right}
+/* schedule */
+.sched .tl{position:relative;flex:1;margin-top:24px;display:grid;grid-template-rows:repeat(3,1fr);gap:8px;min-height:0}
+.lane{display:grid;grid-template-columns:var(--lw,96px) 1fr;align-items:center;border-radius:8px;background:var(--cell-2);min-height:0}
+.lane>span{padding-left:10px;font-size:12px;font-weight:600;color:var(--ink-2)}
+.trk{position:relative;height:100%}
+.blk{font-style:normal;overflow:hidden;position:absolute;top:4px;bottom:4px;border-radius:6px;background:var(--accent-2);box-shadow:inset 0 0 0 1px #a9d6bf;display:flex;align-items:center;padding:0 8px;font-size:11px;font-weight:600;color:#0a5039;white-space:nowrap}
+.now{font-style:normal;position:absolute;top:-6px;bottom:-6px;width:2px;background:var(--ink);left:calc(var(--lw,96px) + (100% - var(--lw,96px)) * .52);border-radius:1px}
+.now::after{content:"14:20";position:absolute;top:-16px;left:-14px;font-size:10px;font-weight:600}
+.hours{padding-left:var(--lw,96px);display:flex;justify-content:space-between;font-size:10px;font-weight:500;color:var(--ink-3);margin-top:8px}
+/* toggle */
+.tog p.t{margin:auto 0 0;font-weight:650;font-size:18px;line-height:1.25;letter-spacing:-.01em;font-stretch:105%}
+.tog p.s{margin:6px 0 14px;font-size:13px;color:var(--ink-2)}
+.sw{position:relative;width:64px;height:36px;border-radius:999px;border:1.5px solid #7d7f82;background:#c7c8c3;cursor:pointer;padding:0;transition:background var(--t-micro) var(--ease)}
+.sw::after{content:"";position:absolute;top:2.5px;left:2.5px;width:28px;height:28px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25);transition:transform var(--t-layout) var(--expo)}
+.sw[aria-checked=true]{background:var(--accent);border-color:var(--accent)}
+.sw[aria-checked=true]::after{transform:translateX(28px)}
+.swrow{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:13px;font-weight:600}
+@media (max-width:1100px){h1{font-size:46px}.count .num{font-size:38px}}
+@media (max-width:860px){
+  body{overflow:auto}.page{height:auto}
+  nav{padding:0 16px}nav ul{display:none}
+  .bento{grid-template-columns:minmax(0,1fr);grid-template-rows:none;grid-auto-rows:auto;padding:0 16px 24px}
+  .w2,.h2{grid-column:auto;grid-row:auto}
+  .c{min-height:200px}.head{padding:28px 22px}
+  h1{font-size:clamp(36px,10.5vw,52px)}
+  .chart svg{height:120px;flex:none}
+  .batt .cellwrap{height:200px;flex:none}
+  .sched{--lw:84px}.blk{font-size:0;padding:0}.sched .tl{height:140px;flex:none}.count{min-height:0}.count .num{margin-top:22px}
+}
+@media (prefers-reduced-motion:reduce){.curve{animation:none;stroke-dashoffset:0}.area{animation:none;opacity:1}.lvl,.lab .live i{animation:none}.tick.go{animation:none}.sw::after,.lvl,.btn{transition:none}}
+</style>
+</head>
+<body>
+<div class="page">
+<nav aria-label="Primary">
+  <a class="logo" href="#" aria-label="Wattle home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"/></svg>Wattle</a>
+  <ul><li><a href="#">How it works</a></li><li><a href="#">Batteries</a></li><li><a href="#">Installers</a></li><li><a href="#">Pricing</a></li></ul>
+  <a class="btn sm" href="#">Get a quote</a>
+</nav>
+<main class="bento" aria-label="Wattle overview">
+  <section class="c head w2 h2" aria-labelledby="h">
+    <p class="lab">Home solar and battery, one app</p>
+    <div>
+      <h1 id="h">Run your house on <span>this afternoon's</span> sun.</h1>
+      <p class="lede">Wattle charges your battery when the panels peak, runs the dishwasher and the car when power is free, and sells the rest back at the best rate of the day.</p>
+      <div class="row"><a class="btn" href="#">Check my roof<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="btn ghost" href="#">See a live house</a></div>
+    </div>
+  </section>
+
+  <section class="c chart w2" aria-labelledby="ct">
+    <p class="lab" id="ct"><span>Solar today, 14 Keel St</span></p>
+    <p class="big">21.6 kWh<small>peak 4.8 kW at 13:05</small></p>
+    <button class="replay" type="button" id="replay">Replay</button>
+    <svg viewBox="0 0 520 110" preserveAspectRatio="none" aria-hidden="true">
+      <path class="area" d="M10 96 C80 96 110 92 150 70 C200 40 230 10 270 12 C310 14 335 42 360 60 L360 96Z"/>
+      <path class="curve" id="curve" d="M10 96 C80 96 110 92 150 70 C200 40 230 10 270 12 C310 14 335 42 360 60 C390 80 430 94 510 96"/>
+      <line x1="360" y1="0" x2="360" y2="100" stroke="#17181a" stroke-dasharray="2 3"/>
+      <circle cx="360" cy="60" r="5" fill="#0d7350" stroke="#fff" stroke-width="2"/>
+      <text class="axis" x="10" y="110">06:00</text><text class="axis" x="250" y="110">12:00</text><text class="axis" x="472" y="110">20:00</text>
+    </svg>
+  </section>
+
+  <section class="c batt h2" id="batt" aria-labelledby="bt">
+    <p class="lab" id="bt"><span>Battery</span><span class="live"><i></i>Charging</span></p>
+    <div class="cellwrap"><div class="bat" aria-hidden="true"><div class="target"></div><div class="lvl" id="lvl"></div></div></div>
+    <div class="read"><b id="pct">82%</b><span id="bnote">+3.1 kW<br>full by 15:40</span></div>
+  </section>
+
+  <section class="c count" aria-labelledby="xt">
+    <p class="lab" id="xt"><span>Sold to grid today</span></p>
+    <p class="num" id="kwh" aria-live="off">18.42<small>kWh</small></p>
+    <p><span class="earn" id="eur">€5.34</span> earned at €0.29</p>
+    <span class="tick" id="tick" aria-hidden="true">+0.01</span>
+  </section>
+
+  <section class="c sched w2" aria-labelledby="st">
+    <p class="lab" id="st"><span>Today's plan</span><span>Next: dishwasher at 15:10</span></p>
+    <div class="tl">
+      <div class="lane"><span>Car</span><b class="trk"><i class="blk" style="left:31.25%;width:25%">22 kWh</i></b></div>
+      <div class="lane"><span>Dishwasher</span><b class="trk"><i class="blk" style="left:57.3%;width:9%">15:10</i></b></div>
+      <div class="lane"><span>Heat pump</span><b class="trk"><i class="blk" style="left:12.5%;width:12.5%">Warm</i><i class="blk" style="left:75%;width:12.5%">Warm</i></b></div>
+      <i class="now" aria-hidden="true"></i>
+    </div>
+    <div class="hours" aria-hidden="true"><span>06</span><span>10</span><span>14</span><span>18</span><span>22</span></div>
+  </section>
+
+  <section class="c tog" aria-labelledby="tt">
+    <p class="lab" id="tt"><span>Storm mode</span></p>
+    <p class="t">Hold the battery at 100% when a storm warning lands.</p>
+    <p class="s">Gales forecast Thu 30 Oct, 18:00</p>
+    <div class="swrow"><span id="tlab">Off</span><button class="sw" type="button" role="switch" aria-checked="false" aria-labelledby="tt tlab" id="storm"></button></div>
+  </section>
+</main>
+</div>
+<script>
+(function(){
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var curve=document.getElementById('curve');
+  if(curve&&curve.getTotalLength){curve.style.setProperty('--len',Math.ceil(curve.getTotalLength()));}
+  var rp=document.getElementById('replay');
+  if(rp)rp.addEventListener('click',function(){[].forEach.call(document.querySelectorAll('.curve,.area'),function(el){el.style.animation='none';void el.getBoundingClientRect();el.style.animation='';});});
+  var kwh=18.42,eur=5.34,k=document.getElementById('kwh'),e=document.getElementById('eur'),t=document.getElementById('tick');
+  if(k&&!reduce)setInterval(function(){
+    kwh+=.01;eur+=.0029;k.firstChild.nodeValue=kwh.toFixed(2);if(e)e.textContent='€'+eur.toFixed(2);
+    if(t){t.classList.remove('go');void t.offsetWidth;t.classList.add('go');}
+  },1800);
+  var sw=document.getElementById('storm'),b=document.getElementById('batt'),lv=document.getElementById('lvl'),pc=document.getElementById('pct'),bn=document.getElementById('bnote'),tl=document.getElementById('tlab');
+  if(sw)sw.addEventListener('click',function(){
+    var on=sw.getAttribute('aria-checked')!=='true';sw.setAttribute('aria-checked',String(on));
+    if(tl)tl.textContent=on?'On, holding 100%':'Off';
+    if(b)b.classList.toggle('storm',on);
+    if(lv)lv.style.setProperty('--pct',on?'97%':'82%');
+    if(pc)pc.textContent=on?'97%':'82%';
+    if(bn)bn.innerHTML=on?'Grid top-up<br>full by 14:35':'+3.1 kW<br>full by 15:40';
+  });
+})();
+</script>
+</body>
+</html>

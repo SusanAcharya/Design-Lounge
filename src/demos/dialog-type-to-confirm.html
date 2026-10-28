@@ -1,0 +1,200 @@
+<!-- Design Lounge piece: dialog-type-to-confirm · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Delete tidewater-ledger · Fenwick</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#111214;--panel:#17181b;--raise:#1d1f22;--well:#141518;--line:#2a2c30;--line-2:#3a3d42;--edge:#70757c;
+  --ink:#eeece6;--ink-2:#b4b5b2;--ink-3:#8c8e90;
+  --danger:#e2876f;--danger-fill:#d9785f;--danger-hover:#e48d76;--danger-ink:#1b0d09;--danger-soft:rgba(226,135,111,.12);--danger-line:rgba(226,135,111,.34);
+  --ok:#9cc59a;--focus:#e9e3cf;--scrim:rgba(8,9,10,.66);
+  --font:"Figtree",system-ui,sans-serif;--mono:"DM Mono",ui-monospace,monospace;
+  --w:480px;--r:14px;--r-ctl:9px;--h-ctl:40px;
+  --t-micro:160ms;--t-open:320ms;--t-shake:360ms;--ease:cubic-bezier(.2,.7,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);--ease-sheet:cubic-bezier(.32,.72,0,1);
+  --shadow:0 1px 0 rgba(255,255,255,.04) inset,0 40px 80px -24px rgba(0,0,0,.7);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.5 var(--font);color:var(--ink);background:var(--bg);overflow:hidden;-webkit-font-smoothing:antialiased}
+svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;flex:none}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.app{display:grid;grid-template-columns:224px 1fr;height:100%}
+.side{background:var(--panel);border-right:1px solid var(--line);padding:16px 12px;display:flex;flex-direction:column;gap:2px}
+.ws{display:flex;align-items:center;gap:10px;padding:6px 8px 18px}
+.ws i{width:28px;height:28px;border-radius:8px;background:#2b3a33;color:#a9d3b8;display:grid;place-items:center;font:600 13px var(--font);font-style:normal}
+.ws b{font-weight:600;font-size:14px;display:block;line-height:1.2}.ws small{color:var(--ink-3);font:12px var(--mono)}
+.side a{display:flex;align-items:center;gap:10px;height:34px;padding:0 10px;border-radius:8px;color:var(--ink-2);text-decoration:none;font-size:13.5px}
+.side a[aria-current]{background:var(--raise);color:var(--ink)}
+.side h6{margin:16px 10px 6px;font:500 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+main{overflow:hidden;padding:32px 48px}
+.crumb{font:12.5px var(--mono);color:var(--ink-3);margin-bottom:10px}
+h1{margin:0 0 4px;font-size:30px;font-weight:650;letter-spacing:-.025em}
+.sub{margin:0 0 28px;color:var(--ink-2)}
+.card{border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin-bottom:14px;background:var(--panel);display:flex;align-items:center;justify-content:space-between;gap:24px;max-width:760px}
+.card h2{margin:0 0 2px;font-size:15px;font-weight:600}.card p{margin:0;color:var(--ink-2);font-size:13px}
+.card.dz{border-color:var(--danger-line)}.card.dz h2{color:var(--danger)}
+.btn{height:var(--h-ctl);padding:0 16px;border-radius:var(--r-ctl);border:1px solid var(--edge);background:transparent;font-weight:600;font-size:13.5px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;white-space:nowrap;transition:background var(--t-micro) var(--ease),opacity var(--t-micro) var(--ease)}
+.btn:hover{background:var(--raise)}
+.btn.danger{background:var(--danger-fill);border-color:var(--danger-fill);color:var(--danger-ink)}
+.btn.danger:hover:not([disabled]){background:var(--danger-hover)}
+.btn.danger.out{background:transparent;color:var(--danger);border-color:var(--danger)}
+.btn.danger.out:hover{background:var(--danger-soft)}
+.btn[disabled]{opacity:.4;cursor:not-allowed}
+.toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,16px);opacity:0;pointer-events:none;display:flex;align-items:center;gap:14px;background:var(--raise);border:1px solid var(--line-2);border-radius:12px;padding:10px 10px 10px 16px;transition:opacity var(--t-open) var(--ease),transform var(--t-open) var(--ease-out);max-width:calc(100% - 32px)}
+.toast.on{opacity:1;transform:translate(-50%,0);pointer-events:auto}
+.toast code{font:13px var(--mono);color:var(--ink)}
+.toast .btn{height:34px}
+/* dialog */
+dialog{width:min(var(--w),calc(100vw - 32px));max-height:calc(100dvh - 32px);border:1px solid var(--line-2);padding:0;border-radius:var(--r);background:var(--raise);color:var(--ink);box-shadow:var(--shadow);overflow:auto;opacity:0;transform:translateY(8px) scale(.98);transition:opacity var(--t-open) var(--ease),transform var(--t-open) var(--ease-out),overlay var(--t-open) allow-discrete,display var(--t-open) allow-discrete}
+dialog[open]{opacity:1;transform:none}
+@starting-style{dialog[open]{opacity:0;transform:translateY(8px) scale(.98)}}
+dialog::backdrop{background:rgba(8,9,10,0);transition:background var(--t-open) var(--ease),overlay var(--t-open) allow-discrete,display var(--t-open) allow-discrete}
+dialog[open]::backdrop{background:var(--scrim)}
+@starting-style{dialog[open]::backdrop{background:rgba(8,9,10,0)}}
+form{padding:24px 24px 20px;display:flex;flex-direction:column;gap:18px}
+.hd{display:flex;gap:14px;align-items:flex-start}
+.glyph{width:40px;height:40px;border-radius:50%;background:var(--danger-soft);color:var(--danger);display:grid;place-items:center;flex:none}
+.glyph svg{width:20px;height:20px}
+.hd h2{margin:2px 0 4px;font-size:20px;font-weight:650;letter-spacing:-.02em;line-height:1.25}
+.hd h2 code{font:500 17px var(--mono);letter-spacing:-.01em}
+.hd p{margin:0;color:var(--ink-2);font-size:13.5px}
+.x{width:32px;height:32px;margin:-4px -8px 0 auto;border:0;border-radius:8px;background:none;color:var(--ink-3);display:grid;place-items:center;cursor:pointer;flex:none}
+.x:hover{background:var(--line);color:var(--ink)}
+.loss{margin:0;padding:0;list-style:none;border:1px solid var(--line);border-radius:10px;background:var(--well)}
+.loss li{display:flex;align-items:center;gap:12px;padding:10px 14px;font-size:13.5px;color:var(--ink-2)}
+.loss li+li{border-top:1px solid var(--line)}
+.loss li svg{color:var(--ink-3)}
+.loss li span{flex:1}.loss small{display:block;color:var(--ink-3);font-size:12px;line-height:1.35}
+.loss b{font:500 14px var(--mono);color:var(--ink);font-variant-numeric:tabular-nums}
+.faces{display:flex}.faces i{width:24px;height:24px;border-radius:50%;border:2px solid var(--well);margin-left:-6px;font:700 8.5px/20px var(--font);font-style:normal;text-align:center;color:#141518}
+.lab{font-size:13px;color:var(--ink-2);display:flex;justify-content:space-between;gap:8px;margin-bottom:8px}
+.lab code{font:500 13px var(--mono);color:var(--ink);background:var(--line);padding:1px 6px;border-radius:5px;user-select:all}
+.lab output{font:12px var(--mono);color:var(--ink-3);white-space:nowrap}
+.field{position:relative;height:44px}
+.field input,.ghost{position:absolute;inset:0;font:15px/42px var(--mono);letter-spacing:.01em;padding:0 14px;border-radius:var(--r-ctl);margin:0;white-space:pre}
+.ghost{border:1px solid transparent;color:var(--ink-3);pointer-events:none;overflow:hidden}
+.ghost s{text-decoration:none;color:transparent}
+.field input{width:100%;background:var(--well);border:1px solid var(--edge);color:var(--ink);caret-color:var(--danger);outline:none;transition:border-color var(--t-micro) var(--ease),box-shadow var(--t-micro) var(--ease)}
+.field input:focus{border-color:var(--ink-2);box-shadow:0 0 0 3px rgba(233,227,207,.12)}
+.ghost{background:none;z-index:1}
+.field.bad input{border-color:var(--danger);box-shadow:0 0 0 3px var(--danger-soft)}
+.field.done input{border-color:var(--ok)}
+.field.shake{animation:shake var(--t-shake) var(--ease)}
+@keyframes shake{0%,100%{transform:none}20%{transform:translateX(-7px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(2px)}}
+.meter{height:2px;background:var(--line);border-radius:2px;margin-top:8px;overflow:hidden}
+.meter i{display:block;height:100%;width:0;background:var(--danger);transition:width var(--t-micro) var(--ease),background var(--t-micro) var(--ease)}
+.field.done+.meter i{background:var(--ok)}
+.hint{min-height:18px;margin:6px 0 0;font-size:12.5px;color:var(--ink-3)}
+.hint.bad{color:var(--danger)}
+.acts{display:flex;justify-content:flex-end;gap:10px;padding-top:2px}
+.spin{width:14px;height:14px;border-radius:50%;border:2px solid currentColor;border-right-color:transparent;animation:rot .7s linear infinite;display:none}
+.busy .spin{display:block}
+@keyframes rot{to{transform:rotate(1turn)}}
+@media (max-width:860px){.app{grid-template-columns:1fr}.side{display:none}main{padding:24px 20px}.card{flex-direction:column;align-items:flex-start;gap:12px}h1{font-size:24px}}
+@media (max-width:640px){
+  dialog{width:100%;max-width:100%;margin:auto 0 0;border-radius:18px 18px 0 0;border-width:1px 0 0;max-height:calc(100dvh - 24px);transform:translateY(100%);transition-timing-function:var(--ease),var(--ease-sheet)}
+  dialog[open]{transform:none}
+  @starting-style{dialog[open]{transform:translateY(100%)}}
+  form{padding:20px 16px 28px}
+  .acts{flex-direction:column-reverse}.acts .btn{width:100%;height:46px}
+  .lab{flex-wrap:wrap}
+}
+@media (prefers-reduced-motion:reduce){*,*::backdrop{transition-duration:1ms!important;animation-duration:1ms!important;animation-iteration-count:1!important}}
+</style>
+</head>
+<body>
+<div class="app">
+  <nav class="side" aria-label="Project">
+    <div class="ws"><i>H</i><div><b>Harbour Ops</b><small>eu-west-2</small></div></div>
+    <a href="#"><svg viewBox="0 0 24 24"><path d="M4 13h6V4H4zM14 20h6v-9h-6zM14 4v3h6V4zM4 20h6v-3H4z"/></svg>Overview</a>
+    <a href="#"><svg viewBox="0 0 24 24"><path d="M8 6l-5 6 5 6M16 6l5 6-5 6"/></svg>Queries</a>
+    <a href="#"><svg viewBox="0 0 24 24"><path d="M4 19V9M10 19V5M16 19v-7M22 19H2"/></svg>Dashboards</a>
+    <a href="#"><svg viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M4 21h16"/></svg>Exports</a>
+    <h6>Project</h6>
+    <a href="#"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0113 0M16 4.5a3.5 3.5 0 010 7M21.5 20a6.5 6.5 0 00-4-6"/></svg>Members</a>
+    <a href="#" aria-current="page"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 00-.1-1.2l2-1.6-2-3.4-2.4 1a7 7 0 00-2-1.2L14 3h-4l-.5 2.6a7 7 0 00-2 1.2l-2.4-1-2 3.4 2 1.6a7 7 0 000 2.4l-2 1.6 2 3.4 2.4-1a7 7 0 002 1.2L10 21h4l.5-2.6a7 7 0 002-1.2l2.4 1 2-3.4-2-1.6c.1-.4.1-.8.1-1.2z"/></svg>Settings</a>
+  </nav>
+  <main>
+    <div class="crumb">harbour-ops / <span id="crumbName">tidewater-ledger</span> / settings</div>
+    <h1>Project settings</h1>
+    <p class="sub">Created 9 Feb 2026 by Ines Okafor. Last query ran 4 minutes ago.</p>
+    <div class="card"><div><h2>Warehouse connection</h2><p>Reads from <span style="font-family:var(--mono)">ledger_prod</span> through a read-only role. Rotated 12 Oct.</p></div><button class="btn" type="button">Edit connection</button></div>
+    <div class="card"><div><h2>Transfer ownership</h2><p>Move this project and its billing to another workspace you administer.</p></div><button class="btn" type="button">Transfer</button></div>
+    <div class="card dz"><div><h2>Delete this project</h2><p>Removes every dashboard, saved query and export for all 9 members.</p></div><button class="btn danger out" type="button" id="open">Delete project</button></div>
+  </main>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"><span><code>tidewater-ledger</code> is in the trash until 4 Nov.</span><button class="btn" type="button" id="restore">Restore</button></div>
+
+<dialog id="dlg" aria-labelledby="dt" aria-describedby="dd">
+  <form method="dialog" id="form" novalidate>
+    <div class="hd">
+      <div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 002 2h6a2 2 0 002-2l1-12M9 7V4h6v3"/></svg></div>
+      <div><h2 id="dt">Delete <code>tidewater-ledger</code>?</h2><p id="dd">It goes to the trash for 7 days, then it is gone for good. Everyone in Harbour Ops loses it at once.</p></div>
+      <button type="button" class="x" aria-label="Close" data-close><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <ul class="loss" aria-label="What will be deleted">
+      <li><svg viewBox="0 0 24 24"><path d="M4 19V9M10 19V5M16 19v-7M22 19H2"/></svg><span>Dashboards</span><b>14</b></li>
+      <li><svg viewBox="0 0 24 24"><path d="M8 6l-5 6 5 6M16 6l5 6-5 6"/></svg><span>Saved queries</span><b>212</b></li>
+      <li><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg><span>Scheduled exports<small>Next one runs tonight at 02:00</small></span><b>3</b></li>
+      <li><svg viewBox="0 0 24 24"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg><span>Cached results</span><b>2.4 GB</b></li>
+      <li><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0113 0"/></svg><span>Members who lose access</span><span class="faces" aria-hidden="true" style="flex:none"><i style="background:#c9b38a">IO</i><i style="background:#9cbfd0">MK</i><i style="background:#c7a2b4">RA</i></span><b>9</b></li>
+    </ul>
+    <div>
+      <div class="lab"><label for="name">Type <code>tidewater-ledger</code> to confirm</label><output id="count" aria-hidden="true">0/16</output></div>
+      <div class="field" id="field"><span class="ghost" id="ghost" aria-hidden="true">tidewater-ledger</span><input id="name" autocomplete="off" spellcheck="false" autocapitalize="off" aria-describedby="hint" autofocus></div>
+      <div class="meter" aria-hidden="true"><i id="bar"></i></div>
+      <p class="hint" id="hint" aria-live="polite">The delete button turns on when the name matches exactly.</p>
+    </div>
+    <div class="acts">
+      <button type="button" class="btn" data-close>Keep project</button>
+      <button type="submit" class="btn danger" id="go" disabled><span class="spin" aria-hidden="true"></span><span id="goLabel">Delete project</span></button>
+    </div>
+  </form>
+</dialog>
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const dlg = $('dlg'), input = $('name'), field = $('field'), ghost = $('ghost'), go = $('go'), hint = $('hint'), toast = $('toast');
+  const NAME = 'tidewater-ledger', DEFAULT_HINT = hint.textContent;
+  let lastBad = -1, busy = false;
+  const esc = (s) => s.replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
+  function shake() { field.classList.remove('shake'); void field.offsetWidth; field.classList.add('shake'); }
+  function render() {
+    const v = input.value;
+    let ok = 0; while (ok < v.length && v[ok] === NAME[ok]) ok++;
+    const bad = ok < v.length, done = v === NAME;
+    ghost.innerHTML = '<s>' + esc(v) + '</s>' + (bad ? '' : esc(NAME.slice(v.length)));
+    field.classList.toggle('bad', bad); field.classList.toggle('done', done);
+    $('bar').style.width = (Math.min(ok, NAME.length) / NAME.length * 100) + '%';
+    $('count').textContent = Math.min(ok, NAME.length) + '/' + NAME.length;
+    go.disabled = !done;
+    if (bad) { hint.textContent = 'Character ' + (ok + 1) + ' does not match. Names are lowercase with hyphens.'; hint.classList.add('bad'); if (lastBad !== ok) shake(); lastBad = ok; }
+    else { lastBad = -1; hint.classList.remove('bad'); hint.textContent = done ? 'Name matches. Deleting is now possible.' : DEFAULT_HINT; }
+  }
+  input.addEventListener('input', render);
+  field.addEventListener('animationend', () => field.classList.remove('shake'));
+  $('form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (busy) return;
+    if (input.value !== NAME) { shake(); input.focus(); return; }
+    busy = true; go.classList.add('busy'); $('goLabel').textContent = 'Deleting';
+    setTimeout(() => { dlg.close('deleted'); toast.classList.add('on'); }, 900);
+  });
+  dlg.querySelectorAll('[data-close]').forEach((b) => b.addEventListener('click', () => dlg.close('cancel')));
+  dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close('cancel'); });
+  dlg.addEventListener('close', () => { busy = false; go.classList.remove('busy'); $('goLabel').textContent = 'Delete project'; (dlg.returnValue === 'deleted' ? $('restore') : $('open')).focus(); });
+  function open() { toast.classList.remove('on'); input.value = ''; render(); dlg.showModal(); input.focus(); }
+  $('open').addEventListener('click', open);
+  $('restore').addEventListener('click', () => { toast.classList.remove('on'); $('open').focus(); });
+  render(); open(); input.value = 'tidewater-led'; render();
+})();
+</script>
+</body>
+</html>

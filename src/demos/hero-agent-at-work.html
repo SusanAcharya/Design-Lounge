@@ -1,0 +1,170 @@
+<!-- Design Lounge piece: hero-agent-at-work · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Ledgerline: an agent that reconciles your bank feed</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0f1216;--panel:#151a20;--panel-2:#1b2129;--line:#262e38;--line-2:#34404d;
+  --ink:#e9edf1;--ink-2:#9aa6b2;--ink-3:#7f8b97;--accent:#6cb6ff;--accent-ink:#06223d;
+  --add:#7fd19b;--del:#f2857a;--warn:#f0c36a;
+  --sans:"Geist",system-ui,sans-serif;--mono:"Geist Mono",ui-monospace,monospace;
+  --r:14px;--ease:cubic-bezier(.2,.7,.2,1);--expo:cubic-bezier(.16,1,.3,1);--t-micro:160ms;--t-line:280ms;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:400 15px/1.55 var(--sans);color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased;overflow:hidden}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.page{height:100%;min-height:700px;display:flex;flex-direction:column}
+nav{height:64px;flex:none;display:flex;align-items:center;gap:28px;padding:0 48px;border-bottom:1px solid var(--line)}
+.logo{display:flex;align-items:center;gap:10px;font-weight:600;font-size:16px;margin-right:auto}
+.logo svg{width:22px;height:22px}
+nav ul{display:flex;gap:24px;list-style:none;margin:0;padding:0;font-size:14px;color:var(--ink-2)}
+nav ul a:hover{color:var(--ink)}
+.btn{display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 18px;border-radius:8px;border:0;background:var(--accent);color:var(--accent-ink);font:600 14px var(--sans);cursor:pointer;transition:filter var(--t-micro) var(--ease),transform var(--t-micro) var(--ease)}
+.btn:hover{filter:brightness(1.08)}.btn:active{transform:translateY(1px)}
+.btn.sm{height:36px;padding:0 14px;font-size:13px}
+.btn.ghost{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1px #5d6a78}
+.btn.ghost:hover{box-shadow:inset 0 0 0 1px var(--ink)}
+.btn svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.hero{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) 620px;gap:56px;padding:40px 48px 40px;align-items:center}
+.eyebrow{font:500 12px var(--mono);color:var(--ink-2);letter-spacing:.02em;margin:0}
+.eyebrow b{font-weight:500;color:var(--accent);margin-right:8px}
+h1{font-weight:600;font-size:60px;line-height:1.02;letter-spacing:-.035em;margin:18px 0 20px}
+h1 span{color:var(--ink-2)}
+.lede{font-size:17px;line-height:1.6;color:var(--ink-2);margin:0 0 28px;max-width:470px}
+.lede b{color:var(--ink);font-weight:500}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.facts{display:flex;gap:28px;margin-top:36px;padding-top:20px;border-top:1px solid var(--line);font-size:13px;color:var(--ink-2)}
+.facts b{display:block;font:500 22px/1.1 var(--sans);color:var(--ink);letter-spacing:-.02em;margin-bottom:4px}
+/* run panel */
+.run{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);display:flex;flex-direction:column;height:100%;max-height:640px;min-height:0;overflow:hidden;box-shadow:0 40px 80px -40px rgba(0,0,0,.6)}
+.rhead{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--line);font:500 12px var(--mono);color:var(--ink-2)}
+.tag{white-space:nowrap;border:1px solid var(--line-2);border-radius:4px;padding:2px 6px;color:var(--warn)}
+.rhead .sp{margin-left:auto}
+.replay{height:30px;padding:0 10px;border-radius:6px;border:1px solid #5d6a78;background:transparent;font:500 12px var(--mono);color:var(--ink);cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.replay:hover{border-color:var(--ink)}
+.replay svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+.task{padding:14px 18px 12px;border-bottom:1px solid var(--line)}
+.task p{margin:0;font-size:14px;line-height:1.5}
+.task p small{display:block;font:400 12px var(--mono);color:var(--ink-3);margin-top:4px}
+.body{flex:1;min-height:0;display:grid;grid-template-columns:236px 1fr}
+.plan{list-style:none;margin:0;padding:14px 14px 14px 18px;border-right:1px solid var(--line);display:flex;flex-direction:column;gap:12px;font-size:13px;line-height:1.4}
+.plan li{display:grid;grid-template-columns:18px 1fr;gap:10px;color:var(--ink-3);transition:color var(--t-line)}
+.plan li i{width:16px;height:16px;border-radius:50%;border:1.5px solid #5d6a78;margin-top:1px;position:relative}
+.plan li.doing{color:var(--ink)}
+.plan li.doing i{border-color:var(--accent);border-right-color:transparent;animation:spin .9s linear infinite}
+.plan li.done{color:var(--ink-2)}
+.plan li.done i{border-color:var(--add);background:var(--add)}
+.plan li.done i::after{content:"";position:absolute;left:4px;top:1px;width:4px;height:8px;border:solid var(--bg);border-width:0 2px 2px 0;transform:rotate(45deg)}
+.plan li.wait i{border-color:var(--warn);border-style:dashed}
+.plan li.wait{color:var(--ink)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.log{position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:12px 16px;font:400 12px/1.6 var(--mono);min-height:0}
+.ln{animation:in var(--t-line) var(--expo) both;white-space:pre-wrap;word-break:break-word}
+@keyframes in{from{opacity:0;transform:translateY(6px)}}
+.ln.call{color:var(--accent)}.ln.res{color:var(--ink-2);padding-left:14px}
+.ln.flag{color:var(--warn);padding-left:14px}
+.ln.add{color:var(--add);background:rgba(127,209,155,.08)}.ln.del{color:var(--del);background:rgba(242,133,122,.08)}
+.ln.hd{color:var(--ink);margin-top:6px}
+.status{display:flex;align-items:center;gap:14px;padding:10px 16px;border-top:1px solid var(--line);font:500 12px var(--mono);color:var(--ink-2);background:var(--panel-2)}
+.status .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);animation:pulse 1.4s var(--ease) infinite}
+.status.hold .dot{background:var(--warn);animation:none}
+.status .bar{flex:1;height:4px;border-radius:2px;background:var(--line-2);overflow:hidden}
+.status .bar i{display:block;height:100%;width:var(--p,0%);background:var(--accent);transition:width 600ms var(--expo)}
+@keyframes pulse{50%{opacity:.35}}
+@media (max-width:1180px){.hero{grid-template-columns:minmax(0,1fr) 540px;gap:40px}h1{font-size:50px}.body{grid-template-columns:200px 1fr}}
+@media (max-width:900px){
+  body{overflow:auto}.page{height:auto}
+  nav{padding:0 16px}nav ul{display:none}
+  .hero{grid-template-columns:minmax(0,1fr);padding:28px 16px 32px;gap:32px}
+  h1{font-size:clamp(36px,10vw,52px)}
+  .run{height:auto;max-height:none}
+  .body{grid-template-columns:minmax(0,1fr)}
+  .plan{border-right:0;border-bottom:1px solid var(--line)}
+  .log{height:240px}
+  .rhead .sp{display:none}
+  .facts{gap:20px;flex-wrap:wrap}
+}
+@media (prefers-reduced-motion:reduce){.ln,.plan li.doing i,.status .dot{animation:none}.status .bar i,.plan li,.btn{transition:none}}
+</style>
+</head>
+<body>
+<div class="page">
+<nav aria-label="Primary">
+  <a class="logo" href="#" aria-label="Ledgerline home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 6h16M4 12h10M4 18h16M18 10l2 2-2 2"/></svg>Ledgerline</a>
+  <ul><li><a href="#">How it works</a></li><li><a href="#">Controls</a></li><li><a href="#">Integrations</a></li><li><a href="#">Pricing</a></li></ul>
+  <a class="btn sm" href="#">Book a walkthrough</a>
+</nav>
+<section class="hero" aria-labelledby="h">
+  <div>
+    <p class="eyebrow"><b>Reconciliation agent</b>for finance teams of 2 to 40</p>
+    <h1 id="h">Matches every bank line to its invoice. <span>Then shows you why.</span></h1>
+    <p class="lede">Ledgerline reads your bank feed and open invoices, matches what it can prove, and hands you the handful it cannot. <b>Nothing posts to your ledger until a person approves it.</b></p>
+    <div class="row"><a class="btn" href="#">Run it on last month<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="btn ghost" href="#">Read the audit trail spec</a></div>
+    <div class="facts"><span><b>96.1%</b>lines matched without help, median</span><span><b>4 h</b>saved per close, per person</span></div>
+  </div>
+  <div class="run" role="region" aria-label="Example run of the agent">
+    <div class="rhead"><span class="tag">Example run</span><span>Harbor &amp; Pine Ltd, October close</span><span class="sp"></span><button class="replay" type="button" id="replay"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 3-6.2M4 4v4h4"/></svg>Replay</button></div>
+    <div class="task"><p>Reconcile the Calder Bank operating account for 1 to 31 October against open invoices in the ledger.<small>started 06:02 by Priya Anand · read-only until approval</small></p></div>
+    <div class="body">
+      <ol class="plan" id="plan">
+        <li><i></i><span>Pull 1,284 lines from the bank feed</span></li>
+        <li><i></i><span>Match against 412 open invoices</span></li>
+        <li><i></i><span>Flag lines that need a person</span></li>
+        <li><i></i><span>Draft journal entries for fees</span></li>
+        <li><i></i><span>Wait for approval, then post</span></li>
+      </ol>
+      <div class="log" id="log" aria-hidden="true"></div>
+    </div>
+    <div class="status" id="status" role="status" aria-live="polite"><i class="dot"></i><span id="stxt">Starting</span><span class="bar"><i id="bar"></i></span></div>
+  </div>
+</section>
+</div>
+<script>
+(function(){
+  var plan=[].slice.call(document.querySelectorAll('#plan li')),log=document.getElementById('log'),st=document.getElementById('status'),stxt=document.getElementById('stxt'),bar=document.getElementById('bar');
+  if(!log||!plan.length)return;
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches,timers=[];
+  var E=[
+    [0,'step',0],[0,'call','bank.fetch("CB-0193", month="2026-10")'],[0,'res','1,284 lines · €612,940 in · €588,212 out'],[0,'call','ledger.open_invoices(as_of="2026-10-31")'],[0,'res','412 open · €701,388 receivable · 38 payers'],[0,'call','rules.load(entity="harbor-pine")'],[0,'res','14 rules · 3 learned in the September close'],[0,'step',1],[0,'st','Step 2 of 5 · 0 of 1,284 matched',8],
+    [900,'call','match(line=841, €2,480.00, "BW-2291")'],[0,'res','INV-2291 Brightwell Studio, exact match'],[0,'st','Step 2 of 5 · 640 of 1,284 matched',30],
+    [1100,'call','match(line=907, €14,600.00, ref=none)'],[0,'res','INV-2244 + 2250 Osterly Freight, summed'],[0,'st','Step 2 of 5 · 1,031 of 1,284 matched',52],
+    [1200,'call','match(line=1118, €-412.37, "CARD 4471")'],[0,'flag','No invoice. Card spend, needs a receipt'],[0,'st','Step 2 of 5 · 1,236 of 1,284 matched',68],
+    [1100,'step',2],[0,'call','flag([1118, 1162, 1203, 1240, 1251, 1277])'],[0,'flag','6 lines sent to Priya with evidence'],[0,'st','Step 3 of 5 · 1,278 matched, 6 flagged',80],
+    [1200,'step',3],[0,'call','draft_journal(type="bank_fees")'],[0,'hd','JE-1031  Bank fees, October'],[0,'add','+ Dr 6810 Bank charges          €48.50'],[0,'del','- Cr 1010 Calder operating      €48.50'],[0,'st','Step 4 of 5 · 4 entries drafted',92],
+    [1300,'step',4],[0,'hold','Waiting for approval · 4 entries · 6 flags · 3m 12s · no writes yet',100]
+  ];
+  function line(cls,txt){var d=document.createElement('div');d.className='ln '+cls;d.textContent=(cls==='call'?'> ':'')+txt;log.appendChild(d);while(log.children.length>26)log.removeChild(log.firstChild);}
+  function apply(e){
+    var k=e[1];
+    if(k==='step'){plan.forEach(function(li,i){li.className=i<e[2]?'done':i===e[2]?'doing':'';});}
+    else if(k==='st'){stxt.textContent=e[2];bar.style.setProperty('--p',e[3]+'%');}
+    else if(k==='hold'){plan.forEach(function(li,i){li.className=i<4?'done':'wait';});st.classList.add('hold');stxt.textContent=e[2];bar.style.setProperty('--p','100%');}
+    else line(k,e[2]);
+  }
+  function run(){
+    timers.forEach(clearTimeout);timers=[];log.textContent='';st.classList.remove('hold');
+    if(reduce){E.forEach(apply);return;}
+    var t=0,i=0;
+    for(;i<E.length&&i<15;i++)apply(E[i]);  /* first frame: already mid-run */
+    for(;i<E.length;i++){t+=E[i][0];(function(e){timers.push(setTimeout(function(){apply(e);},t+600));})(E[i]);}
+  }
+  var rp=document.getElementById('replay');if(rp)rp.addEventListener('click',function(){
+    plan.forEach(function(li){li.className='';});
+    log.textContent='';
+    if(reduce){run();return;}
+    timers.forEach(clearTimeout);timers=[];st.classList.remove('hold');
+    var t=0;E.forEach(function(e){t+=e[0]||120;timers.push(setTimeout(function(){apply(e);},t));});
+  });
+  run();
+})();
+</script>
+</body>
+</html>

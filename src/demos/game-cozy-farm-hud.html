@@ -1,0 +1,207 @@
+<!-- Design Lounge piece: game-cozy-farm-hud · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Bramblewick Farm</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sky-1:#a6d0dc; --sky-2:#f4e4c4; --paper:#fff8ea; --card:#fbf0d9; --stitch:#d8bf93; --ink:#4a3324; --ink-2:#6e5340; --ink-3:#7f6450;
+  --wood:#8a5d3b; --wood-2:#a77650; --wood-dark:#5e3c24; --slot:#f6e7c8; --leaf:#5f8f3e; --leaf-2:#86b35a; --water:#2c6a94; --pin:#c9513a;
+  --soil:#b98a5e; --soil-wet:#7b5638;
+  --font:"Baloo 2",ui-rounded,sans-serif; --r:22px; --ease:cubic-bezier(.2,.7,.2,1); --spring:cubic-bezier(.34,1.56,.64,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:500 16px/1.35 var(--font);color:var(--ink);background:linear-gradient(180deg,var(--sky-1) 0%,#cfe0d6 30%,var(--sky-2) 52%,#e9d3a6 60%);background-color:#e9d3a6;overflow:hidden;position:relative}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--water);outline-offset:3px}
+.scene{position:absolute;inset:0;width:100%;height:100%}
+.plot{cursor:pointer}
+.plot rect{transition:fill 600ms var(--ease)}
+.plot:hover rect{stroke:#fff8ea;stroke-width:3}
+.plot:focus{outline:none}.plot:focus-visible rect{stroke:var(--water);stroke-width:4}
+.drop{animation:drop 700ms var(--ease) both}
+@keyframes drop{from{opacity:0;transform:translateY(-14px)}60%{opacity:1}to{opacity:0;transform:translateY(8px)}}
+.sway{animation:sway 5s ease-in-out infinite alternate;transform-box:fill-box;transform-origin:50% 100%}
+@keyframes sway{to{transform:rotate(3deg)}}
+.cloud{animation:drift 60s linear infinite alternate}
+@keyframes drift{to{transform:translateX(60px)}}
+.grain{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:.22;mix-blend-mode:multiply}
+/* HUD cards */
+.card{background:var(--card);border-radius:var(--r);box-shadow:0 2px 0 #d9c29a,0 10px 24px rgba(94,60,36,.18);position:relative}
+.card::after{content:"";position:absolute;inset:6px;border:2px dashed var(--stitch);border-radius:calc(var(--r) - 6px);pointer-events:none}
+.clock{position:absolute;left:28px;top:24px;display:flex;align-items:center;gap:16px;padding:16px 22px 16px 16px}
+.dial{width:78px;height:78px;flex:none}
+.day{font:800 30px/1 var(--font);letter-spacing:-.01em}
+.time{font:600 17px/1.2 var(--font);color:var(--ink-2);margin-top:4px}
+.chips{display:flex;gap:6px;margin-top:8px}
+.chip{display:inline-flex;align-items:center;gap:5px;background:#f0deb8;border-radius:99px;padding:2px 10px 1px;font:700 14px/1.5 var(--font);color:var(--ink)}
+.chip svg{width:15px;height:15px}
+.energy{position:absolute;left:28px;top:152px;display:flex;align-items:center;gap:12px;padding:12px 20px 12px 14px}
+.energy .ic{width:30px;height:30px;border-radius:50%;background:var(--leaf);display:grid;place-items:center;color:#fff8ea}
+.energy .ic svg{width:18px;height:18px}
+.ebar{width:170px;height:16px;border-radius:99px;background:#ead6ae;box-shadow:inset 0 2px 0 rgba(94,60,36,.15);overflow:hidden}
+.ebar i{display:block;height:100%;border-radius:99px;background:linear-gradient(180deg,var(--leaf-2),var(--leaf));transition:width 400ms var(--ease)}
+.elbl{font:700 15px/1 var(--font)}.elbl small{font-weight:600;color:var(--ink-3);font-size:13px;display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.08em}
+/* note */
+.note{position:absolute;right:34px;top:30px;width:300px;padding:30px 24px 30px;background:var(--paper) repeating-linear-gradient(180deg,transparent 0 29px,#e7d9bd 29px 30px);background-position:0 18px;transform:rotate(2.2deg);box-shadow:0 12px 24px rgba(94,60,36,.2);clip-path:polygon(0 0,100% 0,100% 96%,92% 100%,84% 96.5%,75% 100%,66% 96%,57% 100%,48% 96.5%,39% 100%,30% 96%,21% 100%,12% 96.5%,4% 100%,0 97%)}
+.pin{position:absolute;right:170px;top:20px;width:20px;height:20px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#f0937e,var(--pin) 55%,#8f3524);box-shadow:2px 4px 4px rgba(0,0,0,.25);z-index:2}
+.note h2{font:800 22px/1.2 var(--font);margin:0 0 2px}
+.note .from{font:600 14px/1 var(--font);color:var(--ink-3);margin-bottom:10px}
+.note ul{list-style:none;margin:0;padding:0}
+.note li{display:flex;gap:10px;align-items:flex-start;font:600 16px/30px var(--font)}
+.box{flex:none;width:20px;height:20px;margin-top:5px;border:2px solid var(--ink-2);border-radius:5px 7px 4px 6px;display:grid;place-items:center;color:var(--leaf)}
+.box svg{width:16px;height:16px;opacity:0;transform:scale(.4);transition:transform 300ms var(--spring),opacity 200ms}
+li.done .box svg{opacity:1;transform:none}
+li.done .t{text-decoration:line-through;text-decoration-thickness:2px;color:var(--ink-3)}
+.t b{color:var(--water);font-weight:800}
+.reward{margin-top:10px;font:700 14px/1.3 var(--font);color:var(--ink-2)}
+/* hotbar */
+.bar{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:10px;width:max-content;max-width:calc(100% - 24px)}
+.tag{background:var(--ink);color:#fff8ea;border-radius:99px;padding:5px 16px 4px;font:700 15px/1.4 var(--font);display:flex;gap:10px;align-items:center}
+.tag .g{width:64px;height:8px;border-radius:99px;background:#6e5340;overflow:hidden}
+.tag .g i{display:block;height:100%;background:#9fd3ee;transition:width 300ms var(--ease)}
+.slots{display:flex;gap:6px;padding:8px;background:var(--wood);border-radius:20px;box-shadow:inset 0 -4px 0 var(--wood-dark),inset 0 2px 0 var(--wood-2),0 10px 24px rgba(60,36,20,.3)}
+.slot{position:relative;width:60px;height:60px;border-radius:14px;border:2px solid #6a4429;background:var(--slot);box-shadow:inset 0 -4px 0 #e5cfa5;display:grid;place-items:center;cursor:pointer;padding:0;color:var(--ink);transition:transform 220ms var(--spring),background 160ms}
+.slot:hover{background:#fff4dc}
+.slot svg{width:30px;height:30px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.slot .k{position:absolute;left:6px;top:2px;font:700 12px/1.3 var(--font);color:var(--ink-2)}
+.slot .c{position:absolute;right:6px;bottom:2px;font:800 13px/1.3 var(--font)}
+.slot[aria-pressed=true]{transform:translateY(-8px);background:#fffaf0;border-color:#fff8ea;box-shadow:0 0 0 3px var(--ink),inset 0 -4px 0 #ecdab6}
+.slot.empty{background:#d8bd92;box-shadow:inset 0 3px 0 rgba(94,60,36,.2);cursor:default}
+.hint{position:absolute;left:50%;bottom:150px;transform:translate(-50%,8px);background:var(--paper);border-radius:14px;padding:8px 16px 6px;font:700 15px/1.3 var(--font);box-shadow:0 8px 18px rgba(94,60,36,.2);opacity:0;transition:opacity 200ms var(--ease),transform 300ms var(--spring);pointer-events:none;white-space:nowrap}
+.hint.on{opacity:1;transform:translate(-50%,0)}
+@media (max-width:820px){
+  body{overflow-y:auto;min-height:844px;background:linear-gradient(180deg,var(--sky-1),#cfe0d6 22%,var(--sky-2) 40%,#a4bf6e 40%)}
+  .scene{height:640px;bottom:auto}
+  .note .from,.note li+li,.note .reward{display:none}
+  .note h2{font-size:18px}
+  .clock{left:12px;top:12px;padding:12px 16px 12px 12px;gap:12px}.dial{width:60px;height:60px}.day{font-size:24px}
+  .energy{left:12px;top:118px}.ebar{width:120px}
+  .note{right:auto;left:16px;top:190px;width:calc(100% - 32px);max-width:340px;transform:rotate(1deg);padding:26px 18px}
+  .pin{right:auto;left:50%;top:180px}
+  .slots{flex-wrap:wrap;justify-content:center;gap:5px;padding:6px}
+  .slot{width:calc((100vw - 64px)/5);max-width:60px;height:auto;aspect-ratio:1}
+  .hint{bottom:200px;white-space:normal;width:max-content;max-width:calc(100% - 32px);text-align:center}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:1ms!important}}
+</style>
+</head>
+<body>
+<svg class="scene" viewBox="0 0 1280 800" preserveAspectRatio="xMidYMax slice" aria-hidden="false" role="group" aria-label="Turnip beds at Bramblewick Farm">
+  <defs>
+    <filter id="rough" x="-20%" y="-60%" width="140%" height="220%"><feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="7"/></filter>
+    <radialGradient id="sun"><stop offset="0" stop-color="#fffbe8"/><stop offset=".45" stop-color="#fff1c4"/><stop offset="1" stop-color="#fff1c4" stop-opacity="0"/></radialGradient>
+  </defs>
+  <circle cx="900" cy="200" r="150" fill="url(#sun)"/><circle cx="900" cy="200" r="46" fill="#fffbe8"/>
+  <g fill="#fffaf0" opacity=".85" filter="url(#rough)"><g class="cloud"><ellipse cx="360" cy="150" rx="90" ry="26"/><ellipse cx="400" cy="132" rx="50" ry="30"/></g><g class="cloud"><ellipse cx="1110" cy="120" rx="70" ry="20"/><ellipse cx="1080" cy="106" rx="38" ry="22"/></g></g>
+  <g filter="url(#rough)">
+    <path d="M-40 404C160 330 300 350 440 380S760 320 900 350 1160 330 1320 362V860H-40z" fill="#b8c99a"/><path d="M620 372c90-14 170-18 260-12M980 352c70-6 130-4 190 4" stroke="#d3dcb4" stroke-width="10" stroke-linecap="round" fill="none" opacity=".7"/>
+    <path d="M-40 452C200 400 360 430 560 420S900 390 1080 420 1240 430 1320 425V860H-40z" fill="#9cb67a"/>
+    <path d="M-40 502C260 470 520 490 760 475S1140 470 1320 480V860H-40z" fill="#8cac62"/><path d="M40 560c120-20 220-18 300-8M60 640c90-10 160-8 220 0" stroke="#a3c277" stroke-width="12" stroke-linecap="round" fill="none" opacity=".6"/>
+    <g transform="translate(150 330)"><path d="M0 120V40L70 0l70 40v80z" fill="#c8644a"/><path d="M-12 46L70-8l82 54" fill="none" stroke="#8c3f33" stroke-width="16" stroke-linejoin="round"/><path d="M48 120V70h44v50" fill="#f0dcb6"/><path d="M48 70l44 50M92 70l-44 50" stroke="#c8644a" stroke-width="5"/><circle cx="70" cy="38" r="9" fill="#f0dcb6"/></g>
+    <g transform="translate(360 370)"><rect x="-6" y="40" width="12" height="40" fill="#7a5a3c"/><circle cx="0" cy="22" r="40" fill="#6f9450"/><circle cx="14" cy="32" r="26" fill="#5b7f42"/></g>
+    <g transform="translate(1180 390)"><rect x="-6" y="40" width="12" height="44" fill="#7a5a3c"/><circle cx="0" cy="20" r="46" fill="#6f9450"/><circle cx="-16" cy="30" r="28" fill="#5b7f42"/></g>
+    <path d="M300 800C340 700 280 620 330 540S300 470 290 452" fill="none" stroke="#e8cf9e" stroke-width="64" stroke-linecap="round"/>
+    <g stroke="#8a6440" stroke-width="7" stroke-linecap="round"><path d="M560 470v34M620 468v34M680 466v34M740 464v34M800 463v34M860 462v34M920 462v34M980 463v34"/><path d="M556 478h430M556 492h430" stroke-width="5"/></g>
+    <path d="M520 512C760 498 1060 496 1320 506V860H430C470 760 500 640 520 512z" fill="#a4bf6e"/><g transform="translate(470 410)"><ellipse cx="0" cy="30" rx="34" ry="22" fill="#e3c06b"/><path d="M-28 24h56M-30 34h60" stroke="#c9a24c" stroke-width="3"/><ellipse cx="62" cy="36" rx="30" ry="18" fill="#d9b45e"/></g>
+  </g>
+  <g id="plots"></g>
+  <g transform="translate(110 720)"><g class="sway"><path d="M0 0c-6-26 4-40 16-50M0 0c8-20 26-28 40-26M0 0c-14-14-30-16-40-12" fill="none" stroke="#5f8f3e" stroke-width="6" stroke-linecap="round"/></g></g><g transform="translate(1200 700)"><g class="sway"><path d="M0 0c-4-24 6-36 18-44M0 0c-12-16-26-18-36-14" fill="none" stroke="#5f8f3e" stroke-width="6" stroke-linecap="round"/></g></g><g fill="#fff3e6"><circle cx="180" cy="610" r="5"/><circle cx="214" cy="660" r="4"/><circle cx="90" cy="600" r="4"/><circle cx="420" cy="700" r="5"/><circle cx="1230" cy="610" r="4"/></g><g fill="#e98a9a"><circle cx="150" cy="650" r="4"/><circle cx="240" cy="590" r="3.5"/><circle cx="450" cy="640" r="4"/><circle cx="1250" cy="660" r="4"/></g>
+</svg>
+<svg class="grain" aria-hidden="true"><filter id="g"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 .35 0 0 0 0 .25 0 0 0 0 .15 0 0 0 .6 0"/></filter><rect width="100%" height="100%" filter="url(#g)"/></svg>
+
+<section class="card clock" aria-label="Day and time">
+  <svg class="dial" viewBox="0 0 80 80" aria-hidden="true"><circle cx="40" cy="40" r="36" fill="#f0deb8"/><path d="M8 46a32 32 0 0 1 64 0z" fill="#bfe0ea"/><path d="M8 46h64" stroke="#8cac62" stroke-width="4" stroke-linecap="round"/><path d="M12 46a28 28 0 0 1 56 0" fill="none" stroke="#fff8ea" stroke-width="2" stroke-dasharray="2 4"/><circle id="sundot" cx="40" cy="18" r="7" fill="#f2b33d" stroke="#fff8ea" stroke-width="2"/></svg>
+  <div><div class="day">Spring 14</div><div class="time" id="time" aria-live="off">Thursday · 2:40 pm</div>
+    <div class="chips"><span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="#c98a1d" stroke-width="2.2" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"/></svg>Clear, 19°</span><span class="chip"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="#f2c14e" stroke="#b07a1a" stroke-width="2"/><path d="M12 8v8" stroke="#b07a1a" stroke-width="2"/></svg>1,286 g</span></div></div>
+</section>
+
+<section class="card energy" aria-label="Energy">
+  <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 19C5 10 10 5 19 5c0 9-5 14-14 14zM5 19l7-7"/></svg></span>
+  <div class="elbl"><small>Energy</small><div class="ebar" role="meter" aria-valuemin="0" aria-valuemax="120" aria-valuenow="72" aria-label="Energy" id="em"><i id="eb" style="width:60%"></i></div></div>
+  <span class="elbl" id="ev">72/120</span>
+</section>
+
+<div class="pin" aria-hidden="true"></div>
+<section class="note" aria-labelledby="qh">
+  <h2 id="qh">Granny Odile&rsquo;s list</h2>
+  <div class="from">Left on the gate, Thursday morning</div>
+  <ul>
+    <li id="q1"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span><span class="t">Water the turnip beds (<b id="qn">5</b> of 8)</span></li>
+    <li class="done"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span><span class="t">Feed the hens before noon</span></li>
+    <li><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span><span class="t">Take 3 honey jars to the mill</span></li>
+  </ul>
+  <div class="reward">Reward: rhubarb pie and 120 g</div>
+</section>
+
+<div class="hint" id="hint" role="status"></div>
+<div class="bar">
+  <div class="tag" id="tag"></div>
+  <div class="slots" role="toolbar" aria-label="Hotbar, keys 1 to 0" id="slots"></div>
+</div>
+
+<script>
+(() => {
+  const T = [
+    ['Watering can','M4 10h10v9H4zM14 12l5-4 2 1-6 6M6 10V7a3 3 0 0 1 6 0v3',''],
+    ['Hoe','M5 20L16 9M14 5l5 5-3 1-3-3z',''],
+    ['Axe','M6 21L16 7M13 4c4 0 7 3 7 7-3 0-5-1-6.5-2.5S13 6 13 4z',''],
+    ['Pickaxe','M5 20l9-9M3 9c5-5 13-5 18 0-4-2-10-2-14 2',''],
+    ['Scythe','M6 21L14 5M14 5c3 0 7 2 7 6-3-3-6-4-9-3',''],
+    ['Turnip seeds','M7 8h10l2 12H5zM9 8l1-4h4l1 4M12 12v4M10 14h4','24'],
+    ['Fishing rod','M4 20L18 4M18 4v12M18 16a2 2 0 1 1-2 2',''],
+    ['Basket','M4 11h16l-2 9H6zM8 11l3-6M16 11l-3-6M7 15h10',''],
+    ['Apple','M12 7c-4-2-8 0-8 5s3 9 6 9c1 0 1.5-.5 2-.5s1 .5 2 .5c3 0 6-4 6-9s-4-7-8-5zM12 7c0-2 1-4 3-4','5'],
+    null];
+  const $ = (id) => document.getElementById(id);
+  let sel = 0, water = 18, energy = 72, done = 5, mins = 14 * 60 + 40;
+  const slots = $('slots');
+  T.forEach((t, i) => {
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'slot' + (t ? '' : ' empty');
+    b.innerHTML = `<span class="k" aria-hidden="true">${(i + 1) % 10}</span>` + (t ? `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="${t[1]}"/></svg>${t[2] ? `<span class="c">${t[2]}</span>` : ''}` : '');
+    b.setAttribute('aria-label', t ? t[0] + (t[2] ? ', ' + t[2] : '') : 'Empty slot');
+    if (!t) b.disabled = true;
+    b.addEventListener('click', () => pick(i)); slots.appendChild(b);
+  });
+  const tag = () => { const t = T[sel]; $('tag').innerHTML = sel === 0 ? `${t[0]} <span class="g" aria-hidden="true"><i style="width:${water / 40 * 100}%"></i></span> ${water} / 40` : t[0] + (t[2] ? ` · ${t[2]} left` : ''); };
+  const pick = (i) => { if (!T[i]) return; sel = i; [...slots.children].forEach((b, j) => b.setAttribute('aria-pressed', j === i)); tag(); };
+  let ht; const hint = (s) => { const h = $('hint'); h.textContent = s; h.classList.add('on'); clearTimeout(ht); ht = setTimeout(() => h.classList.remove('on'), 2200); };
+  // eight plots, 4 x 2, 5 already watered
+  const P = $('plots'), wet = [1, 1, 0, 1, 1, 0, 1, 0];
+  wet.forEach((w, i) => {
+    const c = i % 4, r = i / 4 | 0, x = 716 + c * 128 - r * 16, y = 508 + r * 80, wd = 110 + r * 6;
+    const g = document.createElementNS('http://www.w3.org/2000/svg', 'g'); g.setAttribute('class', 'plot'); g.setAttribute('tabindex', '0'); g.setAttribute('role', 'button');
+    g.setAttribute('aria-label', `Turnip bed ${i + 1}, ${w ? 'watered' : 'dry'}`);
+    g.innerHTML = `<rect x="${x}" y="${y}" width="${wd}" height="${62 + r * 6}" rx="18" fill="${w ? 'var(--soil-wet)' : 'var(--soil)'}"/>` + [0, 1, 2].map(k => `<g transform="translate(${x + 24 + k * (wd - 48) / 2} ${y + 36 + r * 4})"><path d="M0 0c-10-6-14-16-10-24 8 2 11 12 10 24zM0 0c8-8 18-10 22-4-6 6-14 7-22 4z" fill="var(--leaf-2)"/><ellipse cx="0" cy="4" rx="9" ry="6" fill="#f2e6f0"/><path d="M-6 2a7 5 0 0 1 12 0" fill="#b9679a"/></g>`).join('');
+    g.dataset.wet = w; P.appendChild(g);
+  });
+  const use = (g) => {
+    if (sel !== 0) { hint(`The ${T[sel][0].toLowerCase()} won't help here. Press 1 for the watering can.`); return; }
+    if (g.dataset.wet === '1') { hint('This bed is already watered.'); return; }
+    if (!water) { hint('The can is empty. Refill it at the well.'); return; }
+    g.dataset.wet = '1'; g.querySelector('rect').setAttribute('fill', 'var(--soil-wet)'); g.setAttribute('aria-label', g.getAttribute('aria-label').replace('dry', 'watered'));
+    const r = g.querySelector('rect'), d = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    d.setAttribute('class', 'drop'); d.innerHTML = [0, 1, 2].map(k => `<path d="M${+r.getAttribute('x') + 30 + k * 34} ${+r.getAttribute('y') - 6}c-5 7-5 12 0 12s5-5 0-12z" fill="#9fd3ee"/>`).join('');
+    P.appendChild(d); setTimeout(() => d.remove(), 800);
+    water--; energy = Math.max(0, energy - 2); done = Math.min(8, done + 1); $('qn').textContent = done; tag();
+    $('eb').style.width = energy / 120 * 100 + '%'; $('ev').textContent = `${energy}/120`; $('em').setAttribute('aria-valuenow', energy);
+    if (done === 8) { $('q1').classList.add('done'); hint('All eight beds watered. Granny Odile will be pleased.'); }
+  };
+  P.addEventListener('click', e => { const g = e.target.closest('.plot'); if (g) use(g); });
+  P.addEventListener('keydown', e => { const g = e.target.closest('.plot'); if (g && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); use(g); } });
+  addEventListener('keydown', e => { if (/^[0-9]$/.test(e.key)) pick((+e.key + 9) % 10); });
+  const tick = () => { const h = mins / 60 | 0, m = mins % 60, a = Math.PI * (1 - (mins - 360) / 840);
+    $('time').textContent = `Thursday · ${(h + 11) % 12 + 1}:${String(m).padStart(2, '0')} ${h < 12 ? 'am' : 'pm'}`;
+    const s = $('sundot'); s.setAttribute('cx', (40 + 28 * Math.cos(a)).toFixed(1)); s.setAttribute('cy', (46 - 28 * Math.sin(a)).toFixed(1)); };
+  setInterval(() => { mins = Math.min(mins + 10, 20 * 60); tick(); }, 4000);
+  const mq = matchMedia('(max-width:820px)'), fit = () => document.querySelector('.scene').setAttribute('preserveAspectRatio', mq.matches ? 'xMaxYMax slice' : 'xMidYMax slice');
+  mq.addEventListener && mq.addEventListener('change', fit); fit();
+  pick(0); tick();
+})();
+</script>
+</body>
+</html>

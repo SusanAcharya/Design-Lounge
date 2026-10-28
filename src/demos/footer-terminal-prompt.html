@@ -1,0 +1,165 @@
+<!-- Design Lounge piece: footer-terminal-prompt · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Terminal prompt footer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Chivo:wght@400;500;700;800&family=Chivo+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0D181E;--page:#F2F4F1;--page-ink:#10191E;--page-ink-2:#4C5A60;--page-line:#D3D9D6;
+  --term:#0A1318;--panel:#13222A;--line:#22343D;--line-2:#34505C;
+  --ink:#DCE6E8;--ink-2:#93A7AE;--ink-3:#7E949B;--cyan:#86D6E2;--ok:#7BD9A0;--warn:#F0C674;
+  --font:"Chivo",system-ui,sans-serif;--mono:"Chivo Mono",ui-monospace,monospace;
+  --r:10px;--t-fast:140ms;--t-mid:260ms;--ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.5 var(--font);color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--cyan);outline-offset:2px;border-radius:4px}
+/* end of the docs page */
+.end{background:var(--page);color:var(--page-ink);padding:44px 56px 40px;display:grid;grid-template-columns:1fr auto;gap:32px;align-items:end}
+.end h2{margin:0;font:800 clamp(40px,6vw,76px)/.94 var(--font);letter-spacing:-.04em}
+.end p{margin:12px 0 0;color:var(--page-ink-2);font-size:15px;max-width:52ch}
+.cmd{display:flex;align-items:center;gap:14px;height:52px;padding:0 8px 0 18px;border:1px solid var(--page-ink);border-radius:var(--r);font:500 15px var(--mono);background:#fff0}
+.cmd span::before{content:"$ ";color:var(--page-ink-2)}
+.cmd button{height:36px;padding:0 14px;border-radius:7px;border:0;background:var(--page-ink);color:var(--page);font:500 12px var(--mono);cursor:pointer}
+.cmd button:focus-visible{outline-color:var(--page-ink)}
+footer{padding:44px 56px 28px;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:48px}
+.hint{margin:0 0 12px;font:13px var(--font);color:var(--ink-2)}
+.hint kbd{font:12px var(--mono);color:var(--ink);border:1px solid var(--line-2);border-radius:4px;padding:1px 5px}
+.term{background:var(--term);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;font:13.5px/1.6 var(--mono)}
+.tbar{display:flex;align-items:center;gap:10px;height:36px;padding:0 14px;border-bottom:1px solid var(--line);color:var(--ink-3);font-size:12px}
+.tbar i{width:10px;height:10px;border-radius:50%;border:1px solid var(--line-2)}
+.tbar span{margin-left:6px}.tbar b{margin-left:auto;font-weight:400}
+.screen{height:372px;overflow-y:auto;padding:14px 18px 10px;scrollbar-width:thin;scrollbar-color:var(--line-2) transparent}
+.ln{margin:0;white-space:pre-wrap;word-break:break-word;min-height:1.6em}
+.ps{color:var(--cyan)}.ps em{font-style:normal;color:var(--ink-3)}
+.out{color:var(--ink-2)}
+.row{display:grid;grid-template-columns:12ch 1fr;gap:8px;color:var(--ink-2)}
+.row a{color:var(--ink);text-decoration:none;border-bottom:1px dashed var(--line-2)}
+.row a:hover{color:var(--cyan);border-bottom-color:var(--cyan)}
+.run{all:unset;cursor:pointer;color:var(--cyan)}.run:hover{text-decoration:underline;text-underline-offset:3px}.run:focus-visible{outline:2px solid var(--cyan);outline-offset:1px;border-radius:2px}
+.ok{color:var(--ok)}.err{color:var(--warn)}
+.prompt{display:flex;gap:1ch;align-items:baseline}
+.field{position:relative;flex:1;min-width:0}
+.field input{all:unset;box-sizing:border-box;display:block;width:100%;height:28px;padding:0 8px;margin-top:-4px;border:1px solid var(--ink-3);border-radius:6px;font:inherit;color:var(--ink);caret-color:transparent}
+.field input:focus{border-color:var(--cyan)}
+.field input:focus-visible{outline:0}
+.cur{position:absolute;top:1px;left:calc(9px + var(--n,0) * 1ch);width:1ch;height:1.3em;background:var(--cyan);animation:blink 1.1s steps(1) 2.4s infinite;pointer-events:none}
+@keyframes blink{50%{opacity:0}}
+.cols{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;padding-top:30px}
+.cols h3{margin:0 0 14px;font:500 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+.cols ul{list-style:none;margin:0;padding:0;display:grid;gap:9px}
+.cols a{text-decoration:none;color:var(--ink)}
+.cols a:hover{color:var(--cyan)}
+.meta{margin-top:30px;border-top:1px solid var(--line);display:grid}
+.meta>a,.meta>div{display:flex;align-items:center;gap:12px;min-height:46px;border-bottom:1px solid var(--line);text-decoration:none;font-size:13px}
+.meta small{margin-left:auto;font:12px var(--mono);color:var(--ink-2)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 0 rgba(123,217,160,.5);animation:pulse 2.4s var(--ease) infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(123,217,160,.45)}70%,100%{box-shadow:0 0 0 7px rgba(123,217,160,0)}}
+.meta>a:hover b{color:var(--cyan)}
+.meta b{font-weight:500}
+.tag{font:12px var(--mono);color:var(--ink);border:1px solid var(--line-2);border-radius:999px;padding:2px 9px}
+.legal{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:8px 22px;align-items:center;font-size:12px;color:var(--ink-2);padding-top:18px;border-top:1px solid var(--line)}
+.legal a{text-decoration:none}.legal a:hover{color:var(--ink);text-decoration:underline}
+.legal .brand{font:800 15px var(--font);color:var(--ink);letter-spacing:-.02em;margin-right:6px}
+@media (max-width:900px){footer{grid-template-columns:1fr;gap:8px}.end{grid-template-columns:1fr}}
+@media (max-width:640px){
+  .end{padding:32px 20px 28px}footer{padding:28px 20px 24px}
+  .cmd{font-size:13px}.screen{height:260px}.term{font-size:12.5px}
+  .row{grid-template-columns:10ch 1fr}
+  .cols{grid-template-columns:1fr 1fr;row-gap:26px}
+  .tbar b{display:none}
+}
+@media (prefers-reduced-motion:reduce){.cur,.dot{animation:none}*{transition-duration:1ms!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<section class="end" aria-label="Get started">
+  <div><h2>Ready when your CI is.</h2><p>Point Ferrule at a monorepo and the second build reads from cache. Most teams see their first hit inside four minutes.</p></div>
+  <div class="cmd"><span>ferrule init --remote</span><button type="button" id="copy">Copy</button></div>
+</section>
+<footer>
+  <div>
+    <p class="hint" id="hint">Type <kbd>help</kbd>, <kbd>docs</kbd> or <kbd>status</kbd> below. Every command has a plain link to the right.</p>
+    <div class="term" id="term">
+      <div class="tbar" aria-hidden="true"><i></i><i></i><i></i><span>~/ferrule</span><b>guest · 80×18</b></div>
+      <div class="screen" id="screen">
+        <div id="log" role="log" aria-live="polite" aria-label="Command output"></div>
+        <div class="ln prompt"><span class="ps">ferrule <em>~</em> $</span><label class="field"><span class="vh" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Command</span><input id="cli" autocomplete="off" autocapitalize="off" spellcheck="false" maxlength="48" aria-describedby="hint"><span class="cur" id="cur" aria-hidden="true"></span></label></div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <nav class="cols" aria-label="Footer">
+      <div><h3>Product</h3><ul><li><a href="#">Remote cache</a></li><li><a href="#">Build queue</a></li><li><a href="#">Pricing</a></li><li><a href="#">Changelog</a></li></ul></div>
+      <div><h3>Developers</h3><ul><li><a href="#">Docs</a></li><li><a href="#">CLI reference</a></li><li><a href="#">API</a></li><li><a href="#">Examples</a></li></ul></div>
+      <div><h3>Company</h3><ul><li><a href="#">About</a></li><li><a href="#">Careers</a></li><li><a href="#">Security</a></li><li><a href="#">Contact</a></li></ul></div>
+    </nav>
+    <div class="meta">
+      <a href="#"><span class="dot" aria-hidden="true"></span><b>All systems normal</b><small>99.98% · 90 days</small></a>
+      <div><span class="tag">v3.2.1</span>Released 21 October 2026<small>Apache-2.0</small></div>
+      <a href="#"><span class="tag">forum</span><b>Office hours, Thursdays 16:00 CET</b><small>4,182 members</small></a>
+    </div>
+  </div>
+  <div class="legal"><span class="brand">ferrule</span><span>© 2026 Ferrule Labs, Inc.</span><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Responsible disclosure</a><span>Made in Rotterdam and Montréal</span></div>
+</footer>
+<script>
+(function(){
+  var log=document.getElementById('log'),cli=document.getElementById('cli'),cur=document.getElementById('cur'),scr=document.getElementById('screen');
+  if(!log||!cli)return;
+  var L=function(cmd,desc){return['link',cmd,desc]};
+  var C={
+    help:[['out','Commands. Each one is also a link on this page.'],['row','docs','Guides, CLI and API reference'],['row','status','Cache, queue and dashboard health'],['row','changelog','What shipped in v3.2'],['row','pricing','Plans, from free for one repo'],['row','contact','Talk to a person'],['row','clear','Clear this window']],
+    docs:[L('Quickstart','Four minutes, one repo'),L('CLI reference','ferrule build, ferrule cache, ferrule why'),L('API','REST and webhooks, v2'),L('Self-hosting','Run the cache on your own buckets')],
+    status:[['ok','● All systems normal'],['out','cache    p95 41 ms   eu-west, us-east, ap-south'],['out','queue    312 jobs    median wait 6 s'],['out','uptime   99.98% over the last 90 days'],L('Status page','Incidents and subscriptions')],
+    changelog:[['out','v3.2.1  21 Oct 2026  Fix cache key drift on Windows paths'],['out','v3.2.0  14 Oct 2026  ferrule why explains every miss'],L('Full changelog','Every release since 0.4')],
+    pricing:[['out','Solo        $0       1 repo, 10 GB cache'],['out','Team        $24      per seat a month, 500 GB'],['out','Enterprise  custom   SSO, audit log, own region'],L('Compare plans','')],
+    contact:[L('hello@ferrule.dev','Replies within one working day'),L('Book a call','30 minutes with an engineer')]
+  };
+  var names=Object.keys(C).concat(['clear']),hist=[],hi=0;
+  function line(cls,html){var d=document.createElement('p');d.className='ln '+cls;d.innerHTML=html;log.appendChild(d);return d}
+  function esc(s){return s.replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+  function row(k,v,isLink){return '<span>'+(isLink?'<a href="#">'+esc(k)+'</a>':'<button type="button" class="run" data-c="'+esc(k)+'">'+esc(k)+'</button>')+'</span><span>'+esc(v)+'</span>'}
+  function run(raw){
+    var c=raw.trim().toLowerCase();
+    line('','<span class="ps">ferrule <em>~</em> $</span> '+esc(raw));
+    if(!c)return;
+    if(c==='clear'){log.innerHTML='';return}
+    var out=C[c];
+    if(!out){line('err','command not found: '+esc(c.slice(0,24))+'. Try help, or use the links.');return}
+    out.forEach(function(o){
+      if(o[0]==='row')line('row',row(o[1],o[2]));
+      else if(o[0]==='link')line('row',row(o[1],o[2],true));
+      else line(o[0],esc(o[1]));
+    });
+    line('','');
+  }
+  function sync(){cur.style.setProperty('--n',cli.selectionStart==null?cli.value.length:cli.selectionStart)}
+  function down(){scr.scrollTop=scr.scrollHeight}
+  cli.addEventListener('keydown',function(e){
+    if(e.key==='Enter'){var v=cli.value;if(v.trim()){hist.push(v)}hi=hist.length;run(v);cli.value='';sync();down();e.preventDefault()}
+    else if(e.key==='ArrowUp'&&hist.length){hi=Math.max(0,hi-1);cli.value=hist[hi];e.preventDefault();requestAnimationFrame(function(){cli.setSelectionRange(cli.value.length,cli.value.length);sync()})}
+    else if(e.key==='ArrowDown'&&hist.length){hi=Math.min(hist.length,hi+1);cli.value=hist[hi]||'';e.preventDefault();sync()}
+    else if(e.key==='Tab'&&cli.value){var m=names.filter(function(n){return n.indexOf(cli.value.toLowerCase())===0});if(m.length===1){cli.value=m[0];e.preventDefault();sync()}}
+    else if(e.key.toLowerCase()==='l'&&e.ctrlKey){log.innerHTML='';e.preventDefault()}
+    requestAnimationFrame(sync);
+  });
+  ['input','click','keyup','focus'].forEach(function(t){cli.addEventListener(t,sync)});
+  document.getElementById('term').addEventListener('click',function(e){if(e.target.tagName!=='A'&&e.target.tagName!=='BUTTON')cli.focus({preventScroll:true})});
+  log.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('.run');if(b){run(b.dataset.c);down();cli.focus({preventScroll:true});e.stopPropagation()}});
+  line('out','Last login Tue 28 Oct 09:14 on ttys004');
+  run('help');down();
+  var copy=document.getElementById('copy');
+  if(copy)copy.addEventListener('click',function(){
+    try{navigator.clipboard&&navigator.clipboard.writeText('ferrule init --remote').catch(function(){})}catch(_){}
+    copy.textContent='Copied';setTimeout(function(){copy.textContent='Copy'},1600);
+  });
+})();
+</script>
+</body>
+</html>

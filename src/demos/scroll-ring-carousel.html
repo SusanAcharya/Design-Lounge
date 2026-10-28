@@ -1,0 +1,194 @@
+<!-- Design Lounge piece: scroll-ring-carousel · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Northlight Film Week · Competition</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0d0c0b;--panel:#171513;--line:#2b2825;--ink:#f2ebe0;--dim:#a59d90;--acc:#f2a33a;--acc-ink:#1b1206;
+  --font:"Big Shoulders Display",system-ui,sans-serif;
+  --cw:280px;--ch:400px;--r:470px;--a:0deg;
+  --ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{background:var(--bg);color:var(--ink);font:500 18px/1.4 var(--font);overflow-x:clip;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--acc);outline-offset:3px}
+
+.top{position:fixed;z-index:10;top:0;left:0;right:0;height:60px;display:flex;align-items:center;gap:24px;padding:0 40px;background:var(--bg);border-bottom:1px solid var(--line)}
+.brand{font:900 22px/1 var(--font);letter-spacing:.06em;text-transform:uppercase;text-decoration:none}
+.brand span{color:var(--acc)}
+.when{font-size:16px;color:var(--dim);letter-spacing:.02em}
+.top nav{margin-left:auto;display:flex;gap:28px;font-weight:700;font-size:16px;letter-spacing:.08em;text-transform:uppercase}
+.top nav a{text-decoration:none;padding:8px 0}.top nav a:hover,.top nav a[aria-current]{color:var(--acc)}
+
+.reel{position:relative;height:calc(100vh + 9 * 46vh)}
+.stage{position:sticky;top:0;height:100vh;min-height:700px;padding-top:60px;overflow:hidden;display:grid;grid-template-rows:1fr auto;touch-action:pan-y;cursor:grab;outline:none}
+.stage:focus-visible{box-shadow:inset 0 0 0 2px var(--acc)}
+.stage.drag{cursor:grabbing}
+.scene{position:relative;perspective:1700px;perspective-origin:50% 45%}
+.ring{position:absolute;left:50%;top:50%;width:var(--cw);height:var(--ch);margin:calc(var(--ch) / -2) 0 0 calc(var(--cw) / -2);transform-style:preserve-3d;transform:translateZ(calc(var(--r) * -1)) rotateY(var(--a))}
+.card{position:absolute;inset:0;transform:rotateY(calc(var(--i) * 36deg)) translateZ(var(--r));backface-visibility:hidden;border-radius:4px;overflow:hidden;
+  filter:brightness(calc(.32 + var(--f, 0) * .68)) saturate(calc(.4 + var(--f, 0) * .6));box-shadow:0 30px 60px rgba(0,0,0,.5)}
+.card.on{box-shadow:0 0 0 1px rgba(242,235,224,.4),0 40px 80px rgba(0,0,0,.6)}
+.poster{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;padding:20px;background:var(--pb);color:var(--pf)}
+.poster svg{position:absolute;left:0;top:40px;width:100%;height:50%}
+.card.mute small,.card.mute h3{visibility:hidden}
+.poster small,.poster h3{position:relative}
+.poster small{font-weight:700;font-size:13px;letter-spacing:.14em;text-transform:uppercase}
+.poster h3{margin:0;font:900 52px/.86 var(--font);letter-spacing:-.01em;text-transform:uppercase}
+.floor{position:absolute;left:50%;bottom:6%;width:min(900px,90%);height:40px;transform:translateX(-50%);background:radial-gradient(closest-side,rgba(242,163,58,.12),transparent);pointer-events:none}
+
+.info{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr) auto;gap:40px;align-items:end;height:200px;padding:0 40px 36px}
+.info h2{margin:0;font:800 76px/.9 var(--font);letter-spacing:-.01em;text-transform:uppercase;text-wrap:balance}
+.kick{display:block;margin-bottom:8px;font-weight:700;font-size:14px;letter-spacing:.16em;text-transform:uppercase;color:var(--acc)}
+.facts{margin:0;display:grid;grid-template-columns:auto 1fr;gap:4px 20px;font-size:17px;padding-bottom:6px}
+.facts dt{color:var(--dim);font-weight:500;text-transform:uppercase;font-size:14px;letter-spacing:.1em;padding-top:2px}
+.facts dd{margin:0;font-weight:500}
+.ctl{display:flex;flex-direction:column;align-items:end;gap:14px;padding-bottom:6px}
+.row{display:flex;gap:8px;align-items:center}
+.step{width:44px;height:44px;border-radius:50%;border:1.5px solid #6f685e;display:grid;place-items:center}
+.step:hover{border-color:var(--ink)}
+.count{font-weight:700;font-size:16px;letter-spacing:.1em;color:var(--dim);min-width:64px;text-align:center}
+.count b{color:var(--ink)}
+.book{height:48px;padding:0 26px;border-radius:24px;background:var(--acc);color:var(--acc-ink);font-weight:800;font-size:18px;letter-spacing:.08em;text-transform:uppercase;display:inline-flex;align-items:center;text-decoration:none}
+.book:hover{background:#f7b55a}
+.hint{position:absolute;left:40px;top:84px;font-size:14px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+.after{padding:80px 40px 100px;border-top:1px solid var(--line);display:grid;grid-template-columns:1fr 1fr;gap:40px}
+.after h2{margin:0;font:800 48px/.95 var(--font);text-transform:uppercase}
+.after p{margin:0;max-width:520px;color:var(--dim)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);opacity:0;pointer-events:none}
+
+@media (max-width:820px){
+  :root{--cw:190px;--ch:272px;--r:310px}
+  .top{padding:0 16px}.when,.top nav{display:none}
+  .stage{min-height:640px}
+  .scene{perspective:1100px}
+  .poster{padding:14px}.poster h3{font-size:36px}.poster small{font-size:11px}
+  .info{grid-template-columns:1fr;gap:16px;height:auto;padding:0 16px 28px}
+  .info h2{font-size:54px;white-space:normal}
+  .ctl{flex-direction:row-reverse;justify-content:space-between;align-items:center}
+  .book{height:44px;padding:0 18px;font-size:16px}
+  .hint{left:16px;top:76px;font-size:12px}
+  .after{grid-template-columns:1fr;padding:56px 16px 72px}.after h2{font-size:36px}
+}
+@media (prefers-reduced-motion: reduce){.book,.step{transition:none}}
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="#">Northlight <span>Film Week</span></a>
+  <span class="when">6 to 15 November 2026 · Harbour Cinema, Kessel</span>
+  <nav aria-label="Festival"><a href="#" aria-current="page">Competition</a><a href="#">Shorts</a><a href="#">Passes</a></nav>
+</header>
+<main>
+  <section class="reel" id="reel" aria-labelledby="rh">
+    <h1 class="sr" id="rh">International competition, ten films</h1>
+    <div class="stage" id="stage" tabindex="0" role="region" aria-roledescription="carousel" aria-label="Competition films. Use left and right arrow keys.">
+      <span class="hint" aria-hidden="true">Competition · Scroll, drag or use arrow keys</span>
+      <div class="scene"><div class="ring" id="ring"></div><div class="floor"></div></div>
+      <div class="info">
+        <div><span class="kick" id="kick"></span><h2 id="title"></h2></div>
+        <dl class="facts" id="facts"></dl>
+        <div class="ctl">
+          <a class="book" href="#" id="book">Book seats</a>
+          <div class="row"><button class="step" id="prev" aria-label="Previous film"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 6l-6 6 6 6"/></svg></button><span class="count" id="count"></span><button class="step" id="next" aria-label="Next film"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg></button></div>
+        </div>
+      </div>
+      <p class="sr" aria-live="polite" id="live"></p>
+    </div>
+  </section>
+  <section class="after" aria-labelledby="ah"><h2 id="ah">Festival pass, 22 screenings</h2><p>One pass opens every competition screening, the shorts programme and the closing night at the Harbour Cinema. €96, or €60 for students and over-65s.</p></section>
+</main>
+<script>
+(() => {
+  const M = {
+    sun:'<circle cx="140" cy="230" r="70" fill="currentColor" opacity=".9"/><path d="M0 250h280M0 268h280M0 286h280M0 304h280" stroke="var(--pb)" stroke-width="7"/>',
+    grid:'<path d="M40 120h200v200H40z M90 120v200M140 120v200M190 120v200M40 170h200M40 220h200M40 270h200" fill="none" stroke="currentColor" stroke-width="3" opacity=".7"/>',
+    waves:'<path d="M0 240q35-24 70 0t70 0 70 0 70 0M0 270q35-24 70 0t70 0 70 0 70 0M0 300q35-24 70 0t70 0 70 0 70 0" fill="none" stroke="currentColor" stroke-width="6"/>',
+    bars:'<path d="M60 110v220M100 150v180M140 90v240M180 170v160M220 130v200" stroke="currentColor" stroke-width="16" opacity=".85"/>',
+    peak:'<path d="M20 330L140 120 260 330z" fill="currentColor"/><path d="M110 172L140 120 170 172 150 160 140 176 128 160z" fill="var(--pb)"/>',
+    dots:'<g fill="currentColor"><circle cx="70" cy="160" r="10"/><circle cx="110" cy="190" r="14"/><circle cx="150" cy="220" r="18"/><circle cx="190" cy="250" r="22"/><circle cx="230" cy="280" r="26"/></g>',
+    ring:'<circle cx="140" cy="210" r="90" fill="none" stroke="currentColor" stroke-width="18"/><circle cx="140" cy="210" r="30" fill="currentColor"/>',
+    moon:'<circle cx="150" cy="200" r="80" fill="currentColor"/><circle cx="182" cy="180" r="72" fill="var(--pb)"/>',
+    tree:'<path d="M140 330V190M140 230l-50-40M140 210l46-44M140 260l-36-26" stroke="currentColor" stroke-width="9" stroke-linecap="round" fill="none"/><circle cx="90" cy="186" r="14" fill="currentColor"/><circle cx="188" cy="162" r="14" fill="currentColor"/>',
+    road:'<path d="M100 330L136 130h8L180 330z" fill="currentColor"/><path d="M140 300v-20M140 250v-16M140 206v-12" stroke="var(--pb)" stroke-width="4"/>'
+  };
+  const F = [
+    ['The Salt Year','Ilse Varga','Hungary','104 min','Fri 7 Nov 19:30 · Sun 9 Nov 16:00','#b23a24','#f4e6cf','sun'],
+    ['Glasshouse','Tomas Rehn','Sweden','96 min','Fri 7 Nov 21:45 · Mon 10 Nov 18:00','#1f4d45','#e8efe0','grid'],
+    ['Low Tide Choir','Ama Owusu','Ghana','88 min','Sat 8 Nov 14:00 · Tue 11 Nov 20:15','#e3b341','#1b1712','waves'],
+    ['Seven Rooms North','Kaito Sena','Japan','121 min','Sat 8 Nov 19:00 · Wed 12 Nov 17:30','#22303f','#f1e3c8','bars'],
+    ['Paper Wolves','Lucía Benet','Spain','99 min','Sat 8 Nov 21:30 · Thu 13 Nov 19:00','#ede3d0','#a92f1c','peak'],
+    ['Night Shift at Kessel','Mirek Dvorak','Czechia','112 min','Sun 9 Nov 20:00 · Fri 14 Nov 22:00','#141619','#f0a33a','dots'],
+    ['A Field Undone','Hedda Lunde','Norway','93 min','Mon 10 Nov 20:30 · Sat 15 Nov 13:00','#5f6b33','#f3efdc','ring'],
+    ['The Long Quiet','Omar Haddad','Lebanon','108 min','Tue 11 Nov 18:00 · Sat 15 Nov 16:30','#3b1f2b','#f0d8c8','moon'],
+    ['Tin Orchard','Priya Raman','India','101 min','Wed 12 Nov 20:00 · Fri 14 Nov 15:30','#d9774a','#1d140f','tree'],
+    ['Last Bus to Ostra','Jonas Kiel','Denmark','85 min','Thu 13 Nov 21:30 · Sat 15 Nov 19:00','#2e5b8a','#f2ece0','road']
+  ];
+  const N = F.length, ring = document.getElementById('ring'), reel = document.getElementById('reel'), stage = document.getElementById('stage');
+  ring.innerHTML = F.map((f, i) => `<div class="card" style="--i:${i}" data-i="${i}" aria-hidden="true"><div class="poster" style="--pb:${f[5]};--pf:${f[6]}"><svg viewBox="0 90 280 250" preserveAspectRatio="xMidYMid meet" style="color:${f[6]}">${M[f[7]]}</svg><small>${f[2]} · ${f[3]}</small><h3>${f[0]}</h3></div></div>`).join('');
+  const cards = [...ring.children], $ = (id) => document.getElementById(id);
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let cur = -1, dragging = false, moved = false, sx = 0, sf = 0, lastX = 0, lastT = 0, vx = 0, settle = 0;
+  const span = () => reel.offsetHeight - innerHeight;
+  const top0 = () => reel.getBoundingClientRect().top + scrollY;
+  const posOf = (k) => top0() + span() * (k / (N - 1));
+  const fNow = () => Math.min(N - 1, Math.max(0, (scrollY - top0()) / span() * (N - 1)));
+  const show = (i) => {
+    if (i === cur) return; cur = i; const f = F[i];
+    $('kick').textContent = 'Competition · ' + f[2];
+    $('title').textContent = f[0];
+    $('facts').innerHTML = `<dt>Director</dt><dd>${f[1]}</dd><dt>Runtime</dt><dd>${f[3]}</dd><dt>Screens</dt><dd>${f[4]}</dd>`;
+    $('count').innerHTML = `<b>${String(i + 1).padStart(2, '0')}</b> / ${N}`;
+    $('book').setAttribute('aria-label', 'Book seats for ' + f[0]);
+    $('live').textContent = `Film ${i + 1} of ${N}: ${f[0]}, ${f[1]}`;
+    cards.forEach((c, k) => c.classList.toggle('on', k === i));
+  };
+  const paint = (f) => {
+    const v = reduce ? Math.round(f) : f;
+    ring.style.setProperty('--a', (-v * 36) + 'deg');
+    cards.forEach((c, k) => { let d = k - v; d -= N * Math.round(d / N); const f = Math.max(0, Math.cos(d * Math.PI / 5)); c.style.setProperty('--f', f.toFixed(3)); c.classList.toggle('mute', k !== Math.round(v)); });
+    show(Math.round(f));
+  };
+  const go = (k) => { k = Math.max(0, Math.min(N - 1, k)); scrollTo({ top: posOf(k), behavior: reduce ? 'auto' : 'smooth' }); };
+  let raf = 0;
+  addEventListener('scroll', () => {
+    if (!raf) raf = requestAnimationFrame(() => { raf = 0; paint(fNow()); });
+    clearTimeout(settle);
+    if (!dragging) settle = setTimeout(() => { const r = reel.getBoundingClientRect(); if (r.top <= 1 && r.bottom >= innerHeight - 1) { const f = fNow(); if (Math.abs(f - Math.round(f)) > .02) go(Math.round(f)); } }, 160);
+  }, { passive: true });
+  stage.addEventListener('pointerdown', (e) => {
+    if (e.button !== 0 || e.target.closest('a,button')) return;
+    dragging = true; moved = false; sx = lastX = e.clientX; lastT = e.timeStamp; vx = 0; sf = fNow();
+    stage.setPointerCapture(e.pointerId); stage.classList.add('drag');
+  });
+  stage.addEventListener('pointermove', (e) => {
+    if (!dragging) return;
+    const dt = Math.max(1, e.timeStamp - lastT); vx = (e.clientX - lastX) / dt; lastX = e.clientX; lastT = e.timeStamp;
+    if (Math.abs(e.clientX - sx) > 6) moved = true;
+    const f = Math.min(N - 1, Math.max(0, sf - (e.clientX - sx) / 220));
+    scrollTo({ top: top0() + span() * f / (N - 1), behavior: 'auto' });
+  });
+  const end = () => { if (!dragging) return; dragging = false; stage.classList.remove('drag'); go(Math.round(fNow() - vx * 1.2)); };
+  stage.addEventListener('pointerup', end); stage.addEventListener('pointercancel', end);
+  stage.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') { e.preventDefault(); go(Math.round(fNow()) + 1); }
+    else if (e.key === 'ArrowLeft') { e.preventDefault(); go(Math.round(fNow()) - 1); }
+    else if (e.key === 'Home') { e.preventDefault(); go(0); } else if (e.key === 'End') { e.preventDefault(); go(N - 1); }
+  });
+  $('prev').onclick = () => go(cur - 1); $('next').onclick = () => go(cur + 1);
+  ring.addEventListener('click', (e) => { const c = e.target.closest('.card'); if (moved) return; if (c && +c.dataset.i !== cur) go(+c.dataset.i); });
+  $('book').onclick = (e) => { e.preventDefault(); $('book').textContent = 'Seats held'; setTimeout(() => { $('book').textContent = 'Book seats'; }, 1600); };
+  addEventListener('resize', () => paint(fNow()));
+  paint(fNow());
+})();
+</script>
+</body>
+</html>

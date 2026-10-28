@@ -1,0 +1,215 @@
+<!-- Design Lounge piece: features-stacked-3d-tabs · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Nightjar: features as a stack</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0E1624; --bg-2:#152033; --line:#26344C; --line-2:#3A4B68;
+  --ink:#EEF2F8; --ink-2:#AFBACB; --ink-3:#8C99AE;
+  --card:#F5F1E8; --card-2:#EAE4D6; --card-line:#D8D0BF; --c-ink:#18202E; --c-ink-2:#4C5566; --c-ink-3:#646C7B;
+  --accent:#FF8B78; --accent-ink:#2A0E08; --accent-deep:#B83A26;
+  --font:"Gabarito",system-ui,sans-serif;
+  --r:16px; --r-sm:8px; --step-y:-34px; --step-z:-90px;
+  --ease:cubic-bezier(.2,.7,.2,1); --expo:cubic-bezier(.16,1,.3,1); --t:160ms; --t-stack:640ms;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:var(--bg);color:var(--ink);font:400 15px/1.5 var(--font);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.wrap{max-width:1200px;margin:0 auto;padding:34px 44px 22px;display:grid;grid-template-columns:400px 1fr;gap:56px;align-items:center}
+.kicker{font-size:13px;font-weight:600;color:var(--accent);margin:0 0 14px;letter-spacing:.02em}
+h2{font-size:clamp(34px,3.8vw,46px);line-height:1.02;letter-spacing:-.03em;font-weight:800;margin:0 0 14px}
+.lede{color:var(--ink-2);margin:0 0 24px;font-size:16px;max-width:36ch}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+[role=tablist]{display:grid;gap:4px;border-left:1px solid var(--line)}
+[role=tab]{all:unset;box-sizing:border-box;position:relative;display:grid;grid-template-columns:1fr auto;gap:2px 12px;padding:12px 16px 12px 20px;cursor:pointer;border-radius:0 var(--r-sm) var(--r-sm) 0;transition:background var(--t) var(--ease)}
+[role=tab]:hover{background:var(--bg-2)}
+[role=tab] b{font-size:18px;font-weight:700;color:var(--ink-2);transition:color var(--t) var(--ease)}
+[role=tab] span{grid-column:1;font-size:14px;color:var(--ink-3)}
+[role=tab] kbd{grid-row:1;grid-column:2;font:500 12px/1 var(--font);color:var(--ink-3);border:1px solid var(--line-2);border-radius:4px;padding:4px 6px;align-self:center}
+[role=tab][aria-selected=true]{background:var(--bg-2)}
+[role=tab][aria-selected=true] b{color:var(--ink)}
+[role=tab][aria-selected=true] span{color:var(--ink-2)}
+[role=tab]::before{content:"";position:absolute;left:-1px;top:10px;bottom:10px;width:2px;background:var(--accent);transform:scaleY(0);transition:transform 240ms var(--expo)}
+[role=tab][aria-selected=true]::before{transform:scaleY(1)}
+[role=tab]:focus-visible{outline-offset:-2px}
+.hint{margin-top:18px;font-size:13px;color:var(--ink-3)}
+/* stack */
+.stage{position:relative;height:540px;perspective:1500px;perspective-origin:50% -30%}
+.stack{position:absolute;inset:118px 0 0;transform-style:preserve-3d}
+.card{position:absolute;inset:0 0 auto;height:400px;background:var(--card);color:var(--c-ink);border-radius:var(--r);overflow:hidden;transform-origin:50% 0;
+  transform:translateY(calc(var(--d) * var(--step-y))) translateZ(calc(var(--d) * var(--step-z))) rotateX(calc(var(--d) * 1.5deg));
+  transition:transform var(--t-stack) var(--expo),box-shadow var(--t-stack) var(--expo);box-shadow:0 30px 60px -30px rgba(0,0,0,.7),0 0 0 1px rgba(255,255,255,.04);cursor:pointer}
+.card::after{content:"";position:absolute;inset:0;background:var(--bg);opacity:calc(var(--d) * .2);transition:opacity var(--t-stack) var(--expo);pointer-events:none}
+.card[data-d="0"]{cursor:default}
+.ch{display:flex;justify-content:space-between;align-items:center;height:56px;padding:0 22px;border-bottom:1px solid var(--card-line);font-weight:700;font-size:16px}
+.ch small{font-weight:500;font-size:13px;color:var(--c-ink-3);white-space:nowrap;flex:none}
+.cb{padding:20px 22px}
+.btn{font:700 14px/1 var(--font);height:42px;padding:0 18px;border-radius:21px;border:0;background:var(--accent);color:var(--accent-ink);cursor:pointer}
+.btn:hover{background:#FF9F8F}
+/* cabins */
+.berths{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.berth{all:unset;box-sizing:border-box;border:1px solid #857C6B;border-radius:12px;padding:14px;cursor:pointer;background:#FBF8F2;display:flex;flex-direction:column;gap:8px}
+.berth[aria-checked=true]{border-color:var(--c-ink);box-shadow:inset 0 0 0 1px var(--c-ink)}
+.plan{height:78px;border-radius:8px;background:var(--card-2);position:relative;overflow:hidden}
+.plan i{position:absolute;background:#C9BFAB;border-radius:3px}
+.berth[aria-checked=true] .plan i.me{background:var(--accent)}
+.berth b{font-size:15px}
+.berth span{font-size:13px;color:var(--c-ink-2)}
+.berth strong{font-size:22px;font-weight:800;letter-spacing:-.02em}
+.tot{display:flex;justify-content:space-between;align-items:center;margin-top:18px;padding-top:16px;border-top:1px solid var(--card-line)}
+.tot div{font-size:13px;color:var(--c-ink-2)}
+.tot div b{display:block;font-size:26px;color:var(--c-ink);letter-spacing:-.02em}
+/* route */
+.route{list-style:none;margin:0;padding:0;position:relative}
+.route::before{content:"";position:absolute;left:62px;top:10px;bottom:10px;width:2px;background:var(--c-ink)}
+.route li{display:grid;grid-template-columns:48px 28px 1fr auto;align-items:center;padding:7px 0;font-size:14px}
+.route time{font-weight:700;font-variant-numeric:tabular-nums}
+.route .dot{width:12px;height:12px;border-radius:50%;background:var(--card);border:2px solid var(--c-ink);justify-self:center;position:relative;left:-1px}
+.route .big .dot{width:16px;height:16px;background:var(--c-ink)}
+.route .sleep{color:var(--c-ink-3);font-size:13px}
+.route .sleep .dot{border-style:dotted}
+.route em{font-style:normal;font-size:12px;color:var(--c-ink-3)}
+/* dining */
+.menu{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.dish{border:1px solid var(--card-line);border-radius:12px;padding:14px;background:#FBF8F2}
+.dish h4{margin:0 0 4px;font-size:16px}
+.dish p{margin:0 0 10px;font-size:13px;color:var(--c-ink-2)}
+.plate{height:70px;border-radius:8px;margin-bottom:12px;background:radial-gradient(circle at 50% 55%,#fff 0 22px,#E9E1D0 23px 30px,transparent 31px),#D9CDB5}
+.plate.b{background:radial-gradient(circle at 40% 55%,#F2C14E 0 9px,transparent 10px),radial-gradient(circle at 50% 55%,#fff 0 22px,#E9E1D0 23px 30px,transparent 31px),#C9D6C4}
+.qty{display:flex;align-items:center;gap:10px}
+.qty button{all:unset;width:32px;height:32px;border-radius:50%;border:1px solid var(--c-ink-3);display:grid;place-items:center;cursor:pointer;font-weight:700}
+.qty output{min-width:16px;text-align:center;font-weight:700}
+/* ticket */
+.pass{display:grid;grid-template-columns:1fr 150px;gap:20px;align-items:start}
+.pass dl{display:grid;grid-template-columns:1fr 1fr;gap:12px 16px;margin:0}
+.pass dt{font-size:12px;color:var(--c-ink-3)}
+.pass dd{margin:0;font-size:18px;font-weight:700}
+.big2{font-size:40px;font-weight:800;letter-spacing:-.03em;line-height:1;margin:0 0 16px}
+.big2 span{color:var(--accent-deep)}
+.qr{width:150px;height:150px;display:grid;grid-template-columns:repeat(21,1fr);gap:0;padding:9px;background:#fff;border-radius:8px;border:1px solid var(--card-line)}
+.qr i{background:var(--c-ink);border-radius:1px}
+.qr i.o{background:transparent}
+.perf{margin-top:22px;padding-top:16px;border-top:2px dashed var(--card-line);display:flex;justify-content:space-between;gap:12px;font-size:13px;color:var(--c-ink-2)}
+.perf b{color:var(--c-ink)}
+.perf span:last-child{flex:none;text-align:right;white-space:nowrap}
+.foot{grid-column:1/-1;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:16px;font-size:13px;color:var(--ink-3)}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important}}
+@media (max-width:1023px){.wrap{grid-template-columns:1fr;gap:28px}.stage{height:560px}}
+@media (max-width:760px){
+  .wrap{padding:32px 16px}
+  .stage{height:580px;perspective:1100px}
+  .stack{inset:90px 0 0}
+  .card{height:480px}
+  :root{--step-y:-26px;--step-z:-70px}
+  .berths,.menu{grid-template-columns:1fr}
+  .berth{flex-direction:row;align-items:center;padding:10px}.plan{display:none}.berth strong{margin-left:auto;font-size:18px}
+  .pass{grid-template-columns:1fr}.qr{width:120px;height:120px}
+  .dish .plate{display:none}
+  [role=tab] kbd{display:none}
+  .cb{padding:16px}
+}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div>
+    <p class="kicker">Nightjar sleeper trains</p>
+    <h2>Go to sleep in Amsterdam. Wake up in Vienna.</h2>
+    <p class="lede">Everything for the night in one booking: your berth, the route while you sleep, breakfast and a ticket that works without signal.</p>
+    <div role="tablist" aria-label="Booking features" aria-orientation="vertical" id="tabs">
+      <button role="tab" id="tb0" aria-controls="cd0" aria-selected="true"><b>Pick your berth</b><kbd>1</kbd><span>Seat, couchette or a cabin with a shower</span></button>
+      <button role="tab" id="tb1" aria-controls="cd1" aria-selected="false" tabindex="-1"><b>See the night</b><kbd>2</kbd><span>Every stop, and when the lights go down</span></button>
+      <button role="tab" id="tb2" aria-controls="cd2" aria-selected="false" tabindex="-1"><b>Order breakfast</b><kbd>3</kbd><span>Served to the cabin 40 minutes out</span></button>
+      <button role="tab" id="tb3" aria-controls="cd3" aria-selected="false" tabindex="-1"><b>Board offline</b><kbd>4</kbd><span>The ticket lives on your phone, no signal needed</span></button>
+    </div>
+    <p class="hint">Arrow keys move between tabs. Click a card behind to bring it forward.</p>
+  </div>
+
+  <div class="stage">
+    <div class="stack" id="stack">
+      <section class="card" id="cd0" role="tabpanel" aria-labelledby="tb0" data-i="0">
+        <div class="ch">NJ 421, Amsterdam to Vienna<small>Fri 14 Nov, 19:58</small></div>
+        <div class="cb">
+          <div class="berths" role="radiogroup" aria-label="Berth" id="berths">
+            <button class="berth" role="radio" aria-checked="false" data-p="89"><span class="plan" aria-hidden="true"><i style="left:8%;top:14%;width:38%;height:30%"></i><i style="left:54%;top:14%;width:38%;height:30%"></i><i class="me" style="left:8%;top:56%;width:38%;height:30%"></i><i style="left:54%;top:56%;width:38%;height:30%"></i></span><b>Couchette, 4</b><span>Shared, linen included</span><strong>€89</strong></button>
+            <button class="berth" role="radio" aria-checked="true" data-p="164"><span class="plan" aria-hidden="true"><i class="me" style="left:8%;top:14%;width:84%;height:30%"></i><i style="left:8%;top:56%;width:84%;height:30%"></i></span><b>Sleeper, 2</b><span>Private, washbasin</span><strong>€164</strong></button>
+            <button class="berth" role="radio" aria-checked="false" data-p="238"><span class="plan" aria-hidden="true"><i class="me" style="left:8%;top:14%;width:60%;height:72%"></i><i style="left:74%;top:14%;width:18%;height:72%;background:#A9C2CC"></i></span><b>Deluxe, 1</b><span>Shower and toilet</span><strong>€238</strong></button>
+          </div>
+          <div class="tot"><div>Total for 1 traveller<b id="tot">€164</b></div><button class="btn" type="button">Hold this berth</button></div>
+        </div>
+      </section>
+      <section class="card" id="cd1" role="tabpanel" aria-labelledby="tb1" data-i="1">
+        <div class="ch">The night, stop by stop<small>12h 14m</small></div>
+        <div class="cb">
+          <ol class="route">
+            <li class="big"><time>19:58</time><i class="dot"></i><b>Amsterdam Centraal</b><em>platform 11b</em></li>
+            <li><time>21:24</time><i class="dot"></i><span>Arnhem</span><em>last boarding</em></li>
+            <li><time>23:02</time><i class="dot"></i><span>Cologne</span><em>lights dim at 23:30</em></li>
+            <li class="sleep"><time>01:40</time><i class="dot"></i><span>Frankfurt, no doors open</span><em>quiet hours</em></li>
+            <li class="sleep"><time>04:55</time><i class="dot"></i><span>Nuremberg, no doors open</span><em>quiet hours</em></li>
+            <li><time>06:48</time><i class="dot"></i><span>Linz</span><em>breakfast from 06:30</em></li>
+            <li class="big"><time>08:12</time><i class="dot"></i><b>Wien Hauptbahnhof</b><em>3 min walk to U1</em></li>
+          </ol>
+        </div>
+      </section>
+      <section class="card" id="cd2" role="tabpanel" aria-labelledby="tb2" data-i="2">
+        <div class="ch">Breakfast, cabin 7, berth 2<small>order by 22:00</small></div>
+        <div class="cb">
+          <div class="menu">
+            <div class="dish"><div class="plate" aria-hidden="true"></div><h4>Bakery basket</h4><p>Two rolls, butter, apricot jam, coffee or tea</p><div class="qty"><button type="button" aria-label="One fewer bakery basket" data-q="-1">−</button><output id="q0">1</output><button type="button" aria-label="One more bakery basket" data-q="1">+</button><span style="margin-left:auto;font-weight:700">€9.50</span></div></div>
+            <div class="dish"><div class="plate b" aria-hidden="true"></div><h4>Eggs and Bergkäse</h4><p>Soft eggs, mountain cheese, rye, orange juice</p><div class="qty"><button type="button" aria-label="One fewer eggs and cheese" data-q="-1">−</button><output id="q1">0</output><button type="button" aria-label="One more eggs and cheese" data-q="1">+</button><span style="margin-left:auto;font-weight:700">€13.00</span></div></div>
+          </div>
+          <div class="tot"><div>Served 07:32, near Linz<b id="bf">€9.50</b></div><button class="btn" type="button">Add to booking</button></div>
+        </div>
+      </section>
+      <section class="card" id="cd3" role="tabpanel" aria-labelledby="tb3" data-i="3">
+        <div class="ch">Ticket, works offline<small>saved 28 Oct, 18:40</small></div>
+        <div class="cb">
+          <div class="pass">
+            <div><p class="big2">AMS <span>to</span> VIE</p>
+              <dl><div><dt>Passenger</dt><dd>Lotte van Raalte</dd></div><div><dt>Train</dt><dd>NJ 421</dd></div><div><dt>Coach, cabin</dt><dd>34, cabin 7</dd></div><div><dt>Berth</dt><dd>2, lower</dd></div><div><dt>Boards</dt><dd>19:40</dd></div><div><dt>Booking</dt><dd>K7Q-2LX</dd></div></dl></div>
+            <div class="qr" id="qr" role="img" aria-label="Ticket code K7Q-2LX"></div>
+          </div>
+          <div class="perf"><span>Show at coach 34. Valid offline until <b>08:12, Sat 15 Nov</b>.</span><span>Single ticket</span></div>
+        </div>
+      </section>
+    </div>
+  </div>
+  <div class="foot"><span>Nightjar Rail, 31 night routes from 9 cities</span><span>Average rating 4.6 from 18,204 sleepers this year</span></div>
+</main>
+<script>
+(function(){
+  var tabs=[].slice.call(document.querySelectorAll('[role=tab]')),cards=[].slice.call(document.querySelectorAll('.card')),n=cards.length,cur=0;
+  function show(i,focus){cur=(i+n)%n;
+    tabs.forEach(function(t,k){var on=k===cur;t.setAttribute('aria-selected',on);t.tabIndex=on?0:-1;});
+    cards.forEach(function(c,k){var d=(k-cur+n)%n;c.style.setProperty('--d',d);c.dataset.d=d;c.style.zIndex=n-d;
+      if(d)c.setAttribute('aria-hidden','true');else c.removeAttribute('aria-hidden');[].forEach.call(c.children,function(ch){ch.inert=d>0;});});
+    if(focus)tabs[cur].focus();}
+  tabs.forEach(function(t,k){t.addEventListener('click',function(){show(k)});
+    t.addEventListener('keydown',function(e){var m={ArrowDown:1,ArrowRight:1,ArrowUp:-1,ArrowLeft:-1};
+      if(e.key in m){e.preventDefault();show(k+m[e.key],true);}else if(e.key==='Home'){e.preventDefault();show(0,true);}else if(e.key==='End'){e.preventDefault();show(n-1,true);}});});
+  document.getElementById('stack').addEventListener('click',function(e){var c=e.target.closest('.card');if(c&&c.dataset.d!=='0')show(+c.dataset.i);});
+  addEventListener('keydown',function(e){if(/^[1-4]$/.test(e.key)&&!e.target.closest('input,textarea'))show(+e.key-1);});
+  // berths
+  var berths=document.getElementById('berths');
+  berths.addEventListener('click',function(e){var b=e.target.closest('.berth');if(!b)return;[].forEach.call(berths.children,function(x){x.setAttribute('aria-checked',x===b)});document.getElementById('tot').textContent='€'+b.dataset.p;});
+  // breakfast
+  var q=[1,0],pr=[9.5,13];
+  [].forEach.call(document.querySelectorAll('.qty'),function(row,k){row.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;q[k]=Math.max(0,Math.min(4,q[k]+ +b.dataset.q));
+    document.getElementById('q'+k).textContent=q[k];document.getElementById('bf').textContent='€'+(q[0]*pr[0]+q[1]*pr[1]).toFixed(2);});});
+  // ticket code, seeded
+  var qr=document.getElementById('qr'),s=421,h='';
+  function fin(x,y){var c=[[3,3],[17,3],[3,17]];for(var j=0;j<3;j++){var d=Math.max(Math.abs(x-c[j][0]),Math.abs(y-c[j][1]));if(d<=4)return d===3||d<=1?1:0;}return -1;}
+  for(var i=0;i<441;i++){s=(s*1103515245+12345)%2147483648;var f=fin(i%21,Math.floor(i/21)),on=f<0?(s>>16)%5<2:f===1;h+='<i'+(on?'':' class="o"')+'></i>';}
+  qr.innerHTML=h;
+  show(0);
+})();
+</script>
+</body>
+</html>

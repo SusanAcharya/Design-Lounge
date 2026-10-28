@@ -1,0 +1,165 @@
+<!-- Design Lounge piece: fintech-metal-card-landing · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Metal card landing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Josefin+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0F1012;--bg-2:#16171A;--line:#2A2B2F;--ink:#EDE8DF;--ink-2:#B3ADA3;--ink-3:#99938A;
+  --accent:#7FB8A4;--accent-ink:#0C1A15;--accent-hi:#97CBB8;
+  --ti-1:#8E9296;--ti-2:#C9CCCE;--ti-3:#5E6266;--ti-ink:#1C1E21;
+  --display:"Bodoni Moda",Didot,serif;--sans:"Josefin Sans",system-ui,sans-serif;
+  --pad:56px;--r:4px;
+  --ease:cubic-bezier(.2,.7,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);--t-fast:180ms;--t-tilt:600ms;--t-sweep:1400ms;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+html{background:var(--bg)}
+body{background:var(--bg);color:var(--ink);font:400 17px/1.55 var(--sans);-webkit-font-smoothing:antialiased;font-variant-numeric:lining-nums tabular-nums;overflow-x:hidden}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.nav{height:76px;display:flex;align-items:center;gap:36px;padding:0 var(--pad);border-bottom:1px solid var(--line)}
+.logo{font:700 15px/1 var(--sans);letter-spacing:.42em;text-decoration:none;padding-top:3px}
+.nav ul{display:flex;gap:28px;list-style:none;margin:0;padding:0;font-size:15px;color:var(--ink-2)}
+.nav ul a{text-decoration:none;padding:6px 0}
+.nav ul a:hover{color:var(--ink)}
+.nav .sp{flex:1}
+.nav .si{font-size:15px;text-decoration:none;color:var(--ink-2)}
+.ghost{height:42px;padding:2px 20px 0;border:1px solid var(--ink-3);border-radius:var(--r);display:inline-flex;align-items:center;font:600 14px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;text-decoration:none;transition:border-color var(--t-fast) var(--ease)}
+.ghost:hover{border-color:var(--ink)}
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:24px;padding:40px var(--pad) 32px;align-items:center}
+.eyebrow{font:600 13px/1 var(--sans);letter-spacing:.32em;text-transform:uppercase;color:var(--accent);margin:0 0 26px}
+h1{font:400 clamp(44px,6.4vw,80px)/.98 var(--display);letter-spacing:-.025em;margin:0}
+h1 em{font-style:italic;color:var(--ink-2);display:block}
+.lede{max-width:480px;color:var(--ink-2);margin:22px 0 30px;font-size:18px}
+.cta{display:flex;align-items:center;gap:26px;flex-wrap:wrap}
+.btn{height:54px;padding:3px 30px 0;border-radius:var(--r);background:var(--accent);color:var(--accent-ink);font:700 15px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;text-decoration:none;display:inline-flex;align-items:center;gap:12px;transition:background var(--t-fast) var(--ease),transform var(--t-fast) var(--ease)}
+.btn:hover{background:var(--accent-hi)}
+.btn:active{transform:translateY(1px)}
+.btn svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;margin-top:-3px}
+.soft{color:var(--ink-2);font-size:15px;text-underline-offset:4px}
+.soft:hover{color:var(--ink)}
+.stage{perspective:1400px;display:grid;place-items:center;position:relative;height:460px;cursor:pointer}
+.stage::before{content:"";position:absolute;width:78%;height:40px;bottom:58px;border-radius:50%;background:rgba(0,0,0,.7);filter:blur(28px)}
+.card{--rx:0deg;--ry:0deg;--x:32%;width:min(100%,540px);aspect-ratio:1.586;border-radius:22px;position:relative;transform:rotateX(var(--rx)) rotateY(var(--ry)) rotateZ(-6deg);transform-style:preserve-3d;transition:transform var(--t-tilt) var(--ease-out);color:var(--ti-ink);
+  background:
+    linear-gradient(100deg,transparent calc(var(--x) - 22%),rgba(255,255,255,.12) calc(var(--x) - 8%),rgba(255,255,255,.55) var(--x),rgba(255,255,255,.12) calc(var(--x) + 8%),transparent calc(var(--x) + 22%)),
+    repeating-linear-gradient(0deg,rgba(255,255,255,.07) 0 1px,rgba(0,0,0,.05) 1px 2px,transparent 2px 3px),
+    linear-gradient(160deg,var(--ti-2) 0%,var(--ti-1) 46%,#A9ACAF 70%,var(--ti-3) 100%);
+  box-shadow:0 1px 0 rgba(255,255,255,.6) inset,0 -2px 0 rgba(0,0,0,.25) inset,0 3px 0 #3B3E41,0 4px 0 #24262A,0 40px 60px -30px rgba(0,0,0,.9)}
+.card.sweep{animation:sweep var(--t-sweep) var(--ease-out)}
+@keyframes sweep{from{--x:-30%}}
+@property --x{syntax:"<percentage>";inherits:true;initial-value:32%}
+.card .lg{position:absolute;left:8%;top:12%;font:700 22px/1 var(--sans);letter-spacing:.46em;text-shadow:0 1px 0 rgba(255,255,255,.45)}
+.card .tier{position:absolute;right:8%;top:12.5%;font:italic 400 22px/1 var(--display);text-shadow:0 1px 0 rgba(255,255,255,.4)}
+.chip{position:absolute;left:8%;top:40%;width:13%;aspect-ratio:1.3;border-radius:8px;background:linear-gradient(135deg,#D8C79F,#9C8B62 60%,#C7B68D);box-shadow:inset 0 0 0 1px rgba(40,30,10,.35)}
+.chip::before{content:"";position:absolute;inset:28% 0;border-top:1px solid rgba(40,30,10,.35);border-bottom:1px solid rgba(40,30,10,.35)}
+.chip::after{content:"";position:absolute;inset:0 38%;border-left:1px solid rgba(40,30,10,.35);border-right:1px solid rgba(40,30,10,.35)}
+.card .nm{position:absolute;left:8%;bottom:12%;font:600 14px/1 var(--sans);letter-spacing:.24em;text-shadow:0 1px 0 rgba(255,255,255,.4)}
+.card .wt{position:absolute;right:8%;bottom:12%;font:600 12px/1 var(--sans);letter-spacing:.18em;text-align:right;text-shadow:0 1px 0 rgba(255,255,255,.4)}
+.card .mk{position:absolute;right:8%;top:38%;width:58px;height:38px}
+.card .mk circle{fill:none;stroke:var(--ti-ink);stroke-width:1.5;opacity:.7}
+.cap{position:absolute;bottom:0;left:0;right:0;text-align:center;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3)}
+.nums{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:0 var(--pad)}
+.nums div{padding:26px 28px 30px;border-left:1px solid var(--line)}
+.nums div:first-child{border-left:0;padding-left:0}
+.nums b{display:block;font:400 clamp(40px,4.6vw,64px)/1 var(--display);letter-spacing:-.02em}
+.nums b small{font-size:.62em;letter-spacing:0;margin-left:4px;color:var(--ink);vertical-align:.12em}
+.nums span{display:block;margin-top:14px;color:var(--ink-2);font-size:15px;max-width:230px}
+.fine{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:64px;padding:96px var(--pad) 80px}
+h2{font:400 clamp(34px,4vw,52px)/1.05 var(--display);letter-spacing:-.02em;margin:0}
+.fine p{color:var(--ink-2);max-width:420px}
+table{width:100%;border-collapse:collapse;font-size:16px}
+th,td{text-align:left;padding:16px 0;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:400;color:var(--ink-2);width:46%;padding-right:20px}
+td{font:500 19px/1.35 var(--display)}
+.apply{margin:0 var(--pad) 64px;padding:56px;border:1px solid var(--line);background:var(--bg-2);display:flex;justify-content:space-between;align-items:center;gap:32px;flex-wrap:wrap}
+.apply p{margin:12px 0 0;color:var(--ink-2);max-width:520px}
+footer{padding:28px var(--pad) 48px;color:var(--ink-3);font-size:13px;border-top:1px solid var(--line);line-height:1.6}
+footer p{margin:0 0 8px;max-width:900px}
+@media (max-width:1023px){.hero{grid-template-columns:1fr;min-height:0}.stage{height:420px}.nav ul{display:none}.fine{grid-template-columns:1fr;gap:28px}.nums{grid-template-columns:1fr 1fr}.nums div:nth-child(3){border-left:0;padding-left:0}.nums div:nth-child(n+3){border-top:1px solid var(--line)}}
+@media (max-width:640px){
+  :root{--pad:16px}
+  .nav{gap:16px}.nav .si{display:none}.ghost{padding:2px 14px 0;height:40px}
+  .hero{padding:40px var(--pad) 32px;gap:8px}.lede{font-size:17px}
+  .stage{height:300px}.card{border-radius:14px;width:90%}.card .lg{font-size:15px}.card .tier{font-size:16px}.card .nm{font-size:11px;letter-spacing:.16em}.card .wt{font-size:10px}.card .mk{width:40px;height:26px}
+  .nums div{padding:24px 12px 22px}.nums div:nth-child(odd){padding-left:0}
+  .fine{padding:64px var(--pad) 48px}.apply{padding:32px 20px}.btn{width:100%;justify-content:center}
+  th{width:52%}
+}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition-duration:1ms!important}}
+</style>
+</head>
+<body>
+<header class="nav">
+  <a class="logo" href="#" aria-label="Orrin home">ORRIN</a>
+  <nav aria-label="Primary"><ul><li><a href="#">Cards</a></li><li><a href="#">Rewards</a></li><li><a href="#">Travel</a></li><li><a href="#">Help</a></li></ul></nav>
+  <span class="sp"></span>
+  <a class="si" href="#">Sign in</a>
+  <a class="ghost" href="#apply">Apply</a>
+</header>
+<main>
+  <section class="hero" aria-labelledby="h">
+    <div>
+      <p class="eyebrow">Orrin Reserve</p>
+      <h1 id="h">Cut from titanium. <em>Priced in plain numbers.</em></h1>
+      <p class="lede">An 18 gram card with a $395 annual fee that pays back $300 in travel credit before you earn a single point. No foreign fees, no tiers to climb.</p>
+      <div class="cta"><a class="btn" href="#apply">Apply for Reserve <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5l5 5-5 5"/></svg></a><a class="soft" href="#fees">See every fee</a></div>
+    </div>
+    <div class="stage" id="stage" role="button" tabindex="0" aria-label="Orrin Reserve titanium card. Press to replay the light.">
+      <div class="card sweep" id="card">
+        <span class="lg">ORRIN</span><span class="tier">Reserve</span>
+        <span class="chip" aria-hidden="true"></span>
+        <svg class="mk" viewBox="0 0 58 38" aria-hidden="true"><circle cx="19" cy="19" r="17"/><circle cx="39" cy="19" r="17"/></svg>
+        <span class="nm">ELENA VASQUEZ-ROW</span><span class="wt">TITANIUM<br>18 G</span>
+      </div>
+    </div>
+  </section>
+  <section class="nums" aria-label="The numbers">
+    <div><b>$395</b><span>Annual fee, charged once a year. Authorised users $75 each.</span></div>
+    <div><b>$300</b><span>Travel credit every card year, applied to fares and stays automatically.</span></div>
+    <div><b>3<small>&times;</small></b><span>Points on flights, hotels and restaurants. 1&times; on everything else.</span></div>
+    <div><b>0%</b><span>Foreign transaction fees, in 140 currencies at the network rate.</span></div>
+  </section>
+  <section class="fine" id="fees" aria-labelledby="fh">
+    <div><h2 id="fh">Every fee, before you apply.</h2><p>If a charge is not on this list, Reserve does not have it. Rates as of October 28, 2026.</p></div>
+    <table>
+      <tr><th scope="row">Annual fee</th><td>$395</td></tr>
+      <tr><th scope="row">Authorised user</th><td>$75 each per year</td></tr>
+      <tr><th scope="row">Purchase APR, variable</th><td>21.24% to 28.99%</td></tr>
+      <tr><th scope="row">Late payment</th><td>Up to $40</td></tr>
+      <tr><th scope="row">Lounge access</th><td>1,340 lounges, 2 guests free</td></tr>
+      <tr><th scope="row">Replacement card</th><td>Free, by courier in 2 days</td></tr>
+    </table>
+  </section>
+  <section class="apply" id="apply" aria-labelledby="ah">
+    <div><h2 id="ah">Apply in about six minutes.</h2><p>Most decisions arrive on screen. Approved cards ship by courier in 5 to 7 business days, with a digital card ready the same hour.</p></div>
+    <a class="btn" href="#">Start application <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5l5 5-5 5"/></svg></a>
+  </section>
+</main>
+<footer>
+  <p>Orrin Reserve is issued by Orrin Bank, N.A. Deposits are insured up to legal limits. Credit approval is subject to eligibility. The $300 travel credit resets on each card anniversary and does not roll over.</p>
+  <p>Card shown is 18 grams of brushed grade 5 titanium. Returned cards are recycled by the issuer.</p>
+</footer>
+<script>
+(() => {
+  const stage = document.getElementById('stage'), card = document.getElementById('card');
+  const fine = matchMedia('(pointer:fine)').matches;
+  const move = e => { const r = stage.getBoundingClientRect(), px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
+    card.classList.remove('sweep');
+    card.style.setProperty('--x', (px * 140 - 20).toFixed(1) + '%');
+    card.style.setProperty('--ry', ((px - .5) * 14).toFixed(2) + 'deg');
+    card.style.setProperty('--rx', ((.5 - py) * 10).toFixed(2) + 'deg'); };
+  document.querySelector('.hero').addEventListener('pointermove', e => { if (fine || e.pointerType !== 'mouse') move(e); });
+  document.querySelector('.hero').addEventListener('pointerleave', () => { card.style.setProperty('--rx', '0deg'); card.style.setProperty('--ry', '0deg'); card.style.setProperty('--x', '32%'); });
+  const replay = () => { card.style.setProperty('--x', '32%'); card.classList.remove('sweep'); void card.offsetWidth; card.classList.add('sweep'); };
+  stage.addEventListener('click', replay);
+  stage.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); replay(); } });
+})();
+</script>
+</body>
+</html>

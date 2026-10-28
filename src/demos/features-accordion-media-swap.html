@@ -1,0 +1,241 @@
+<!-- Design Lounge piece: features-accordion-media-swap · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Passline: rota features</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F3E8DF; --surface:#FFF9F4; --sunk:#EEDFD3; --line:#E0CDBE; --line-2:#B8A190;
+  --ink:#261B16; --ink-2:#5A4A41; --ink-3:#6E5A4F;
+  --accent:#0D6B66; --accent-2:#B4E1D9; --accent-ink:#FFFFFF; --warm:#D9822B; --warm-2:#F6D9B8; --rose:#E7B7A8;
+  --font:"Manrope",system-ui,sans-serif;
+  --r:14px; --r-sm:8px;
+  --ease:cubic-bezier(.2,.7,.2,1); --expo:cubic-bezier(.16,1,.3,1); --t:160ms; --dwell:7000ms;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:var(--bg);color:var(--ink);font:400 15px/1.5 var(--font);-webkit-font-smoothing:antialiased}
+.wrap{max-width:1200px;margin:0 auto;padding:48px 44px}
+.head{display:flex;justify-content:space-between;align-items:end;gap:32px;margin-bottom:36px}
+.head h2{font-size:clamp(34px,4.6vw,56px);line-height:1;letter-spacing:-.04em;font-weight:800;margin:0;max-width:15ch}
+.head p{margin:0;max-width:34ch;color:var(--ink-2);font-size:16px}
+.grid{display:grid;grid-template-columns:420px 1fr;gap:48px;align-items:start}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+/* accordion */
+.acc{border-top:1px solid var(--line-2)}
+.item{border-bottom:1px solid var(--line)}
+.trig{all:unset;box-sizing:border-box;width:100%;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:20px 0 18px;cursor:pointer;font:700 20px/1.25 var(--font);letter-spacing:-.015em;color:var(--ink-3);transition:color var(--t) var(--ease)}
+.trig:hover{color:var(--ink)}
+.item.open .trig{color:var(--ink)}
+.trig svg{flex:none;transition:transform 320ms var(--ease)}
+.item.open .trig svg{transform:rotate(45deg)}
+.panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows 320ms var(--ease)}
+.item.open .panel{grid-template-rows:1fr}
+.panel > div{overflow:hidden}
+.panel p{margin:0 0 12px;color:var(--ink-2);font-size:15px;max-width:38ch}
+.fact{display:flex;gap:8px;align-items:baseline;margin:0 0 20px;font-size:13px;color:var(--ink-2)}
+.fact b{white-space:nowrap;font-size:22px;font-weight:800;color:var(--accent);letter-spacing:-.02em}
+.prog{height:2px;background:var(--line);margin:0 0 -1px;position:relative;overflow:hidden;visibility:hidden}
+.item.open .prog{visibility:visible}
+.prog i{position:absolute;inset:0;background:var(--accent);transform-origin:0 50%;transform:scaleX(0)}
+.item.open .prog i{animation:fill var(--dwell) linear forwards}
+@keyframes fill{to{transform:scaleX(1)}}
+.feat:hover .prog i,.feat:focus-within .prog i,.feat.paused .prog i{animation-play-state:paused}
+.ctl{display:flex;align-items:center;gap:12px;margin-top:20px;font-size:13px;color:var(--ink-3)}
+.pause{white-space:nowrap;flex:none;display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 14px 0 12px;border-radius:18px;border:1px solid var(--line-2);background:transparent;color:var(--ink);font:600 13px/1 var(--font);cursor:pointer}
+.pause:hover{background:var(--sunk)}
+/* media */
+.media{position:relative;height:500px}
+.pane{position:absolute;inset:0;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;opacity:0;transform:scale(.975) translateY(8px);transition:opacity 420ms var(--ease),transform 520ms var(--expo),visibility 0s 420ms;visibility:hidden}
+.pane.on{opacity:1;transform:none;visibility:visible;transition-delay:0s}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:12px;height:52px;padding:0 20px;border-bottom:1px solid var(--line);font-size:13px;color:var(--ink-2)}
+.bar b{color:var(--ink);font-weight:700;font-size:14px}
+.pill{font-size:12px;font-weight:700;padding:5px 10px;border-radius:999px;background:var(--accent-2);color:#073A37}
+.body{padding:20px}
+/* week grid */
+.wk{display:grid;grid-template-columns:72px repeat(7,1fr);gap:4px;font-size:12px}
+.wk .h{font-weight:700;color:var(--ink-2);text-align:center;padding-bottom:2px}
+.wk .h small{display:block;font-weight:500;color:var(--ink-3)}
+.cov{height:48px;display:flex;align-items:end;justify-content:center}
+.cov i{display:block;width:60%;background:var(--warm-2);border-radius:3px 3px 0 0}
+.wk .role{font-weight:700;color:var(--ink-2);align-self:center}
+.cell{height:48px;border-radius:6px;background:var(--sunk);position:relative}
+.s{position:absolute;top:4px;bottom:4px;left:4px;right:4px;border-radius:4px;background:var(--accent);color:#fff;font-size:11px;font-style:normal;font-weight:700;padding:5px 6px;line-height:1.25;overflow:hidden;white-space:nowrap}
+.s span{display:block;font-weight:500;opacity:.92}
+.s.b{background:var(--warm);color:#2B1606}
+.s.c{background:#3D2E28;color:#F6EAE0}
+.gap{outline:2px dashed var(--warm);outline-offset:-3px;background:transparent}
+.note{margin-top:16px;display:flex;gap:12px;align-items:center;padding:12px 14px;border-radius:var(--r-sm);background:var(--warm-2);color:#4A2A0C;font-size:13px}
+.note b{font-weight:800}
+/* swaps */
+.sw{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.req{border:1px solid var(--line);border-radius:12px;padding:16px;background:#fff}
+.who{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.av{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:13px;color:#fff}
+.req h4{margin:0;font-size:15px}
+.req small{color:var(--ink-3);font-size:12px}
+.shift{display:flex;justify-content:space-between;border-top:1px solid var(--line);padding:10px 0;font-size:13px}
+.shift b{font-weight:700}
+.act{display:flex;gap:8px;margin-top:6px}
+.btn{height:38px;padding:0 14px;border-radius:var(--r-sm);font:700 13px/1 var(--font);border:1px solid var(--accent);background:var(--accent);color:#fff;cursor:pointer}
+.btn.g{background:transparent;color:var(--ink);border-color:var(--line-2)}
+.msg{font-size:13px;background:var(--sunk);border-radius:12px 12px 12px 4px;padding:10px 12px;margin:0 0 8px;max-width:90%}
+.msg.sys{background:transparent;border:1px dashed var(--line-2);color:var(--ink-2);border-radius:12px}
+.msg.me{background:var(--accent);color:#fff;border-radius:12px 12px 4px 12px;margin-left:auto}
+.queue{grid-column:1/-1;list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.queue li{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);font-size:13px}
+.queue .av{width:28px;height:28px;font-size:11px;flex:none}
+.queue em{margin-left:auto;font-style:normal;font-weight:700;font-size:12px;color:var(--accent);white-space:nowrap}
+.queue em.bad{color:#9A3F12}
+@media (max-width:760px){.queue li{flex-wrap:wrap}.queue em{margin-left:40px}}
+/* chart */
+.kp{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px}
+.kp div{border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:#fff}
+.kp span{font-size:12px;color:var(--ink-3);display:block}
+.kp b{font-size:24px;font-weight:800;letter-spacing:-.02em}
+.kp em{font-style:normal;font-size:12px;font-weight:700;color:var(--accent)}
+.chart{width:100%;height:auto;display:block}
+.lg{display:flex;gap:18px;font-size:12px;color:var(--ink-2);margin-top:8px}
+.lg i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+/* payroll */
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;font-weight:700;color:var(--ink-3);font-size:12px;padding:0 8px 8px;border-bottom:1px solid var(--line-2)}
+td{padding:10px 8px;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
+td.n,th.n{text-align:right}
+tfoot td{font-weight:800;border-bottom:0;font-size:14px}
+.file{margin-top:16px;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 14px;border:1px dashed var(--line-2);border-radius:var(--r-sm);font-size:13px}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important}.item.open .prog i{animation:none}.prog{display:none}.pause{display:none}}
+@media (max-width:1023px){.grid{grid-template-columns:1fr;gap:28px}.head{flex-direction:column;align-items:start;gap:14px}}
+@media (max-width:760px){
+  .wrap{padding:32px 16px}
+  .media{height:auto;display:grid}
+  .pane{position:relative;grid-area:1/1}
+  .wk{grid-template-columns:44px repeat(7,1fr);gap:2px}
+  .s{font-size:0;padding:0}.wk .h{font-size:11px}.wk .h small{display:none}.wk .role{font-size:10px}
+  .sw,.kp{grid-template-columns:1fr}
+  .body{padding:14px}
+  .bar{padding:0 14px}
+}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <section class="feat" id="feat" aria-labelledby="ft">
+    <div class="head">
+      <h2 id="ft">A rota that already knows Friday is busy.</h2>
+      <p>Passline plans kitchen and floor shifts from your covers, then keeps the week honest after it is published. Used in 640 restaurants across the North West.</p>
+    </div>
+    <div class="grid">
+      <div>
+        <div class="acc" id="acc">
+          <div class="item open"><h3 style="margin:0"><button class="trig" id="t0" aria-expanded="true" aria-controls="p0">Build the week from last year's covers<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button></h3>
+            <div class="panel" id="p0" role="region" aria-labelledby="t0"><div><p>Passline reads 52 weeks of covers and bookings, then drafts every shift. You move the few it gets wrong.</p><p class="fact"><b>11 min</b>median time to publish a week</p></div></div><div class="prog"><i></i></div></div>
+          <div class="item"><h3 style="margin:0"><button class="trig" id="t1" aria-expanded="false" aria-controls="p1">Swaps the team sorts out itself<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button></h3>
+            <div class="panel" id="p1" role="region" aria-labelledby="t1"><div><p>Staff offer and claim shifts in the app. You approve with one tap, and only if the cover and skills still hold.</p><p class="fact"><b>83%</b>of swaps settled without a manager message</p></div></div><div class="prog"><i></i></div></div>
+          <div class="item"><h3 style="margin:0"><button class="trig" id="t2" aria-expanded="false" aria-controls="p2">Labour cost against covers, live<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button></h3>
+            <div class="panel" id="p2" role="region" aria-labelledby="t2"><div><p>Clock-ins meet the till every 15 minutes. When a quiet lunch pushes labour past target, the duty manager hears first.</p><p class="fact"><b>2.6 pts</b>average labour saving in the first quarter</p></div></div><div class="prog"><i></i></div></div>
+          <div class="item"><h3 style="margin:0"><button class="trig" id="t3" aria-expanded="false" aria-controls="p3">Hours straight to payroll<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button></h3>
+            <div class="panel" id="p3" role="region" aria-labelledby="t3"><div><p>Approved hours, tronc and holiday accrual leave as one file your payroll provider already accepts.</p><p class="fact"><b>0</b>spreadsheets on a Monday morning</p></div></div><div class="prog"><i></i></div></div>
+        </div>
+        <div class="ctl"><button class="pause" id="pause" type="button" aria-pressed="false"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path id="pi" d="M7 5h3v14H7zM14 5h3v14h-3z"/></svg><span>Pause tour</span></button><span id="hint">Moves on every 7 seconds. Hover to hold.</span></div>
+      </div>
+
+      <div class="media">
+        <div class="pane on" data-i="0" aria-label="Week planner">
+          <div class="bar"><span><b>Week 44</b>, The Larder, Ancoats</span><span class="pill">Draft ready</span></div>
+          <div class="body">
+            <div class="wk" aria-hidden="true">
+              <span></span><span class="h">Mon<small>84</small></span><span class="h">Tue<small>96</small></span><span class="h">Wed<small>118</small></span><span class="h">Thu<small>142</small></span><span class="h">Fri<small>231</small></span><span class="h">Sat<small>264</small></span><span class="h">Sun<small>172</small></span>
+              <span class="role">Covers</span><span class="cov"><i style="height:30%"></i></span><span class="cov"><i style="height:36%"></i></span><span class="cov"><i style="height:44%"></i></span><span class="cov"><i style="height:54%"></i></span><span class="cov"><i style="height:87%"></i></span><span class="cov"><i style="height:100%"></i></span><span class="cov"><i style="height:65%"></i></span>
+              <span class="role">Grill</span><span class="cell"><i class="s">Theo<span>12-8</span></i></span><span class="cell"><i class="s">Theo<span>12-8</span></i></span><span class="cell"><i class="s">Ama<span>4-11</span></i></span><span class="cell"><i class="s">Ama<span>+1 more</span></i></span><span class="cell"><i class="s">Ama<span>+2 more</span></i></span><span class="cell"><i class="s">Ama<span>+2 more</span></i></span><span class="cell"><i class="s">Kit<span>11-7</span></i></span>
+              <span class="role">Pastry</span><span class="cell"></span><span class="cell"><i class="s b">Ines<span>7-2</span></i></span><span class="cell"><i class="s b">Ines<span>7-2</span></i></span><span class="cell"><i class="s b">Ines<span>7-2</span></i></span><span class="cell"><i class="s b">Ines<span>7-4</span></i></span><span class="cell gap"></span><span class="cell"><i class="s b">Ines<span>7-2</span></i></span>
+              <span class="role">Floor</span><span class="cell"><i class="s c">Dani<span>5-11</span></i></span><span class="cell"><i class="s c">Dani<span>5-11</span></i></span><span class="cell"><i class="s c">Rui<span>5-11</span></i></span><span class="cell"><i class="s c">Dani<span>+1 more</span></i></span><span class="cell"><i class="s c">Dani<span>+2 more</span></i></span><span class="cell"><i class="s c">Dani<span>+2 more</span></i></span><span class="cell"><i class="s c">Mo<span>12-6</span></i></span>
+              <span class="role">Pot wash</span><span class="cell"><i class="s c">Sol<span>close</span></i></span><span class="cell"><i class="s c">Sol<span>close</span></i></span><span class="cell"><i class="s c">Sol<span>close</span></i></span><span class="cell"><i class="s c">Sol<span>close</span></i></span><span class="cell"><i class="s c">Sol<span>+1 more</span></i></span><span class="cell"><i class="s c">Sol<span>+1 more</span></i></span><span class="cell"></span>
+            </div>
+            <div class="note"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16v.5"/></svg><span><b>Saturday pastry is open.</b> 264 covers forecast, Ines is on leave. Offer to 3 trained cooks?</span></div>
+          </div>
+        </div>
+
+        <div class="pane" data-i="1" aria-label="Shift swaps">
+          <div class="bar"><span><b>Swaps</b>, 3 waiting</span><span class="pill">Cover holds</span></div>
+          <div class="body sw">
+            <div class="req">
+              <div class="who"><span class="av" style="background:#0D6B66">DA</span><div><h4>Dani Asante</h4><small>Floor lead, asked 9:14</small></div></div>
+              <div class="shift"><span>Gives away</span><b>Sat 1 Nov, 17:00 to 23:00</b></div>
+              <div class="shift"><span>Taken by</span><b>Rui Matos</b></div>
+              <div class="shift"><span>Rui's week</span><b>38 h after swap</b></div>
+              <div class="act"><button class="btn" type="button">Approve swap</button><button class="btn g" type="button">Decline</button></div>
+            </div>
+            <div>
+              <p class="msg"><b>Dani</b><br>Can anyone take my Saturday close? Cousin's wedding in Leeds.</p>
+              <p class="msg me"><b>Rui</b><br>I'll take it. Puts me on 38 hours, still under my cap.</p>
+              <p class="msg sys">Cover holds: Saturday keeps 3 floor staff on close. Sent to Hollie to approve.</p>
+            </div>
+            <ul class="queue">
+              <li><span class="av" style="background:#D9822B;color:#2B1606">IC</span><span><b>Ines to Kit</b>, Sun 2 Nov, pastry 07:00 to 14:00</span><em class="bad">Kit not signed off on pastry</em></li>
+              <li><span class="av" style="background:#3D2E28">SO</span><span><b>Sol to Jem</b>, Thu 30 Oct, pot wash 16:00 to 23:00</span><em>Ready to approve</em></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="pane" data-i="2" aria-label="Labour against covers">
+          <div class="bar"><span><b>Today</b>, Tue 28 Oct</span><span class="pill">Updated 14:15</span></div>
+          <div class="body">
+            <div class="kp"><div><span>Labour so far</span><b>£1,284</b></div><div><span>Labour % of sales</span><b>27.4%</b> <em>target 29%</em></div><div><span>Covers</span><b>61</b> <em>+9 on forecast</em></div></div>
+            <svg class="chart" viewBox="0 0 560 244" aria-hidden="true">
+              <rect x="0" y="62" width="560" height="26" fill="#B4E1D9" opacity=".55"/>
+              <g stroke="#E0CDBE"><path d="M0 20h560M0 90h560M0 160h560M0 220h560"/></g>
+              <g fill="#F6D9B8"><rect x="10" y="170" width="44" height="50" rx="3"/><rect x="80" y="120" width="44" height="100" rx="3"/><rect x="150" y="60" width="44" height="160" rx="3"/><rect x="220" y="84" width="44" height="136" rx="3"/><rect x="290" y="150" width="44" height="70" rx="3"/><rect x="360" y="110" width="44" height="110" rx="3"/><rect x="430" y="40" width="44" height="180" rx="3"/><rect x="500" y="30" width="44" height="190" rx="3"/></g>
+              <path d="M32 40L102 72L172 88L242 80L312 52L382 70L452 84L522 86" fill="none" stroke="#0D6B66" stroke-width="3" stroke-linejoin="round"/>
+              <g fill="#0D6B66"><circle cx="312" cy="52" r="5"/></g>
+              <text x="320" y="40" font-size="12" font-weight="700" fill="#5A4A41">15:00, 34%</text>
+              <g font-size="11" fill="#6E5A4F"><text x="18" y="236">11</text><text x="88" y="236">12</text><text x="158" y="236">13</text><text x="228" y="236">14</text><text x="298" y="236">15</text><text x="368" y="236">16</text><text x="438" y="236">17</text><text x="508" y="236">18</text></g>
+            </svg>
+            <div class="lg"><span><i style="background:#F6D9B8"></i>Covers per hour</span><span><i style="background:#0D6B66"></i>Labour % of sales</span><span><i style="background:#B4E1D9"></i>Target 26 to 30%</span></div>
+          </div>
+        </div>
+
+        <div class="pane" data-i="3" aria-label="Payroll export">
+          <div class="bar"><span><b>Pay period</b>, 1 to 26 Oct</span><span class="pill">All hours approved</span></div>
+          <div class="body">
+            <table><thead><tr><th>Name</th><th>Role</th><th class="n">Hours</th><th class="n">Tronc</th><th class="n">Holiday</th></tr></thead>
+              <tbody><tr><td>Ama Boateng</td><td>Sous chef</td><td class="n">162.5</td><td class="n">£318.40</td><td class="n">19.6 h</td></tr>
+              <tr><td>Theo Lindqvist</td><td>Grill</td><td class="n">148.0</td><td class="n">£290.10</td><td class="n">17.9 h</td></tr>
+              <tr><td>Ines Carvalho</td><td>Pastry</td><td class="n">131.25</td><td class="n">£257.30</td><td class="n">15.8 h</td></tr>
+              <tr><td>Dani Asante</td><td>Floor lead</td><td class="n">156.0</td><td class="n">£402.75</td><td class="n">18.8 h</td></tr>
+              <tr><td>Sol Okafor</td><td>Pot wash</td><td class="n">120.5</td><td class="n">£236.20</td><td class="n">14.5 h</td></tr></tbody>
+              <tfoot><tr><td>14 people</td><td></td><td class="n">1,926.75</td><td class="n">£3,861.40</td><td class="n">232.4 h</td></tr></tfoot></table>
+            <div class="file"><span>larder-ancoats_oct-2026.csv, 14 rows</span><button class="btn" type="button">Send to payroll</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<script>
+(function(){
+  var feat=document.getElementById('feat'),items=[].slice.call(document.querySelectorAll('.item')),panes=[].slice.call(document.querySelectorAll('.pane')),cur=0;
+  function open(i,focus){cur=(i+items.length)%items.length;
+    items.forEach(function(it,k){var on=k===cur,t=it.querySelector('.trig'),bar=it.querySelector('.prog i');it.classList.toggle('open',on);t.setAttribute('aria-expanded',on);
+      bar.style.animation='none';void bar.offsetWidth;bar.style.animation='';});
+    panes.forEach(function(p,k){p.classList.toggle('on',k===cur);p.setAttribute('aria-hidden',k!==cur);});
+    if(focus)items[cur].querySelector('.trig').focus();}
+  items.forEach(function(it,k){var t=it.querySelector('.trig');
+    t.addEventListener('click',function(){open(k)});
+    t.addEventListener('keydown',function(e){var m={ArrowDown:1,ArrowUp:-1};if(e.key in m){e.preventDefault();open(k+m[e.key],true);}
+      else if(e.key==='Home'){e.preventDefault();open(0,true);}else if(e.key==='End'){e.preventDefault();open(items.length-1,true);}});
+    it.querySelector('.prog i').addEventListener('animationend',function(){if(it.classList.contains('open'))open(k+1);});});
+  var pb=document.getElementById('pause'),pi=document.getElementById('pi');
+  pb.addEventListener('click',function(){var p=!feat.classList.contains('paused');feat.classList.toggle('paused',p);pb.setAttribute('aria-pressed',p);
+    pb.querySelector('span').textContent=p?'Play tour':'Pause tour';pi.setAttribute('d',p?'M7 5l12 7-12 7z':'M7 5h3v14H7zM14 5h3v14h-3z');
+    document.getElementById('hint').textContent=p?'Tour paused. Open any feature.':'Moves on every 7 seconds. Hover to hold.';});
+  open(0);
+})();
+</script>
+</body>
+</html>
