@@ -1,14 +1,15 @@
-// Pictures and demo code for pieces: the bundled copy, then the repo, then the live site.
+// Pictures and demo code for pieces: the repo, then the bundled copy, then the live site.
 // The agent builds better from a piece it has seen than from a brief it has only read.
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
+// The repo first (public/thumbs and src/demos are always current there), then the copy bundled for npm.
 const roots = () => [
   process.env.DESIGN_LOUNGE_ASSETS,
+  path.join(here, '..', '..'),
   path.join(here, '..', 'assets'),
-  path.join(here, '..', '..'), // the repo: public/thumbs and src/demos
 ].filter(Boolean);
 const places = {
   thumb: (root, id) => [path.join(root, 'thumbs', `${id}.webp`), path.join(root, 'public', 'thumbs', `${id}.webp`)],

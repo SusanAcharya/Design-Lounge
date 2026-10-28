@@ -6,12 +6,15 @@ import { fileURLToPath } from 'node:url';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 
-/** The skill folder: DESIGN_LOUNGE_SKILL, then the copy bundled into the package, then the repo's own. */
+/**
+ * The skill folder: DESIGN_LOUNGE_SKILL, then the repo's own, then the copy bundled into the package. In the repo the
+ * bundled copy is a leftover from the last pack and goes stale; an npm install has no repo copy, so it uses the bundle.
+ */
 export function findSkillDir() {
   const candidates = [
     process.env.DESIGN_LOUNGE_SKILL,
-    path.join(here, '..', 'skill'),
     path.join(here, '..', '..', 'skills', 'design-lounge'),
+    path.join(here, '..', 'skill'),
   ].filter(Boolean);
   for (const dir of candidates) {
     if (fs.existsSync(path.join(dir, 'library', 'map.json'))) return path.resolve(dir);
