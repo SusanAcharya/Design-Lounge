@@ -174,7 +174,7 @@ Nothing eases in or slides. Change is a glyph swap or a fill swap, as it would b
 - ≥ 1280: spans as drawn (7/5, 5/7, 5/7, 12).
 - 1000–1279: same spans; the ledger may clip at its right edge inside `overflow: hidden`, so keep it at 50 columns or fewer.
 - < 1000: every section spans 12; grammar cards become 2 × 2.
-- < 640: header nav hides; cell padding `22px 16px`; ledger 10.5px / 17px so 50 columns fit 358px; x4 specimen drops to 42 / 66; frames stack to one column; grammar cards stack; chart columns drop to 9px glyphs with 2px gaps and a 5ch axis. At 390 nothing scrolls sideways.
+- < 640: header nav and the `grid 1ch x 22px` label hide (mono glyphs are a little wider on Linux, and the label pushed the row past 390); cell padding `22px 16px`; ledger 10.5px / 17px so 50 columns fit 358px; x4 specimen drops to 42 / 66; frames stack to one column; grammar cards stack; chart columns drop to 9px glyphs with 2px gaps and a 5ch axis. At 390 nothing scrolls sideways.
 
 ## Acceptance checklist
 

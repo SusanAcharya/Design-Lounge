@@ -341,6 +341,14 @@ async function openStill(page, url) {
   await Promise.race([page.evaluate(FONTS), sleep(8000)]);
 }
 
+// Linux Chromium draws text on solid ground with subpixel (LCD) antialiasing: blue and orange fringes beside each
+// glyph. The pixel check reads those fringes as a ground the text sits on and fails text that is fine. Pieces after
+// LEGACY_MAX are measured with greyscale text, the same on every platform. The ratchet was measured with LCD text, so
+// pieces it can list keep that renderer until it is re-measured; switching them now would read as "now passes".
+const LCD_OFF = ['--disable-lcd-text'];
+const browsersFor = async () => ({ legacy: await chromium.launch(), current: await chromium.launch({ args: LCD_OFF }) });
+const pick = (b, id) => ((NUMBERS[id] ?? Infinity) > LEGACY_MAX ? b.current : b.legacy);
+
 async function gateOne(browser, id) {
   const url = `${base}/demo/${id}.html`;
   const result = { id, n: NUMBERS[id] ?? null, phone390: [], contrast: [], uiLines: [] };
@@ -366,20 +374,20 @@ async function gateOne(browser, id) {
 }
 
 /* ---------- run ---------- */
-const browser = await chromium.launch();
+const browsers = await browsersFor();
 const results = [];
 let next = 0;
 async function worker() {
   while (next < ids.length) {
     const id = ids[next++];
-    const r = await gateOne(browser, id);
+    const r = await gateOne(pick(browsers, id), id);
     results.push(r);
     const cell = (k) => (r[k].length ? `FAIL (${r[k][0]})` : 'ok');
     console.log(`${id} · phone390 ${cell('phone390')} · contrast ${cell('contrast')} · uiLines ${cell('uiLines')}${r.error ? ' · error ' + r.error : ''}`);
   }
 }
 await Promise.all(Array.from({ length: Math.min(concurrency, ids.length) }, worker));
-await browser.close();
+await browsers.legacy.close(); await browsers.current.close();
 results.sort((a, b) => a.id.localeCompare(b.id));
 
 /* ---------- retry ---------- */
@@ -392,9 +400,9 @@ const fails = (r, k) => Boolean(r[k].length || r.error);
 const unstable = [];
 const suspects = results.filter((r) => CHECKS.some((k) => fails(r, k) !== listedIn(k, r.id)));
 if (suspects.length) {
-  const again = await chromium.launch();
+  const again = await browsersFor();
   for (const r of suspects) {
-    const runs = [r, await gateOne(again, r.id), await gateOne(again, r.id)];
+    const runs = [r, await gateOne(pick(again, r.id), r.id), await gateOne(pick(again, r.id), r.id)];
     // A page that errored once but loaded on a retry is judged by the retry, not counted as failing everything.
     const clean = r.error && runs.find((x) => !x.error);
     if (clean) { for (const k of CHECKS) r[k] = clean[k]; delete r.error; runs[0] = { ...r }; }
@@ -405,7 +413,7 @@ if (suspects.length) {
       r[k] = listedIn(k, r.id) ? [`unstable: ${runs.find((x) => fails(x, k))[k][0] || 'error'}`] : [];
     }
   }
-  await again.close();
+  await again.legacy.close(); await again.current.close();
   console.log(`re-gated ${suspects.length} demo${suspects.length === 1 ? '' : 's'} that differed from the ratchet`);
 }
 server.close();
