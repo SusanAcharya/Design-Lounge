@@ -1,7 +1,7 @@
 {
   "name": "design-lounge-mcp",
   "mcpName": "io.github.SusanAcharya/design-lounge",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Design Lounge as an MCP server: the library, direction picking, and a review that catches AI giveaways and SEO, AEO and GEO gaps.",
   "keywords": [
     "mcp",
