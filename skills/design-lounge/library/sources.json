@@ -189,7 +189,8 @@
         "game-racing-results",
         "card-link-in-bio-bento",
         "email-newsletter-editorial",
-        "email-product-launch"
+        "email-product-launch",
+        "newsletter-mailbox-flag"
       ]
     },
     {
@@ -305,7 +306,9 @@
         "mockup-watch-faces",
         "widget-world-clocks",
         "hero-brutal-stack",
-        "game-cozy-farm-hud"
+        "game-cozy-farm-hud",
+        "features-pencil-annotations",
+        "features-paper-cutout-steps"
       ]
     },
     {
@@ -346,7 +349,8 @@
         "features-scroll-driven-cards",
         "footer-terminal-prompt",
         "game-quest-map",
-        "fintech-portfolio-dashboard"
+        "fintech-portfolio-dashboard",
+        "features-telescope-focus"
       ]
     },
     {
@@ -757,7 +761,10 @@
         "footer-curtain-reveal",
         "footer-local-hours-map",
         "scroll-driven-chapters",
-        "parallax-cursor-gallery"
+        "parallax-cursor-gallery",
+        "footer-constellation-links",
+        "footer-sleepy-cat",
+        "footer-growing-vine"
       ]
     },
     {
@@ -841,7 +848,8 @@
         "sidebar-mail-folders",
         "sidebar-floating-island",
         "sidebar-chat-history",
-        "onboarding-personality-quiz"
+        "onboarding-personality-quiz",
+        "nav-lighthouse-spotlight-menu"
       ]
     },
     {

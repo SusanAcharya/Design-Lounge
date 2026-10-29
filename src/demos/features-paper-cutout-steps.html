@@ -1,0 +1,165 @@
+<!-- Design Lounge piece: features-paper-cutout-steps · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Paper cutout steps</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Playpen+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f3e8d3;--card:#fffaf0;--ink:#2f2a24;--ink-2:#5c5245;--line:#dccbaa;--tomato:#c9472f;--tomato-d:#a3361f;--teal:#2f5d5b;
+  --display:"Abril Fatface",Georgia,serif;--sans:"Playpen Sans",system-ui,sans-serif;
+  --r:6px;--shadow:0 1px 0 rgba(90,60,25,.08),0 14px 24px -16px rgba(90,60,25,.45);
+  --t-rise:760ms;--t-fold:320ms;--ease:cubic-bezier(.2,.7,.2,1);--pop:cubic-bezier(.34,1.42,.52,1);--stagger:90ms;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:400 15px/1.6 var(--sans);-webkit-font-smoothing:antialiased}
+.how{position:relative;max-width:1280px;margin:0 auto;padding:52px 64px 40px;display:grid;grid-template-columns:572px 1fr;grid-template-rows:auto 1fr auto;gap:0 72px;align-content:start;min-height:100%}
+.head{grid-column:1}
+.kicker{margin:0;font:600 13px/1 var(--sans);letter-spacing:.08em;color:var(--tomato-d)}
+h2{margin:14px 0 0;font:400 54px/1.02 var(--display);letter-spacing:-.005em;max-width:560px}
+.steps{grid-column:2;grid-row:1/span 2;list-style:none;margin:0;padding:6px 0 0;display:flex;flex-direction:column;gap:4px}
+.card{all:unset;box-sizing:border-box;display:grid;grid-template-columns:44px 1fr;gap:4px 16px;width:100%;padding:14px 22px 15px 18px;border-radius:var(--r);cursor:pointer;position:relative;transition:background 220ms var(--ease),box-shadow 220ms var(--ease)}
+.card:focus-visible{outline:2px solid var(--tomato-d);outline-offset:3px}
+.card:hover{background:#f8efdd}
+.on .card{background:var(--card);box-shadow:var(--shadow)}
+.on .card::before{content:"";position:absolute;left:-10px;top:22px;width:16px;height:30px;background:var(--tomato);clip-path:polygon(0 0,100% 8%,100% 92%,0 100%,22% 50%)}
+.num{grid-row:1/span 3;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font:400 20px/1 var(--display);background:var(--bg);color:var(--ink);border:1.5px solid var(--ink);transition:background 220ms,color 220ms}
+.on .num{background:var(--ink);color:var(--card)}
+.card b{font:400 28px/1.1 var(--display);letter-spacing:.005em;padding-top:4px}
+.card span.d{color:var(--ink-2)}
+.card small{font:600 13px/1.3 var(--sans);color:var(--tomato-d)}
+.book{grid-column:2;display:flex;align-items:center;gap:18px;margin-top:18px;padding-left:18px}
+.btn{font:600 15px/1 var(--sans);color:var(--card);background:var(--teal);border:0;border-radius:999px;padding:15px 24px;cursor:pointer;transition:background 180ms var(--ease)}
+.btn:hover{background:#244a48}
+.book span{font-size:14px;color:var(--ink-2)}
+.scene{position:absolute;left:64px;top:214px;width:572px;height:534px;margin:0}
+.lay,.floor{position:absolute;inset:0;transform:translate3d(calc(var(--mx,0) * var(--d) * 1px),calc(var(--my,0) * var(--d) * .45px),0);transition:transform 380ms var(--ease);perspective:1100px;perspective-origin:50% -10%}
+.lay svg,.floor svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;filter:drop-shadow(0 7px 6px rgba(80,50,20,.26))}
+.lay svg{transform:rotateX(-88deg);opacity:0;visibility:hidden;transition:transform var(--t-fold) var(--ease),opacity var(--t-fold) var(--ease),visibility 0s var(--t-fold)}
+.on .lay svg{transform:none;opacity:1;visibility:visible;transition:transform var(--t-rise) var(--pop) var(--w),opacity 200ms var(--ease) var(--w),visibility 0s}
+.lay:nth-of-type(1){--d:2}.lay:nth-of-type(1) svg{transform-origin:50% 74.5%;--w:0ms}
+.lay:nth-of-type(2){--d:5}.lay:nth-of-type(2) svg{transform-origin:50% 78.6%;--w:var(--stagger)}
+.lay:nth-of-type(3){--d:9}.lay:nth-of-type(3) svg{transform-origin:50% 83.3%;--w:calc(var(--stagger) * 2)}
+.lay:nth-of-type(4){--d:14}.lay:nth-of-type(4) svg{transform-origin:50% 89%;--w:calc(var(--stagger) * 3)}
+.floor{--d:1}
+.steps li:not(.on) .floor{visibility:hidden}
+.grain{position:absolute;inset:0;pointer-events:none;mix-blend-mode:multiply;opacity:.55;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3CfeColorMatrix values='0 0 0 0 .4 0 0 0 0 .3 0 0 0 0 .2 .22 0 0 0 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 560'%3E%3Cpath d='M40 30H560V540H0Z'/%3E%3C/svg%3E") 0 0/100% 100%}
+.steps li:not(.on) .grain{display:none}
+@media (max-width:860px){
+  .how{grid-template-columns:1fr;gap:0;padding:56px 20px 48px;overflow-x:clip}
+  h2{font-size:40px}
+  .steps{grid-column:1;grid-row:auto;gap:34px;padding-top:26px}
+  .steps li{display:flex;flex-direction:column;gap:12px}
+  .scene{position:relative;left:auto;top:auto;width:100%;height:auto;aspect-ratio:600/560}
+  .steps li .floor,.steps li .grain{visibility:visible;display:block}
+  .card,.on .card{background:var(--card);box-shadow:var(--shadow);grid-template-columns:40px 1fr;gap:4px 14px;padding:16px 18px 18px 16px}
+  .on .card::before{display:none}
+  .card b{font-size:25px}
+  .book{grid-column:1;flex-direction:column;align-items:flex-start;gap:10px;margin-top:30px;padding-left:0}
+}
+@media (prefers-reduced-motion:reduce){.lay,.lay svg,.on .lay svg,.card,.num,.btn{transition:none!important}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <filter id="cut" x="-4%" y="-4%" width="108%" height="108%"><feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="7"/><feDisplacementMap in="SourceGraphic" scale="4"/></filter>
+  <pattern id="gh" width="22" height="22" patternUnits="userSpaceOnUse"><rect width="22" height="22" fill="#f7eadf"/><rect width="11" height="22" fill="#d75b43" opacity=".6"/><rect width="22" height="11" fill="#d75b43" opacity=".6"/></pattern>
+  <pattern id="wv" width="18" height="12" patternUnits="userSpaceOnUse"><rect width="18" height="12" fill="#c88c40"/><path d="M0 6h18M9 0v6M1 6v6M17 6v6" stroke="#93622a" stroke-width="1.6"/></pattern>
+  <path id="cloud" d="M0 30Q2 13 19 15Q25 0 44 4Q58-5 67 12Q84 9 87 27Q89 36 80 36H7Q0 36 0 30Z" fill="#fbf5e8"/>
+  <path id="tuft" d="M0 0L6-22L10-4L16-30L20-3L27-20L30 0Z"/>
+  <g id="floorArt"><path d="M44 398H556L592 506H8Z" fill="#fbf4e4"/><path d="M62 406H538L566 496H34Z" fill="#d8e0b2"/><path d="M8 506H592L590 516H10Z" fill="#ecdfc3"/><path d="M12 510H588M12 513H588" stroke="#d3c19c" stroke-width=".8"/><path d="M2 514H598L596 530Q300 537 4 530Z" fill="#2f5d5b"/><path d="M44 398H556" stroke="#cdb98f" stroke-width="2.5"/></g>
+  <g id="page"><path d="M48 32H552" stroke="#e9dcbf" stroke-width="5"/><path d="M44 398V46Q44 38 52 38H548Q556 38 556 46V398Z" fill="#fbf4e4"/></g>
+</defs></svg>
+<section class="how" aria-labelledby="hh">
+  <div class="head">
+    <p class="kicker">Hamper &amp; Hill picnic delivery</p>
+    <h2 id="hh">Lunch on the grass, and nothing to carry.</h2>
+  </div>
+  <ol class="steps">
+    <li class="on">
+      <figure class="scene" aria-label="A map pin stuck in a green hill under a morning sun">
+        <div class="floor"><svg viewBox="0 0 600 560" aria-hidden="true"><use href="#floorArt"/></svg></div>
+        <div class="lay"><svg viewBox="0 0 600 560" aria-hidden="true"><use href="#page"/><g filter="url(#cut)"><rect x="56" y="50" width="488" height="348" fill="#b7d3d1"/><circle cx="430" cy="128" r="54" fill="none" stroke="#f0c35b" stroke-width="12" stroke-dasharray="9 10"/><circle cx="430" cy="128" r="40" fill="#f2c45e"/><use href="#cloud" x="110" y="96"/><use href="#cloud" x="300" y="180" transform="scale(.8)" transform-origin="300 180"/></g></svg></div>
+        <div class="lay"><svg viewBox="0 0 600 560" aria-hidden="true"><g filter="url(#cut)"><path d="M40 420V300Q120 238 212 280Q292 318 362 266Q452 204 560 278V420Z" fill="#a9c27f" stroke="#fffbea" stroke-opacity=".35" stroke-width="2"/><g fill="#759c57"><circle cx="150" cy="262" r="11"/><circle cx="170" cy="266" r="8"/><circle cx="470" cy="238" r="12"/><circle cx="492" cy="246" r="9"/></g></g></svg></div>
+        <div class="lay"><svg viewBox="0 0 600 560" aria-hidden="true"><g filter="url(#cut)"><path d="M20 442V362Q142 300 282 350Q402 394 580 330V442Z" fill="#74a058" stroke="#fffbea" stroke-opacity=".35" stroke-width="2"/><path d="M168 442Q182 402 236 394Q302 386 326 356" stroke="#f1e6c8" stroke-width="8" stroke-dasharray="15 11" fill="none" stroke-linecap="round"/></g></svg></div>
+        <div class="lay"><svg viewBox="0 0 600 560" aria-hidden="true"><g filter="url(#cut)"><path d="M0 474V442Q70 424 130 436Q206 452 302 434Q424 414 600 440V474Z" fill="#4c7a45"/><g fill="#4c7a45"><use href="#tuft" x="70" y="432"/><use href="#tuft" x="480" y="430"/></g><path d="M400 448L402 400" stroke="#7a5a3a" stroke-width="5"/><path d="M402 404Q360 352 360 318A42 42 0 1 1 444 318Q444 352 402 404Z" fill="#c9472f"/><circle cx="402" cy="318" r="15" fill="#fbf4e4"/><path d="M380 296Q394 284 410 286" stroke="#e56d55" stroke-width="5" fill="none" stroke-linecap="round"/></g></svg></div>
+        <div class="grain"></div>
+      </figure>
+      <button class="card" type="button" aria-pressed="true"><span class="num" aria-hidden="true">1</span><b>Drop a pin</b><span class="d">Choose a park, a riverbank or your own garden inside the ring road. We check the grass is dry and the gate is open by noon.</span><small>34 parks and greens mapped</small></button>
+    </li>
+    <li>
+      <figure class="scene" aria-label="An open wicker basket with a loaf, a bottle and apples under a tree">
+        <div class="floor"><svg viewBox="0 0 600 560" aria-hidden="true"><use href="#floorArt"/></svg></div>
+        <div class="lay"><svg viewBox="0 0 600 560" aria-hidden="true"><use href="#page"/><g filter="url(#cut)"><rect x="56" y="50" width="488" height="348" fill="#c4dbd5"/><circle cx="452" cy="104" r="34" fill="#f2c45e"/><use href="#cloud" x="250" y="88"/><path d="M56 330Q200 290 330 318Q440 340 544 300V398H56Z" fill="#bcd09a"/></g></svg></div>
+        <div class="lay"><svg viewBox="0 0 600 560" aria-hidden="true"><g filter="url(#cut)"><path d="M150 420L160 260H186L196 420Z" fill="#7a5a3a"/><g fill="#5d8a4b"><circle cx="128" cy="214" r="62"/><circle cx="210" cy="190" r="70"/><circle cx="182" cy="262" r="52"/><circle cx="92" cy="272" r="40"/></g><g fill="#c9472f"><circle cx="140" cy="200" r="7"/><circle cx="226" cy="230" r="7"/><circle cx="196" cy="160" r="6"/></g><path d="M300 420V378Q420 340 560 364V420Z" fill="#a3be79" stroke="#fffbea" stroke-opacity=".35" stroke-width="2"/></g></svg></div>
+        <div class="lay"><svg viewBox="0 0 600 560" aria-hidden="true"><g filter="url(#cut)"><path d="M20 446V392Q150 356 300 382Q440 406 580 374V446Z" fill="#83a95f" stroke="#fffbea" stroke-opacity=".35" stroke-width="2"/><g fill="#5f8a4c"><use href="#tuft" x="60" y="400"/><use href="#tuft" x="520" y="390"/></g></g></svg></div>
+        <div class="lay"><svg viewBox="0 0 600 560" aria-hidden="true"><g filter="url(#cut)"><path d="M232 362Q300 258 368 362" stroke="#93622a" stroke-width="13" fill="none" stroke-linecap="round"/><rect x="322" y="268" width="26" height="92" rx="9" fill="#3d6a4e" transform="rotate(14 335 314)"/><rect x="326" y="254" width="12" height="20" rx="3" fill="#e9d6a6" transform="rotate(14 335 314)"/><rect x="190" y="296" width="40" height="130" rx="20" fill="#e2ae66" transform="rotate(-28 210 360)"/><path d="M196 318l18 6M194 338l18 6M193 358l18 6" stroke="#b9813f" stroke-width="4" stroke-linecap="round" transform="rotate(-28 210 360)"/><path d="M196 350L404 350L396 368L204 368Z" fill="url(#gh)"/><circle cx="276" cy="352" r="17" fill="#c9472f"/><circle cx="304" cy="356" r="15" fill="#d6603f"/><path d="M276 336Q284 326 292 330" stroke="#4c7a45" stroke-width="4" fill="none"/><path d="M188 362H412L396 470H204Z" fill="url(#wv)"/><path d="M182 358H418V376H182Z" fill="#a8722f"/><path d="M0 474V454Q120 444 300 452Q460 458 600 448V474Z" fill="#4c7a45"/></g></svg></div>
+        <div class="grain"></div>
+      </figure>
+      <button class="card" type="button" aria-pressed="false"><span class="num" aria-hidden="true">2</span><b>Fill the basket</b><span class="d">Pick one of eleven baskets for two to eight people. Everything is baked or bottled that morning and packed cold at 7.30.</span><small>From £38 for two</small></button>
+    </li>
+    <li>
+      <figure class="scene" aria-label="A rider on a cargo bike leaving a gingham blanket laid with plates">
+        <div class="floor"><svg viewBox="0 0 600 560" aria-hidden="true"><use href="#floorArt"/></svg></div>
+        <div class="lay"><svg viewBox="0 0 600 560" aria-hidden="true"><use href="#page"/><g filter="url(#cut)"><rect x="56" y="50" width="488" height="348" fill="#bcd6dc"/><circle cx="150" cy="120" r="38" fill="#f2c45e"/><use href="#cloud" x="330" y="92"/><use href="#cloud" x="420" y="160" transform="scale(.7)" transform-origin="420 160"/></g></svg></div>
+        <div class="lay"><svg viewBox="0 0 600 560" aria-hidden="true"><g filter="url(#cut)"><path d="M40 420V318Q150 270 270 300Q380 326 560 290V420Z" fill="#a6c07d" stroke="#fffbea" stroke-opacity=".35" stroke-width="2"/></g></svg></div>
+        <div class="lay"><svg viewBox="0 0 600 560" aria-hidden="true"><g filter="url(#cut)"><path d="M20 446V380Q160 344 300 368Q440 392 580 360V446Z" fill="#7aa45b" stroke="#fffbea" stroke-opacity=".35" stroke-width="2"/><path d="M432 326L446 366" stroke="#2f5d5b" stroke-width="9" stroke-linecap="round"/><g fill="none" stroke="#2f2a24" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"><circle cx="400" cy="366" r="22"/><circle cx="486" cy="366" r="22"/><path d="M400 366L428 332L472 332L486 366M428 332L446 366L472 332M466 318H480M420 324H438"/></g><rect x="374" y="306" width="46" height="30" rx="3" fill="#c9472f"/><path d="M430 322L452 288" stroke="#2f5d5b" stroke-width="13" stroke-linecap="round"/><path d="M452 296L474 318" stroke="#2f5d5b" stroke-width="7" stroke-linecap="round"/><circle cx="457" cy="274" r="11" fill="#2f2a24"/><path d="M448 284Q434 284 426 292" stroke="#f0c35b" stroke-width="6" fill="none" stroke-linecap="round"/><g fill="#5f8a4c"><use href="#tuft" x="90" y="390"/><use href="#tuft" x="500" y="384"/></g></g></svg></div>
+        <div class="lay"><svg viewBox="0 0 600 560" aria-hidden="true"><g filter="url(#cut)"><path d="M150 396L450 396L500 468L100 468Z" fill="url(#gh)"/><path d="M100 468L500 468L496 476L104 476Z" fill="#b8472f"/><g fill="#fbf5e8" stroke="#dccbaa" stroke-width="3"><ellipse cx="220" cy="424" rx="34" ry="13"/><ellipse cx="376" cy="424" rx="34" ry="13"/></g><ellipse cx="220" cy="423" rx="16" ry="6" fill="#e9c46a"/><ellipse cx="376" cy="423" rx="16" ry="6" fill="#c9472f"/><path d="M290 432V384Q290 376 298 376H314Q322 376 322 384V432Z" fill="#cfe2dc" opacity=".9"/><path d="M300 380L294 350M306 380V340M312 380L320 352" stroke="#4c7a45" stroke-width="3.5"/><circle cx="294" cy="346" r="7" fill="#f0c35b"/><circle cx="306" cy="336" r="7" fill="#e56d55"/><circle cx="321" cy="348" r="6" fill="#fbf5e8"/><path d="M0 474V460Q150 452 300 458Q450 464 600 456V474Z" fill="#4c7a45"/></g></svg></div>
+        <div class="grain"></div>
+      </figure>
+      <button class="card" type="button" aria-pressed="false"><span class="num" aria-hidden="true">3</span><b>We lay the blanket</b><span class="d">A rider arrives fifteen minutes before you, spreads a wool blanket, sets the plates and weighs the napkins down with stones.</span><small>On time on 96.4% of Saturdays</small></button>
+    </li>
+    <li>
+      <figure class="scene" aria-label="A closed basket and folded blanket on the grass at dusk">
+        <div class="floor"><svg viewBox="0 0 600 560" aria-hidden="true"><use href="#floorArt"/></svg></div>
+        <div class="lay"><svg viewBox="0 0 600 560" aria-hidden="true"><use href="#page"/><g filter="url(#cut)"><rect x="56" y="50" width="488" height="348" fill="#efbf9e"/><path d="M56 50H544V170Q300 140 56 180Z" fill="#e2a58c"/><path d="M220 330A86 86 0 0 1 392 330Z" fill="#f6d58c"/><path d="M380 120l12 8 12-8M420 150l9 6 9-6M150 140l10 7 10-7" stroke="#6b4f4a" stroke-width="3.5" fill="none" stroke-linecap="round"/></g></svg></div>
+        <div class="lay"><svg viewBox="0 0 600 560" aria-hidden="true"><g filter="url(#cut)"><path d="M40 420V318Q140 268 250 306Q360 342 452 296Q510 270 560 288V420Z" fill="#8e9d7f" stroke="#fffbea" stroke-opacity=".35" stroke-width="2"/></g></svg></div>
+        <div class="lay"><svg viewBox="0 0 600 560" aria-hidden="true"><g filter="url(#cut)"><path d="M20 446V376Q170 336 320 366Q460 392 580 356V446Z" fill="#5f7d5c" stroke="#fffbea" stroke-opacity=".35" stroke-width="2"/><g fill="#f7e3a0"><circle cx="120" cy="352" r="4"/><circle cx="470" cy="338" r="3.5"/><circle cx="520" cy="318" r="3"/><circle cx="80" cy="322" r="3"/></g></g></svg></div>
+        <div class="lay"><svg viewBox="0 0 600 560" aria-hidden="true"><g filter="url(#cut)"><path d="M232 372Q300 290 368 372" stroke="#93622a" stroke-width="13" fill="none" stroke-linecap="round"/><path d="M196 372H404L392 460H208Z" fill="url(#wv)"/><path d="M186 352H414L418 376H182Z" fill="#a8722f"/><path d="M206 338H394V354H206Z" fill="url(#gh)"/><path d="M206 330H394V340H206Z" fill="#b8472f"/><rect x="430" y="404" width="30" height="50" rx="4" fill="#fbf5e8"/><rect x="437" y="414" width="16" height="26" rx="3" fill="#f2c45e"/><path d="M445 404V392" stroke="#2f2a24" stroke-width="3"/><path d="M0 474V456Q140 446 300 454Q470 462 600 450V474Z" fill="#3f5f45"/></g></svg></div>
+        <div class="grain"></div>
+      </figure>
+      <button class="card" type="button" aria-pressed="false"><span class="num" aria-hidden="true">4</span><b>Leave it on the grass</b><span class="d">Text us when you are done. We collect the basket, the blanket and the bottles within the hour and compost what is left.</span><small>Collected in 41 minutes on average</small></button>
+    </li>
+  </ol>
+  <div class="book"><button class="btn" type="button">Book a Saturday picnic</button><span>April to September, 11.00 to 15.00</span></div>
+</section>
+<script>
+(() => {
+  const how = document.querySelector('.how'), lis = [...document.querySelectorAll('.steps li')];
+  const RM = matchMedia('(prefers-reduced-motion: reduce)'), PH = matchMedia('(max-width: 860px)');
+  let io = null, raf = 0;
+  const set = (i) => lis.forEach((li, k) => { li.classList.toggle('on', k === i); li.querySelector('.card').setAttribute('aria-pressed', String(k === i)); });
+  lis.forEach((li, i) => {
+    const c = li.querySelector('.card');
+    ['mouseenter', 'focus', 'click'].forEach((ev) => c.addEventListener(ev, () => { if (!PH.matches) set(i); }));
+  });
+  function mode() {
+    if (io) { io.disconnect(); io = null; }
+    how.style.setProperty('--mx', 0); how.style.setProperty('--my', 0);
+    if (!PH.matches) { const k = lis.findIndex((l) => l.classList.contains('on')); set(k < 0 ? 0 : k); return; }
+    if (RM.matches || !('IntersectionObserver' in window)) { lis.forEach((l) => l.classList.add('on')); return; }
+    io = new IntersectionObserver((es) => es.forEach((e) => {
+      const li = e.target.parentElement;
+      if (e.intersectionRatio >= .4) li.classList.add('on'); else if (!e.isIntersecting) li.classList.remove('on');
+    }), { threshold: [0, .4] });
+    lis.forEach((l) => io.observe(l.querySelector('.scene')));
+  }
+  how.addEventListener('pointermove', (e) => {
+    if (PH.matches || RM.matches || e.pointerType !== 'mouse') return;
+    const s = how.querySelector('.on .scene'); if (!s) return;
+    const r = s.getBoundingClientRect();
+    const mx = Math.max(-1, Math.min(1, ((e.clientX - r.left) / r.width - .5) * 2)), my = Math.max(-1, Math.min(1, ((e.clientY - r.top) / r.height - .5) * 2));
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(() => { how.style.setProperty('--mx', (-mx).toFixed(3)); how.style.setProperty('--my', (-my).toFixed(3)); });
+  });
+  how.addEventListener('pointerleave', () => { how.style.setProperty('--mx', 0); how.style.setProperty('--my', 0); });
+  (PH.addEventListener ? PH.addEventListener('change', mode) : PH.addListener(mode));
+  mode();
+})();
+</script>
+</body>
+</html>

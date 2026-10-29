@@ -1,0 +1,256 @@
+<!-- Design Lounge piece: newsletter-mailbox-flag · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Mailbox flag newsletter signup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Petrona:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Mali:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f1e8d4;--card:#fbf6ea;--ink:#2b2620;--ink-2:#594f43;--line:#cbbd9f;
+  --red:#b3361f;--red-ink:#fff6ea;--ok:#3f6b35;
+  --steel:#aebcbd;--steel-2:#c7d2d1;--wood:#b98d5c;--sage:#cdd2a9;--meadow:#b0bd88;--lilac:#d8cce6;
+  --serif:"Petrona",Georgia,serif;--hand:"Mali",ui-rounded,cursive;
+  --r:6px;--h:54px;
+  --t-door:320ms;--t-flag:520ms;--t-send:2400ms;
+  --ease:cubic-bezier(.2,.7,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);--spring:cubic-bezier(.34,1.56,.64,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--paper) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .17 0 0 0 0 .14 0 0 0 0 .1 0 0 0 .55 -.2'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");color:var(--ink);font:17px/1.5 var(--serif);-webkit-font-smoothing:antialiased}
+.wrap{min-height:100%;display:grid;grid-template-columns:minmax(0,600px) minmax(0,1fr);align-items:center;gap:24px;padding:40px 88px 40px 48px;max-width:1280px;margin:0 auto}
+.art{position:relative}
+.art svg{display:block;width:100%;height:auto}
+.copy{max-width:520px}
+.kick{font:500 15px/1.3 var(--hand);color:var(--red);margin:0 0 18px;display:flex;align-items:center;gap:10px}
+.kick svg{width:34px;height:12px;flex:none}
+h2{font:500 64px/1.02 var(--serif);letter-spacing:-.022em;margin:0 0 22px}
+h2 em{font-style:italic;font-weight:400}
+.lede{margin:0 0 30px;font-size:19px;line-height:1.55;color:var(--ink-2);max-width:470px}
+label{display:block;font:500 15px/1 var(--hand);margin:0 0 10px}
+.row{display:flex;gap:10px}
+input{flex:1;min-width:0;height:var(--h);padding:0 16px;border:1.5px solid var(--ink);border-radius:var(--r);background:var(--card);font:400 18px var(--serif);color:var(--ink);outline:none;transition:border-color 150ms var(--ease),box-shadow 150ms var(--ease)}
+input::placeholder{color:#6f6453}
+input:focus{box-shadow:0 0 0 3px #b3361f40}
+input[aria-invalid="true"]{border-color:var(--red)}
+.go{height:var(--h);padding:0 22px;border:0;border-radius:var(--r);background:var(--red);color:var(--red-ink);font:600 16px var(--hand);cursor:pointer;display:inline-flex;align-items:center;gap:10px;box-shadow:0 2px 0 #6f1f10;transition:transform 150ms var(--ease),box-shadow 150ms var(--ease)}
+.go:hover{transform:translateY(-1px);box-shadow:0 3px 0 #6f1f10}
+.go:active{transform:translateY(1px);box-shadow:0 1px 0 #6f1f10}
+.go svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+.msg{min-height:24px;margin:10px 0 0;font:400 14px/1.5 var(--hand);color:var(--ink-2);display:flex;gap:8px;align-items:flex-start}
+.msg.bad{color:var(--red)}
+.msg svg{width:16px;height:16px;flex:none;margin-top:2px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+.facts{display:flex;gap:0;margin:30px 0 0;padding:16px 0 0;border-top:1px dashed var(--line);list-style:none}
+.facts li{flex:1;padding:0 16px;border-left:1px solid var(--line);font:400 14px/1.4 var(--hand);color:var(--ink-2)}
+.facts li:first-child{padding-left:0;border-left:0}
+.facts b{display:block;font:500 21px/1.2 var(--serif);color:var(--ink);margin-bottom:2px}
+.note.off{animation:none}
+.note{background:var(--card);border:1.5px solid var(--ink);border-radius:var(--r);padding:22px 24px 20px;position:relative;box-shadow:4px 5px 0 var(--line);transform:rotate(-.6deg);animation:noteIn 520ms var(--ease-out) both}
+.note h3{font:600 22px/1.25 var(--hand);margin:0 0 8px}
+.note p{margin:0 0 14px;font-size:17px;line-height:1.5}
+.note b{font-weight:600;overflow-wrap:anywhere}
+.again{all:unset;cursor:pointer;font:500 15px var(--hand);color:var(--ink);text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:1.5px}
+.again:hover{color:var(--red)}
+.again:focus-visible{outline:2px solid var(--ink);outline-offset:3px;border-radius:2px}
+.slot{display:grid;align-items:start}.slot>*{grid-area:1/1}.off{visibility:hidden}
+@keyframes noteIn{from{opacity:0;transform:translateY(10px) rotate(-.6deg)}}
+/* drawing */
+svg .k{fill:none;stroke:var(--ink);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+svg .h{fill:none;stroke:var(--ink);stroke-width:1.1;stroke-linecap:round;opacity:.55}
+#door,#flag,#env,#env .flap,#env .letter,#bird{transform-box:view-box}
+#door{transform-origin:200px 316px;transition:transform var(--t-door) var(--ease-out)}
+#flag{transform-origin:420px 262px;transition:transform var(--t-flag) var(--spring)}
+#bird{transform-origin:432px 186px}
+.typing #door{transform:scaleY(.84)}
+.up #flag{transform:rotate(90deg)}
+.wobble #flag{animation:wobble 620ms var(--ease) both}
+#env{opacity:0;transform:translate(96px,104px)}
+#env .flap{transform-origin:0 -39px}
+.sent #env{animation:envGo var(--t-send) var(--ease) both}
+.sent #env .letter{animation:letterIn var(--t-send) var(--ease) both}
+.sent #env .flap{animation:flapFold var(--t-send) var(--ease) both}
+.sent #door{animation:doorPost var(--t-send) var(--ease) both}
+.sent #door .num{animation:numHide var(--t-send) linear both}
+.sent #bird{animation:hop var(--t-send) var(--ease) both}
+@keyframes wobble{20%{transform:rotate(16deg)}45%{transform:rotate(-7deg)}70%{transform:rotate(6deg)}}
+@keyframes envGo{0%{opacity:0;transform:translate(96px,92px)}12%{opacity:1;transform:translate(96px,104px)}50%{opacity:1;transform:translate(96px,104px) scale(1)}74%{opacity:1;transform:translate(196px,262px) scale(.5) rotate(8deg)}80%,100%{opacity:0;transform:translate(204px,272px) scale(.36) rotate(8deg)}}
+@keyframes letterIn{0%,14%{transform:translateY(0)}32%,100%{transform:translateY(44px)}}
+@keyframes flapFold{0%,34%{transform:scaleY(1)}50%,100%{transform:scaleY(-1)}}
+@keyframes doorPost{0%{transform:scaleY(.84)}38%{transform:scaleY(.84)}52%,78%{transform:scaleY(-.46)}92%,100%{transform:scaleY(1)}}
+@keyframes numHide{40%,84%{opacity:0}}
+@keyframes hop{0%,82%{transform:none}88%{transform:translateY(-10px) rotate(-6deg)}94%,100%{transform:none}}
+@media (max-width:900px){
+  .wrap{grid-template-columns:1fr;padding:28px 20px 40px;gap:8px;align-items:start}
+  .art{max-width:440px;margin:0 auto;width:100%}
+  h2{font-size:40px}
+  .lede{font-size:17px;margin-bottom:24px}
+  .row{flex-direction:column}
+  input{flex:none}
+  .go{justify-content:center}
+  .facts{flex-direction:column;gap:12px}
+  .facts li{padding:0;border-left:0}
+}
+@media (prefers-reduced-motion:reduce){
+  *,svg *{transition-duration:1ms!important;animation-duration:1ms!important;animation-delay:0ms!important}
+}
+</style>
+</head>
+<body>
+<section class="wrap" aria-labelledby="sub-h">
+  <div class="art">
+    <svg id="box" viewBox="0 0 560 600" role="img" aria-labelledby="art-t">
+      <title id="art-t">A country mailbox on a wooden post in a meadow. Its door and red flag follow the sign-up form.</title>
+      <defs>
+        <filter id="rough" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency=".04" numOctaves="2" seed="7"/><feDisplacementMap in="SourceGraphic" scale="3.2"/></filter>
+        <clipPath id="body-c"><path d="M200 198 L408 184 A52 52 0 0 1 460 236 V302 L252 316 V250 A52 52 0 0 0 200 198Z"/></clipPath>
+        <clipPath id="land"><path d="M18 300H542C560 400 562 500 530 576C440 604 120 604 30 576C-2 500 0 400 18 300z"/></clipPath>
+        <clipPath id="door-c"><path d="M148 316V250a52 52 0 0 1 104 0v66z"/></clipPath>
+      </defs>
+      <g filter="url(#rough)">
+        <!-- sky -->
+        <path class="k" d="M74 92c6-14 24-18 34-8 6-12 26-14 32 0 14-2 20 10 12 18H70c-8-2-6-10 4-10z" fill="#fbf6ea" stroke-width="1.8"/>
+        <path class="h" d="M418 74c18-3 38-2 58 3M444 86c10-1 22 0 32 2"/>
+        <path class="k" d="M486 128l9-6 9 6M512 112l6-4 6 4" stroke-width="1.6"/>
+        <g clip-path="url(#land)">
+        <!-- far hills -->
+        <path d="M0 432c70-28 140-34 214-20 70 12 130-18 206-22 58-3 104 8 140 18v212H0z" fill="var(--sage)"/>
+        <path class="k" d="M0 432c70-28 140-34 214-20 70 12 130-18 206-22 58-3 104 8 140 18" stroke-width="1.8"/>
+        <path class="h" d="M30 438l10-8M52 434l10-8M74 430l10-8M96 426l10-8M440 404l10-8M462 402l10-8M484 404l10-8M506 406l10-8"/>
+        <!-- fence on the hill -->
+        <path class="k" d="M34 446v-30M88 436v-30M142 430v-28M30 424c40-8 76-14 118-18M30 436c40-8 76-14 118-18" stroke-width="1.7"/>
+        <!-- tree -->
+        <path class="k" d="M506 410v-34" stroke-width="2"/>
+        <path class="k" d="M506 382c-26 2-34-22-18-34-6-18 14-30 26-20 14-10 32 4 24 20 14 12 2 34-18 32-4 2-10 2-14 2z" fill="#9fae78"/>
+        <path class="h" d="M494 360l8 6M512 352l6 8M520 370l8 4"/>
+        <!-- meadow -->
+        <path d="M0 520c96-18 196-14 290 2 92 14 190 6 270-10v100H0z" fill="var(--meadow)"/>
+        <path class="k" d="M0 520c96-18 196-14 290 2 92 14 190 6 270-10" stroke-width="1.9"/>
+        <path class="h" d="M40 548l6-10M64 556l6-10M98 546l6-10M370 552l6-10M402 544l6-10M440 556l6-10M480 542l6-10M512 552l6-10M24 580l6-10M146 584l6-10M430 584l6-10M520 586l6-10"/>
+        <!-- mound and stone at the foot -->
+        <path d="M218 566c18-14 104-16 124 0z" fill="#9cab72"/>
+        <path class="k" d="M214 567c22-14 106-16 132 0" stroke-width="1.8"/>
+        <path d="M352 566c2-10 22-12 28 0z" fill="#d9d2c0"/><path class="k" d="M350 567c2-11 24-13 32 0" stroke-width="1.7"/>
+        </g>
+        <!-- post -->
+        <path d="M264 322h30l2 240h-34z" fill="var(--wood)"/>
+        <path class="k" d="M264 322l-2 240M294 322l2 240M262 562c10 3 24 3 34 0"/>
+        <path class="h" d="M272 340c2 40 0 90 3 140M284 360c-1 30 2 70 0 120M278 500c1 20 0 36 1 50"/>
+        <!-- grass tufts at the foot -->
+        <path class="k" d="M240 566c4-10 6-18 4-28M250 566c2-12 8-20 14-24M300 566c2-12 0-20-6-28M310 566c4-8 10-14 18-16M232 568c-6-6-12-8-18-8" stroke-width="1.8"/>
+        <!-- flowers -->
+        <g stroke="var(--ink)" stroke-width="1.6" stroke-linecap="round">
+          <path d="M120 560v-26M150 572v-22M392 566v-28M424 574v-20M88 576v-18" fill="none"/>
+          <circle cx="120" cy="530" r="6" fill="#e2b244"/><circle cx="150" cy="547" r="5" fill="var(--lilac)"/>
+          <circle cx="392" cy="534" r="6" fill="var(--lilac)"/><circle cx="424" cy="551" r="5" fill="#e2b244"/><circle cx="88" cy="555" r="4.5" fill="#e2b244"/>
+        </g>
+        <!-- plank -->
+        <path d="M172 318l274-18v12l-274 20z" fill="#a37a4c"/>
+        <path class="k" d="M172 318l274-18v12l-274 20zM300 326l-6 14M286 326l-4 12"/>
+        <!-- mailbox body -->
+        <path d="M200 198L408 184a52 52 0 0 1 52 52v66l-208 14v-66a52 52 0 0 0-52-52z" fill="var(--steel)"/>
+        <g clip-path="url(#body-c)">
+          <path d="M240 300l20-20M262 300l24-24M290 298l26-26M318 296l26-26M346 294l26-26M374 292l26-26M402 290l26-26M430 288l26-26M256 310l8-8M286 308l8-8M316 306l8-8M346 304l8-8M376 302l8-8M406 300l8-8" class="h" opacity=".42"/>
+          <path d="M224 205l176-12" stroke="#eef2ee" stroke-width="7" stroke-linecap="round" opacity=".8"/>
+        </g>
+        <path class="k" d="M200 198L408 184a52 52 0 0 1 52 52v66l-208 14"/>
+        <path class="k" d="M218 197a52 52 0 0 1 52 52v65M390 185a52 52 0 0 1 52 52v66" stroke-width="1.5" opacity=".75"/>
+        <!-- inside of the box, seen when the door opens -->
+        <path d="M148 316V250a52 52 0 0 1 104 0v66z" fill="#2f2a24"/>
+        <path d="M170 292c14-6 40-6 58 0" stroke="#6c6257" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <!-- flag -->
+        <g id="flag">
+          <path d="M424 259.5H328v6h96z" fill="#8a2a18"/>
+          <path class="k" d="M424 259H328v7h96" stroke-width="1.8"/>
+          <path d="M328 236c10-1 22 1 34-1l1 24h-35z" fill="var(--red)"/>
+          <path class="k" d="M328 236c10-1 22 1 34-1l1 24h-35z" stroke-width="1.9"/>
+          <path d="M334 244c6 0 12-1 18-1" stroke="#e8846c" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+        </g>
+        <circle cx="420" cy="262" r="4.5" fill="#8d9a9a" stroke="var(--ink)" stroke-width="1.6"/>
+        <!-- door, hinged at the bottom -->
+        <g id="door">
+          <path d="M148 316V250a52 52 0 0 1 104 0v66z" fill="var(--steel-2)"/>
+          <g clip-path="url(#door-c)"><path class="h" d="M150 304l14-14M150 316l24-24M162 316l22-22M226 316l24-24M238 316l14-14" opacity=".4"/></g>
+          <path class="k" d="M148 316V250a52 52 0 0 1 104 0v66z"/>
+          <path class="k" d="M160 308V252a40 40 0 0 1 80 0v56z" stroke-width="1.3" opacity=".6"/>
+          <path d="M193 190h14v14h-14z" fill="#8d9a9a"/>
+          <path class="k" d="M193 191c5-1 9-1 14 0v13h-14z" stroke-width="1.8"/>
+          <text class="num" x="200" y="276" text-anchor="middle" font-family="Mali,cursive" font-size="15" font-weight="600" fill="var(--ink)">No. 12</text>
+        </g>
+        <!-- robin on the box -->
+        <g transform="translate(-92 6)"><g id="bird">
+          <path d="M418 186c-2-14 8-24 20-22 6-8 18-6 20 4 2 10-6 16-12 18z" fill="#8c6a4a"/>
+          <path d="M424 182c2-8 10-12 18-10 4 4 2 10-4 12z" fill="#d46a3c"/>
+          <path class="k" d="M418 186c-2-14 8-24 20-22 6-8 18-6 20 4 2 10-6 16-12 18zM458 168l8 2-8 3M418 184c-10 0-16-4-20-8" stroke-width="1.7"/>
+          <circle cx="451" cy="166" r="1.8" fill="var(--ink)"/>
+        </g></g>
+        <!-- envelope -->
+        <g id="env">
+          <path d="M-60-39H60v78H-60z" fill="#c7b9d9"/>
+          <g class="letter">
+            <path d="M-48-74h96v64h-96z" fill="#fbf6ea"/>
+            <path class="k" d="M-48-74h96v64h-96zM-38-62h60M-38-52h70M-38-42h48" stroke-width="1.5"/>
+          </g>
+          <path d="M-60-39L0 6l60-45v78H-60z" fill="var(--lilac)"/>
+          <path class="k" d="M-60-39h120v78H-60zM-60-39L0 6l60-45M-60 39l44-32M60 39L16 7" stroke-width="1.8"/>
+          <path d="M28 14h22v18H28z" fill="var(--red)"/><path class="k" d="M28 14h22v18H28z" stroke-width="1.4"/>
+          <path class="flap" d="M-60-39L0-84l60 45z" fill="#cdbfe0" stroke="var(--ink)" stroke-width="1.8" stroke-linejoin="round"/>
+        </g>
+      </g>
+    </svg>
+  </div>
+
+  <div class="copy">
+    <p class="kick"><svg viewBox="0 0 34 12" aria-hidden="true"><path d="M1 7c5-5 9 3 14-1s9-4 18 0" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>The Hedgerow Post, a letter club</p>
+    <h2 id="sub-h">Write to a stranger. <em>Get a real letter back.</em></h2>
+    <p class="lede">Once a month we pair you with another member somewhere else in the world. You write by hand, they write back. The email is only for the prompt and the address.</p>
+    <div class="slot">
+    <div id="formbox">
+      <form id="form" novalidate>
+        <label for="email">Your email, for the monthly prompt</label>
+        <div class="row">
+          <input id="email" type="email" name="email" placeholder="you@yourlane.co.uk" autocomplete="email" aria-describedby="msg" aria-invalid="false">
+          <button class="go" type="submit">Join the club <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h18v12H3zM3 7l9 7 9-7"/></svg></button>
+        </div>
+        <p class="msg" id="msg" aria-live="polite">One email on the first of each month. Never shared, never sold.</p>
+      </form>
+      <ul class="facts">
+        <li><b>Wed 4 Nov</b>next letters go out</li>
+        <li><b>2,418</b>members in 31 countries</li>
+        <li><b>Free</b>you buy your own stamp</li>
+      </ul>
+    </div>
+    <div class="note off" id="note" tabindex="-1" aria-live="polite">
+      <h3>Posted. Thank you.</h3>
+      <p>Your welcome letter is on its way to <b id="addr"></b>. Look for a lilac envelope and your first pen pal on Wednesday 4 November.</p>
+      <button class="again" type="button" id="again">Use a different address</button>
+    </div>
+    </div>
+  </div>
+</section>
+<script>
+(()=>{
+  const $=id=>document.getElementById(id);
+  const box=$('box'),f=$('form'),i=$('email'),m=$('msg'),fb=$('formbox'),note=$('note');
+  const base=m.innerHTML,re=/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  const err='<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5M12 16.5v.5"/></svg><span></span>';
+  const sync=()=>{const v=i.value.trim();box.classList.toggle('typing',v.length>0);box.classList.toggle('up',re.test(v));};
+  const bad=t=>{m.className='msg bad';m.innerHTML=err;m.lastChild.textContent=t;i.setAttribute('aria-invalid','true');
+    box.classList.remove('wobble');void box.getBoundingClientRect();box.classList.add('wobble');i.focus();};
+  i.addEventListener('input',()=>{sync();if(m.className!=='msg'){m.className='msg';m.innerHTML=base;i.setAttribute('aria-invalid','false');}});
+  box.addEventListener('animationend',e=>{if(e.animationName==='wobble')box.classList.remove('wobble');});
+  f.addEventListener('submit',e=>{
+    e.preventDefault();const v=i.value.trim();
+    if(!v)return bad('Add your email so we can send the first prompt.');
+    if(!re.test(v))return bad('That address needs an @ and a domain, like ann@yourlane.co.uk.');
+    $('addr').textContent=v;box.classList.add('typing','up','sent');
+    const done=()=>{fb.classList.add('off');note.classList.remove('off');note.focus({preventScroll:true});};
+    matchMedia('(prefers-reduced-motion: reduce)').matches?done():setTimeout(done,1900);
+  });
+  $('again').addEventListener('click',()=>{box.classList.remove('sent','typing','up');i.value='';note.classList.add('off');fb.classList.remove('off');i.focus();});
+})();
+</script>
+</body>
+</html>

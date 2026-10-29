@@ -1,0 +1,210 @@
+<!-- Design Lounge piece: features-pencil-annotations · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Pencil annotations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Schoolbell&family=Spectral:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f3ecdd;--ink:#2a251e;--ink-2:#5a5246;--rule:#e2b3a6;--lead:#b8412a;--note:#a3311b;
+  --serif:"Spectral",Georgia,serif;--hand:"Schoolbell","Comic Sans MS",cursive;
+  --col:380px;--feat:420px;--note-x:480px;
+  --ease:cubic-bezier(.2,.7,.2,1);--t-fast:180ms;--t-erase:240ms;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--paper) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .32 0 0 0 0 .25 0 0 0 0 .16 .2 0 0 0 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");color:var(--ink);font:400 16px/1.75 var(--serif);-webkit-font-smoothing:antialiased}
+.page{position:relative;min-height:100%;display:grid;grid-template-columns:var(--col) 1fr;gap:72px;padding:64px 64px 48px;overflow:clip}
+.intro{padding-top:6px}
+.kicker{margin:0;font:500 13px/1 var(--serif);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
+h1{font:300 76px/.98 var(--serif);letter-spacing:-.025em;margin:22px 0 26px}
+h1 em{font-style:italic;font-weight:400;color:var(--lead)}
+.lede{margin:0;font-size:18px;line-height:1.6;color:var(--ink-2);max-width:350px}
+.cta{display:flex;align-items:center;gap:18px;margin-top:34px;flex-wrap:wrap}
+.btn{font:500 16px/1 var(--serif);color:var(--paper);background:var(--ink);border:0;border-radius:3px;padding:15px 22px;cursor:pointer;transition:background var(--t-fast) var(--ease)}
+.btn:hover{background:#4a3f31}
+.price{font-size:14px;color:var(--ink-2);line-height:1.4}
+.kept{margin:56px 0 0;padding-top:16px;border-top:1px solid #d9cdb6;font-size:14px;line-height:1.5;color:var(--ink-2);max-width:330px}
+.kept b{font-weight:500;color:var(--ink)}
+.sheet{position:relative;padding-top:4px}
+.sheet::before{content:"";position:absolute;left:calc(var(--feat) + 30px);top:-64px;bottom:-48px;width:5px;border-left:1px solid var(--rule);border-right:1px solid var(--rule)}
+.hint{margin:0 0 30px var(--note-x);font:400 19px/1.2 var(--hand);color:var(--ink-2);max-width:220px}
+.hint .m{display:none}
+.feats{list-style:none;margin:0;padding:0;width:var(--feat)}
+.feat{position:relative;padding-bottom:34px}
+.feat h3{margin:0 0 14px;font:500 26px/1.2 var(--serif);letter-spacing:-.01em}
+.feat h3 button{all:unset;cursor:pointer;border-radius:2px}
+.feat h3 button:focus-visible{outline:2px solid var(--lead);outline-offset:6px}
+.feat p{margin:0;color:var(--ink-2);line-height:1.8}
+.feat .note{position:absolute;left:var(--note-x);top:-2px;width:230px;margin:0;font:400 21px/1.2 var(--hand);color:var(--note);visibility:hidden}
+.note span{display:block;width:max-content;max-width:100%}
+.feat.on .note{visibility:visible}
+#ink{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;overflow:visible}
+#ink path{fill:none;stroke:var(--lead);stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round;opacity:.92}
+#ink g{transition:opacity var(--t-erase) var(--ease)}
+#ink g.gone{opacity:0}
+.pencil{position:absolute;left:0;top:0;pointer-events:none;filter:drop-shadow(5px 9px 4px rgba(70,48,24,.3));transition:filter 260ms var(--ease);z-index:3;will-change:transform}
+.pencil.up{filter:drop-shadow(14px 22px 9px rgba(70,48,24,.18))}
+.pencil>div{transform-origin:0 0}
+.pencil svg{position:absolute;left:-4px;top:-16px;display:block}
+@media (max-width:760px){
+  .page{grid-template-columns:1fr;gap:40px;padding:56px 20px 56px}
+  h1{font-size:50px;margin:16px 0 18px}
+  .lede{font-size:17px}
+  .cta{margin-top:26px}
+  .kept{margin-top:30px}
+  .sheet::before{display:none}
+  .hint{margin:0 0 22px;font-size:18px;max-width:none}
+  .hint .d{display:none}.hint .m{display:inline}
+  .feats{width:auto}
+  .feat{padding-bottom:30px}
+  .feat h3{font-size:23px;max-width:300px}
+  .feat .note{position:static;width:auto;max-width:200px;margin:14px 0 0 40px;font-size:20px}
+}
+@media (prefers-reduced-motion:reduce){#ink g,.pencil,.btn{transition:none}}
+</style>
+</head>
+<body>
+<main class="page">
+  <section class="intro" aria-labelledby="hd">
+    <p class="kicker">Quire, a reading notebook</p>
+    <h1 id="hd">Read with a <em>pencil</em> in hand.</h1>
+    <p class="lede">Quire sits beside your PDFs, books and saved articles. It remembers where every mark was made, and it never asks you to stop reading to file anything.</p>
+    <div class="cta"><button class="btn" type="button">Start a notebook</button><span class="price">30 days free,<br>then £4 a month</span></div>
+    <p class="kept">Kept by <b>1,284 reading groups</b> and 38 college libraries, from Leeds to Dunedin.</p>
+  </section>
+  <section class="sheet" aria-label="What Quire does in the margins">
+    <p class="hint" aria-hidden="true"><span class="d">point at a feature and I'll mark it up</span><span class="m">tap a feature and I'll mark it up</span></p>
+    <ul class="feats">
+      <li class="feat"><h3><button type="button" aria-pressed="false"><span class="t">Highlights with page numbers</span></button></h3>
+        <p>Mark a passage in a PDF, an EPUB or a web article and Quire saves <span class="u">the page and the edition</span> with it, so the citation is ready before the essay is.</p>
+        <p class="note"><span>p. 214, 2nd edition,</span><span>it cites itself!</span></p></li>
+      <li class="feat"><h3><button type="button" aria-pressed="false"><span class="t">Margins that follow you</span></button></h3>
+        <p>Write beside a paragraph on the laptop and the note waits <span class="u">beside the same paragraph</span> on your phone, even after the text reflows onto a new screen.</p>
+        <p class="note"><span>same spot on every</span><span>screen, even reflowed</span></p></li>
+      <li class="feat"><h3><button type="button" aria-pressed="false"><span class="t">Threads between books</span></button></h3>
+        <p>Type two square brackets to link this note to anything you read last spring. Quire draws <span class="u">the thread both ways</span> and lists every place an idea came back.</p>
+        <p class="note"><span>ch. 3 now links back</span><span>to the Vane essay</span></p></li>
+      <li class="feat"><h3><button type="button" aria-pressed="false"><span class="t">A quieter reading mode</span></button></h3>
+        <p>Hide the toolbar, the counters and the clock. Pages turn with the space bar, and your notes <span class="u">wait in the margin</span> until you press M.</p>
+        <p class="note"><span>no clock, no badges,</span><span>just the page</span></p></li>
+    </ul>
+  </section>
+  <svg id="ink" aria-hidden="true"><defs><filter id="graphite" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency="1.2" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="1.8"/></filter></defs></svg>
+  <div class="pencil" aria-hidden="true"><div>
+    <svg width="312" height="32" viewBox="-4 -16 312 32">
+      <defs><clipPath id="pb"><path d="M47 -12Q41 -8 46 -4Q40 0 46 4Q41 8 47 12L252 12L252 -12Z"/></clipPath>
+      <pattern id="hx" width="5" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(32)"><path d="M0 0v9" stroke="#6f2112" stroke-width=".9"/></pattern></defs>
+      <path d="M1 0L48 -12.6L48 12.6Z" fill="#ecd0a8" stroke="#2b2620" stroke-width="1.2" stroke-linejoin="round"/>
+      <path d="M19 -2.6L41 -6.8M23 3.4L42 8M29 .4L44 .9M34 -9L45 -10.4" stroke="#b88a58" stroke-width=".8" fill="none" stroke-linecap="round"/>
+      <path d="M0 0L13 -3.5Q15.5 0 13 3.5Z" fill="#8f2717" stroke="#2b2620" stroke-width=".8"/>
+      <g clip-path="url(#pb)"><rect x="38" y="-12" width="216" height="8" fill="#de6446"/><rect x="38" y="-4" width="216" height="8" fill="#c8452c"/><rect x="38" y="4" width="216" height="8" fill="#a3361f"/><rect x="38" y="4" width="216" height="8" fill="url(#hx)" opacity=".55"/>
+        <path d="M60 -8.6C118 -9.4 186 -8.4 246 -9" stroke="#f6bba6" stroke-width="1.7" stroke-linecap="round" fill="none"/>
+        <path d="M96 .2h10M110 .2h4M118 .2h15M137 .2h7M148 .2h11" stroke="#efc874" stroke-width="2.3" stroke-linecap="round"/></g>
+      <path d="M47 -12Q41 -8 46 -4Q40 0 46 4Q41 8 47 12L252 12.3M47.5 -12.2L252 -12.4" stroke="#2b2620" stroke-width="1.25" fill="none" stroke-linejoin="round"/>
+      <path d="M46 -4L252 -4.2M46 4L252 4.1" stroke="#5d1a0e" stroke-width=".7" fill="none"/>
+      <rect x="252" y="-12.8" width="26" height="25.4" rx="1.6" fill="#cdb98c" stroke="#2b2620" stroke-width="1.2"/>
+      <path d="M252.6 4.6h24.8v7.5h-24.8Z" fill="#a8946a" opacity=".7"/>
+      <path d="M257.5 -12.6v25.2M261 -12.6v25.2M269 -12.6v25.2M272.5 -12.6v25.2" stroke="#7d6a45" stroke-width="1"/>
+      <path d="M278 -11.6L295 -11.6Q302.5 -11 302.5 -4L302.5 4Q302.5 11 295 11.6L278 11.6Z" fill="#e8a092" stroke="#2b2620" stroke-width="1.2" stroke-linejoin="round"/>
+      <path d="M279 5L301 5Q300 10.6 295 10.8L279 10.8Z" fill="#c97b6e" opacity=".75"/>
+    </svg></div></div>
+</main>
+<script>
+(() => {
+  const page = document.querySelector('.page'), ink = document.getElementById('ink');
+  const pen = document.querySelector('.pencil'), pb = pen.firstElementChild;
+  const feats = [...document.querySelectorAll('.feat')];
+  const RM = matchMedia('(prefers-reduced-motion: reduce)'), PH = matchMedia('(max-width: 760px)');
+  const NS = 'http://www.w3.org/2000/svg', A = 32;
+  const DOODLE = [
+    'M9 40L21 4L34 39L4 16.5L40.5 15.5L8.5 40.6 M44 5L49 0 M46 11L53 10.5 M39 1L39.5 -5',
+    'M2 21L42 4L29 40L20.5 26.5Z M20.5 26.5L42 4 M2 21L-10 27 M-14 29.5L-19 32',
+    'M2 12C10 8 18 9 22 14C26 9 34 8 42 12V38C34 34 26 35 22 40C18 35 10 34 2 38Z M22 14V40 M42 22C53 23 55 34 47 35C40 36 40 28 47 28',
+    'M6 21L34 21C34.5 33 28 40.5 20 40.5C12 40.5 6 33 6 21 M34 25C42 24 42.5 32.5 33 33.5 M16 16C12 12 20 9 16 3.5 M24 16C20 12 28 9 24 3.5'];
+  let cur = -1, tok = 0, at = { x: 0, y: 0 };
+  const sc = () => (PH.matches ? .55 : .9);
+  const box = (r) => { const p = page.getBoundingClientRect(); return { l: r.left - p.left, t: r.top - p.top, r: r.right - p.left, b: r.bottom - p.top, w: r.width, h: r.height }; };
+  const rel = (el) => box(el.getBoundingClientRect());
+  const rng = (s) => () => ((s = (s * 16807) % 2147483647) / 2147483647);
+  const f = (p) => p[0].toFixed(1) + ' ' + p[1].toFixed(1);
+  const smooth = (P) => { let d = 'M' + f(P[0]); for (let i = 1; i < P.length - 1; i++) d += 'Q' + f(P[i]) + ' ' + f([(P[i][0] + P[i + 1][0]) / 2, (P[i][1] + P[i + 1][1]) / 2]); return d + 'L' + f(P[P.length - 1]); };
+  const place = (x, y, a = A) => { at = { x, y }; pen.style.transform = `translate(${x.toFixed(1)}px,${y.toFixed(1)}px)`; pb.style.transform = `rotate(${a.toFixed(2)}deg) scale(${sc()})`; };
+  const frame = (fn) => new Promise((res) => requestAnimationFrame((t) => res(fn(t))));
+  async function tween(d, fn, my) {
+    const t0 = await frame((t) => t);
+    for (;;) { if (my !== tok) return false; const q = Math.min(1, (await frame((t) => t) - t0) / d); fn(q); if (q >= 1) return true; }
+  }
+  const ease = (q) => (q < .5 ? 4 * q * q * q : 1 - Math.pow(-2 * q + 2, 3) / 2);
+  async function travel(to, my) {
+    const from = { ...at }, dist = Math.hypot(to[0] - from.x, to[1] - from.y);
+    if (dist < 2) return true;
+    pen.classList.add('up');
+    const ok = await tween(Math.min(560, 180 + dist * .55), (q) => { const e = ease(q); place(from.x + (to[0] - from.x) * e, from.y + (to[1] - from.y) * e - Math.sin(q * Math.PI) * 10, A - 6 * Math.sin(q * Math.PI)); }, my);
+    pen.classList.remove('up'); return ok;
+  }
+  function plan(i) {
+    const el = feats[i], ph = PH.matches, R = rng(i * 7919 + 31), seq = [];
+    const g = document.createElementNS(NS, 'g'); g.setAttribute('filter', 'url(#graphite)'); ink.appendChild(g);
+    const add = (d, ox = 0, oy = 0, k = 1) => { const p = document.createElementNS(NS, 'path'); p.setAttribute('d', d); if (ox || oy) p.setAttribute('transform', `translate(${ox} ${oy}) scale(${k})`); g.appendChild(p); const L = p.getTotalLength(); p.style.strokeDasharray = L + ' ' + (L + 2); p.style.strokeDashoffset = L; if (k !== 1) p.style.strokeWidth = 2.1 / k; seq.push({ p, L, ox, oy, k }); };
+    const t = rel(el.querySelector('.t')), cx = (t.l + t.r) / 2, cy = (t.t + t.b) / 2 + 1;
+    const rx = t.w / 2 + (ph ? 16 : 24), ry = t.h / 2 + (ph ? 10 : 12), tilt = -.02 + R() * .012, P = [], se = (v) => Math.sign(v) * Math.pow(Math.abs(v), 2 / 3);
+    for (let k = 0; k <= 48; k++) { const q = k / 48, a = -2.6 + Math.PI * 2.16 * q, s = 1.012 + (R() - .5) * .018 - (q - .5) * .045, x = se(Math.cos(a)) * rx * s, y = se(Math.sin(a)) * ry * s; P.push([cx + x * Math.cos(tilt) - y * Math.sin(tilt), cy + x * Math.sin(tilt) + y * Math.cos(tilt)]); }
+    add(smooth(P));
+    let u = '';
+    for (const rr of el.querySelector('.u').getClientRects()) { const r = box(rr), U = []; for (let x = r.l - 3; x < r.r + 6; x += 14) U.push([x, r.b + 2.2 + (x - r.l) * .012 + (R() - .5) * 1.1]); U.push([r.r + 6, r.b + 2.4 + r.w * .012]); u += smooth(U); }
+    add(u);
+    el.classList.add('on');
+    const spans = [...el.querySelectorAll('.note span')], n = rel(el.querySelector('.note')), s0 = rel(spans[0]), ey = s0.t + s0.h * .55;
+    let s, e, c1, c2;
+    if (ph) { s = [14, n.t - 12]; e = [n.l - 7, ey]; c1 = [8, n.t + 6]; c2 = [14, ey + 2]; }
+    else { s = [cx + rx + 5, cy - 4]; e = [n.l - 10, ey]; c1 = [s[0] + (e[0] - s[0]) * .3, Math.min(s[1], e[1]) - 24]; c2 = [e[0] - (e[0] - s[0]) * .28, e[1] - 16]; }
+    add(`M${f(s)}C${f(c1)} ${f(c2)} ${f(e)}`);
+    const ang = Math.atan2(e[1] - c2[1], e[0] - c2[0]), bl = (k) => [e[0] - 11 * Math.cos(ang + k), e[1] - 11 * Math.sin(ang + k)];
+    add(`M${f(bl(.5))}L${f(e)}L${f(bl(-.5))}`);
+    spans.forEach((sp) => { const r = rel(sp); sp.style.clipPath = 'inset(-6px 100% -6px -4px)'; seq.push({ sp, r }); });
+    const ox = ph ? Math.min(n.l + Math.max(...spans.map((x) => rel(x).w)) + 14, page.clientWidth - 64) : n.l + 6, oy = ph ? n.t + n.h / 2 - 22 : n.b + 14;
+    const k = ph ? 1 : 1.4; add(DOODLE[i], ox, oy, k);
+    return { g, seq, rest: ph ? [Math.min(ox + 58, page.clientWidth - 18), oy + 30] : [ox + 44 * k + 22, oy + 44 * k] };
+  }
+  async function draw(i, instant) {
+    const my = ++tok;
+    ink.querySelectorAll('g:not(.gone)').forEach((g) => { g.classList.add('gone'); setTimeout(() => g.remove(), 280); });
+    feats.forEach((el) => { el.classList.remove('on'); el.querySelectorAll('.note span').forEach((s) => (s.style.clipPath = '')); });
+    const pl = plan(i);
+    if (instant || RM.matches) { pl.seq.forEach((st) => (st.p ? (st.p.style.strokeDashoffset = 0) : (st.sp.style.clipPath = 'none'))); place(...pl.rest); return; }
+    for (const st of pl.seq) {
+      if (st.sp) {
+        const { l, t, w, h } = st.r, y = t + h * .62;
+        if (!(await travel([l, y], my))) return;
+        if (!(await tween(260 + w * 3.2, (q) => { st.sp.style.clipPath = `inset(-6px ${(1 - q) * 100}% -6px -4px)`; place(l + w * q, y - Math.abs(Math.sin(q * w / 9)) * 5, A + Math.sin(q * 30) * 2); }, my))) return;
+        st.sp.style.clipPath = 'none';
+      } else {
+        const pt = (k) => { const q = st.p.getPointAtLength(k); return [q.x * st.k + st.ox, q.y * st.k + st.oy]; };
+        if (!(await travel(pt(0), my))) return;
+        if (!(await tween(Math.min(900, 160 + st.L * 1.25), (q) => { st.p.style.strokeDashoffset = st.L * (1 - q); place(...pt(st.L * q), A + Math.sin(q * 24) * 1.6); }, my))) return;
+      }
+    }
+    travel(pl.rest, my);
+  }
+  function select(i, force) {
+    if (i === cur && !force) return;
+    cur = i;
+    feats.forEach((el, k) => el.querySelector('button').setAttribute('aria-pressed', String(k === i)));
+    draw(i);
+  }
+  feats.forEach((el, i) => {
+    el.addEventListener('mouseenter', () => select(i));
+    el.querySelector('button').addEventListener('focus', () => select(i));
+    el.addEventListener('click', () => select(i, true));
+  });
+  let rz; addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => cur > -1 && draw(cur, true), 120); });
+  const start = () => { const w = page.clientWidth; place(PH.matches ? w - 40 : w - 230, PH.matches ? 470 : 690); select(0); };
+  (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(start, start);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,221 @@
+<!-- Design Lounge piece: footer-constellation-links · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>The Orrery Room, footer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Domine:wght@500;700&family=Delius&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#EFE6D4;--paper-ink:#1F2433;--paper-2:#5A5A62;--paper-line:#D3C7AE;
+  --night:#111C2E;--night-2:#0B1422;--line:#2B3B57;--cream:#F1E7D2;--cream-2:#C6BEAD;--honey:#F2C46D;--honey-ink:#111C2E;--brass:#D9A85B;
+  --head:"Domine",Georgia,serif;--body:"Delius","Trebuchet MS",sans-serif;
+  --sky-h:430px;--gutter:64px;
+  --t-micro:160ms;--t-ink:560ms;--t-turn:700ms;--ease:cubic-bezier(.2,.7,.2,1);--swing:cubic-bezier(.34,1.2,.5,1);
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+html{background:var(--night-2)}
+body{font:15px/1.5 var(--body);color:var(--cream);-webkit-font-smoothing:antialiased;height:auto;min-height:100%}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--honey);outline-offset:3px;border-radius:6px}
+main :focus-visible{outline-color:var(--paper-ink)}
+main{background:var(--paper);color:var(--paper-ink);padding:26px var(--gutter) 28px}
+main header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px}
+main h2{font:700 26px/1.1 var(--head);margin:0;letter-spacing:-.01em}
+main header a{font-size:14px;border-bottom:1.5px solid var(--paper-ink)}
+.ev{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.ev li{border-top:1px solid var(--paper-ink);padding-top:10px;display:grid;grid-template-columns:auto 1fr;column-gap:14px}
+.ev b{font:700 15px/1.3 var(--head);grid-row:span 2}
+.ev span{font-size:14px;line-height:1.35}.ev small{font-size:13px;color:var(--paper-2)}
+footer{background:var(--night-2)}
+.sky{position:relative;height:var(--sky-h);background:var(--night);overflow:hidden}
+.sky>svg.field{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.grain{position:absolute;inset:0;z-index:3;pointer-events:none;opacity:.14;mix-blend-mode:screen;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 .9 0 0 0 0 .9 0 0 0 0 1 0 0 0 .5 -.1'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")}
+.roofs{position:absolute;left:0;right:0;bottom:0;width:100%;height:140px;pointer-events:none;overflow:visible}
+.scope{transform:translate(1176px,82px) scale(1.45) translate(-1176px,-82px)}.cat{transform:translate(1238px,82px) scale(1.2) translate(-1248px,-82px)}
+.bg circle{fill:var(--cream)}
+.ink path{fill:none;stroke:var(--honey);stroke-width:1.7;stroke-linecap:round;opacity:.9}
+.ink path.old{opacity:.5}
+.ink path.drawing{transition:stroke-dashoffset var(--t-ink) var(--ease)}
+.st circle{fill:var(--cream);opacity:.85;transition:r var(--t-micro) var(--ease),fill var(--t-micro),opacity var(--t-micro)}
+.st.on circle{fill:var(--honey);opacity:1;r:3.6}
+.st .halo{fill:var(--honey);opacity:0;r:16;transform-box:fill-box;transform-origin:center;transform:scale(.3);transition:opacity 300ms var(--ease),transform 400ms var(--swing)}
+.st .ray{fill:var(--honey);opacity:0;transform-box:fill-box;transform-origin:center;transform:scale(.2) rotate(-30deg);transition:opacity 200ms,transform 500ms var(--swing)}
+.st.now .halo{opacity:.2;transform:none}.st.now .ray{opacity:1;transform:none}.st.now circle{r:4.2}
+#tube{transform-origin:1176px 48px;transition:transform var(--t-turn) var(--swing)}
+.cat .tail{transform-origin:1246px 120px;animation:flick 5s ease-in-out infinite alternate}
+@keyframes flick{to{transform:rotate(9deg)}}
+.hint{position:absolute;z-index:2;left:var(--gutter);right:var(--gutter);top:20px;display:flex;justify-content:space-between;align-items:center;font-size:14px;color:var(--cream-2)}
+.hint p{margin:0;background:var(--night);padding:0 6px;margin-left:-6px}
+.hint div{display:flex;gap:14px;align-items:center;background:var(--night);padding-left:6px}
+.clear{font:inherit;font-size:14px;color:var(--cream);background:transparent;border:1.5px solid var(--cream-2);border-radius:999px;height:34px;padding:0 14px;cursor:pointer;transition:background var(--t-micro),color var(--t-micro)}
+.clear:hover{background:var(--cream);color:var(--night)}
+.map{position:absolute;inset:0;z-index:2}
+.map h3{position:absolute;left:var(--x);top:var(--y);margin:0;font:700 12px/1 var(--head);letter-spacing:.16em;text-transform:uppercase;color:var(--honey);background:var(--night);padding:3px 6px}
+.map ul{list-style:none;margin:0;padding:0}
+.map a{position:absolute;left:calc(var(--x) - 14px);top:calc(var(--y) - 16px);display:flex;align-items:center;height:32px;padding:0 6px 0 26px;white-space:nowrap}
+.map a span{background:var(--night);padding:1px 6px;border-radius:4px;color:var(--cream);transition:color var(--t-micro)}
+.map a .dot{position:absolute;left:14px;top:16px;width:0;height:0;padding:0}
+.map a:hover span,.map a.now span{color:var(--honey)}
+.map a sup{font-size:10px;color:var(--honey);margin-left:3px}
+.base{display:grid;grid-template-columns:1.15fr .95fr 1.3fr 1.35fr;gap:36px;padding:24px var(--gutter) 16px}
+.base h4{margin:0 0 8px;font:700 12px/1 var(--head);letter-spacing:.16em;text-transform:uppercase;color:var(--honey)}
+.base p{margin:0;font-size:14px;line-height:1.55;color:var(--cream)}
+.base .muted{color:var(--cream-2)}
+.brand b{display:block;font:700 26px/1.1 var(--head);letter-spacing:-.01em;margin-bottom:6px}
+.hours{display:grid;grid-template-columns:auto 1fr;column-gap:14px;font-size:14px;margin:0}
+.hours dt{color:var(--cream-2)}.hours dd{margin:0}
+form{display:flex;gap:8px;margin-top:10px}
+label.sr,.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+input{flex:1;min-width:0;height:42px;padding:0 14px;font:inherit;font-size:14px;color:var(--cream);background:transparent;border:1.5px solid var(--cream-2);border-radius:999px}
+input::placeholder{color:var(--cream-2)}
+form button{height:42px;padding:0 18px;border:0;border-radius:999px;background:var(--honey);color:var(--honey-ink);font:700 14px var(--head);cursor:pointer}
+form button:hover{background:var(--cream)}
+.ok{font-size:13px;color:var(--honey);margin-top:6px;min-height:20px}.ok:empty{min-height:0;margin:0}
+.legal{display:flex;justify-content:space-between;gap:20px;padding:12px var(--gutter) 14px;border-top:1px solid var(--line);font-size:13px;color:var(--cream-2)}
+.legal a{text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--line)}
+.legal a:hover{color:var(--cream)}
+@media (max-width:1100px){:root{--gutter:40px}.base{grid-template-columns:1fr 1fr;row-gap:24px}}
+@media (max-width:640px){
+  :root{--gutter:20px;--sky-h:auto}
+  main{padding:22px 20px 22px}.ev{grid-template-columns:1fr;gap:10px}main header{flex-direction:column;gap:4px}
+  .sky{padding-top:250px}.sky>svg.field{height:250px}.roofs{top:150px;bottom:auto;height:100px}
+  .grain{bottom:auto;height:250px}.hint p,.hint div{background:none}
+  .hint{position:relative;left:0;right:0;top:0;padding:18px 20px 0;flex-direction:column;align-items:flex-start;gap:10px}
+  .map{position:static;display:grid;grid-template-columns:1fr 1fr;gap:22px 16px;padding:20px 20px 28px}
+  .map h3,.map a{position:static}.map h3{padding:0;margin-bottom:6px;display:inline-block}
+  .map a{height:40px;padding:0}.map a span{padding:0;background:none}.map a .dot{display:none}
+  .base{grid-template-columns:1fr;gap:22px;padding-top:24px}.legal{flex-direction:column;gap:6px}
+}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important;animation:none!important}}
+</style>
+</head>
+<body>
+<main>
+  <header><h2>On the roof this week</h2><a href="#calendar">Full sky calendar</a></header>
+  <ul class="ev">
+    <li><b>Tue 4</b><span>Jupiter and its four big moons, 20:30</span><small>6 of 14 seats left · £8 with cocoa</small></li>
+    <li><b>Thu 6</b><span>The Pleiades, read aloud by Ines Varga</span><small>Fully booked · waiting list open</small></li>
+    <li><b>Sat 8</b><span>Kids' sky club: find the Plough, 17:45</span><small>Ages 6 to 11 · free with a grown-up</small></li>
+  </ul>
+</main>
+<footer>
+  <div class="sky" id="sky">
+    <svg class="field" aria-hidden="true"><defs><filter id="rough"><feTurbulence type="fractalNoise" baseFrequency=".022" numOctaves="2" seed="7"/><feDisplacementMap in="SourceGraphic" scale="2.4"/></filter></defs><g class="bg"></g><g class="ink"></g><g class="stars"></g></svg>
+    <svg class="roofs" viewBox="0 0 1280 140" preserveAspectRatio="xMaxYMax slice" aria-hidden="true">
+      <g filter="url(#rough)" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M0 140V96H34V86L60 70L86 86V96H120V60H128V54H136V60H140V100L176 78L212 100V92H262V64L272 40L282 64V92H330V102H372L398 82L424 102V88H470V76H478V88H520L548 70L576 88V104H640V84H690L714 66L738 84V96H790V58H798V70H830L860 50L890 70V100H940V90H1000L1026 72L1052 90V98H1090V82H1280V140Z" fill="var(--night-2)" stroke="#3A4C6B" stroke-width="1.4"/>
+        <path d="M52 104h8v10h-8zM190 106h8v10h-8zM292 102h7v9h-7zM440 100h8v10h-8zM560 98h7v9h-7zM706 96h8v10h-8zM850 84h8v10h-8zM956 104h7v9h-7zM1130 100h9v12h-9zM1160 100h9v12h-9z" fill="var(--honey)" opacity=".85"/>
+        <path d="M1094 82V66M1280 66H1090M1112 82V66M1134 82V66M1156 82V66M1200 82V66M1222 82V66M1244 82V66M1266 82V66" stroke="#55688A" stroke-width="1.5" fill="none"/>
+        <g class="scope" stroke="var(--night-2)" stroke-width="1.4"><path d="M1176 50L1150 82M1176 50L1202 82M1176 50L1178 82M1160 70L1194 71" stroke="var(--cream-2)" fill="none"/>
+          <g id="tube"><path d="M1192 40L1104 26Q1100 36 1102 46L1192 56Z" fill="var(--cream)"/><path d="M1104 25L1090 22Q1085 37 1088 51L1102 47Z" fill="var(--brass)"/><path d="M1160 35L1166 36V51L1160 50Z" fill="var(--brass)"/><path d="M1192 42L1204 44V54L1192 54Z" fill="var(--brass)"/><path d="M1140 30L1150 31.5V26L1140 24.5Z" fill="var(--cream-2)"/><path d="M1112 41l8 4M1124 43l8 5M1136 45l8 5M1148 47l8 5M1172 50l8 4M1184 51l6 3" stroke="var(--night)" stroke-width=".9" opacity=".55"/><path d="M1120 28.6V45.6M1124 29.2V46.2" stroke="var(--brass)" stroke-width="1.2"/><path d="M1092 28q-2 9 0 18" stroke="var(--cream)" stroke-width="1.2" opacity=".8"/><circle cx="1176" cy="48" r="4.5" fill="var(--brass)"/></g></g>
+        <g class="cat" fill="#1A2740" stroke="#55688A" stroke-width="1.3"><path d="M1236 82Q1230 62 1240 56L1238 46L1245 52H1251L1257 46L1256 57Q1264 64 1258 82Z"/><path class="tail" d="M1257 80Q1272 80 1268 66" fill="none"/><circle cx="1244" cy="58" r="1.2" fill="var(--honey)" stroke="none"/><circle cx="1251" cy="58" r="1.2" fill="var(--honey)" stroke="none"/></g>
+      </g>
+    </svg>
+    <div class="grain" aria-hidden="true"></div>
+    <div class="hint"><p>Run along the sitemap and you'll draw your own constellation.</p><div><span id="count" aria-live="polite">5 stars joined</span><button class="clear" type="button">Clear the sky</button></div></div>
+    <nav class="map" aria-label="Sitemap">
+      <div><h3 style="--x:5.6%;--y:64px">Visit</h3><ul>
+        <li><a href="#cafe" style="--x:7.2%;--y:118px"><i class="dot"></i><span>Café &amp; menu</span></a></li>
+        <li><a href="#hours" style="--x:13.8%;--y:178px"><i class="dot"></i><span>Opening times</span></a></li>
+        <li><a href="#find" style="--x:8.1%;--y:236px"><i class="dot"></i><span>Find us</span></a></li>
+        <li><a href="#access" style="--x:15.3%;--y:292px"><i class="dot"></i><span>Accessibility</span></a></li></ul></div>
+      <div><h3 style="--x:29%;--y:76px">Shop</h3><ul>
+        <li><a href="#new" style="--x:31.1%;--y:128px"><i class="dot"></i><span>New books</span></a></li>
+        <li><a href="#charts" style="--x:37.5%;--y:190px"><i class="dot"></i><span>Star charts</span></a></li>
+        <li><a href="#club" style="--x:30%;--y:248px"><i class="dot"></i><span>Book club</span></a></li>
+        <li><a href="#gift" style="--x:38.6%;--y:298px"><i class="dot"></i><span>Gift cards</span></a></li></ul></div>
+      <div><h3 style="--x:50.9%;--y:64px">Look up</h3><ul>
+        <li><a href="#roof" style="--x:52.8%;--y:120px"><i class="dot"></i><span>Roof sessions</span></a></li>
+        <li><a href="#calendar" style="--x:59.4%;--y:182px"><i class="dot"></i><span>Sky calendar</span></a></li>
+        <li><a href="#kids" style="--x:50.8%;--y:244px"><i class="dot"></i><span>Kids' sky club</span></a></li>
+        <li><a href="#dome" style="--x:60.2%;--y:300px"><i class="dot"></i><span>Hire the roof</span></a></li></ul></div>
+      <div><h3 style="--x:72.6%;--y:80px">About</h3><ul>
+        <li><a href="#story" style="--x:73.9%;--y:134px"><i class="dot"></i><span>Our story</span></a></li>
+        <li><a href="#journal" style="--x:80%;--y:196px"><i class="dot"></i><span>Journal</span></a></li>
+        <li><a href="#jobs" style="--x:72.7%;--y:254px"><i class="dot"></i><span>Jobs<sup>2</sup></span></a></li>
+        <li><a href="#press" style="--x:78.9%;--y:306px"><i class="dot"></i><span>Press</span></a></li></ul></div>
+    </nav>
+  </div>
+  <div class="base">
+    <div class="brand"><b>The Orrery Room</b><p class="muted">Café, bookshop and a rooftop telescope, under the same clear sky since 2014.</p></div>
+    <div><h4>Find us</h4><p>9 Lantern Yard, Haverleigh<br>HV2 4QT, top of the hill<br><a href="#tel">+44 1632 960 418</a></p></div>
+    <div><h4>Opening hours</h4><dl class="hours"><dt>Mon–Thu</dt><dd>8:00–18:00</dd><dt>Fri–Sat</dt><dd>8:00–23:00, roof after dark</dd><dt>Sun</dt><dd>10:00–17:00</dd></dl></div>
+    <div><h4>The clear night letter</h4><p class="muted">One email a month: what's up, and what's new on the shelves.</p>
+      <form><label class="sr" for="em">Email address</label><input id="em" type="email" placeholder="you@example.org" required><button type="submit">Subscribe</button></form><p class="ok" aria-live="polite"></p></div>
+  </div>
+  <div class="legal"><span>© 2026 The Orrery Room Ltd · Company no. 09184421</span><span><a href="#privacy">Privacy</a> · <a href="#cookies">Cookies</a> · <a href="#a11y">Accessibility statement</a></span></div>
+</footer>
+<script>
+(function(){
+  var NS='http://www.w3.org/2000/svg',sky=document.getElementById('sky'),svg=sky.querySelector('svg');
+  var gBg=svg.querySelector('.bg'),gInk=svg.querySelector('.ink'),gSt=svg.querySelector('.stars');
+  var links=[].slice.call(sky.querySelectorAll('.map a')),tube=document.getElementById('tube'),pivot=tube.querySelector('circle');
+  var count=document.getElementById('count'),reduce=matchMedia('(prefers-reduced-motion: reduce)'),phone=matchMedia('(max-width: 640px)');
+  var trail=[2,5,8,9,13],pos=[],stars=[];
+  function el(n,a){var e=document.createElementNS(NS,n);for(var k in a)e.setAttribute(k,a[k]);return e}
+  function measure(){
+    var r=svg.getBoundingClientRect();
+    pos=links.map(function(a,i){
+      if(phone.matches){var x=parseFloat(a.style.getPropertyValue('--x'))/100,y=parseFloat(a.style.getPropertyValue('--y'));
+        return [r.width*(.04+x*.98),24+y*.46+(i%2)*4]}
+      var d=a.querySelector('.dot').getBoundingClientRect();return [d.left-r.left,d.top-r.top]});
+  }
+  function bg(){
+    gBg.textContent='';var r=svg.getBoundingClientRect(),s=7;
+    for(var i=0;i<90;i++){s=(s*9301+49297)%233280;var x=s/233280;s=(s*9301+49297)%233280;var y=s/233280;
+      gBg.appendChild(el('circle',{cx:(x*r.width).toFixed(1),cy:(y*(r.height-60)).toFixed(1),r:(.5+(i%4)*.25).toFixed(2),opacity:(.25+(i%5)*.08).toFixed(2)}))}
+  }
+  function drawStars(){
+    gSt.textContent='';stars=pos.map(function(p){
+      var g=el('g',{'class':'st',transform:'translate('+p[0].toFixed(1)+' '+p[1].toFixed(1)+')'});
+      g.appendChild(el('circle',{'class':'halo',r:16}));
+      g.appendChild(el('path',{'class':'ray',d:'M0-13L1.6-1.6L13 0L1.6 1.6L0 13L-1.6 1.6L-13 0L-1.6-1.6Z'}));
+      g.appendChild(el('circle',{r:2.6}));gSt.appendChild(g);return g});
+  }
+  function line(a,b,animate){
+    var A=pos[a],B=pos[b],dx=B[0]-A[0],dy=B[1]-A[1],k=((a*7+b*3)%5-2)*.035;
+    var j=((a*5+b*11)%7-3)*.012,c1x=A[0]+dx*.33-dy*(k+j),c1y=A[1]+dy*.33+dx*(k+j),c2x=A[0]+dx*.68-dy*(k-j),c2y=A[1]+dy*.68+dx*(k-j);
+    var p=el('path',{d:'M'+A[0].toFixed(1)+' '+A[1].toFixed(1)+'C'+[c1x,c1y,c2x,c2y,B[0]+dx*.012,B[1]+dy*.012].map(function(v){return v.toFixed(1)}).join(' ')});
+    gInk.appendChild(p);
+    if(animate&&!reduce.matches){var L=p.getTotalLength();p.style.strokeDasharray=L;p.style.strokeDashoffset=L;p.getBoundingClientRect();p.classList.add('drawing');p.style.strokeDashoffset=0}
+  }
+  function paint(animateLast){
+    gInk.textContent='';
+    for(var i=1;i<trail.length;i++)line(trail[i-1],trail[i],animateLast&&i===trail.length-1);
+    var paths=gInk.querySelectorAll('path');for(var j=0;j<paths.length-3;j++)paths[j].classList.add('old');
+    var last=trail[trail.length-1];
+    stars.forEach(function(g,i){g.classList.toggle('on',trail.indexOf(i)>-1);g.classList.toggle('now',i===last)});
+    links.forEach(function(a,i){a.classList.toggle('now',i===last)});
+    var n=trail.length;count.textContent=n<2?(n?'1 star lit':'No stars lit yet'):n+' stars joined';
+    aimScope(last);
+  }
+  function aimScope(i){
+    if(i==null||!pos[i]){tube.style.transform='rotate(14deg)';return}
+    var pr=pivot.getBoundingClientRect(),sr=svg.getBoundingClientRect();
+    var px=pr.left+pr.width/2-sr.left,py=pr.top+pr.height/2-sr.top,t=pos[i];
+    var ang=Math.atan2(t[1]-py,t[0]-px)*180/Math.PI;ang=(ang+360)%360-180-7.1;
+    tube.style.transform='rotate('+Math.max(-12,Math.min(80,ang)).toFixed(1)+'deg)';
+  }
+  function light(i){
+    if(trail[trail.length-1]===i)return;
+    trail.push(i);if(trail.length>9)trail.shift();paint(true);
+  }
+  links.forEach(function(a,i){
+    a.addEventListener('mouseenter',function(){light(i)});
+    a.addEventListener('focus',function(){light(i)});
+    a.addEventListener('click',function(e){e.preventDefault();light(i)});
+  });
+  sky.querySelector('.clear').addEventListener('click',function(){trail=[];paint(false)});
+  document.querySelector('form').addEventListener('submit',function(e){e.preventDefault();
+    document.querySelector('.ok').textContent='Thanks. The first letter goes out with the new moon on 20 November.'});
+  function all(){measure();bg();drawStars();paint(false)}
+  var rt;addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(all,120)});
+  all();if(document.fonts&&document.fonts.ready)document.fonts.ready.then(all);
+})();
+</script>
+</body>
+</html>

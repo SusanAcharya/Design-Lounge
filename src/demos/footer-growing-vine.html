@@ -1,0 +1,183 @@
+<!-- Design Lounge piece: footer-growing-vine · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Growing vine footer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,500;1,600&family=Shantell+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F2EDE0;--paper-2:#E9E2D0;--ink:#24332B;--ink-2:#4C5A4F;--rule:#B7B39F;
+  --moss:#3A6540;--wash:#A9BE98;--leaf:#C3D2B1;--madder:#B0435A;--ochre:#C99A3A;
+  --serif:"Lora",Georgia,serif;--hand:"Shantell Sans",system-ui,sans-serif;
+  --gutter:56px;--col-pad:40px;
+  --t-grow:560ms;--t-leaf:420ms;--t-fast:160ms;
+  --ease:cubic-bezier(.2,.7,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+html{background:var(--paper)}
+body{font:15px/1.55 var(--serif);color:var(--ink);-webkit-font-smoothing:antialiased;height:auto;min-height:100%;display:flex;flex-direction:column;
+  background:var(--paper) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .2 0 0 0 0 .25 0 0 0 0 .18 0 0 0 .06 0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E")}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px;border-radius:3px}
+.end{padding:40px var(--gutter) 34px;display:flex;justify-content:space-between;align-items:end;gap:40px;border-bottom:1px solid var(--rule)}
+.end h2{margin:0;font:500 30px/1.2 var(--serif);max-width:24ch}
+.end h2 em{font-weight:600}
+.end p{margin:0;max-width:44ch;color:var(--ink-2)}
+.end p a{color:var(--moss);font-weight:600;text-underline-offset:3px}
+footer{flex:1;padding:34px var(--gutter) 22px;display:flex;flex-direction:column}
+.top{display:flex;justify-content:space-between;align-items:end;gap:40px}
+.mark{margin:0;font:italic 600 104px/.9 var(--serif);letter-spacing:-.025em}
+.mark small{display:block;margin-top:12px;font:400 15px/1.4 var(--hand);letter-spacing:0;color:var(--ink-2)}
+.reach{display:grid;grid-template-columns:auto auto;gap:4px 40px;font-size:14px;padding-bottom:6px}
+.reach address{font-style:normal}
+.reach b{display:block;font:500 13px var(--hand);color:var(--ink-2);margin-bottom:2px}
+.flora{position:relative;margin-top:14px;padding-top:112px}
+.vine{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.cols{display:grid;grid-template-columns:repeat(4,1fr);gap:0 20px}
+.cols>div{padding-left:var(--col-pad)}
+h3{margin:0 0 8px;font:500 14px/1.2 var(--hand);color:var(--ink-2)}
+.cols ul{list-style:none;margin:0;padding:0;display:grid;gap:3px}
+.cols a{text-decoration:none;display:inline-block;padding:2px 0}
+.cols a:hover,.cols a:focus-visible{color:var(--moss);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px}
+.cols a[aria-current]{font-style:italic;font-weight:600}
+.fig{margin:18px 0 0 var(--col-pad);font:400 13px/1.4 var(--hand);color:var(--ink-2)}
+.legal{margin-top:auto;padding-top:14px;border-top:1px solid var(--rule);display:flex;flex-wrap:wrap;gap:6px 22px;font-size:13px;color:var(--ink-2)}
+.legal a{text-underline-offset:3px}.legal a:hover{color:var(--ink)}
+.legal .sp{margin-left:auto}
+.foot-gap{height:20px}
+/* drawing */
+.vine .ink{fill:none;stroke:var(--ink);stroke-linecap:round;stroke-linejoin:round}
+.vine .wash{fill:none;stroke:var(--wash);stroke-linecap:round;opacity:.5}
+.tendril{transition:stroke-dashoffset 300ms var(--ease)}
+.on .tendril{transition:stroke-dashoffset var(--t-grow) var(--ease-out)}
+.sprout{transform-box:fill-box;transform:scale(0) rotate(-40deg);opacity:0;transition:transform 220ms var(--ease),opacity 220ms var(--ease)}
+.on .sprout{transform:none;opacity:1;transition:transform var(--t-leaf) var(--ease-out) 330ms,opacity 200ms var(--ease) 330ms}
+@media (max-width:1000px){.cols{grid-template-columns:1fr 1fr;row-gap:22px}.mark{font-size:80px}}
+@media (max-width:640px){
+  :root{--gutter:20px;--col-pad:48px}
+  .end{flex-direction:column;align-items:start;gap:12px;padding:30px var(--gutter) 26px}
+  .end h2{font-size:24px}
+  .top{flex-direction:column;align-items:start;gap:22px}
+  .mark{font-size:60px}
+  .mark small{font-size:14px}
+  .reach{grid-template-columns:1fr 1fr;gap:12px 16px}
+  .flora{padding-top:8px;margin-top:26px}
+  .cols{grid-template-columns:1fr;row-gap:22px}
+  .cols ul{gap:0}.cols a{padding:9px 0}
+  .fig{margin-top:20px}
+  .legal{flex-direction:column;gap:4px}.legal .sp{margin-left:0}
+  .legal a{padding:6px 0}
+}
+@media (prefers-reduced-motion:reduce){
+  .tendril,.on .tendril,.sprout,.on .sprout{transition:none!important}
+}
+</style>
+</head>
+<body>
+<main class="end">
+  <h2>Seeds are packed by hand on Tuesdays, <em>in paper we fold ourselves.</em></h2>
+  <p>Orders placed by noon on Monday go out with Wednesday's post. 214 varieties are in stock this week, 31 of them saved from our own beds. <a href="#">See the full seed list</a></p>
+</main>
+<footer>
+  <div class="top">
+    <p class="mark">Fernhollow<small>Nursery and seed room, growing in Kington since 1987</small></p>
+    <div class="reach">
+      <address><b>Find us</b>Hollow Lane, Kington<br>Herefordshire HR5 3QE</address>
+      <div><b>Write or ring</b><a href="#">hello@fernhollow.garden</a><br><a href="#">01544 230 187</a></div>
+      <div><b>Open</b>Wed to Sun, 9 to 5</div>
+      <div><b>Closed</b>23 Dec to 2 Jan</div>
+    </div>
+  </div>
+
+  <nav class="flora" id="flora" aria-label="Sitemap">
+    <svg class="vine" id="vine" aria-hidden="true">
+      <defs>
+        <filter id="rough" x="-2%" y="-10%" width="104%" height="120%"><feTurbulence type="fractalNoise" baseFrequency=".05" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="2"/></filter>
+        <filter id="bleed" x="-5%" y="-30%" width="110%" height="160%"><feTurbulence type="fractalNoise" baseFrequency=".02 .09" numOctaves="3" seed="9"/><feDisplacementMap in="SourceGraphic" scale="9"/></filter>
+        <g id="leaf"><path d="M0 0 C5 -9 17 -11 26 0 C17 8 6 8 0 0 Z" fill="#C3D2B1" stroke="#24332B" stroke-width="1.3" stroke-linejoin="round"/><path d="M1 0 C9 -1 17 -1 24 0" fill="none" stroke="#24332B" stroke-width=".9"/><path d="M6 1.6 l3 3.6 M10 1.8 l3 4 M14 1.8 l3 4 M18 1.6 l2.6 3.2 M8 -1 l3 -4 M14 -1.2 l3 -4.4" fill="none" stroke="#24332B" stroke-width=".7" stroke-linecap="round"/></g>
+        <g id="bud"><path d="M0 0 C-2 -6 -1 -11 3 -14 C7 -11 8 -6 6 0 Z" fill="#E6B9B5" stroke="#24332B" stroke-width="1.2"/><path d="M-1 0 C1 -3 5 -3 7 0" fill="#A9BE98" stroke="#24332B" stroke-width="1.1"/><path d="M2 -4 l1 -6" stroke="#24332B" stroke-width=".7"/></g>
+        <g id="flower"><g fill="#B0435A" stroke="#24332B" stroke-width="1.1"><ellipse cx="0" cy="-6.5" rx="3.6" ry="5.6"/><ellipse cx="0" cy="-6.5" rx="3.6" ry="5.6" transform="rotate(72)"/><ellipse cx="0" cy="-6.5" rx="3.6" ry="5.6" transform="rotate(144)"/><ellipse cx="0" cy="-6.5" rx="3.6" ry="5.6" transform="rotate(216)"/><ellipse cx="0" cy="-6.5" rx="3.6" ry="5.6" transform="rotate(288)"/></g><path d="M-1.5 -9 v4 M1.5 -9 v4 M5 -3 l-3 1 M-5 -3 l3 1" stroke="#F2EDE0" stroke-width=".8" stroke-linecap="round"/><circle r="2.8" fill="#C99A3A" stroke="#24332B" stroke-width="1"/></g>
+      </defs>
+      <g id="art" filter="url(#rough)"></g>
+    </svg>
+    <div class="cols">
+      <div><h3>Nursery</h3><ul><li><a href="#">Plants A to Z</a></li><li><a href="#">Bare-root season</a></li><li><a href="#">Hedging by the metre</a></li><li><a href="#" aria-current="page">Seed room</a></li><li><a href="#">Gift vouchers</a></li></ul></div>
+      <div><h3>Visit</h3><ul><li><a href="#">Opening times</a></li><li><a href="#">Finding us</a></li><li><a href="#">Potting shed café</a></li><li><a href="#">Workshops</a></li></ul></div>
+      <div><h3>Journal</h3><ul><li><a href="#">Planting notes</a></li><li><a href="#">The plate archive</a></li><li><a href="#">Ask the grower</a></li><li><a href="#">What's flowering</a></li></ul></div>
+      <div><h3>Elsewhere</h3><ul><li><a href="#">Photo diary</a></li><li><a href="#">Video garden walks</a></li><li><a href="#">Seed swap forum</a></li><li><a href="#">Journal by RSS</a></li></ul></div>
+    </div>
+    <p class="fig">Fig. 1. Honeysuckle, Lonicera periclymenum, along the top bed</p>
+  </nav>
+  <div class="foot-gap"></div>
+  <div class="legal">
+    <span>&copy; 2026 Fernhollow Nursery Ltd. Registered in England, no. 02184371</span>
+    <a href="#">Privacy</a><a href="#">Delivery and returns</a><a href="#">Plant health passport</a>
+    <span class="sp">Drawn and grown on site</span>
+  </div>
+</footer>
+<script>
+(() => {
+  const flora = document.getElementById('flora'), art = document.getElementById('art');
+  if (!flora || !art) return;
+  const NS = 'http://www.w3.org/2000/svg', links = [...flora.querySelectorAll('.cols a')];
+  const el = (n, a, p) => { const e = document.createElementNS(NS, n); for (const k in a) e.setAttribute(k, a[k]); (p || art).appendChild(e); return e; };
+  const use = (id, x, y, r, s, p) => el('use', { href: '#' + id, transform: `translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${r}) scale(${s})` }, p);
+  let vert = false, tendrils = new Map(), timer = 0;
+  const wob = (t) => Math.sin(t / 74) * 13 + Math.sin(t / 31 + 1.3) * 4 + Math.sin(t / 190) * 6;
+  const smooth = (pts) => pts.reduce((d, p, i) => i ? d + ` Q${pts[i - 1][0].toFixed(1)} ${pts[i - 1][1].toFixed(1)} ${((p[0] + pts[i - 1][0]) / 2).toFixed(1)} ${((p[1] + pts[i - 1][1]) / 2).toFixed(1)}` : `M${p[0].toFixed(1)} ${p[1].toFixed(1)}`, '');
+  function draw() {
+    art.textContent = ''; tendrils.clear();
+    const R = flora.getBoundingClientRect(); vert = innerWidth <= 640;
+    const W = R.width, H = R.height, base = 54, vx = 22;
+    const at = (t) => vert ? [vx + wob(t) * .55, t] : [t, base + wob(t)];
+    const pts = []; for (let t = vert ? 0 : -24; t <= (vert ? H - 40 : W + 10); t += 12) pts.push(at(t));
+    const d = smooth(pts);
+    el('path', { d, class: 'wash', 'stroke-width': vert ? 10 : 16, filter: 'url(#bleed)' });
+    el('path', { d, class: 'ink', 'stroke-width': 2.4 });
+    el('path', { d, class: 'ink', 'stroke-width': .8, transform: 'translate(1.6 1.2)', opacity: .7 });
+    const stepL = vert ? 62 : 46;
+    for (let t = 26, i = 0; t < (vert ? H - 60 : W - 10); t += stepL, i++) {
+      const [x, y] = at(t), up = i % 2 ? 1 : -1;
+      if (vert) use(i % 5 === 3 ? 'bud' : 'leaf', x, y, i % 5 === 3 ? (up > 0 ? 30 : -30) : -90 + up * 52, .8);
+      else if (i % 7 === 4) { use('bud', x, y, up > 0 ? 165 : 12, 1.2); use('bud', x + 4, y, up > 0 ? 190 : -14, 1); }
+      else { use('leaf', x, y, up * (34 + (i * 13) % 26), 1 + (i * 7 % 5) / 9); if (i % 3 === 0) use('leaf', x + 3, y, -up * (60 + i % 20), .7); }
+      if (!vert && i % 4 === 1) el('path', { d: `M${x} ${y} c6 ${up * 8} 16 ${up * 8} 16 ${up * 2} c0 ${-up * 5} -6 ${-up * 6} -7 ${-up * 2}`, class: 'ink', 'stroke-width': 1 });
+    }
+    links.forEach((a) => {
+      const r = a.getBoundingClientRect(), col = a.closest('.cols > div').getBoundingClientRect();
+      const ly = r.top - R.top + r.height / 2, ex = col.left - R.left + (vert ? 32 : 16);
+      let sx, sy, c1, c2;
+      if (vert) { [sx, sy] = at(ly - 30); c1 = [sx + 12, sy + 4]; c2 = [ex - 16, ly + 6]; }
+      else { sx = col.left - R.left + 12; sy = at(sx)[1]; c1 = [sx - 18, sy + (ly - sy) * .36]; c2 = [ex + 24, sy + (ly - sy) * .7]; }
+      const g = el('g', { class: 'tw' });
+      const p = el('path', { d: `M${sx.toFixed(1)} ${sy.toFixed(1)} C${c1} ${c2} ${ex.toFixed(1)} ${ly.toFixed(1)} c3 4 10 4 10 -1 c0 -4 -5 -5 -6 -2`, class: 'ink tendril', 'stroke-width': 1.6 }, g);
+      const len = p.getTotalLength(); p.style.strokeDasharray = len; p.style.strokeDashoffset = len;
+      const s = el('g', { class: 'sprout' }, g);
+      const m = p.getPointAtLength(len * .55);
+      use('leaf', ex, ly, vert ? -128 : 150, .85, s);
+      if (!vert) use('leaf', m.x, m.y, -150, .6, s);
+      if (a.hasAttribute('aria-current')) { use('flower', vert ? ex - 2 : ex + 9, ly - 3, 12, .9, s); g.classList.add('on'); p.style.strokeDashoffset = 0; g.dataset.keep = 1; }
+      tendrils.set(a, { g, p, len });
+    });
+  }
+  function grow(a, on) {
+    const t = tendrils.get(a); if (!t || t.g.dataset.keep) return;
+    t.g.classList.toggle('on', on); t.p.style.strokeDashoffset = on ? 0 : t.len;
+  }
+  links.forEach((a) => {
+    a.addEventListener('pointerenter', () => grow(a, true));
+    a.addEventListener('pointerleave', () => { if (document.activeElement !== a) grow(a, false); });
+    a.addEventListener('focus', () => grow(a, true));
+    a.addEventListener('blur', () => grow(a, false));
+    a.addEventListener('click', (e) => { e.preventDefault(); if (matchMedia('(hover: none)').matches) { links.forEach((b) => b !== a && grow(b, false)); grow(a, true); } });
+  });
+  addEventListener('resize', () => { clearTimeout(timer); timer = setTimeout(draw, 120); });
+  (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(draw);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,241 @@
+<!-- Design Lounge piece: footer-sleepy-cat · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Sleepy cat footer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Grandstander:wght@500;700&family=Gelasio:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --page:#F6EEDF;--kraft:#EADBC0;--ink:#2B211A;--ink-2:#5A4636;--rule:#B9A283;
+  --rust:#A3401E;--rust-ink:#FFF6E8;--field:#FBF5EA;--field-line:#6E5947;
+  --fur:#E7A35E;--fur-dk:#B86A2E;--eye:#CFD68A;--pink:#D9877A;
+  --display:"Grandstander",system-ui,sans-serif;--font:"Gelasio",Georgia,serif;
+  --gutter:56px;--r:10px;
+  --t-fast:160ms;--t-mid:420ms;--breath:4.2s;
+  --ease:cubic-bezier(.2,.7,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+html{background:var(--kraft)}
+body{font:15px/1.55 var(--font);color:var(--ink);-webkit-font-smoothing:antialiased;height:auto;min-height:100%;background:var(--page);display:flex;flex-direction:column}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px;border-radius:4px}
+.end{padding:44px var(--gutter) 40px;display:grid;grid-template-columns:1fr 360px;gap:48px;align-items:end}
+.end h2{margin:0;font:700 clamp(40px,5.4vw,68px)/.98 var(--display);letter-spacing:-.02em}
+.end p{margin:0 0 6px;color:var(--ink-2);font-size:16px}
+.end p a{color:var(--rust);font-weight:600;text-underline-offset:3px}
+footer{flex:1;position:relative;background:var(--kraft);padding:30px var(--gutter) 22px;border-top:2px solid var(--ink);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .25 0 0 0 0 .15 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")}
+.grid{display:grid;grid-template-columns:270px 1fr 300px;gap:52px}
+.brand b{display:block;font:700 34px/1 var(--display);letter-spacing:-.015em}
+.brand .tag{margin:8px 0 18px;font-style:italic;color:var(--ink-2)}
+.brand address{font-style:normal;margin-bottom:16px}
+.hours{margin:0;display:grid;grid-template-columns:auto 1fr;gap:2px 14px;font-size:14px}
+.hours dt{font-weight:600}.hours dd{margin:0;color:var(--ink-2)}
+h3{margin:0 0 10px;font:700 13px/1 var(--display);letter-spacing:.08em;text-transform:uppercase}
+/* the shelf the cat sleeps on */
+.map{position:relative;padding-top:170px}
+.cat{position:absolute;left:0;top:4px;width:340px;height:auto;overflow:visible;cursor:pointer}
+.shelf{position:absolute;left:-6px;top:160px;width:calc(100% + 12px);height:8px;overflow:visible}
+.cols{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;padding-top:22px}
+.cols ul{list-style:none;margin:0;padding:0;display:grid;gap:5px}
+.cols a{text-decoration:none;display:inline-block;padding:1px 0}
+.cols a:hover,.cols a:focus-visible{color:var(--rust);text-decoration:underline;text-decoration-thickness:1.5px;text-underline-offset:4px}
+.news h3{margin-bottom:8px}
+.news p{margin:0 0 14px;color:var(--ink-2);font-size:14px}
+.news label{display:block;font-size:13px;font-weight:600;margin-bottom:6px}
+.row{display:flex;gap:8px}
+.news input{flex:1;min-width:0;height:46px;padding:0 14px;font:15px var(--font);color:var(--ink);background:var(--field);border:1.5px solid var(--field-line);border-radius:var(--r)}
+.news input::placeholder{color:#6E5947}
+.news input:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.news button{height:46px;padding:0 16px;border:0;border-radius:var(--r);background:var(--rust);color:var(--rust-ink);font:700 15px var(--display);cursor:pointer;transition:transform var(--t-fast) var(--ease)}
+.news button:hover{background:#8C3518}
+.news button:active{transform:scale(.97)}
+.news .ok{margin:10px 0 0;min-height:22px;font-size:14px;color:var(--ink)}
+.legal{display:flex;flex-wrap:wrap;gap:6px 22px;margin-top:30px;padding-top:14px;border-top:1px solid var(--rule);font-size:13px;color:var(--ink-2)}
+.legal a{text-underline-offset:3px}.legal a:hover{color:var(--ink)}
+.legal .sp{margin-left:auto;font-style:italic}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ---- the cat ---- */
+.cat .ln{fill:none;stroke:var(--ink);stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}
+.cat .thin{stroke-width:1.3}
+.cat .pink{stroke:var(--pink)}
+.cat .tube{fill:none;stroke:var(--ink);stroke-width:11;stroke-linecap:round}
+.cat .tube-in{fill:none;stroke:var(--fur);stroke-width:7;stroke-linecap:round}
+.cat .fur{fill:var(--fur);stroke:var(--ink);stroke-width:2.2;stroke-linejoin:round}
+.cat .st{fill:none;stroke:var(--fur-dk);stroke-width:3;stroke-linecap:round}
+.cat .hatch{fill:none;stroke:var(--fur-dk);stroke-width:1.1;stroke-linecap:round;opacity:.9}
+.cat g,.cat path,.cat ellipse{transform-box:view-box}
+.torso{transform-origin:150px 116px;animation:breathe var(--breath) cubic-bezier(.45,0,.55,1) infinite}
+.head{transform-origin:100px 104px;transition:transform 520ms var(--ease-out);animation:nod var(--breath) cubic-bezier(.45,0,.55,1) infinite}
+@keyframes breathe{0%,100%{transform:scale(1,1)}45%{transform:scale(1.012,1.05)}}
+@keyframes nod{0%,100%{transform:translateY(0)}45%{transform:translateY(-1.6px)}}
+.open,.yawn,.tail-up{opacity:0}
+.pupil{transform:translate(var(--px,0px),var(--py,0px));transition:transform 260ms var(--ease-out)}
+.zz path{fill:none;stroke:var(--ink);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;opacity:0;animation:zz 4.2s var(--ease) infinite}
+.zz path:nth-child(2){animation-delay:1.4s}.zz path:nth-child(3){animation-delay:2.8s}
+@keyframes zz{0%{opacity:0;transform:translate(0,6px) scale(.6)}25%{opacity:.9}100%{opacity:0;transform:translate(16px,-26px) scale(1.1)}}
+.zz path{transform-origin:112px 50px}
+/* alert: head up, eyes open, following */
+.cat.alert .head{animation:none;transform:translate(6px,-15px) rotate(var(--tilt,0deg))}
+.cat.alert .shut,.cat.alert .zz{opacity:0}
+.cat.alert .open{opacity:1}
+.cat.alert .torso{animation-duration:2.6s}
+.cat.alert .ear{animation:twitch 2.8s var(--ease) infinite}
+.ear{transform-origin:92px 62px}
+@keyframes twitch{0%,86%,100%{transform:none}90%{transform:rotate(9deg)}}
+/* stretch: yawn, long front, tail up, settle */
+.cat.stretch .zz{opacity:0}
+.cat.stretch .head{animation:s-head 2.6s var(--ease) both}
+.cat.stretch .torso{animation:s-body 2.6s var(--ease) both}
+.cat.stretch .paws{animation:s-paws 2.6s var(--ease) both}
+.cat.stretch .tail-low{animation:s-fade 2.6s var(--ease) both}
+.cat.stretch .tail-up{animation:s-show 2.6s var(--ease) both}
+.cat.stretch .yawn{animation:s-show 1.6s var(--ease) both}
+.cat.stretch .shut{animation:s-blink 2.6s var(--ease) both}
+.cat.stretch .open{animation:s-open 2.6s var(--ease) both}
+.paws{transform-origin:60px 116px}
+@keyframes s-head{0%{transform:none}18%{transform:translate(4px,-22px) rotate(10deg)}45%,62%{transform:translate(-14px,6px) rotate(-6deg)}82%{transform:translate(6px,-14px)}100%{transform:none}}
+@keyframes s-body{0%{transform:none}45%,62%{transform:translate(-4px,0) scale(1.07,.96) rotate(-4deg)}100%{transform:none}}
+@keyframes s-paws{0%{transform:none}40%,64%{transform:translateX(-22px) scaleX(1.25)}100%{transform:none}}
+@keyframes s-show{0%{opacity:0}12%,74%{opacity:1}100%{opacity:0}}
+@keyframes s-fade{0%{opacity:1}12%,74%{opacity:0}100%{opacity:1}}
+@keyframes s-blink{0%,70%{opacity:1}74%,92%{opacity:0}100%{opacity:1}}
+@keyframes s-open{0%,70%{opacity:0}74%,92%{opacity:1}100%{opacity:0}}
+@media (max-width:1080px){.grid{grid-template-columns:1fr 1fr}.news{grid-column:1/-1}}
+@media (max-width:640px){
+  :root{--gutter:20px}
+  .end{grid-template-columns:1fr;gap:14px;padding:32px var(--gutter) 30px}
+  .grid{grid-template-columns:1fr;gap:30px}
+  .map{padding-top:122px}
+  .cat{width:236px;left:50%;margin-left:-112px;top:2px}
+  .shelf{top:107px}
+  .cols{grid-template-columns:1fr 1fr;gap:22px 16px}
+  .cols ul{gap:2px}.cols a{padding:8px 0}
+  .cols div:last-child{grid-column:1/-1}
+  .cols div:last-child ul{grid-template-columns:1fr 1fr;column-gap:16px}
+  .legal{flex-direction:column;gap:6px}.legal .sp{margin-left:0}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .zz path:first-child{opacity:.8}
+  .cat.stretch .open{opacity:1}.cat.stretch .shut{opacity:0}
+  .cat.stretch .head{transform:translate(6px,-15px)}
+}
+</style>
+</head>
+<body>
+<main class="end">
+  <h2>Come in out of the rain. The kettle is already on.</h2>
+  <p>Walk-ins are welcome every day we're open. The reading room upstairs seats twelve and can be booked for two hours at a time. <a href="#">Book the reading room</a></p>
+</main>
+<footer>
+  <div class="grid">
+    <div class="brand">
+      <b>Little Oolong</b>
+      <p class="tag">Loose tea, slow pots and a shop cat, since 2014.</p>
+      <address>23 Mill Yard, Weaver's Row<br>Hebden Bridge HX7 8AD<br><a href="#">01422 845 310</a></address>
+      <dl class="hours">
+        <dt>Tue to Fri</dt><dd>9:30 to 17:30</dd>
+        <dt>Saturday</dt><dd>9:00 to 18:00</dd>
+        <dt>Sunday</dt><dd>11:00 to 16:00</dd>
+        <dt>Monday</dt><dd>Closed, Biscuit naps</dd>
+      </dl>
+    </div>
+
+    <nav class="map" aria-label="Sitemap">
+      <svg class="cat" id="cat" viewBox="22 0 250 124" role="img" aria-labelledby="catT">
+        <title id="catT">Biscuit, the shop cat, asleep along the top of the sitemap</title>
+        <defs><filter id="rough" x="-5%" y="-10%" width="110%" height="120%"><feTurbulence type="fractalNoise" baseFrequency=".045" numOctaves="2" seed="7"/><feDisplacementMap in="SourceGraphic" scale="2.4"/></filter></defs>
+        <g filter="url(#rough)">
+          <g class="tail-up"><path class="tube" d="M224 106 C248 98 256 72 244 57 C236 47 242 36 252 40"/><path class="tube-in" d="M224 106 C248 98 256 72 244 57 C236 47 242 36 252 40"/><path class="st" d="M243 90 l7 3 M249 74 l7 0 M243 58 l6 -4"/></g>
+          <g class="torso">
+            <path class="fur" d="M84 117 C72 88 90 58 124 52 C162 45 206 54 226 78 C236 92 236 108 230 117 Z"/>
+            <path class="st" d="M134 51 c3 7 3 13 -1 19 M152 49 c3 8 3 15 -1 21 M170 51 c4 8 3 14 0 20 M188 56 c3 7 3 12 0 17 M221 86 c-6 2 -10 6 -12 11 M228 100 c-6 1 -9 4 -11 8"/>
+            <path class="ln" d="M198 117 C190 98 200 81 222 82"/>
+            <path class="hatch" d="M110 109 l6 -7 M117 110 l6 -7 M124 110 l6 -7 M131 110 l5 -6 M162 110 l5 -6 M169 110 l5 -6 M98 74 l5 -5 M96 81 l6 -6"/>
+          </g>
+          <g class="head">
+            <g class="ear"><path class="fur" d="M82 58 L96 45 C98 43 101 44 101 47 L102 72 Z"/><path class="ln thin pink" d="M96 52 L96 61 L90 60"/></g>
+            <path class="fur" d="M34 100 C26 88 28 74 38 66 L36 46 C36 43 39 42 41 44 L56 58 C64 55 74 55 82 57 C90 59 96 62 100 68 C108 78 108 96 98 106 C88 114 72 116 58 114 C46 112 38 107 34 100 Z"/>
+            <path class="ln thin pink" d="M41 51 L42 60 L50 58"/>
+            <path class="ln thin" d="M31 95 l-5 2 l4 2 M33 102 l-4 3"/>
+            <path class="st" d="M60 63 l1 6 M68 61 v7 M76 63 l-1 6 M30 84 l6 1 M31 90 l6 0"/>
+            <ellipse cx="45" cy="97" rx="6" ry="3.4" fill="#D9877A" opacity=".45"/><ellipse cx="91" cy="97" rx="6" ry="3.4" fill="#D9877A" opacity=".45"/>
+            <g class="shut"><path class="ln" d="M50 86 q6 5 12 0 M74 86 q6 5 12 0 M49.5 86 l-2.5 -1.6 M86.5 86 l2.5 -1.6"/></g>
+            <g class="open"><ellipse cx="56" cy="86" rx="5" ry="5.6" fill="#CFD68A" stroke="#2B211A" stroke-width="1.7"/><ellipse cx="80" cy="86" rx="5" ry="5.6" fill="#CFD68A" stroke="#2B211A" stroke-width="1.7"/><g class="pupil"><ellipse cx="56" cy="86.4" rx="1.7" ry="4" fill="#2B211A"/><ellipse cx="80" cy="86.4" rx="1.7" ry="4" fill="#2B211A"/><circle cx="57.4" cy="84" r="1" fill="#FFF6E8"/><circle cx="81.4" cy="84" r="1" fill="#FFF6E8"/></g></g>
+            <path d="M65 93 h6 l-3 3.4 z" fill="#D9877A" stroke="#2B211A" stroke-width="1.2" stroke-linejoin="round"/>
+            <path class="ln thin" d="M68 96.5 v2 q-3 3 -6 1 M68 98.5 q3 3 6 1"/>
+            <ellipse class="yawn" cx="68" cy="103" rx="4.4" ry="5.8" fill="#5A2A22" stroke="#2B211A" stroke-width="1.4"/>
+            <path class="ln thin" d="M54 98 l-24 -3 M54 101 l-22 4 M82 98 l24 -4 M82 101 l22 3"/>
+          </g>
+          <g class="paws"><path class="fur" d="M28 117 C24 109 42 105 58 109 C64 111 64 117 58 117 Z"/><path class="fur" d="M56 117 C54 110 70 107 82 111 C86 113 86 117 82 117 Z"/><path class="ln thin" d="M38 113 v4 M45 112 v5 M68 112 v5 M75 112 v5"/></g>
+          <g class="tail-low"><path class="tube" d="M228 106 C244 108 244 116 224 114 C186 113.5 140 113.5 104 113 C80 112.5 56 113 44 108 C38 105 38 99 44 98"/><path class="tube-in" d="M228 106 C244 108 244 116 224 114 C186 113.5 140 113.5 104 113 C80 112.5 56 113 44 108 C38 105 38 99 44 98"/><path d="M50 110 C42 107 39 102 44 98" fill="none" stroke="#B86A2E" stroke-width="6.6" stroke-linecap="round"/><path class="st" d="M140 110 v6 M166 110 v6 M190 110 v6 M212 110 v6 M70 110 l-1 6" stroke-width="2.4"/></g>
+        </g>
+        <g class="zz" aria-hidden="true"><path d="M108 48 h7 l-7 8 h7"/><path d="M118 38 h8 l-8 9 h8"/><path d="M130 26 h9 l-9 10 h9"/></g>
+      </svg>
+      <svg class="shelf" viewBox="0 0 600 8" preserveAspectRatio="none" aria-hidden="true"><path d="M0 4 C120 2.6 240 5.4 360 3.6 S540 4.8 600 3.8" fill="none" stroke="#2B211A" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linecap="round"/></svg>
+      <div class="cols">
+        <div><h3>Shop</h3><ul><li><a href="#">Green &amp; white</a></li><li><a href="#">Oolong</a></li><li><a href="#">Black &amp; smoked</a></li><li><a href="#">Teaware</a></li><li><a href="#">Gift cards</a></li></ul></div>
+        <div><h3>Visit</h3><ul><li><a href="#">Tea room menu</a></li><li><a href="#">Reading room</a></li><li><a href="#">Tasting nights</a></li><li><a href="#">Getting here</a></li></ul></div>
+        <div><h3>About</h3><ul><li><a href="#">Our growers</a></li><li><a href="#">Meet Biscuit</a></li><li><a href="#">Wholesale</a></li><li><a href="#">Jobs</a></li></ul></div>
+      </div>
+    </nav>
+
+    <form class="news" id="news" novalidate>
+      <h3>The Steeping Letter</h3>
+      <p>One letter a month: new harvests, tasting nights, and whatever Biscuit knocked off the counter.</p>
+      <label for="em">Email address</label>
+      <div class="row"><input id="em" type="email" placeholder="you@example.com" autocomplete="email" required><button type="submit">Sign me up</button></div>
+      <p class="ok" id="ok" role="status" aria-live="polite"></p>
+    </form>
+  </div>
+  <div class="legal">
+    <span>&copy; 2026 Little Oolong Tea Ltd. Company no. 09122487</span>
+    <a href="#">Privacy</a><a href="#">Terms of sale</a><a href="#">Accessibility</a>
+    <span class="sp">Biscuit is not for sale, but she is open to offers of ham.</span>
+  </div>
+</footer>
+<script>
+(() => {
+  const cat = document.getElementById('cat'); if (!cat) return;
+  const eyes = cat.querySelector('.open'), say = document.getElementById('ok');
+  const targets = [...document.querySelectorAll('.cols a, .legal a, .end a, .brand a, .news input, .news button')];
+  let rest = 0, wake = 0, current = null;
+  function look(el) {
+    const r = el.getBoundingClientRect(), e = cat.getBoundingClientRect();
+    const ex = e.left + e.width * .2, ey = e.top + e.height * .62;
+    const dx = r.left + Math.min(r.width, 80) / 2 - ex, dy = r.top + r.height / 2 - ey, d = Math.hypot(dx, dy) || 1;
+    cat.style.setProperty('--px', (dx / d * 2.4).toFixed(2) + 'px');
+    cat.style.setProperty('--py', (dy / d * 1.8).toFixed(2) + 'px');
+    cat.style.setProperty('--tilt', Math.max(-12, Math.min(12, dx / 30)).toFixed(1) + 'deg');
+  }
+  function wakeTo(el) { clearTimeout(rest); current = el; look(el); cat.classList.add('alert'); }
+  function sleep() { current = null; clearTimeout(rest); rest = setTimeout(() => { if (!current) cat.classList.remove('alert'); }, 700); }
+  function stretch() {
+    clearTimeout(wake); cat.classList.remove('stretch'); void cat.getBoundingClientRect();
+    cat.classList.add('stretch');
+    wake = setTimeout(() => { cat.classList.remove('stretch'); if (!current) cat.classList.remove('alert'); }, 2700);
+  }
+  targets.forEach((el) => {
+    el.addEventListener('pointerenter', () => wakeTo(el));
+    el.addEventListener('pointerleave', sleep);
+    el.addEventListener('focus', () => wakeTo(el));
+    el.addEventListener('blur', sleep);
+    if (el.tagName === 'A') el.addEventListener('click', (ev) => { ev.preventDefault(); wakeTo(el); stretch(); });
+  });
+  cat.addEventListener('click', stretch);
+  document.getElementById('news').addEventListener('submit', (ev) => {
+    ev.preventDefault(); stretch();
+    const v = document.getElementById('em').value.trim();
+    say.textContent = /.+@.+\..+/.test(v) ? 'Lovely. The November letter goes out on the 4th.' : 'Pop in an email address and Biscuit will wait.';
+  });
+  addEventListener('resize', () => { if (current) look(current); });
+})();
+</script>
+</body>
+</html>

@@ -606,3 +606,11 @@ store-locator-map | web | contact | Store locator with synced map | minimal pape
 vinyl-record-player | web | media | Vinyl record player | dark retro editorial | music player vinyl turntable audio
 onboarding-personality-quiz | mobile-app | onboarding | Onboarding personality quiz | playful material soft | onboarding quiz material personalisation mobile
 ascii-ocean-sharks | web | backgrounds | ASCII ocean with sharks | terminal dark organic | ascii canvas ocean hero generative
+nav-lighthouse-spotlight-menu | web | navigation | Lighthouse spotlight menu | paper riso playful | menu navigation illustration hover portfolio
+footer-constellation-links | web | footer | Constellation footer links | dark playful paper | footer sitemap illustration hover svg
+footer-sleepy-cat | web | footer | Sleepy cat footer | paper playful soft | footer illustration sitemap newsletter character
+footer-growing-vine | web | footer | Growing vine footer | paper organic editorial | footer illustration sitemap botanical svg
+newsletter-mailbox-flag | web | newsletter | Mailbox flag newsletter signup | paper playful organic | newsletter signup illustration email form
+features-telescope-focus | web | features | Telescope focus features | dark riso playful | features tabs illustration svg astronomy
+features-pencil-annotations | web | features | Pencil annotations features | paper playful editorial | features pencil annotation handwriting svg
+features-paper-cutout-steps | web | features | Paper cutout steps | paper playful organic | features steps pop-up paper illustration parallax
