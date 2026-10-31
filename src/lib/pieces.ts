@@ -197,6 +197,26 @@ export const CATEGORY_META: Record<Category, { label: string; blurb: string }> =
 export const MOTION_LABEL = { none: 'Static', subtle: 'Subtle motion', rich: 'Rich motion' } as const;
 export const DIFFICULTY_LABEL = { 1: 'Quick build', 2: 'One session', 3: 'Multi-step' } as const;
 
+// What the visitor does to a piece, read from its tags and category, so the library can be browsed by gesture.
+export const INTERACTIONS = [
+  { v: 'hover', label: 'Hover', tags: ['hover', 'cursor', 'pointer', 'magnetic', 'tilt', 'spotlight', 'flashlight', 'tooltip'] },
+  { v: 'press', label: 'Press', tags: ['press', 'button', 'buttons', 'toggle', 'switch', 'like', 'hold', 'tap', 'click', 'confirm'] },
+  { v: 'drag', label: 'Drag', tags: ['drag', 'draggable', 'sortable', 'reorder', 'kanban', 'gesture', 'signature'] },
+  { v: 'slide', label: 'Slide', tags: ['slide', 'slider', 'range', 'scrubber', 'compare', 'before-after'] },
+  { v: 'swipe', label: 'Swipe', tags: ['swipe', 'carousel', 'bottom-sheet', 'sheet', 'pull-to-refresh', 'deck'] },
+  { v: 'type', label: 'Type', tags: ['form', 'search', 'input', 'field', 'validation', 'otp', 'sign-in', 'chat', 'command', 'composer'] },
+  { v: 'select', label: 'Select', tags: ['select', 'selection', 'tabs', 'chips', 'filter', 'filters', 'picker', 'radio', 'checkbox', 'dropdown', 'segmented', 'accordion', 'menu'] },
+  { v: 'scroll', label: 'Scroll', tags: ['scroll', 'parallax', 'sticky', 'scrollspy', 'scroll-driven'] },
+  { v: 'loading', label: 'Loading', tags: ['loading', 'loader', 'skeleton', 'progress', 'spinner', 'upload', 'shimmer'] },
+] as const;
+const INTERACTION_CATEGORY: Partial<Record<Category, string>> = { cursor: 'hover', buttons: 'press', inputs: 'type', pickers: 'select', scroll: 'scroll', loaders: 'loading' };
+
+export function interactions(piece: { data: { tags: string[]; category: Category } }): string[] {
+  const tags = new Set(piece.data.tags.map((t) => t.toLowerCase()));
+  const out = INTERACTIONS.filter((i) => i.tags.some((t) => tags.has(t)) || INTERACTION_CATEGORY[piece.data.category] === i.v).map((i) => i.v);
+  return out;
+}
+
 const NUMBERS: Record<string, number> = NUMBERS_JSON;
 let cache: Piece[] | null = null;
 

@@ -2,7 +2,7 @@
 /* Filterable, sortable catalogue. The page draws one screen of poster cards; the rest stay in JSON until asked for. */
 import PieceCard from './PieceCard.astro';
 import { cardPoster } from '../lib/posters';
-import { PLATFORM_META, TYPE_META, STYLE_META, CATEGORY_META, CATEGORY_GROUPS, numberMap, type Piece, type Category } from '../lib/pieces';
+import { PLATFORM_META, TYPE_META, STYLE_META, CATEGORY_META, CATEGORY_GROUPS, INTERACTIONS, interactions, numberMap, type Piece, type Category } from '../lib/pieces';
 
 interface Props {
   pieces: Piece[];          // the pieces to render (already scoped, e.g. a room)
@@ -31,6 +31,8 @@ const SHORT: Partial<Record<Category, string>> = {
 };
 const MOTION_OPTS = [{ v: 'none', label: 'Static' }, { v: 'subtle', label: 'Subtle' }, { v: 'rich', label: 'Rich' }];
 const motionCount = (m: string) => pieces.filter((p) => p.data.motion === m).length;
+const verbsOf = new Map(pieces.map((p) => [p.id, interactions(p)]));
+const verbCount = (v: string) => pieces.filter((p) => verbsOf.get(p.id)!.includes(v)).length;
 const rows = list.map((p) => {
   const poster = cardPoster(p.id, p.data.platform);
   return {
@@ -47,6 +49,7 @@ const rows = list.map((p) => {
     motion: p.data.motion,
     difficulty: String(p.data.difficulty),
     tags: p.data.tags.join(' '),
+    verbs: verbsOf.get(p.id)!.join(' '),
     palette: p.data.palette.slice(0, 4),
     poster: poster.src,
     tall: poster.tall,
@@ -149,6 +152,12 @@ const WAYS_IN = [
         <span class="status mono faint" data-status aria-live="polite"></span>
         <button type="button" class="clear" data-clear hidden>Clear</button>
       </div>
+      <div class="verbs" role="group" aria-label="By interaction">
+        <span class="eyebrow">By interaction</span>
+        {INTERACTIONS.map((i) => verbCount(i.v) > 0 && (
+          <button type="button" class="chip" data-f="verb" data-v={i.v} aria-pressed="false">{i.label}<span class="cnt num">{verbCount(i.v)}</span></button>
+        ))}
+      </div>
       <div class="picks" data-picks hidden></div>
       {!sidebar && (
       <div class="panel" data-panel hidden>
@@ -233,7 +242,7 @@ const WAYS_IN = [
     const none = root.querySelector<HTMLElement>('[data-none]');
     const clears = root.querySelectorAll<HTMLButtonElement>('[data-clear]');
     const views = root.querySelectorAll<HTMLButtonElement>('[data-view]');
-    const state: Record<string, Set<string>> = { type: new Set(), platform: new Set(), style: new Set(), motion: new Set(), category: new Set() };
+    const state: Record<string, Set<string>> = { type: new Set(), platform: new Set(), style: new Set(), motion: new Set(), category: new Set(), verb: new Set() };
 
     // hydrate from URL
     const sp = new URLSearchParams(location.search);
@@ -247,6 +256,7 @@ const WAYS_IN = [
       if (state.platform.size && !state.platform.has(p.platform)) return false;
       if (state.category.size && !state.category.has(p.category)) return false;
       if (state.motion.size && !state.motion.has(p.motion)) return false;
+      if (state.verb.size && ![...state.verb].some((v) => p.verbs.split(' ').includes(v))) return false;
       if (state.style.size && ![...state.style].some((s) => p.styles.split(' ').includes(s))) return false;
       if (words.length) {
         const hay = `${p.title} ${p.tags} ${p.styles} ${p.type} ${p.category.replace('-', ' ')} ${p.platform} ${p.summary}`.toLowerCase();
@@ -257,6 +267,8 @@ const WAYS_IN = [
     function cardEl(p: (typeof rows)[number], i: number) {
       const el = document.createElement('article');
       el.className = 'card';
+      el.dataset.slug = p.id;
+      el.dataset.platform = p.platform;
       el.style.setProperty('--d', `${Math.min(i, 12) * 30}ms`);
       const eager = i === 0 ? ' loading="eager" fetchpriority="high"' : ' loading="lazy"';
       const plate = p.poster
@@ -301,7 +313,7 @@ const WAYS_IN = [
     function paintPicks() {
       if (!picks) return;
       picks.replaceChildren();
-      const on = chips.filter((ch) => state[ch.dataset.f!]?.has(ch.dataset.v!));
+      const on = chips.filter((ch) => ch.dataset.f !== 'verb' && state[ch.dataset.f!]?.has(ch.dataset.v!));
       picks.hidden = on.length === 0;
       for (const ch of on) {
         const b = document.createElement('button');
@@ -342,6 +354,10 @@ const WAYS_IN = [
   .frow { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
   .filter-btn { height: 40px; }
   .picks { display: flex; flex-wrap: wrap; gap: 6px; }
+  .verbs { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; }
+  .verbs .eyebrow { width: auto; margin-right: 4px; }
+  .verbs .cnt { color: var(--ink-3); }
+  .verbs .chip[aria-pressed="true"] .cnt { color: inherit; opacity: .7; }
   .picks[hidden] { display: none; }
   .panel { display: flex; flex-direction: column; gap: 18px; padding-top: 4px; }
   .panel[hidden] { display: none; }

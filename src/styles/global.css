@@ -178,6 +178,8 @@ a.chip:hover, button.chip:hover { border-color: var(--ink); color: var(--ink); }
 .card .plate { position: absolute; inset: 0; display: grid; place-items: center; }
 .card .plate img { width: 100%; height: 100%; object-fit: cover; }
 .card .plate img.tall { position: absolute; top: 6%; left: 50%; translate: -50% 0; width: auto; height: 88%; aspect-ratio: 390 / 844; border-radius: 10px; box-shadow: 0 0 0 1px var(--line), 0 10px 24px -14px rgba(24, 24, 27, 0.35); }
+.card .plate iframe.live { position: absolute; z-index: 4; border: 0; transform-origin: 0 0; transform: scale(var(--s, 1)); background: var(--paper-2); opacity: 0; transition: opacity var(--t-med) var(--ease); }
+.card .plate iframe.live.on { opacity: 1; }
 .card .plate .swatch { display: flex; gap: 8px; }
 .card .plate .swatch i { width: 28px; height: 48px; border-radius: 4px; }
 .card .stage .cover { position: absolute; inset: 0; z-index: 3; }
