@@ -1,0 +1,261 @@
+<!-- Design Lounge piece: swipe-tab-pager · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wrenford Market · Saturday stalls</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anek+Latin:wdth,wght@75..125,400..700&family=Wix+Madefor+Display:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ground:#f2efe6;--card:#fbf9f3;--ink:#1f2620;--ink-2:#545b52;--line:#dcd6c6;--edge:#7d8378;
+  --pill:#b8401f;--on-pill:#fff7ec;--leaf:#2f6a3c;
+  --display:"Wix Madefor Display",system-ui,sans-serif;--ui:"Anek Latin",system-ui,sans-serif;
+  --ease:cubic-bezier(.2,.7,.2,1);--out:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--ground);color:var(--ink);font:15px/1.4 var(--ui);font-stretch:100%;-webkit-font-smoothing:antialiased;overflow:hidden}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+:focus-visible{outline:3px solid var(--ink);outline-offset:2px;border-radius:12px}
+svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+.app{height:100%;max-width:440px;margin:0 auto;display:flex;flex-direction:column}
+header{padding:60px 16px 0}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.open{display:inline-flex;align-items:center;gap:6px;font:600 13px/1 var(--ui);color:var(--leaf);letter-spacing:.02em}
+.open i{width:8px;height:8px;border-radius:50%;background:var(--leaf);box-shadow:0 0 0 3px #d5e3d2}
+.ib{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;border:1.5px solid var(--edge)}
+h1{margin:12px 0 2px;font:800 32px/1.02 var(--display);letter-spacing:-.025em}
+.sub{margin:0;color:var(--ink-2);font-size:15px}
+
+/* tabs */
+.tabs{position:relative;margin:18px 12px 0;display:flex;justify-content:space-between;padding:4px;border-radius:24px;background:#e6e1d4}
+.tab,.lit span{height:40px;padding:0 14px;border-radius:20px;font:620 17px/1 var(--ui);font-stretch:94%;letter-spacing:.005em;display:flex;align-items:center;white-space:nowrap}
+.tab{--w:0;color:color-mix(in oklab,var(--ink) calc(var(--w)*100%),var(--ink-2));touch-action:manipulation}
+.tab.on{color:transparent}
+.tab:focus-visible{outline:3px solid var(--ink);outline-offset:1px}
+@media (hover:hover){.tab:not(.on):hover{color:var(--ink)}}
+/* the pill: a cream copy of the labels on tomato, clipped to the moving, stretching capsule */
+.lit{position:absolute;inset:0;padding:4px;display:flex;justify-content:space-between;background:var(--pill);color:var(--on-pill);pointer-events:none;clip-path:inset(4px 100% 4px 0 round 20px)}
+.lit span{visibility:hidden}
+
+/* pager */
+.pager{position:relative;flex:1;min-height:0;overflow:hidden;touch-action:pan-y;margin-top:8px}
+.track{display:flex;height:100%;will-change:transform}
+.pager.drag{cursor:grabbing;user-select:none;-webkit-user-select:none}
+.page{flex:0 0 100%;height:100%;overflow-y:auto;padding:12px 16px 120px;overscroll-behavior:contain;scrollbar-width:none}
+.page::-webkit-scrollbar{display:none}
+.hero{border-radius:22px;background:var(--card);border:1px solid var(--line);overflow:hidden}
+.art{height:132px;position:relative;background:var(--art)}
+.art b{position:absolute;left:12px;top:12px;padding:6px 10px;border-radius:12px;background:var(--card);font:650 12px/1 var(--ui);letter-spacing:.06em;text-transform:uppercase;color:var(--ink)}
+.hero div.t{padding:14px 16px 16px}
+.hero h2{margin:0;font:700 21px/1.15 var(--display);letter-spacing:-.015em}
+.hero p{margin:6px 0 0;color:var(--ink-2);font-size:15px}
+.list{list-style:none;margin:14px 0 0;padding:0}
+.list li{display:flex;align-items:center;gap:12px;padding:12px 0;border-top:1px solid var(--line)}
+.list li:first-child{border-top:0}
+.sw{flex:none;width:52px;height:52px;border-radius:16px;background:radial-gradient(circle at 34% 30%,var(--a),var(--b) 58%,var(--c));box-shadow:inset 0 -3px 0 rgba(0,0,0,.08)}
+.nm{flex:1;min-width:0}
+.nm b{display:block;font:640 16px/1.2 var(--ui)}
+.nm span{display:block;font-size:14px;color:var(--ink-2)}
+.pr{font:700 16px/1 var(--display);font-variant-numeric:tabular-nums;white-space:nowrap}
+.pr small{display:block;margin-top:3px;font:500 12px var(--ui);color:var(--ink-2);text-align:right}
+.add{flex:none;width:40px;height:40px;border-radius:50%;border:1.5px solid var(--edge);display:grid;place-items:center;transition:background 160ms var(--ease),color 160ms var(--ease),transform 160ms var(--out)}
+.add:active{transform:scale(.9)}
+.add[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:var(--on-pill)}
+@media (hover:hover){.add[aria-pressed=false]:hover{background:#ebe6d9}}
+.add .ck{display:none}.add[aria-pressed=true] .ck{display:block}.add[aria-pressed=true] .pl{display:none}
+
+.basket{position:absolute;left:16px;right:16px;bottom:34px;max-width:408px;margin:0 auto;height:60px;border-radius:30px;background:var(--ink);color:var(--on-pill);display:flex;align-items:center;gap:12px;padding:0 8px 0 20px;box-shadow:0 10px 24px rgba(31,38,32,.22)}
+.basket p{margin:0;flex:1;min-width:0;font-size:14px;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.basket p b{font:700 16px var(--display);font-variant-numeric:tabular-nums}
+.basket button{height:44px;padding:0 18px;border-radius:22px;background:var(--on-pill);color:var(--ink);font:650 15px/1 var(--ui)}
+.basket button:focus-visible{outline-color:var(--on-pill);outline-offset:2px}
+.bump{animation:bump 360ms var(--out)}
+@keyframes bump{30%{transform:scale(1.12)}}
+@media (prefers-reduced-motion:reduce){.bump{animation:none}.add{transition:none}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <div class="top">
+      <span class="open"><i></i>Open now, until 13:00</span>
+      <button class="ib" type="button" aria-label="Search the market"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg></button>
+    </div>
+    <h1>Wrenford Market</h1>
+    <p class="sub">Canal Yard · Saturday 1 November · 31 stalls</p>
+  </header>
+  <div class="tabs" role="tablist" aria-label="Stall types" id="tabs">
+    </div>
+  <div class="pager" id="pager"><div class="track" id="track"></div></div>
+  <div class="basket">
+    <p><b id="bc">2 items</b> · <span id="bt">£9.00</span><br>Collect at Pitch 1 from 8:30</p>
+    <button type="button">Basket</button>
+  </div>
+</div>
+<p class="vh" aria-live="polite" id="sr"></p>
+<script>
+(() => {
+const $ = id => document.getElementById(id);
+const PAGES = [
+  ['Produce', 'Pitch 7', 'First leeks of the winter, pulled Thursday', 'Hollin Farm grows on clay a mile up the canal. Ask for the trimmings, they are free.',
+   'radial-gradient(circle at 14% 104%,#3f6b33 0 17%,transparent 17.5%),radial-gradient(circle at 34% 96%,#e9e1c6 0 13%,transparent 13.5%),radial-gradient(circle at 52% 108%,#5d8a3d 0 20%,transparent 20.5%),radial-gradient(circle at 74% 100%,#c8381c 0 11%,transparent 11.5%),radial-gradient(circle at 88% 106%,#8fae4f 0 16%,transparent 16.5%),repeating-linear-gradient(90deg,transparent 0 46px,rgba(255,255,255,.18) 46px 48px),linear-gradient(#d6e4cb,#adc69e)',
+   [['Heritage tomatoes, mixed', 'Hollin Farm · Pitch 7', '4.20', 'per kg', '#f7a07a,#c8381c,#8e2410'],
+    ['Cavolo nero', 'Ashby Leaves · Pitch 3', '1.80', 'bunch', '#6f8f62,#2f4a32,#1d2e20'],
+    ['Crown prince squash', 'Hollin Farm · Pitch 7', '2.60', 'each', '#c9d6d2,#7f9a98,#5b7472'],
+    ['Rainbow chard', 'Ashby Leaves · Pitch 3', '2.10', 'bunch', '#f2c14e,#d0473a,#6a2c4a'],
+    ['Russet apples', 'Kettle Orchard · Pitch 11', '3.40', 'per kg', '#e0b06a,#a4692f,#6b3f1b']]],
+  ['Bakery', 'Pitch 2', 'Rye sourdough, out of the oven at 7:40', 'Morrow Bakehouse bakes six loaves a tray. The seeded rye is gone by ten most weeks.',
+   'radial-gradient(ellipse 22% 30% at 20% 92%,#9a5a26 0 98%,transparent),radial-gradient(ellipse 26% 34% at 50% 98%,#7a4319 0 98%,transparent),radial-gradient(ellipse 20% 26% at 80% 94%,#b77737 0 98%,transparent),radial-gradient(ellipse 12% 8% at 50% 80%,#e9c48c 0 98%,transparent),repeating-linear-gradient(0deg,transparent 0 30px,rgba(122,67,25,.08) 30px 32px),linear-gradient(#f6e6c8,#e8c895)',
+   [['Seeded rye loaf', 'Morrow Bakehouse · Pitch 2', '4.80', '800 g', '#c8945a,#8a5427,#5a3415'],
+    ['Cardamom buns', 'Morrow Bakehouse · Pitch 2', '6.00', 'four', '#f0d29c,#c88b45,#8a5a2a'],
+    ['Spelt baguette', 'Feld Ovens · Pitch 5', '2.90', 'each', '#ebc787,#b9803d,#7c5023'],
+    ['Fig and walnut loaf', 'Feld Ovens · Pitch 5', '5.20', '600 g', '#9a6b56,#5e3a2e,#3a221b'],
+    ['Oat crackers', 'Morrow Bakehouse · Pitch 2', '3.50', 'tin', '#f1e3c4,#cdb488,#9a8257']]],
+  ['Dairy', 'Pitch 9', 'A new washed-rind, aged six weeks', 'Tarnside Creamery makes it from one herd of Shorthorns. Taste before you buy.',
+   'radial-gradient(circle at 30% 112%,#f0c85e 0 34%,transparent 34.5%),radial-gradient(circle at 30% 112%,#fff3cf 0 26%,transparent 26.5%),radial-gradient(circle at 78% 118%,#e1ae4c 0 26%,transparent 26.5%),radial-gradient(circle at 78% 118%,#fbe8b8 0 19%,transparent 19.5%),radial-gradient(circle at 60% 34%,#fffaf0 0 5%,transparent 5.5%),linear-gradient(#e1e8ea,#c3d2d6)',
+   [['Whole milk, unhomogenised', 'Tarnside Creamery · Pitch 9', '1.90', 'litre', '#ffffff,#e9e6dc,#c9c3b2'],
+    ['Tarnside Blue', 'Tarnside Creamery · Pitch 9', '5.60', '200 g', '#f4eedb,#b9c0b6,#6d7a78'],
+    ['Cultured butter', 'Linnet Dairy · Pitch 10', '4.40', '250 g', '#fff2b8,#f0cf62,#c9a03a'],
+    ["Sheep's yoghurt", 'Linnet Dairy · Pitch 10', '3.80', '500 g', '#ffffff,#f1ede3,#d6cfbf'],
+    ['Eggs, half dozen', 'Coldharbour Hens · Pitch 4', '2.70', 'six', '#f4dcc0,#d6a87a,#a87650']]],
+  ['Flowers', 'Pitch 14', 'The last dahlias of the year', 'Ivel Plot cuts on Friday evening. After the first frost these are done until July.',
+   'radial-gradient(circle at 20% 64%,#c2364a 0 12%,transparent 12.5%),radial-gradient(circle at 20% 64%,#e05868 0 5%,transparent 5.5%),radial-gradient(circle at 46% 48%,#ec9a6e 0 14%,transparent 14.5%),radial-gradient(circle at 46% 48%,#f7c4a4 0 6%,transparent 6.5%),radial-gradient(circle at 72% 62%,#8d2a52 0 12%,transparent 12.5%),radial-gradient(circle at 88% 40%,#f2d06b 0 7%,transparent 7.5%),radial-gradient(ellipse at 50% 150%,#4f6b40 0 52%,transparent 52.5%),linear-gradient(#f3e6de,#e6cfc3)',
+   [['Dahlia bunch, Café au lait', 'Ivel Plot · Pitch 14', '8.00', 'ten stems', '#f6d6c4,#d99a86,#9c5b4c'],
+    ['Eucalyptus stems', 'Ivel Plot · Pitch 14', '4.50', 'bunch', '#c9d8cf,#7e9a8c,#4d6559'],
+    ['Chrysanthemum spray', 'Sallow Lane · Pitch 15', '6.00', 'bunch', '#f7e08a,#e2a33a,#a4651c'],
+    ['Dried statice', 'Sallow Lane · Pitch 15', '5.50', 'bunch', '#c7b6e6,#7b5fa8,#4a3570'],
+    ['Narcissus bulbs', 'Ivel Plot · Pitch 14', '4.00', 'ten', '#efe2c4,#c4a56e,#8c6e3f']]]];
+const PLUS = '<svg class="pl" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg><svg class="ck" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>';
+const tabsEl = $('tabs'), track = $('track'), pager = $('pager'), sr = $('sr');
+PAGES.forEach(([name, pitch, h, p, art, items], i) => {
+  tabsEl.insertAdjacentHTML('beforeend', `<button class="tab" role="tab" id="t${i}" aria-controls="p${i}" aria-selected="false" tabindex="-1">${name}</button>`);
+  track.insertAdjacentHTML('beforeend', `<section class="page" role="tabpanel" id="p${i}" aria-labelledby="t${i}">
+    <article class="hero"><div class="art" style="--art:${art}"><b>${pitch}</b></div><div class="t"><h2>${h}</h2><p>${p}</p></div></article>
+    <ul class="list">${items.map(([n, s, pr, u, c], k) => { const [a, b, d] = c.split(','); return `<li><span class="sw" style="--a:${a};--b:${b};--c:${d}" aria-hidden="true"></span>
+      <span class="nm"><b>${n}</b><span>${s}</span></span><span class="pr">£${pr}<small>${u}</small></span>
+      <button class="add" type="button" aria-pressed="${i === 0 && k < 2}" data-p="${pr}" aria-label="Add ${n}, £${pr} ${u}, to basket">${PLUS}</button></li>`; }).join('')}</ul></section>`);
+});
+tabsEl.insertAdjacentHTML('beforeend', `<div class="lit" id="ind" aria-hidden="true">${PAGES.map(p => `<span>${p[0]}</span>`).join('')}</div>`);
+const lit = [...$('ind').children];
+const ind = $('ind'), tabs = [...tabsEl.querySelectorAll('[role=tab]')], panels = [...track.children], N = tabs.length;
+const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+let W = 1, TW = 1, x = 0, v = 0, raf = 0, idx = 0, geo = [], touched = false;
+function measure(){
+  W = pager.clientWidth || 1; TW = tabsEl.clientWidth;
+  const L = tabsEl.getBoundingClientRect().left;
+  geo = tabs.map(t => { const r = t.getBoundingClientRect(); return [r.left - L, r.width]; });
+}
+const rubber = (d, D) => (1 - 1 / (Math.abs(d) * .55 / D + 1)) * D * Math.sign(d);
+function draw(){
+  track.style.transform = `translate3d(${x.toFixed(2)}px,0,0)`;
+  const p = -x / W, pc = Math.max(0, Math.min(N - 1, p)), i = Math.min(N - 2, Math.floor(pc)), t = pc - i;
+  const a = geo[i], b = geo[i + 1];
+  // leading edge runs ahead (sine), trailing edge lags (1 - cos): the pill stretches mid-swipe
+  const lead = Math.sin(t * Math.PI / 2), trail = 1 - Math.cos(t * Math.PI / 2);
+  let l = a[0] + (b[0] - a[0]) * trail, r = a[0] + a[1] + (b[0] + b[1] - a[0] - a[1]) * lead;
+  const rest = a[1] + (b[1] - a[1]) * t, stretch = Math.max(0, (r - l) - rest) / Math.max(1, b[0] - a[0]);
+  const over = p - pc; // rubber band past the ends squeezes the pill against the wall
+  if (over){ const s = Math.min(.3, Math.abs(over) * 1.4) * (r - l); if (over < 0) r -= s; else l += s; }
+  const y = 4 + 4 * Math.min(1, stretch * 1.6); // a stretched pill gets thinner, up to 8px
+  ind.style.clipPath = `inset(${y.toFixed(2)}px ${(TW - r).toFixed(2)}px ${y.toFixed(2)}px ${l.toFixed(2)}px round 20px)`;
+  tabs.forEach((tb, k) => {
+    const w = Math.max(0, 1 - Math.abs(pc - k));
+    tb.style.setProperty('--w', w.toFixed(3)); tb.classList.toggle('on', w > .999);
+    lit[k].style.visibility = w > .001 ? 'visible' : 'hidden';
+  });
+  panels.forEach((pn, k) => { pn.style.visibility = Math.abs(p - k) < .999 ? 'visible' : 'hidden'; });
+}
+function select(n, say){
+  idx = n;
+  tabs.forEach((tb, k) => { tb.setAttribute('aria-selected', k === n); tb.tabIndex = k === n ? 0 : -1; });
+  panels.forEach((pn, k) => { pn.inert = k !== n; });
+  if (say) sr.textContent = `${PAGES[n][0]}, page ${n + 1} of ${N}`;
+}
+function spring(tx, vel, done){
+  cancelAnimationFrame(raf);
+  if (reduce.matches){ x = tx; v = 0; draw(); done && done(); return; }
+  v = vel || 0; let last = performance.now();
+  const tick = now => {
+    const dt = Math.min(.032, (now - last) / 1000) / 4; last = now;
+    for (let s = 0; s < 4; s++){ v += (380 * (tx - x) - 33 * v) * dt; x += v * dt; }
+    draw();
+    if (Math.abs(tx - x) < .4 && Math.abs(v) < 10){ x = tx; v = 0; draw(); done && done(); return; }
+    raf = requestAnimationFrame(tick);
+  };
+  raf = requestAnimationFrame(tick);
+}
+const goTo = (n, vel, say) => { n = Math.max(0, Math.min(N - 1, n)); select(n, say); spring(-n * W, vel); };
+
+// pointer: lock to horizontal after 8px, track velocity over the last 90ms
+let st = null, swallow = false;
+pager.addEventListener('pointerdown', e => {
+  if (e.button) return;
+  measure(); st = { x0: e.clientX, y0: e.clientY, ox: x, lock: 0, s: [[e.timeStamp, e.clientX]] };
+});
+pager.addEventListener('pointermove', e => {
+  if (!st) return;
+  const dx = e.clientX - st.x0, dy = e.clientY - st.y0;
+  if (!st.lock){
+    if (Math.abs(dx) > 8 && Math.abs(dx) > Math.abs(dy) * 1.2){
+      st.lock = 1; st.x0 = e.clientX; st.ox = x; touched = true; cancelAnimationFrame(raf);
+      pager.setPointerCapture(e.pointerId); pager.classList.add('drag');
+    } else if (Math.abs(dy) > 8) st = null;
+    return;
+  }
+  const raw = st.ox + e.clientX - st.x0, min = -(N - 1) * W;
+  x = raw > 0 ? rubber(raw, W) : raw < min ? min + rubber(raw - min, W) : raw;
+  st.s.push([e.timeStamp, e.clientX]);
+  while (st.s.length > 2 && e.timeStamp - st.s[0][0] > 90) st.s.shift();
+  draw();
+});
+function end(e){
+  if (!st) return;
+  const s = st.s, locked = st.lock; st = null;
+  if (!locked) return;
+  pager.classList.remove('drag'); swallow = true; setTimeout(() => swallow = false, 0);
+  const f = s[0], g = s[s.length - 1], vel = g[0] > f[0] && e.timeStamp - g[0] < 100 ? (g[1] - f[1]) / (g[0] - f[0]) : 0; // px per ms; a pause before letting go kills the fling
+  const p = -x / W;
+  let n = Math.abs(vel) > .3 ? (vel < 0 ? Math.ceil(p) : Math.floor(p)) : Math.round(p);
+  n = Math.max(idx - 1, Math.min(idx + 1, n));
+  goTo(n, vel * 1000, n !== idx);
+}
+pager.addEventListener('pointerup', end);
+pager.addEventListener('pointercancel', end);
+pager.addEventListener('click', e => { if (swallow){ e.stopPropagation(); e.preventDefault(); } }, true);
+
+tabs.forEach((tb, k) => tb.addEventListener('click', () => { touched = true; measure(); goTo(k, 0); }));
+tabsEl.addEventListener('keydown', e => {
+  const k = { ArrowRight: idx + 1, ArrowLeft: idx - 1, Home: 0, End: N - 1 }[e.key];
+  if (k === undefined) return;
+  e.preventDefault(); touched = true; measure();
+  const n = (k + N) % N; goTo(n, 0); tabs[n].focus();
+});
+
+// basket
+const bc = $('bc'), bt = $('bt');
+function basket(){
+  const on = [...document.querySelectorAll('.add[aria-pressed=true]')];
+  const sum = on.reduce((t, b) => t + +b.dataset.p, 0);
+  bc.textContent = on.length + (on.length === 1 ? ' item' : ' items'); bt.textContent = '£' + sum.toFixed(2);
+}
+track.addEventListener('click', e => {
+  const b = e.target.closest('.add'); if (!b) return;
+  const on = b.getAttribute('aria-pressed') !== 'true';
+  b.setAttribute('aria-pressed', on); basket();
+  bc.classList.remove('bump'); void bc.offsetWidth; bc.classList.add('bump');
+  sr.textContent = (on ? 'Added. ' : 'Removed. ') + bc.textContent + ', ' + bt.textContent;
+});
+addEventListener('resize', () => { measure(); x = -idx * W; draw(); });
+measure(); select(0); basket(); draw();
+if (document.fonts) document.fonts.ready.then(() => { measure(); draw(); });
+// one gentle peek so the swipe is discoverable; never repeats
+setTimeout(() => { if (!touched && !reduce.matches){ measure(); spring(0, -1700); } }, 1100);
+})();
+</script>
+</body>
+</html>

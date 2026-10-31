@@ -622,3 +622,11 @@ reaction-burst-picker | web | social | Reaction burst picker | soft playful mini
 dynamic-island-activity | mobile-app | widgets | Island live activities | minimal dark soft | press loading live-activity morph spring
 toggle-liquid-squish | web | inputs | Liquid squish toggles | soft minimal organic | press drag slide switch slider physics
 button-slide-to-confirm | mobile-app | buttons | Slide to pay back a friend | soft playful paper | drag slide payment confirm keyboard
+slider-range-histogram | web | inputs | Price range over a histogram | soft minimal paper | slide range filter histogram slider keyboard
+slider-clip-trim | web | media | Clip trimmer with a filmstrip | dark minimal | slide drag scrubber video trim keyboard
+swipe-tab-pager | mobile-app | navigation | Swipe tab pager with stretching pill | soft material playful | swipe tabs pager momentum keyboard
+swipe-flashcard-review | mobile-app | cards | Swipe-to-grade flashcard review | dark soft playful | swipe drag flashcards flip learning undo
+loader-export-render | web | loaders | Export render with a settling ETA | minimal paper | loading progress export video cancel
+loader-blur-up-gallery | web | gallery | Blur-up photo album | paper soft editorial | loading skeleton gallery photos progressive
+drag-avatar-crop | mobile-app | inputs | Drag to crop a profile photo | soft paper minimal | drag slide crop avatar pinch keyboard
+hover-link-peek | web | reading | Link peek with a safe area | editorial paper minimal | hover tooltip preview footnotes links keyboard

@@ -1,0 +1,156 @@
+<!-- Design Lounge piece: loader-blur-up-gallery · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Fieldbook · Carran Point</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,opsz,wght@0,18..144,400..800;1,18..144,400&family=Gantari:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f4f1ea;--ink:#1e1c18;--ink-2:#58534a;--line:#dcd6ca;--edge:#857e72;
+  --sea:#1f4e5f;--sea-2:#163a47;--card:#fffdf8;--fail:#a2361c;
+  --serif:"Merriweather",Georgia,serif;--sans:"Gantari",system-ui,sans-serif;
+  --out:cubic-bezier(.16,1,.3,1);--ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.45 var(--sans);color:var(--ink);background:var(--paper);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+button{font:inherit;color:inherit;cursor:pointer}
+.vh{position:absolute;left:0;bottom:0;width:300px;height:1px;margin:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+:focus-visible{outline:3px solid var(--sea);outline-offset:3px}
+.wrap{max-width:1280px;margin:0 auto;padding:22px 32px 28px}
+.top{display:flex;align-items:center;gap:14px;font-size:13px;color:var(--ink-2)}
+.logo{font:italic 400 17px var(--serif);color:var(--ink);margin-right:8px}
+.top a{color:var(--ink-2);text-decoration:none}
+.top .me{margin-left:auto;width:32px;height:32px;border-radius:50%;background:#e3c9a6;color:var(--ink);display:grid;place-items:center;font-weight:600;font-size:12px}
+.head{display:flex;align-items:flex-end;gap:24px;margin:18px 0 18px;flex-wrap:wrap}
+h1{margin:0;font:700 44px/1.05 var(--serif);font-variation-settings:"opsz" 96;letter-spacing:-.02em}
+h1 em{font-weight:400}
+.sub{margin:8px 0 0;color:var(--ink-2);font-size:14px}
+.ctl{margin-left:auto;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.sw{display:inline-flex;align-items:center;gap:10px;min-height:40px;background:var(--card);border:1.5px solid var(--edge);border-radius:20px;padding:0 16px 0 8px;font-weight:500;transition:background 140ms}
+.sw:hover{background:#efe9dd}
+.sw .k{width:40px;height:24px;border-radius:12px;border:1.5px solid var(--edge);background:var(--card);position:relative;transition:background 160ms var(--ease),border-color 160ms var(--ease)}
+.sw .k::after{content:"";position:absolute;top:3px;left:3px;width:15px;height:15px;border-radius:50%;background:var(--ink-2);transition:transform 200ms var(--out),background 160ms}
+.sw[aria-checked="true"] .k{background:var(--sea);border-color:var(--sea)}
+.sw[aria-checked="true"] .k::after{transform:translateX(16px);background:#fff}
+.btn{min-height:40px;padding:0 16px;border-radius:20px;border:1.5px solid var(--ink);background:var(--ink);color:#f7f3ea;font-weight:600;display:inline-flex;align-items:center;gap:8px;transition:transform 120ms var(--ease),background 140ms}
+.btn:hover{background:#3a362f}
+.btn:active{transform:scale(.97)}
+.btn svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.stat{display:flex;align-items:center;gap:12px;margin:0 0 12px;font-size:13px;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.stat b{color:var(--ink);font-weight:600}
+.meter{flex:0 0 160px;height:4px;border-radius:2px;background:var(--line);overflow:hidden}
+.meter i{display:block;height:100%;width:calc(var(--m,0)*100%);background:var(--sea);transition:width 200ms linear}
+/* grid */
+.grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(6,1fr);grid-auto-rows:136px;grid-auto-flow:dense;gap:10px}
+.w2{grid-column:span 2}.h2{grid-row:span 2}
+.t{position:relative;overflow:hidden;border-radius:6px;background:var(--dom)}
+.t figure{margin:0;position:absolute;inset:0}
+.t svg.ph{position:absolute;inset:0;width:100%;height:100%;opacity:0;filter:blur(14px);transform:scale(1.12);transition:opacity 260ms var(--ease),filter 620ms var(--out),transform 620ms var(--out)}
+.t.lq svg.ph{opacity:1}
+.t.ok svg.ph{filter:blur(0);transform:scale(1)}
+.t::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.16) 50%,transparent 70%);background-size:220% 100%;animation:sk 1.6s var(--ease) infinite;pointer-events:none}
+.t.lq::before,.t.ok::before{display:none}
+@keyframes sk{from{background-position:120% 0}to{background-position:-120% 0}}
+.bar{position:absolute;left:0;bottom:0;height:3px;width:calc(var(--d,0)*100%);background:var(--card);z-index:2;opacity:.9;transition:opacity 300ms}
+.t.ok .bar,.t.err .bar{opacity:0}
+figcaption{position:absolute;left:0;right:0;bottom:0;z-index:3;background:var(--ink);color:#f7f3ea;font-size:13px;padding:8px 12px;display:flex;justify-content:space-between;gap:8px;transform:translateY(101%);transition:transform 220ms var(--out);visibility:hidden}
+figcaption b{font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+figcaption span{color:#cfc8ba;white-space:nowrap;flex:none}
+.t.ok:hover figcaption,.t.ok:focus-within figcaption{transform:none;visibility:visible}
+.t.ok:hover svg.ph{transform:scale(1.03);transition:transform 600ms var(--out)}
+.t a.open{position:absolute;inset:0;z-index:2;border-radius:6px}
+.t a.open:focus-visible{outline-offset:-3px;outline-color:#fff;box-shadow:inset 0 0 0 6px var(--ink)}
+.t:not(.ok) a.open{pointer-events:none}
+.fail{position:absolute;inset:0;z-index:4;display:none;align-items:center;justify-content:center}
+.t.err .fail{display:flex}
+.fail div{background:var(--card);border-radius:8px;padding:12px 14px;display:flex;align-items:center;gap:12px;box-shadow:0 6px 18px rgba(30,28,24,.18);max-width:calc(100% - 20px)}
+.fail p{margin:0;font-size:13px;line-height:1.3}
+.fail p b{display:block;color:var(--fail);font-weight:600}
+.retry{min-height:36px;padding:0 12px;border-radius:18px;border:1.5px solid var(--ink);background:var(--card);font-weight:600;font-size:13px;display:inline-flex;align-items:center;gap:6px;flex:none}
+.retry:hover{background:#efe9dd}
+.retry svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round}
+@media (max-width:860px){
+  .wrap{padding:18px 16px 24px}
+  h1{font-size:32px}
+  .grid{grid-template-columns:repeat(2,1fr);grid-auto-rows:120px;gap:8px}
+  .ctl{margin-left:0}
+  .top a{display:none}
+  .meter{flex-basis:80px}
+}
+@media (prefers-reduced-motion:reduce){*,*::before{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top"><span class="logo">Fieldbook</span><a href="#">Albums</a><a href="#">Shared with you</a><a href="#">Prints</a><span class="me" aria-hidden="true">IM</span></header>
+  <div class="head">
+    <div><h1>Carran Point, <em>late May</em></h1><p class="sub">14 photos · shared by Ines Marlow · 3 days on the north shore</p></div>
+    <div class="ctl">
+      <button class="sw" role="switch" aria-checked="false" id="slow"><span class="k" aria-hidden="true"></span>Simulate slow network</button>
+      <button class="btn" id="replay"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 0 3-6.2M4 4v4h4"/></svg>Replay loading</button>
+    </div>
+  </div>
+  <p class="stat"><span class="meter" aria-hidden="true"><i id="m"></i></span><span id="st">Loading 0 of 14</span></p>
+  <ul class="grid" id="g" aria-busy="true" aria-label="Photos"></ul>
+  <p class="vh" aria-live="polite" id="live"></p>
+</div>
+<script>
+(()=>{
+const $=id=>document.getElementById(id),G=$('g'),RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+// name, size class, dominant, sky top, sky bottom, sun [x,y,r,c] , layers [[colour, base y, amplitude, freq]], extra, KB
+const P=[
+['Low tide, first light','w2 h2','#d9b48f','#efb995','#f6e2c6',[140,52,16,'#fff2dc'],[['#7e98a0',84,3,.05],['#c9a57c',104,6,.03]],'',1420],
+['Harbour wall','','#8fa6a8','#b6ccd1','#e5ece8',0,[['#4d6b74',80,1,.08],['#2f3634',96,0,0]],'<rect x="120" y="58" width="10" height="24" fill="#2f3634"/>',520],
+['The light at Ard Ness','h2','#6c6170','#2a3b54','#e2906d',[60,96,10,'#f3c79a'],[['#2a2f37',112,4,.04]],'<path d="M128 112V58l5-8 5 8v54z" fill="#e9e1d4"/><rect x="130" y="44" width="6" height="7" fill="#ffd98a"/>',880],
+['Machair in flower','w2','#a6b177','#cfe0e6','#eef3ea',0,[['#95a65a',70,5,.04],['#6f7d38',92,7,.06]],'<g fill="#f3e6a1">'+'<circle cx="20" cy="110" r="2"/><circle cx="58" cy="118" r="2"/><circle cx="96" cy="106" r="2"/><circle cx="150" cy="122" r="2"/><circle cx="178" cy="112" r="2"/></g>',760],
+['Creels on the slip','','#a85c3b','#d9a27a','#e7c3a3',0,[['#8a4a2c',88,2,.1],['#4a2c20',104,3,.07]],'<path d="M40 96h50v-22h-50z M100 100h44v-18h-44z" fill="#c4693f"/>',480],
+['Seals off the skerry','','#5f7d86','#9eb7bf','#d4e0e1',0,[['#4f6d77',74,2,.09],['#2e3d40',98,6,.12]],'<ellipse cx="96" cy="84" rx="14" ry="4" fill="#2b3134"/>',410],
+['Storm coming in','w2 h2','#58626a','#3c454d','#8d989b',0,[['#56656c',78,4,.05],['#2b3336',100,8,.035]],'<path d="M0 30Q60 10 120 26T200 22V0H0z" fill="#2b3237" opacity=".7"/>',1680],
+['Bothy, Achmore','','#9b8c6e','#cbd5d4','#ebe7da',0,[['#857a55',80,8,.03]],'<path d="M80 80v-16l14-10 14 10v16z" fill="#efe8d8"/><path d="M78 65l16-12 16 12" stroke="#3a3328" stroke-width="3" fill="none"/>',560],
+['Kelp line','','#6d6a3c','#c9c39a','#e5dfc0',0,[['#9b9668',78,2,.08],['#4f4c24',96,5,.15]],'',390],
+['Ferry to Inchmor','w2','#7d9cb0','#a9c4d6','#e4edf1',[40,40,9,'#fffaf0'],[['#5f8197',82,1,.1]],'<path d="M118 82h46l-6 8h-36z" fill="#f4efe6"/><rect x="130" y="72" width="18" height="10" fill="#c43f2a"/>',940],
+['Night swim','','#24324a','#0f1a2c','#2d4262',[150,30,6,'#f2ead2'],[['#16243a',86,2,.09]],'<path d="M150 88v18" stroke="#c9c09a" stroke-width="2" opacity=".6"/>',450],
+['Lichen, close','','#b9a35f','#8b7d43','#c5ae63',0,[['#d7c27a',60,14,.07],['#7c6b31',96,10,.11]],'',360],
+['Dune path','w2','#cdb68c','#d8e1e0','#f1ece0',0,[['#c9b183',78,10,.025],['#a9905f',100,6,.05]],'<path d="M90 140C100 110 110 100 104 84" stroke="#efe3c8" stroke-width="8" fill="none"/>',820],
+['Last ferry home','','#c27d55','#e59a67','#f2c995',[100,82,14,'#ffe2b0'],[['#38455a',88,1,.1],['#202733',104,3,.06]],'',500]];
+const FAIL=9;let seed,timers=[],slow=false,raf,active=[],done=0,bytes=0,total=P.reduce((s,p)=>s+p[8],0),started;
+const rnd=()=>(seed=(seed*16807)%2147483647)/2147483647;
+function svg(p,i){const[, , ,a,b,sun,layers,extra]=p;let s=`<svg class="ph" viewBox="0 0 200 140" preserveAspectRatio="xMidYMid slice" role="img" aria-label="${p[0]}"><defs><linearGradient id="g${i}" x2="0" y2="1"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient></defs><rect width="200" height="140" fill="url(#g${i})"/>`;
+  if(sun)s+=`<circle cx="${sun[0]}" cy="${sun[1]}" r="${sun[2]}" fill="${sun[3]}"/>`;
+  layers.forEach(([c,y,amp,f],k)=>{let d=`M0 140V${y}`;for(let x=0;x<=200;x+=10)d+=`L${x} ${(y+amp*Math.sin(x*f+k*2+i)+amp*.4*Math.sin(x*f*2.3+i)).toFixed(1)}`;s+=`<path d="${d}V140z" fill="${c}"/>`});
+  return s+extra+'</svg>'}
+function kb(n){return (n/1024).toFixed(1)}
+function build(){G.innerHTML=P.map((p,i)=>`<li class="t ${p[1]}" style="--dom:${p[2]}" id="t${i}"><figure>${svg(p,i)}<figcaption><b>${p[0]}</b><span>${p[8]} KB</span></figcaption></figure><a class="open" href="#" tabindex="-1" aria-label="Open ${p[0]}"></a><i class="bar"></i><div class="fail"><div><p><b>Didn't load</b>Connection dropped</p><button class="retry" data-i="${i}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 0 3-6.2M4 4v4h4"/></svg>Retry</button></div></div></li>`).join('')}
+function status(){const n=P.length,ok=done,err=G.querySelectorAll('.t.err').length;
+  $('m').style.setProperty('--m',bytes/total);
+  $('st').innerHTML=ok+err<n?`Loading <b>${ok}</b> of ${n} · ${kb(bytes)} of ${kb(total)} MB${slow?' · slow 3G':''}`:`<b>${ok}</b> of ${n} loaded · ${kb(bytes)} MB${err?` · <b>1 didn't load</b>`:''}`;
+  if(ok+err===n&&!active.length){G.setAttribute('aria-busy','false');say(err?`${ok} of ${n} photos loaded. ${p0(FAIL)} didn't load; Retry is on the photo.`:`All ${n} photos loaded.`)}}
+const p0=i=>P[i][0],say=m=>{$('live').textContent=m};
+const later=(f,ms)=>timers.push(setTimeout(f,ms));
+function get(i,retry){const el=$('t'+i),bw=slow?110:900,lat=slow?650:110,size=P[i][8];
+  el.classList.remove('err');active.push({i,el,size,t:performance.now(),lat,dur:lat+size/bw*1000,fail:i===FAIL&&!retry,got:0});
+  if(!raf)raf=requestAnimationFrame(tick)}
+function tick(now){raf=0;let freed=0;
+  active=active.filter(x=>{const d=Math.max(0,Math.min(1,(now-x.t-x.lat)/(x.dur-x.lat)));const g=Math.round(d*x.size);bytes+=g-x.got;x.got=g;x.el.style.setProperty('--d',d);
+    if(x.fail&&d>.62){bytes-=x.got;x.el.classList.add('err');x.el.querySelector('.retry').tabIndex=0;status();freed++;return false}
+    if(d>=1){x.el.classList.add('ok');x.el.querySelector('.open').tabIndex=0;done++;freed++;return false}return true});
+  if(freed)next();status();if(active.length&&!raf)raf=requestAnimationFrame(tick)}
+let queue=[];
+function next(){while(active.length<4&&queue.length)get(queue.shift())}
+function run(){timers.forEach(clearTimeout);timers=[];cancelAnimationFrame(raf);raf=0;active=[];done=0;bytes=0;seed=11;build();G.setAttribute('aria-busy','true');say('');
+  // network order: the 4 above-the-fold big tiles first, the rest by position, with a little jitter
+  queue=P.map((p,i)=>[i,(p[1].includes('h2')?-3:0)+i*.6+rnd()*2.2]).sort((a,b)=>a[1]-b[1]).map(a=>a[0]);
+  P.forEach((p,i)=>later(()=>$('t'+i).classList.add('lq'),(slow?900:240)+i*(slow?120:45)+rnd()*80));
+  later(next,slow?1100:420);status();
+  G.querySelectorAll('.retry').forEach(b=>b.onclick=()=>{const i=+b.dataset.i,el=$('t'+i);say(`Retrying ${p0(i)}.`);G.setAttribute('aria-busy','true');get(i,true);el.querySelector('.open').focus({preventScroll:true})})}
+$('replay').onclick=run;
+$('slow').onclick=e=>{slow=!slow;e.currentTarget.setAttribute('aria-checked',slow);run()};
+run();
+})();
+</script>
+</body>
+</html>

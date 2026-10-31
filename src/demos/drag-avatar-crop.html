@@ -1,0 +1,281 @@
+<!-- Design Lounge piece: drag-avatar-crop · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kilnhouse · Profile photo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fustat:wght@400..800&family=Asap:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#f4efe8;--card:#fbf8f3;--ink:#231d19;--ink-2:#66594f;--edge:#8c7e72;--line:#e2d8cc;
+  --stage:#1f1a17;--veil:rgba(24,19,16,.66);--ring:#f7efe3;--clay:#b04a2b;--clay-deep:#8f3a20;--rail:#d8cec2;
+  --display:"Fustat",system-ui,sans-serif;--sans:"Asap",system-ui,sans-serif;
+  --out:cubic-bezier(.16,1,.3,1);--ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:15px/1.45 var(--sans);color:var(--ink);background:var(--cream);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+:focus-visible{outline:3px solid var(--clay);outline-offset:3px;border-radius:10px}
+.app{max-width:430px;min-height:100%;margin:0 auto;padding:58px 16px 34px;display:flex;flex-direction:column}
+.bar{display:grid;grid-template-columns:72px 1fr 72px;align-items:center;height:44px}
+.bar h1{margin:0;text-align:center;font:700 17px/1 var(--display);letter-spacing:-.01em}
+.link{min-height:44px;padding:0 4px;font-weight:500;font-size:16px;text-align:left}
+.now{justify-self:end;width:36px;height:36px;border-radius:50%;overflow:hidden;background:#d9c7a7;box-shadow:0 0 0 2px var(--cream),0 0 0 3.5px var(--edge)}
+.now svg{display:block;width:100%;height:100%}
+.lede{margin:10px 0 14px;font-size:15px;color:var(--ink-2);text-align:center}
+.lede b{color:var(--ink);font-weight:600}
+
+.stage{position:relative;aspect-ratio:1;border-radius:22px;background:var(--stage);overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none;cursor:grab}
+.stage.grab{cursor:grabbing}
+.stage:focus-visible{outline:3px solid var(--clay);outline-offset:3px;border-radius:22px}
+.stage svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+.veil{fill:var(--veil);fill-rule:evenodd}
+.grid{stroke:rgba(247,239,227,.55);stroke-width:1;opacity:0;transition:opacity 220ms var(--ease)}
+.stage.grab .grid,.stage.zoom .grid{opacity:1}
+.ringo{fill:none;stroke:var(--ring);stroke-width:2}
+.tag{position:absolute;left:12px;bottom:12px;padding:5px 10px;border-radius:999px;background:var(--stage);color:var(--ring);font:600 13px/1 var(--sans);font-variant-numeric:tabular-nums;letter-spacing:.01em}
+.hint{position:absolute;right:12px;bottom:12px;padding:5px 10px;border-radius:999px;background:var(--stage);color:var(--ring);font:500 13px/1 var(--sans);transition:opacity 300ms var(--ease)}
+.stage.used .hint{opacity:0}
+
+.zoomrow{display:grid;grid-template-columns:44px 1fr 44px;align-items:center;gap:6px;margin-top:12px}
+.zb{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;color:var(--ink)}
+.zb svg,.btn svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.zb:active{background:var(--line)}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:30px;margin:0;padding:12px 0;border-radius:3px;--p:0%;
+  background-color:var(--edge);background-image:linear-gradient(90deg,var(--clay) var(--p),transparent var(--p));background-clip:content-box;cursor:pointer}
+input[type=range]::-webkit-slider-runnable-track{height:6px;background:none}
+input[type=range]::-moz-range-track{height:6px;background:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:26px;height:26px;margin-top:-10px;border-radius:50%;background:#fff;border:2px solid var(--clay-deep);box-shadow:0 2px 6px rgba(35,29,25,.25)}
+input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:#fff;border:2px solid var(--clay-deep)}
+input[type=range]:focus-visible{outline:none}
+input[type=range]:focus-visible::-webkit-slider-thumb{outline:3px solid var(--clay);outline-offset:2px}
+
+.prev{margin-top:12px;padding:14px 14px 12px;background:var(--card);border:1px solid var(--line);border-radius:18px}
+.prev h2{margin:0 0 10px;font:700 13px/1 var(--display);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2)}
+.prev ul{list-style:none;margin:0;padding:0;display:flex;align-items:flex-end;justify-content:space-between}
+.prev li{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:13px;color:var(--ink-2)}
+.prev li svg{display:block;border-radius:50%;background:#d9c7a7}
+
+.acts{margin-top:auto;padding-top:14px;display:grid;grid-template-columns:1fr 1.6fr;gap:10px}
+.btn{height:52px;border-radius:26px;font:700 16px/1 var(--display);display:flex;align-items:center;justify-content:center;gap:8px;transition:transform 140ms var(--ease),background 200ms var(--ease)}
+.btn:active{transform:scale(.97)}
+.reset{border:1.5px solid var(--edge);color:var(--ink)}
+.save{background:var(--clay);color:#fff}
+.save:hover{background:var(--clay-deep)}
+.save.ok{background:#2f5d45}
+.save svg path{stroke-dasharray:24;stroke-dashoffset:0}
+.save.ok svg path{animation:draw 360ms var(--out) both}
+@keyframes draw{from{stroke-dashoffset:24}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+@media (max-height:760px){.lede{display:none}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="photo" viewBox="0 0 600 760">
+    <rect width="600" height="760" fill="#d9c7a7"/>
+    <path d="M360 0h240v760L250 0z" fill="#e6d7bd"/>
+    <path d="M430 0h70L600 260V420z" fill="#efe4cf"/>
+    <rect y="196" width="600" height="16" fill="#7a4f34"/>
+    <rect y="212" width="600" height="6" fill="#5e3c27" opacity=".5"/>
+    <path d="M38 196c-6-40 2-70 22-82h36c20 12 28 42 22 82z" fill="#b5653f"/>
+    <path d="M58 114h40v-10H58z" fill="#9c5434"/>
+    <path d="M140 196c-10-30-4-58 18-66 4-14 30-14 34 0 22 8 28 36 18 66z" fill="#6e7f6a"/>
+    <path d="M150 150h60" stroke="#566553" stroke-width="5"/>
+    <ellipse cx="500" cy="172" rx="62" ry="26" fill="#e9e1d2"/>
+    <path d="M440 172a60 26 0 0 0 120 0v14a60 18 0 0 1-120 0z" fill="#cfc4b0"/>
+    <path d="M545 120c-6 30 0 60 12 76h22c12-16 18-46 12-76z" fill="#3e4a52"/>
+    <path d="M0 470h600v290H0z" fill="#cbb896" opacity=".35"/>
+    <path d="M118 760c4-120 60-176 120-190 20 26 104 26 124 0 60 14 116 70 120 190z" fill="#2f4a5a"/>
+    <path d="M212 760c4-82 22-132 38-152h100c16 20 34 70 38 152z" fill="#c9b58f"/>
+    <path d="M236 602c-10-30-6-56 2-74M364 602c10-30 6-56-2-74" stroke="#a79168" stroke-width="10" fill="none" stroke-linecap="round"/>
+    <circle cx="276" cy="690" r="9" fill="#9c5434" opacity=".7"/><circle cx="330" cy="718" r="5" fill="#9c5434" opacity=".6"/>
+    <path d="M262 470h76v108c-20 18-56 18-76 0z" fill="#a8704f"/>
+    <ellipse cx="300" cy="392" rx="92" ry="114" fill="#c68a64"/>
+    <ellipse cx="214" cy="404" rx="13" ry="22" fill="#b97a56"/>
+    <circle cx="212" cy="430" r="4.5" fill="#e0b04a"/>
+    <path d="M206 382c-6-96 42-148 100-146 64 2 100 52 92 142-12-44-36-76-60-86-30 34-84 52-132 52z" fill="#2a1e1a"/>
+    <circle cx="348" cy="248" r="44" fill="#2a1e1a"/>
+    <path d="M322 232c12-8 30-8 42 2" stroke="#4a3830" stroke-width="5" fill="none" stroke-linecap="round"/>
+    <path d="M244 376c10-8 26-8 36-2M322 374c10-6 26-6 36 2" stroke="#2a1e1a" stroke-width="6" fill="none" stroke-linecap="round"/>
+    <path d="M248 404c8 8 22 8 30 0M324 404c8 8 22 8 30 0" stroke="#2a1e1a" stroke-width="5.5" fill="none" stroke-linecap="round"/>
+    <path d="M302 410c-4 18-8 28-2 32 4 2 10 2 14 0" stroke="#9e6646" stroke-width="5" fill="none" stroke-linecap="round"/>
+    <path d="M272 462c16 14 44 14 60 0" stroke="#7e3f2b" stroke-width="6.5" fill="none" stroke-linecap="round"/>
+    <ellipse cx="248" cy="440" rx="20" ry="11" fill="#d96f5a" opacity=".35"/><ellipse cx="356" cy="440" rx="20" ry="11" fill="#d96f5a" opacity=".35"/>
+    <path d="M362 466c10-4 22-2 28 6-8 6-20 6-28-6z" fill="#9c5434" opacity=".7"/>
+  </symbol>
+</svg>
+
+<div class="app">
+  <header class="bar">
+    <button class="link" type="button">Cancel</button>
+    <h1>Profile photo</h1>
+    <span class="now" aria-hidden="true"><svg id="pvNow" viewBox="0 0 600 760"><use href="#photo" width="600" height="760"/></svg></span>
+  </header>
+  <p class="lede" id="lede" role="status"><b>Tamsin</b>, this is how members of Kilnhouse will see you.</p>
+
+  <div class="stage" id="stage" tabindex="0" role="group" aria-roledescription="photo crop area" aria-label="Crop your photo" aria-describedby="how">
+    <svg viewBox="0 0 358 358" aria-hidden="true">
+      <g id="img"><use href="#photo" width="600" height="760"/></g>
+      <path class="veil" d="M0 0h358v358H0z M179 31a148 148 0 1 0 0.01 0z"/>
+      <g class="grid" clip-path="url(#cc)"><path d="M130 31v296M228 31v296M31 130h296M31 228h296"/></g>
+      <clipPath id="cc"><circle cx="179" cy="179" r="148"/></clipPath>
+      <circle class="ringo" cx="179" cy="179" r="148"/>
+    </svg>
+    <span class="tag" id="tag" aria-hidden="true">1.0×</span>
+    <span class="hint" aria-hidden="true">Drag to move</span>
+  </div>
+  <p id="how" hidden>Drag to move the photo. Pinch, scroll or use the slider to zoom. Arrow keys move, plus and minus zoom, 0 resets.</p>
+
+  <div class="zoomrow">
+    <button class="zb" type="button" id="zout" aria-label="Zoom out"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M8 11h6M16 16l4 4"/></svg></button>
+    <input type="range" id="zr" min="0" max="100" step="1" value="0" aria-label="Zoom" aria-valuetext="1.0 times">
+    <button class="zb" type="button" id="zin" aria-label="Zoom in"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M8 11h6M11 8v6M16 16l4 4"/></svg></button>
+  </div>
+
+  <section class="prev" aria-labelledby="ph">
+    <h2 id="ph">Where it shows</h2>
+    <ul>
+      <li><svg class="pv" width="72" height="72" viewBox="0 0 600 760" aria-hidden="true"><use href="#photo" width="600" height="760"/></svg>Profile</li>
+      <li><svg class="pv" width="48" height="48" viewBox="0 0 600 760" aria-hidden="true"><use href="#photo" width="600" height="760"/></svg>Kiln rota</li>
+      <li><svg class="pv" width="32" height="32" viewBox="0 0 600 760" aria-hidden="true"><use href="#photo" width="600" height="760"/></svg>Comments</li>
+      <li><svg class="pv" width="24" height="24" viewBox="0 0 600 760" aria-hidden="true"><use href="#photo" width="600" height="760"/></svg>Mentions</li>
+    </ul>
+      </section>
+
+  <div class="acts">
+    <button class="btn reset" type="button" id="reset">Reset</button>
+    <button class="btn save" type="button" id="save"><span id="saveT">Save photo</span></button>
+  </div>
+</div>
+<p class="vh" id="sr" aria-live="polite"></p>
+
+<script>
+(() => {
+const $ = id => document.getElementById(id);
+const stage = $('stage'), img = $('img'), zr = $('zr'), tag = $('tag'), sr = $('sr');
+const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+const W = 600, H = 760, C = 179, R = 148, D = 296, MIN = D / W, MAX = MIN * 4;
+const HOME = { s: D / 380, fx: 300, fy: 420 };              // face centre at start
+const home = () => ({ s: HOME.s, x: C - HOME.fx * HOME.s, y: C - HOME.fy * HOME.s });
+let st = home(), vx = 0, vy = 0, vs = 0, raf = 0, goal = null;
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const band = (o, d) => (1 - 1 / (Math.abs(o) * .55 / d + 1)) * d * Math.sign(o);
+const lim = s => ({ x0: C + R - W * s, x1: C - R, y0: C + R - H * s, y1: C - R });
+const soft = (v, a, b, d) => v < a ? a + band(v - a, d) : v > b ? b + band(v - b, d) : v;
+function draw(){
+  img.setAttribute('transform', `translate(${st.x.toFixed(2)} ${st.y.toFixed(2)}) scale(${st.s.toFixed(4)})`);
+  const z = st.s / MIN, vb = `${((C - R - st.x) / st.s).toFixed(1)} ${((C - R - st.y) / st.s).toFixed(1)} ${(D / st.s).toFixed(1)} ${(D / st.s).toFixed(1)}`;
+  document.querySelectorAll('.pv').forEach(p => p.setAttribute('viewBox', vb));
+  tag.textContent = clamp(z, 1, 4).toFixed(1) + '×';
+  const p = Math.log(clamp(z, 1, 4)) / Math.log(4) * 100;
+  zr.value = p; zr.style.setProperty('--p', p + '%'); zr.setAttribute('aria-valuetext', clamp(z, 1, 4).toFixed(1) + ' times');
+}
+function zoomAt(ns, px, py){ const k = ns / st.s; st.x = px - (px - st.x) * k; st.y = py - (py - st.y) * k; st.s = ns; }
+function hard(){ const L = lim(st.s); st.x = clamp(st.x, L.x0, L.x1); st.y = clamp(st.y, L.y0, L.y1); }
+// one integrator: friction inside the bounds, a spring outside them, so flings coast then bounce back
+function settle(target){
+  cancelAnimationFrame(raf); goal = target || null;
+  if (reduce.matches){ if (target) st = target; else { st.s = clamp(st.s, MIN, MAX); hard(); } vx = vy = vs = 0; draw(); return; }
+  let last = performance.now();
+  const tick = now => {
+    const dt = Math.min(.032, (now - last) / 1000) / 4; last = now;
+    for (let i = 0; i < 4; i++){
+      const ts = target ? target.s : clamp(st.s, MIN, MAX);
+      vs += (260 * (ts - st.s) - 32 * vs) * dt; zoomAt(st.s + vs * dt, C, C);
+      const L = lim(st.s), tx = target ? target.x : clamp(st.x, L.x0, L.x1), ty = target ? target.y : clamp(st.y, L.y0, L.y1);
+      vx += (target || tx !== st.x ? 220 * (tx - st.x) - 30 * vx : -4.2 * vx) * dt;
+      vy += (target || ty !== st.y ? 220 * (ty - st.y) - 30 * vy : -4.2 * vy) * dt;
+      st.x += vx * dt; st.y += vy * dt;
+    }
+    draw();
+    const L = lim(st.s), still = Math.abs(vx) + Math.abs(vy) < 6 && Math.abs(vs) < .01;
+    if (still && st.x >= L.x0 - .3 && st.x <= L.x1 + .3 && st.y >= L.y0 - .3 && st.y <= L.y1 + .3 && Math.abs(st.s - (target ? target.s : clamp(st.s, MIN, MAX))) < .001){
+      if (target) st = { ...target }; else { st.s = clamp(st.s, MIN, MAX); hard(); }
+      vx = vy = vs = 0; goal = null; draw(); stage.classList.remove('zoom'); return;
+    }
+    raf = requestAnimationFrame(tick);
+  };
+  raf = requestAnimationFrame(tick);
+}
+const local = e => { const r = stage.getBoundingClientRect(), k = 358 / r.width; return { x: (e.clientX - r.left) * k, y: (e.clientY - r.top) * k }; };
+// drag and pinch: raw position is tracked separately, then rubber-banded for display
+const pts = new Map(); let raw = null, pinch = null, hist = [];
+stage.addEventListener('pointerdown', e => {
+  if (e.button) return;
+  stage.setPointerCapture(e.pointerId); cancelAnimationFrame(raf); goal = null; vx = vy = vs = 0;
+  pts.set(e.pointerId, local(e)); stage.classList.add('grab', 'used');
+  raw = { ...st }; hist = []; pinch = null;
+  if (pts.size === 2){ const [a, b] = [...pts.values()]; pinch = { d: Math.hypot(a.x - b.x, a.y - b.y), s: raw.s }; }
+});
+stage.addEventListener('pointermove', e => {
+  if (!pts.has(e.pointerId)) return;
+  const p = local(e), o = pts.get(e.pointerId); pts.set(e.pointerId, p);
+  if (pinch && pts.size === 2){
+    const [a, b] = [...pts.values()], d = Math.hypot(a.x - b.x, a.y - b.y), m = { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
+    const ns = pinch.s * d / pinch.d, k = ns / raw.s;
+    raw.x = m.x - (m.x - raw.x) * k + (p.x - o.x) / 2; raw.y = m.y - (m.y - raw.y) * k + (p.y - o.y) / 2; raw.s = ns;
+  } else { raw.x += p.x - o.x; raw.y += p.y - o.y; }
+  st.s = soft(raw.s, MIN, MAX, MIN * .25); const k = st.s / raw.s;
+  const L = lim(st.s); st.x = soft(C - (C - raw.x) * k, L.x0, L.x1, 120); st.y = soft(C - (C - raw.y) * k, L.y0, L.y1, 120);
+  hist.push({ t: e.timeStamp, x: st.x, y: st.y }); if (hist.length > 6) hist.shift();
+  draw();
+});
+const up = e => {
+  if (!pts.delete(e.pointerId)) return;
+  if (pts.size){ raw = { ...st }; pinch = null; return; }
+  stage.classList.remove('grab');
+  const a = hist[0], b = hist[hist.length - 1];
+  if (a && b && b.t - a.t > 10 && e.timeStamp - b.t < 60){ vx = (b.x - a.x) / (b.t - a.t) * 1000; vy = (b.y - a.y) / (b.t - a.t) * 1000; }
+  settle(); say();
+};
+stage.addEventListener('pointerup', up); stage.addEventListener('pointercancel', up);
+let wt = 0;
+stage.addEventListener('wheel', e => {
+  e.preventDefault(); cancelAnimationFrame(raf); goal = null; stage.classList.add('zoom', 'used');
+  const p = local(e); zoomAt(clamp(st.s * Math.exp(-e.deltaY * .0016), MIN * .9, MAX * 1.08), p.x, p.y);
+  const L = lim(st.s); st.x = soft(st.x, L.x0, L.x1, 120); st.y = soft(st.y, L.y0, L.y1, 120); draw();
+  clearTimeout(wt); wt = setTimeout(() => { settle(); say(); }, 140);
+}, { passive: false });
+// slider, buttons, keys: all zoom around the circle centre
+const toS = v => MIN * Math.pow(4, v / 100);
+zr.addEventListener('input', () => { cancelAnimationFrame(raf); goal = null; zoomAt(toS(+zr.value), C, C); hard(); draw(); });
+zr.addEventListener('change', say);
+const nudge = (dx, dy, f) => { cancelAnimationFrame(raf); const t = { ...(goal || st) }; const ns = clamp(t.s * f, MIN, MAX), k = ns / t.s;
+  t.x = C - (C - t.x) * k + dx; t.y = C - (C - t.y) * k + dy; t.s = ns; const L = lim(ns);
+  t.x = clamp(t.x, L.x0, L.x1); t.y = clamp(t.y, L.y0, L.y1); stage.classList.add('zoom'); settle(t); };
+$('zin').onclick = () => { nudge(0, 0, 1.25); say(); };
+$('zout').onclick = () => { nudge(0, 0, .8); say(); };
+stage.addEventListener('keydown', e => {
+  const n = e.shiftKey ? 40 : 10, m = { ArrowLeft: [-n, 0], ArrowRight: [n, 0], ArrowUp: [0, -n], ArrowDown: [0, n] }[e.key];
+  if (m){ e.preventDefault(); stage.classList.add('used'); nudge(m[0], m[1], 1); }
+  else if (e.key === '+' || e.key === '='){ e.preventDefault(); nudge(0, 0, 1.15); }
+  else if (e.key === '-' || e.key === '_'){ e.preventDefault(); nudge(0, 0, 1 / 1.15); }
+  else if (e.key === '0'){ e.preventDefault(); reset(); return; }
+  else return;
+  say();
+});
+let sayT = 0;
+function say(){ clearTimeout(sayT); sayT = setTimeout(() => { sr.textContent = 'Zoom ' + (st.s / MIN).toFixed(1) + ' times.'; }, 400); }
+function reset(){ settle(home()); sr.textContent = 'Crop reset to the centre of your face.'; }
+$('reset').onclick = reset;
+let saveT = 0; const lede = $('lede'), LEDE = lede.innerHTML;
+$('save').onclick = () => {
+  const b = $('save'); clearTimeout(saveT);
+  b.disabled = true; $('saveT').textContent = 'Saving';
+  saveT = setTimeout(() => {
+    $('pvNow').setAttribute('viewBox', document.querySelector('.pv').getAttribute('viewBox'));
+    b.classList.add('ok'); b.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span id="saveT">Saved</span>';
+    lede.textContent = 'Saved. Members see it on your next post.';
+    saveT = setTimeout(() => { b.classList.remove('ok'); b.innerHTML = '<span id="saveT">Save photo</span>'; b.disabled = false; lede.innerHTML = LEDE; }, 2600);
+  }, 650);
+};
+draw(); $('pvNow').setAttribute('viewBox', '120 160 360 360');
+})();
+</script>
+</body>
+</html>

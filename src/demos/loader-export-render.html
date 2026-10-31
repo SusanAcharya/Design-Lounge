@@ -1,0 +1,244 @@
+<!-- Design Lounge piece: loader-export-render · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Cutwater · Export</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@400;500;600;700&family=Encode+Sans:wdth,wght@75..125,400..800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ground:#e7eae3;--panel:#fafbf7;--ink:#141a17;--ink-2:#4b5650;--line:#d3d8cf;--edge:#7d8780;
+  --track:#dde1d8;--signal:#e2471b;--signal-ink:#b0330f;--ok:#17734f;--clipA:#c9d2c8;
+  --head:"Alexandria",system-ui,sans-serif;--num:"Encode Sans",system-ui,sans-serif;
+  --out:cubic-bezier(.16,1,.3,1);--ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.45 var(--head);color:var(--ink);background:var(--ground);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+button{font:inherit;color:inherit;cursor:pointer}
+.vh{position:absolute;left:0;bottom:0;width:300px;height:1px;margin:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+:focus-visible{outline:3px solid var(--signal-ink);outline-offset:2px}
+.app{display:grid;grid-template-columns:1fr 452px;grid-template-rows:52px 1fr;height:100%;min-height:640px}
+/* app bar */
+.bar{grid-column:1/-1;min-height:52px;display:flex;align-items:center;gap:20px;padding:0 20px;border-bottom:1px solid var(--line);background:var(--panel)}
+.mark{display:flex;align-items:center;gap:8px;font:700 15px var(--head);letter-spacing:-.01em}
+.mark svg{width:22px;height:22px}
+.crumb{color:var(--ink-2);font-size:13px}
+.crumb b{color:var(--ink);font-weight:500}
+.bar nav{margin-left:auto;display:flex;gap:18px;font-size:13px;color:var(--ink-2)}
+.bar nav span[aria-current]{color:var(--ink);font-weight:600}
+/* editor */
+.ed{display:flex;flex-direction:column;gap:16px;padding:20px;min-width:0}
+.mon{position:relative;flex:1;min-height:200px;border-radius:10px;overflow:hidden;background:#20302c}
+.scene{position:absolute;inset:0;opacity:0;transition:opacity 500ms var(--ease)}
+.scene.on{opacity:1}
+.scene svg{position:absolute;left:0;right:0;bottom:0;width:100%;height:46%}
+.s0{background:linear-gradient(#f2c6b2,#e9d9c9 48%,#9aa7a6 50%,#6f817f)}
+.s1{background:linear-gradient(#a8c4c6,#d7e2dc 46%,#4f6f72 48%,#2c4547)}
+.s2{background:radial-gradient(60% 70% at 70% 40%,#e9a46a,#8c4a26 60%,#3b2014)}
+.s3{background:linear-gradient(#d8b46a,#e7cf98 44%,#6c6a3c 47%,#3b3b22)}
+.tc{position:absolute;left:12px;bottom:12px;background:var(--ink);color:#f3f5ef;font:600 13px var(--num);font-variant-numeric:tabular-nums;padding:5px 9px;border-radius:6px;z-index:2}
+.tc span{color:#c8cfc8;font-weight:500;margin-left:8px}
+.tl{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 12px 12px;position:relative}
+.ruler{position:relative;height:22px;margin-left:64px;font:500 11px var(--num);color:var(--ink-2);font-variant-numeric:tabular-nums;border-bottom:1px solid var(--line)}
+.ruler span{position:absolute;top:2px;transform:translateX(-50%)}
+.ruler span:first-child{transform:none}
+.done-band{position:absolute;left:0;bottom:-2px;height:3px;width:calc(var(--p,0)*100%);background:var(--signal);border-radius:2px}
+.row{display:flex;align-items:center;height:36px;border-bottom:1px solid #e6e9e2}
+.row:last-child{border:0}
+.row>b{flex:none;width:64px;font:600 12px var(--num);color:var(--ink-2)}
+.lane{position:relative;flex:1;height:28px}
+.clip{position:absolute;top:0;bottom:0;border-radius:5px;overflow:hidden;border:1px solid rgba(20,26,23,.18)}
+.clip i{position:absolute;left:4px;top:4px;z-index:3;font:500 11px/1 var(--head);font-style:normal;background:var(--ink);color:#f3f5ef;padding:3px 5px;border-radius:3px;white-space:nowrap;max-width:calc(100% - 8px);overflow:hidden}
+.ttl{background:#ead9a6}
+.wave{background:#c8d8cf}.music{background:#d9d2c3}
+.wave svg,.music svg{position:absolute;inset:0;width:100%;height:100%}
+.veil{position:absolute;top:30px;bottom:12px;left:calc(76px + (100% - 88px)*var(--p,0));right:12px;background:repeating-linear-gradient(135deg,rgba(231,234,227,.78) 0 6px,rgba(231,234,227,.6) 6px 12px);z-index:2;pointer-events:none}
+.phead{position:absolute;top:8px;bottom:10px;left:calc(76px + (100% - 88px)*var(--p,0));width:2px;margin-left:-1px;background:var(--signal);z-index:4}
+.phead::before{content:"";position:absolute;top:0;left:-5px;border:6px solid transparent;border-top:8px solid var(--signal)}
+.pre .veil{left:76px}.pre .phead{opacity:0}
+/* export panel */
+.pan{background:var(--panel);border-left:1px solid var(--line);padding:24px 28px;display:flex;flex-direction:column;min-width:0}
+.pan h1{margin:0;font:600 20px/1.2 var(--head);letter-spacing:-.01em}
+.file{margin:14px 0 0;padding:12px 14px;border:1px solid var(--line);border-radius:8px}
+.file b{display:block;font:600 14px var(--head);overflow-wrap:anywhere}
+.file small{display:block;margin-top:2px;font:500 12.5px var(--num);font-stretch:92%;color:var(--ink-2)}
+.state{margin:28px 0 0;font:600 12px var(--head);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);display:flex;align-items:center;gap:8px}
+.state::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--signal)}
+.s-done .state::before{background:var(--ok)}
+.s-stop .state::before{background:var(--edge)}
+.big{display:flex;align-items:baseline;gap:4px;margin-top:6px;height:116px;font:700 112px/1 var(--num);font-stretch:78%;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.big small{font-size:44px;font-weight:600;letter-spacing:0}
+.big .prep{font:500 40px/116px var(--head);letter-spacing:-.02em;color:var(--ink)}
+.big [data-n]{transition:opacity 300ms var(--ease)}
+.pbar{position:relative;height:10px;margin-top:14px;border-radius:5px;background:var(--track);overflow:hidden;box-shadow:inset 0 0 0 1px #c3c9bf}
+.fill{position:absolute;top:0;bottom:0;left:calc(var(--a,0)*100%);width:calc((var(--b,0) - var(--a,0))*100%);background:var(--signal);border-radius:5px}
+.s-done .fill{background:var(--ok)}
+.s-stop .fill{background:var(--edge)}
+.meta{display:flex;justify-content:space-between;gap:12px;margin-top:10px;font:500 13.5px var(--num);font-variant-numeric:tabular-nums;color:var(--ink-2)}
+.meta b{color:var(--ink);font-weight:650}
+.step{margin:6px 0 0;font-size:13px;color:var(--ink-2);min-height:19px}
+.spec{margin:22px 0 0;font-size:13px}
+.spec div{display:flex;gap:12px;padding:8px 0;border-top:1px solid var(--line)}
+.spec dt{flex:none;width:84px;color:var(--ink-2)}
+.spec dd{margin:0;font-weight:500}
+.act{margin-top:auto;padding-top:20px;border-top:1px solid var(--line)}
+.act p{margin:0 0 12px;font-size:14px}
+.btns{display:flex;gap:10px;flex-wrap:wrap}
+.btn{min-height:42px;padding:0 18px;border-radius:8px;border:1.5px solid var(--edge);background:var(--panel);font-weight:600;font-size:14px;display:inline-flex;align-items:center;gap:8px;transition:background 140ms var(--ease),transform 120ms var(--ease)}
+.btn:hover{background:#eef1ea}
+.btn:active{transform:translateY(1px)}
+.btn.pri{background:var(--ink);border-color:var(--ink);color:#f3f5ef}
+.btn.pri:hover{background:#2a332e}
+.btn.dan{border-color:var(--signal-ink);color:var(--signal-ink)}
+.btn.dan:hover{background:#fbe9e2}
+.btn svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ask{animation:in 220ms var(--out)}
+@keyframes in{from{opacity:0;transform:translateY(6px)}}
+.where{margin:10px 0 0;font:500 12.5px var(--num);color:var(--ink-2)}
+.where[hidden]{display:block;visibility:hidden}
+.chk path{stroke-dasharray:30;animation:draw 420ms var(--out) both}
+@keyframes draw{from{stroke-dashoffset:30}}
+@media (max-width:900px){
+  .app{grid-template-columns:1fr;grid-template-rows:auto auto auto;height:auto}
+  .bar nav,.crumb{display:none}
+  .pan{order:-1;grid-row:2;border-left:0;border-bottom:1px solid var(--line);padding:20px 16px;min-height:520px}
+  .ed{grid-row:3;padding:16px}
+  .mon{flex:none;height:190px}
+  .clip i{display:none}
+  .big{font-size:92px;height:96px}.big .prep{line-height:96px;font-size:34px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="app pre" id="app">
+  <header class="bar">
+    <span class="mark"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 15c3-5 6-5 9 0s6 5 9 0" fill="none" stroke="#e2471b" stroke-width="2.4" stroke-linecap="round"/><path d="M3 9c3-5 6-5 9 0s6 5 9 0" fill="none" stroke="#141a17" stroke-width="2.4" stroke-linecap="round"/></svg>Cutwater</span>
+    <span class="crumb">Saltmarsh Radio / <b>Season 3 trailer</b></span>
+    <nav aria-label="Workspace"><span>Edit</span><span>Mix</span><span>Colour</span><span aria-current="page">Deliver</span></nav>
+  </header>
+
+  <section class="ed" aria-label="Timeline">
+    <div class="mon" aria-hidden="true">
+      <div class="scene s0 on"><svg viewBox="0 0 400 100" preserveAspectRatio="none"><path d="M0 40 Q60 30 120 44 T260 40 T400 46 V100 H0Z" fill="#4c5f5c"/><path d="M0 70 L8 30 L12 70 L20 22 L26 70 L40 36 L44 70 L330 70 L336 28 L342 70 L352 40 L358 70 L400 70 V100 H0Z" fill="#33433f"/></svg></div>
+      <div class="scene s1"><svg viewBox="0 0 400 100" preserveAspectRatio="none"><path d="M0 34 H230 V18 H246 V34 H400 V100 H0Z" fill="#203335"/><path d="M0 60 H400 V100 H0Z" fill="#162628"/></svg></div>
+      <div class="scene s2"><svg viewBox="0 0 400 100" preserveAspectRatio="none"><path d="M120 100 C120 40 150 20 180 20 S240 40 240 100Z" fill="#2a160e"/><circle cx="180" cy="6" r="22" fill="#2a160e"/></svg></div>
+      <div class="scene s3"><svg viewBox="0 0 400 100" preserveAspectRatio="none"><path d="M0 100 V60 L6 10 L10 60 L18 0 L22 60 L34 20 L38 60 L52 6 L56 60 L70 30 L74 60 L330 60 L338 8 L342 60 L356 24 L360 60 L372 2 L376 60 L392 30 L396 60 L400 60 V100Z" fill="#26261a"/></svg></div>
+      <span class="tc" id="tc">00:00:00:00<span id="tcName">Cold open, dawn</span></span>
+    </div>
+    <div class="tl" id="tl">
+      <div class="ruler"><span>00:00</span><span style="left:23.8%">01:00</span><span style="left:47.6%">02:00</span><span style="left:71.4%">03:00</span><span style="left:95.2%">04:00</span><i class="done-band"></i></div>
+      <div class="row"><b>V2</b><div class="lane"><span class="clip ttl" style="left:1.6%;width:6.4%"><i>Title</i></span><span class="clip ttl" style="left:91.3%;width:6.3%"><i>Card</i></span></div></div>
+      <div class="row"><b>V1</b><div class="lane">
+        <span class="clip s0" style="left:0;width:15.1%"><i>Cold open, dawn</i></span>
+        <span class="clip s1" style="left:15.1%;width:23%"><i>Harbour wall</i></span>
+        <span class="clip s2" style="left:38.1%;width:32.5%"><i>Interview, Wren Halloran</i></span>
+        <span class="clip s3" style="left:70.6%;width:29.4%"><i>Reed beds, dusk</i></span></div></div>
+      <div class="row"><b>A1</b><div class="lane"><span class="clip wave" style="left:4%;width:89.6%"><svg id="w1" viewBox="0 0 400 28" preserveAspectRatio="none"></svg><i>Dialogue</i></span></div></div>
+      <div class="row"><b>A2</b><div class="lane"><span class="clip music" style="left:0;width:100%"><svg id="w2" viewBox="0 0 400 28" preserveAspectRatio="none"></svg><i>Tidewater, score</i></span></div></div>
+      <div class="veil"></div><div class="phead"></div>
+    </div>
+  </section>
+
+  <aside class="pan" id="pan" aria-labelledby="h">
+    <h1 id="h">Export</h1>
+    <div class="file"><b>saltmarsh-s3-trailer.mp4</b><small>1920 × 1080 · H.264 · 30 fps · AAC 256k · 04:12</small></div>
+    <p class="state" id="state">Preparing</p>
+    <div class="big" id="big" aria-hidden="true"><span class="prep">Measuring length</span></div>
+    <div class="pbar" id="pb" role="progressbar" aria-labelledby="h" aria-valuemin="0" aria-valuemax="100" aria-valuetext="Preparing"><div class="fill" id="fill"></div></div>
+    <div class="meta"><span id="frames">Frame count pending</span><span id="eta">Estimating time left</span></div>
+    <p class="step" id="step">Reading 7 clips and 2 audio tracks</p>
+    <dl class="spec"><div><dt>Range</dt><dd>Whole timeline, 00:00 to 04:12</dd></div><div><dt>Video</dt><dd>H.264 High · 12 Mbps · Rec. 709</dd></div><div><dt>Loudness</dt><dd>−16 LUFS · true peak −1 dB</dd></div><div><dt>Save to</dt><dd>Movies / Cutwater Exports</dd></div></dl>
+    <div class="act" id="act"></div>
+    <p class="vh" aria-live="polite" id="live"></p>
+  </aside>
+</div>
+<script>
+(()=>{
+const $=id=>document.getElementById(id),app=$('app'),act=$('act'),fill=$('fill'),pb=$('pb'),big=$('big'),live=$('live');
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const TOTAL=7560,FPS=30,SCENES=[[0,.151,'Cold open, dawn'],[.151,.381,'Harbour wall'],[.381,.706,'Interview, Wren Halloran'],[.706,1,'Reed beds, dusk']];
+// seeded waveforms
+let seed=7;const rnd=()=>(seed=(seed*16807)%2147483647)/2147483647;
+[['w1',.9,'#3e6455'],['w2',.55,'#7a6a4c']].forEach(([id,amp,c])=>{let d='M0 14';for(let x=0;x<=400;x+=2){const h=(rnd()*.8+.2)*amp*12*(id==='w1'&&rnd()<.15?.25:1);d+=`M${x} ${14-h}V${14+h}`}$(id).innerHTML=`<path d="${d}" stroke="${c}" stroke-width="1.2"/>`});
+let st,t0,frames,rate,ema,shownEta,lastEta,a,b,hand,lastPct,said,raf,last,sceneI=-1;
+const fmtTC=f=>{const s=Math.floor(f/FPS);return [s/3600|0,(s/60|0)%60,s%60,Math.floor(f%FPS)].map(n=>String(n).padStart(2,'0')).join(':')};
+const nf=n=>n.toLocaleString('en-GB').replace(/,/g,' ');
+const ico={x:'<svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>',f:'<svg viewBox="0 0 24 24"><path d="M3 7h6l2 2h10v10H3z"/></svg>',r:'<svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 3-6.2M4 4v4h4"/></svg>'};
+function say(m){live.textContent='';setTimeout(()=>live.textContent=m,60)}
+function set(cls,label){app.className='app '+cls;$('state').textContent=label}
+function paint(){fill.style.setProperty('--a',a);fill.style.setProperty('--b',b)}
+function actions(kind){
+  if(kind==='run')act.innerHTML=`<div class="btns"><button class="btn" id="cancel">${ico.x}Cancel export</button></div>`;
+  if(kind==='ask')act.innerHTML=`<div class="ask" role="group" aria-labelledby="q"><p id="q"><b>Stop this export?</b> The partial file will be deleted.</p><div class="btns"><button class="btn pri" id="keep">Keep exporting</button><button class="btn dan" id="stop">Stop export</button></div></div>`;
+  if(kind==='done')act.innerHTML=`<div class="ask"><div class="btns"><button class="btn pri" id="show">${ico.f}Show file</button><button class="btn" id="again">${ico.r}Export again</button></div><p class="where" id="where" hidden>Movies / Cutwater Exports / saltmarsh-s3-trailer.mp4</p></div>`;
+  if(kind==='stop')act.innerHTML=`<div class="ask"><p>Nothing was saved. Your timeline is unchanged.</p><div class="btns"><button class="btn pri" id="again">${ico.r}Start export again</button></div></div>`;
+  const on=(id,f)=>{const el=$(id);if(el)el.onclick=f};
+  on('cancel',()=>{st.ask=true;actions('ask');$('keep').focus();say('Stop this export? The partial file will be deleted.')});
+  on('keep',()=>{st.ask=false;actions('run');$('cancel').focus();say('Still exporting.')});
+  on('stop',stop);on('again',start);
+  on('show',()=>{$('where').hidden=false;say('In Movies, Cutwater Exports.')});
+}
+act.addEventListener('keydown',e=>{if(e.key==='Escape'&&st&&st.ask)$('keep').click()});
+function scene(p){const i=SCENES.findIndex(s=>p<s[1]||s[1]===1);if(i!==sceneI){sceneI=i;document.querySelectorAll('.mon .scene').forEach((s,j)=>s.classList.toggle('on',j===i));$('tcName').textContent=SCENES[i][2]}}
+function start(){
+  cancelAnimationFrame(raf);st={phase:'prep',ask:false};t0=performance.now();last=t0;frames=0;rate=0;ema=0;shownEta=null;lastEta=0;a=0;b=0;lastPct=-1;said=0;sceneI=-1;scene(0);
+  set('pre','Preparing');big.innerHTML='<span class="prep">Measuring length</span>';
+  $('frames').textContent='Frame count pending';$('eta').textContent='Estimating time left';$('step').textContent='Reading 7 clips and 2 audio tracks';
+  pb.removeAttribute('aria-valuenow');pb.setAttribute('aria-valuetext','Preparing');app.style.setProperty('--p',0);
+  actions('run');say('Preparing export of saltmarsh-s3-trailer.mp4.');
+  if(RM){a=0;b=.28;paint()}
+  raf=requestAnimationFrame(tick);
+}
+function tick(now){
+  const dt=Math.min(.05,(now-last)/1000);last=now;const T=now-t0;
+  if(st.phase==='prep'){
+    if(T>700&&T<1400)$('step').textContent='Conforming audio to 48 kHz';
+    if(T>=1400)$('step').textContent='Counting frames';
+    if(!RM){const ph=(T%1500)/1500,e=1-Math.pow(1-ph,2);b=Math.min(1,e*1.32);a=Math.max(0,Math.min(1,e*1.32-.32));paint()}
+    if(T>2100){st.phase='run';st.th=now;hand=[a,b];set('','Rendering');
+      big.innerHTML='<span data-n id="pct" style="opacity:0">0</span><small>%</small>';requestAnimationFrame(()=>$('pct').style.opacity=1);
+      $('frames').innerHTML=`Frame <b id="fr">0</b> of ${nf(TOTAL)}`;
+      say(`Rendering ${nf(TOTAL)} frames.`)}
+  }else if(st.phase==='run'){
+    const p0=frames/TOTAL,slow=p0>.38&&p0<.52?.55:1;
+    rate=(560+((rnd()-.5)*180))*slow;frames=Math.min(TOTAL,frames+rate*dt);
+    ema=ema?ema+(rate-ema)*Math.min(1,dt/1.6):rate;
+    const p=frames/TOTAL,k=RM?1:Math.min(1,(now-st.th)/650),ek=1-Math.pow(1-k,3);
+    a=hand[0]*(1-ek);b=hand[1]+(p-hand[1])*ek;paint();
+    app.style.setProperty('--p',p);scene(p);
+    const pct=Math.floor(p*100);$('pct').textContent=pct;$('fr').textContent=nf(Math.floor(frames));
+    $('tc').firstChild.textContent=fmtTC(frames);
+    $('step').textContent=slow<1?`Encoding video · ${Math.round(ema)} fps · graded section`:`Encoding video · ${Math.round(ema)} fps`;
+    if(pct!==lastPct){lastPct=pct;pb.setAttribute('aria-valuenow',pct);pb.setAttribute('aria-valuetext',pct+' percent');}
+    if(now-st.th>1200&&now-lastEta>600){lastEta=now;
+      let s=(TOTAL-frames)/ema;s=s>20?Math.round(s/5)*5:Math.ceil(s);
+      if(shownEta==null||s<shownEta||s-shownEta>=4)shownEta=s;
+      $('eta').innerHTML=shownEta<=3?'<b>Almost done</b>':`About <b>${shownEta} s</b> left`}
+    const q=Math.floor(p*4);if(q>said&&q<4){said=q;if(!st.ask)say(`${q*25} percent. About ${shownEta||'a few'} seconds left.`)}
+    if(frames>=TOTAL)return done(now);
+  }
+  raf=requestAnimationFrame(tick);
+}
+function done(now){
+  st.phase='done';st.ask=false;a=0;b=1;paint();set('s-done','Exported');
+  const secs=Math.round((now-t0)/1000);
+  big.innerHTML='<svg class="chk" viewBox="0 0 24 24" width="84" height="84" aria-hidden="true" style="align-self:center"><path d="M4 12.5l5 5L20 6.5" fill="none" stroke="#17734f" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>48.6</span><small>MB</small>';
+  $('frames').innerHTML=`<b>${nf(TOTAL)}</b> frames`;$('eta').innerHTML=`Took <b>${secs} s</b>`;$('step').textContent='Checked: plays from start to end, audio in sync.';
+  pb.setAttribute('aria-valuenow',100);pb.setAttribute('aria-valuetext','Done');
+  const had=act.contains(document.activeElement);actions('done');if(had)$('show').focus();
+  say('Export finished. saltmarsh-s3-trailer.mp4, 48.6 megabytes.');
+}
+function stop(){
+  cancelAnimationFrame(raf);st.phase='stop';st.ask=false;const pct=Math.floor(frames/TOTAL*100);set('s-stop','Stopped');
+  big.innerHTML=`<span>${pct}</span><small>%</small>`;$('eta').textContent='Stopped by you';$('step').textContent='Partial file deleted.';
+  pb.setAttribute('aria-valuetext',`Stopped at ${pct} percent`);actions('stop');$('again').focus();say(`Export stopped at ${pct} percent. Nothing was saved.`);
+}
+start();
+})();
+</script>
+</body>
+</html>

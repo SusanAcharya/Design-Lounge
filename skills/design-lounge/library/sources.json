@@ -192,7 +192,8 @@
         "card-link-in-bio-bento",
         "email-newsletter-editorial",
         "email-product-launch",
-        "newsletter-mailbox-flag"
+        "newsletter-mailbox-flag",
+        "hover-link-peek"
       ]
     },
     {
@@ -224,7 +225,8 @@
         "phone-video-player",
         "testimonials-masonry-wall",
         "phone-photo-viewer",
-        "game-card-table"
+        "game-card-table",
+        "slider-clip-trim"
       ]
     },
     {
@@ -276,7 +278,8 @@
         "hero-bento-intro",
         "features-accordion-media-swap",
         "features-ai-chat-demo",
-        "dialog-wizard-steps"
+        "dialog-wizard-steps",
+        "drag-avatar-crop"
       ]
     },
     {
@@ -522,7 +525,8 @@
         "cartoon-sticker-landing",
         "hero-liquid-glass-layers",
         "game-gacha-pull-reveal",
-        "card-wrapped-story"
+        "card-wrapped-story",
+        "swipe-flashcard-review"
       ]
     },
     {
@@ -856,7 +860,9 @@
         "sidebar-chat-history",
         "onboarding-personality-quiz",
         "nav-lighthouse-spotlight-menu",
-        "drag-slingshot-launch"
+        "drag-slingshot-launch",
+        "swipe-tab-pager",
+        "loader-export-render"
       ]
     },
     {
@@ -903,7 +909,9 @@
         "game-fantasy-inventory",
         "game-scifi-loadout",
         "spatial-glass-windows",
-        "reaction-burst-picker"
+        "reaction-burst-picker",
+        "slider-range-histogram",
+        "loader-blur-up-gallery"
       ]
     }
   ]

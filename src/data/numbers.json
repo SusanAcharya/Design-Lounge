@@ -619,5 +619,13 @@
   "reaction-burst-picker": 618,
   "dynamic-island-activity": 619,
   "toggle-liquid-squish": 620,
-  "button-slide-to-confirm": 621
+  "button-slide-to-confirm": 621,
+  "slider-range-histogram": 622,
+  "slider-clip-trim": 623,
+  "swipe-tab-pager": 624,
+  "swipe-flashcard-review": 625,
+  "loader-export-render": 626,
+  "loader-blur-up-gallery": 627,
+  "drag-avatar-crop": 628,
+  "hover-link-peek": 629
 }

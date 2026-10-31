@@ -1,0 +1,260 @@
+<!-- Design Lounge piece: slider-clip-trim · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Offcut · Trim Moon jar, take 3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sen:wght@500;600;700;800&family=Readex+Pro:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#141412;--surface:#1d1d1a;--raise:#272723;--line:#34332e;--text:#eceae3;--text-2:#a8a59b;
+  --kiln:#ff8a4c;--kiln-ink:#2a1206;--shade:rgba(12,12,10,.74);--head:#f6f3ea;
+  --display:"Sen",system-ui,sans-serif;--sans:"Readex Pro",system-ui,sans-serif;
+  --ease:cubic-bezier(.2,.7,.2,1);--out:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:15px/1.45 var(--sans);color:var(--text);background:var(--bg);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+:focus-visible{outline:2.5px solid var(--head);outline-offset:3px;border-radius:6px}
+svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+.top{height:60px;display:flex;align-items:center;gap:14px;padding:0 28px;border-bottom:1px solid var(--line)}
+.back{width:40px;height:40px;border-radius:10px;display:grid;place-items:center;border:1.5px solid #6d6a62}
+.ttl b{display:block;font:700 16px/1.2 var(--display)}
+.ttl small{font-size:13px;color:var(--text-2)}
+.acts{margin-left:auto;display:flex;gap:10px}
+.btn{height:40px;padding:0 16px;border-radius:10px;font-weight:500;font-size:14px;border:1.5px solid #6d6a62}
+.btn.pri{background:var(--kiln);border-color:var(--kiln);color:var(--kiln-ink);font-weight:600}
+
+.stage{max-width:1180px;margin:0 auto;padding:22px 32px 24px}
+.mon{position:relative;width:min(100%,640px);aspect-ratio:16/9;margin:0 auto;border-radius:12px;overflow:hidden;background:#000}
+.mon svg{display:block;width:100%;height:100%}
+.tc{position:absolute;left:12px;bottom:12px;padding:4px 9px;border-radius:6px;background:#0d0d0c;font:600 13px var(--display);font-variant-numeric:tabular-nums;letter-spacing:.02em}
+.tag{position:absolute;right:12px;top:12px;padding:4px 9px;border-radius:6px;background:var(--kiln);color:var(--kiln-ink);font:600 12px var(--sans);opacity:0;transition:opacity 160ms var(--ease)}
+.tag.on{opacity:1}
+
+.bar{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:20px;margin:18px 0 6px}
+.pt{font-size:13px;color:var(--text-2)}
+.pt b{display:block;font:700 20px var(--display);color:var(--text);font-variant-numeric:tabular-nums}
+.pt.r{text-align:right}
+.mid{display:flex;align-items:center;gap:16px}
+.play{width:48px;height:48px;border-radius:50%;background:var(--head);color:var(--bg);display:grid;place-items:center;transition:transform 200ms var(--out)}
+.play:active{transform:scale(.92)}
+.play svg{width:22px;height:22px;fill:currentColor;stroke:none}
+.len{min-width:150px}
+.len b{display:block;font:800 40px/1 var(--display);letter-spacing:-.02em;font-variant-numeric:tabular-nums;transition:color 160ms var(--ease)}
+.len span{font-size:13px;color:var(--text-2);transition:color 160ms var(--ease)}
+.len.lim b,.len.lim span{color:var(--kiln)}
+
+.trim{position:relative;margin-top:26px;padding:0 20px;touch-action:none;user-select:none;-webkit-user-select:none}
+.lane{position:relative}
+.strip{position:relative;height:80px;border-radius:8px;overflow:hidden;display:flex;background:#000;cursor:pointer}
+.strip svg{flex:1;min-width:0;height:100%;display:block;border-right:1px solid #000}
+.shade{position:absolute;top:0;bottom:0;background:var(--shade);pointer-events:none}
+#sl{border-radius:8px 0 0 8px}#sr2{border-radius:0 8px 8px 0}
+.win{position:absolute;top:-3px;bottom:-3px;border-top:3px solid var(--kiln);border-bottom:3px solid var(--kiln);pointer-events:none}
+.hd{position:absolute;top:-3px;bottom:-3px;width:20px;background:var(--kiln);color:var(--kiln-ink);display:grid;place-items:center;cursor:ew-resize;touch-action:none;transition:transform 200ms var(--out)}
+.hd::after{content:"";position:absolute;inset:-6px -12px}
+.hd.in{border-radius:8px 0 0 8px;margin-left:-20px}
+.hd.out{border-radius:0 8px 8px 0}
+.hd i{width:4px;height:24px;border-left:1.5px solid currentColor;border-right:1.5px solid currentColor}
+.hd:hover{background:#ff9b63}
+.hd.on{transform:scaleY(1.06)}
+.hd:focus-visible{outline:2.5px solid var(--head);outline-offset:2px;border-radius:8px}
+.hd.on:focus-visible,.ph.on:focus-visible{outline-color:transparent}
+.lbl{position:absolute;bottom:calc(100% + 22px);transform:translateX(-50%);padding:3px 8px;border-radius:6px;background:var(--head);color:var(--bg);font:600 12px var(--display);font-variant-numeric:tabular-nums;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity 140ms var(--ease)}
+.lbl.on{opacity:1}
+.ph{position:absolute;top:-14px;bottom:-8px;width:2px;margin-left:-1px;background:var(--head);cursor:ew-resize;touch-action:none}
+.ph::before{content:"";position:absolute;left:-6px;top:0;width:14px;height:14px;border-radius:50%;background:var(--head);box-shadow:0 0 0 3px var(--bg)}
+.ph::after{content:"";position:absolute;inset:-4px -14px}
+.ph:focus-visible{outline:2.5px solid var(--kiln);outline-offset:4px;border-radius:2px}
+
+.ruler{position:relative;height:28px;margin:8px 20px 0}
+.ruler i{position:absolute;top:0;width:1px;height:6px;background:#5b5953}
+.ruler i.big{height:10px;background:#8a877e}
+.ruler span{position:absolute;top:12px;transform:translateX(-50%);font:500 12px var(--display);color:var(--text-2);font-variant-numeric:tabular-nums}
+.hint{margin:10px 0 0;text-align:center;font-size:13px;color:var(--text-2)}
+.hint kbd{font:600 12px var(--display);padding:1px 6px;border:1px solid #6d6a62;border-radius:4px;color:var(--text)}
+@media (max-width:700px){
+  .top{padding:0 16px}.ttl small,.btn.ghost{display:none}
+  .stage{padding:16px 16px 24px}
+  .bar{grid-template-columns:1fr 1fr;gap:12px 16px}.mid{grid-column:1/-1;order:-1;justify-content:center}
+  .len b{font-size:34px}.trim{padding:0 18px}.ruler{margin:8px 18px 0}.ruler span.odd{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header class="top">
+  <button class="back" type="button" aria-label="Back to Kilnroom posts"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+  <div class="ttl"><b>Moon jar, take 3</b><small>Studio cam B · 24.0s · 30 fps</small></div>
+  <div class="acts"><button class="btn ghost" type="button">Cancel</button><button class="btn pri" type="button" id="save">Save trim</button></div>
+</header>
+<main class="stage">
+  <div class="mon"><svg id="view" viewBox="0 0 160 90" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Preview frame"></svg>
+    <span class="tc" id="tc">0:07.9</span><span class="tag" id="tag">Looping</span></div>
+  <div class="bar">
+    <p class="pt">In<b id="vin">0:04.2</b></p>
+    <div class="mid">
+      <button class="play" id="play" type="button" aria-pressed="false" aria-label="Preview loop"><svg viewBox="0 0 24 24" aria-hidden="true" id="pi"><path d="M8 5.5v13l11-6.5z"/></svg></button>
+      <p class="len" id="len"><b id="vlen">11.6s</b><span id="vnote">Selected of 24.0s</span></p>
+    </div>
+    <p class="pt r">Out<b id="vout">0:15.8</b></p>
+  </div>
+  <div class="trim" id="trim"><div class="lane">
+    <div class="strip" id="strip" aria-hidden="true"></div>
+    <span class="shade" id="sl"></span><span class="shade" id="sr2"></span>
+    <span class="win" id="win"></span>
+    <span class="hd in" id="hin" role="slider" tabindex="0" aria-label="Trim start" aria-describedby="how"><i></i></span>
+    <span class="hd out" id="hout" role="slider" tabindex="0" aria-label="Trim end" aria-describedby="how"><i></i></span>
+    <span class="ph" id="ph" role="slider" tabindex="0" aria-label="Playhead" aria-describedby="how"></span>
+    <span class="lbl" id="lin" aria-hidden="true"></span><span class="lbl" id="lout" aria-hidden="true"></span></div>
+  </div>
+  <div class="ruler" id="ruler" aria-hidden="true"></div>
+  <p class="hint" id="how">Drag the orange handles to trim, at least 1.0s. Arrows nudge 0.1s, <kbd>Shift</kbd> 1s, <kbd>Space</kbd> plays the loop.</p>
+</main>
+<p class="vh" aria-live="polite" id="sr"></p>
+<script>
+(() => {
+const $ = id => document.getElementById(id);
+const DUR = 24, MINL = 1, reduce = matchMedia('(prefers-reduced-motion: reduce)');
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const r1 = v => Math.round(v * 10) / 10;
+const tf = t => Math.floor(t / 60) + ':' + (t % 60).toFixed(1).padStart(4, '0');
+// one drawing for every frame: a jar rising on a wheel
+function scene(t){
+  const u = t / DUR, e = 1 - Math.pow(1 - u, 2), H = 10 + 46 * e, W = 13 + 15 * Math.sin(Math.min(1, u * 1.3) * 1.57), N = 15 - 7 * e, cx = 80, by = 70, a = t * 12.6;
+  let marks = '';
+  for (let k = 0; k < 6; k++){ const ang = a + k * 1.047, s = Math.sin(ang); if (s > 0) marks += `<circle cx="${(cx + 40 * Math.cos(ang)).toFixed(1)}" cy="${(by + 3 + 7 * s).toFixed(1)}" r="1.2" fill="#a28a74"/>`; }
+  const sh = (cx + 4 * Math.sin(a)).toFixed(1);
+  return `<defs><linearGradient id="w" x1="0" x2="1"><stop offset="0" stop-color="#2b2420"/><stop offset=".55" stop-color="#4a3c33"/><stop offset="1" stop-color="#2b2420"/></linearGradient>
+<linearGradient id="c" x1="0" x2="1"><stop offset="0" stop-color="#7d5640"/><stop offset=".4" stop-color="#c49473"/><stop offset=".6" stop-color="#b68565"/><stop offset="1" stop-color="#6a4836"/></linearGradient></defs>
+<rect width="160" height="90" fill="url(#w)"/><rect x="104" y="8" width="34" height="40" rx="2" fill="#5e4c3f"/><path d="M121 8v40M104 28h34" stroke="#2b2420" stroke-width="1.5"/>
+<rect y="76" width="160" height="14" fill="#1e1916"/><ellipse cx="${cx}" cy="${by + 6}" rx="48" ry="11" fill="#2e2622"/>
+<ellipse cx="${cx}" cy="${by + 3}" rx="42" ry="9" fill="#6e5b4c"/>${marks}
+<path d="M${cx - 16} ${by} C${cx - W - 6} ${by - H * .25} ${cx - W - 4} ${by - H * .75} ${cx - N} ${by - H} L${cx + N} ${by - H} C${cx + W + 4} ${by - H * .75} ${cx + W + 6} ${by - H * .25} ${cx + 16} ${by}Z" fill="url(#c)"/>
+<ellipse cx="${cx}" cy="${by - H}" rx="${N}" ry="2" fill="#5a3d2e"/><path d="M${sh} ${by - H + 4} q2 ${H * .4} 0 ${H * .8}" stroke="#e3bd9c" stroke-width="1" fill="none" opacity=".55"/>`;
+}
+const strip = $('strip'), trim = $('trim'), view = $('view');
+for (let i = 0; i < 14; i++) strip.insertAdjacentHTML('beforeend', `<svg viewBox="0 0 160 90" preserveAspectRatio="xMidYMid slice">${scene((i + .5) * DUR / 14).replace(/id="(w|c)"/g, 'id="$1' + i + '"').replace(/url\(#(w|c)\)/g, 'url(#$1' + i + ')')}</svg>`);
+const ruler = $('ruler');
+for (let s = 0; s <= DUR; s++) ruler.insertAdjacentHTML('beforeend', `<i class="${s % 4 ? '' : 'big'}" style="left:${s / DUR * 100}%"></i>` + (s % 4 ? '' : `<span class="${s % 8 ? 'odd' : ''}" style="left:${s / DUR * 100}%">${tf(s).slice(0, -2)}</span>`));
+let v = { in: 4.2, out: 15.8, ph: 7.9 }, off = { in: 0, out: 0 }, scrub = null, playing = false;
+const H = { in: $('hin'), out: $('hout'), ph: $('ph') }, L = { in: $('lin'), out: $('lout') };
+const pos = (t, o = 0) => `calc(${t / DUR * 100}% + ${o.toFixed(1)}px)`;
+function draw(){
+  const xi = pos(v.in, off.in), xo = pos(v.out, off.out);
+  H.in.style.left = xi; H.out.style.left = xo; H.ph.style.left = pos(v.ph);
+  L.in.style.left = `calc(${xi} - 10px)`; L.out.style.left = `calc(${xo} + 10px)`;
+  $('sl').style.cssText = `left:0;width:${xi}`; $('sr2').style.cssText = `right:0;left:${xo}`;
+  $('win').style.cssText = `left:${xi};right:calc(${(1 - v.out / DUR) * 100}% - ${off.out.toFixed(1)}px)`;
+  const show = scrub ? v[scrub] : v.ph;
+  view.innerHTML = scene(show); $('tc').textContent = tf(show);
+}
+function meta(){
+  const len = r1(v.out - v.in);
+  $('vin').textContent = tf(v.in); $('vout').textContent = tf(v.out); $('vlen').textContent = len.toFixed(1) + 's';
+  H.in.setAttribute('aria-valuemin', 0); H.in.setAttribute('aria-valuemax', r1(v.out - MINL)); H.in.setAttribute('aria-valuenow', v.in);
+  H.out.setAttribute('aria-valuemin', r1(v.in + MINL)); H.out.setAttribute('aria-valuemax', DUR); H.out.setAttribute('aria-valuenow', v.out);
+  H.ph.setAttribute('aria-valuemin', v.in); H.ph.setAttribute('aria-valuemax', v.out); H.ph.setAttribute('aria-valuenow', r1(v.ph));
+  H.in.setAttribute('aria-valuetext', 'Starts at ' + v.in.toFixed(1) + ' seconds, clip ' + len.toFixed(1) + ' seconds');
+  H.out.setAttribute('aria-valuetext', 'Ends at ' + v.out.toFixed(1) + ' seconds, clip ' + len.toFixed(1) + ' seconds');
+  H.ph.setAttribute('aria-valuetext', r1(v.ph).toFixed(1) + ' seconds');
+  L.in.textContent = tf(v.in); L.out.textContent = tf(v.out);
+}
+let limT = 0;
+function limit(on){
+  $('len').classList.toggle('lim', on); $('vnote').textContent = on ? 'Shortest a clip can be' : 'Selected of 24.0s';
+  if (on){ clearTimeout(limT); limT = setTimeout(() => limit(false), 900); }
+}
+let srT = 0; const say = m => { clearTimeout(srT); srT = setTimeout(() => $('sr').textContent = m, 350); };
+const lenMsg = () => 'Clip ' + (v.out - v.in).toFixed(1) + ' seconds, from ' + v.in.toFixed(1) + ' to ' + v.out.toFixed(1);
+// returns over-limit pixels so the handle can rubber-band past its stop
+function setEdge(k, t, px){
+  const lo = k === 'in' ? 0 : v.in + MINL, hi = k === 'in' ? v.out - MINL : DUR, c = r1(clamp(t, lo, hi));
+  v[k] = c; v.ph = clamp(v.ph, v.in, v.out);
+  const over = (t - c) * px;
+  if (Math.abs(over) > 1 && ((k === 'in' && t > hi) || (k === 'out' && t < lo))) limit(true);
+  return over;
+}
+const rb = o => 12 * Math.tanh(o / 48);
+let rafS = 0;
+function settle(k){
+  cancelAnimationFrame(rafS);
+  if (reduce.matches){ off[k] = 0; draw(); return; }
+  let vel = 0, last = performance.now();
+  const tick = now => {
+    const dt = Math.min(.032, (now - last) / 1000) / 4; last = now;
+    for (let j = 0; j < 4; j++){ vel += (-520 * off[k] - 18 * vel) * dt; off[k] += vel * dt; }
+    if (Math.abs(off[k]) < .2 && Math.abs(vel) < 3){ off[k] = 0; draw(); return; }
+    draw(); rafS = requestAnimationFrame(tick);
+  };
+  rafS = requestAnimationFrame(tick);
+}
+// pointer
+let drag = null, grab = 0;
+const tAt = x => { const r = strip.getBoundingClientRect(); return { t: (x - r.left) / r.width * DUR, px: r.width / DUR }; };
+trim.addEventListener('pointerdown', e => {
+  if (e.button) return;
+  const k = e.target === H.in ? 'in' : e.target === H.out ? 'out' : 'ph';
+  drag = k; trim.setPointerCapture(e.pointerId); cancelAnimationFrame(rafS);
+  const { t } = tAt(e.clientX); H[k].classList.add('on');
+  if (k !== 'ph'){ scrub = k; grab = t - v[k]; L[k].classList.add('on'); }
+  else { grab = 0; v.ph = clamp(t, v.in, v.out); }
+  H[k].focus({ preventScroll: true }); e.preventDefault(); meta(); draw();
+});
+trim.addEventListener('pointermove', e => {
+  if (!drag || !trim.hasPointerCapture(e.pointerId)) return;
+  const { px } = tAt(e.clientX), t = tAt(e.clientX).t - grab;
+  if (drag === 'ph') v.ph = clamp(t, v.in, v.out);
+  else off[drag] = rb(setEdge(drag, t, px));
+  meta(); draw();
+});
+const up = () => {
+  if (!drag) return;
+  const k = drag; drag = null; H[k].classList.remove('on');
+  if (k !== 'ph'){ H[k].classList.remove('on'); L[k].classList.remove('on'); scrub = null; settle(k); say(lenMsg()); }
+  draw();
+};
+trim.addEventListener('pointerup', up); trim.addEventListener('pointercancel', up);
+// keyboard
+['in', 'out', 'ph'].forEach(k => H[k].addEventListener('keydown', e => {
+  const st = e.shiftKey ? 1 : .1, d = { ArrowRight: st, ArrowUp: st, ArrowLeft: -st, ArrowDown: -st, PageUp: 1, PageDown: -1 }[e.key];
+  let t;
+  if (d !== undefined) t = v[k] + d;
+  else if (e.key === 'Home') t = k === 'out' ? v.in + MINL : k === 'in' ? 0 : v.in;
+  else if (e.key === 'End') t = k === 'in' ? v.out - MINL : k === 'out' ? DUR : v.out;
+  else return;
+  e.preventDefault();
+  if (k === 'ph'){ v.ph = r1(clamp(t, v.in, v.out)); meta(); draw(); return; }
+  const over = setEdge(k, r1(t), 1);
+  if (Math.abs(over) > .001 && !reduce.matches) H[k].animate([{ transform: 'translateX(0)' }, { transform: `translateX(${over > 0 ? 5 : -5}px)` }, { transform: 'translateX(0)' }], { duration: 260, easing: 'cubic-bezier(.16,1,.3,1)' });
+  scrub = k; meta(); draw(); scrub = null; say(lenMsg());
+}));
+['in', 'out'].forEach(k => { H[k].addEventListener('focus', () => { if (H[k].matches(':focus-visible')) L[k].classList.add('on'); }); H[k].addEventListener('blur', () => L[k].classList.remove('on')); });
+// loop preview
+let rafP = 0, lastP = 0;
+function loop(now){
+  const dt = Math.min(.05, (now - lastP) / 1000); lastP = now;
+  v.ph += dt; if (v.ph >= v.out) v.ph = v.in + (v.ph - v.out);
+  if (!drag) { meta(); draw(); }
+  rafP = requestAnimationFrame(loop);
+}
+function setPlay(p){
+  playing = p; $('play').setAttribute('aria-pressed', p); $('play').setAttribute('aria-label', p ? 'Pause loop' : 'Preview loop');
+  $('pi').innerHTML = p ? '<path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/>' : '<path d="M8 5.5v13l11-6.5z"/>';
+  $('tag').classList.toggle('on', p); cancelAnimationFrame(rafP);
+  if (p){ if (v.ph >= v.out - .05) v.ph = v.in; lastP = performance.now(); rafP = requestAnimationFrame(loop); }
+}
+$('play').onclick = () => setPlay(!playing);
+document.addEventListener('keydown', e => { if (e.key === ' ' && !/BUTTON|INPUT/.test(e.target.tagName)){ e.preventDefault(); setPlay(!playing); } });
+$('save').onclick = () => { $('sr').textContent = 'Trim saved. ' + lenMsg() + '.'; };
+meta(); draw();
+})();
+</script>
+</body>
+</html>

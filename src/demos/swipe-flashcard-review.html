@@ -1,0 +1,287 @@
+<!-- Design Lounge piece: swipe-flashcard-review · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tidewords · At the market review</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@400;500;600;700&family=Ysabeau+Office:ital,wght@0,500;0,700;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#1b1e19;--bg-2:#262b23;--on:#efe9dc;--on-2:#b4b6a6;--rim:#8d907f;
+  --paper:#f6f0e3;--paper-2:#efe7d5;--ink:#22251f;--ink-2:#5b5d53;--rule:#ddd3bd;
+  --ok:#2e6b3c;--ok-soft:#a8d5a6;--no:#a8431f;--no-soft:#f3ae8c;
+  --word:"Ysabeau Office",Georgia,serif;--ui:"Spline Sans",system-ui,sans-serif;
+  --out:cubic-bezier(.16,1,.3,1);--ease:cubic-bezier(.2,.7,.2,1);--flip:cubic-bezier(.34,1.3,.5,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:radial-gradient(120% 70% at 50% 46%,var(--bg-2),var(--bg) 70%);color:var(--on);font:15px/1.4 var(--ui);-webkit-font-smoothing:antialiased;overflow:hidden}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+button:disabled{cursor:default;opacity:.45}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+:focus-visible{outline:3px solid var(--on);outline-offset:3px}
+svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+.app{height:100%;max-width:440px;margin:0 auto;padding:58px 20px 34px;display:flex;flex-direction:column}
+.bar{display:flex;align-items:center;gap:12px}
+.ib{flex:none;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;border:1.5px solid var(--rim)}
+.bar div{flex:1;text-align:center;min-width:0}
+.bar b{display:block;font:600 15px/1.2 var(--ui)}
+.bar small{display:block;font-size:13px;color:var(--on-2)}
+.prog{margin:16px 0 0;height:4px;border-radius:2px;background:#3a3f35;overflow:hidden}
+.prog i{display:block;height:100%;width:calc(var(--p)*100%);background:var(--on);border-radius:2px;transition:width 360ms var(--out)}
+
+.piles{display:flex;justify-content:space-between;margin-top:16px}
+.pile{display:flex;align-items:center;gap:10px;font:500 13px/1.1 var(--ui);color:var(--on-2)}
+.pile:last-child{flex-direction:row-reverse;text-align:right}
+.pile b{display:block;font:700 22px/1 var(--ui);color:var(--on);font-variant-numeric:tabular-nums}
+.chip{width:20px;height:26px;border-radius:5px;position:relative}
+.chip::before{content:"";position:absolute;inset:0;border-radius:5px;background:inherit;transform:translate(3px,-3px);opacity:.55}
+.no-pile .chip{background:var(--no-soft)}.ok-pile .chip{background:var(--ok-soft)}
+.bump{animation:bump 420ms var(--out)}
+@keyframes bump{30%{transform:scale(1.25)}}
+
+/* stack */
+.stage{flex:1;min-height:0;display:grid;place-items:center;padding:14px 0 6px}
+.stack{position:relative;width:100%;max-width:340px;height:min(440px,100%)}
+.card{position:absolute;inset:0 0 28px;perspective:1400px;touch-action:none;user-select:none;-webkit-user-select:none;transform-origin:50% 100%;border-radius:24px}
+.card.settle{transition:transform 340ms var(--out)}
+.card.gone{visibility:hidden}
+.card:focus-visible{outline-offset:5px}
+.inner{position:absolute;inset:0;transform-style:preserve-3d;transition:transform 560ms var(--flip);border-radius:24px}
+.flipped .inner{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:24px;background:var(--paper);color:var(--ink);padding:24px 24px 22px;display:flex;flex-direction:column;
+  box-shadow:0 1px 0 #fff inset,0 18px 40px rgba(0,0,0,.35)}
+.back{transform:rotateY(180deg);background:var(--paper-2);visibility:hidden;transition:visibility 0s 140ms}
+.flipped .back{visibility:visible}
+.flipped .front{visibility:hidden;transition:visibility 0s 140ms}
+.lang{display:flex;justify-content:space-between;gap:12px;font:600 12px/1 var(--ui);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2)}
+.lang em{font-style:normal;letter-spacing:.02em;text-transform:none;font-weight:500}
+.word{margin:auto 0 0;font:700 58px/1 var(--word);letter-spacing:-.01em}
+.word i{display:block;margin-bottom:6px;font:italic 400 24px/1 var(--word);color:var(--ink-2)}
+.say{margin:12px 0 auto;font-size:15px;color:var(--ink-2)}
+.say b{font-weight:600;color:var(--ink);letter-spacing:.04em}
+.tap{display:flex;align-items:center;gap:8px;padding-top:14px;border-top:1px solid var(--rule);font-size:13px;color:var(--ink-2)}
+.tap svg{width:18px;height:18px}
+.mean{margin:auto 0 0;font:700 40px/1.05 var(--word)}
+.ex{margin:22px 0 0;font:italic 500 22px/1.25 var(--word)}
+.tr{margin:6px 0 auto;font-size:15px;color:var(--ink-2)}
+/* under-cards: paper only until they rise */
+.card:not(.top) .face>*{visibility:hidden}
+.card.rise .face>*{visibility:visible}
+.card::after{content:"";position:absolute;inset:0;border-radius:24px;background:#10120e;opacity:var(--shade,0);pointer-events:none}
+.tint{position:absolute;inset:0;border-radius:24px;pointer-events:none;opacity:calc(var(--q,0)*.26);background:var(--tc,transparent)}
+.card.go-ok .tint{--tc:#3f9a55}.card.go-no .tint{--tc:#d4562a}
+.stamp{position:absolute;top:30px;padding:6px 12px 5px;border:3px solid;border-radius:10px;font:700 24px/1 var(--ui);letter-spacing:.06em;text-transform:uppercase;background:var(--paper);pointer-events:none;visibility:hidden}
+.stamp.ok{left:22px;color:var(--ok);transform:rotate(-12deg) scale(calc(.55 + .45*var(--q,0)));opacity:var(--q,0)}
+.stamp.no{right:22px;color:var(--no);transform:rotate(12deg) scale(calc(.55 + .45*var(--q,0)));opacity:var(--q,0)}
+.card.go-ok .stamp.ok,.card.go-no .stamp.no{visibility:visible}
+
+.done{position:absolute;inset:0 0 28px;border-radius:24px;border:1.5px dashed var(--rim);display:flex;flex-direction:column;justify-content:center;padding:28px;text-align:center;visibility:hidden;opacity:0;transition:opacity 300ms var(--ease)}
+.done.on{visibility:visible;opacity:1}
+.done h2{margin:0;font:700 40px/1.05 var(--word)}
+.done p{margin:10px 0 0;color:var(--on-2)}
+.done button{margin:22px auto 0;height:48px;padding:0 22px;border-radius:24px;background:var(--on);color:var(--bg);font-weight:600}
+
+.hint{margin:0;text-align:center;font-size:13px;color:var(--on-2)}
+.ctl{display:grid;grid-template-columns:1fr 64px 1fr;gap:12px;margin-top:14px}
+.ctl button{height:60px;border-radius:30px;display:flex;align-items:center;justify-content:center;gap:8px;font:600 16px/1 var(--ui);transition:transform 160ms var(--out),background 160ms var(--ease)}
+.ctl button:active:not(:disabled){transform:scale(.94)}
+.again{background:var(--no-soft);color:#3b1508}
+.got{background:var(--ok-soft);color:#10301a}
+.flipb{border:1.5px solid var(--rim)!important;color:var(--on)}
+@media (hover:hover){.again:hover:not(:disabled){background:#f6bfa3}.got:hover:not(:disabled){background:#b9dfb6}.flipb:hover{background:#2f342b}}
+@media (prefers-reduced-motion:reduce){.inner,.card.settle,.prog i,.ctl button{transition:none}.bump{animation:none}}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="bar">
+    <button class="ib" type="button" aria-label="End review"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    <div><b>At the market</b><small id="where">Portuguese · card 4 of 12</small></div>
+    <button class="ib" type="button" id="undo" aria-label="Undo last card" aria-keyshortcuts="Z"><svg viewBox="0 0 24 24"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg></button>
+  </div>
+  <div class="prog" role="progressbar" aria-label="Session progress" aria-valuemin="0" aria-valuemax="12" id="prog"><i></i></div>
+  <div class="piles">
+    <p class="pile no-pile" style="margin:0"><span class="chip"></span><span><b id="nNo">1</b>Again</span></p>
+    <p class="pile ok-pile" style="margin:0"><span class="chip"></span><span><b id="nOk">2</b>Got it</span></p>
+  </div>
+  <div class="stage"><div class="stack" id="stack">
+    <div class="done" id="done"><h2>Set 3 done</h2><p id="sum"></p><button type="button" id="redo">Review the again pile</button></div>
+  </div></div>
+  <p class="hint" id="hint">Tap to flip. Swipe right if you knew it, left to see it again.</p>
+  <div class="ctl">
+    <button class="again" type="button" id="bNo" aria-keyshortcuts="ArrowLeft"><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg>Again</button>
+    <button class="flipb" type="button" id="bFlip" aria-label="Flip card" aria-keyshortcuts="Space"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 13.7-5.6L20 9"/><path d="M20 4v5h-5"/><path d="M20 12a8 8 0 0 1-13.7 5.6L4 15"/><path d="M4 20v-5h5"/></svg></button>
+    <button class="got" type="button" id="bOk" aria-keyshortcuts="ArrowRight">Got it<svg viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg></button>
+  </div>
+</div>
+<p class="vh" aria-live="polite" id="sr"></p>
+<script>
+(() => {
+const $ = id => document.getElementById(id);
+const C = [
+  ['o', 'mercado', 'mer-KAH-doo', 'market hall', 'O mercado abre às sete.', 'The market hall opens at seven.'],
+  ['', 'barato', 'buh-RAH-too', 'cheap', 'Este queijo é barato.', 'This cheese is cheap.'],
+  ['o', 'pão', 'POWNG', 'bread', 'Dois pães, por favor.', 'Two loaves, please.'],
+  ['a', 'feira', 'FAY-ruh', 'street market', 'Vamos à feira no sábado.', 'We are going to the market on Saturday.'],
+  ['o', 'pêssego', 'PEH-suh-goo', 'peach', 'Os pêssegos estão maduros.', 'The peaches are ripe.'],
+  ['a', 'balança', 'buh-LAHN-suh', 'scales', 'Põe as maçãs na balança.', 'Put the apples on the scales.'],
+  ['o', 'troco', 'TROH-koo', 'change (money)', 'Fique com o troco.', 'Keep the change.'],
+  ['', 'pesar', 'puh-ZAR', 'to weigh', 'Pode pesar meio quilo?', 'Can you weigh half a kilo?'],
+  ['a', 'abóbora', 'uh-BAW-boo-ruh', 'pumpkin', 'A sopa de abóbora está pronta.', 'The pumpkin soup is ready.'],
+  ['', 'fresco', 'FRESH-koo', 'fresh', 'O peixe é fresco de hoje.', 'The fish is fresh today.'],
+  ['o', 'saco', 'SAH-koo', 'bag', 'Não preciso de saco.', "I don't need a bag."],
+  ['a', 'banca', 'BAHN-kuh', 'stall', 'A banca da Rosa fica ao fundo.', "Rosa's stall is at the back."]];
+const pos = i => C[i][0] === 'a' ? 'noun, feminine' : C[i][0] === 'o' ? 'noun, masculine' : i === 7 ? 'verb' : 'adjective';
+const seen = ['Seen 3 times', 'Missed last time', 'New this week', 'Seen twice'];
+const FLIP = '<svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 13.7-5.6L20 9"/><path d="M20 4v5h-5"/></svg>';
+const stack = $('stack'), sr = $('sr'), reduce = matchMedia('(prefers-reduced-motion: reduce)');
+const els = C.map(([art, w, say, mean, ex, tr], i) => {
+  const d = document.createElement('div'); d.className = 'card'; d.dataset.i = i;
+  d.innerHTML = `<div class="inner"><div class="face front"><span class="lang">Portuguese<em>${pos(i)}</em></span><p class="word">${art ? `<i>${art}</i>` : ''}${w}</p>
+    <p class="say">say it <b>${say}</b></p><span class="tap">${FLIP}Tap or press Space to see the meaning</span></div>
+    <div class="face back"><span class="lang">English<em>${seen[i % 4]}</em></span><p class="mean">${mean}</p><p class="ex" lang="pt">${ex}</p><p class="tr">${tr}</p>
+    <span class="tap">Swipe right if you knew it</span></div></div><span class="tint"></span><b class="stamp ok" aria-hidden="true">Got it</b><b class="stamp no" aria-hidden="true">Again</b>`;
+  stack.appendChild(d); return d;
+});
+// three already reviewed so the piles have something in them
+let queue = [3, 4, 5, 6, 7, 8, 9, 10, 11], ok = [0, 1], no = [2], hist = [[0, 1], [1, 1], [2, -1]];
+let x = 0, y = 0, rs = 1, raf = 0, busy = false, tot = C.length;
+const name = i => (C[i][0] ? C[i][0] + ' ' : '') + C[i][1];
+const slot = s => `translateY(${(14 * s).toFixed(2)}px) scale(${(1 - .06 * s).toFixed(4)})`;
+function layout(settle){
+  els.forEach((c, i) => {
+    const s = queue.indexOf(i);
+    c.classList.toggle('settle', !!settle);
+    if (s < 0){ c.classList.add('gone'); c.tabIndex = -1; return; }
+    c.classList.remove('gone', 'rise'); c.classList.toggle('top', s === 0);
+    c.style.zIndex = 20 - s; c.style.visibility = s > 2 ? 'hidden' : '';
+    if (s){ c.style.transform = slot(Math.min(s, 2)); c.style.setProperty('--shade', (.12 * s).toFixed(2)); c.classList.remove('flipped'); }
+    c.tabIndex = s === 0 ? 0 : -1;
+    c.setAttribute('role', s === 0 ? 'button' : 'presentation');
+    if (s === 0){ c.setAttribute('aria-label', `${name(i)}. Space flips, arrows grade.`); c.setAttribute('aria-describedby', 'hint'); c.style.setProperty('--shade', 0); }
+  });
+  const done = tot - queue.length, empty = !queue.length;
+  $('prog').firstChild.style.setProperty('--p', done / tot); $('prog').setAttribute('aria-valuenow', done); $('prog').setAttribute('aria-valuemax', tot);
+  $('nOk').textContent = ok.length; $('nNo').textContent = no.length;
+  $('where').textContent = empty ? 'Portuguese · set 3 finished' : `Portuguese · card ${done + 1} of ${tot}`;
+  ['bNo', 'bOk', 'bFlip'].forEach(b => $(b).disabled = empty); $('undo').disabled = !hist.length;
+  $('done').classList.toggle('on', empty);
+  if (empty){ $('sum').textContent = `${ok.length} got it · ${no.length} to see again. Again cards come back in 10 minutes, mixed into set 4.`;
+    $('redo').textContent = no.length ? `Review the ${no.length} again` : 'Start set 3 over'; }
+}
+function paint(){
+  const c = els[queue[0]]; if (!c) return;
+  const q = Math.min(1, Math.abs(x) / 110);
+  c.style.transform = `translate(${x.toFixed(1)}px,${y.toFixed(1)}px) rotate(${(x * .06 * rs).toFixed(2)}deg)`;
+  c.style.setProperty('--q', q.toFixed(3));
+  c.classList.toggle('go-ok', x > 2); c.classList.toggle('go-no', x < -2);
+  [1, 2].forEach(s => { const n = els[queue[s]]; if (!n) return;
+    n.style.transform = slot(s - q); n.style.setProperty('--shade', (.12 * (s - q)).toFixed(3));
+    if (s === 1) n.classList.toggle('rise', q > .02); });
+}
+function spring(tx, ty, vx, vy, done){
+  cancelAnimationFrame(raf);
+  if (reduce.matches){ x = tx; y = ty; paint(); done && done(); return; }
+  let last = performance.now();
+  const tick = now => {
+    const dt = Math.min(.032, (now - last) / 1000) / 4; last = now;
+    for (let k = 0; k < 4; k++){ vx += (260 * (tx - x) - 23 * vx) * dt; vy += (260 * (ty - y) - 23 * vy) * dt; x += vx * dt; y += vy * dt; }
+    paint();
+    if (Math.hypot(tx - x, ty - y) < .4 && Math.hypot(vx, vy) < 8){ x = tx; y = ty; paint(); done && done(); return; }
+    raf = requestAnimationFrame(tick);
+  };
+  raf = requestAnimationFrame(tick);
+}
+function bump(id){ const b = $(id).parentNode.parentNode.querySelector('.chip'); b.classList.remove('bump'); void b.offsetWidth; b.classList.add('bump'); }
+function fling(dir, vx, vy){
+  if (busy || !queue.length) return;
+  busy = true; cancelAnimationFrame(raf);
+  const i = queue[0], c = els[i], had = document.activeElement === c || queue.length === 1 && document.activeElement.closest('.ctl');
+  const sp = Math.max(Math.abs(vx), 1500) * dir, end = innerWidth / 2 + 420;
+  const finish = () => {
+    queue.shift(); (dir > 0 ? ok : no).push(i); hist.push([i, dir]);
+    c.style.transform = ''; c.classList.remove('go-ok', 'go-no', 'flipped'); x = y = 0; rs = 1;
+    layout(true); bump(dir > 0 ? 'nOk' : 'nNo'); busy = false;
+    sr.textContent = `${dir > 0 ? 'Got it' : 'Again'}: ${name(i)}. ${queue.length ? queue.length + ' left.' : 'Set finished.'}`;
+    if (had) (queue.length ? els[queue[0]] : $('redo')).focus({ preventScroll: true });
+  };
+  if (reduce.matches){ finish(); return; }
+  let last = performance.now();
+  const tick = now => {
+    const dt = Math.min(.032, (now - last) / 1000); last = now;
+    x += sp * dt; y += vy * dt; vy += 900 * dt; paint();
+    if (Math.abs(x) > end){ finish(); return; }
+    raf = requestAnimationFrame(tick);
+  };
+  raf = requestAnimationFrame(tick);
+}
+function flip(){
+  const c = els[queue[0]]; if (!c || busy) return;
+  const on = c.classList.toggle('flipped'), i = queue[0];
+  sr.textContent = on ? `${C[i][3]}. ${C[i][4]} ${C[i][5]}` : name(i);
+}
+function undo(){
+  if (busy || !hist.length) return;
+  cancelAnimationFrame(raf);
+  if (queue.length){ const t = els[queue[0]]; t.style.transform = ''; t.classList.remove('go-ok', 'go-no'); }
+  const [i, dir] = hist.pop(), pile = dir > 0 ? ok : no; pile.splice(pile.lastIndexOf(i), 1);
+  queue.unshift(i); x = dir * (innerWidth / 2 + 300); y = -30; rs = 1;
+  layout(false); paint(); els[i].classList.remove('settle');
+  busy = true; spring(0, 0, -dir * 900, 0, () => { busy = false; els[i].classList.remove('go-ok', 'go-no'); });
+  sr.textContent = `Undone. ${name(i)} is back on top.`;
+  if (document.activeElement && document.activeElement !== $('undo')) els[i].focus({ preventScroll: true });
+}
+// pointer: drag the top card, a short press is a tap that flips
+let st = null;
+stack.addEventListener('pointerdown', e => {
+  const c = e.target.closest('.card.top'); if (!c || busy || e.button) return;
+  cancelAnimationFrame(raf); c.setPointerCapture(e.pointerId);
+  const r = c.getBoundingClientRect(); rs = e.clientY < r.top + r.height / 2 ? 1 : -1;
+  st = { c, sx: e.clientX - x, sy: e.clientY - y, moved: 0, s: [[e.timeStamp, e.clientX, e.clientY]] };
+});
+stack.addEventListener('pointermove', e => {
+  if (!st) return;
+  x = e.clientX - st.sx; y = (e.clientY - st.sy) * .4;
+  if (Math.hypot(x, y) > 6) st.moved = 1;
+  st.s.push([e.timeStamp, e.clientX, e.clientY]);
+  while (st.s.length > 2 && e.timeStamp - st.s[0][0] > 90) st.s.shift();
+  paint();
+});
+function release(e){
+  if (!st) return;
+  const s = st.s, f = s[0], g = s[s.length - 1], moved = st.moved; st = null;
+  const live = g[0] > f[0] && e.timeStamp - g[0] < 100, vx = live ? (g[1] - f[1]) / (g[0] - f[0]) : 0, vy = live ? (g[2] - f[2]) / (g[0] - f[0]) * 400 : 0;
+  if (!moved){ x = y = 0; paint(); flip(); return; }
+  if (x > 100 || (vx > .5 && x > 16)) fling(1, vx * 1000, vy);
+  else if (x < -100 || (vx < -.5 && x < -16)) fling(-1, vx * 1000, vy);
+  else spring(0, 0, vx * 1000, vy);
+}
+stack.addEventListener('pointerup', release);
+stack.addEventListener('pointercancel', release);
+$('bOk').onclick = () => { rs = 1; fling(1, 1700, -120); };
+$('bNo').onclick = () => { rs = 1; fling(-1, 1700, -120); };
+$('bFlip').onclick = flip;
+$('undo').onclick = undo;
+$('redo').onclick = () => {
+  queue = no.length ? no.slice() : C.map((_, i) => i); if (!no.length) ok = []; no = []; hist = []; tot = queue.length;
+  layout(false); paint(); els[queue[0]].focus({ preventScroll: true }); sr.textContent = queue.length + (queue.length > 1 ? ' cards' : ' card') + ' to review.';
+};
+document.addEventListener('keydown', e => {
+  if (e.altKey || e.metaKey && e.key !== 'z' || e.ctrlKey && e.key !== 'z') return;
+  const onBtn = e.target.tagName === 'BUTTON';
+  if (e.key === 'ArrowRight'){ e.preventDefault(); rs = 1; fling(1, 1700, -120); }
+  else if (e.key === 'ArrowLeft'){ e.preventDefault(); rs = 1; fling(-1, 1700, -120); }
+  else if ((e.key === ' ' || e.key === 'Enter') && !onBtn){ e.preventDefault(); if (!e.repeat) flip(); }
+  else if (e.key === 'z' || e.key === 'Z' || e.key === 'Backspace'){ e.preventDefault(); undo(); }
+});
+layout(false); paint();
+// one small lean to the right so the swipe is discoverable; never repeats
+setTimeout(() => { if (!st && !busy && !reduce.matches && hist.length === 3) spring(0, 0, 520, 0); }, 1200);
+})();
+</script>
+</body>
+</html>
