@@ -1,0 +1,217 @@
+<!-- Design Lounge piece: toggle-liquid-squish · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Rillet · Watering settings</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@400;500;700&family=Funnel+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#e7e6dc;--panel:#fbfaf5;--ink:#16211d;--ink-2:#55605a;--line:#d8d8cc;
+  --edge:#6c756f;--well:#f1f0e8;--water:#1a5a9a;--water-hi:#4589c9;--water-ink:#f2fbf6;
+  --knob:#ffffff;--focus:#c4561d;
+  --display:"Funnel Display",system-ui,sans-serif;--sans:"Funnel Sans",system-ui,sans-serif;
+  --ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:15px/1.5 var(--sans);color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.page{min-height:100%;display:grid;grid-template-columns:minmax(0,400px) minmax(0,620px);gap:72px;justify-content:center;align-items:center;padding:48px 40px}
+
+/* left: context */
+.brand{display:flex;align-items:center;gap:10px;font:500 14px var(--sans);color:var(--ink)}
+.brand svg{width:28px;height:28px}
+.brand span{color:var(--ink-2)}
+h1{font:500 108px/.9 var(--display);letter-spacing:-.045em;margin:44px 0 22px}
+.lede{margin:0;font-size:17px;line-height:1.5;color:var(--ink-2);max-width:340px}
+.next{margin-top:40px;border-top:1px solid var(--line);padding-top:18px;display:grid;grid-template-columns:auto 1fr;gap:6px 20px;font-size:14px}
+.next dt{color:var(--ink-2)}
+.next dd{margin:0;font-weight:600;font-variant-numeric:tabular-nums}
+
+/* right: panel */
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:10px 32px 30px;box-shadow:0 1px 0 #fff inset,0 24px 48px -32px rgba(22,33,29,.35)}
+.row{display:flex;align-items:center;gap:24px;padding:20px 0;border-bottom:1px solid var(--line)}
+.row .txt{flex:1;min-width:0}
+.row label{display:block;font:600 17px/1.3 var(--sans);letter-spacing:-.005em;cursor:pointer}
+.row p{margin:3px 0 0;font-size:14px;color:var(--ink-2)}
+
+/* the switch: the button IS the track */
+.sw{position:relative;flex:none;width:80px;height:44px;padding:0;border:2px solid var(--edge);border-radius:999px;background:var(--well);
+  cursor:pointer;touch-action:none;-webkit-tap-highlight-color:transparent;transition:border-color 220ms var(--ease)}
+.sw[aria-checked=true]{border-color:var(--water)}
+.sw:focus-visible,.rng input:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+.fill,.rfill{position:absolute;left:5px;top:5px;bottom:5px;width:30px;border-radius:999px;pointer-events:none;
+  background:linear-gradient(180deg,var(--water-hi),var(--water) 55%);box-shadow:inset 0 2px 3px rgba(255,255,255,.28)}
+.knob,.rknob{position:absolute;left:3px;top:3px;width:34px;height:34px;border-radius:50%;pointer-events:none;will-change:transform;
+  background:radial-gradient(circle at 36% 30%,#fff 0 30%,#eef3ef 70%,#dfe7e2);
+  box-shadow:0 1px 1px rgba(22,33,29,.25),0 3px 8px rgba(22,33,29,.2),inset 0 -2px 3px rgba(26,90,154,.14)}
+
+/* slider */
+.slide{padding:24px 0 0}
+.shead{display:flex;justify-content:space-between;align-items:baseline;gap:16px}
+.shead label{font:600 17px/1.3 var(--sans)}
+.val{font:500 44px/1 var(--display);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.val small{font:500 16px var(--sans);letter-spacing:0;color:var(--ink-2);margin-left:4px}
+.rng{position:relative;height:44px;margin:16px 0 10px}
+.rng input{position:absolute;inset:0;width:100%;height:44px;margin:0;-webkit-appearance:none;appearance:none;background:transparent;
+  border:2px solid var(--water);border-radius:999px;cursor:pointer;touch-action:none;z-index:2}
+.rng input::-webkit-slider-runnable-track{height:40px;background:transparent;border:0}
+.rng input::-webkit-slider-thumb{-webkit-appearance:none;width:40px;height:40px;background:transparent;border:0}
+.rng input::-moz-range-track{height:40px;background:transparent}
+.rng input::-moz-range-thumb{width:40px;height:40px;background:transparent;border:0}
+.rng .bed{position:absolute;inset:0;border-radius:999px;background:var(--well)}
+.rfill{left:7px;top:7px;bottom:7px}
+.rknob{left:5px;top:5px}
+.ticks{display:flex;justify-content:space-between;font-size:13px;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.sum{margin:22px 0 0;padding:14px 16px;border-radius:12px;background:var(--well);font-size:14px;color:var(--ink)}
+.sum b{font-weight:600}
+
+@media (max-width:960px){
+  .page{grid-template-columns:minmax(0,620px);gap:28px;padding:32px 20px 40px;align-items:start}
+  h1{font-size:72px;margin:28px 0 14px}
+  .next{margin-top:24px}
+  .panel{padding:4px 20px 22px}
+  .row{gap:16px}
+}
+@media (prefers-reduced-motion:reduce){.sw{transition:none}}
+@media (max-width:400px){ .row label{font-size:16px} .row p{font-size:13.5px} }
+</style>
+</head>
+<body>
+<div class="page">
+  <section aria-labelledby="t">
+    <div class="brand"><svg viewBox="0 0 28 28" aria-hidden="true"><path d="M14 3c4.6 6 7.5 10.2 7.5 14a7.5 7.5 0 0 1-15 0C6.5 13.2 9.4 9 14 3z" fill="#1a5a9a"/><path d="M10.5 18a3.5 3.5 0 0 0 3.5 3.5" stroke="#f2fbf6" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>Rillet <span>· Back garden, 4-zone valve</span></div>
+    <h1 id="t">Watering</h1>
+    <p class="lede">How the beds, lawn and greenhouse get their water while you sleep. Changes reach the valve in a few seconds.</p>
+    <dl class="next">
+      <dt>Next run</dt><dd id="when">Sat 1 Nov, 05:40</dd>
+      <dt>Soil, north bed</dt><dd>31% moisture</dd>
+      <dt>Rain by noon</dt><dd>0.4 mm</dd>
+    </dl>
+  </section>
+
+  <main class="panel" aria-label="Watering settings">
+    <div class="row"><div class="txt"><label for="s1">Morning cycle</label><p id="d1">Runs every zone from 05:40, before sun reaches the beds.</p></div>
+      <button class="sw" id="s1" type="button" role="switch" aria-checked="true" aria-describedby="d1"><span class="fill"></span><span class="knob"></span></button></div>
+    <div class="row"><div class="txt"><label for="s2">Skip when rain is due</label><p id="d2">Holds the cycle if more than 3 mm is forecast by noon.</p></div>
+      <button class="sw" id="s2" type="button" role="switch" aria-checked="true" aria-describedby="d2"><span class="fill"></span><span class="knob"></span></button></div>
+    <div class="row"><div class="txt"><label for="s3">Frost guard</label><p id="d3">Drains the lines overnight when it drops below 2°C.</p></div>
+      <button class="sw" id="s3" type="button" role="switch" aria-checked="false" aria-describedby="d3"><span class="fill"></span><span class="knob"></span></button></div>
+    <div class="row"><div class="txt"><label for="s4">Tell me when a bed runs dry</label><p id="d4">A note on your phone if soil moisture falls under 18%.</p></div>
+      <button class="sw" id="s4" type="button" role="switch" aria-checked="false" aria-describedby="d4"><span class="fill"></span><span class="knob"></span></button></div>
+
+    <div class="slide">
+      <div class="shead"><label for="len">Run length per zone</label><output class="val" id="out" for="len">12<small>min</small></output></div>
+      <div class="rng"><span class="bed"></span><span class="rfill"></span><span class="rknob"></span>
+        <input id="len" type="range" min="3" max="25" step="1" value="12" aria-describedby="sum"></div>
+      <div class="ticks" aria-hidden="true"><span>3 min</span><span>14</span><span>25 min</span></div>
+      <p class="sum" id="sum" aria-live="polite"><b>4 zones × 12 min.</b> Done by 06:28.</p>
+    </div>
+  </main>
+</div>
+<p class="vh" id="sr" aria-live="polite"></p>
+
+<script>
+(() => {
+const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const bodies = new Set(); let raf = 0, last = 0;
+function wake(b){ bodies.add(b); if (!raf){ last = performance.now(); raf = requestAnimationFrame(tick); } }
+function tick(now){
+  const dt = Math.min(.032, (now - last) / 1000); last = now;
+  for (const b of bodies){
+    for (let i = 0; i < 4; i++) step(b, dt / 4);
+    b.draw();
+    const still = Math.abs(b.v) + Math.abs(b.sv) + Math.abs(b.Lv) < .02 && Math.abs(b.t - b.x) + Math.abs(b.s - b.sT()) + Math.abs(b.x - b.L) < .002;
+    if (still && !b.drag && !b.press){ b.x = b.L = b.t; b.s = b.sT(); b.v = b.sv = b.Lv = 0; b.draw(); bodies.delete(b); }
+  }
+  raf = bodies.size ? requestAnimationFrame(tick) : 0;
+}
+function step(b, dt){
+  if (!b.drag){ b.v += (b.K * (b.t - b.x) - b.C * b.v) * dt; b.x += b.v * dt;
+    if (b.wall && (b.x > 1 || b.x < 0)){ b.sv -= Math.abs(b.v) * .5; b.x = clamp(b.x, 0, 1); b.v *= -.22; } }
+  b.sv += (520 * (b.sT() - b.s) - 13 * b.sv) * dt; b.s += b.sv * dt;
+  b.Lv += (b.LK * (b.x - b.L) - b.LC * b.Lv) * dt; b.L += b.Lv * dt;
+}
+function snap(b){ b.x = b.L = b.t; b.v = b.sv = b.Lv = 0; b.s = 0; b.draw(); }
+function shape(b, knob, base, travel, gain, tilt){
+  const s = clamp(b.s, -.3, .5), sx = 1 + s, sy = clamp(1 - s * .55, .76, 1.18);
+  const room = clamp(Math.min(b.x, 1 - b.x) * 5, 0, 1);
+  const lean = clamp(-b.v * travel * gain, -6, 6) * room;
+  const skew = tilt ? clamp(-b.v * travel * tilt, -16, 16) : 0;
+  knob.style.transform = `translateX(${(b.x * travel + lean).toFixed(2)}px) skewX(${skew.toFixed(2)}deg) scale(${sx.toFixed(3)},${sy.toFixed(3)})`;
+  return base + clamp(b.L, 0, 1) * travel;
+}
+
+/* switches */
+const sr = document.getElementById('sr');
+document.querySelectorAll('.sw').forEach(el => {
+  const knob = el.querySelector('.knob'), fill = el.querySelector('.fill'), TRAVEL = 36;
+  const on = el.getAttribute('aria-checked') === 'true';
+  const b = { x: +on, t: +on, L: +on, v: 0, s: 0, sv: 0, Lv: 0, K: 330, C: 17, LK: 150, LC: 19, wall: true, drag: false, press: false };
+  b.sT = () => (b.press ? .2 : 0) + Math.min(.42, Math.abs(b.v) * .055);
+  b.draw = () => { fill.style.width = shape(b, knob, 30, TRAVEL, .004).toFixed(2) + 'px'; fill.style.opacity = clamp(Math.max(b.L, b.x) * 8, 0, 1).toFixed(2); };
+  b.draw();
+  const name = el.closest('.row').querySelector('label').textContent;
+  function set(v, say){
+    b.t = v ? 1 : 0; el.setAttribute('aria-checked', String(!!v)); el.dispatchEvent(new Event('change'));
+    if (say) sr.textContent = name + (v ? ', on' : ', off');
+    reduce.matches ? snap(b) : wake(b);
+  }
+  let sx = 0, ox = 0, px = 0, pt = 0, moved = false, swallow = false;
+  el.addEventListener('pointerdown', e => {
+    if (e.button) return; el.setPointerCapture(e.pointerId);
+    sx = px = e.clientX; pt = e.timeStamp; ox = b.x; moved = false; b.press = true; wake(b);
+  });
+  el.addEventListener('pointermove', e => {
+    if (!b.press) return;
+    const dx = e.clientX - sx;
+    if (!moved && Math.abs(dx) > 4){ moved = true; b.drag = true; }
+    if (!moved) return;
+    let x = ox + dx / TRAVEL; if (x > 1) x = 1 + (x - 1) * .25; if (x < 0) x *= .25;
+    const dtp = Math.max(8, e.timeStamp - pt) / 1000;
+    b.v = b.v * .6 + ((x - b.x) / dtp) * .4; b.x = x; px = e.clientX; pt = e.timeStamp; wake(b);
+  });
+  const up = () => {
+    if (!b.press) return; b.press = false;
+    if (b.drag){ b.drag = false; swallow = true; set(b.x + b.v * .06 > .5, true); }
+    wake(b);
+  };
+  el.addEventListener('pointerup', up); el.addEventListener('pointercancel', up);
+  el.addEventListener('click', () => { if (swallow){ swallow = false; return; } set(b.t < .5, true); });
+  el.addEventListener('keydown', e => { if (e.key === ' ' && !e.repeat){ b.press = true; wake(b); } });
+  el.addEventListener('keyup', e => { if (e.key === ' '){ b.press = false; wake(b); } });
+  el.addEventListener('blur', () => { b.press = false; wake(b); });
+});
+
+/* slider */
+const inp = document.getElementById('len'), rk = document.querySelector('.rknob'), rf = document.querySelector('.rfill');
+const out = document.getElementById('out'), sum = document.getElementById('sum');
+const p0 = () => (inp.value - inp.min) / (inp.max - inp.min);
+const sl = { x: p0(), t: p0(), L: p0(), v: 0, s: 0, sv: 0, Lv: 0, K: 520, C: 34, LK: 230, LC: 24, wall: false, drag: false, press: false };
+const travel = () => inp.clientWidth - 40;
+sl.sT = () => (sl.press ? .16 : 0) + Math.min(.34, Math.abs(sl.v) * travel() * .0004);
+sl.draw = () => { const T = travel(); rf.style.width = shape(sl, rk, 30, T, .0012, .012).toFixed(1) + 'px'; };
+sl.draw();
+function clock(m){ const end = 5 * 60 + 40 + m * 4; return String(Math.floor(end / 60)).padStart(2, '0') + ':' + String(end % 60).padStart(2, '0'); }
+const s1 = document.getElementById('s1'), when = document.getElementById('when');
+function plan(){
+  const on = s1.getAttribute('aria-checked') === 'true';
+  sum.innerHTML = on ? `<b>4 zones × ${inp.value} min.</b> Done by ${clock(+inp.value)}.` : `<b>Morning cycle is off.</b> Nothing runs until you turn it back on.`;
+  when.textContent = on ? 'Sat 1 Nov, 05:40' : 'Paused';
+}
+s1.addEventListener('change', plan);
+inp.addEventListener('input', () => {
+  sl.t = p0(); out.firstChild.nodeValue = inp.value; plan();
+  reduce.matches ? snap(sl) : wake(sl);
+});
+inp.addEventListener('pointerdown', () => { sl.press = true; wake(sl); });
+addEventListener('pointerup', () => { if (sl.press){ sl.press = false; wake(sl); } });
+addEventListener('resize', () => sl.draw());
+})();
+</script>
+</body>
+</html>

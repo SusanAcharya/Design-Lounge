@@ -1,0 +1,234 @@
+<!-- Design Lounge piece: dynamic-island-activity · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hearth · live activities</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Hubot+Sans:wdth,wght@75..125,400..800&family=SUSE:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f5efe4;--card:#fffbf4;--ink:#231b15;--ink-2:#54483f;--ink-3:#6b5e54;--line:#e3d8c7;--hearth:#b93f0c;
+  --isl:#000;--isl-2:#1e1c1a;--isl-3:#2c2926;--isl-ink:#f7f3ee;--isl-dim:#aaa39b;
+  --timer:#ffc94d;--order:#ff8a4c;--call:#5bd68a;--end:#ff5a4f;
+  --num:"Hubot Sans",system-ui,sans-serif;--ui:"SUSE",system-ui,sans-serif;
+  --pill-h:36px;--pill-w:200px;--dot:36px;--gap:6px;--r-x:44px;
+  --fade-out:120ms;--fade-in:200ms;--fade-delay:90ms;--ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:#ebe3d6;font:15px/1.45 var(--ui);color:var(--ink);overflow:hidden;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--hearth);outline-offset:2px}
+.screen{position:relative;width:min(100%,430px);height:100%;margin:0 auto;background:var(--paper);padding:62px 20px 34px;display:flex;flex-direction:column;overflow:hidden}
+.nav{display:flex;align-items:center;justify-content:space-between;height:40px;color:var(--hearth);font-weight:600}
+.nav span{display:flex;align-items:center;gap:2px}
+.nav svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.kicker{margin:14px 0 4px;font:600 12px/1 var(--ui);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+h1{margin:0;font:700 31px/1.02 var(--num);font-stretch:112%;letter-spacing:-.02em}
+.meta{margin:8px 0 0;color:var(--ink-2);font-size:14px}
+.step{margin-top:20px;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px}
+.step b{display:block;font:700 13px/1 var(--num);font-stretch:100%;letter-spacing:.04em;text-transform:uppercase;color:var(--hearth)}
+.step p{margin:8px 0 14px;font-size:17px;line-height:1.4}
+.tbtn{display:flex;align-items:center;justify-content:space-between;width:100%;height:52px;padding:0 8px 0 16px;border-radius:14px;background:var(--ink);color:var(--paper);font-weight:600}
+.tbtn i{font:700 17px/1 var(--num);font-stretch:110%;font-style:normal;background:#3a2f27;padding:9px 11px;border-radius:9px}
+.order{margin-top:12px;display:flex;align-items:center;gap:12px;padding:14px 16px;border:1px solid var(--line);border-radius:18px}
+.order .bag{width:40px;height:40px;border-radius:12px;background:#ffe2cf;display:grid;place-items:center;flex:none}
+.order .bag svg{width:22px;height:22px;fill:none;stroke:#9a3a0b;stroke-width:1.9;stroke-linejoin:round;stroke-linecap:round}
+.order p{margin:0;font-size:14px;color:var(--ink-2)}
+.order strong{display:block;font-weight:600;color:var(--ink);font-size:15px}
+.next{margin-top:12px;padding:14px 16px 2px}
+.next b{display:block;font:700 13px/1 var(--num);letter-spacing:.04em;text-transform:uppercase;color:var(--ink-3);margin-top:12px}
+.next p{margin:6px 0 0;color:var(--ink-2);font-size:15px}
+.dots{display:flex;gap:6px}
+.dots i{flex:1;height:4px;border-radius:2px;background:var(--line)}
+.dots .d{background:var(--ink)}.dots .c{background:var(--hearth)}
+.dock{margin-top:auto;padding-top:16px;border-top:1px solid var(--line)}
+.dock h2{margin:0 0 10px;font:600 12px/1 var(--ui);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.toggles{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.tg{height:48px;border-radius:14px;border:1.5px solid #a99b8b;display:flex;align-items:center;justify-content:center;gap:8px;font-weight:600;color:var(--ink-2)}
+.tg i{width:9px;height:9px;border-radius:50%;border:1.5px solid currentColor}
+.tg[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.tg[aria-pressed="true"] i{background:var(--c);border-color:var(--c)}
+/* island */
+.blob{position:absolute;left:0;top:0;background:var(--isl);color:var(--isl-ink);overflow:hidden;z-index:10;will-change:transform,width,height}
+.hit{position:absolute;inset:0;width:100%;border-radius:inherit;z-index:3}
+.blob.x .hit{height:46px;bottom:auto}
+.hit:focus-visible{outline:2px solid var(--timer);outline-offset:2px}
+.ly{position:absolute;opacity:0;visibility:hidden;transition:opacity var(--fade-out) var(--ease),visibility 0s var(--fade-out)}
+.ly.on{opacity:1;visibility:visible;transition:opacity var(--fade-in) var(--ease) var(--fade-delay)}
+.cp{inset:0;display:flex;align-items:center;justify-content:space-between;padding:0 12px 0 9px;pointer-events:none}
+.tr{font:650 15px/1 var(--num);font-stretch:80%;font-variant-numeric:tabular-nums;letter-spacing:.01em}
+.ring{width:22px;height:22px;transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:3}
+.ring .bg{stroke:#3d3a36}
+.ring .fg{stroke:var(--timer);stroke-dasharray:56.5;stroke-linecap:round}
+.ico{width:22px;height:22px;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.wave{display:flex;gap:2.5px;align-items:center;height:16px}
+.wave i{width:3px;border-radius:2px;background:var(--call);height:6px;animation:w 1.1s var(--ease) infinite alternate}
+.wave i:nth-child(2){animation-delay:-.4s}.wave i:nth-child(3){animation-delay:-.8s}.wave i:nth-child(4){animation-delay:-.2s}
+@keyframes w{to{height:15px}}
+.mn{inset:0;display:grid;place-items:center;pointer-events:none}
+.ex{left:0;top:0;width:var(--xw,370px);padding:46px 22px 20px}
+.xh{display:flex;align-items:center;gap:10px}
+.app{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;flex:none}
+.xh .t{flex:1;min-width:0}
+.xh .t b{display:block;font-weight:600;font-size:15px}
+.xh .t span{display:block;font-size:13px;color:var(--isl-dim)}
+.big{font:700 40px/1 var(--num);font-stretch:118%;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.ctl{display:flex;gap:10px;margin-top:16px}
+.cb{height:44px;border-radius:22px;background:var(--isl-3);color:var(--isl-ink);display:flex;align-items:center;justify-content:center;gap:7px;padding:0 16px;font-weight:600;font-size:14px;flex:1}
+.cb svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.cb[aria-pressed="true"]{background:var(--isl-ink);color:var(--isl)}
+.cb.end{background:var(--end);color:#2a0705;flex:0 0 44px;padding:0}
+.cb:focus-visible{outline:2px solid var(--isl-ink);outline-offset:2px}
+.bar{position:relative;height:6px;border-radius:3px;background:var(--isl-3);margin:18px 0 8px}
+.bar i{position:absolute;left:0;top:0;bottom:0;border-radius:3px;background:var(--order);width:var(--p,70%)}
+.bar b{position:absolute;top:50%;left:var(--p,70%);width:16px;height:16px;margin:-8px 0 0 -8px;border-radius:50%;background:var(--isl-ink);box-shadow:0 0 0 3px var(--isl)}
+.stops{display:flex;justify-content:space-between;font-size:12.5px;color:var(--isl-dim)}
+.stops span{min-width:76px}.stops span:nth-child(2){text-align:center}.stops span:last-child{text-align:right}
+.stops .on{color:var(--isl-ink)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (prefers-reduced-motion:reduce){.ly,.ly.on{transition:none}.wave i{animation:none;height:10px}}
+</style>
+</head>
+<body>
+<div class="screen" id="screen">
+  <div class="nav"><span><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>Recipes</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h12v17l-6-4-6 4z"/></svg></div>
+  <p class="kicker">Hearth · Weeknight</p>
+  <h1>Saffron rice with crispy shallots</h1>
+  <p class="meta">Serves 4 · 45 min · Step 4 of 6</p>
+  <section class="step" aria-label="Step 4">
+    <b>Step 4</b>
+    <p>Take the pan off the heat, lay a tea towel under the lid and let the rice steam, untouched.</p>
+    <button class="tbtn" id="startTimer" data-act="timer"><span id="tbLabel">Timer running</span><i data-v="tleft">7:42</i></button>
+  </section>
+  <div class="order"><span class="bag"><svg viewBox="0 0 24 24"><path d="M5 8h14l-1 12H6zM9 8V6a3 3 0 016 0v2"/></svg></span><p><strong>Pantry No. 9 is on the way</strong>Shallots, yoghurt, coriander · 3 items</p></div>
+  <section class="next" aria-label="Up next">
+    <div class="dots" aria-hidden="true"><i class="d"></i><i class="d"></i><i class="d"></i><i class="d c"></i><i></i><i></i></div>
+    <b>Up next · Step 5</b>
+    <p>Fry the shallots in 4 tbsp ghee until deep amber, 6 to 8 min. Drain on paper.</p>
+  </section>
+  <div class="dock">
+    <h2>Run live activities</h2>
+    <div class="toggles">
+      <button class="tg" data-act="timer" style="--c:var(--timer)" aria-pressed="true"><i></i>Timer</button>
+      <button class="tg" data-act="order" style="--c:var(--order)" aria-pressed="true"><i></i>Order</button>
+      <button class="tg" data-act="call" style="--c:var(--call)" aria-pressed="false"><i></i>Call</button>
+    </div>
+  </div>
+
+  <div class="blob" id="dot" aria-label="Second live activity">
+    <button class="hit" id="dotHit" aria-label="Open second activity"></button>
+    <div class="ly mn" data-k="timer"><svg class="ring" viewBox="0 0 22 22" aria-hidden="true"><circle class="bg" cx="11" cy="11" r="9"/><circle class="fg" cx="11" cy="11" r="9"/></svg></div>
+    <div class="ly mn" data-k="order"><svg class="ico" viewBox="0 0 24 24" stroke="var(--order)" aria-hidden="true"><path d="M5 8h14l-1 12H6zM9 8V6a3 3 0 016 0v2"/></svg></div>
+    <div class="ly mn" data-k="call"><svg class="ico" viewBox="0 0 24 24" stroke="var(--call)" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2z"/></svg></div>
+  </div>
+
+  <div class="blob" id="main" role="region" aria-label="Live activity">
+    <button class="hit" id="hit" aria-expanded="false"></button>
+    <div class="ly cp" data-k="timer"><svg class="ring" viewBox="0 0 22 22" aria-hidden="true"><circle class="bg" cx="11" cy="11" r="9"/><circle class="fg" cx="11" cy="11" r="9"/></svg><span class="tr" style="color:var(--timer)" data-v="tleft">7:42</span></div>
+    <div class="ly cp" data-k="order"><svg class="ico" viewBox="0 0 24 24" stroke="var(--order)" aria-hidden="true"><path d="M5 8h14l-1 12H6zM9 8V6a3 3 0 016 0v2"/></svg><span class="tr" style="color:var(--order)" data-v="omin">6 min</span></div>
+    <div class="ly cp" data-k="call"><svg class="ico" viewBox="0 0 24 24" stroke="var(--call)" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2z"/></svg><span class="wave" aria-hidden="true"><i></i><i></i><i></i><i></i></span></div>
+
+    <div class="ly ex" data-k="timer">
+      <div class="xh"><span class="app" style="background:var(--timer)"><svg class="ico" viewBox="0 0 24 24" stroke="#3b2a00"><circle cx="12" cy="13" r="7"/><path d="M12 9v4l2.5 2M10 3h4"/></svg></span><div class="t"><b>Rice resting</b><span>Hearth · ends at 7:58 pm</span></div><span class="big" style="color:var(--timer)" data-v="tleft">7:42</span></div>
+      <div class="ctl"><button class="cb" data-do="pause" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M9 6v12M15 6v12"/></svg><span>Pause</span></button><button class="cb" data-do="plus"><svg viewBox="0 0 24 24"><path d="M12 6v12M6 12h12"/></svg>1 min</button><button class="cb end" data-do="stop-timer" aria-label="End timer"><svg viewBox="0 0 24 24"><path d="M7 7l10 10M17 7L7 17"/></svg></button></div>
+    </div>
+    <div class="ly ex" data-k="order">
+      <div class="xh"><span class="app" style="background:var(--order)"><svg class="ico" viewBox="0 0 24 24" stroke="#3a1300"><path d="M5 8h14l-1 12H6zM9 8V6a3 3 0 016 0v2"/></svg></span><div class="t"><b>Arriving in <span data-v="omin" style="display:inline;color:inherit;font-size:inherit">6 min</span></b><span>Pantry No. 9 · Kofi, 1.2 km away</span></div></div>
+      <div class="bar" aria-hidden="true"><i></i><b></b></div>
+      <div class="stops"><span class="on">Packed</span><span class="on">On the way</span><span>At your door</span></div>
+      <div class="ctl"><button class="cb" data-do="door" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M6 21V4h12v17M3 21h18M14 12h.01"/></svg>Leave at door</button><button class="cb end" data-do="stop-order" aria-label="Stop tracking order"><svg viewBox="0 0 24 24"><path d="M7 7l10 10M17 7L7 17"/></svg></button></div>
+    </div>
+    <div class="ly ex" data-k="call">
+      <div class="xh"><span class="app" style="background:#3f6f52;font:700 13px var(--ui);color:#fff">NH</span><div class="t"><b>Noor Haddad</b><span>Mobile · <span data-v="cdur" style="display:inline">0:00</span></span></div><span class="wave" aria-hidden="true"><i></i><i></i><i></i><i></i></span></div>
+      <div class="ctl"><button class="cb" data-do="mute" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M12 4a3 3 0 00-3 3v5a3 3 0 006 0V7a3 3 0 00-3-3zM6 11a6 6 0 0012 0M12 17v3"/></svg>Mute</button><button class="cb" data-do="spk" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M4 10v4h4l5 4V6L8 10zM16 9a4 4 0 010 6"/></svg>Speaker</button><button class="cb end" data-do="stop-call" aria-label="End call"><svg viewBox="0 0 24 24"><path d="M4 14c4.5-4 11.5-4 16 0l-2 2.5-3-1.2V13a10 10 0 00-6 0v2.3l-3 1.2z"/></svg></button></div>
+    </div>
+  </div>
+</div>
+<p class="sr" id="live" aria-live="polite"></p>
+<script>
+(()=>{
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const screen=$('#screen'),main=$('#main'),dot=$('#dot'),hit=$('#hit'),live=$('#live');
+const still=matchMedia('(prefers-reduced-motion: reduce)');
+const PRI=['call','order','timer'],NAME={timer:'Rice timer',order:'Pantry No. 9 order',call:'Call with Noor Haddad'};
+const S={timer:{on:true,left:462,total:480,paused:false},order:{on:true,left:360,total:1500},call:{on:false,t:0}};
+let open='order',raf=0,last=0;
+const B=[main,dot].map(el=>({el,s:{x:133,y:11,w:124,h:36,r:18},v:{x:0,y:0,w:0,h:0,r:0},t:null}));
+const running=()=>PRI.filter(k=>S[k].on);
+const fmt=s=>Math.floor(s/60)+':'+String(s%60).padStart(2,'0');
+function layout(){
+  const W=screen.clientWidth,cx=W/2,run=running(),[a,b]=run;
+  const xw=Math.min(W-20,410);main.style.setProperty('--xw',xw+'px');
+  let m,d;
+  if(open&&S[open].on){const ly=main.querySelector(`.ex[data-k="${open}"]`);m={x:cx-xw/2,y:11,w:xw,h:ly.offsetHeight,r:44};d={x:cx+xw/2-60,y:16,w:26,h:26,r:13}}
+  else{open='';
+    if(!a)m={x:cx-62,y:11,w:124,h:36,r:18};
+    else if(!b)m={x:cx-100,y:11,w:200,h:36,r:18};
+    else m={x:cx-122,y:11,w:200,h:36,r:18};
+    d=b?{x:m.x+206,y:11,w:36,h:36,r:18}:{x:m.x+m.w-30,y:14,w:28,h:28,r:14};}
+  B[0].t=m;B[1].t=d;
+  const mk=open||a||'',dk=open?'':b||'';
+  main.classList.toggle('x',!!open);
+  main.querySelectorAll('.ly').forEach(l=>l.classList.toggle('on',l.dataset.k===mk&&(l.classList.contains('ex')===!!open)));
+  dot.querySelectorAll('.ly').forEach(l=>l.classList.toggle('on',l.dataset.k===dk));
+  dot.style.visibility=dk?'visible':'hidden';dot.style.zIndex=9;
+  hit.setAttribute('aria-expanded',!!open);
+  hit.setAttribute('aria-label',mk?NAME[mk]+(open?', collapse':', show controls'):'No live activities');
+  hit.disabled=!mk;$('#dotHit').setAttribute('aria-label',dk?NAME[dk]+', show controls':'');
+  if(still.matches){B.forEach(o=>{Object.assign(o.s,o.t);paint(o)});return}
+  if(!raf){last=performance.now();raf=requestAnimationFrame(step)}
+}
+function paint(o){const s=o.s;o.el.style.transform=`translate(${s.x}px,${s.y}px)`;o.el.style.width=s.w+'px';o.el.style.height=Math.max(0,s.h)+'px';o.el.style.borderRadius=Math.max(0,s.r)+'px'}
+function step(now){
+  let dt=Math.min(.034,(now-last)/1000),moving=false;last=now;
+  B.forEach((o,i)=>{const k=i?300:260,c=i?26:22;
+    for(let n=0;n<4;n++)for(const p in o.t){const a=-k*(o.s[p]-o.t[p])-c*o.v[p];o.v[p]+=a*dt/4;o.s[p]+=o.v[p]*dt/4}
+    for(const p in o.t){if(Math.abs(o.s[p]-o.t[p])>.2||Math.abs(o.v[p])>.2)moving=true}
+    paint(o)});
+  if(moving)raf=requestAnimationFrame(step);else{raf=0;B.forEach(o=>{Object.assign(o.s,o.t);paint(o)})}
+}
+function tick(){
+  const t=S.timer,o=S.order;
+  if(t.on&&!t.paused&&t.left>0){t.left--;if(!t.left){live.textContent='Rice timer done';if(!open){open='timer';layout()}}}
+  if(o.on&&o.left>0)o.left--;
+  if(S.call.on)S.call.t++;
+  render();
+}
+function render(){
+  const t=S.timer,o=S.order;
+  $$('[data-v="tleft"]').forEach(e=>e.textContent=t.left?fmt(t.left):'Done');
+  const mins=Math.ceil(o.left/60);$$('[data-v="omin"]').forEach(e=>e.textContent=o.left?mins+' min':'now');
+  $$('[data-v="cdur"]').forEach(e=>e.textContent=fmt(S.call.t));
+  $$('.ring .fg').forEach(c=>c.style.strokeDashoffset=(56.5*(1-t.left/t.total)).toFixed(2));
+  const p=Math.round((1-o.left/o.total)*100);main.style.setProperty('--p',p+'%');
+  $$('.tg').forEach(b=>b.setAttribute('aria-pressed',S[b.dataset.act].on));
+  $('#tbLabel').textContent=t.on?(t.paused?'Timer paused':'Timer running'):'Start timer';
+  const pb=main.querySelector('[data-do="pause"]');pb.setAttribute('aria-pressed',t.paused);pb.querySelector('span').textContent=t.paused?'Resume':'Pause';
+}
+function set(k,on){
+  S[k].on=on;
+  if(on){if(k==='timer'){S.timer.left=480;S.timer.paused=false}if(k==='order')S.order.left=360;if(k==='call'){S.call.t=0;open='call'}}
+  else if(open===k)open='';
+  live.textContent=NAME[k]+(on?' started':' ended');render();layout();
+}
+$$('[data-act]').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();const k=b.dataset.act;set(k,b.classList.contains('tbtn')?true:!S[k].on)}));
+hit.addEventListener('click',e=>{e.stopPropagation();const k=running()[0];if(!k)return;open=open?'':k;layout()});
+$('#dotHit').addEventListener('click',e=>{e.stopPropagation();const k=running()[1];if(k){open=k;layout()}});
+main.addEventListener('click',e=>{e.stopPropagation();const b=e.target.closest('[data-do]');if(!b)return;const d=b.dataset.do;
+  if(d==='pause'){S.timer.paused=!S.timer.paused;live.textContent=S.timer.paused?'Timer paused':'Timer resumed'}
+  else if(d==='plus'){S.timer.left+=60;S.timer.total=Math.max(S.timer.total,S.timer.left)}
+  else if(d==='door'||d==='mute'||d==='spk'){b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')!=='true')}
+  else if(d.startsWith('stop-')){set(d.slice(5),false);hit.focus();return}
+  render()});
+document.addEventListener('click',()=>{if(open){open='';layout()}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&open){open='';layout();hit.focus()}});
+addEventListener('resize',layout);
+render();layout();setInterval(tick,1000);
+})();
+</script>
+</body>
+</html>

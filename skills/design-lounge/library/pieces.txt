@@ -614,3 +614,11 @@ newsletter-mailbox-flag | web | newsletter | Mailbox flag newsletter signup | pa
 features-telescope-focus | web | features | Telescope focus features | dark riso playful | features tabs illustration svg astronomy
 features-pencil-annotations | web | features | Pencil annotations features | paper playful editorial | features pencil annotation handwriting svg
 features-paper-cutout-steps | web | features | Paper cutout steps | paper playful organic | features steps pop-up paper illustration parallax
+drag-slingshot-launch | web | micro | Slingshot launch to send | paper playful | drag physics slingshot gravity keyboard messaging
+cursor-eyes-follow | web | cursor | Sign-in mascot with following eyes | playful soft | hover cursor mascot sign-in eyes type
+voice-note-recorder | mobile-app | messaging | Hold-to-record voice note | soft minimal | messaging voice press drag slide
+signature-pad-sign | web | inputs | Signature pad with type instead | paper minimal | signature forms drag type
+reaction-burst-picker | web | social | Reaction burst picker | soft playful minimal | press hover drag select reactions
+dynamic-island-activity | mobile-app | widgets | Island live activities | minimal dark soft | press loading live-activity morph spring
+toggle-liquid-squish | web | inputs | Liquid squish toggles | soft minimal organic | press drag slide switch slider physics
+button-slide-to-confirm | mobile-app | buttons | Slide to pay back a friend | soft playful paper | drag slide payment confirm keyboard

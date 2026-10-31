@@ -1,0 +1,277 @@
+<!-- Design Lounge piece: signature-pad-sign · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Ostler &amp; Finch · Sign your renewal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Afacad:wght@400;500;600;700&family=Mrs+Saint+Delafield&display=swap" rel="stylesheet">
+<style>
+:root{
+  --desk:#e3ded3;--bar:#f7f5ef;--paper:#fffefb;--ink:#1f1e1a;--ink-2:#5d5a51;--line:#e2ddd2;--edge:#858072;
+  --pen:#1c2b57;--pen-hover:#14204a;--pen-tint:#e7eaf2;--stamp:#a8321f;--ok:#2f6b46;--off:#dcd8ce;--off-ink:#4f4b43;
+  --sans:"Afacad",system-ui,sans-serif;--script:"Mrs Saint Delafield",cursive;
+  --ease:cubic-bezier(.2,.7,.2,1);--out:cubic-bezier(.16,1,.3,1);--thump:cubic-bezier(.34,1.56,.64,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--desk);font:16px/1.45 var(--sans);color:var(--ink);display:flex;flex-direction:column;overflow-x:hidden}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+:focus-visible{outline:2.5px solid var(--pen);outline-offset:3px}
+
+.top{height:56px;flex:none;display:flex;align-items:center;gap:18px;padding:0 28px;background:var(--bar);border-bottom:1px solid #d6d0c3}
+.brand{display:flex;align-items:center;gap:9px;font-weight:700;font-size:17px;letter-spacing:-.01em}
+.brand i{width:26px;height:26px;border-radius:7px;background:var(--ink);color:var(--paper);display:grid;place-items:center;font:700 13px var(--sans);font-style:normal}
+.doc{color:var(--ink-2);font-size:15px;padding-left:18px;border-left:1px solid #d6d0c3}
+.top .pg{margin-left:auto;font-size:14px;color:var(--ink-2)}
+
+.desk{flex:1;overflow:auto;display:flex;justify-content:center;gap:36px;padding:28px 28px 40px;align-items:flex-start}
+.sheet{width:760px;max-width:100%;background:var(--paper);box-shadow:0 1px 0 #d2ccbf,0 14px 34px -14px rgba(60,50,30,.28);padding:40px 56px 44px;position:relative}
+.run{display:flex;justify-content:space-between;font-size:13px;color:var(--ink-2);padding-bottom:14px;border-bottom:1px solid var(--line);margin-bottom:22px}
+h2{font-size:17px;font-weight:600;margin:0 0 10px;letter-spacing:-.005em}
+h2 span{color:var(--ink-2);font-weight:500;margin-right:8px}
+.terms{width:100%;border-collapse:collapse;font-size:15px;margin-bottom:24px}
+.terms th{text-align:left;font-weight:400;color:var(--ink-2);width:36%;padding:7px 0;border-bottom:1px solid var(--line)}
+.terms td{padding:7px 0;border-bottom:1px solid var(--line);font-weight:500}
+.terms s{color:var(--ink-2);font-weight:400;margin-left:8px}
+.lead{font-size:15px;margin:0 0 20px;max-width:58ch}
+
+.sigs{display:grid;grid-template-columns:200px 1fr;gap:36px;align-items:start}
+.lab{font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);margin:0 0 8px;display:flex;justify-content:space-between;align-items:baseline;height:22px}
+.ll .ink{height:120px;border-bottom:1.5px solid var(--ink);display:flex;align-items:flex-end;padding-bottom:6px}
+.ll .ink svg{width:196px;height:85px;stroke:var(--pen);stroke-width:2.1}
+.who{font-size:14.5px;margin-top:8px}.who b{font-weight:600;display:block}.who span{color:var(--ink-2)}
+
+.swap{font:600 14px var(--sans);color:var(--pen);letter-spacing:0;text-transform:none;text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px;padding:4px 0}
+.swap:hover{text-decoration-thickness:2px}
+.pad{position:relative;height:150px;border:1.5px solid var(--edge);border-radius:10px;background:#fff;overflow:hidden;transition:border-color 160ms var(--ease),box-shadow 160ms var(--ease)}
+.pad:hover{border-color:#6f6a5d}
+.pad.inking{border-color:var(--pen);box-shadow:0 0 0 3px var(--pen-tint)}
+.pad:focus-within{border-color:var(--pen);box-shadow:0 0 0 3px var(--pen-tint)}
+canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:crosshair;display:block}
+.base{position:absolute;left:22px;right:22px;top:108px;border-top:1.5px solid #b9b3a5;pointer-events:none}
+.x{position:absolute;left:22px;top:84px;width:18px;height:18px;color:var(--ink-2);pointer-events:none;stroke-width:2}
+.hint{position:absolute;right:22px;top:114px;font-size:13.5px;color:var(--ink-2);pointer-events:none;transition:opacity 200ms var(--ease)}
+.has .hint{opacity:0}
+.typed{position:absolute;left:48px;right:22px;top:24px;height:90px;display:none;align-items:flex-end;font:64px/1 var(--script);color:var(--pen);white-space:nowrap;overflow:hidden;pointer-events:none}
+.typing canvas{display:none}.typing .typed{display:flex}
+.name{display:none;margin-top:10px}
+.typing .name{display:block}
+.name label{display:block;font-size:13.5px;color:var(--ink-2);margin-bottom:4px}
+.name input{width:100%;height:42px;border:1.5px solid var(--edge);border-radius:8px;background:#fff;font:17px var(--sans);color:var(--ink);padding:0 12px}
+.name input:focus{outline:none;border-color:var(--pen);box-shadow:0 0 0 3px var(--pen-tint)}
+.tools{display:flex;align-items:center;gap:4px;margin-top:8px}
+.tools .who{margin:0 auto 0 0}
+.tl{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 10px;border-radius:8px;font-size:14.5px;font-weight:500;color:var(--ink)}
+.tl:hover:not(:disabled){background:#f1eee6}
+.tl:disabled{color:var(--off-ink);cursor:not-allowed}
+.tl:disabled svg{opacity:.55}
+.typing .tl{display:none}
+
+.stamp{position:absolute;right:-6px;top:6px;padding:8px 14px 9px;border:2.5px solid var(--stamp);border-radius:8px;color:var(--stamp);background:var(--paper);
+  text-align:center;rotate:-7deg;box-shadow:inset 0 0 0 2px var(--paper),inset 0 0 0 3.5px var(--stamp);visibility:hidden;line-height:1.1;z-index:2}
+.stamp b{display:block;font-size:20px;font-weight:700;letter-spacing:.16em}
+.stamp span{font-size:13px;font-weight:600;letter-spacing:.04em}
+.tb{position:relative}
+.done .stamp{visibility:visible}
+.done .lab .swap,.done .tl{visibility:hidden}
+.done canvas{pointer-events:none}
+.done .pad{border-color:var(--edge);box-shadow:none}
+
+.rail{width:330px;flex:none;position:sticky;top:0}
+.card{background:var(--paper);border-radius:14px;padding:24px 24px 22px;box-shadow:0 1px 0 #d2ccbf}
+.k{font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);margin:0}
+.big{font-size:46px;font-weight:600;letter-spacing:-.03em;line-height:1;margin:8px 0 2px}
+.sub{font-size:14.5px;color:var(--ink-2);margin:0 0 18px}
+.steps{list-style:none;margin:0 0 20px;padding:16px 0 0;border-top:1px solid var(--line);display:grid;gap:10px;font-size:15px}
+.steps li{display:flex;gap:10px;align-items:center}
+.steps i{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;flex:none;background:var(--ok);color:#fff}
+.steps i svg{width:13px;height:13px;stroke-width:2.6}
+.steps .now i{background:#fff;box-shadow:inset 0 0 0 1.5px var(--pen)}
+.steps .now i::after{content:"";width:8px;height:8px;border-radius:50%;background:var(--pen)}
+.steps .now.ok i{background:var(--ok);box-shadow:none}.steps .now.ok i::after{display:none}
+.steps .now i svg{display:none}.steps .now.ok i svg{display:block}
+.send{width:100%;height:52px;border-radius:10px;background:var(--pen);color:#fff;font-size:17px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:10px;
+  transition:background-color 160ms var(--ease),scale 160ms var(--ease)}
+.send:hover:not(:disabled){background:var(--pen-hover)}
+.send:active:not(:disabled){scale:.98}
+.send:disabled{background:var(--off);color:var(--off-ink);cursor:not-allowed}
+.send.sent,.send.sent:disabled{background:var(--ok);color:#fff;cursor:default}
+.fine{font-size:13.5px;color:var(--ink-2);margin:12px 0 0}
+.again{color:var(--pen);font-weight:600;text-decoration:underline;text-underline-offset:3px;display:none;margin-top:10px;font-size:14.5px}
+.sentcard .again{display:inline-block}
+
+@media (max-width:1100px){.desk{flex-direction:column;align-items:center}.rail{width:760px;max-width:100%;position:static}}
+@media (max-width:640px){
+  .top{padding:0 16px}.doc,.top .pg{display:none}
+  .desk{padding:16px 12px 28px;gap:16px}
+  .sheet{padding:24px 18px 28px}
+  .run{flex-direction:column;gap:2px}
+  .sigs{grid-template-columns:1fr;gap:24px}
+  .ll .ink{height:84px}
+  .terms th{width:42%}
+  .typed{font-size:54px;left:44px}
+  .hint{display:none}
+  .stamp{right:0;top:30px}
+}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important;animation:none!important}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="brand"><i aria-hidden="true">O</i>Ostler &amp; Finch</div>
+  <div class="doc">Tenancy renewal · Flat 3, 27 Calder Row</div>
+  <div class="pg">Page 4 of 4</div>
+</header>
+
+<div class="desk">
+  <main class="sheet" aria-labelledby="t13">
+    <div class="run"><span>Renewal of assured shorthold tenancy · OF-58213</span><span>Page 4 of 4</span></div>
+    <h2><span>12.</span>Rent and term</h2>
+    <table class="terms">
+      <tr><th scope="row">Monthly rent</th><td>£1,385.00 <s>£1,340.00</s></td></tr>
+      <tr><th scope="row">Term</th><td>12 months, 1 Dec 2026 to 30 Nov 2027</td></tr>
+      <tr><th scope="row">Deposit</th><td>£1,598.00, held by Calder Deposit Trust</td></tr>
+      <tr><th scope="row">Rent day</th><td>1st of each month, by standing order</td></tr>
+    </table>
+    <h2 id="t13"><span>13.</span>Signatures</h2>
+    <p class="lead">By signing you confirm you have read pages 1 to 4 and agree to renew the tenancy of Flat 3, 27 Calder Row on the terms above.</p>
+
+    <div class="sigs">
+      <div class="ll">
+        <p class="lab">Landlord</p>
+        <div class="ink" role="img" aria-label="Signature of Tobias Renning">
+          <svg viewBox="0 0 176 76"><path d="M8 58C14 30 24 10 32 14s-6 44-2 46 14-30 22-28-4 22 4 22 12-20 18-18-2 16 6 16 10-14 16-12-2 10 6 10c12 0 22-10 34-12M24 40c30-6 70-10 136-14"/></svg>
+        </div>
+        <div class="who"><b>Tobias Renning</b><span>Signed 29 Oct 2026</span></div>
+      </div>
+
+      <div class="tb" id="tb">
+        <p class="lab"><span id="padlab">Tenant</span><button class="swap" id="swap" aria-controls="pad">Type instead</button></p>
+        <div class="pad" id="pad">
+          <span class="base"></span>
+          <svg class="x" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg>
+          <span class="hint">Sign above the line</span>
+          <canvas id="cv" role="img" aria-label="Signature pad. Draw with a mouse, finger or stylus, or choose Type instead."></canvas>
+          <div class="typed" id="typed" aria-hidden="true"></div>
+        </div>
+        <div class="name">
+          <label for="nm">Type your full name to sign</label>
+          <input id="nm" autocomplete="name" placeholder="Ilse Marchetti" spellcheck="false">
+        </div>
+        <div class="tools">
+          <div class="who"><b>Ilse Marchetti</b></div>
+          <button class="tl" id="undo" disabled><svg viewBox="0 0 24 24"><path d="M9 14L4 9l5-5"/><path d="M4 9h10a6 6 0 0 1 0 12h-3"/></svg>Undo stroke</button>
+          <button class="tl" id="clear" disabled><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>Clear</button>
+        </div>
+        <div class="stamp" id="stamp" aria-hidden="true"><b>SIGNED</b><span id="sdate">31 OCT 2026 · 14:22</span></div>
+      </div>
+    </div>
+  </main>
+
+  <aside class="rail" aria-label="Signing">
+    <div class="card" id="card">
+      <p class="k">New monthly rent</p>
+      <p class="big">£1,385</p>
+      <p class="sub">from 1 December 2026, up £45</p>
+      <ol class="steps">
+        <li><i><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></i>Read the renewal, 4 pages</li>
+        <li><i><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></i>Initial clauses 4, 7 and 11</li>
+        <li class="now" id="step"><i><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></i>Sign as tenant</li>
+      </ol>
+      <button class="send" id="send" disabled>Sign and send</button>
+      <p class="fine" id="fine">Add your signature to continue. Ostler &amp; Finch countersign within one working day.</p>
+      <button class="again" id="again">Start again</button>
+    </div>
+  </aside>
+</div>
+<p class="vh" aria-live="polite" id="say"></p>
+
+<script>
+(() => {
+const $ = (s) => document.getElementById(s);
+const cv = $('cv'), ctx = cv.getContext('2d'), pad = $('pad'), tb = $('tb'), nm = $('nm'), typed = $('typed'), send = $('send'), fine = $('fine'), sayEl = $('say');
+const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const PEN = '#1c2b57', MAXW = 4.2, MINW = .9;
+let strokes = [], live = null, W = 0, H = 0, typing = false, done = false, ready = false;
+const say = (m) => { sayEl.textContent = ''; setTimeout(() => { sayEl.textContent = m; }, 40); };
+
+function size() {
+  const r = cv.getBoundingClientRect(), d = devicePixelRatio || 1; if (!r.width) return;
+  W = r.width; H = r.height; cv.width = Math.round(W * d); cv.height = Math.round(H * d); ctx.setTransform(d, 0, 0, d, 0, 0); redraw();
+}
+// points are stored as fractions of the pad width so a resize keeps the drawing
+function seg(s, i) {
+  const a = s[i - 2], b = s[i - 1], c = s[i], k = W;
+  const m1 = i === 2 ? a : { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 }, m2 = { x: (b.x + c.x) / 2, y: (b.y + c.y) / 2 };
+  ctx.beginPath(); ctx.lineWidth = (b.w + c.w) / 2; ctx.moveTo(m1.x * k, m1.y * k); ctx.quadraticCurveTo(b.x * k, b.y * k, m2.x * k, m2.y * k); ctx.stroke();
+}
+function dot(p) { ctx.beginPath(); ctx.arc(p.x * W, p.y * W, p.w / 2 + .3, 0, 7); ctx.fill(); }
+function drawStroke(s) { if (s.length < 3) { dot(s[0]); return; } for (let i = 2; i < s.length; i++) seg(s, i); }
+function redraw() { ctx.clearRect(0, 0, W, H); ctx.strokeStyle = ctx.fillStyle = PEN; ctx.lineCap = ctx.lineJoin = 'round'; strokes.forEach(drawStroke); }
+function inkLength() { let L = 0; strokes.forEach((s) => { for (let i = 1; i < s.length; i++) L += Math.hypot(s[i].x - s[i - 1].x, s[i].y - s[i - 1].y) * W; }); return L; }
+
+function sync() {
+  const has = typing ? nm.value.trim().length > 1 : inkLength() > 40;
+  pad.classList.toggle('has', typing ? nm.value.trim().length > 0 : strokes.length > 0);
+  $('undo').disabled = !strokes.length; $('clear').disabled = !strokes.length;
+  send.disabled = !has || done; $('step').classList.toggle('ok', has);
+  fine.textContent = has ? 'Ready. Ostler & Finch countersign within one working day.' : 'Add your signature to continue. Ostler & Finch countersign within one working day.';
+  if (has !== ready) { ready = has; if (has) say('Signature added. Sign and send is ready.'); }
+}
+function add(e) {
+  const r = cv.getBoundingClientRect(), x = (e.clientX - r.left) / W, y = (e.clientY - r.top) / W, l = live[live.length - 1];
+  if (l) {
+    const dist = Math.hypot(x - l.x, y - l.y) * W; if (dist < 1.2) return;
+    const v = dist / Math.max(1, e.timeStamp - l.t); // px per ms
+    const target = Math.max(MINW, Math.min(MAXW, MAXW - v * 2.2));
+    live.push({ x, y, t: e.timeStamp, w: l.w * .62 + target * .38 });
+    ctx.strokeStyle = PEN; ctx.lineCap = ctx.lineJoin = 'round';
+    if (live.length >= 3) seg(live, live.length - 1);
+  } else { live.push({ x, y, t: e.timeStamp, w: MAXW * .7 }); ctx.fillStyle = PEN; dot(live[0]); }
+}
+cv.addEventListener('pointerdown', (e) => {
+  if (e.button || done || typing) return; cv.setPointerCapture(e.pointerId); live = []; strokes.push(live); pad.classList.add('inking'); add(e);
+});
+cv.addEventListener('pointermove', (e) => { if (!live) return; (e.getCoalescedEvents ? e.getCoalescedEvents() : [e]).forEach(add); });
+const end = () => { if (!live) return; live = null; pad.classList.remove('inking'); redraw(); sync(); };
+cv.addEventListener('pointerup', end); cv.addEventListener('pointercancel', end);
+
+$('undo').onclick = () => { strokes.pop(); redraw(); sync(); say(strokes.length ? 'Last stroke removed.' : 'Signature cleared.'); };
+$('clear').onclick = () => { strokes = []; redraw(); sync(); say('Signature cleared.'); };
+tb.addEventListener('keydown', (e) => { if ((e.metaKey || e.ctrlKey) && e.key === 'z' && strokes.length && !typing && e.target !== nm) { e.preventDefault(); $('undo').click(); } });
+
+$('swap').onclick = () => {
+  typing = !typing; tb.classList.toggle('typing', typing); $('swap').textContent = typing ? 'Draw instead' : 'Type instead';
+  if (typing) nm.focus(); else size(); sync();
+};
+nm.addEventListener('input', () => { typed.textContent = nm.value; sync(); });
+
+function stampDate() {
+  const d = new Date(), mo = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'][d.getMonth()];
+  return [d.getDate() + ' ' + mo + ' ' + d.getFullYear(), String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0')];
+}
+send.onclick = () => {
+  if (send.disabled) return; done = true; send.disabled = true; send.textContent = 'Sending';
+  setTimeout(() => {
+    const [day, time] = stampDate(); $('sdate').textContent = day + ' · ' + time;
+    tb.classList.add('done'); nm.disabled = true;
+    if (!RM) $('stamp').animate([{ scale: 1.7, opacity: 0, rotate: '-14deg' }, { scale: .94, opacity: 1, rotate: '-7deg', offset: .6 }, { scale: 1, opacity: 1, rotate: '-7deg' }], { duration: 380, easing: 'cubic-bezier(.3,.7,.3,1)' });
+    if (!RM) $('pad').animate([{ translate: '0 0' }, { translate: '0 2px' }, { translate: '0 0' }], { duration: 160, delay: 220 });
+    send.classList.add('sent'); send.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>Signed and sent';
+    fine.textContent = 'Sent ' + day.toLowerCase().replace(/^(\d+) (\w)(\w+)/, (m, a, b, c) => a + " " + b.toUpperCase() + c) + ' at ' + time + '. A countersigned copy will follow by email.';
+    $('card').classList.add('sentcard'); say('Signed and sent on ' + day + ' at ' + time + '.'); $('again').focus();
+  }, RM ? 0 : 650);
+};
+$('again').onclick = () => {
+  done = false; strokes = []; nm.value = ''; nm.disabled = false; typed.textContent = ''; tb.classList.remove('done'); $('card').classList.remove('sentcard');
+  send.classList.remove('sent'); send.textContent = 'Sign and send'; redraw(); sync(); ready = false; $('swap').focus();
+};
+new ResizeObserver(size).observe(cv); size(); sync();
+})();
+</script>
+</body>
+</html>

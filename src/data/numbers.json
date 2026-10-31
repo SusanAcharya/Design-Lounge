@@ -611,5 +611,13 @@
   "newsletter-mailbox-flag": 610,
   "features-telescope-focus": 611,
   "features-pencil-annotations": 612,
-  "features-paper-cutout-steps": 613
+  "features-paper-cutout-steps": 613,
+  "drag-slingshot-launch": 614,
+  "cursor-eyes-follow": 615,
+  "voice-note-recorder": 616,
+  "signature-pad-sign": 617,
+  "reaction-burst-picker": 618,
+  "dynamic-island-activity": 619,
+  "toggle-liquid-squish": 620,
+  "button-slide-to-confirm": 621
 }

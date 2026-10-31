@@ -1,0 +1,228 @@
+<!-- Design Lounge piece: button-slide-to-confirm · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quits · Pay Maren back</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Mona+Sans:wdth,wght@75..125,400..800&family=Atkinson+Hyperlegible+Next:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f3eee4;--card:#fbf8f1;--ink:#1c1a15;--ink-2:#5b5549;--line:#ddd5c4;
+  --gold:#f0b23a;--gold-deep:#c98a12;--trail:#3a3123;--cream:#f7f1e3;--peach:#f6d9c4;
+  --display:"Mona Sans",system-ui,sans-serif;--sans:"Atkinson Hyperlegible Next",system-ui,sans-serif;
+  --out:cubic-bezier(.16,1,.3,1);--ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:15px/1.45 var(--sans);color:var(--ink);background:var(--paper);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+:focus-visible{outline:3px solid var(--ink);outline-offset:3px;border-radius:8px}
+
+.app{max-width:420px;min-height:100%;margin:0 auto;padding:62px 16px 34px;display:flex;flex-direction:column}
+.bar{display:flex;align-items:center;gap:12px}
+.back{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;border:1.5px solid #8a8272}
+.back svg,.ico{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.bar b{display:block;font:600 15px/1.2 var(--sans)}
+.bar small{display:block;font-size:13px;color:var(--ink-2)}
+
+.who{margin-top:34px;display:flex;align-items:center;gap:12px}
+.av{width:44px;height:44px;border-radius:50%;background:var(--peach);display:grid;place-items:center;font:700 15px var(--display);font-stretch:110%}
+.who p{margin:0;font-size:16px}
+.who p span{display:block;font-size:13px;color:var(--ink-2)}
+.amt{position:relative;display:inline-block;margin:18px 0 0;font:760 88px/.95 var(--display);font-stretch:125%;letter-spacing:-.035em;font-variant-numeric:tabular-nums}
+.amt sup{font-size:.42em;vertical-align:.95em;letter-spacing:0;margin-right:2px}
+.amt{transition:color 400ms var(--ease)}
+.paid .amt{color:var(--ink-2)}
+.amt::after{content:"";position:absolute;left:-4px;right:-4px;top:50%;height:7px;border-radius:4px;background:var(--gold-deep);transform:scaleX(0);transform-origin:left;transition:transform 520ms var(--out) 120ms}
+.paid .amt::after{transform:scaleX(1)}
+.note{margin:12px 0 0;font-size:15px;color:var(--ink-2);max-width:330px}
+
+.bill{margin-top:24px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:6px 16px}
+.bill div{display:flex;justify-content:space-between;gap:12px;padding:11px 0;font-size:14px}
+.bill div+div{border-top:1px solid var(--line)}
+.bill dt{color:var(--ink-2)}
+.bill dd{margin:0;font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
+
+.foot{margin-top:auto;padding-top:24px}
+.arm{margin:0 0 10px;text-align:center;font-size:13px;font-weight:600;color:var(--ink);opacity:0;transform:translateY(4px);transition:opacity 180ms var(--ease),transform 180ms var(--ease)}
+.arm.on{opacity:1;transform:none}
+
+/* the slider */
+.track{--x:0px;position:relative;height:68px;border-radius:34px;background:var(--ink);border:2px solid var(--ink);touch-action:none;user-select:none;-webkit-user-select:none;overflow:hidden}
+.trail{position:absolute;left:0;top:0;bottom:0;width:calc(var(--x) + 62px);border-radius:34px;background:var(--trail)}
+.lab{position:absolute;left:72px;right:18px;top:0;bottom:0;display:flex;align-items:center;justify-content:center;font:650 16px var(--display);font-stretch:112%;letter-spacing:.01em;color:var(--cream);white-space:pre;pointer-events:none}
+.lab i{font-style:normal;display:inline-block;transition:opacity 90ms linear}
+.lab svg{width:18px;height:18px;margin-left:8px;fill:none;stroke:var(--gold);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.handle{position:absolute;left:4px;top:4px;height:56px;width:56px;border-radius:28px;background:var(--gold);color:var(--ink);display:flex;align-items:center;overflow:hidden;
+  transform:translateX(var(--x));cursor:grab;touch-action:none;box-shadow:0 2px 0 var(--gold-deep) inset,0 -2px 0 rgba(0,0,0,.08) inset}
+.handle:focus-visible{outline:3px solid var(--cream);outline-offset:-7px;border-radius:28px}
+.track.grab .handle{cursor:grabbing}
+.handle .go{flex:none;width:56px;height:56px;display:grid;place-items:center;transition:transform 260ms var(--out)}
+.handle .go svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.handle .ok{display:flex;justify-content:space-between;align-items:center;gap:10px;flex:1;min-width:0;padding-right:20px;white-space:nowrap;opacity:0;transform:translateX(-10px);transition:opacity 240ms var(--ease) 200ms,transform 320ms var(--out) 200ms}
+.handle .ok b{font:700 16px var(--display);font-stretch:110%}
+.handle .ok span{font-size:13px;font-weight:600;font-variant-numeric:tabular-nums}
+.track.back .handle,.track.back .trail{transition:transform 0s,width 0s}
+.track.done .handle{width:calc(100% - 8px);transform:translateX(0);cursor:default;transition:width 440ms var(--out),transform 440ms var(--out)}
+.track.done .trail{width:100%}
+.track.done .lab{opacity:0}
+.track.done .ok{opacity:1;transform:none}
+.track.done .go{transform:scale(.92)}
+.fine{margin:12px 0 0;text-align:center;font-size:13px;color:var(--ink-2)}
+.again{display:block;margin:6px auto 0;min-height:40px;padding:0 12px;font-size:14px;font-weight:600;text-decoration:underline;text-underline-offset:3px}
+.again[hidden]{display:block;visibility:hidden}
+@keyframes draw{from{stroke-dashoffset:24}to{stroke-dashoffset:0}}
+.track.done .go svg path{stroke-dasharray:24;animation:draw 360ms var(--out) 180ms both}
+@keyframes nudge{0%,100%{transform:translateX(0)}35%{transform:translateX(14px)}60%{transform:translateX(-2px)}}
+.track.hint .handle{animation:nudge 900ms var(--out) 700ms 1}
+@media (prefers-reduced-motion:reduce){
+  .track.hint .handle{animation:none}
+  .handle,.handle *,.amt::after,.arm{transition:none!important}
+}
+@media (max-height:700px){.amt{font-size:68px}.who{margin-top:20px}.bill{margin-top:16px}}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+  <header class="bar">
+    <button class="back" type="button" aria-label="Back to Cabin weekend"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+    <div><b>Cabin weekend</b><small>Hartsfell · 3 people · 24 to 26 Oct</small></div>
+  </header>
+
+  <main>
+    <div class="who"><span class="av" aria-hidden="true">MO</span><p id="who">You owe Maren Okafor<span>She paid for the cabin and the Friday shop</span></p></div>
+    <p class="amt" aria-label="64 pounds 20"><sup>£</sup>64.20</p>
+    <p class="note" id="note">Your share of the weekend. Payments can't be recalled, so check the amount.</p>
+    <dl class="bill">
+      <div><dt>Cabin, 2 nights, your third</dt><dd>£48.00</dd></div>
+      <div><dt>Friday shop, Penhallow Stores</dt><dd>£11.70</dd></div>
+      <div><dt>Fuel, split three ways</dt><dd>£4.50</dd></div>
+      <div><dt>From Everyday ·· 3318</dt><dd>Arrives now</dd></div>
+    </dl>
+  </main>
+
+  <div class="foot">
+    <p class="arm" id="arm" aria-hidden="true">Press Enter again to send £64.20</p>
+    <div class="track hint" id="track">
+      <span class="trail"></span>
+      <span class="lab" id="lab" aria-hidden="true">Slide to pay £64.20<svg viewBox="0 0 24 24"><path d="M5 12h12M12 6l6 6-6 6"/></svg></span>
+      <span class="handle" id="handle" role="slider" tabindex="0" aria-label="Slide to pay Maren £64.20" aria-describedby="how"
+        aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-valuetext="Not sent">
+        <span class="go" aria-hidden="true"><svg viewBox="0 0 24 24" id="gi"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        <span class="ok" aria-hidden="true"><b>£64.20 sent</b><span id="at">14:32</span></span>
+      </span>
+    </div>
+    <p class="fine" id="how">Drag to the end, or press Enter twice.</p>
+    <button class="again" id="again" type="button" hidden>Replay</button>
+  </div>
+</div>
+<p class="vh" id="sr" aria-live="polite"></p>
+
+<script>
+(() => {
+const $ = id => document.getElementById(id);
+const track = $('track'), handle = $('handle'), lab = $('lab'), sr = $('sr'), arm = $('arm'), app = $('app');
+const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+const CHECK = '<path d="M5 12.5l4.5 4.5L19 7.5"/>', ARROW = '<path d="M5 12h14M13 6l6 6-6 6"/>';
+const HOW = 'Drag to the end, or press Enter twice.';
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+// split the label into letters so each can dim as the handle passes
+const textNode = lab.firstChild, words = textNode.nodeValue;
+textNode.replaceWith(...[...words].map(ch => { const i = document.createElement('i'); i.textContent = ch; return i; }));
+const letters = [...lab.querySelectorAll('i')];
+let max = 0, cx = [], x = 0, v = 0, done = false, armed = 0, raf = 0;
+function measure(){
+  max = track.clientWidth - 64;
+  const t = track.getBoundingClientRect().left;
+  cx = letters.map(l => { const r = l.getBoundingClientRect(); return r.left - t + r.width / 2; });
+}
+const resist = r => r <= .72 ? r : .72 + .28 * Math.tanh((r - .72) / .28 * 1.1);
+function draw(){
+  const p = max ? x / max : 0, edge = 4 + x + 56;
+  track.style.setProperty('--x', x.toFixed(1) + 'px');
+  letters.forEach((l, i) => { const d = cx[i] - edge; l.style.opacity = (d < 0 ? 0 : d < 56 ? .2 + .8 * d / 56 : 1) * (1 - p * .45); });
+  const pct = Math.round(clamp(p, 0, 1) * 100);
+  handle.setAttribute('aria-valuenow', done ? 100 : pct);
+  handle.setAttribute('aria-valuetext', done ? 'Sent' : armed ? 'Ready. Press Enter to send' : pct ? pct + ' percent' : 'Not sent');
+}
+function springTo(target, k, c, then){
+  cancelAnimationFrame(raf);
+  if (reduce.matches){ x = target; v = 0; draw(); then && then(); return; }
+  let last = performance.now();
+  const tick = now => {
+    const dt = Math.min(.032, (now - last) / 1000) / 4; last = now;
+    for (let i = 0; i < 4; i++){ v += (k * (target - x) - c * v) * dt; x += v * dt; if (x < 0){ x = 0; v *= -.3; } }
+    draw();
+    if (Math.abs(target - x) < .3 && Math.abs(v) < 4){ x = target; v = 0; draw(); then && then(); return; }
+    raf = requestAnimationFrame(tick);
+  };
+  raf = requestAnimationFrame(tick);
+}
+function complete(){
+  if (done) return;
+  done = true; armed = 0; arm.classList.remove('on'); clearTimeout(armTimer);
+  const t = new Date(), at = String(t.getHours()).padStart(2, '0') + ':' + String(t.getMinutes()).padStart(2, '0');
+  $('at').textContent = at;
+  springTo(max, 900, 46, () => {
+    track.classList.add('done'); $('gi').innerHTML = CHECK; draw();
+    app.classList.add('paid');
+    $('who').firstChild.nodeValue = "You're square with Maren";
+    $('note').textContent = 'Paid from Everyday ·· 3318 at ' + at + '. Cabin weekend is settled for you.';
+    $('again').hidden = false; $('how').textContent = 'Maren gets a note from Quits right away.';
+    sr.textContent = 'Paid Maren £64.20 at ' + at + ". You're square.";
+  });
+}
+function home(say){
+  armed = 0; arm.classList.remove('on'); clearTimeout(armTimer);
+  springTo(0, 340, 17);
+  if (say) sr.textContent = 'Not sent.';
+}
+// pointer
+let sx = 0, ox = 0, drag = false;
+handle.addEventListener('pointerdown', e => {
+  if (done || e.button) return;
+  measure(); track.classList.remove('hint'); cancelAnimationFrame(raf);
+  drag = true; sx = e.clientX; ox = x; handle.setPointerCapture(e.pointerId); track.classList.add('grab');
+});
+handle.addEventListener('pointermove', e => {
+  if (!drag) return;
+  x = resist(Math.max(0, ox + e.clientX - sx) / max) * max; draw();
+  if (x >= max * .9){ drag = false; track.classList.remove('grab'); complete(); }
+});
+const release = () => { if (!drag) return; drag = false; track.classList.remove('grab'); home(x > max * .25); };
+handle.addEventListener('pointerup', release);
+handle.addEventListener('pointercancel', release);
+// keyboard: arrows move it, Enter arms, Enter again sends
+let armTimer = 0;
+handle.addEventListener('keydown', e => {
+  if (done) return;
+  measure(); track.classList.remove('hint');
+  const step = { ArrowRight: .1, ArrowUp: .1, ArrowLeft: -.1, ArrowDown: -.1 }[e.key];
+  if (step){ e.preventDefault(); springTo(clamp(x / max + step, 0, .8) * max, 600, 40); return; }
+  if (e.key === 'Home' || e.key === 'Escape'){ e.preventDefault(); home(armed); return; }
+  if (e.key === 'Enter' || e.key === ' '){
+    e.preventDefault(); if (e.repeat) return;
+    if (armed){ complete(); return; }
+    armed = 1; arm.classList.add('on'); springTo(max * .84, 600, 34);
+    sr.textContent = 'Press Enter again to send £64.20 to Maren. Escape cancels.';
+    armTimer = setTimeout(() => home(true), 5000);
+  }
+});
+$('again').addEventListener('click', () => {
+  done = false; track.classList.add('back'); track.classList.remove('done'); app.classList.remove('paid');
+  $('gi').innerHTML = ARROW; $('who').firstChild.nodeValue = 'You owe Maren Okafor';
+  $('note').textContent = "Your share of the weekend. Payments can't be recalled, so check the amount."; $('how').textContent = HOW;
+  $('again').hidden = true; x = 0; draw();
+  requestAnimationFrame(() => track.classList.remove('back'));
+  sr.textContent = 'Reset. £64.20 to Maren, not sent.'; handle.focus();
+});
+addEventListener('resize', () => { measure(); if (done) x = max; else x = Math.min(x, max); draw(); });
+measure(); draw();
+if (document.fonts) document.fonts.ready.then(() => { measure(); draw(); });
+})();
+</script>
+</body>
+</html>

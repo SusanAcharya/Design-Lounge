@@ -1,0 +1,345 @@
+<!-- Design Lounge piece: drag-slingshot-launch · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Postwind · Send by air</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@500;700;800&family=Golos+Text:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sky:#F2E9DB;--sky-2:#E9DCC6;--ground:#D7BF98;--ground-line:#BFA273;--mound:#CDB287;
+  --ink:#1B2540;--ink-2:#4D5367;--paper:#FFFCF5;--red:#B23F28;--blue:#2B4B8A;--post:#5B4530;--hole:#0E1630;
+  --display:"Host Grotesk",system-ui,sans-serif;--ui:"Golos Text",system-ui,sans-serif;
+  --ease:cubic-bezier(.2,.7,.2,1);--spring:cubic-bezier(.34,1.56,.64,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:15px/1.5 var(--ui);color:var(--ink);background:linear-gradient(180deg,#EFE4D3 0%,var(--sky) 52%,var(--sky-2) 100%);overflow:hidden;position:relative;touch-action:manipulation}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:6px}
+
+.top{position:relative;z-index:2;display:flex;align-items:center;gap:28px;padding:20px 48px;font-size:14px}
+.mark{font:800 21px/1 var(--display);letter-spacing:-.04em;display:flex;align-items:center;gap:9px}
+.mark svg{width:26px;height:26px}
+.top nav{display:flex;gap:22px;margin-left:auto;color:var(--ink-2)}
+.top nav a[aria-current]{color:var(--ink);font-weight:600}
+.tally{font-weight:500;color:var(--ink-2)}
+.tally b{color:var(--ink);font-variant-numeric:tabular-nums}
+.me{width:34px;height:34px;border-radius:50%;background:var(--ink);color:var(--paper);display:grid;place-items:center;font:600 12px var(--ui)}
+
+.letter{position:absolute;z-index:2;left:48px;top:96px;width:352px;padding:22px 24px 20px;border:7px solid transparent;border-radius:6px;
+  background:linear-gradient(var(--paper),var(--paper)) padding-box,repeating-linear-gradient(-45deg,var(--red) 0 13px,var(--paper) 13px 19px,var(--blue) 19px 32px,var(--paper) 32px 38px) border-box;
+  box-shadow:0 1px 0 rgba(27,37,64,.08),0 14px 30px -18px rgba(27,37,64,.45);transition:opacity 220ms var(--ease),transform 320ms var(--ease)}
+.letter.swap{opacity:0;transform:translateY(-8px) rotate(-1deg)}
+.eyebrow{margin:0 0 12px;font:600 11px/1 var(--ui);letter-spacing:.12em;text-transform:uppercase;color:var(--red)}
+.letter h2{margin:0;font:700 24px/1.1 var(--display);letter-spacing:-.025em}
+.addr{margin:4px 0 14px;font-size:13px;color:var(--ink-2)}
+.body{margin:0;font-size:15px;line-height:1.55;padding-top:14px;border-top:1px dashed #CDBFA8}
+.meta{margin:14px 0 0;font-size:12px;color:var(--ink-2);display:flex;justify-content:space-between}
+.postmark{position:absolute;right:14px;top:12px;width:96px;height:96px;opacity:0;pointer-events:none}
+.letter.sent .postmark{animation:stamp 380ms var(--spring) forwards}
+@keyframes stamp{0%{opacity:0;transform:scale(1.6) rotate(4deg)}100%{opacity:1;transform:scale(1) rotate(-14deg)}}
+
+.pitch{position:absolute;z-index:2;right:56px;top:100px;text-align:right}
+h1{margin:0;font:800 112px/.9 var(--display);letter-spacing:-.055em}
+.hint{margin:22px 0 0;font-size:14px;color:var(--ink-2)}
+kbd{font:600 12px var(--ui);color:var(--ink);background:var(--paper);border:1px solid #BCAE97;border-bottom-width:2px;border-radius:5px;padding:1px 6px;margin:0 1px}
+
+.scene{position:absolute;inset:0;width:100%;height:100%;z-index:3;pointer-events:none;overflow:visible}
+#dots{transition:opacity 180ms var(--ease)}
+#dots.off{opacity:0}
+#flag g{transform:rotate(-90deg);transition:transform 560ms var(--spring)}
+.got #flag g{transform:rotate(0)}
+.got .mb{animation:thunk 300ms var(--ease)}
+@keyframes thunk{40%{transform:scale(1.04,.94)}}
+.mb{transform-box:fill-box;transform-origin:50% 100%}
+#plane{transition:opacity 160ms}
+#plane.gone{opacity:0}
+
+.grab{position:absolute;z-index:4;left:0;top:0;width:76px;height:76px;border-radius:50%;padding:0;border:1.5px dashed #6A6F80;background:none;cursor:grab;touch-action:none;transition:border-color 160ms var(--ease)}
+.grab:hover{border-color:var(--ink)}
+.grab:active{cursor:grabbing}
+.grab:focus-visible{outline:3px solid var(--blue);outline-offset:3px;border-radius:50%}
+.grab.fly{border-color:transparent;cursor:default}
+.ground-label{position:absolute;z-index:4;margin:0;font:500 12px/1.3 var(--ui);color:var(--ink);white-space:nowrap;font-variant-numeric:tabular-nums}
+.ground-label b{font:700 13px var(--display);letter-spacing:-.01em}
+#aim{transform:translateX(-50%)}
+#owner{transform:translateX(-50%);text-align:center}
+
+@media (max-width:699px){
+  .top{padding:16px 16px;gap:12px}
+  .top nav,.tally{display:none}
+  .me{margin-left:auto}
+  .letter{position:relative;left:auto;top:auto;margin:4px 16px 0;width:auto;padding:14px 16px 14px;border-width:6px}
+  .letter h2{font-size:20px}
+  .addr{margin:2px 0 10px}
+  .body{font-size:14px;padding-top:10px}
+  .meta{display:none}
+  .postmark{width:72px;height:72px;right:8px;top:6px}
+  .pitch{position:relative;right:auto;top:auto;margin:22px 16px 0;text-align:left}
+  h1{font-size:44px;letter-spacing:-.045em}
+  .hint{margin-top:10px;font-size:13px}
+  .hint .keys{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .letter,#dots,#flag g,.grab{transition:none}
+  .letter.sent .postmark{animation:none;opacity:1;transform:rotate(-14deg)}
+  .got .mb{animation:none}
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="mark" href="#" aria-label="Postwind home"><svg viewBox="0 0 26 26" aria-hidden="true"><circle cx="13" cy="13" r="13" fill="#B23F28"/><path d="M6 13.5 20 7l-3.6 13-3.7-4.4L6 13.5Zm6.7 2.1L20 7" fill="#FFFCF5" stroke="#1B2540" stroke-width="1.2" stroke-linejoin="round"/></svg>Postwind</a>
+  <nav aria-label="Main"><a href="#" aria-current="page">Outbox</a><a href="#">Pen pals</a><a href="#">Stamps</a></nav>
+  <span class="tally"><b id="count">4</b> sent this week</span>
+  <span class="me" aria-label="Signed in as Marta Reyes">MR</span>
+</header>
+
+<main>
+  <article class="letter" id="letter" aria-labelledby="to">
+    <p class="eyebrow">Outbox · by air</p>
+    <h2 id="to">To Ines Faria</h2>
+    <p class="addr" id="addr">Rua do Almada 14, Porto</p>
+    <p class="body" id="body">The figs finally came in. I saved you the ugly ones, which everyone knows are the sweet ones.</p>
+    <p class="meta"><span id="words">212 words · folded 14:20</span><span>Stamp 1.20</span></p>
+    <svg class="postmark" viewBox="0 0 96 96" aria-hidden="true"><g fill="none" stroke="#B23F28" stroke-width="2"><circle cx="48" cy="48" r="44"/><circle cx="48" cy="48" r="31"/></g><g fill="#B23F28" font-family="Host Grotesk,sans-serif" font-weight="800" text-anchor="middle"><text x="48" y="45" font-size="13" letter-spacing="1">LANDED</text><text x="48" y="60" font-size="10">31 OCT</text></g></svg>
+  </article>
+
+  <div class="pitch">
+    <h1>Pull back.<br>Let it fly.</h1>
+    <p class="hint" id="hint">Drag the plane back, then let go<span class="keys"> · <kbd>↑</kbd><kbd>↓</kbd> angle · <kbd>←</kbd><kbd>→</kbd> pull · <kbd>Space</kbd> send</span></p>
+  </div>
+
+  <svg class="scene" id="scene" aria-hidden="true">
+    <defs><path id="cloud" d="M0 0H128A18 18 0 0 0 110 -22A26 26 0 0 0 62 -34A20 20 0 0 0 26 -20A15 15 0 0 0 0 0Z"/></defs>
+    <g id="clouds" fill="#F8F2E8"><use href="#cloud"/><use href="#cloud"/><use href="#cloud"/></g>
+    <path id="hill" fill="var(--mound)"/>
+    <path id="ground" fill="var(--ground)"/>
+    <path id="gline" stroke="var(--ground-line)" stroke-width="1"/>
+    <g id="box">
+      <rect x="-6" y="-122" width="12" height="124" rx="2" fill="var(--post)"/>
+      <g class="mb">
+        <path d="M-58 -120V-150Q-58 -178 -30 -178H30Q58 -178 58 -150V-120Z" fill="var(--blue)"/>
+        <path d="M-50 -164Q-44 -172 -30 -172H24" fill="none" stroke="#FFFCF5" stroke-opacity=".3" stroke-width="3" stroke-linecap="round"/>
+        <ellipse cx="-58" cy="-149" rx="12" ry="29" fill="var(--hole)" stroke="#3E63A8" stroke-width="3"/>
+        <path d="M-63 -121h9l-8 50h-9Z" fill="#22407A" stroke="#3E63A8" stroke-width="2" stroke-linejoin="round"/>
+        <path d="M-44 -126H52" stroke="#1E3A70" stroke-width="2"/>
+        <g id="flag" transform="translate(46 -158)"><g><rect x="-2.5" y="-62" width="5" height="64" rx="2.5" fill="#7A1E10"/><path d="M2 -62h26l-6 8 6 8H2Z" fill="var(--red)"/></g></g>
+        <circle cx="46" cy="-158" r="3.5" fill="#E9DCC6"/>
+        <text id="boxname" x="0" y="-131" fill="#FFFCF5" font-family="Host Grotesk,sans-serif" font-weight="800" font-size="13" letter-spacing="1.6" text-anchor="middle">FARIA</text>
+      </g>
+    </g>
+    <g id="fork" fill="none" stroke-linecap="round">
+      <path d="M0 150V52M0 52C0 26-24 22-24-4M0 52C0 26 24 22 24-4" stroke="var(--ink)" stroke-width="11"/>
+      <path d="M-24 -1v-8M24 -1v-8" stroke="var(--red)" stroke-width="13"/>
+    </g>
+    <line id="bandB" stroke="#8E2E1C" stroke-linecap="round"/>
+    <g id="dots"></g>
+    <g id="plane">
+      <path d="M42 0 0 -14 9 0Z" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.6" stroke-linejoin="round"/>
+      <path d="M42 0 9 0 3 10Z" fill="#E6DCCB" stroke="var(--ink)" stroke-width="1.6" stroke-linejoin="round"/>
+      <path d="M38 -1.5 4 -12.5" stroke="var(--red)" stroke-width="2" stroke-dasharray="4 4"/>
+      <path d="M34 -2.5 4 -12" stroke="var(--blue)" stroke-width="2" stroke-dasharray="4 4" stroke-dashoffset="4" opacity="0"/>
+    </g>
+    <rect id="pouch" x="-5" y="-7" width="10" height="14" rx="3" fill="#6E2416"/>
+    <line id="bandF" stroke="var(--red)" stroke-linecap="round"/>
+  </svg>
+
+  <button class="grab" id="grab" type="button" aria-describedby="hint" aria-label="Paper plane, angle 38 degrees, pull 64 percent"></button>
+  <p class="ground-label" id="aim" aria-hidden="true"><b>38°</b> angle · <b>64%</b> pull</p>
+  <p class="ground-label" id="owner" aria-hidden="true">Ines’s box · Porto</p>
+  <p class="vh" id="say" aria-live="polite"></p>
+</main>
+
+<script>
+(() => {
+const RM = matchMedia('(prefers-reduced-motion: reduce)');
+const $ = id => document.getElementById(id), NS = 'http://www.w3.org/2000/svg';
+const svg = $('scene'), plane = $('plane'), bandB = $('bandB'), bandF = $('bandF'), pouch = $('pouch'), grab = $('grab'), box = $('box'), dotsG = $('dots'), say = $('say');
+const dots = Array.from({ length: 16 }, (_, i) => { const c = document.createElementNS(NS, 'circle'); c.setAttribute('fill', '#1B2540'); c.setAttribute('r', (3.4 - i * .1).toFixed(2)); c.setAttribute('opacity', (.85 - i * .045).toFixed(2)); dotsG.appendChild(c); return c; });
+const PALS = [
+  { to: 'Ines Faria', box: 'FARIA', addr: 'Rua do Almada 14, Porto', city: 'Porto', owner: 'Ines’s box · Porto', body: 'The figs finally came in. I saved you the ugly ones, which everyone knows are the sweet ones.', words: '212 words · folded 14:20' },
+  { to: 'Tomas Lindqvist', box: 'LINDQVIST', addr: 'Kvarnvägen 3, Umeå', city: 'Umeå', owner: 'Tomas’s box · Umeå', body: 'Snow came early. Your pressed cornflower fell out of my atlas and it still smells of July.', words: '168 words · folded 14:41' },
+  { to: 'Aiko Wren', box: 'WREN', addr: '4-2 Minami-cho, Otaru', city: 'Otaru', owner: 'Aiko’s box · Otaru', body: 'I tried your trick with the kettle and the cracked bowl. It worked, mostly. Drawings next time.', words: '190 words · folded 15:02' }
+];
+const DT = 1 / 120, AIR = .1;
+let W, H, sc, ps, gy, r0, mx, my, P, g, vmax, tipL, tipR;
+let st = 'rest', p = { x: 0, y: 0 }, v = { x: 0, y: 0 }, rot = 0, scl = 1, aimA = 38, aimP = .64;
+let band = { x: 0, y: 0, vx: 0, vy: 0, free: false }, sp = null, tw = null, off = null, saved = null;
+let pal = 0, sent = 4, raf = 0, last = 0, aimT = 0;
+
+const rad = d => d * Math.PI / 180;
+const aimPos = () => ({ x: r0.x - Math.cos(rad(aimA)) * aimP * P, y: r0.y + Math.sin(rad(aimA)) * aimP * P });
+const W2 = (lx, ly) => ({ x: mx + lx * sc, y: my + ly * sc });
+const inR = (pt, a, b) => pt.x >= a.x && pt.x <= b.x && pt.y >= a.y && pt.y <= b.y;
+const nose = () => ({ x: p.x + Math.cos(rad(rot)) * 42 * ps * scl, y: p.y + Math.sin(rad(rot)) * 42 * ps * scl });
+const inSling = () => st === 'rest' || st === 'cocking' || st === 'cocked' || st === 'drag';
+
+function layout() {
+  W = innerWidth; H = innerHeight; const ph = W < 700;
+  sc = ph ? .64 : 1.12; ps = ph ? .88 : 1.3; gy = H - (ph ? 96 : 92);
+  r0 = { x: ph ? 98 : Math.max(220, W * .22), y: gy - 150 * sc };
+  mx = ph ? W - 70 : W * .8; my = gy - 24 * sc;
+  P = ph ? 86 : 150; g = ph ? 780 : 1500; vmax = Math.sqrt(2.4 * (mx - r0.x) * g);
+  tipL = { x: r0.x - 24 * sc, y: r0.y - 5 * sc }; tipR = { x: r0.x + 24 * sc, y: r0.y - 5 * sc };
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  $('ground').setAttribute('d', `M0 ${gy}H${W}V${H}H0Z`);
+  $('gline').setAttribute('d', `M0 ${gy + .5}H${W}`);
+  $('hill').setAttribute('d', `M${mx - 190 * sc} ${gy + 1}Q${mx} ${gy - 66 * sc} ${mx + 210 * sc} ${gy + 1}Z`);
+  $('fork').setAttribute('transform', `translate(${r0.x} ${r0.y}) scale(${sc})`);
+  box.setAttribute('transform', `translate(${mx} ${my}) scale(${sc})`);
+  [[.42, .56, 1], [.6, .66, .62], [.9, .55, .85]].forEach(([fx, fy, k], i) => $('clouds').children[i].setAttribute('transform', `translate(${W * fx - (ph ? 60 : 0)} ${ph ? H * (.5 + i * .05) : H * fy}) scale(${k * sc})`));
+  const a = $('aim'), o = $('owner');
+  a.style.left = r0.x + 'px'; a.style.top = gy + (ph ? 18 : 22) + 'px';
+  o.style.left = mx + 'px'; o.style.top = gy + (ph ? 18 : 22) + 'px';
+  if (st === 'cocked' || st === 'drag') { p = aimPos(); rot = -aimA; } else if (st === 'rest') { p = { ...r0 }; rot = 0; }
+  render();
+}
+
+function render() {
+  plane.setAttribute('transform', `translate(${p.x} ${p.y}) rotate(${rot}) scale(${ps * scl})`);
+  const at = inSling() || st === 'loading' ? p : band, s = Math.min(1, Math.hypot(at.x - r0.x, at.y - r0.y) / P);
+  const w = ((st === 'rest' && !band.free ? 7 : 7 - 4.6 * s) * sc).toFixed(2);
+  [[bandB, tipL], [bandF, tipR]].forEach(([l, t]) => { l.setAttribute('x1', t.x); l.setAttribute('y1', t.y); l.setAttribute('x2', at.x); l.setAttribute('y2', at.y); l.setAttribute('stroke-width', w); });
+  pouch.setAttribute('transform', `translate(${at.x} ${at.y}) rotate(${inSling() ? rot : 0}) scale(${sc})`);
+  const q = inSling() ? p : r0, c = { x: q.x + Math.cos(rad(inSling() ? rot : 0)) * 20 * ps, y: q.y + Math.sin(rad(inSling() ? rot : 0)) * 20 * ps };
+  grab.style.transform = `translate(${c.x - 38}px,${c.y - 38}px)`;
+  grab.classList.toggle('fly', !inSling());
+  const show = st === 'cocked' || st === 'drag';
+  dotsG.classList.toggle('off', !show);
+  if (show) preview();
+  const A = Math.round(aimA), Pp = Math.round(aimP * 100);
+  $('aim').innerHTML = `<b>${A}°</b> angle · <b>${Pp}%</b> pull`;
+  grab.setAttribute('aria-label', `Paper plane, angle ${A} degrees, pull ${Pp} percent`);
+}
+
+function preview() {
+  let x = p.x, y = p.y, vx = (r0.x - p.x) / P * vmax, vy = (r0.y - p.y) / P * vmax, n = 0;
+  for (let i = 1; i < 400 && n < dots.length; i++) {
+    vy += g * DT; vx *= 1 - AIR * DT; vy *= 1 - AIR * DT; x += vx * DT; y += vy * DT;
+    if (y > gy) break;
+    if (i % 6 === 0) { dots[n].setAttribute('cx', x.toFixed(1)); dots[n].setAttribute('cy', y.toFixed(1)); dots[n].style.display = ''; n++; }
+  }
+  for (; n < dots.length; n++) dots[n].style.display = 'none';
+}
+
+function kick() { if (!raf) { last = performance.now(); raf = requestAnimationFrame(tick); } }
+function tick(now) {
+  const dt = Math.min(.034, (now - last) / 1000); last = now;
+  const n = Math.max(1, Math.round(dt / DT));
+  if (st === 'flight') { for (let i = 0; i < n && st === 'flight'; i++) step(); if (st === 'flight') rot = Math.atan2(v.y, v.x) * 180 / Math.PI; }
+  if (band.free) for (let i = 0; i < n; i++) {
+    band.vx += (-560 * (band.x - r0.x) - 9 * band.vx) * DT; band.vy += (-560 * (band.y - r0.y) - 9 * band.vy) * DT;
+    band.x += band.vx * DT; band.y += band.vy * DT;
+    if (Math.hypot(band.x - r0.x, band.y - r0.y) < .2 && Math.hypot(band.vx, band.vy) < 4) { band.free = false; band.x = r0.x; band.y = r0.y; }
+  }
+  if (sp) for (let i = 0; i < n; i++) {
+    sp.vx += (-130 * (p.x - sp.x) - 13 * sp.vx) * DT; sp.vy += (-130 * (p.y - sp.y) - 13 * sp.vy) * DT; sp.vr += (-210 * rot - 9 * sp.vr) * DT;
+    p.x += sp.vx * DT; p.y += sp.vy * DT; rot += sp.vr * DT;
+    if (Math.hypot(p.x - sp.x, p.y - sp.y) < .4 && Math.hypot(sp.vx, sp.vy) < 6 && Math.abs(rot) < .5) { p = { x: sp.x, y: sp.y }; rot = 0; sp = null; st = 'rest'; band.free = false; band.x = r0.x; band.y = r0.y; setTimeout(cock, 140); break; }
+  }
+  if (tw) { const k = Math.min(1, (now - tw.t0) / tw.d), e = tw.e(k); for (const key in tw.to) { const f = tw.from[key], t = tw.to[key]; if (key === 'p') p = { x: f.x + (t.x - f.x) * e, y: f.y + (t.y - f.y) * e }; else if (key === 'rot') rot = f + (t - f) * e; else scl = f + (t - f) * e; } if (k >= 1) { const d = tw.done; tw = null; d && d(); } }
+  render();
+  raf = (st === 'flight' || band.free || sp || tw) ? requestAnimationFrame(tick) : 0;
+}
+const easeOut = k => 1 - Math.pow(1 - k, 3), back = k => 1 + 2.4 * Math.pow(k - 1, 3) + 1.4 * Math.pow(k - 1, 2);
+function tween(to, d, e, done) { tw = { t0: performance.now(), d, e, done, to, from: { p: { ...p }, rot, s: scl } }; kick(); }
+
+function step() {
+  v.y += g * DT; v.x *= 1 - AIR * DT; v.y *= 1 - AIR * DT; p.x += v.x * DT; p.y += v.y * DT;
+  const t = nose();
+  if (v.x > 0 && inR(t, W2(-74, -174), W2(-46, -124))) return deliver();
+  if (inR(t, W2(-58, -178), W2(58, -120)) || inR(t, W2(-6, -122), W2(6, 0))) { v.x = -Math.abs(v.x) * .35; v.y *= .4; p.x -= 3; hitBox = true; }
+  if (t.y >= gy - 2) return land(t);
+  if (p.x > W + 80 || p.x < -120 || p.y > H + 60) return miss(p.x > mx ? 'long' : 'short');
+}
+let hitBox = false;
+
+function cock() {
+  if (st !== 'rest') return;
+  if (RM.matches) { st = 'cocked'; p = aimPos(); rot = -aimA; render(); return; }
+  st = 'cocking'; tween({ p: aimPos(), rot: -aimA }, 420, easeOut, () => { st = 'cocked'; render(); });
+}
+function fire() {
+  saved = null;
+  if (aimP < .14) { announce('Too gentle to fly. Pull further back.'); st = 'cocked'; aimP = .14; p = aimPos(); rot = -aimA; render(); return; }
+  v = { x: (r0.x - p.x) / P * vmax, y: (r0.y - p.y) / P * vmax }; hitBox = false;
+  if (RM.matches) return instant();
+  band = { x: p.x, y: p.y, vx: v.x * .45, vy: v.y * .45, free: true };
+  st = 'flight'; kick();
+}
+function instant() {
+  const s0 = { ...p }; st = 'flight';
+  for (let i = 0; i < 2400 && st === 'flight'; i++) step();
+  if (st !== 'in') { p = s0; st = 'cocked'; rot = -aimA; render(); }
+}
+function land(t) {
+  p.y -= t.y - gy + 2; rot = Math.max(18, Math.min(50, rot));
+  miss(hitBox ? 'box' : t.x < mx ? 'short' : 'long');
+}
+function miss(why) {
+  st = 'landed'; render();
+  announce({ short: 'Landed short of the mailbox. Add pull or raise the angle.', long: 'Flew past the mailbox. Ease off the pull.', box: 'Bounced off the mailbox. Aim for the open door.' }[why] + ' The plane is back in the sling.');
+  if (RM.matches) return;
+  setTimeout(() => { sp = { x: r0.x, y: r0.y, vx: 0, vy: -260, vr: 0 }; st = 'return'; kick(); }, 650);
+}
+function deliver() {
+  const L = PALS[pal]; sent++;
+  st = 'in'; $('count').textContent = sent; $('letter').classList.add('sent'); box.classList.add('got');
+  announce(`Delivered to ${L.to} in ${L.city}. ${sent} letters sent this week.`);
+  const done = () => { plane.classList.add('gone'); setTimeout(next, RM.matches ? 1800 : 2200); };
+  if (RM.matches) return done();
+  tween({ p: W2(-60, -149), rot: 0, s: .5 }, 200, easeOut, done);
+}
+function next() {
+  pal = (pal + 1) % PALS.length; const L = PALS[pal], card = $('letter');
+  card.classList.add('swap'); box.classList.remove('got');
+  setTimeout(() => {
+    $('to').textContent = 'To ' + L.to; $('addr').textContent = L.addr; $('body').textContent = L.body; $('words').textContent = L.words;
+    $('boxname').textContent = L.box; $('owner').textContent = L.owner;
+    card.classList.remove('sent', 'swap');
+    p = { ...r0 }; rot = 0; scl = RM.matches ? 1 : .2; plane.classList.remove('gone'); st = 'loading';
+    if (RM.matches) { st = 'rest'; return cock(); }
+    tween({ s: 1 }, 380, back, () => { st = 'rest'; cock(); });
+  }, RM.matches ? 0 : 240);
+}
+function announce(t) { say.textContent = ''; setTimeout(() => { say.textContent = t; }, 40); }
+
+grab.addEventListener('pointerdown', e => {
+  if (e.button || !inSling()) return;
+  e.preventDefault(); tw = null; saved = { a: aimA, p: aimP }; st = 'drag';
+  grab.setPointerCapture(e.pointerId); off = { x: e.clientX - p.x, y: e.clientY - p.y }; render();
+});
+grab.addEventListener('pointermove', e => {
+  if (st !== 'drag') return;
+  const dx = e.clientX - off.x - r0.x, dy = e.clientY - off.y - r0.y;
+  aimP = Math.min(1, Math.hypot(dx, dy) / P);
+  aimA = Math.max(4, Math.min(84, Math.atan2(dy, -dx) * 180 / Math.PI));
+  p = aimPos(); rot = -aimA; render();
+});
+const up = () => { if (st === 'drag') fire(); };
+grab.addEventListener('pointerup', up);
+grab.addEventListener('pointercancel', () => { if (st === 'drag' && saved) { aimA = saved.a; aimP = saved.p; st = 'cocked'; p = aimPos(); rot = -aimA; render(); } });
+grab.addEventListener('keydown', e => {
+  const m = e.shiftKey ? 3 : 1, k = e.key;
+  if (k === ' ' || k === 'Enter') { e.preventDefault(); if (st === 'cocked' || st === 'cocking') { tw = null; p = aimPos(); rot = -aimA; fire(); } return; }
+  const d = { ArrowUp: [2, 0], ArrowDown: [-2, 0], ArrowLeft: [0, .04], ArrowRight: [0, -.04] }[k];
+  if (!d && k !== 'Home') return;
+  e.preventDefault(); if (!(st === 'cocked' || st === 'cocking')) return;
+  if (d) { aimA = Math.max(4, Math.min(84, aimA + d[0] * m)); aimP = Math.max(.14, Math.min(1, aimP + d[1] * m)); } else { aimA = 38; aimP = .64; }
+  tw = null; st = 'cocked'; p = aimPos(); rot = -aimA; render();
+  clearTimeout(aimT); aimT = setTimeout(() => announce(`Angle ${Math.round(aimA)} degrees, pull ${Math.round(aimP * 100)} percent.`), 260);
+});
+grab.addEventListener('keyup', e => { if (e.key === ' ') e.preventDefault(); });
+addEventListener('resize', layout);
+
+layout(); p = { ...r0 }; render();
+setTimeout(cock, RM.matches ? 0 : 450);
+})();
+</script>
+</body>
+</html>
