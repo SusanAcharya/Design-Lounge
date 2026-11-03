@@ -9,7 +9,7 @@
     "source": "github",
     "subfolder": "mcp"
   },
-  "version": "0.2.5",
+  "version": "0.2.6",
   "remotes": [
     {
       "type": "streamable-http",
@@ -20,7 +20,7 @@
     {
       "registryType": "npm",
       "identifier": "design-lounge-mcp",
-      "version": "0.2.5",
+      "version": "0.2.6",
       "transport": {
         "type": "stdio"
       },
