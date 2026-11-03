@@ -45,7 +45,7 @@ const DIRECTIONS: Record<string, Direction[]> = {
     ['warm-studio', 'Warm studio', 'Friendly, crafted, clay and sand', 'kiln', 'studio-display', 'soft', 'editorial-landing-hero', 'scroll-word-highlight'],
   ]),
   saas: d([
-    ['ledger-paper', 'Ledger paper', 'Money, trust, professional services: the real document is the hero', 'harbour-ledger', 'slab-ledger', 'editorial', 'fintech-invoice-builder', null],
+    ['ledger-paper', 'Ledger paper', 'Money, trust, professional services: the real document is the hero', 'harbour-ledger', 'lettera', 'editorial', 'fintech-invoice-builder', null],
     ['calm-cobalt', 'Calm cobalt', 'Enterprise IT, security, a team tool that lives in a browser', 'fog-city', 'swiss-precision', 'quiet', 'hero-split-ui-stack', 'features-sticky-scroll-steps'],
     ['dev-night', 'Dev night', 'Technical, dark, for developers', 'night-desk', 'developer-docs', 'sharp', 'landing-devtool-dark', 'webgl-shader-hero'],
     ['lime-engine', 'Lime engine', 'AI, infrastructure, fast and expensive', 'circuit', 'signal-mono', 'sharp', 'hero-ai-prompt-cycle', 'spotlight-hover-grid'],

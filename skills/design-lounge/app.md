@@ -13,6 +13,7 @@ These are fails, unless they asked for one by name:
 - A greeting ("Good evening, Alex"), a purple gradient, and a glass card (unless lifted by Named aesthetic in [practice.md](practice.md)).
 - An ops screen where every status gets its own loud block. Colour marks what needs a person now. Everything else stays the theme's quiet surface, so the one alert is the first thing seen.
 - On a phone, a map, chart, or board above the thing that needs action. The queue of what needs a person comes first; the map and the rest follow.
+- On a phone, a status board as a sideways swipe when the board is only a view. Its columns become stacked sections with their counts, so every late or stuck item is seen by scrolling down. A board people drag cards on (a kanban tool) may keep the swipe.
 
 Good: "The home is today's three deliveries, and the next stop is already open." "The first screen is the recording, the timer big enough to read from across the counter."
 
