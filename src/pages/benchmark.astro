@@ -66,6 +66,7 @@ const dataset = {
                 <p class="label">{label}</p>
                 <dl class="stats">
                   {AREAS.map(([key, name]) => <div><dt>{name}</dt><dd class="num">{r[key]}</dd></div>)}
+                  <div><dt>Design rating</dt><dd class="num">{VERDICTS.find((x) => x.subject === s.id)![arm]}/50</dd></div>
                   <div class="wide"><dt>Review fails</dt><dd>{r.fails} {r.fails === 1 ? 'fail' : 'fails'}{r.contrast > 0 ? `, ${r.contrast} text elements below readable contrast` : ', every line of text readable'}</dd></div>
                 </dl>
                 <p class="meta"><a href={url(s.id, arm)} target="_blank" rel="noopener">Open the build <span aria-hidden="true">↗</span></a></p>
@@ -74,7 +75,6 @@ const dataset = {
           );
         })}
       </div>
-      <p class="why"><b>Blind design rating: {VERDICTS.find((x) => x.subject === s.id)!.with} to {VERDICTS.find((x) => x.subject === s.id)!.without} out of 50 for the Lounge build.</b> {VERDICTS.find((x) => x.subject === s.id)!.why}</p>
     </section>
   ))}
 
@@ -142,7 +142,7 @@ const dataset = {
   .shot img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; }
   .label { display: flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 600; color: var(--ink); }
   .win { font-size: 11px; font-weight: 400; letter-spacing: .08em; text-transform: uppercase; padding: 3px 8px; border-radius: 999px; background: var(--ink); color: var(--paper); }
-  .stats { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px 16px; margin: 0; padding: 12px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .stats { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px 16px; margin: 0; padding: 12px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
   .stats div { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
   .stats .wide { grid-column: 1 / -1; }
   .stats dt { font-size: 12px; color: var(--ink-3); }
