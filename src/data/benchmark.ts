@@ -62,7 +62,7 @@ export interface Verdict { subject: string; winner: Arm; with: number; without: 
 export const VERDICTS: Verdict[] = [
   { subject: 'ledgerly', winner: 'with', with: 38, without: 32, why: 'Builds trust honestly with a working invoice editor, client-account versus office-account routing and a change log, set in a confident italic serif with navy and gold. The other states invented facts as real: 2,500+ practices, FCA authorisation, SOC 2, 99.98% uptime and a named testimonial.' },
   { subject: 'crumb', winner: 'with', with: 40, without: 39, why: 'Does the whole job: timed trays with live counts, a pickup slip, a grid of 15-minute slots and a phone tab bar. Its "Dear neighbour" letter is truly ownable.' },
-  { subject: 'fleet', winner: 'without', with: 40, without: 39, why: 'The more distinctive board, with pointed actions such as "Send Van 04, 2.4 km" and "Retry tracker". The other won narrowly because its map sits in the first screen.' },
+  { subject: 'fleet', winner: 'without', with: 40, without: 39, why: 'The more distinctive board: a needs-help column first, with pointed actions such as "Send Van 04, 2.4 km" and "Retry tracker", condensed display type and stop-by-stop progress on every van.' },
 ];
 
 const avg = (xs: number[]) => (xs.length ? xs.reduce((a, b) => a + b, 0) / xs.length : 0);
@@ -73,8 +73,11 @@ export function benchSummary() {
   const sum = (arm: Arm, key: keyof Review) => of(arm).reduce((n, r) => n + (r[key] as number), 0);
   return {
     builds: of('with').length,
-    judgeWins: VERDICTS.filter((v) => v.winner === 'with').length,
+    judgeHigher: VERDICTS.filter((v) => v.with > v.without).length,
     judged: VERDICTS.length,
+    judgeWith: VERDICTS.reduce((n, v) => n + v.with, 0),
+    judgeWithout: VERDICTS.reduce((n, v) => n + v.without, 0),
+    judgeMax: VERDICTS.length * 50,
     failsWith: sum('with', 'fails'),
     failsWithout: sum('without', 'fails'),
     contrastWith: sum('with', 'contrast'),
