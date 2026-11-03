@@ -1,0 +1,29 @@
+name: IndexNow
+
+# After a push to main, wait for Vercel to serve the new build, then tell Bing and the other IndexNow engines
+# which pages changed. The key file in public/ proves the site is ours.
+on:
+  push:
+    branches: [main]
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-actions[bot]'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Wait for the deploy
+        run: |
+          KEY=$(grep -o "const KEY = '[^']*'" scripts/indexnow.mjs | cut -d"'" -f2)
+          for i in $(seq 1 30); do
+            curl -sf "https://www.designlounge.live/$KEY.txt" | grep -q "$KEY" && exit 0
+            sleep 20
+          done
+          echo "Key file not live yet; submitting anyway."
+      - run: sleep 120
+      - run: node scripts/indexnow.mjs ${{ github.event.before }}
