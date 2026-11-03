@@ -31,22 +31,35 @@
   "pricing-usage-slider",
   "faq-category-accordion",
   "footer-sitemap-columns",
+  "fintech-invoice-builder",
   "hero-ai-prompt-cycle",
   "hero-live-browser-card",
   "hero-asymmetric-type-lockup"
  ],
  "directions": [
   {
-   "id": "calm-cobalt",
-   "name": "Calm cobalt",
-   "mood": "Trustworthy, clear, enterprise-friendly",
-   "theme": "fog-city",
-   "pairing": "friendly-saas",
-   "family": "quiet",
-   "hero": "hero-product-window-tilt",
-   "effect": "features-sticky-scroll-steps",
+   "id": "ledger-paper",
+   "name": "Ledger paper",
+   "mood": "Money, trust, professional services: the real document is the hero",
+   "theme": "harbour-ledger",
+   "pairing": "slab-ledger",
+   "family": "editorial",
+   "hero": "fintech-invoice-builder",
+   "effect": null,
    "work": "features-tabbed-preview",
    "footer": "footer-enterprise-sitemap"
+  },
+  {
+   "id": "calm-cobalt",
+   "name": "Calm cobalt",
+   "mood": "Enterprise IT, security, a team tool that lives in a browser",
+   "theme": "fog-city",
+   "pairing": "swiss-precision",
+   "family": "quiet",
+   "hero": "hero-split-ui-stack",
+   "effect": "features-sticky-scroll-steps",
+   "work": "features-sticky-scroll-steps",
+   "footer": "footer-giant-wordmark-reveal"
   },
   {
    "id": "dev-night",
@@ -57,8 +70,8 @@
    "family": "sharp",
    "hero": "landing-devtool-dark",
    "effect": "webgl-shader-hero",
-   "work": "features-sticky-scroll-steps",
-   "footer": "footer-giant-wordmark-reveal"
+   "work": "bento-feature-grid",
+   "footer": "footer-centered-colophon"
   },
   {
    "id": "lime-engine",
@@ -69,8 +82,8 @@
    "family": "sharp",
    "hero": "hero-ai-prompt-cycle",
    "effect": "spotlight-hover-grid",
-   "work": "bento-feature-grid",
-   "footer": "footer-centered-colophon"
+   "work": "features-alternating-rows",
+   "footer": "footer-newsletter-split"
   },
   {
    "id": "butter-tool",
@@ -81,8 +94,8 @@
    "family": "soft",
    "hero": "hero-live-browser-card",
    "effect": "stacking-cards-scroll",
-   "work": "features-alternating-rows",
-   "footer": "footer-newsletter-split"
+   "work": "stacking-cards-scroll",
+   "footer": "footer-sitemap-columns"
   },
   {
    "id": "printed-saas",
@@ -93,8 +106,8 @@
    "family": "editorial",
    "hero": "hero-asymmetric-type-lockup",
    "effect": "text-marker-highlight-draw",
-   "work": "stacking-cards-scroll",
-   "footer": "footer-sitemap-columns"
+   "work": "features-tabbed-preview",
+   "footer": "footer-engraved-caravan-strip"
   }
  ]
 }

@@ -25,7 +25,7 @@ The rest of this file stops slop. This section stops dull. A page can pass every
 Agents with good taste still land on the same few pages. These are fails, unless they asked for one by name.
 
 - The dark portfolio. A near-black page, a huge serif italic name, a small mono kicker line, a numbered table of projects, a local clock, an "open to work" dot.
-- The SaaS template. A gradient hero, a centred headline, three feature cards, a row of logos.
+- The SaaS template. A gradient hero, a centred headline, three feature cards, a row of logos. Its newer form is just as common: a cobalt button, a headline whose second half turns grey or blue, a tilted app window of grey placeholder charts, and one geometric sans everywhere. A product people trust with money, health, or their records shows the thing itself instead: the invoice, the statement, the record, drawn as the real document with real-looking figures, and the price on the page.
 - The quiet paper page. Cream background, a serif headline, and everything else small grey text.
 - The studio template. The 2024-26 look that good agents now all make: hairline grid lines everywhere, small tracked uppercase mono labels, numbered sections ("01 / Work"), a giant wordmark footer, and a sticky scroll section. Each one is fine. All of them together is a template. Use two at most on one site.
 - The wellness template. Linen or blush, an italic serif, clay and sage, an arch frame, a plant sprig, and three step icons. A clinic, a salon, or a spa reaches for it by default.

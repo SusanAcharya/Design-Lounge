@@ -45,7 +45,8 @@ const DIRECTIONS: Record<string, Direction[]> = {
     ['warm-studio', 'Warm studio', 'Friendly, crafted, clay and sand', 'kiln', 'studio-display', 'soft', 'editorial-landing-hero', 'scroll-word-highlight'],
   ]),
   saas: d([
-    ['calm-cobalt', 'Calm cobalt', 'Trustworthy, clear, enterprise-friendly', 'fog-city', 'friendly-saas', 'quiet', 'hero-product-window-tilt', 'features-sticky-scroll-steps'],
+    ['ledger-paper', 'Ledger paper', 'Money, trust, professional services: the real document is the hero', 'harbour-ledger', 'slab-ledger', 'editorial', 'fintech-invoice-builder', null],
+    ['calm-cobalt', 'Calm cobalt', 'Enterprise IT, security, a team tool that lives in a browser', 'fog-city', 'swiss-precision', 'quiet', 'hero-split-ui-stack', 'features-sticky-scroll-steps'],
     ['dev-night', 'Dev night', 'Technical, dark, for developers', 'night-desk', 'developer-docs', 'sharp', 'landing-devtool-dark', 'webgl-shader-hero'],
     ['lime-engine', 'Lime engine', 'AI, infrastructure, fast and expensive', 'circuit', 'signal-mono', 'sharp', 'hero-ai-prompt-cycle', 'spotlight-hover-grid'],
     ['butter-tool', 'Butter tool', 'Playful, consumer, small teams', 'playroom', 'indie-maker', 'soft', 'hero-live-browser-card', 'stacking-cards-scroll'],
@@ -201,7 +202,7 @@ const DIRECTIONS: Record<string, Direction[]> = {
   dashboard: d([
     ['harbour-desk', 'Harbour desk', 'Finance ops, navy and brass, the numbers first', 'harbour-ledger', 'swiss-precision', 'sharp', 'analytics-dashboard-overview', null],
     ['night-ops', 'Night ops', 'Engineers, a dark desk, the log of what changed', 'night-desk', 'developer-docs', 'sharp', 'audit-activity-log', null],
-    ['yard', 'Yard', 'Logistics, safety orange, the jobs on a board', 'cinder', 'industrial-label', 'industrial', 'kanban-board', null],
+    ['yard', 'Yard', 'Logistics and dispatch: a calm concrete desk, safety orange only on what needs a person', 'cinder', 'industrial-label', 'industrial', 'kanban-board', null],
     ['civic', 'Civic', 'An admin that lasts, cool gray, the records', 'fog-city', 'red-hat', 'quiet', 'dense-data-table', null],
     ['paper-office', 'Paper office', 'A quiet office, warm paper, the people and their roles', 'paper-ink', 'academic', 'editorial', 'people-role-list', null],
     ['signal-ops', 'Signal ops', 'A terminal, phosphor on soot, the log is the screen', 'signal-green', 'terminal-native', 'sharp', 'card-terminal-log', null],
