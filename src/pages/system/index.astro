@@ -1,104 +1,220 @@
 ---
+import PageFaq from '../../components/PageFaq.astro';
 import Base from '../../layouts/Base.astro';
 import PageHead from '../../components/PageHead.astro';
-import { AUTHOR } from '../../lib/pieces';
+import { AUTHOR, about, getPieces } from '../../lib/pieces';
 import { PAIRINGS } from '../../data/type';
 import { THEMES } from '../../data/themes';
 import { ICONS, iconSvg } from '../../data/icons';
-import { RECIPES } from '../../data/motion';
+import { RECIPES, EASINGS } from '../../data/motion';
+import { FAMILIES } from '../../data/kit';
 import { WADA_COMBINATIONS } from '../../data/wada';
 
+const pieces = await getPieces();
 const strip = WADA_COMBINATIONS.filter((c) => [176, 263, 336, 343, 265, 126, 166, 303].includes(c.id));
+// A spread across every icon group, not the first few of one.
+const step = Math.max(1, Math.floor(ICONS.length / 24));
+const previewIcons = ICONS.filter((_, i) => i % step === 0).slice(0, 24);
+const previewThemes = THEMES.slice(0, 8);
+const previewPairings = PAIRINGS.slice(0, 4);
+const previewRecipes = ['fade-rise', 'dialog-scale', 'sheet-up', 'tab-ink', 'count-up', 'like-pop'].map((id) => RECIPES.find((r) => r.id === id)).filter((r) => r !== undefined);
+const easeName = (id: string) => EASINGS.find((e) => id.startsWith(e.id))?.name ?? id;
+// Drawn at half scale on a 26px swatch, so 999px still reads as a pill and 2px as nearly square.
+const radiusPx = (r: string) => Math.min((parseInt(r, 10) || 0) / 2, 13);
 
-const previewIcons = ICONS.filter((i) => ['search', 'menu', 'heart', 'arrow-right', 'bell', 'image', 'cart', 'mail', 'file', 'check'].includes(i.id)).slice(0, 8);
-const previewThemes = THEMES.slice(0, 6);
+const lede = `The Design Lounge system is the shared set of font pairings, colour themes, icons, motion recipes, component families and Wada colour sets that every piece in the library is built from. An agent reads it through the skill's library files or the MCP server's tools, so a product it builds uses one palette, one pairing and one component language instead of inventing new ones.`;
+const tools = [
+  { name: 'get_theme', label: 'Themes', what: "A theme's locked colour tokens as CSS, with a board of its colour roles.", href: '/themes' },
+  { name: 'get_pairing', label: 'Type', what: "A pairing's type tokens and rules as CSS, with a specimen of both faces.", href: '/type' },
+  { name: 'get_family', label: 'Kit', what: "A component family's tokens and rules as CSS: radius, buttons, density, shadow.", href: '/kit' },
+  { name: 'get_icons', label: 'Icons', what: "Lounge Icons as SVG on a 24px grid, stroked in currentColor.", href: '/icons' },
+  { name: 'search_wada', label: 'Wada colours', what: "Wada's combinations, found by a word or by the nearest hex.", href: '/wada' },
+];
+const faq = [
+  { q: 'What is the Design Lounge system?', a: lede },
+  { q: 'How does an AI agent use the system?', a: `With the skill installed, the agent reads the theme, pairing, family and icon files in its library folder. With the MCP server, it calls ${tools.map((t) => t.name).join(', ')} and gets the same data back.` },
+];
 ---
-<Base title="System" description={`Type, themes, icons and motion from Design Lounge by ${AUTHOR.name}. The ingredients of a design system, copyable.`}>
-  <PageHead eyebrow="System" title="System" count={PAIRINGS.length + THEMES.length + ICONS.length + RECIPES.length} countLabel="tokens" blurb="The fonts, colours, icons, and motion every piece uses." />
+<Base title="System" description={`The design system behind Design Lounge by ${AUTHOR.name}: ${about(PAIRINGS.length)} font pairings, ${about(THEMES.length)} colour themes, ${about(ICONS.length)} icons, ${about(RECIPES.length)} motion recipes and ${FAMILIES.length} component families, read by AI agents through a skill or MCP server.`} crumbs={[{ name: 'System', href: '/system' }]} faq={faq}>
+  <PageHead eyebrow="System" title="System" count={PAIRINGS.length + THEMES.length + ICONS.length + RECIPES.length + FAMILIES.length} countLabel="tokens" blurb={lede} />
   <div class="wrap page">
-    <ol class="libs">
-      <li>
-        <a href="/type">
-          <span class="eyebrow">Type · {String(PAIRINGS.length).padStart(2, '0')}</span>
-          <h2 class="display h3">Type</h2>
-          <ol class="spec" aria-hidden="true">
-            {PAIRINGS.slice(0, 3).map((p) => (
-              <li>
-                <span class="display h4">{p.name}</span>
-                <span class="mono faint">{p.display.family} + {p.text.family}</span>
-              </li>
-            ))}
-          </ol>
-        </a>
-      </li>
-      <li>
-        <a href="/themes">
-          <span class="eyebrow">Themes · {String(THEMES.length).padStart(2, '0')}</span>
-          <h2 class="display h3">Themes</h2>
-          <ol class="swatch-rows" aria-hidden="true">
-            {previewThemes.map((t) => (
-              <li>
-                <span class="nm">{t.name}</span>
-                <span class="dots"><i style={`background:${t.tokens.bg}`}></i><i style={`background:${t.tokens.ink}`}></i><i style={`background:${t.tokens.accent}`}></i></span>
-              </li>
-            ))}
-          </ol>
-        </a>
-      </li>
-      <li>
-        <a href="/icons">
-          <span class="eyebrow">Icons · {String(ICONS.length).padStart(2, '0')}</span>
-          <h2 class="display h3">Icons</h2>
-          <div class="icos" aria-hidden="true" set:html={previewIcons.map((i) => iconSvg(i, { size: 28 })).join('')} />
-        </a>
-      </li>
-      <li>
-        <a href="/motion">
-          <span class="eyebrow">Motion · {String(RECIPES.length).padStart(2, '0')}</span>
-          <h2 class="display h3">Motion</h2>
-          <div class="ease" aria-hidden="true"><i></i><span class="mono faint">lounge-standard · 320ms</span></div>
-        </a>
-      </li>
-      <li class="wide">
-        <a href="/wada">
-          <span class="eyebrow">Colour · {WADA_COMBINATIONS.length}</span>
-          <h2 class="display h3">A Dictionary of Color Combinations</h2>
-          <p>Sanzo Wada's sets of two, three, and four colours from the 1930s, as printed.</p>
-          <ol class="sets" aria-hidden="true">
-            {strip.map((c) => <li>{c.colours.map((x) => <i style={`background:${x.hex}`}></i>)}</li>)}
-          </ol>
-        </a>
-      </li>
-    </ol>
-    <p class="note">Sources are the public sites. <a href="/sources">One product, one site.</a></p>
+    <section aria-labelledby="parts-h">
+      <h2 class="sr-only" id="parts-h">The parts of the system</h2>
+      <ol class="libs">
+        <li>
+          <a href="/type">
+            <span class="eyebrow">Type · {String(PAIRINGS.length).padStart(2, '0')}</span>
+            <h3 class="display h3">Type pairings</h3>
+            <p>A display face and a text face that agree, with the sizes and weights set.</p>
+            <ol class="spec" aria-hidden="true">
+              {previewPairings.map((p) => (
+                <li>
+                  <span class="nm">{p.name}</span>
+                  <span class="mono faint">{p.display.family} + {p.text.family}</span>
+                </li>
+              ))}
+            </ol>
+            <span class="go">All {PAIRINGS.length} pairings <span aria-hidden="true">→</span></span>
+          </a>
+        </li>
+        <li>
+          <a href="/themes">
+            <span class="eyebrow">Themes · {String(THEMES.length).padStart(2, '0')}</span>
+            <h3 class="display h3">Colour themes</h3>
+            <p>Every colour role a product needs: paper, ink, primary, secondary and states.</p>
+            <ol class="swatch-rows" aria-hidden="true">
+              {previewThemes.map((t) => (
+                <li>
+                  <span class="nm">{t.name}</span>
+                  <span class="dots"><i style={`background:${t.tokens.bg}`}></i><i style={`background:${t.tokens.ink}`}></i><i style={`background:${t.tokens.accent}`}></i></span>
+                </li>
+              ))}
+            </ol>
+            <span class="go">All {THEMES.length} themes <span aria-hidden="true">→</span></span>
+          </a>
+        </li>
+        <li>
+          <a href="/icons">
+            <span class="eyebrow">Icons · {String(ICONS.length).padStart(2, '0')}</span>
+            <h3 class="display h3">Icons</h3>
+            <p>One stroke icon set on a 24px grid, drawn to sit beside the type.</p>
+            <div class="icos" aria-hidden="true" set:html={previewIcons.map((i) => iconSvg(i, { size: 22 })).join('')} />
+            <span class="go">All {ICONS.length} icons <span aria-hidden="true">→</span></span>
+          </a>
+        </li>
+        <li>
+          <a href="/motion">
+            <span class="eyebrow">Motion · {String(RECIPES.length).padStart(2, '0')}</span>
+            <h3 class="display h3">Motion recipes</h3>
+            <p>Named moves with a duration, a curve and a reduced-motion fallback.</p>
+            <ol class="recipes" aria-hidden="true">
+              {previewRecipes.map((r, i) => (
+                <li>
+                  <span class="nm">{r.name}</span>
+                  <span class="mono faint">{r.duration} · {easeName(r.easing)}</span>
+                  <i class="track"><b style={`--i:${i}`}></b></i>
+                </li>
+              ))}
+            </ol>
+            <span class="go">All {RECIPES.length} recipes <span aria-hidden="true">→</span></span>
+          </a>
+        </li>
+        <li>
+          <a href="/kit">
+            <span class="eyebrow">Kit · {String(FAMILIES.length).padStart(2, '0')}</span>
+            <h3 class="display h3">Component families</h3>
+            <p>Corner radius, button style, density and shadow, locked as one language.</p>
+            <ol class="fams" aria-hidden="true">
+              {FAMILIES.map((f) => (
+                <li>
+                  <i style={`border-radius:${radiusPx(f.radius)}px`}></i>
+                  <span class="nm">{f.name}</span>
+                  <span class="mono faint">{f.radius}</span>
+                </li>
+              ))}
+            </ol>
+            <span class="go">Open the kit <span aria-hidden="true">→</span></span>
+          </a>
+        </li>
+        <li>
+          <a href="/wada">
+            <span class="eyebrow">Colour · {WADA_COMBINATIONS.length}</span>
+            <h3 class="display h3">Wada colour sets</h3>
+            <p>Sanzo Wada's sets of two, three and four colours from the 1930s, proofed as printed.</p>
+            <ol class="sets" aria-hidden="true">
+              {strip.map((c) => <li>{c.colours.map((x) => <i style={`background:${x.hex}`}></i>)}</li>)}
+            </ol>
+            <span class="go">All {WADA_COMBINATIONS.length} sets <span aria-hidden="true">→</span></span>
+          </a>
+        </li>
+      </ol>
+    </section>
+
+    <section class="agents" aria-labelledby="agents-h">
+      <div class="agents-head">
+        <p class="eyebrow">For agents</p>
+        <h2 class="display h3" id="agents-h">How an agent reads the system</h2>
+        <p class="muted">With the <a href="/agents">skill</a> installed, the agent opens these files from its own library folder. With the <a href="/agents">MCP server</a>, it asks for them by name and gets the same tokens back. Either way it picks from here and does not make up a palette.</p>
+      </div>
+      <ul class="tools">
+        {tools.map((t) => (
+          <li>
+            <code class="mono">{t.name}</code>
+            <p>{t.what}</p>
+            <a class="textlink" href={t.href}>{t.label} <span aria-hidden="true">→</span></a>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <p class="note">Every one of the {about(pieces.length)} pieces on <a href="/browse">Browse</a> is built from these parts. Some pieces study the craft of public sites, and those are named on <a href="/sources">Sources</a>.</p>
   </div>
+  <PageFaq faq={faq} />
 </Base>
 
 <style>
-  .page { margin-top: 40px; display: flex; flex-direction: column; gap: 48px; }
-  .libs { display: grid; grid-template-columns: repeat(2, 1fr); border-top: 1px solid var(--ink); border-left: 1px solid var(--line); }
-  .libs a { display: flex; flex-direction: column; gap: 12px; padding: 32px 28px; min-height: 320px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); transition: background-color var(--t-med) var(--ease); }
+  .page { margin-top: 40px; margin-bottom: clamp(56px, 8vw, 104px); display: flex; flex-direction: column; gap: clamp(56px, 7vw, 96px); }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .faint { color: var(--ink-3); }
+  .libs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: 1px solid var(--ink); border-left: 1px solid var(--line); }
+  .libs > li { min-width: 0; }
+  .libs a { display: flex; flex-direction: column; gap: 10px; height: 100%; padding: 32px 28px 28px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); transition: background-color var(--t-med) var(--ease); }
   .libs a:hover { background: var(--paper-2); }
-  .libs p { max-width: 36ch; font-size: 14.5px; text-wrap: pretty; }
-  .spec { display: flex; flex-direction: column; gap: 10px; margin-top: auto; padding-top: 16px; }
-  .spec li { display: flex; flex-direction: column; gap: 2px; }
-  .swatch-rows { display: flex; flex-direction: column; gap: 8px; margin-top: auto; padding-top: 16px; }
-  .swatch-rows li { display: flex; justify-content: space-between; align-items: center; font-size: 13px; }
+  .libs a:hover .go { color: var(--accent-text); }
+  .libs p { max-width: 40ch; font-size: 14.5px; line-height: 1.5; color: var(--ink-2); text-wrap: pretty; }
+  .nm { font-size: 14px; color: var(--ink); }
+  .mono.faint { font-size: 12px; }
+  .go { margin-top: auto; padding-top: 22px; font-size: 13.5px; font-weight: 500; color: var(--ink); transition: color var(--t-med) var(--ease); }
+
+  .spec { display: flex; flex-direction: column; gap: 12px; padding-top: 18px; }
+  .spec li { display: flex; flex-direction: column; gap: 2px; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
+  .spec .nm { font-size: 17px; font-weight: 500; letter-spacing: -0.01em; }
+  .swatch-rows { display: flex; flex-direction: column; gap: 9px; padding-top: 18px; }
+  .swatch-rows li { display: flex; justify-content: space-between; align-items: center; }
   .dots { display: flex; gap: 6px; }
   .dots i { width: 14px; height: 14px; border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(0,0,0,.12); }
-  .icos { display: flex; flex-wrap: wrap; gap: 14px; margin-top: auto; padding-top: 16px; color: var(--ink); }
-  .icos :global(svg) { stroke: currentColor; fill: none; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
-  .ease { display: flex; align-items: center; gap: 14px; margin-top: auto; padding-top: 16px; }
-  .ease i { width: 12px; height: 12px; border-radius: 50%; background: var(--accent); animation: slide 1.4s cubic-bezier(.2,.7,.2,1) infinite alternate; }
-  .wide { grid-column: 1 / -1; }
-  .wide a { min-height: 0; }
-  .sets { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 10px; margin-top: auto; padding-top: 16px; }
-  .sets li { display: flex; height: 56px; border-radius: 3px; overflow: hidden; }
+
+  .icos { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 6px; padding-top: 18px; color: var(--ink); }
+  .icos :global(svg) { justify-self: center; display: block; width: 100%; max-width: 40px; height: auto; aspect-ratio: 1; padding: 9px; border: 1px solid var(--line); border-radius: 8px; box-sizing: border-box; }
+
+  .recipes { display: flex; flex-direction: column; gap: 10px; padding-top: 18px; }
+  .recipes li { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: baseline; gap: 2px 12px; }
+  .recipes .track { grid-column: 1 / -1; position: relative; height: 1px; background: var(--line); }
+  .recipes .track b { position: absolute; top: -3px; left: 0; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); animation: slide 2.4s cubic-bezier(.2,.7,.2,1) calc(var(--i) * 120ms) infinite alternate; }
+
+  .fams { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px 12px; padding-top: 18px; }
+  .fams li { display: grid; grid-template-columns: 26px minmax(0, 1fr); grid-template-rows: auto auto; column-gap: 10px; align-items: center; }
+  .fams i { grid-row: 1 / 3; width: 26px; height: 26px; border: 1.5px solid var(--ink); background: var(--paper-2); }
+  .fams .nm { font-size: 13.5px; }
+  .fams .mono { font-size: 11.5px; }
+
+  .sets { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; padding-top: 18px; }
+  .sets li { display: flex; height: 44px; border-radius: 3px; overflow: hidden; }
   .sets i { flex: 1; }
-  @media (max-width: 800px) { .sets { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
-  .note { max-width: 56ch; display: flex; flex-direction: column; gap: 10px; }
-  .note a { text-decoration: underline; text-underline-offset: 3px; }
-  @keyframes slide { from { transform: translateX(0); } to { transform: translateX(48px); } }
-  @media (prefers-reduced-motion: reduce) { .ease i { animation: none; } }
-  @media (max-width: 800px) { .libs { grid-template-columns: minmax(0, 1fr); } .libs a { min-height: 0; } }
+
+  .agents { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(24px, 5vw, 72px); align-items: start; }
+  .agents-head { display: flex; flex-direction: column; gap: 12px; }
+  .muted { color: var(--ink-2); font-size: 16px; line-height: 1.6; text-wrap: pretty; }
+  .muted a, .note a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+  .tools { display: flex; flex-direction: column; border-top: 1px solid var(--ink); }
+  .tools li { display: grid; grid-template-columns: 140px minmax(0, 1fr) auto; gap: 6px 20px; align-items: baseline; padding: 16px 0; border-bottom: 1px solid var(--line); }
+  .tools code { font-size: 13.5px; color: var(--accent-text); }
+  .tools p { font-size: 14.5px; line-height: 1.5; color: var(--ink-2); }
+  .tools .textlink { font-size: 13px; white-space: nowrap; }
+  .note { max-width: 64ch; color: var(--ink-2); font-size: 15px; line-height: 1.6; }
+
+  @keyframes slide { from { transform: translateX(0); } to { transform: translateX(min(220px, 60vw)); } }
+  @media (prefers-reduced-motion: reduce) { .recipes .track b { animation: none; } }
+  @media (max-width: 900px) {
+    .agents { grid-template-columns: minmax(0, 1fr); }
+  }
+  @media (max-width: 800px) {
+    .libs { grid-template-columns: minmax(0, 1fr); }
+    .libs a { padding: 28px 20px 24px; }
+  }
+  @media (max-width: 560px) {
+    .tools li { grid-template-columns: minmax(0, 1fr); }
+    .icos { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+    .fams { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
 </style>

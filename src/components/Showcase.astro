@@ -50,7 +50,6 @@ const prompt = (title: string, slug: string) => `Use the Design Lounge skill. Bu
           data-thumb={it.thumb}
           data-prompt={prompt(it.title, it.slug)}
         >
-          <span class="num mono">{String(i + 1).padStart(2, '0')}</span>
           <span class="lbl">{it.label}</span>
         </button>
       ))}
@@ -165,7 +164,7 @@ const prompt = (title: string, slug: string) => `Use the Design Lounge skill. Bu
 
   .sc-list { display: flex; flex-direction: column; border-top: 1px solid var(--line-2); margin-top: 8px; }
   .sc-list [role="tab"] {
-    position: relative; display: grid; grid-template-columns: 36px 1fr; align-items: baseline; gap: 8px;
+    position: relative; display: block;
     padding: 11px 4px 11px 0; border-bottom: 1px solid var(--line); text-align: left; color: var(--ink-2);
     font-size: 15px; transition: color var(--t-fast), padding-left var(--t-med) var(--ease);
   }

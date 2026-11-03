@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ledgerly — Invoicing for accounting firms</title>
+<meta name="description" content="Ledgerly is invoicing and client-money handling built for small accounting firms. Separate client funds, a permanent audit trail, and payouts you can reconcile to the penny.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap header-row">
+    <a class="brand" href="#" aria-label="Ledgerly home">
+      <svg class="brand-mark" viewBox="0 0 28 28" aria-hidden="true"><rect x="1" y="1" width="26" height="26" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 7v14h12" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 11h8M12 15h8" stroke="currentColor" stroke-width="1.2"/></svg>
+      <span>Ledgerly</span>
+    </a>
+    <nav class="nav" id="nav" aria-label="Primary">
+      <a href="#how">How money moves</a>
+      <a href="#safeguards">Safeguards</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">Questions</a>
+    </nav>
+    <div class="header-cta">
+      <a class="link-quiet" href="#">Sign in</a>
+      <a class="btn btn-primary btn-sm" href="#start">Book a walkthrough</a>
+    </div>
+    <button class="menu-btn" aria-expanded="false" aria-controls="nav" id="menuBtn">
+      <span class="sr">Menu</span><span class="bars" aria-hidden="true"></span>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow">Invoicing for firms of 2 to 40 people</p>
+        <h1>Your clients’ money, <em>accounted for</em> at every step.</h1>
+        <p class="lede">Ledgerly sends invoices, collects payment and pays out to your operating account, with client funds held separately and every change written to a record nobody can edit. Including us.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#start">Book a 30-minute walkthrough</a>
+          <a class="btn btn-ghost" href="#safeguards">Read the safeguards</a>
+        </div>
+        <ul class="hero-facts" role="list">
+          <li><strong>£0</strong> held in Ledgerly’s own accounts, ever</li>
+          <li><strong>T+1</strong> payout to your firm’s bank</li>
+          <li><strong>7 yrs</strong> audit trail retained by default</li>
+        </ul>
+      </div>
+
+      <figure class="specimen" aria-label="Example invoice and its audit trail">
+        <div class="invoice">
+          <div class="inv-head">
+            <div>
+              <p class="inv-firm">Harlow &amp; Pike Chartered Accountants</p>
+              <p class="inv-meta">Invoice <span class="mono">HP-2026-0418</span></p>
+            </div>
+            <span class="status" id="invStatus" data-state="paid">Paid</span>
+          </div>
+          <dl class="inv-to">
+            <div><dt>Billed to</dt><dd>Okafor Joinery Ltd</dd></div>
+            <div><dt>Issued</dt><dd class="mono">14 Oct 2026</dd></div>
+            <div><dt>Due</dt><dd class="mono">28 Oct 2026</dd></div>
+          </dl>
+          <table class="inv-lines">
+            <thead><tr><th scope="col">Item</th><th scope="col" class="num">Amount</th></tr></thead>
+            <tbody>
+              <tr><td>Year-end accounts, FY 2025/26</td><td class="num">1,850.00</td></tr>
+              <tr><td>Corporation tax return (CT600)</td><td class="num">420.00</td></tr>
+              <tr><td>Payroll, Q3 — 6 employees</td><td class="num">270.00</td></tr>
+            </tbody>
+            <tfoot>
+              <tr><td>VAT 20%</td><td class="num">508.00</td></tr>
+              <tr class="total"><td>Total</td><td class="num">£3,048.00</td></tr>
+            </tfoot>
+          </table>
+        </div>
+
+        <div class="trail" aria-label="Audit trail">
+          <div class="trail-head">
+            <p>Audit trail</p>
+            <span class="mono hash" title="Chained record hash">sha256 · 9f2c…e41a</span>
+          </div>
+          <ol class="trail-list" id="trail">
+            <li><time class="mono">14 Oct 09:12</time><span>Issued by <b>R. Pike</b></span></li>
+            <li><time class="mono">14 Oct 09:12</time><span>Delivered to accounts@okaforjoinery.co.uk</span></li>
+            <li><time class="mono">21 Oct 16:40</time><span>Paid by bank transfer, ref <span class="mono">HP0418</span></span></li>
+            <li><time class="mono">21 Oct 16:40</time><span>Held in client funds account ••4417</span></li>
+            <li><time class="mono">22 Oct 06:00</time><span>Paid out to Harlow &amp; Pike operating ••2093</span></li>
+            <li><time class="mono">22 Oct 06:01</time><span>Matched in Xero, <span class="mono">£3,048.00 = £3,048.00</span></span></li>
+          </ol>
+        </div>
+        <figcaption class="specimen-note">An invoice as Ledgerly records it. Every line in the trail is timestamped, signed and linked to the one before.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- PROOF -->
+  <section class="proof" aria-label="Firms using Ledgerly">
+    <div class="wrap proof-row">
+      <p class="proof-label">Used by 1,100+ practices across the UK and Ireland</p>
+      <ul class="proof-list" role="list">
+        <li>Harlow &amp; Pike</li>
+        <li>Brennan Moore</li>
+        <li>Castell Accounts</li>
+        <li>Northgate Tax</li>
+        <li>Ivers &amp; Co.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- HOW -->
+  <section class="section" id="how">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">How money moves</p>
+        <h2>Four steps, and you can see all of them.</h2>
+        <p class="section-sub">Most invoicing tools stop at “payment received”. The part your clients worry about is what happens after. Here is the whole path for a single payment.</p>
+      </div>
+
+      <ol class="flow" role="list">
+        <li class="flow-step">
+          <span class="flow-n mono">01</span>
+          <h3>Invoice goes out</h3>
+          <p>From your firm’s name and domain, with your engagement terms attached. Clients pay by bank transfer, Direct Debit or card.</p>
+          <p class="flow-ledger mono"><span>Outstanding</span><span>£3,048.00</span></p>
+        </li>
+        <li class="flow-step">
+          <span class="flow-n mono">02</span>
+          <h3>Funds land separately</h3>
+          <p>Payments arrive in a designated client account at a regulated UK bank, ring-fenced from Ledgerly’s money and from your own.</p>
+          <p class="flow-ledger mono"><span>Client funds</span><span>£3,048.00</span></p>
+        </li>
+        <li class="flow-step">
+          <span class="flow-n mono">03</span>
+          <h3>Payout, next working day</h3>
+          <p>Fees are released to your operating account on a schedule you set. Amounts over your threshold wait for a second partner to approve.</p>
+          <p class="flow-ledger mono"><span>Paid out</span><span>£3,048.00</span></p>
+        </li>
+        <li class="flow-step">
+          <span class="flow-n mono">04</span>
+          <h3>Books reconcile themselves</h3>
+          <p>Each payout arrives with its invoice references, so Xero, QuickBooks or Sage match it without anyone typing a number.</p>
+          <p class="flow-ledger mono ok"><span>Difference</span><span>£0.00</span></p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- SAFEGUARDS -->
+  <section class="section section-ink" id="safeguards">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Safeguards</p>
+        <h2>What we do with money that isn’t ours.</h2>
+        <p class="section-sub">Plain answers, written for the partner who signs off on the software. Our full controls report is available under NDA.</p>
+      </div>
+
+      <div class="guards">
+        <article class="guard">
+          <h3>Safeguarded client funds</h3>
+          <p>Client money sits in designated safeguarding accounts at two UK-regulated banks. If Ledgerly ceased trading tomorrow, those funds are not part of our estate and are returned to you.</p>
+        </article>
+        <article class="guard">
+          <h3>An audit trail you can’t edit</h3>
+          <p>Every issue, change, payment and payout is appended to a hash-chained log. Edits create a new entry rather than rewriting the old one. Export it as CSV or PDF for your reviewer.</p>
+        </article>
+        <article class="guard">
+          <h3>Two-partner approval</h3>
+          <p>Set a threshold above which refunds, write-offs and payout changes need a second approver. Bank details can’t be changed and paid out on the same day.</p>
+        </article>
+        <article class="guard">
+          <h3>Access that matches your firm</h3>
+          <p>Partners, managers and juniors get separate permissions. Single sign-on, enforced two-factor and per-client visibility come with every plan.</p>
+        </article>
+      </div>
+
+      <div class="controls">
+        <table class="controls-table">
+          <caption>Controls and certifications</caption>
+          <tbody>
+            <tr><th scope="row">Authorisation</th><td>FCA-authorised Electronic Money Institution, firm reference shown in-app</td></tr>
+            <tr><th scope="row">Independent audit</th><td>SOC 2 Type II, renewed annually; ISO/IEC 27001</td></tr>
+            <tr><th scope="row">Encryption</th><td>TLS 1.3 in transit, AES-256 at rest, keys held in HSMs</td></tr>
+            <tr><th scope="row">Data residency</th><td>Stored in London and Dublin; never leaves the UK and EU</td></tr>
+            <tr><th scope="row">Uptime, last 12 months</th><td class="mono">99.98%</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIAL -->
+  <section class="section">
+    <div class="wrap quote-grid">
+      <blockquote class="quote">
+        <p>“Our clients ask where their money is. Before Ledgerly, the honest answer involved three spreadsheets and me. Now I send them the trail, and the question doesn’t come back.”</p>
+        <footer>
+          <span class="quote-name">Aoife Brennan, ACA</span>
+          <span class="quote-role">Managing partner, Brennan Moore · 14 staff, Cork</span>
+        </footer>
+      </blockquote>
+      <dl class="figures">
+        <div><dt>Average days to get paid</dt><dd><span class="mono">38</span><span class="arrow" aria-hidden="true">→</span><span class="mono">11</span></dd></div>
+        <div><dt>Hours a month on reconciliation</dt><dd><span class="mono">22</span><span class="arrow" aria-hidden="true">→</span><span class="mono">3</span></dd></div>
+        <div><dt>Payments unaccounted for</dt><dd><span class="mono">0</span></dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="section section-paper" id="pricing">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Pricing</p>
+        <h2>One price per seat. Payment fees at cost.</h2>
+        <p class="section-sub">No percentage of your fees, no setup charge, cancel at month end. Prices exclude VAT.</p>
+      </div>
+
+      <div class="billing-toggle" role="group" aria-label="Billing period">
+        <button type="button" class="tog is-on" data-period="monthly" aria-pressed="true">Monthly</button>
+        <button type="button" class="tog" data-period="annual" aria-pressed="false">Annual <span class="save">2 months free</span></button>
+      </div>
+
+      <div class="plans">
+        <article class="plan">
+          <h3>Practice</h3>
+          <p class="plan-for">For sole practitioners and firms up to 5.</p>
+          <p class="price"><span class="mono" data-monthly="18" data-annual="15">£18</span><span class="per">per seat / month</span></p>
+          <ul role="list">
+            <li>Unlimited invoices and clients</li>
+            <li>Safeguarded client funds</li>
+            <li>Full audit trail, 7 years</li>
+            <li>Xero, QuickBooks and Sage sync</li>
+          </ul>
+          <a class="btn btn-ghost btn-block" href="#start">Start a 30-day trial</a>
+        </article>
+        <article class="plan plan-featured">
+          <p class="plan-tag">Most firms choose this</p>
+          <h3>Partnership</h3>
+          <p class="plan-for">For firms of 5 to 40 with more than one partner.</p>
+          <p class="price"><span class="mono" data-monthly="29" data-annual="24">£29</span><span class="per">per seat / month</span></p>
+          <ul role="list">
+            <li>Everything in Practice</li>
+            <li>Two-partner approvals and thresholds</li>
+            <li>Recurring and retainer billing</li>
+            <li>Single sign-on and role permissions</li>
+            <li>Named account manager</li>
+          </ul>
+          <a class="btn btn-primary btn-block" href="#start">Book a walkthrough</a>
+        </article>
+      </div>
+
+      <table class="fees">
+        <caption>Payment fees, passed through at cost</caption>
+        <tbody>
+          <tr><th scope="row">Bank transfer (Open Banking)</th><td class="mono">20p</td></tr>
+          <tr><th scope="row">Direct Debit</th><td class="mono">1% capped at £2</td></tr>
+          <tr><th scope="row">UK card</th><td class="mono">1.4% + 20p</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section" id="faq">
+    <div class="wrap faq-grid">
+      <div class="section-head">
+        <p class="eyebrow">Questions</p>
+        <h2>What partners ask before signing.</h2>
+      </div>
+      <div class="faq">
+        <details>
+          <summary>Does Ledgerly ever hold our money in its own accounts?</summary>
+          <p>No. Payments go straight into designated safeguarding accounts held for your firm’s benefit. Ledgerly’s operating money is kept at a different bank entirely, and the two are reconciled daily by an independent process.</p>
+        </details>
+        <details>
+          <summary>What happens to client funds if Ledgerly shuts down?</summary>
+          <p>Safeguarded funds are legally separate from our assets. An appointed administrator would return them to your firm. We publish our wind-down plan to every customer on request.</p>
+        </details>
+        <details>
+          <summary>Can we move our existing invoices and clients across?</summary>
+          <p>Yes. We import from Xero, QuickBooks, Sage, FreeAgent and spreadsheets. A migration specialist does it with you, and old invoice numbers are kept so nothing confuses your clients.</p>
+        </details>
+        <details>
+          <summary>Will this satisfy our professional body’s rules on client money?</summary>
+          <p>Ledgerly is designed around ICAEW and ACCA client money regulations, including separate designation and timely reconciliation. Your firm stays responsible for compliance; the audit trail export is built to make your review straightforward.</p>
+        </details>
+        <details>
+          <summary>Who can we call when something looks wrong?</summary>
+          <p>A person in our London office, 8am to 7pm on working days, on the phone. Payment issues are answered within one hour. There is no chatbot in front of them.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta" id="start">
+    <div class="wrap cta-grid">
+      <div>
+        <h2>See your own invoices in Ledgerly before you commit.</h2>
+        <p>Bring last month’s billing. In thirty minutes we’ll walk through how it would have moved, step by step, and you can keep the trail.</p>
+      </div>
+      <form class="cta-form" id="ctaForm" novalidate>
+        <label for="email">Work email</label>
+        <div class="field-row">
+          <input id="email" name="email" type="email" autocomplete="email" placeholder="you@yourfirm.co.uk" required>
+          <button class="btn btn-primary" type="submit">Book a walkthrough</button>
+        </div>
+        <p class="form-msg" id="formMsg" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div>
+      <a class="brand" href="#">
+        <svg class="brand-mark" viewBox="0 0 28 28" aria-hidden="true"><rect x="1" y="1" width="26" height="26" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 7v14h12" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 11h8M12 15h8" stroke="currentColor" stroke-width="1.2"/></svg>
+        <span>Ledgerly</span>
+      </a>
+      <p class="fine">Ledgerly Payments Ltd is authorised by the Financial Conduct Authority under the Electronic Money Regulations 2011 for the issuing of electronic money. Registered in England and Wales. Registered office: 12 Finsbury Square, London.</p>
+    </div>
+    <nav class="footer-links" aria-label="Footer">
+      <div><p>Product</p><a href="#how">How money moves</a><a href="#pricing">Pricing</a><a href="#">Integrations</a></div>
+      <div><p>Trust</p><a href="#safeguards">Safeguards</a><a href="#">Status</a><a href="#">Controls report</a></div>
+      <div><p>Company</p><a href="#">About</a><a href="#">Contact</a><a href="#">Privacy</a></div>
+    </nav>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>

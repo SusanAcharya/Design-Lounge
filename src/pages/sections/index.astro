@@ -1,45 +1,127 @@
 ---
+import PageFaq from '../../components/PageFaq.astro';
 import Base from '../../layouts/Base.astro';
 import PageHead from '../../components/PageHead.astro';
-import { getPieces, CATEGORY_META, CATEGORY_GROUPS } from '../../lib/pieces';
+import { getPieces, CATEGORY_META, CATEGORY_GROUPS, about } from '../../lib/pieces';
+import { cardPoster } from '../../lib/posters';
+
 const all = await getPieces();
 const newest = [...all].reverse();
+// What each group holds, in one line.
+const GROUP_LINES: Record<string, string> = {
+  sections: 'The parts of a website, top to bottom: the hero, the proof, the price, the footer.',
+  pages: 'Whole pages and app screens: a portfolio, a checkout, a dashboard, a settings list.',
+  components: 'The smaller parts every interface reuses: buttons, inputs, cards, charts, overlays.',
+  motion: 'Movement on its own: text that animates, scroll effects, cursors, loaders, transitions.',
+  kits: 'Complete design languages that set the type, colour and components before any screen.',
+};
+// The preview for a category: a featured piece with a poster, else the newest piece with one.
+const preview = (c: string) => {
+  const inCat = newest.filter((p) => p.data.category === c);
+  const withPoster = inCat.map((p) => ({ p, ...cardPoster(p.id, p.data.platform) })).filter((x) => x.src);
+  return withPoster.find((x) => x.p.data.featured) ?? withPoster[0];
+};
 const groups = CATEGORY_GROUPS.map((g) => ({
   ...g,
-  items: g.items.map((c) => ({ c, meta: CATEGORY_META[c], n: all.filter((p) => p.data.category === c).length, latest: newest.find((p) => p.data.category === c) })).filter((i) => i.n > 0),
+  line: GROUP_LINES[g.key] ?? '',
+  items: g.items
+    .map((c) => ({ c, meta: CATEGORY_META[c], n: all.filter((p) => p.data.category === c).length, img: preview(c) }))
+    .filter((i) => i.n > 0),
 })).filter((g) => g.items.length);
 const total = groups.reduce((a, g) => a + g.items.length, 0);
+const faq = [
+  { q: 'What are the sections in Design Lounge?', a: `Sections are the categories of the library, ${about(total)} in all, grouped into website sections, pages and screens, components, motion and kits. Each category lists every piece of that kind with a live demo and a brief an AI agent can build from.` },
+  { q: 'How is a section different from a recipe?', a: 'A section holds one kind of piece, such as every footer. A Start recipe gathers the pieces, theme and type pairing for one kind of product, such as a SaaS site.' },
+];
+let idx = 0;
 ---
-<Base title="Index" description="Every kind of interface in Design Lounge: hero sections, footers, pricing, contact, portfolios, landing pages, components and motion.">
-  <PageHead eyebrow="Sections" title="Sections" count={total} countLabel="categories" blurb="Every kind of piece, by name. Hero, footer, chart, loader." />
+<Base title="Sections: UI design ideas by category" description={`Every kind of interface in Design Lounge, in ${about(total)} categories: hero sections, footers, pricing, dashboards, components, charts, loaders and motion, each with live demos and agent briefs.`} faq={faq}>
+  <PageHead eyebrow="Index" title="Sections" blurb={`Sections is the Design Lounge library sorted by kind of interface: ${about(all.length)} pieces in ${about(total)} categories, from hero sections and footers to charts, loaders and full app screens. Open a category to see every piece in it with a live demo and a brief your agent can build from.`}>
+    <nav class="jump" aria-label="Groups">
+      {groups.map((g) => <a class="chip" href={`#${g.key}`}>{g.label} <span class="cnt num">{g.items.length}</span></a>)}
+    </nav>
+  </PageHead>
   <div class="wrap idx">
-    {groups.map((g, gi) => (
-      <section class="grp reveal" style={`--d:${gi * 60}ms`}>
-        <h2 class="eyebrow">{g.label}</h2>
-        <ol class="rows">
-          {g.items.map((i) => (
-            <li>
-              <a href={`/sections/${i.c}`}>
-                <span class="display name">{i.meta.label}</span>
-                <span class="n mono num">{String(i.n).padStart(2, '0')}</span>
-              </a>
-            </li>
-          ))}
-        </ol>
+    {groups.map((g) => (
+      <section class="grp" id={g.key} aria-labelledby={`${g.key}-h`}>
+        <header class="grp-head">
+          <h2 id={`${g.key}-h`} class="display h3">{g.label}</h2>
+          <p class="line">{g.line}</p>
+        </header>
+        <ul class="grid">
+          {g.items.map((i) => {
+            const eager = idx++ < 4;
+            return (
+              <li>
+                <a class="cat" href={`/sections/${i.c}`}>
+                  <span class="thumb" aria-hidden="true">
+                    {i.img
+                      ? <img src={i.img.src} alt="" class:list={[{ tall: i.img.tall }]} width={i.img.tall ? 390 : 640} height={i.img.tall ? 844 : 480} loading={eager ? 'eager' : 'lazy'} decoding="async" />
+                      : <span class="none"></span>}
+                  </span>
+                  <span class="row">
+                    <span class="name">{i.meta.label}</span>
+                    <span class="n mono num">{i.n}</span>
+                  </span>
+                  <span class="blurb">{i.meta.blurb}</span>
+                </a>
+              </li>
+            );
+          })}
+        </ul>
       </section>
     ))}
+
+    <section class="more" aria-labelledby="more-h">
+      <h2 id="more-h" class="display h3">Other ways in</h2>
+      <ul class="ways">
+        <li><a href="/browse"><b>Browse</b><span>Every piece in one grid, with filters for platform, style and motion.</span></a></li>
+        <li><a href="/start"><b>Start</b><span>Recipes for the product you are making, with the pieces to open first.</span></a></li>
+        <li><a href="/collections"><b>Collections</b><span>Shelves of pieces that already agree with each other.</span></a></li>
+        <li><a href="/system"><b>System</b><span>The themes, type pairings, icons and motion the pieces are built from.</span></a></li>
+      </ul>
+    </section>
   </div>
+  <PageFaq faq={faq} />
 </Base>
 
 <style>
-  .idx { display: flex; flex-direction: column; gap: 56px; margin-top: 48px; }
-  .grp > .eyebrow { padding-bottom: 12px; border-bottom: 1px solid var(--ink); }
-  .rows li a { display: grid; grid-template-columns: 1fr 48px; gap: 24px; align-items: baseline; padding: 16px 0; border-bottom: 1px solid var(--line); transition: background-color var(--t-fast), padding var(--t-med) var(--ease); }
-  .rows li a:hover { background: var(--paper-2); padding-inline: 12px; }
-  .name { font-size: clamp(22px, 2.2vw, 30px); letter-spacing: -0.02em; line-height: 1.05; }
-  .n { text-align: right; color: var(--ink-2); font-size: 13px; }
-  @media (max-width: 860px) {
-    .rows li a { grid-template-columns: 1fr 40px; gap: 4px 16px; }
-    .n { grid-column: 2; grid-row: 1; }
+  .jump { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+  .jump .chip { text-decoration: none; }
+  .cnt { color: var(--ink-3); font-size: 12px; }
+  .idx { display: flex; flex-direction: column; gap: 64px; margin-top: 48px; }
+  [id] { scroll-margin-top: calc(var(--header-h) + 72px); }
+  .grp-head { display: flex; align-items: baseline; justify-content: space-between; gap: 8px 32px; flex-wrap: wrap; padding-bottom: 14px; margin-bottom: 20px; border-bottom: 1px solid var(--ink); }
+  .grp-head .h3 { font-size: clamp(22px, 2vw, 28px); }
+  .line { color: var(--ink-2); font-size: 15px; max-width: 72ch; text-wrap: pretty; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(232px, 1fr)); gap: 28px 20px; }
+  .cat { display: flex; flex-direction: column; gap: 8px; }
+  .thumb { position: relative; display: block; aspect-ratio: 4 / 3; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--paper-2); transition: border-color var(--t-fast); }
+  .thumb img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top center; transition: transform var(--t-slow) var(--ease-out); }
+  .thumb img.tall { inset: 6% auto auto 50%; translate: -50% 0; width: auto; height: 88%; aspect-ratio: 390 / 844; border-radius: 8px; box-shadow: 0 0 0 1px var(--line), 0 10px 24px -14px rgba(24, 24, 27, 0.35); }
+  .cat:hover .thumb { border-color: var(--ink); }
+  .cat:hover .thumb img:not(.tall) { transform: scale(1.03); }
+  .none { position: absolute; inset: 0; background: var(--paper-3); }
+  .row { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-top: 4px; }
+  .name { font-family: var(--display); font-size: 17px; font-weight: 550; letter-spacing: -0.015em; line-height: 1.2; }
+  .cat:hover .name { color: var(--accent-text); }
+  .n { color: var(--ink-3); }
+  .blurb { font-size: 13.5px; line-height: 1.45; color: var(--ink-3); text-wrap: pretty; }
+
+  .more { padding-top: 40px; border-top: 1px solid var(--ink); display: flex; flex-direction: column; gap: 20px; }
+  .ways { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; }
+  .ways a { display: flex; flex-direction: column; gap: 6px; padding: 16px; border: 1px solid var(--line); border-radius: 10px; height: 100%; transition: border-color var(--t-fast), background-color var(--t-fast); }
+  .ways a:hover { border-color: var(--ink); background: var(--paper-2); }
+  .ways b { font-weight: 550; }
+  .ways span { font-size: 13.5px; line-height: 1.45; color: var(--ink-3); }
+
+  @media (max-width: 900px) { .ways { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 560px) {
+    .idx { gap: 48px; margin-top: 36px; }
+    .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 12px; }
+    .name { font-size: 15px; }
+    .blurb { font-size: 12.5px; }
+    .ways { grid-template-columns: minmax(0, 1fr); gap: 10px; }
   }
+  @media (prefers-reduced-motion: reduce) { .thumb img { transition: none; } }
 </style>

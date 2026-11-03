@@ -7,6 +7,7 @@ import { THEMES } from '../data/themes';
 import { PAIRINGS } from '../data/type';
 import { familyById } from '../data/kit';
 import { getPieces } from '../lib/pieces';
+import { PROOF, proofCount } from '../data/proof';
 
 const all = await getPieces();
 const titles = new Map(all.map((p) => [p.id, p.data.title]));
@@ -17,10 +18,16 @@ const range = SOLO.filter((e) => !e.featured);
 const given = (e: Example) => (e.mode === 'one-shot' ? 'One sentence, nothing else' : 'Prompt plus one direction');
 const cover = (e: Example) => `/built/${e.id}/cover.jpg`;
 const phoneShot = (e: Example) => `/built/${e.id}/phone.jpg`;
+const proofTotal = proofCount();
+const intro = `Each of these ${EXAMPLES.length} sites was built by an AI agent with the Design Lounge skill, in one pass, from the prompt shown beside it, and no designer touched the pixels. Together they show one skill producing many distinct, finished looks, and every one runs live on this page.`;
 const installCmd = 'npx skills add SusanAcharya/Design-Lounge';
 ---
-<Base rail={false} title="Examples" description={`Sites an AI agent built in one pass with the Design Lounge skill: ${EXAMPLES.map((e) => e.title).join(', ')}. Each one runs live in the browser.`} crumbs={[{ name: 'Examples', href: '/examples' }]}>
-  <PageHead eyebrow="Examples" title="Built from <i>one prompt.</i>" count={EXAMPLES.length} countLabel="sites" blurb="Every site here was built by an agent with the skill installed, in one pass. No designer touched the pixels. They run live below: scroll inside them, then open one." />
+<Base rail={false} title="Examples" description={`${EXAMPLES.length} sites an AI agent built in one pass with the Design Lounge skill, each running live: ${EXAMPLES.map((e) => e.title).join(', ')}.`} crumbs={[{ name: 'Examples', href: '/examples' }]}>
+  <PageHead eyebrow="Examples" title="Built from <i>one prompt.</i>" count={EXAMPLES.length} countLabel="sites" blurb={intro}>
+    <p class="head-links">
+      <a class="proof-link" href="/examples/proof"><span class="mono tag">Proof</span><span>The same {PROOF.length} prompts built {proofTotal} times, with and without the skill. Every run, unedited.</span><span aria-hidden="true">→</span></a>
+    </p>
+  </PageHead>
 
   {PAIRS.length > 0 && (
     <section class="wrap block" aria-labelledby="pair-h">
@@ -35,7 +42,7 @@ const installCmd = 'npx skills add SusanAcharya/Design-Lounge';
     <section class="wrap block" aria-labelledby="os-h">
       <header class="block-head">
         <h2 class="display h3" id="os-h">Start with these {featured.length}.</h2>
-        <p class="muted">Each one is marked with what its agent was given. <em>One sentence</em> means the prompt you see, word for word: the agent chose the recipe, the palette, the type and the effects on its own. <em>Plus one direction</em> means it also got a named direction from <a href="/start">the Start recipes</a>.</p>
+        <p class="muted">Each one is marked with what its agent was given. <em>One sentence</em> means the prompt you see, word for word: the agent chose the recipe, the palette, the type and the effects on its own. <em>Plus one direction</em> means it also got a named direction from <a href="/start">the Start recipes</a>. Point at a frame to run the live build, then scroll inside it.</p>
       </header>
       <ol class="features">
         {featured.map((e, i) => {
@@ -169,6 +176,26 @@ const installCmd = 'npx skills add SusanAcharya/Design-Lounge';
   .meta { margin-top: auto; display: flex; flex-wrap: wrap; gap: 4px 12px; font-size: 13px; color: var(--ink-3); }
   .meta a { color: var(--ink-2); border-bottom: 1px solid var(--line-2); }
   .meta a:hover { color: var(--accent-text); border-color: var(--accent-text); }
+
+  /* head link to proof */
+  .head-links { margin-top: 8px; }
+  .proof-link { display: inline-flex; align-items: center; gap: 12px; max-width: 100%; padding: 10px 16px 10px 10px; border: 1px solid var(--line-2); border-radius: 999px; background: var(--paper); font-size: 14.5px; color: var(--ink); transition: border-color var(--t-med) var(--ease); }
+  .proof-link:hover { border-color: var(--ink); }
+  .proof-link .tag { flex: none; font-size: 11.5px; letter-spacing: .1em; text-transform: uppercase; padding: 4px 9px; border-radius: 999px; background: var(--ink); color: var(--paper); }
+  @media (max-width: 640px) { .proof-link { border-radius: var(--r-lg); align-items: flex-start; } }
+
+  /* Hold the cover until the live build has had time to paint. The built sites draw their own intros and fonts,
+     and a frame that fades its poster the moment the document loads shows a white page first. */
+  .f-stage :global(lounge-frame.loaded .lf-poster-img) { transition-delay: 2.5s; }
+  /* With a pointer, the cover stays until the visitor reaches for the frame, then the live build takes over. */
+  @media (hover: hover) {
+    .f-stage :global(lounge-frame.loaded .lf-poster-img) { opacity: 1; transition-delay: 0s; }
+    .f-desk:hover :global(lounge-frame.loaded .lf-poster-img), .f-desk:focus-within :global(lounge-frame.loaded .lf-poster-img),
+    .f-phone:hover :global(lounge-frame.loaded .lf-poster-img), .f-phone:focus-within :global(lounge-frame.loaded .lf-poster-img) { opacity: 0; }
+  }
+  /* The range cards are previews, not something to scroll: keep the cover, and show the live build on hover. */
+  .thumb :global(lounge-frame.loaded .lf-poster-img) { opacity: 1; transition-delay: 0s; }
+  @media (hover: hover) { .card-x:hover .thumb :global(lounge-frame.loaded .lf-poster-img) { opacity: 0; transition-delay: .2s; } }
 
   /* close */
   .close { display: flex; flex-direction: column; align-items: center; gap: 18px; text-align: center; margin-top: clamp(64px, 8vw, 120px); padding-block: clamp(64px, 8vw, 120px); border-top: 1px solid var(--line); }

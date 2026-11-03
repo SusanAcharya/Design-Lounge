@@ -1,7 +1,8 @@
 ---
+import PageFaq from '../../components/PageFaq.astro';
 import Base from '../../layouts/Base.astro';
 import PageHead from '../../components/PageHead.astro';
-import { AUTHOR, CATEGORY_META, getPieces } from '../../lib/pieces';
+import { AUTHOR, CATEGORY_META, about, getPieces } from '../../lib/pieces';
 import { STARTS, SURFACES, startsOn } from '../../data/starts';
 import { PAIRINGS } from '../../data/type';
 import { THEMES } from '../../data/themes';
@@ -12,105 +13,295 @@ const titles = new Map(all.map((p) => [p.id, p.data.title]));
 const pairing = (id: string) => PAIRINGS.find((p) => p.id === id);
 const theme = (id: string) => THEMES.find((t) => t.id === id);
 const shelf = (id: string) => COLLECTIONS.find((c) => c.slug === id);
+// The recipe copy is shared with the skill; on this page a spaced dash reads as a comma.
+const tidy = (s: string) => s.replace(/\s+—\s+/g, ', ');
+const SHOWN = 6;
+
+const groups = SURFACES.map((g) => ({ ...g, starts: startsOn(g.id) }));
+const n = about(STARTS.length);
+const origin = 'https://www.designlounge.live';
+
+const faq = [
+  { q: 'What is a Start recipe?', a: `A Start recipe is a ready combination for one kind of product, such as a SaaS site, a portfolio or a bank app. It names a theme, a type pairing, a shelf of pieces, the index categories to browse, and several directions, each a complete look with its own theme and pairing.` },
+  { q: 'How do I use a recipe?', a: 'Find the product you are making, pick one of its directions, then open the pieces listed under Open first and build from their briefs. An AI agent can read the same recipes through the Design Lounge skill or MCP server and pick a direction for you.' },
+  { q: 'What if my product is not on the list?', a: 'Take the closest recipe and change one part, or compose your own kit from a product kind, a palette, a type pairing and a component family.' },
+];
+const schema = [{
+  '@type': 'ItemList',
+  name: 'Design Lounge Start recipes',
+  itemListElement: groups.flatMap((g) => g.starts).map((s, i) => ({ '@type': 'ListItem', position: i + 1, name: s.title, url: `${origin}/start#${s.id}` })),
+}];
 ---
-<Base title="Start a product" description={`Recipes from Design Lounge by ${AUTHOR.name}: a theme, a type pairing, and a shelf of pieces, put together for the thing you are making.`}>
-  <PageHead eyebrow="Start" title="Start" count={STARTS.length} countLabel="recipes" blurb="Find what you are making. Each one comes with colours, type, and the screens to open first." />
-  <p class="wrap kit-jump"><a href="#web">Websites</a> · <a href="#app">Apps</a> · <a href="/kit">Or build your own kit</a></p>
-  <div class="wrap page">
-    {SURFACES.map((group) => (
-      <section id={group.id}>
-        <header class="group">
-          <h2 class="display h2">{group.title}</h2>
-          <p class="when">{group.blurb}</p>
-        </header>
-        <ol class="starts">
-      {startsOn(group.id).map((s, i) => {
-        const t = theme(s.theme);
-        const p = pairing(s.pairing);
-        const sh = shelf(s.shelf);
-        return (
-          <li class="card reveal" style={`--d:${i * 40}ms`} id={s.id}>
-            <header>
-              <span class="eyebrow">{s.kicker} · {String(i + 1).padStart(2, '0')}</span>
-              <h2 class="display h3">{s.title}</h2>
-              <p class="when">{s.when}</p>
-            </header>
-            <dl>
-              {t && (
-                <div>
-                  <dt>Theme</dt>
-                  <dd><a href={`/themes/${t.id}`}>{t.name}</a>
-                    <span class="swatches" aria-hidden="true"><i style={`background:${t.tokens.bg}`}></i><i style={`background:${t.tokens.ink}`}></i><i style={`background:${t.tokens.accent}`}></i></span>
-                  </dd>
-                </div>
-              )}
-              {p && (
-                <div>
-                  <dt>Type</dt>
-                  <dd><a href={`/type/${p.id}`}>{p.name}</a><span class="mono faint"> · {p.display.family} + {p.text.family}</span></dd>
-                </div>
-              )}
-              {sh && (
-                <div>
-                  <dt>Shelf</dt>
-                  <dd><a href={`/collections/${sh.slug}`}>{sh.title}</a></dd>
-                </div>
-              )}
-              <div>
-                <dt>Index</dt>
-                <dd class="cats">{s.categories.map((c) => <a class="chip" href={`/sections/${c}`}>{CATEGORY_META[c as keyof typeof CATEGORY_META]?.label ?? c}</a>)}</dd>
-              </div>
-            </dl>
-            <div class="pieces">
-              <p class="eyebrow">{s.directions.length} directions</p>
-              <ul class="dirs">
-                {s.directions.map((dir) => {
-                  const dt = theme(dir.theme);
-                  return (
-                    <li title={dir.mood}>
-                      {dt && <span class="swatches" aria-hidden="true"><i style={`background:${dt.tokens.bg}`}></i><i style={`background:${dt.tokens.accent}`}></i></span>}
-                      <span>{dir.name}</span>
-                    </li>
-                  );
-                })}
-              </ul>
-              <p class="eyebrow">Open first</p>
-              <ol>
-                {s.pieces.map((id) => (
-                  <li><a href={`/p/${id}`}>{titles.get(id) ?? id}</a></li>
-                ))}
-              </ol>
-            </div>
-          </li>
-        );
-      })}
-        </ol>
+<Base title="Start a product: design recipes" description={`Start is a set of ${n} design recipes from Design Lounge by ${AUTHOR.name}. Each one pairs a theme, a type pairing and a shelf of pieces for the site or app you are making.`} faq={faq} schema={schema}>
+  <PageHead eyebrow="Start" title="Start from what you are making" blurb={`Start is a set of ${n} recipes, one for each kind of website or app, from a marketing site to a bank in the hand. Each recipe gives you a theme, a type pairing, named directions and the pieces to open first, so the screens agree before you build them.`} />
+
+  <div class="start-page">
+    <nav class="jump" aria-label="On this page">
+      <div class="wrap jump-row">
+        <a href="#overview">Overview</a>
+        {groups.map((g) => <a href={`#${g.id}`}>{g.title} <span class="cnt num">{g.starts.length}</span></a>)}
+        <a class="own" href="/kit">Build your own kit <span aria-hidden="true">→</span></a>
+      </div>
+    </nav>
+
+    <div class="wrap">
+      <ol class="how" aria-label="How to use Start">
+        <li><p><b>Find your product.</b> Pick the closest recipe below. Websites first, then apps.</p></li>
+        <li><p><b>Choose a direction.</b> Each one is a whole look: a <a href="/themes">theme</a> and a <a href="/type">type pairing</a> that agree.</p></li>
+        <li><p><b>Open the pieces.</b> Build from their briefs, or let your agent do it with <a href="/agents">the skill or MCP server</a>.</p></li>
+      </ol>
+
+      <section id="overview" class="overview" aria-labelledby="overview-h">
+        <h2 id="overview-h" class="eyebrow">All recipes at a glance</h2>
+        {groups.map((g) => (
+          <div class="ov-group">
+            <h3 class="ov-title"><a href={`#${g.id}`}>{g.title}</a> <span class="cnt num">{g.starts.length}</span></h3>
+            <ul class="ov-grid">
+              {g.starts.map((s) => (
+                <li>
+                  <a href={`#${s.id}`} class="ov">
+                    <span class="ov-swatches" aria-hidden="true">
+                      {s.directions.slice(0, 6).map((dir) => {
+                        const dt = theme(dir.theme);
+                        return dt && <i style={`background:${dt.tokens.bg};--a:${dt.tokens.accent}`}></i>;
+                      })}
+                    </span>
+                    <span class="ov-name">{s.title}</span>
+                    <span class="ov-blurb">{tidy(s.blurb)}</span>
+                    <span class="ov-meta mono">{s.directions.length} directions · {s.pieces.length} pieces</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
       </section>
-    ))}
+    </div>
+
+    <div class="wrap page">
+      {groups.map((g) => (
+        <section id={g.id} class="grp" aria-labelledby={`${g.id}-h`}>
+          <header class="group">
+            <h2 id={`${g.id}-h`} class="display h2">{g.title}</h2>
+            <p class="when">{g.blurb}</p>
+            <a class="top mono" href="#overview">Back to overview</a>
+          </header>
+          <ol class="starts">
+            {g.starts.map((s, i) => {
+              const t = theme(s.theme);
+              const p = pairing(s.pairing);
+              const sh = shelf(s.shelf);
+              const first = s.pieces.slice(0, SHOWN);
+              const rest = s.pieces.slice(SHOWN);
+              return (
+                <li class="recipe" id={s.id}>
+                  <div class="col head">
+                    <span class="eyebrow">{s.kicker}</span>
+                    <h3 class="display h3">{s.title}</h3>
+                    <p class="when">{tidy(s.when)}</p>
+                    <button class="fold-btn mono" type="button" aria-expanded="false" aria-controls={`${s.id}-body`} hidden>Directions, theme and {s.pieces.length} pieces</button>
+                    <p class="eyebrow sub">{s.directions.length} directions</p>
+                    <ul class="dirs">
+                      {s.directions.map((dir) => {
+                        const dt = theme(dir.theme);
+                        return (
+                          <li title={dir.mood}>
+                            {dt && <span class="swatches" aria-hidden="true"><i style={`background:${dt.tokens.bg}`}></i><i style={`background:${dt.tokens.accent}`}></i></span>}
+                            <span>{dir.name}</span>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
+                  <dl class="col" id={`${s.id}-body`}>
+                    {t && (
+                      <div>
+                        <dt>Theme</dt>
+                        <dd><a href={`/themes/${t.id}`}>{t.name}</a>
+                          <span class="swatches" aria-hidden="true"><i style={`background:${t.tokens.bg}`}></i><i style={`background:${t.tokens.ink}`}></i><i style={`background:${t.tokens.accent}`}></i></span>
+                        </dd>
+                      </div>
+                    )}
+                    {p && (
+                      <div>
+                        <dt>Type</dt>
+                        <dd><a href={`/type/${p.id}`}>{p.name}</a><span class="mono faint">{p.display.family} + {p.text.family}</span></dd>
+                      </div>
+                    )}
+                    {sh && (
+                      <div>
+                        <dt>Shelf</dt>
+                        <dd><a href={`/collections/${sh.slug}`}>{sh.title}</a></dd>
+                      </div>
+                    )}
+                    <div>
+                      <dt>Index</dt>
+                      <dd class="cats">{s.categories.map((c) => <a class="chip" href={`/sections/${c}`}>{CATEGORY_META[c as keyof typeof CATEGORY_META]?.label ?? c}</a>)}</dd>
+                    </div>
+                  </dl>
+                  <div class="col pieces">
+                    <p class="eyebrow">Open first</p>
+                    <ol>
+                      {first.map((id) => <li><a href={`/p/${id}`}>{titles.get(id) ?? id}</a></li>)}
+                    </ol>
+                    {rest.length > 0 && (
+                      <details>
+                        <summary><span class="more">Show all {s.pieces.length} pieces</span><span class="less">Show fewer</span></summary>
+                        <ol start={SHOWN + 1}>
+                          {rest.map((id) => <li><a href={`/p/${id}`}>{titles.get(id) ?? id}</a></li>)}
+                        </ol>
+                      </details>
+                    )}
+                  </div>
+                </li>
+              );
+            })}
+          </ol>
+        </section>
+      ))}
+
+      <section class="close" aria-labelledby="close-h">
+        <h2 id="close-h" class="display h3">Not on the list?</h2>
+        <p class="when">Take the closest recipe and change one part, or compose a kit from a palette, a type pairing and a component family. The <a href="/sections">index</a> has every piece by kind, and <a href="/examples">Examples</a> shows sites built from these recipes.</p>
+        <p><a class="btn primary" href="/kit">Build your own kit</a></p>
+      </section>
+    </div>
   </div>
+  <PageFaq faq={faq} />
 </Base>
 
+<script>
+  // On a phone, each recipe folds to its name and note; the overview is the map. Everything stays in the page.
+  const start = document.querySelector<HTMLElement>('.start-page');
+  const openRecipe = (li: Element | null, on = true) => {
+    if (!li?.classList.contains('recipe')) return;
+    li.classList.toggle('open', on);
+    li.querySelector('.fold-btn')?.setAttribute('aria-expanded', String(on));
+  };
+  if (start) {
+    start.classList.add('fold');
+    for (const b of start.querySelectorAll<HTMLButtonElement>('.fold-btn')) {
+      b.hidden = false;
+      b.addEventListener('click', () => openRecipe(b.closest('.recipe'), !b.closest('.recipe')!.classList.contains('open')));
+    }
+    const fromHash = () => { if (location.hash.length > 1) openRecipe(document.getElementById(decodeURIComponent(location.hash.slice(1)))); };
+    fromHash();
+    addEventListener('hashchange', fromHash);
+  }
+
+  // Mark the jump link for the part of the page in view.
+  const links = [...document.querySelectorAll<HTMLAnchorElement>('.jump-row a[href^="#"]')];
+  const targets = links.map((a) => document.getElementById(a.hash.slice(1))).filter((el): el is HTMLElement => !!el);
+  if (targets.length && 'IntersectionObserver' in window) {
+    const seen = new Map<Element, boolean>();
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) seen.set(e.target, e.isIntersecting);
+      const on = targets.find((t) => seen.get(t));
+      for (const a of links) a.toggleAttribute('aria-current', !!on && a.hash === `#${on.id}`);
+    }, { rootMargin: '-140px 0px -55% 0px' });
+    targets.forEach((t) => io.observe(t));
+  }
+</script>
+
 <style>
-  .kit-jump { margin: 20px auto 0; font-size: 15px; color: var(--ink-3); }
-  .kit-jump a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
-  .kit-jump a:hover { color: var(--accent-text); }
-  .page { margin-top: 40px; display: flex; flex-direction: column; gap: 64px; }
-  .group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 8px; }
-  .group .h2 { font-size: clamp(32px, 3vw, 48px); }
+  .start-page { --stick: calc(var(--header-h) + 49px); }
+  .jump { position: sticky; top: var(--stick); z-index: 30; margin-top: 28px; background: color-mix(in srgb, var(--paper) 92%, transparent); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-block: 1px solid var(--line); }
+  .jump-row { display: flex; align-items: center; gap: 4px 24px; padding: 12px 0; overflow-x: auto; scrollbar-width: none; white-space: nowrap; }
+  .jump-row::-webkit-scrollbar { display: none; }
+  .jump-row a { font-size: 14px; color: var(--ink-2); padding-bottom: 2px; border-bottom: 1px solid transparent; transition: color var(--t-fast), border-color var(--t-fast); }
+  .jump-row a:hover, .jump-row a[aria-current] { color: var(--ink); border-color: var(--ink); }
+  .jump-row .own { margin-left: auto; color: var(--ink); }
+  .jump-row .own:hover { color: var(--accent-text); border-color: currentColor; }
+  .cnt { font-family: var(--mono); font-size: 12px; color: var(--ink-3); }
+
+  [id] { scroll-margin-top: calc(var(--stick) + 64px); }
+
+  .how { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; margin-top: 40px; padding-bottom: 40px; border-bottom: 1px solid var(--line); }
+  .how li { display: flex; gap: 14px; align-items: baseline; }
+  .how .mono { color: var(--accent-text); }
+  .how p { font-size: 15px; line-height: 1.55; color: var(--ink-2); max-width: 38ch; text-wrap: pretty; }
+  .how b { color: var(--ink); font-weight: 550; }
+  .how a, .when a, dd a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 3px; }
+  .how a:hover, .when a:hover, dd a:hover { text-decoration-color: currentColor; color: var(--accent-text); }
+
+  .overview { margin-top: 40px; display: flex; flex-direction: column; gap: 32px; }
+  .overview > .eyebrow { padding-bottom: 12px; border-bottom: 1px solid var(--ink); }
+  .ov-title { font-family: var(--display); font-size: 18px; font-weight: 550; letter-spacing: -0.015em; margin-bottom: 14px; display: flex; align-items: baseline; gap: 8px; }
+  .ov-title a:hover { color: var(--accent-text); }
+  .ov-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
+  .ov { height: 100%; display: flex; flex-direction: column; gap: 6px; padding: 14px 16px 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); transition: border-color var(--t-fast), background-color var(--t-fast); }
+  .ov:hover { border-color: var(--ink); background: var(--paper-2); }
+  .ov-swatches { display: flex; gap: 3px; margin-bottom: 4px; }
+  .ov-swatches i { width: 16px; height: 16px; border-radius: 4px; box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ink) 16%, transparent); background-image: linear-gradient(135deg, transparent 55%, var(--a) 55%); }
+  .ov-name { font-family: var(--display); font-size: 17px; font-weight: 550; letter-spacing: -0.015em; line-height: 1.2; }
+  .ov-blurb { font-size: 13px; line-height: 1.45; color: var(--ink-3); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .ov-meta { margin-top: auto; padding-top: 4px; color: var(--ink-3); font-size: 11px; }
+
+  .page { margin-top: 72px; display: flex; flex-direction: column; gap: 72px; }
+  .group { display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 8px 24px; margin-bottom: 8px; }
+  .group .h2 { font-size: clamp(32px, 3vw, 48px); grid-column: 1; }
+  .group .when { grid-column: 1; }
+  .group .top { grid-column: 2; grid-row: 1 / span 2; color: var(--ink-3); padding-bottom: 4px; }
+  .group .top:hover { color: var(--ink); }
   .starts { display: flex; flex-direction: column; border-top: 1px solid var(--ink); }
-  .card { display: grid; grid-template-columns: minmax(240px, 1fr) minmax(220px, .9fr) minmax(200px, .8fr); gap: 32px; padding: 36px 0; border-bottom: 1px solid var(--line); }
-  .card header { display: flex; flex-direction: column; gap: 10px; }
-  .card .muted { max-width: 40ch; font-size: 15px; text-wrap: pretty; }
-  .when { color: var(--ink-3); font-size: 13.5px; max-width: 42ch; text-wrap: pretty; }
-  dl { display: flex; flex-direction: column; gap: 14px; }
+  .recipe { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr) minmax(0, .9fr); gap: 32px; padding: 32px 0; border-bottom: 1px solid var(--line); }
+  .recipe:target { background: linear-gradient(90deg, var(--accent-soft), transparent 60%); padding-inline: 16px; margin-inline: -16px; border-radius: 8px; }
+  .col { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+  .head .h3 { font-size: clamp(22px, 2vw, 28px); }
+  .when { color: var(--ink-3); font-size: 13.5px; line-height: 1.5; max-width: 46ch; text-wrap: pretty; }
+  .sub { margin-top: 6px; }
+  dl { gap: 14px; }
   dt { font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 4px; }
-  dd { font-size: 15px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
-  dd a { text-decoration: underline; text-underline-offset: 3px; }
+  dd { margin: 0; font-size: 15px; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; }
   .cats { gap: 6px; }
-  .pieces ol { display: flex; flex-direction: column; gap: 6px; margin-top: 8px; }
+  .swatches { display: inline-flex; gap: 2px; }
+  .swatches i { width: 10px; height: 10px; border-radius: 50%; box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ink) 18%, transparent); }
+  .dirs { display: flex; flex-wrap: wrap; gap: 6px; }
+  .dirs li { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px 4px 6px; border: 1px solid var(--line); border-radius: 999px; font-size: 13px; }
+  .pieces ol { display: flex; flex-direction: column; gap: 6px; }
   .pieces a { font-size: 14px; text-transform: capitalize; border-bottom: 1px solid transparent; }
   .pieces a:hover { border-color: var(--ink); }
-  .dirs { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 18px; }
-  .dirs li { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px 4px 6px; border: 1px solid var(--line); border-radius: 999px; font-size: 13px; }
-  @media (max-width: 900px) { .card { grid-template-columns: minmax(0, 1fr); gap: 20px; } }
+  details ol { margin-top: 6px; }
+  summary { cursor: pointer; list-style: none; display: inline-flex; margin-top: 4px; font-family: var(--mono); font-size: 12px; color: var(--ink-2); border-bottom: 1px solid var(--line-2); padding-bottom: 1px; }
+  summary::-webkit-details-marker { display: none; }
+  summary:hover { color: var(--ink); border-color: var(--ink); }
+  details[open] summary { order: 2; margin-top: 10px; }
+  details[open] { display: flex; flex-direction: column; }
+  details .less, details[open] .more { display: none; }
+  details[open] .less { display: inline; }
+
+  .close { display: flex; flex-direction: column; gap: 14px; padding: 40px 0 8px; border-top: 1px solid var(--ink); }
+  .close .when { font-size: 15px; color: var(--ink-2); max-width: 60ch; }
+
+  @media (max-width: 1000px) {
+    .recipe { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+    .head { grid-column: 1 / -1; }
+  }
+  .fold-btn { display: none; }
+  @media (max-width: 760px) {
+    .fold .fold-btn:not([hidden]) { display: inline-flex; align-items: center; gap: 8px; align-self: flex-start; margin-top: 4px; padding: 7px 12px; font-size: 12px; color: var(--ink); background: transparent; border: 1px solid var(--line-2); border-radius: 999px; cursor: pointer; }
+    .fold .fold-btn::after { content: '+'; color: var(--ink-3); }
+    .fold .open .fold-btn::after { content: '−'; }
+    .fold .recipe:not(.open) > dl, .fold .recipe:not(.open) > .pieces, .fold .recipe:not(.open) .sub, .fold .recipe:not(.open) .dirs { display: none; }
+    .jump { position: static; }
+    .jump-row { gap: 4px 18px; }
+    .jump-row .own { margin-left: 0; }
+    [id] { scroll-margin-top: calc(var(--header-h) + 64px); }
+    .how { grid-template-columns: minmax(0, 1fr); gap: 16px; margin-top: 28px; padding-bottom: 28px; }
+    .ov-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+    .ov { padding: 12px; }
+    .ov-name { font-size: 15px; }
+    .ov-blurb { display: none; }
+    .page { margin-top: 56px; gap: 56px; }
+    .recipe { grid-template-columns: minmax(0, 1fr); gap: 18px; padding: 24px 0; }
+    .head { gap: 8px; }
+    dl.col { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px 16px; }
+    dl.col > div:last-child { grid-column: 1 / -1; }
+    dt { margin-bottom: 2px; font-size: 11px; }
+    dd { font-size: 14px; }
+    dd .mono { font-size: 11px; }
+    .cats .chip { padding: 3px 9px; font-size: 12px; }
+    .dirs li { font-size: 12px; padding: 3px 8px 3px 5px; }
+    .pieces ol { gap: 4px; }
+  }
 </style>

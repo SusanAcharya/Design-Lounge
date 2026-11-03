@@ -1,87 +1,312 @@
 ---
+// The site footer, built from the Lounge's own piece Nº 563 (footer-terminal-prompt) on the house kit:
+// an install band, a small working prompt that speaks the MCP server's tool names, and plain link columns
+// so nobody has to type to get anywhere.
 import { getPieces, AUTHOR, about } from '../lib/pieces';
 import { SHELF_GROUPS } from '../data/collections';
+import mcp from '../../mcp/package.json';
 const pieces = await getPieces();
 const year = new Date().getFullYear();
+const mcpCmd = 'claude mcp add -s user design-lounge -- npx -y design-lounge-mcp@latest';
+const newest = [...pieces].reverse().slice(0, 5).map((p) => ({ id: p.id, title: p.data.title }));
 ---
+<section class="end" aria-labelledby="end-h">
+  <div class="wrap end-in">
+    <div class="end-text">
+      <h2 class="display" id="end-h">Install once. Ask for anything.</h2>
+      <p>The MCP server gives your agent {about(pieces.length)} pieces, the themes and the review tools. It installs the skill too. Free, no account.</p>
+    </div>
+    <div class="end-cmd">
+      <span class="ecmd">
+        <span class="mono acc" aria-hidden="true">$</span>
+        <code id="ftr-cmd">{mcpCmd}</code>
+        <button class="copy" type="button" data-copy="#ftr-cmd"><span data-label>Copy</span></button>
+      </span>
+      <p class="end-note">Claude Code. For Cursor, Codex, VS Code, ChatGPT and the skill alone, see <a href="/agents">Install</a>.</p>
+    </div>
+  </div>
+</section>
+
 <footer class="ftr">
-  <div class="wrap">
-    <div class="sign">
-      <a class="who display" href="/about">{AUTHOR.name}</a>
-      <ul class="links mono">
-        {AUTHOR.links.map((l) => <li><a href={l.href} target="_blank" rel="noopener">{l.label} ↗</a></li>)}
-        <li><a href={`mailto:${AUTHOR.email}?subject=Design%20Lounge`}>Email ↗</a></li>
+  <div class="wrap ftr-grid">
+    <div class="tw">
+      <p class="hint" id="ftr-hint">Try the Lounge from here: type <kbd>help</kbd>, <kbd>search pricing</kbd> or <kbd>tools</kbd>. Every answer is also a link on the right.</p>
+      <div class="term">
+        <div class="bar" aria-hidden="true"><i></i><i></i><i></i><span>~/design-lounge</span><span class="sz">mcp v{mcp.version}</span></div>
+        <div class="screen" data-screen>
+          <div class="log" role="log" aria-live="polite" aria-label="Command output" data-log></div>
+          <div class="line">
+            <span class="ps" aria-hidden="true">lounge ~ $</span>
+            <label class="field">
+              <span class="sr-only">Command</span>
+              <input data-cli type="text" autocomplete="off" autocapitalize="off" spellcheck="false" aria-describedby="ftr-hint" />
+              <span class="cur" aria-hidden="true" data-cur></span>
+            </label>
+          </div>
+        </div>
+      </div>
+      <script type="application/json" data-newest set:html={JSON.stringify(newest)}></script>
+    </div>
+
+    <div class="side">
+      <nav class="cols" aria-label="Footer">
+        <div>
+          <h3><a href="/system">System</a></h3>
+          <ul>
+            <li><a href="/type">Type</a></li>
+            <li><a href="/themes">Themes</a></li>
+            <li><a href="/wada">Wada colours</a></li>
+            <li><a href="/icons">Icons</a></li>
+            <li><a href="/motion">Motion</a></li>
+            <li><a href="/kit">Kit</a></li>
+            <li><a href="/start">Start from a product</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3><a href="/sections">Sections</a></h3>
+          <ul>
+            <li><a href="/sections/hero">Hero</a></li>
+            <li><a href="/sections/footer">Footer</a></li>
+            <li><a href="/sections/landing">Landing</a></li>
+            <li><a href="/sections/pricing">Pricing</a></li>
+            <li><a href="/sections/dashboard">Dashboards</a></li>
+            <li><a href="/browse">Browse all</a></li>
+            <li><a href="/random" data-random>Surprise me</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3><a href="/collections">Shelves</a></h3>
+          <ul>
+            {SHELF_GROUPS.map((g) => <li><a href={`/collections#${g.id}`}>{g.label}</a></li>)}
+            <li><a href="/rooms">Rooms</a></li>
+            <li><a href="/platforms">Platforms</a></li>
+            <li><a href="/styles">Styles</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Lounge</h3>
+          <ul>
+            <li><a href="/agents">Install</a></li>
+            <li><a href="/benchmark">Benchmark</a></li>
+            <li><a href="/examples">Examples</a></li>
+            <li><a href="/guide">Briefs</a></li>
+            <li><a href="/sources">Sources</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/privacy">Privacy</a></li>
+          </ul>
+        </div>
+      </nav>
+      <ul class="meta">
+        <li><a href="https://www.npmjs.com/package/design-lounge-mcp" rel="noopener"><span class="tag mono">v{mcp.version}</span><span class="k">design-lounge-mcp on npm</span><span class="v mono">free to use</span></a></li>
+        <li><a href="https://registry.modelcontextprotocol.io/v0/servers?search=design-lounge" rel="noopener"><span class="dot" aria-hidden="true"></span><span class="k">Listed on the official MCP Registry</span><span class="v mono">io.github.SusanAcharya</span></a></li>
+        <li><a href="https://github.com/SusanAcharya/Design-Lounge" rel="noopener"><span class="tag mono">src</span><span class="k">Source and issues on GitHub</span><span class="v mono">↗</span></a></li>
+        <li><a href="/llms.txt"><span class="tag mono">txt</span><span class="k">llms.txt and a JSON catalogue for agents</span><span class="v mono">↗</span></a></li>
       </ul>
     </div>
-    <div class="cols">
-      <div>
-        <p class="eyebrow"><a href="/system">System</a></p>
-        <ul>
-          <li><a href="/type">Type</a></li>
-          <li><a href="/themes">Themes</a></li>
-          <li><a href="/wada">Wada colours</a></li>
-          <li><a href="/icons">Icons</a></li>
-          <li><a href="/motion">Motion</a></li>
-          <li><a href="/kit">Kit</a></li>
-          <li><a href="/start">Start from a product</a></li>
-        </ul>
-      </div>
-      <div>
-        <p class="eyebrow"><a href="/sections">Sections</a></p>
-        <ul>
-          <li><a href="/sections/hero">Hero</a></li>
-          <li><a href="/sections/footer">Footer</a></li>
-          <li><a href="/sections/portfolio">Portfolio</a></li>
-          <li><a href="/sections/landing">Landing</a></li>
-          <li><a href="/sections/pricing">Pricing</a></li>
-          <li><a href="/sections/contact">Contact</a></li>
-        </ul>
-      </div>
-      <div>
-        <p class="eyebrow"><a href="/collections">Shelves</a></p>
-        <ul>
-          {SHELF_GROUPS.map((g) => <li><a href={`/collections#${g.id}`}>{g.label}</a></li>)}
-          <li><a href="/browse">Browse</a></li>
-          <li><a href="/rooms">Rooms</a></li>
-          <li><a href="/platforms">Platforms</a></li>
-          <li><a href="/styles">Styles</a></li>
-        </ul>
-      </div>
-      <div>
-        <p class="eyebrow">Lounge</p>
-        <ul>
-          <li><a href="/agents">Install</a></li>
-          <li><a href="/guide">Briefs</a></li>
-          <li><a href="/sources">Sources</a></li>
-          <li><a href="/about">About</a></li>
-          <li><a href="/privacy">Privacy</a></li>
-          <li><a href="/random" data-random>Surprise</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="big display" aria-hidden="true">Design <i>Lounge</i></div>
-    <div class="legal mono faint">
-      <span>© {year} {AUTHOR.name} · Design Lounge · {about(pieces.length)} pieces</span>
-      <span><a href={AUTHOR.site}>{AUTHOR.siteLabel}</a></span>
+
+    <div class="legal">
+      <a class="wm" href="/">Design <span>Lounge</span></a>
+      <span>© {year} <a href="/about">{AUTHOR.name}</a> · made in {AUTHOR.city} · {about(pieces.length)} pieces</span>
+      <ul class="who">
+        {AUTHOR.links.map((l) => <li><a href={l.href} target="_blank" rel="noopener me">{l.label}</a></li>)}
+        <li><a href={`mailto:${AUTHOR.email}?subject=Design%20Lounge`}>Email</a></li>
+      </ul>
     </div>
   </div>
 </footer>
 
+<script>
+  // The footer prompt. Commands mirror the MCP server's tools; output is plain lines with links, shown at once.
+  const term = document.querySelector<HTMLElement>('.ftr .term');
+  if (term) {
+    const log = term.querySelector<HTMLElement>('[data-log]')!;
+    const screen = term.querySelector<HTMLElement>('[data-screen]')!;
+    const cli = term.querySelector<HTMLInputElement>('[data-cli]')!;
+    const cur = term.querySelector<HTMLElement>('[data-cur]')!;
+    const newest: { id: string; title: string }[] = JSON.parse(document.querySelector('.ftr [data-newest]')?.textContent || '[]');
+    const MCP = 'claude mcp add -s user design-lounge -- npx -y design-lounge-mcp@latest';
+    type Part = string | { href: string; text: string } | { cmd: string };
+    const TOOLS: [string, string][] = [
+      ['start_design', 'Reads your words and returns the plan: recipe, rules, next calls.'],
+      ['get_recipe', 'A product kind with its directions and the pieces to open first.'],
+      ['get_theme', 'One palette as CSS tokens, light and dark.'],
+      ['get_pairing', 'A display, text and mono font pairing with sizes.'],
+      ['get_piece', 'The build brief for one piece, with a picture.'],
+      ['search_pieces', 'Find pieces by job, style or interaction.'],
+      ['review_page', 'Checks a built page for AI giveaways, SEO, AEO and GEO.'],
+      ['match_reference', 'Names the kit closest to a site or screenshot you like.'],
+    ];
+    const CMDS: Record<string, string> = {
+      help: 'What you can type here',
+      install: 'The one line that adds the MCP server',
+      tools: 'The tools your agent gets',
+      search: 'search <words>: find pieces, like search_pieces',
+      new: 'The newest pieces',
+      random: 'Open a piece at random',
+      clear: 'Clear the screen (or Ctrl+L)',
+    };
+    let index: { id: string; n: string; title: string; summary?: string; tags?: string[]; category?: string }[] | null = null;
+    const history: string[] = [];
+    let hi = 0;
+
+    const row = (parts: Part[], cls = '') => {
+      const p = document.createElement('p');
+      if (cls) p.className = cls;
+      for (const part of parts) {
+        if (typeof part === 'string') p.append(part);
+        else if ('href' in part) { const a = document.createElement('a'); a.href = part.href; a.textContent = part.text; p.append(a); }
+        else { const b = document.createElement('button'); b.type = 'button'; b.className = 'run'; b.textContent = part.cmd; b.addEventListener('click', () => { run(part.cmd); cli.focus(); }); p.append(b); }
+      }
+      log.append(p);
+    };
+    const pair = (k: Part, v: string) => row([k, v], 'pair');
+    const end = () => { screen.scrollTop = screen.scrollHeight; };
+
+    async function search(q: string) {
+      if (!q) { row(['Type a few words after search, like ', { cmd: 'search pricing toggle' }, '.'], 'warn'); return; }
+      try { index ??= await (await fetch('/search.json')).json(); } catch { row(['The catalogue did not load. ', { href: `/browse?q=${encodeURIComponent(q)}`, text: 'Search on Browse' }, '.'], 'warn'); return; }
+      const words = q.toLowerCase().split(/\s+/).filter(Boolean);
+      const hits = index!
+        .map((p) => { const hay = `${p.title} ${p.summary ?? ''} ${(p.tags ?? []).join(' ')} ${p.category ?? ''}`.toLowerCase(); return { p, s: words.reduce((n, w) => n + (p.title.toLowerCase().includes(w) ? 3 : hay.includes(w) ? 1 : 0), 0) }; })
+        .filter((h) => h.s >= words.length)
+        .sort((a, b) => b.s - a.s);
+      if (!hits.length) { row([`Nothing matches "${q}". Try fewer words, or `, { href: `/browse?q=${encodeURIComponent(q)}`, text: 'Browse' }, '.'], 'warn'); return; }
+      row([`${hits.length} pieces. The first ${Math.min(5, hits.length)}:`], 'dim');
+      for (const { p } of hits.slice(0, 5)) pair({ href: `/p/${p.id}`, text: `Nº ${p.n}` }, p.title);
+      if (hits.length > 5) row([{ href: `/browse?q=${encodeURIComponent(q)}`, text: `All ${hits.length} on Browse` }]);
+    }
+
+    async function run(raw: string) {
+      const line = raw.trim();
+      if (!line) return;
+      history.push(line); hi = history.length;
+      row([line], 'echo');
+      const [word, ...rest] = line.split(/\s+/);
+      const cmd = word.toLowerCase().replace(/^search_pieces$/, 'search');
+      try {
+      if (cmd === 'clear') { log.textContent = ''; }
+      else if (cmd === 'help') { for (const [k, v] of Object.entries(CMDS)) pair({ cmd: k === 'search' ? 'search footer' : k }, v); }
+      else if (cmd === 'install') { row([MCP], 'code'); row(['Other agents and the skill alone: ', { href: '/agents', text: 'Install' }, '.']); }
+      else if (cmd === 'tools') { for (const [k, v] of TOOLS) pair(k, v); row([{ href: '/agents', text: 'All tools and how to add them' }]); }
+      else if (cmd === 'search') await search(rest.join(' '));
+      else if (cmd === 'new') { for (const p of newest) pair({ href: `/p/${p.id}`, text: 'open' }, p.title); }
+      else if (cmd === 'random') { row([{ href: '/random', text: 'Open a piece at random' }]); }
+      else row([`${word} is not a command here. Type `, { cmd: 'help' }, '.'], 'warn');
+      } catch { row(['Something went wrong there. ', { href: '/browse', text: 'Browse the library' }, ' instead.'], 'warn'); }
+      end();
+    }
+
+    const place = () => { cur.style.left = `calc(9px + ${cli.selectionStart ?? cli.value.length}ch)`; };
+    cli.addEventListener('input', place);
+    cli.addEventListener('keyup', place);
+    cli.addEventListener('click', place);
+    cli.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') { e.preventDefault(); const v = cli.value; cli.value = ''; place(); run(v); }
+      else if (e.key === 'ArrowUp' && history.length) { e.preventDefault(); hi = Math.max(0, hi - 1); cli.value = history[hi]; requestAnimationFrame(place); }
+      else if (e.key === 'ArrowDown' && history.length) { e.preventDefault(); hi = Math.min(history.length, hi + 1); cli.value = history[hi] ?? ''; requestAnimationFrame(place); }
+      else if (e.key === 'Tab' && cli.value && !cli.value.includes(' ')) {
+        const m = Object.keys(CMDS).filter((k) => k.startsWith(cli.value.toLowerCase()));
+        if (m.length === 1) { e.preventDefault(); cli.value = m[0] + (m[0] === 'search' ? ' ' : ''); place(); }
+      } else if (e.key === 'l' && e.ctrlKey) { e.preventDefault(); log.textContent = ''; }
+    });
+    term.addEventListener('click', (e) => { if (!(e.target as HTMLElement).closest('a, button')) cli.focus({ preventScroll: true }); });
+    // First frame: help already run, so the screen shows what it can do.
+    row(['Design Lounge, the same library your agent reads through the MCP server.'], 'dim');
+    run('help');
+    history.length = 0; hi = 0;
+    screen.scrollTop = 0;
+  }
+</script>
+
 <style>
-  .ftr { border-top: 1px solid var(--ink); margin-top: clamp(48px, 8vw, 120px); padding-top: 56px; position: relative; z-index: 1; }
-  .sign { display: flex; flex-direction: column; gap: 16px; padding-bottom: 40px; margin-bottom: 32px; border-bottom: 1px solid var(--line); }
-  .who { font-size: clamp(40px, 6vw, 72px); line-height: .9; letter-spacing: -0.035em; }
-  .who:hover { color: var(--accent-text); }
-  .links { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 6px 22px; margin-top: 18px; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
-  .links a { border-bottom: 1px solid var(--line-2); padding-bottom: 2px; transition: border-color var(--t-fast); }
-  .links a:hover { border-color: var(--ink); }
-  .cols { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; }
-  .cols .eyebrow { margin-bottom: 14px; }
-  .cols li { padding: 5px 0; font-size: 14.5px; }
-  .cols li a { border-bottom: 1px solid transparent; transition: border-color var(--t-fast); }
-  .cols li a:hover { border-color: var(--ink); }
-  .big { font-size: clamp(64px, 14vw, 220px); line-height: 0.85; margin: 64px 0 24px; color: transparent; -webkit-text-stroke: 1px var(--ink-3); user-select: none; letter-spacing: -0.03em; }
-  .legal { display: flex; justify-content: space-between; gap: 16px; padding: 16px 0 28px; border-top: 1px solid var(--line); }
-  .legal a { text-decoration: underline; text-underline-offset: 3px; }
-  @media (max-width: 860px) { .sign { grid-template-columns: minmax(0, 1fr); } .cols { grid-template-columns: repeat(2, minmax(0, 1fr)); } .big { margin-top: 40px; } .legal { flex-direction: column; gap: 6px; } }
+  /* install band */
+  .end { border-top: 1px solid var(--ink); margin-top: clamp(48px, 8vw, 120px); background: var(--paper-2); }
+  .end-in { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px 48px; align-items: end; padding-block: clamp(40px, 5vw, 64px); }
+  .end h2 { font-size: clamp(34px, 4.6vw, 64px); line-height: 1; letter-spacing: -0.035em; max-width: 13ch; }
+  .end-text p { margin-top: 14px; max-width: 46ch; color: var(--ink-2); font-size: 16px; line-height: 1.55; }
+  .end-cmd { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+  .ecmd { display: flex; align-items: center; gap: 10px; min-width: 0; padding: 7px 7px 7px 16px; border: 1px solid var(--line-2); border-radius: 12px; background: var(--paper); }
+  .ecmd code { flex: 1; min-width: 0; font-family: var(--mono); font-size: 14px; line-height: 1.45; color: var(--ink); overflow-wrap: anywhere; }
+  .ecmd .acc { color: var(--accent-text); font-size: 14px; }
+  .ecmd .copy { flex: none; height: 38px; padding: 0 16px; border-radius: 8px; font-size: 14px; font-weight: 500; background: var(--ink); color: var(--paper); }
+  .ecmd .copy:hover { opacity: .86; }
+  .ecmd .copy[data-done] { background: var(--accent); color: var(--accent-ink); }
+  .end-note { font-size: 13px; color: var(--ink-3); }
+  .end-note a { color: var(--ink-2); text-decoration: underline; text-underline-offset: 3px; }
+  .end-note a:hover { color: var(--accent-text); }
+
+  /* footer */
+  .ftr { position: relative; z-index: 1; padding-top: clamp(40px, 5vw, 56px); border-top: 1px solid var(--line); }
+  .ftr-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 40px 56px; }
+  .tw { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+  .hint { font-size: 13.5px; line-height: 1.5; color: var(--ink-2); max-width: 56ch; }
+  .hint kbd, .ftr :global(kbd) { font-family: var(--mono); font-size: 12px; padding: 1px 6px; border: 1px solid var(--line-2); border-radius: 5px; background: var(--paper-2); color: var(--ink); }
+
+  /* the terminal keeps its own dark ground in both themes */
+  .term {
+    --t-bg: #141416; --t-bar: #1C1C1F; --t-ink: #EDEDEF; --t-ink2: #B4B4BB; --t-ink3: #8E8E96; --t-line: #2C2C31; --t-acc: #FF8A4C; --t-warn: #F2C36B;
+    border-radius: 10px; background: var(--t-bg); color: var(--t-ink); border: 1px solid #000; overflow: hidden; font-family: var(--mono); font-size: 13.5px; line-height: 1.6;
+  }
+  .bar { display: flex; align-items: center; gap: 7px; height: 36px; padding: 0 14px; background: var(--t-bar); border-bottom: 1px solid var(--t-line); color: var(--t-ink3); font-size: 12px; }
+  .bar i { width: 10px; height: 10px; border-radius: 50%; background: #3A3A40; }
+  .bar span:first-of-type { margin-left: 8px; }
+  .bar .sz { margin-left: auto; }
+  .screen { height: 340px; overflow-y: auto; padding: 14px 16px 16px; scrollbar-width: thin; scrollbar-color: #3A3A40 transparent; }
+  .log :global(p) { margin: 0; color: var(--t-ink2); overflow-wrap: anywhere; }
+  .log :global(p.echo) { color: var(--t-ink); margin-top: 10px; }
+  .log :global(p.echo)::before { content: "lounge ~ $ "; color: var(--t-acc); }
+  .log :global(p.dim) { color: var(--t-ink3); }
+  .log :global(p.warn) { color: var(--t-warn); }
+  .log :global(p.code) { color: var(--t-ink); }
+  .log :global(p.pair) { display: grid; grid-template-columns: 17ch minmax(0, 1fr); gap: 0 12px; }
+  .log :global(a) { color: var(--t-ink); text-decoration: underline dashed var(--t-ink3); text-underline-offset: 3px; }
+  .log :global(a:hover) { color: var(--t-acc); text-decoration-color: var(--t-acc); }
+  .log :global(.run) { justify-self: start; padding: 0; font: inherit; color: var(--t-acc); background: none; cursor: pointer; text-align: left; }
+  .log :global(.run:hover) { text-decoration: underline; text-underline-offset: 3px; }
+  .term :global(:focus-visible) { outline: 2px solid var(--t-acc); outline-offset: 1px; border-radius: 4px; }
+  .line { display: flex; align-items: center; gap: 8px; margin-top: 10px; }
+  .ps { color: var(--t-acc); white-space: nowrap; }
+  .field { position: relative; flex: 1; min-width: 0; }
+  .field input { width: 100%; height: 28px; padding: 0 8px; font: inherit; color: var(--t-ink); background: transparent; border: 1px solid var(--t-ink3); border-radius: 6px; caret-color: transparent; }
+  .field input:focus { outline: none; border-color: var(--t-acc); }
+  .cur { position: absolute; top: 4px; left: 9px; width: 1ch; height: 1.3em; background: var(--t-acc); pointer-events: none; animation: blink 1100ms steps(1) 2.4s infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  .side { display: flex; flex-direction: column; gap: 28px; min-width: 0; }
+  .cols { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; }
+  .cols h3 { font-family: var(--mono); font-size: 12px; font-weight: 400; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 12px; }
+  .cols h3 a:hover { color: var(--ink); }
+  .cols li { padding: 4px 0; font-size: 14px; }
+  .cols li a { color: var(--ink-2); transition: color var(--t-fast); }
+  .cols li a:hover { color: var(--accent-text); }
+  .meta { border-top: 1px solid var(--line); }
+  .meta a { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 12px; min-height: 46px; padding: 8px 0; border-bottom: 1px solid var(--line); font-size: 14px; color: var(--ink); }
+  .meta a:hover .k { color: var(--accent-text); }
+  .meta .tag { min-width: 52px; text-align: center; font-size: 11.5px; padding: 2px 8px; border: 1px solid var(--line-2); border-radius: 6px; color: var(--ink-2); }
+  .meta .dot { justify-self: center; width: 52px; height: 8px; display: grid; place-items: center; }
+  .meta .dot::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+  .meta .v { font-size: 12px; color: var(--ink-3); }
+
+  .legal { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px 24px; padding: 20px 0 28px; margin-top: 8px; border-top: 1px solid var(--line); font-size: 13px; color: var(--ink-3); }
+  .legal a { color: var(--ink-2); }
+  .legal > span a { text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--line-2); }
+  .legal a:hover { color: var(--accent-text); }
+  .wm { font-size: 17px; font-weight: 600; letter-spacing: -0.02em; color: var(--ink) !important; }
+  .wm span { font-weight: 400; color: var(--ink-2); }
+  .who { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-left: auto; }
+
+  @media (prefers-reduced-motion: reduce) { .cur { animation: none; } }
+  @media (max-width: 1100px) { .cols { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 900px) {
+    .end-in, .ftr-grid { grid-template-columns: minmax(0, 1fr); }
+    .who { margin-left: 0; }
+  }
+  @media (max-width: 640px) {
+    .term { font-size: 12.5px; }
+    .screen { height: 260px; padding: 12px; }
+    .log :global(p.pair) { grid-template-columns: auto minmax(0, 1fr); gap: 0 10px; margin-bottom: 4px; }
+    .bar .sz { display: none; }
+    .meta .v { display: none; }
+    .meta a { grid-template-columns: auto minmax(0, 1fr); }
+  }
 </style>

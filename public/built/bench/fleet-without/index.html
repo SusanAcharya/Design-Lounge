@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dispatch Board · Kestrel Couriers</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="top">
+    <div class="brand">
+      <svg class="brand-mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 15.5 12 4l9 11.5-9-3.2-9 3.2Z" fill="currentColor"/><path d="M12 12.3V20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <div>
+        <p class="brand-name">Kestrel Couriers</p>
+        <p class="brand-sub">Dispatch board</p>
+      </div>
+    </div>
+    <div class="today">
+      <p class="today-date" id="today-date">Today</p>
+      <div class="shift" aria-label="Shift progress">
+        <span class="shift-end">07:30</span>
+        <span class="shift-track"><span class="shift-fill" id="shift-fill"></span></span>
+        <span class="shift-end">18:00</span>
+      </div>
+    </div>
+    <div class="clock">
+      <span class="live-dot" aria-hidden="true"></span>
+      <span class="clock-time" id="clock">11:24</span>
+    </div>
+  </header>
+
+  <main class="board">
+    <section class="summary" aria-label="Today at a glance">
+      <div class="stat">
+        <p class="stat-label">Vans out</p>
+        <p class="stat-value"><span id="s-out">10</span><span class="stat-of">/12</span></p>
+        <p class="stat-note" id="s-out-note">1 at depot · 1 returning</p>
+      </div>
+      <div class="stat stat-wide">
+        <p class="stat-label">Stops delivered</p>
+        <p class="stat-value"><span id="s-done">0</span><span class="stat-of" id="s-total">/0</span></p>
+        <div class="meter" aria-hidden="true"><span id="s-meter"></span></div>
+      </div>
+      <button class="stat stat-btn" data-jump="late" type="button">
+        <p class="stat-label"><i class="key key-late"></i>Running late</p>
+        <p class="stat-value" id="s-late">0</p>
+        <p class="stat-note" id="s-late-note">—</p>
+      </button>
+      <button class="stat stat-btn" data-jump="help" type="button">
+        <p class="stat-label"><i class="key key-help"></i>Need help</p>
+        <p class="stat-value" id="s-help">0</p>
+        <p class="stat-note" id="s-help-note">—</p>
+      </button>
+      <div class="stat">
+        <p class="stat-label">Last van back</p>
+        <p class="stat-value" id="s-return">—</p>
+        <p class="stat-note" id="s-return-note">—</p>
+      </div>
+    </section>
+
+    <section class="map-panel panel" aria-labelledby="map-title">
+      <div class="panel-head">
+        <h2 id="map-title">Where they are</h2>
+        <ul class="legend" aria-label="Legend">
+          <li><i class="key key-ok"></i>On time</li>
+          <li><i class="key key-late"></i>Late</li>
+          <li><i class="key key-help"></i>Needs help</li>
+          <li><i class="key key-idle"></i>Depot / returning</li>
+        </ul>
+      </div>
+      <p class="map-hint">Tap a van for details. Drag sideways to see the whole area.</p>
+      <div class="map-wrap">
+        <div class="map-scroll" id="map-scroll">
+          <svg id="map" viewBox="0 0 1000 640" role="img" aria-label="Map of the delivery area with van positions"></svg>
+        </div>
+        <div class="van-card" id="van-card" hidden></div>
+      </div>
+    </section>
+
+    <aside class="help-panel panel" id="help" aria-labelledby="help-title">
+      <div class="panel-head">
+        <h2 id="help-title">Who needs help</h2>
+        <span class="count-pill" id="help-count">0 open</span>
+      </div>
+      <ol class="help-list" id="help-list"></ol>
+      <div class="feed">
+        <h3>Latest from the road</h3>
+        <ol class="feed-list" id="feed"></ol>
+      </div>
+    </aside>
+
+    <section class="fleet panel" id="fleet" aria-labelledby="fleet-title">
+      <div class="panel-head">
+        <h2 id="fleet-title">All vans</h2>
+        <div class="filters" role="tablist" aria-label="Filter vans">
+          <button role="tab" class="filter is-on" data-filter="all" aria-selected="true">All <span>12</span></button>
+          <button role="tab" class="filter" data-filter="late" aria-selected="false">Late <span id="f-late">0</span></button>
+          <button role="tab" class="filter" data-filter="help" aria-selected="false">Help <span id="f-help">0</span></button>
+          <button role="tab" class="filter" data-filter="ok" aria-selected="false">On time <span id="f-ok">0</span></button>
+        </div>
+      </div>
+      <div class="rows-head" aria-hidden="true">
+        <span>Van</span><span>Driver · area</span><span>Status</span><span>Stops</span><span>Next stop</span><span class="r">Delay</span><span class="r">Done by</span>
+      </div>
+      <ol class="rows" id="rows"></ol>
+    </section>
+  </main>
+
+  <script src="main.js"></script>
+</body>
+</html>

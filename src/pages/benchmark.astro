@@ -1,0 +1,201 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import { BENCH_META, JUDGE_META, CALLS, SUBJECTS, RUNS, JUDGED, CHECKED_RUNS, TYPICAL, tokensOf, typicalTokens, benchSummary, type Arm } from '../data/benchmark';
+
+const b = benchSummary();
+const k = (n: number) => `${(n / 1000).toFixed(1).replace(/\.0$/, '')}k`;
+const min = (ms: number) => `${(ms / 60000).toFixed(1)} min`;
+const ARMS: { arm: Arm; label: string }[] = [
+  { arm: 'without', label: 'Without the Lounge' },
+  { arm: 'with', label: 'With the Lounge MCP' },
+];
+const run = (s: string, a: Arm) => RUNS.find((r) => r.subject === s && r.arm === a)!;
+const check = (s: string, a: Arm) => CHECKED_RUNS.find((r) => r.subject === s && r.arm === a)!;
+const verdict = (s: string) => JUDGED.find((j) => j.subject === s)!;
+const total = (sc: { fit: number; craft: number; distinct: number; phone: number; ship: number }) => sc.fit + sc.craft + sc.distinct + sc.phone + sc.ship;
+const url = (s: string, a: Arm) => `/built/bench/${s}-${a}/index.html`;
+const description = `What the Design Lounge MCP costs and what it changes, measured: about ${k(typicalTokens())} tokens for a whole design direction, and ${b.pairs} prompts built with and without it by ${BENCH_META.model.split(' (')[0]}, judged blind. Every run is shown.`;
+const faq = [
+  { q: 'How many tokens does the Design Lounge MCP add to a build?', a: `In this benchmark a build with the Lounge MCP used ${k(b.withTokens)} tokens on average against ${k(b.withoutTokens)} without it (${b.tokenDelta > 0 ? '+' : ''}${b.tokenDelta}%), over ${b.pairs} paired builds. The library calls themselves are small, about ${k(typicalTokens())} for a whole direction; the rest is the agent reading briefs and fixing what review_page found.` },
+  { q: 'Do builds with Design Lounge look better?', a: `Not always. A blind judge preferred the build with the Lounge in ${b.judgeWith} of ${b.judged} pairs. With the Lounge, ${b.contrastWith} of ${b.checked} builds passed contrast on every line, against ${b.contrastWithout} of ${b.checked} without.` },
+];
+const dataset = {
+  '@type': 'Dataset',
+  name: 'Design Lounge MCP benchmark',
+  description,
+  datePublished: BENCH_META.date,
+  creator: { '@type': 'Person', name: 'Susan Acharya' },
+  license: 'https://github.com/SusanAcharya/Design-Lounge/blob/main/LICENSE',
+  variableMeasured: ['total tokens', 'tool calls', 'wall time', 'contrast check', 'blind judge score'],
+};
+---
+<Base rail={false} title="Benchmark: the Design Lounge MCP, measured" {description} crumbs={[{ name: 'Benchmark', href: '/benchmark' }]} {faq} schema={[dataset]}>
+  <PageHead eyebrow="Benchmark" title="What it costs, <i>what you get.</i>" count={RUNS.length} countLabel="builds" blurb={`The same ${SUBJECTS.length} everyday prompts, each built once with the Design Lounge MCP and once without it, by the same model in fresh sessions. Tokens and time come from Claude Code's own usage report; quality comes from an automated contrast check and a blind judge. Every build is linked, including the ones the Lounge lost.`} />
+
+  <section class="wrap sum" aria-label="Summary">
+    <dl class="figs">
+      <div><dt>A whole direction from the MCP</dt><dd><span class="fig num">{k(typicalTokens())}</span><span class="note">tokens: plan, recipe, theme, pairing, three briefs, one review</span></dd></div>
+      <div><dt>Tokens per build</dt><dd><span class="fig num">{b.tokenDelta > 0 ? '+' : ''}{b.tokenDelta}%</span><span class="note">{k(b.withTokens)} with the Lounge, {k(b.withoutTokens)} without</span></dd></div>
+      <div><dt>Time per build</dt><dd><span class="fig num">{min(b.withMs)}</span><span class="note">with the Lounge, against {min(b.withoutMs)} without</span></dd></div>
+      <div><dt>Contrast passed</dt><dd><span class="fig num">{b.contrastWith} vs {b.contrastWithout}</span><span class="note">of {b.checked} builds each, with vs without</span></dd></div>
+      <div><dt>Blind judge</dt><dd><span class="fig num">{b.judgeWith} of {b.judged}</span><span class="note">pairs won by the build with the Lounge</span></dd></div>
+    </dl>
+  </section>
+
+  <section class="wrap read" aria-labelledby="read-h">
+    <h2 class="display h3" id="read-h">How to read this</h2>
+    <div class="read-body">
+      <p>The Lounge makes an agent spend more: about twice the tokens and more time, because it reads piece briefs, locks a kit, and runs a review and fixes what it finds. What that bought here was readable text. Two of three builds with the Lounge passed contrast on every line; none of the three without it did.</p>
+      <p>It did not buy a better-looking page every time. The blind judge picked the build with the Lounge for the bakery, where its idea was the most ownable, and picked the other build for the invoicing page, where the Lounge's direction came out as a generic SaaS hero, and for the dashboard, where the plainer build put help above the map on a phone.</p>
+      <p>Three pairs is a small sample, the judge is a model, and the contrast check is the Lounge's own. Read it as an honest first measurement, not a verdict. The method is below so you can run it yourself.</p>
+    </div>
+  </section>
+
+  {SUBJECTS.map((s) => {
+    const v = verdict(s.id);
+    return (
+      <section class="wrap subject" aria-labelledby={`b-${s.id}`}>
+        <header class="subject-head">
+          <h2 class="display h3" id={`b-${s.id}`}>{s.title}</h2>
+          <p class="prompt"><span class="mono" aria-hidden="true">&gt;</span> {s.prompt}</p>
+        </header>
+        <div class="sides">
+          {ARMS.map(({ arm, label }) => {
+            const r = run(s.id, arm);
+            const c = check(s.id, arm);
+            const sc = v[arm];
+            return (
+              <figure class={`side${v.winner === arm ? ' won' : ''}`}>
+                <a class="shot" href={url(s.id, arm)} target="_blank" rel="noopener">
+                  <img src={`/built/bench/${s.id}-${arm}/cover.jpg`} alt={`${s.title}, ${label.toLowerCase()}, first screen`} width="1280" height="800" loading="lazy" />
+                </a>
+                <figcaption>
+                  <p class="label">{label}{v.winner === arm && <span class="win mono">Judge's pick</span>}</p>
+                  <dl class="stats">
+                    <div><dt>Tokens</dt><dd class="num">{r.tokens.toLocaleString('en-GB')}</dd></div>
+                    <div><dt>Tool calls</dt><dd class="num">{r.tools}</dd></div>
+                    <div><dt>Time</dt><dd class="num">{min(r.ms)}</dd></div>
+                    <div><dt>Judge score</dt><dd class="num">{total(sc)} / 50</dd></div>
+                    <div class="wide"><dt>Contrast</dt><dd>{c.contrast ? 'Every line passes 4.5:1' : `Fails: ${c.first}`}</dd></div>
+                  </dl>
+                  <p class="meta"><a href={url(s.id, arm)} target="_blank" rel="noopener">Open the build <span aria-hidden="true">↗</span></a></p>
+                </figcaption>
+              </figure>
+            );
+          })}
+        </div>
+        <p class="why"><b>The judge:</b> {v.why}</p>
+      </section>
+    );
+  })}
+
+  <section class="wrap costs" aria-labelledby="cost-h">
+    <h2 class="display h3" id="cost-h">What each MCP call costs</h2>
+    <p class="lede">One response per tool from the hosted endpoint, text only, measured on {BENCH_META.date}. Tokens are characters divided by four, rounded to the nearest hundred. A typical direction is {TYPICAL.join(', ').replace(/, ([^,]*)$/, ' and $1')}: about {k(typicalTokens())} tokens.</p>
+    <div class="tbl" role="region" aria-labelledby="cost-h" tabindex="0">
+      <table>
+        <thead><tr><th scope="col">Call</th><th scope="col">What it returns</th><th scope="col" class="r">Characters</th><th scope="col" class="r">≈ Tokens</th></tr></thead>
+        <tbody>
+          {CALLS.map((c) => <tr><th scope="row"><code>{c.tool}</code></th><td>{c.what}</td><td class="r num">{c.chars.toLocaleString('en-GB')}</td><td class="r num">{tokensOf(c.chars).toLocaleString('en-GB')}</td></tr>)}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="wrap method" aria-labelledby="m-h">
+    <h2 class="display h3" id="m-h">Method</h2>
+    <dl>
+      <div><dt>Model</dt><dd>{BENCH_META.model}</dd></div>
+      <div><dt>Setup</dt><dd>{BENCH_META.harness}</dd></div>
+      <div><dt>Date</dt><dd>{BENCH_META.date}</dd></div>
+      <div><dt>Without</dt><dd>{BENCH_META.without}</dd></div>
+      <div><dt>With</dt><dd>{BENCH_META.with}</dd></div>
+      <div><dt>Tokens</dt><dd>{BENCH_META.tokensNote}</dd></div>
+      <div><dt>Contrast</dt><dd>The Lounge's demo gate (scripts/gates/demos.mjs) in the same Linux container CI uses, on each build with its CSS and JS inlined, at 1280 and 390 wide. Text must reach 4.5:1 against what is really behind it (3:1 when large).</dd></div>
+      <div><dt>Judge</dt><dd>{JUDGE_META}</dd></div>
+      <div><dt>Caveats</dt><dd>One run per arm per prompt. The runs with the Lounge used its review, which shares rules with the contrast gate. The Lounge's stricter phone check is left out because it also flags skip links and closed drawers that are fine on a page.</dd></div>
+    </dl>
+    <div class="qa">
+      {faq.map((f) => (
+        <div>
+          <h3>{f.q}</h3>
+          <p>{f.a}</p>
+        </div>
+      ))}
+    </div>
+    <p class="also">The older <a href="/examples/proof">proof page</a> shows 18 builds of three show-off prompts, with and without the skill. <a href="https://github.com/SusanAcharya/Design-Lounge/issues" rel="noopener">Run it yourself and open an issue</a> with what you get.</p>
+  </section>
+</Base>
+
+<style>
+  .sum { padding-block: 8px clamp(40px, 5vw, 64px); }
+  .figs { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); margin: 0; border-top: 1px solid var(--ink); }
+  .figs > div { display: flex; flex-direction: column; gap: 10px; padding: 18px 20px 4px 0; min-width: 0; }
+  .figs > div + div { padding-left: 20px; border-left: 1px solid var(--line); }
+  .figs dt { font-size: 13px; color: var(--ink-3); }
+  .figs dd { margin: 0; display: flex; flex-direction: column; gap: 8px; }
+  .fig { font-size: clamp(34px, 3.6vw, 52px); font-weight: 600; letter-spacing: -0.045em; line-height: 1; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .note { font-size: 13px; line-height: 1.5; color: var(--ink-2); }
+
+  .read { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 24px clamp(32px, 5vw, 80px); padding-block: clamp(40px, 5vw, 72px); border-top: 1px solid var(--line); }
+  .read-body { display: flex; flex-direction: column; gap: 14px; max-width: 66ch; }
+  .read-body p { font-size: 16.5px; line-height: 1.65; color: var(--ink-2); text-wrap: pretty; }
+  .read-body p:first-child { color: var(--ink); }
+
+  .subject { padding-block: clamp(40px, 5vw, 72px); border-top: 1px solid var(--line); }
+  .subject-head { display: flex; flex-direction: column; gap: 12px; max-width: 72ch; margin-bottom: clamp(18px, 2.5vw, 28px); }
+  .prompt { font-family: var(--mono); font-size: 14px; line-height: 1.55; color: var(--ink); padding: 12px 14px; background: var(--paper-2); border: 1px solid var(--line); border-radius: var(--r); text-wrap: pretty; }
+  .prompt .mono { color: var(--accent-text); margin-right: 4px; }
+  .sides { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(16px, 2vw, 28px); }
+  .side { display: flex; flex-direction: column; gap: 14px; margin: 0; min-width: 0; }
+  .shot { display: block; border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden; background: var(--paper-2); transition: border-color var(--t-med), transform var(--t-med) var(--ease-out); }
+  .shot:hover { border-color: var(--line-2); transform: translateY(-2px); }
+  .side.won .shot { border-color: var(--ink); }
+  .shot img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; }
+  .label { display: flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 600; color: var(--ink); }
+  .win { font-size: 11px; font-weight: 400; letter-spacing: .08em; text-transform: uppercase; padding: 3px 8px; border-radius: 999px; background: var(--ink); color: var(--paper); }
+  .stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px 16px; margin: 0; padding: 12px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .stats div { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+  .stats .wide { grid-column: 1 / -1; }
+  .stats dt { font-size: 12px; color: var(--ink-3); }
+  .stats dd { margin: 0; font-size: 15px; color: var(--ink); }
+  .stats .wide dd { font-size: 14px; color: var(--ink-2); }
+  .meta a { font-size: 13.5px; color: var(--ink-2); border-bottom: 1px solid var(--line-2); }
+  .meta a:hover { color: var(--accent-text); border-color: var(--accent); }
+  .why { margin-top: 18px; max-width: 80ch; font-size: 15px; line-height: 1.6; color: var(--ink-2); }
+  .why b { color: var(--ink); font-weight: 600; }
+
+  .costs { padding-block: clamp(40px, 5vw, 72px); border-top: 1px solid var(--line); }
+  .costs .lede { margin: 12px 0 20px; max-width: 70ch; }
+  .tbl { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--r-lg); }
+  .tbl:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  table { width: 100%; min-width: 560px; border-collapse: collapse; font-size: 14px; }
+  th, td { padding: 11px 14px; text-align: left; border-bottom: 1px solid var(--line); }
+  tbody tr:last-child > * { border-bottom: 0; }
+  thead th { font-size: 12.5px; font-weight: 500; color: var(--ink-3); background: var(--paper-2); }
+  tbody th { font-weight: 400; }
+  td { color: var(--ink-2); }
+  .r { text-align: right; }
+  code { font-family: var(--mono); font-size: 13px; color: var(--ink); }
+
+  .method { padding-block: clamp(40px, 5vw, 72px) 0; border-top: 1px solid var(--line); }
+  .method dl { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px 32px; margin: 20px 0 0; }
+  .method div { display: flex; flex-direction: column; gap: 4px; }
+  .method dt { font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); }
+  .method dd { margin: 0; font-size: 14.5px; line-height: 1.55; color: var(--ink-2); text-wrap: pretty; }
+  .qa { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 40px; margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--line); }
+  .qa h3 { font-size: 16px; font-weight: 600; letter-spacing: -0.015em; margin-bottom: 6px; }
+  .qa p { font-size: 14.5px; line-height: 1.6; color: var(--ink-2); max-width: 60ch; }
+  .also { margin-top: 28px; font-size: 15px; color: var(--ink-2); max-width: 70ch; }
+  .also a { color: var(--ink); border-bottom: 1px solid var(--line-2); }
+  .also a:hover { color: var(--accent-text); }
+
+  @media (max-width: 1100px) { .figs { grid-template-columns: repeat(3, minmax(0, 1fr)); } .figs > div:nth-child(4) { padding-left: 0; border-left: 0; } }
+  @media (max-width: 760px) {
+    .figs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .figs > div { padding: 16px 12px 8px 0 !important; border-left: 0 !important; border-top: 1px solid var(--line); }
+    .read, .sides, .qa { grid-template-columns: minmax(0, 1fr); }
+    .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+</style>

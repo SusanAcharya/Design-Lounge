@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Crumb & Co — Bakery in Campo de Ourique, Lisbon</title>
+<meta name="description" content="Today's bakes from Crumb & Co, a neighbourhood bakery on Rua Saraiva de Carvalho, Lisbon. See what's out of the oven and pre-order for pickup.">
+<meta name="theme-color" content="#f4ecdf">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<a class="skip" href="#bakes">Skip to today's bakes</a>
+
+<header class="top">
+  <div class="wrap top__in">
+    <a class="logo" href="#" aria-label="Crumb & Co home">
+      <span class="logo__mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32"><path d="M4 20c0-7 5.4-12 12-12s12 5 12 12v2a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z" fill="currentColor"/><path d="M11 13.5l2 5M16 12v6M21 13.5l-2 5" stroke="var(--paper)" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </span>
+      <span class="logo__word">Crumb <em>&amp;</em> Co</span>
+    </a>
+    <p class="top__status" id="openStatus"><span class="dot" aria-hidden="true"></span><span>Open until 19:00</span></p>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap hero__in">
+      <p class="eyebrow" id="todayLabel">Tuesday, 3 November</p>
+      <h1>Baked at four.<br>Gone by <span class="hl">noon</span>, mostly.</h1>
+      <p class="lede">A small oven on Rua Saraiva de Carvalho, Campo de Ourique. Reserve what you want from today's board and we'll keep it wrapped behind the counter.</p>
+      <div class="hero__cta">
+        <a class="btn btn--ink" href="#bakes">See today's board</a>
+        <a class="btn btn--line" href="#visit">Find us</a>
+      </div>
+
+      <dl class="facts">
+        <div><dt>First batch</dt><dd>07:00</dd></div>
+        <div><dt>Natas, every</dt><dd>40 min</dd></div>
+        <div><dt>Pickup</dt><dd>until 19:00</dd></div>
+      </dl>
+    </div>
+    <div class="tiles" aria-hidden="true"></div>
+  </section>
+
+  <section class="board" id="bakes" aria-labelledby="bakesTitle">
+    <div class="wrap">
+      <div class="board__head">
+        <div>
+          <p class="eyebrow">Today's board</p>
+          <h2 id="bakesTitle">Out of the oven</h2>
+        </div>
+        <p class="board__note">Counts update as the shop sells. Pre-ordered items are set aside the moment you confirm.</p>
+      </div>
+
+      <div class="chips" role="tablist" aria-label="Filter bakes" id="chips">
+        <button role="tab" class="chip" aria-selected="true" data-filter="all">All</button>
+        <button role="tab" class="chip" aria-selected="false" data-filter="pastry">Pastelaria</button>
+        <button role="tab" class="chip" aria-selected="false" data-filter="bread">Pão</button>
+        <button role="tab" class="chip" aria-selected="false" data-filter="savoury">Salgados</button>
+        <button role="tab" class="chip" aria-selected="false" data-filter="cake">Bolos</button>
+      </div>
+
+      <ol class="list" id="list" aria-live="polite"></ol>
+    </div>
+  </section>
+
+  <section class="how" aria-labelledby="howTitle">
+    <div class="wrap">
+      <p class="eyebrow">How pickup works</p>
+      <h2 id="howTitle">Three steps, no account.</h2>
+      <ol class="steps">
+        <li><span class="steps__n">1</span><div><h3>Pick from the board</h3><p>Add what you want. If it says three left, that's three on the rack right now.</p></div></li>
+        <li><span class="steps__n">2</span><div><h3>Choose a time</h3><p>Fifteen-minute slots, from the next one free until closing.</p></div></li>
+        <li><span class="steps__n">3</span><div><h3>Pay at the counter</h3><p>Give your name or code. Card, MB Way or cash. Held for 30 minutes after your slot.</p></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="visit" id="visit" aria-labelledby="visitTitle">
+    <div class="wrap visit__in">
+      <div>
+        <p class="eyebrow">Visit</p>
+        <h2 id="visitTitle">Rua Saraiva de Carvalho 112</h2>
+        <p class="addr">1250-245 Lisboa · Tram 25 or 28 to Igreja Santo Condestável, then two minutes downhill.</p>
+        <a class="btn btn--line" href="https://maps.google.com/?q=Rua+Saraiva+de+Carvalho+112+Lisboa" target="_blank" rel="noopener">Open in Maps</a>
+      </div>
+      <table class="hours" aria-label="Opening hours">
+        <tbody>
+          <tr data-day="2"><th scope="row">Tuesday – Friday</th><td>07:00 – 19:00</td></tr>
+          <tr data-day="6"><th scope="row">Saturday</th><td>07:30 – 19:00</td></tr>
+          <tr data-day="0"><th scope="row">Sunday</th><td>08:00 – 14:00</td></tr>
+          <tr data-day="1"><th scope="row">Monday</th><td class="muted">Closed, oven rests</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot__in">
+    <p class="foot__word">Crumb <em>&amp;</em> Co</p>
+    <p>+351 21 396 0412 · ola@crumbandco.pt</p>
+    <p class="muted">Flour from Moagem Ceres, butter from the Azores, eggs from Quinta do Arneiro.</p>
+  </div>
+</footer>
+
+<!-- Sticky bag bar -->
+<div class="bagbar" id="bagbar" hidden>
+  <button class="bagbar__btn" id="openBag" aria-haspopup="dialog">
+    <span class="bagbar__count" id="bagCount">0</span>
+    <span class="bagbar__label">Review pre-order</span>
+    <span class="bagbar__total" id="bagTotal">€0,00</span>
+  </button>
+</div>
+
+<!-- Order sheet -->
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle" hidden>
+  <div class="sheet__scrim" data-close></div>
+  <div class="sheet__panel" tabindex="-1">
+    <div class="sheet__grab" aria-hidden="true"></div>
+    <div class="sheet__head">
+      <h2 id="sheetTitle">Your pre-order</h2>
+      <button class="iconbtn" data-close aria-label="Close">
+        <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+
+    <form id="orderForm" class="sheet__body" novalidate>
+      <ul class="bag" id="bagList"></ul>
+
+      <fieldset class="field">
+        <legend>Pickup time <span class="muted" id="slotDay">today</span></legend>
+        <div class="slots" id="slots"></div>
+        <p class="err" id="slotErr" hidden>Choose a pickup time.</p>
+      </fieldset>
+
+      <div class="field">
+        <label for="name">Name for the bag</label>
+        <input id="name" name="name" autocomplete="given-name" placeholder="e.g. Inês" required>
+        <p class="err" id="nameErr" hidden>We need a name to label your bag.</p>
+      </div>
+      <div class="field">
+        <label for="phone">Phone <span class="muted">(only if something sells out)</span></label>
+        <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+351 9__ ___ ___">
+      </div>
+      <div class="field">
+        <label for="note">Note <span class="muted">(optional)</span></label>
+        <input id="note" name="note" placeholder="Slice the loaf, no box, etc.">
+      </div>
+
+      <div class="sheet__foot">
+        <div class="sum"><span>Pay at pickup</span><strong id="sheetTotal">€0,00</strong></div>
+        <button class="btn btn--ink btn--block" type="submit">Reserve for pickup</button>
+      </div>
+    </form>
+
+    <div class="done" id="done" hidden>
+      <div class="done__stamp" aria-hidden="true">
+        <svg viewBox="0 0 48 48"><path d="M14 25l7 7 14-15" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <h2>Set aside, <span id="doneName">friend</span>.</h2>
+      <p>Your code is</p>
+      <p class="done__code" id="doneCode">CC-000</p>
+      <p class="muted" id="doneWhen">Pickup today at 10:15</p>
+      <button class="btn btn--line btn--block" data-close>Back to the board</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="main.js"></script>
+</body>
+</html>

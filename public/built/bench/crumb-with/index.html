@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Today's bakes and pickup pre-orders | Crumb &amp; Co</title>
+<meta name="description" content="Crumb & Co is a neighbourhood bakery in Lisbon. See what came out of the oven today, from pastéis de nata to broa, and pre-order for pickup at the counter.">
+<meta name="theme-color" content="#f6f1e4">
+<meta property="og:title" content="Crumb & Co, a neighbourhood bakery in Lisbon">
+<meta property="og:description" content="Today's bakes, three oven batches a day, and pre-orders kept on the shelf under your name.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://crumbandco.pt/">
+<meta property="og:image" content="og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://crumbandco.pt/">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gochi+Hand&family=Patrick+Hand&display=swap">
+<link rel="stylesheet" href="styles.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Bakery",
+  "name": "Crumb & Co",
+  "description": "A neighbourhood bakery in Lisbon. Three oven batches a day and pre-orders for pickup.",
+  "address": {"@type": "PostalAddress", "streetAddress": "Rua de São Bento 182", "addressLocality": "Lisboa", "addressCountry": "PT"},
+  "email": "ola@crumbandco.pt",
+  "servesCuisine": "Portuguese bakery",
+  "priceRange": "€",
+  "openingHoursSpecification": [
+    {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Tuesday","Wednesday","Thursday","Friday"], "opens": "07:00", "closes": "19:00"},
+    {"@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "07:30", "closes": "19:00"},
+    {"@type": "OpeningHoursSpecification", "dayOfWeek": "Sunday", "opens": "07:30", "closes": "14:00"}
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "When can I collect?", "acceptedAnswer": {"@type": "Answer", "text": "From thirty minutes after you reserve, and never before the tray is out of the oven. Loaves from 12:00, sweets from 16:00."}},
+    {"@type": "Question", "name": "Do I pay when I reserve?", "acceptedAnswer": {"@type": "Answer", "text": "No. You pay at the counter when you collect, by card or cash."}},
+    {"@type": "Question", "name": "What if I am late?", "acceptedAnswer": {"@type": "Answer", "text": "Your bag waits on the shelf for thirty minutes past your time. After that it goes back on the counter."}}
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#bakes">Skip to today's bakes</a>
+
+<header class="top" id="top">
+  <div class="top-in">
+    <nav class="top-l" aria-label="Primary, left">
+      <ul>
+        <li><a href="#today" data-nav="today" aria-current="true">Today</a></li>
+        <li><a href="#bakes" data-nav="bakes">Bakes</a></li>
+      </ul>
+    </nav>
+    <a class="mark" href="#today" aria-label="Crumb &amp; Co, home">Crumb <span>&amp;</span> Co</a>
+    <div class="top-r">
+      <nav aria-label="Primary, right">
+        <ul><li><a href="#visit" data-nav="visit">Visit</a></li></ul>
+      </nav>
+      <a class="btn-outline" href="#order" data-nav="order">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8h12l-1 12H7z"/><path d="M9 8V7a3 3 0 016 0v1"/></svg>
+        Pre-order <span class="count num" data-count aria-label="items on your slip">0</span>
+      </a>
+    </div>
+    <p class="status" data-status><span class="dot" aria-hidden="true"></span><span data-status-text>Open today</span></p>
+  </div>
+</header>
+
+<main>
+  <!-- Hero: the note on the door (handwritten-homepage) -->
+  <section class="desk" id="today" aria-labelledby="h1">
+    <article class="sheet">
+      <div class="split">
+        <div class="letter" id="letter">
+          <p class="date"><time data-today datetime="2026-11-03">Tuesday 3 November</time></p>
+          <h1 id="h1">Out of the oven at seven</h1>
+          <p class="salute">Dear neighbour,</p>
+          <p>This is what we baked today. Pick what you want, choose a time, and we keep it on the shelf <span class="an" data-k="underline">with your name on the bag</span>.</p>
+          <p>The <span class="an" data-k="circle">nata</span> are usually gone by <del aria-hidden="true">noon</del> <ins>ten</ins>. Loaves come out at twelve, the sweet tray at four.</p>
+          <p class="sign-off">See you at the counter,</p>
+          <p class="sign">Crumb &amp; Co</p>
+          <a class="btn" href="#bakes">Start my pre-order</a>
+          <svg class="ink" aria-hidden="true" focusable="false"></svg>
+        </div>
+        <ul class="notes" id="notes" aria-label="Today's oven batches">
+          <li>
+            <button class="note" type="button" aria-pressed="false" aria-controls="note-1-more" data-batch="morning">
+              <span class="note-t">7:00 · Morning tray</span>
+              <span class="note-b">Nata, pão de Deus, croissants and bolo de arroz.</span>
+              <span class="note-more" id="note-1-more" hidden data-batch-line="morning"></span>
+            </button>
+          </li>
+          <li>
+            <button class="note tilt" type="button" aria-pressed="false" aria-controls="note-2-more" data-batch="midday">
+              <span class="note-t">12:00 · Midday loaves</span>
+              <span class="note-b">Broa de milho, country sourdough, pão alentejano.</span>
+              <span class="note-more" id="note-2-more" hidden data-batch-line="midday"></span>
+            </button>
+          </li>
+          <li>
+            <button class="note" type="button" aria-pressed="false" aria-controls="note-3-more" data-batch="afternoon">
+              <span class="note-t">16:00 · Afternoon sweets</span>
+              <span class="note-b">Bolas de Berlim, queijadas, torta de laranja.</span>
+              <span class="note-more" id="note-3-more" hidden data-batch-line="afternoon"></span>
+            </button>
+          </li>
+        </ul>
+      </div>
+      <p class="sheet-foot" data-hours-line>Rua de São Bento 182, Lisbon. Closed on Mondays.</p>
+    </article>
+  </section>
+
+  <!-- Work: one row per oven batch (features-alternating-rows) -->
+  <section class="bakes" id="bakes" aria-labelledby="bakes-h">
+    <header class="bakes-head">
+      <h2 id="bakes-h">Today's bakes</h2>
+      <p>Three trays a day. Add what you want and it goes on your slip. You pay at the counter when you collect.</p>
+    </header>
+
+    <section class="row" id="morning" aria-labelledby="morning-h" data-batch-row="morning">
+      <div class="copy">
+        <p class="when"><span class="num">7:00</span> out of the oven</p>
+        <h3 id="morning-h">Morning tray</h3>
+        <ul class="items" data-items="morning"></ul>
+      </div>
+      <figure class="tray" aria-label="Drawing of the morning tray: custard tarts, sweet buns and croissants">
+        <div class="tray-bar"><span>Tray one</span><span class="num">07:00</span></div>
+        <svg viewBox="0 0 360 240" aria-hidden="true">
+          <rect class="pan" x="14" y="14" width="332" height="212" rx="14"/>
+          <g class="nata">
+            <circle cx="72" cy="72" r="34"/><circle cx="72" cy="72" r="24" class="fill"/><g class="spot"><ellipse cx="64" cy="66" rx="5" ry="3.5"/><ellipse cx="80" cy="76" rx="4" ry="3"/><ellipse cx="70" cy="84" rx="3" ry="2.2"/><ellipse cx="82" cy="62" rx="2.5" ry="2"/></g>
+            <circle cx="152" cy="72" r="34"/><circle cx="152" cy="72" r="24" class="fill"/><g class="spot"><ellipse cx="146" cy="68" rx="4.5" ry="3.2"/><ellipse cx="160" cy="80" rx="5" ry="3.5"/><ellipse cx="141" cy="82" rx="2.6" ry="2"/><ellipse cx="160" cy="62" rx="2.8" ry="2.2"/></g>
+            <circle cx="72" cy="160" r="34"/><circle cx="72" cy="160" r="24" class="fill"/><g class="spot"><ellipse cx="66" cy="154" rx="5" ry="3.4"/><ellipse cx="80" cy="166" rx="3.6" ry="2.8"/><ellipse cx="62" cy="170" rx="2.6" ry="2"/><ellipse cx="78" cy="150" rx="2.4" ry="1.8"/></g>
+          </g>
+          <g class="bun">
+            <ellipse cx="152" cy="160" rx="38" ry="32"/><path d="M128 150c14-10 34-10 48 0" /><circle cx="140" cy="158" r="1.6" class="dust"/><circle cx="156" cy="152" r="1.6" class="dust"/><circle cx="166" cy="162" r="1.6" class="dust"/><circle cx="148" cy="168" r="1.6" class="dust"/>
+          </g>
+          <g class="croissant">
+            <path d="M216 120c10-44 96-44 110 0c-8 18-22 26-30 20c-8 10-42 10-50 0c-10 6-26-2-30-20z"/>
+            <path d="M246 140c-2-20 4-38 14-48M272 140c2-20-2-38-10-48M228 128c4-12 12-22 22-30M314 128c-4-12-12-22-22-30"/>
+            <path d="M226 200c6-28 70-28 82 0c-6 12-16 18-22 14c-6 6-30 6-36 0c-8 4-20-2-24-14z" />
+            <path d="M248 212c-1-12 3-22 9-28M268 212c1-12-1-22-7-28"/>
+          </g>
+        </svg>
+        <figcaption class="readout" data-readout="morning"></figcaption>
+      </figure>
+    </section>
+
+    <section class="row flip" id="midday" aria-labelledby="midday-h" data-batch-row="midday">
+      <div class="copy">
+        <p class="when"><span class="num">12:00</span> out of the oven</p>
+        <h3 id="midday-h">Midday loaves</h3>
+        <ul class="items" data-items="midday"></ul>
+      </div>
+      <figure class="tray" aria-label="Drawing of the midday loaves: a round corn bread, a scored sourdough and an Alentejo loaf">
+        <div class="tray-bar"><span>Tray two</span><span class="num">12:00</span></div>
+        <svg viewBox="0 0 360 240" aria-hidden="true">
+          <rect class="pan" x="14" y="14" width="332" height="212" rx="14"/>
+          <g class="loaf">
+            <ellipse cx="96" cy="88" rx="62" ry="50" class="fill"/><ellipse cx="96" cy="88" rx="62" ry="50"/>
+            <path d="M58 74l10 6M84 62l8 8M112 66l6 9M70 104l9 4M104 100l9 6M132 86l7 7" class="crack"/>
+          </g>
+          <g class="loaf">
+            <ellipse cx="248" cy="80" rx="78" ry="44" class="fill"/><ellipse cx="248" cy="80" rx="78" ry="44"/>
+            <path d="M196 88c20-26 46-34 70-30M214 104c22-24 50-32 76-28M232 64c16-12 34-16 52-14" class="score"/>
+          </g>
+          <g class="loaf">
+            <path d="M120 206c-36 0-52-24-40-46c10-18 40-22 60-16c14-12 52-12 64 4c22-2 38 14 32 32c-6 16-24 26-48 26z" class="fill"/>
+            <path d="M120 206c-36 0-52-24-40-46c10-18 40-22 60-16c14-12 52-12 64 4c22-2 38 14 32 32c-6 16-24 26-48 26z"/>
+            <path d="M140 144c4 10 4 22-2 32M204 148c-2 10 0 22 6 30" class="score"/>
+          </g>
+          <path d="M290 150l36 0M290 166l28 0M290 182l34 0" class="flour"/>
+        </svg>
+        <figcaption class="readout" data-readout="midday"></figcaption>
+      </figure>
+    </section>
+
+    <section class="row" id="afternoon" aria-labelledby="afternoon-h" data-batch-row="afternoon">
+      <div class="copy">
+        <p class="when"><span class="num">16:00</span> out of the oven</p>
+        <h3 id="afternoon-h">Afternoon sweets</h3>
+        <ul class="items" data-items="afternoon"></ul>
+      </div>
+      <figure class="tray" aria-label="Drawing of the afternoon sweets: filled doughnuts, small cheese tarts and a rolled orange cake">
+        <div class="tray-bar"><span>Tray three</span><span class="num">16:00</span></div>
+        <svg viewBox="0 0 360 240" aria-hidden="true">
+          <rect class="pan" x="14" y="14" width="332" height="212" rx="14"/>
+          <g class="berlin">
+            <circle cx="70" cy="74" r="38" class="fill"/><circle cx="70" cy="74" r="38"/><path d="M33 78c20 6 54 6 74 0" class="cream"/>
+            <circle cx="160" cy="74" r="38" class="fill"/><circle cx="160" cy="74" r="38"/><path d="M123 78c20 6 54 6 74 0" class="cream"/>
+            <g class="sugar"><circle cx="50" cy="56" r="1.3"/><circle cx="62" cy="48" r="1.3"/><circle cx="78" cy="50" r="1.3"/><circle cx="90" cy="60" r="1.3"/><circle cx="56" cy="66" r="1.3"/><circle cx="84" cy="68" r="1.3"/><circle cx="70" cy="60" r="1.3"/><circle cx="46" cy="92" r="1.3"/><circle cx="60" cy="100" r="1.3"/><circle cx="80" cy="102" r="1.3"/><circle cx="94" cy="92" r="1.3"/><circle cx="140" cy="56" r="1.3"/><circle cx="152" cy="48" r="1.3"/><circle cx="168" cy="50" r="1.3"/><circle cx="180" cy="60" r="1.3"/><circle cx="146" cy="66" r="1.3"/><circle cx="174" cy="68" r="1.3"/><circle cx="160" cy="60" r="1.3"/><circle cx="136" cy="92" r="1.3"/><circle cx="150" cy="100" r="1.3"/><circle cx="170" cy="102" r="1.3"/><circle cx="184" cy="92" r="1.3"/></g>
+          </g>
+          <g class="queijada">
+            <path d="M40 176c0-20 16-30 30-30s30 10 30 30l-6 22h-48z" class="fill"/><path d="M40 176c0-20 16-30 30-30s30 10 30 30l-6 22h-48z"/><path d="M52 160c10-6 26-6 36 0" class="burn"/>
+            <path d="M120 176c0-20 16-30 30-30s30 10 30 30l-6 22h-48z" class="fill"/><path d="M120 176c0-20 16-30 30-30s30 10 30 30l-6 22h-48z"/><path d="M132 160c10-6 26-6 36 0" class="burn"/>
+          </g>
+          <g class="torta">
+            <rect x="214" y="44" width="116" height="150" rx="22" class="fill"/><rect x="214" y="44" width="116" height="150" rx="22"/>
+            <path d="M232 70c30 14 52 14 80 0M232 106c30 14 52 14 80 0M232 142c30 14 52 14 80 0M232 176c30 10 52 10 80 0" class="score"/>
+          </g>
+        </svg>
+        <figcaption class="readout" data-readout="afternoon"></figcaption>
+      </figure>
+    </section>
+  </section>
+
+  <!-- Signature: the pickup slip -->
+  <section class="order" id="order" aria-labelledby="order-h">
+    <div class="order-in">
+      <div class="slip-wrap">
+        <div class="slip" id="slip">
+          <div class="slip-head">
+            <h2 id="order-h">Pickup slip</h2>
+            <p class="slip-no num" data-slip-no>Not reserved yet</p>
+          </div>
+          <ol class="slip-lines" id="slip-lines" aria-live="polite" aria-label="Bakes on your slip"></ol>
+          <p class="slip-empty" id="slip-empty">Nothing on the slip yet. Add a bake from the trays above.</p>
+          <p class="slip-total"><span>Pay at the counter</span><span class="num" data-total>€0.00</span></p>
+          <div class="perf" aria-hidden="true"></div>
+          <div class="stub" id="stub">
+            <p class="stub-l">For</p><p class="stub-v" data-stub-name>Your name</p>
+            <p class="stub-l">Ready</p><p class="stub-v num" data-stub-time>Pick a time</p>
+          </div>
+        </div>
+      </div>
+
+      <form class="form" id="form" novalidate aria-describedby="form-msg">
+        <p class="form-lede">We keep your bag on the shelf behind the counter. Bring your name, pay when you collect.</p>
+        <label class="field">
+          <span>Your name</span>
+          <input name="name" id="f-name" autocomplete="given-name" required maxlength="40">
+        </label>
+        <label class="field">
+          <span>Phone, in case a tray runs late</span>
+          <input name="phone" id="f-phone" type="tel" autocomplete="tel" inputmode="tel" maxlength="20">
+        </label>
+        <fieldset class="times">
+          <legend>Pickup time <span class="legend-day" data-slot-day></span></legend>
+          <div class="chips" id="slots" role="radiogroup" aria-label="Pickup time"></div>
+          <p class="hint" id="slot-hint">Times start when the last tray on your slip is out of the oven.</p>
+        </fieldset>
+        <button class="btn btn-full" type="submit" id="reserve">Reserve for pickup</button>
+        <p class="form-msg" id="form-msg" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+
+  <!-- Find us (contact-booking-hours) -->
+  <section class="visit" id="visit" aria-labelledby="visit-h">
+    <div class="visit-l">
+      <h2 id="visit-h">Find the counter</h2>
+      <p class="addr">Rua de São Bento 182<br>Lisbon</p>
+      <p>Come in, say your name, and the bag is already packed. Orders wait on the shelf for thirty minutes past your time.</p>
+      <a class="mail" href="mailto:ola@crumbandco.pt">ola@crumbandco.pt</a>
+    </div>
+    <div class="visit-r">
+      <h3 id="hours-h">Hours this week</h3>
+      <table class="hours" aria-labelledby="hours-h">
+        <thead><tr><th scope="col">Day</th><th scope="col">Open</th></tr></thead>
+        <tbody>
+          <tr data-day="1"><th scope="row">Monday</th><td class="closed">Closed</td></tr>
+          <tr data-day="2"><th scope="row">Tuesday</th><td class="num">7:00 to 19:00</td></tr>
+          <tr data-day="3"><th scope="row">Wednesday</th><td class="num">7:00 to 19:00</td></tr>
+          <tr data-day="4"><th scope="row">Thursday</th><td class="num">7:00 to 19:00</td></tr>
+          <tr data-day="5"><th scope="row">Friday</th><td class="num">7:00 to 19:00</td></tr>
+          <tr data-day="6"><th scope="row">Saturday</th><td class="num">7:30 to 19:00</td></tr>
+          <tr data-day="0"><th scope="row">Sunday</th><td class="num">7:30 to 14:00</td></tr>
+        </tbody>
+      </table>
+      <p class="tz">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v6l4 2"/></svg>
+        Times are Lisbon time.
+      </p>
+      <div class="faq">
+        <h3>When can I collect?</h3>
+        <p>From thirty minutes after you reserve, and never before the tray is out of the oven. Loaves from 12:00, sweets from 16:00.</p>
+        <h3>Do I pay when I reserve?</h3>
+        <p>No. You pay at the counter when you collect, by card or cash.</p>
+        <h3>What if I am late?</h3>
+        <p>Your bag waits on the shelf for thirty minutes past your time. After that it goes back on the counter.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- Footer (footer-sitemap-columns) -->
+<footer class="foot" aria-label="Site footer">
+  <p class="foot-pre">Bread out at seven, every day but Monday.</p>
+  <div class="foot-top">
+    <div class="foot-brand">
+      <a class="foot-mark" href="#today" aria-label="Crumb &amp; Co, back to top">Crumb &amp; Co</a>
+      <p>A neighbourhood bakery in Lisbon. Three trays a day, kept for you if you ask.</p>
+    </div>
+    <nav class="foot-col" aria-labelledby="fc-1">
+      <h2><button type="button" id="fc-1" aria-controls="fp-1">Bakes<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button></h2>
+      <div class="panel" id="fp-1"><div><ul>
+        <li><a href="#morning">Morning tray</a></li>
+        <li><a href="#midday">Midday loaves</a></li>
+        <li><a href="#afternoon">Afternoon sweets</a></li>
+      </ul></div></div>
+    </nav>
+    <nav class="foot-col" aria-labelledby="fc-2">
+      <h2><button type="button" id="fc-2" aria-controls="fp-2">Pickup<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button></h2>
+      <div class="panel" id="fp-2"><div><ul>
+        <li><a href="#order">Your slip</a></li>
+        <li><a href="#visit">Hours</a></li>
+        <li><a href="mailto:ola@crumbandco.pt">Change an order</a></li>
+      </ul></div></div>
+    </nav>
+    <nav class="foot-col" aria-labelledby="fc-3">
+      <h2><button type="button" id="fc-3" aria-controls="fp-3">Visit<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button></h2>
+      <div class="panel" id="fp-3"><div><ul>
+        <li><a href="#visit">Rua de São Bento 182</a></li>
+        <li><a href="mailto:ola@crumbandco.pt">ola@crumbandco.pt</a></li>
+      </ul></div></div>
+    </nav>
+  </div>
+  <div class="foot-legal">
+    <p>© 2026 Crumb &amp; Co, Lisbon.</p>
+    <p>Designed using <a href="https://www.designlounge.live">Design Lounge</a></p>
+  </div>
+</footer>
+
+<!-- Phone bar (mobile-web-bottom-nav) -->
+<nav class="bar" id="bar" aria-label="Site">
+  <ul>
+    <li><a href="#today" data-nav="today" aria-current="true">
+      <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11l8-7 8 7v9H4z"/><path d="M10 20v-6h4v6"/></svg>
+      <span>Today</span></a></li>
+    <li><a href="#bakes" data-nav="bakes">
+      <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 7h11M9 12h11M9 17h11M5 7h.01M5 12h.01M5 17h.01"/></svg>
+      <span>Bakes</span></a></li>
+    <li><a href="#order" data-nav="order" class="fab">
+      <span class="pad"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8h12l-1 12H7z"/><path d="M9 8V7a3 3 0 016 0v1"/></svg><span class="fab-n num" data-count aria-hidden="true">0</span></span>
+      <span>Slip</span></a></li>
+    <li><a href="#visit" data-nav="visit">
+      <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6.2 7-11a7 7 0 10-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.2"/></svg>
+      <span>Visit</span></a></li>
+  </ul>
+</nav>
+
+<p class="sr" id="live" role="status" aria-live="polite"></p>
+<script src="main.js"></script>
+</body>
+</html>

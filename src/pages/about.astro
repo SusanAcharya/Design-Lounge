@@ -5,34 +5,244 @@ import { getPieces, AUTHOR, about } from '../lib/pieces';
 import { PAIRINGS } from '../data/type';
 import { THEMES } from '../data/themes';
 import { ICONS } from '../data/icons';
-const pieces = await getPieces();
-const desc = `${AUTHOR.name} is a ${AUTHOR.role.toLowerCase()} in ${AUTHOR.city}, Nepal, who made Design Lounge, a free UI design skill for AI agents.`;
----
-<Base title={`About ${AUTHOR.name}`} description={desc} crumbs={[{ name: 'About', href: '/about' }]}>
-  <PageHead eyebrow="About" title={AUTHOR.name} />
-  <div class="wrap about">
-    <p class="lead">{AUTHOR.role} in {AUTHOR.city}, Nepal.</p>
-    <p>I build products end to end: the research, the interface, and the code. I made Design Lounge because AI coding agents kept shipping the same page. A purple gradient, three feature cards, and a row of logos. The agents could write code, but they had no taste to draw on.</p>
-    <p>Design Lounge is that taste, written down. It is a skill your agent installs, and a library of {about(pieces.length)} designs it can read: website sections, app screens, components and motion. Each piece has a live demo and a brief with the exact sizes, states and timing. Around them sit {THEMES.length} colour themes, {PAIRINGS.length} font pairings and {ICONS.length} icons that agree with each other.</p>
-    <p>Every piece is an original design with an invented brand. Some study the craft of public sites, and those are named on the <a href="/sources">Sources</a> page. The library is free to use in your own products.</p>
+import { RECIPES } from '../data/motion';
+import { FAMILIES } from '../data/kit';
+import { WADA_COMBINATIONS } from '../data/wada';
+import { EXAMPLES } from '../data/examples';
 
-    <h2 class="h4">Find me</h2>
-    <ul class="who-links mono">
-      {AUTHOR.links.map((l) => <li><a href={l.href} target="_blank" rel="noopener me">{l.label}</a></li>)}
-      <li><a href={`mailto:${AUTHOR.email}`}>Email</a></li>
-    </ul>
-    <p class="mono faint">{about(pieces.length)} pieces · {about(PAIRINGS.length)} pairings · {about(THEMES.length)} themes · {about(ICONS.length)} icons</p>
+const pieces = await getPieces();
+const n = about(pieces.length);
+const origin = (Astro.site ?? new URL('https://www.designlounge.live')).toString().replace(/\/$/, '');
+const repo = 'https://github.com/SusanAcharya/Design-Lounge';
+const skillCmd = 'npx skills add SusanAcharya/Design-Lounge';
+const endpoint = 'https://www.designlounge.live/api/mcp';
+
+const intro = `Design Lounge is a free UI design library and skill for AI coding agents, made by ${AUTHOR.name}, a ${AUTHOR.role.toLowerCase()} in ${AUTHOR.city}, Nepal. It gives an agent ${n} live, documented designs and one shared system of type, colour, icons and motion, so the interface it builds looks designed rather than generated.`;
+
+const rules = [
+  { t: 'A live demo', d: 'Every piece runs in the browser as one self-contained HTML file: no images, no CDN, no fetches. It opens in its best state and honours reduced motion.' },
+  { t: 'A brief with numbers', d: 'Each demo has a brief with the exact sizes, tokens, states, timing and keyboard behaviour, complete enough that an agent can rebuild it without seeing the demo.' },
+  { t: 'An invented brand', d: 'Names, prices and copy are plausible and fictional. No placeholder text, no real brands, no emoji. Pieces that study a public site name it on the Sources page.' },
+  { t: 'Accessible by default', d: 'Semantic elements, a visible focus ring, body text at 4.5:1 contrast or better, and hit targets of 40px or more on phone pieces.' },
+  { t: 'Checked on every push', d: 'Continuous integration opens each demo and fails it when a phone layout spills past 390px, text misses contrast, or a form control loses its edge. The build fails when the site and the skill disagree.' },
+];
+
+const ways = [
+  { k: 'Skill', v: 'Installs into Claude Code, Cursor, Codex and other agents that read skills.', code: skillCmd },
+  { k: 'MCP server', v: 'design-lounge-mcp on npm, also listed on the official MCP Registry. Installing it installs the skill too.', href: 'https://www.npmjs.com/package/design-lounge-mcp', label: 'npm' },
+  { k: 'Hosted MCP', v: 'For clients that cannot run a local program, such as Claude.ai and ChatGPT connectors.', code: endpoint },
+  { k: 'Source', v: 'The library, the skill and the server, with issues, on GitHub.', href: repo, label: 'GitHub' },
+];
+
+// Every date below is the commit date in git log.
+const timeline = [
+  { date: '2026-10-02', t: 'First commit', d: 'The library, the kit composer and the agent skill go public on day one, with more than 150 pieces.' },
+  { date: '2026-10-04', t: 'Past 500 pieces, and Examples', d: 'App screens, forms and website sections take the library past 500. Examples adds sites agents built with the skill.' },
+  { date: '2026-10-05', t: 'designlounge.live', d: 'The library moves to its own domain.' },
+  { date: '2026-10-07', t: 'Proof', d: 'Unedited builds of the same prompts with and without the skill, side by side.' },
+  { date: '2026-10-11', t: 'Wada colours', d: `Sanzo Wada's A Dictionary of Color Combinations, all ${WADA_COMBINATIONS.length} sets proofed through a print profile.` },
+  { date: '2026-10-27', t: 'MCP server and Astro 7', d: 'design-lounge-mcp ships on npm and the MCP Registry, with a hosted endpoint. The site moves to Astro 7 on Node 24.' },
+  { date: '2026-10-28', t: 'Past 600 pieces', d: 'A round of 55 pieces, then seven more, takes the library past 600.' },
+];
+const fmt = (iso: string) => new Date(iso + 'T12:00:00Z').toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
+
+const numbers = [
+  { v: n, k: 'pieces', href: '/browse' },
+  { v: about(THEMES.length), k: 'colour themes', href: '/themes' },
+  { v: about(PAIRINGS.length), k: 'font pairings', href: '/type' },
+  { v: about(ICONS.length), k: 'icons', href: '/icons' },
+  { v: about(RECIPES.length), k: 'motion recipes', href: '/motion' },
+  { v: about(FAMILIES.length), k: 'component families', href: '/kit' },
+  // The whole of Wada's dictionary, a fixed historical set, so it is given exactly.
+  { v: String(WADA_COMBINATIONS.length), k: 'Wada colour sets', href: '/wada' },
+  { v: about(EXAMPLES.length), k: 'example sites', href: '/examples' },
+];
+
+const person = {
+  '@type': 'Person',
+  '@id': `${origin}/about#person`,
+  name: AUTHOR.name,
+  url: AUTHOR.site,
+  jobTitle: AUTHOR.role,
+  email: `mailto:${AUTHOR.email}`,
+  homeLocation: { '@type': 'Place', name: `${AUTHOR.city}, Nepal` },
+  sameAs: AUTHOR.links.map((l) => l.href),
+};
+const schema = [
+  { '@type': 'AboutPage', '@id': `${origin}/about`, url: `${origin}/about`, name: 'About Design Lounge', description: intro, mainEntity: { '@id': `${origin}/about#person` } },
+  person,
+];
+---
+<Base rail={false} title="About" fullTitle={`About Design Lounge and ${AUTHOR.name}`} description={intro} crumbs={[{ name: 'About', href: '/about' }]} schema={schema}>
+  <PageHead eyebrow="About" title="About Design Lounge" blurb={intro} />
+
+  <div class="wrap about">
+    <section class="row" aria-labelledby="who-h">
+      <div class="side">
+        <h2 class="h4" id="who-h">Who made it, and why</h2>
+      </div>
+      <div class="main copy">
+        <p class="lead">{AUTHOR.name} is a {AUTHOR.role.toLowerCase()} in {AUTHOR.city}, Nepal.</p>
+        <p>I build products end to end: the research, the interface, and the code. I made Design Lounge because AI coding agents kept shipping the same page. A purple gradient, three feature cards, and a row of logos. The agents could write code, but they had no taste to draw on.</p>
+        <p>Design Lounge is that taste, written down. The library is free to use in your own products.</p>
+        <p class="sig mono">{AUTHOR.name} · <a href={AUTHOR.site} rel="me noopener" target="_blank">{AUTHOR.siteLabel}</a></p>
+      </div>
+    </section>
+
+    <section class="row" aria-labelledby="what-h">
+      <div class="side">
+        <h2 class="h4" id="what-h">What Design Lounge is</h2>
+      </div>
+      <div class="main">
+        <ol class="parts">
+          <li>
+            <h3>A library</h3>
+            <p>{n} designs an agent can read: website sections, app screens, components and motion. Each one is a live demo and a brief. <a href="/browse">Browse the library</a>.</p>
+          </li>
+          <li>
+            <h3>A system</h3>
+            <p>The themes, font pairings, icons, motion and component families every piece is built from, so the parts agree. <a href="/system">See the system</a>.</p>
+          </li>
+          <li>
+            <h3>A skill and an MCP server</h3>
+            <p>The method an agent follows to pick one direction and build from it, plus a page review that flags the giveaways. <a href="/agents">Install it</a>.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="row" aria-labelledby="rules-h">
+      <div class="side">
+        <h2 class="h4" id="rules-h">What every piece must pass</h2>
+        <p class="note">From the piece specification in the repository. The checks run in code, not by eye.</p>
+      </div>
+      <div class="main">
+        <ol class="rules">
+          {rules.map((r, i) => (
+            <li>
+              <div><h3>{r.t}</h3><p>{r.d}</p></div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    <section class="row" aria-labelledby="ways-h">
+      <div class="side">
+        <h2 class="h4" id="ways-h">How it reaches your agent</h2>
+        <p class="note">All free. Step-by-step setup for each agent is on the <a href="/agents">Install</a> page.</p>
+      </div>
+      <div class="main">
+        <dl class="ways">
+          {ways.map((w) => (
+            <div>
+              <dt>{w.k}</dt>
+              <dd>
+                <p>{w.v}</p>
+                {w.code && <code class="mono">{w.code}</code>}
+                {w.href && <a class="textlink" href={w.href} rel="noopener" target="_blank">{w.label} <span aria-hidden="true">↗</span></a>}
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </section>
+
+    <section class="row" aria-labelledby="time-h">
+      <div class="side">
+        <h2 class="h4" id="time-h">Timeline</h2>
+        <p class="note">Dates are from the repository's commit history.</p>
+      </div>
+      <div class="main">
+        <ol class="time">
+          {timeline.map((e) => (
+            <li>
+              <time class="mono" datetime={e.date}>{fmt(e.date)}</time>
+              <div><h3>{e.t}</h3><p>{e.d}</p></div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    <section class="row" aria-labelledby="num-h">
+      <div class="side">
+        <h2 class="h4" id="num-h">The library in numbers</h2>
+      </div>
+      <div class="main">
+        <ul class="nums">
+          {numbers.map((x) => <li><a href={x.href}><b class="display">{x.v}</b><span>{x.k}</span></a></li>)}
+        </ul>
+      </div>
+    </section>
+
+    <section class="row" aria-labelledby="contact-h">
+      <div class="side">
+        <h2 class="h4" id="contact-h">Contact</h2>
+      </div>
+      <div class="main copy">
+        <p>For questions, corrections or a piece you want to see, write to <a href={`mailto:${AUTHOR.email}?subject=Design%20Lounge`}>{AUTHOR.email}</a> or open an issue on <a href={`${repo}/issues`} rel="noopener" target="_blank">GitHub</a>.</p>
+        <ul class="who-links mono">
+          {AUTHOR.links.map((l) => <li><a href={l.href} target="_blank" rel="noopener me">{l.label} <span aria-hidden="true">↗</span></a></li>)}
+        </ul>
+      </div>
+    </section>
   </div>
 </Base>
 
 <style>
-  .about { display: flex; flex-direction: column; gap: 16px; margin-top: 32px; margin-bottom: clamp(48px, 8vw, 96px); }
-  .about > * { max-width: 640px; }
-  .about p { color: var(--ink-2); font-size: 17px; line-height: 1.65; }
-  .about .lead { color: var(--ink); font-size: 20px; }
-  .about p a { color: var(--ink); border-bottom: 1px solid var(--line-2); }
-  .about .h4 { margin-top: 16px; }
-  .who-links { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
-  .who-links a { border-bottom: 1px solid var(--line-2); padding-bottom: 2px; }
+  .about { display: flex; flex-direction: column; margin-top: clamp(32px, 5vw, 56px); margin-bottom: clamp(56px, 8vw, 104px); border-top: 1px solid var(--ink); }
+  .row { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: 16px clamp(24px, 5vw, 72px); padding-block: clamp(28px, 4vw, 48px); border-bottom: 1px solid var(--line); }
+  .side { display: flex; flex-direction: column; gap: 10px; }
+  .note { color: var(--ink-3); font-size: 14px; line-height: 1.55; max-width: 32ch; text-wrap: pretty; }
+  .note a, .copy a, .parts a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 3px; }
+  .note a:hover, .copy a:hover, .parts a:hover { text-decoration-color: var(--ink); }
+  .main { min-width: 0; }
+  .copy { display: flex; flex-direction: column; gap: 16px; max-width: 640px; }
+  .copy p { color: var(--ink-2); font-size: 17px; line-height: 1.65; text-wrap: pretty; }
+  .copy .lead { color: var(--ink); font-size: 20px; line-height: 1.5; }
+  .sig { font-size: 12.5px !important; letter-spacing: .04em; color: var(--ink-3) !important; }
+  h3 { font-size: 16px; font-weight: 600; letter-spacing: -0.01em; color: var(--ink); }
+  .num { font-size: 12px; color: var(--accent-text); letter-spacing: .06em; }
+
+  .parts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+  .parts li { display: flex; flex-direction: column; gap: 8px; }
+  .parts p { color: var(--ink-2); font-size: 15px; line-height: 1.55; text-wrap: pretty; }
+
+  .rules, .time { display: flex; flex-direction: column; }
+  .rules li, .time li { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 6px 20px; padding-block: 16px; border-top: 1px solid var(--line); }
+  .rules li { grid-template-columns: minmax(0, 1fr); }
+  .rules li:first-child, .time li:first-child { border-top: 0; padding-top: 0; }
+  .rules p, .time p { color: var(--ink-2); font-size: 15px; line-height: 1.55; margin-top: 4px; max-width: 60ch; text-wrap: pretty; }
+  .time time { font-size: 12.5px; color: var(--ink-3); letter-spacing: .02em; padding-top: 2px; }
+
+  .ways { display: flex; flex-direction: column; }
+  .ways > div { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 6px 20px; padding-block: 16px; border-top: 1px solid var(--line); }
+  .ways > div:first-child { border-top: 0; padding-top: 0; }
+  .ways dt { font-weight: 600; font-size: 15px; }
+  .ways dd { margin: 0; display: flex; flex-direction: column; align-items: flex-start; gap: 8px; min-width: 0; }
+  .ways p { color: var(--ink-2); font-size: 15px; line-height: 1.55; }
+  .ways code { max-width: 100%; font-size: 13px; padding: 6px 10px; background: var(--paper-2); border: 1px solid var(--line); border-radius: var(--r); overflow-wrap: anywhere; }
+  .ways .textlink { font-size: 13.5px; }
+
+  .nums { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
+  .nums a { display: flex; flex-direction: column; gap: 4px; padding: 18px 16px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); transition: background-color var(--t-med) var(--ease); }
+  .nums a:hover { background: var(--paper-2); }
+  .nums b { font-size: clamp(26px, 3vw, 34px); font-weight: 500; letter-spacing: -0.03em; line-height: 1.1; }
+  .nums span { font-size: 13.5px; color: var(--ink-2); }
+
+  .who-links { display: flex; flex-wrap: wrap; gap: 10px 20px; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+  .who-links a { text-decoration: none; border-bottom: 1px solid var(--line-2); padding-bottom: 2px; }
   .who-links a:hover { border-color: var(--ink); }
+
+  @media (max-width: 900px) {
+    .row { grid-template-columns: minmax(0, 1fr); }
+    .note { max-width: 60ch; }
+    .parts { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+  }
+  @media (max-width: 560px) {
+    .nums { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .time li, .ways > div { grid-template-columns: minmax(0, 1fr); }
+    .copy p { font-size: 16px; }
+  }
 </style>

@@ -11,6 +11,9 @@ import { RECIPES } from '../data/motion';
 import { STARTS } from '../data/starts';
 import { AUTHOR } from '../lib/pieces';
 import { EXAMPLES, PAIRS, SOLO, exampleUrl } from '../data/examples';
+import { CALLS, tokensOf, typicalTokens, benchSummary } from '../data/benchmark';
+import { ROWS, LOUNGE, RIVALS, CHECKED } from '../data/compare';
+import mcp from '../../mcp/package.json';
 
 const all = await getPieces();
 const newest = [...all].reverse();
@@ -52,12 +55,29 @@ const installModes = [
   { key: 'mcp', label: 'MCP server', cmd: mcpCmd, note: 'For Claude Code. It installs the skill too.', link: { href: '/agents', label: 'Cursor, Codex, ChatGPT' } },
   { key: 'skill', label: 'Skill', cmd: installCmd, note: 'Files your agent reads. Needs Node 22.20 or newer.', link: null },
 ];
+const cost = (tool: string) => tokensOf(CALLS.find((c) => c.tool === tool)!.chars);
+const k = (n: number) => `${(n / 1000).toFixed(1).replace(/\.0$/, '')}k`;
+const bench = benchSummary();
+const flow = [
+  { step: 'Ask', tools: ['start_design'], tokens: cost('start_design'), text: 'Say what you are making in plain words. It reads them and returns the plan: the product kind, the rules that must hold, and the calls to make next.' },
+  { step: 'Lock a direction', tools: ['get_recipe', 'get_theme', 'get_pairing'], tokens: cost('get_recipe') + cost('get_theme') + cost('get_pairing'), text: 'One recipe, one palette as CSS tokens, one type pairing with sizes. Your agent stops inventing a purple gradient and a font.' },
+  { step: 'Build from briefs', tools: ['get_piece'], tokens: cost('get_piece'), each: true, text: 'Each section comes from a live piece and its numeric brief: sizes, states, timing, the acceptance checks.' },
+  { step: 'Review', tools: ['review_page'], tokens: cost('review_page'), text: 'It opens the page and fails what looks machine-made, then checks SEO, AEO and GEO. Your agent fixes the list and runs it again.' },
+];
+const markText = { yes: 'Yes', no: 'No', part: 'In part' } as const;
 const faq = [
   { q: 'What is Design Lounge?', a: `Design Lounge is a free UI design skill for AI coding agents, plus a library of ${about(all.length)} design ideas: website sections, app screens, components and motion. Each one has a live demo and a written brief that an agent can build from.` },
   { q: 'How do I add the UI design skill to my agent?', a: `Add the MCP server, which installs the skill too and adds tools that show your agent each piece and check the page it built. In Claude Code, run ${mcpCmd}. Cursor, Codex, VS Code and Claude Desktop take npx -y design-lounge-mcp@latest in their MCP settings, and Claude.ai or ChatGPT can add https://www.designlounge.live/api/mcp as a connector. For the skill alone, run ${installCmd} in your project (it needs Node 22.20 or newer). Then ask for what you are making, such as a portfolio, a shop or a dashboard.` },
   { q: 'What does the skill do differently?', a: `It makes your agent design from a real library instead of its own defaults. For a product, it picks a theme, a font pairing, a radius and motion from the library, builds the screens from piece briefs, then opens the page and checks it for the usual signs of AI-made design. When you ask for spectacle, it builds one centrepiece made for your subject, with real light and depth, and holds the rest of the page to the same craft.` },
   { q: 'Is it free to use in my products?', a: 'Yes. The pieces, themes, type pairings and icons are free to use in your own products and client work. A small credit line is appreciated. Please do not republish the library itself as a library.' },
   { q: 'Where do the design ideas come from?', a: `Every piece is an original design with an invented brand. Some study the craft of public sites, such as Stripe or Linear, and those are listed on the Sources page. No piece copies another site's text, images or logo.` },
+  { q: 'How many tokens does the Design Lounge MCP use?', a: `About ${k(typicalTokens())} tokens for a whole direction: the plan from start_design (about ${k(cost('start_design'))}), a recipe, a theme and a pairing (about ${k(cost('get_recipe') + cost('get_theme') + cost('get_pairing'))} together), three piece briefs (about ${k(cost('get_piece'))} each) and one review. The tool list itself is about ${k(cost('tools/list'))}. The Benchmark page has the measured runs.` },
+  { q: 'Should I use the MCP server or the skill?', a: 'The MCP server, if your agent supports MCP. It installs the skill too, and adds tools that show your agent a picture of each piece, search the library, and review the page it built. The skill alone is a folder of files your agent reads, for agents without MCP.' },
+  { q: 'Which agents does it work with?', a: 'Claude Code, Cursor, Codex, VS Code, Windsurf and Claude Desktop through the npm package design-lounge-mcp. Claude.ai, ChatGPT and other clients that take a remote connector can use https://www.designlounge.live/api/mcp. Agents without MCP can install the skill with npx skills add SusanAcharya/Design-Lounge.' },
+  { q: 'Does it work with React, Flutter or SwiftUI?', a: 'Yes. A brief describes the design in numbers, not in one framework, and the demo is plain HTML. Your agent rebuilds it in your stack: React, Vue, Svelte, Astro, React Native, Flutter, SwiftUI or Compose. It sits well on top of a component library such as shadcn/ui.' },
+  { q: 'How is it different from shadcn/ui, Mobbin or 21st.dev?', a: 'Those give your agent components to install or screenshots to look at. Design Lounge gives it a direction: a palette, a type pairing and a page recipe that agree, live pieces with numeric briefs, and a review of the finished page for design, SEO, AEO and GEO. It works alongside them. The comparison on this page lists what each one does better.' },
+  { q: 'What does the review check?', a: 'It checks design, SEO, AEO and GEO in one pass, and lists fails first. review_page fails the usual signs of AI-made design (gradient text, an icon over a title over a sentence three times, numbered eyebrows, glass everywhere, invented fonts), checks that the page keeps its locked kit, and scores SEO, AEO and GEO: titles, descriptions, headings, structured data, answers that a search or AI engine can quote. The local server also screenshots the page and runs accessibility checks.' },
+  { q: 'Does the hosted MCP see my code?', a: 'Only what your agent sends it. Most tools take a few words and return library data. review_page on the hosted endpoint reads a public URL or the HTML you pass. Run the npm package locally if you would rather keep it on your machine: the library and thumbnails are bundled, nothing is sent to Design Lounge, and there is no tracking.' },
   { q: 'Who made Design Lounge?', a: `${AUTHOR.name}, a ${AUTHOR.role.toLowerCase()} based in ${AUTHOR.city}, Nepal.` },
 ];
 ---
@@ -80,6 +100,12 @@ const faq = [
         </div>
         <a class="textlink" href="/browse">Browse the library <span aria-hidden="true">→</span></a>
       </div>
+      <ul class="trust reveal" style="--d:240ms" aria-label="At a glance">
+        <li>Free, no account</li>
+        <li><a href="https://www.npmjs.com/package/design-lounge-mcp" rel="noopener">design-lounge-mcp v{mcp.version}</a></li>
+        <li><a href="https://registry.modelcontextprotocol.io/v0/servers?search=design-lounge" rel="noopener">On the MCP Registry</a></li>
+        <li><a href="https://github.com/SusanAcharya/Design-Lounge" rel="noopener">Source on GitHub</a></li>
+      </ul>
     </div>
     <div class="hero-wall" aria-label="Featured pieces">
       {heroWeb && (
@@ -101,6 +127,37 @@ const faq = [
         </a>
       )}
     </div>
+  </section>
+
+  <section class="proof wrap" aria-labelledby="proof-h">
+    <header class="proof-head">
+      <h2 class="h4" id="proof-h">Measured, not claimed</h2>
+      <a class="textlink" href="/benchmark">How it was measured <span aria-hidden="true">→</span></a>
+    </header>
+    <dl class="figs">
+      <div>
+        <dt>Tokens for a whole direction</dt>
+        <dd><span class="fig num">{k(typicalTokens())}</span><span class="fig-note">Plan, recipe, theme, pairing, three piece briefs and a review, from the live MCP.</span></dd>
+      </div>
+      {bench.pairs > 0 && (
+        <div>
+          <dt>Tokens per build</dt>
+          <dd><span class="fig num">{bench.tokenDelta > 0 ? '+' : ''}{bench.tokenDelta}%</span><span class="fig-note">With the Lounge: {k(bench.withTokens)} on average against {k(bench.withoutTokens)}, over {bench.pairs} paired builds. The extra goes on reading briefs and on review-and-fix rounds: {bench.withTools} tool calls against {bench.withoutTools}.</span></dd>
+        </div>
+      )}
+      {bench.judged > 0 && (
+        <div>
+          <dt>Blind judge</dt>
+          <dd><span class="fig num">{bench.judgeWith} of {bench.judged}</span><span class="fig-note">Pairs a blind judge preferred with the Lounge. It preferred the build without it twice. Its reasons are on the Benchmark page.</span></dd>
+        </div>
+      )}
+      {bench.checked > 0 && (
+        <div>
+          <dt>Builds with readable contrast</dt>
+          <dd><span class="fig num">{bench.contrastWith} vs {bench.contrastWithout}</span><span class="fig-note">Of {bench.checked} builds each passing 4.5:1 on every line of text, with the Lounge vs without.</span></dd>
+        </div>
+      )}
+    </dl>
   </section>
 
   <section class="lib wrap" aria-labelledby="lib-h">
@@ -163,14 +220,19 @@ const faq = [
 
   <section class="skill wrap" id="agent" aria-labelledby="agent-h">
     <header class="block-head">
-      <p class="eyebrow">The skill</p>
+      <p class="eyebrow">How it works</p>
       <h2 class="display h2" id="agent-h">Say what you're making. It picks the rest.</h2>
-      <p class="lede">Your agent reads the skill, chooses one recipe, one palette and one type pairing from the library, then checks its own work for anything generic.</p>
+      <p class="lede">The MCP server turns one sentence into a locked direction and a checked page, in four kinds of call. Each one costs a few thousand tokens, measured on the live server.</p>
     </header>
-    <ol class="steps">
-      <li><b>Install</b><span>One command in Cursor, Claude Code or Codex.</span></li>
-      <li><b>Ask</b><span>"Build me a SaaS landing page." Plain words are enough.</span></li>
-      <li><b>Ship</b><span>Real code with a palette, a pairing and pieces that fit.</span></li>
+    <ol class="flow">
+      {flow.map((f) => (
+        <li>
+          <b>{f.step}</b>
+          <span class="flow-tools">{f.tools.map((t) => <code>{t}</code>)}</span>
+          <span class="flow-text">{f.text}</span>
+          <span class="flow-cost mono">≈ {k(f.tokens)} tokens{f.each ? ' each' : ''}</span>
+        </li>
+      ))}
     </ol>
     <div class="agent-grid">
       <AgentTerminal pieces={about(all.length)} pairings={about(PAIRINGS.length)} themes={about(THEMES.length)} />
@@ -231,6 +293,43 @@ const faq = [
       </ol>
     </section>
   )}
+
+  <section class="cmp wrap" aria-labelledby="cmp-h">
+    <header class="block-head">
+      <p class="eyebrow">How it compares</p>
+      <h2 class="display h2" id="cmp-h">A direction and a review, in one free MCP.</h2>
+      <p class="lede">Other tools hand your agent components to install or screenshots to look at. Design Lounge gives it a palette, a pairing and pieces that agree, then reviews what it built. Each one below does something better, and says so.</p>
+    </header>
+    <div class="cmp-scroll" role="region" aria-labelledby="cmp-h" tabindex="0">
+      <table class="cmp-table">
+        <thead>
+          <tr>
+            <th scope="col"><span class="sr-only">Feature</span></th>
+            <th scope="col" class="us">Design Lounge</th>
+            {RIVALS.map((r) => <th scope="col"><a href={r.href} rel="noopener">{r.name}</a></th>)}
+          </tr>
+        </thead>
+        <tbody>
+          {ROWS.map((row) => (
+            <tr>
+              <th scope="row">{row.label}</th>
+              <td class="us"><span class={`mk ${LOUNGE.marks[row.key]}`}>{markText[LOUNGE.marks[row.key]]}</span></td>
+              {RIVALS.map((r) => <td><span class={`mk ${r.marks[row.key]}`}>{markText[r.marks[row.key]]}</span></td>)}
+            </tr>
+          ))}
+          <tr class="price">
+            <th scope="row">Price</th>
+            <td class="us">{LOUNGE.price}</td>
+            {RIVALS.map((r) => <td>{r.price}</td>)}
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <ul class="better">
+      {RIVALS.map((r) => <li><b>{r.name}</b> is better at: {r.better}</li>)}
+    </ul>
+    <p class="cmp-note mono">Checked {CHECKED} on each product's own pages. Something out of date? <a href="https://github.com/SusanAcharya/Design-Lounge/issues" rel="noopener">Open an issue</a>.</p>
+  </section>
 
   <section class="feats wrap" aria-labelledby="feats-h">
     <header class="feats-head">
@@ -301,21 +400,6 @@ const faq = [
     </p>
   </section>
 
-  <section class="close wrap" aria-labelledby="close-h">
-    <h2 class="display h2" id="close-h">Install once. Ask for anything.</h2>
-    <div class="install" data-install>
-      <div class="modes" role="group" aria-label="Install as">
-        {installModes.map((m, i) => <button type="button" data-mode={m.key} aria-pressed={i === 0 ? 'true' : 'false'}>{m.label}</button>)}
-      </div>
-      <span class="cmd big">
-        <span class="prompt mono" aria-hidden="true">$</span>
-        <code id="close-cmd" data-cmds={JSON.stringify(Object.fromEntries(installModes.map((m) => [m.key, m.cmd])))}>{installModes[0].cmd}</code>
-        <button class="copy" type="button" data-copy="#close-cmd"><span data-label>Copy</span></button>
-      </span>
-      {installModes.map((m, i) => <p class="cmd-note" data-note={m.key} hidden={i !== 0}>{m.note}{m.link && <> <a href={m.link.href}>{m.link.label} →</a></>}</p>)}
-    </div>
-    <a class="textlink" href="/browse">Browse the library <span aria-hidden="true">→</span></a>
-  </section>
 </Base>
 
 <script>
@@ -341,6 +425,62 @@ const faq = [
 </script>
 
 <style>
+
+  /* hero trust line */
+  .trust { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 4px; font-size: 13px; color: var(--ink-3); }
+  .trust li { display: inline-flex; align-items: center; gap: 18px; }
+  .trust li + li::before { content: ""; width: 3px; height: 3px; border-radius: 50%; background: var(--ink-3); margin-left: -10px; margin-right: -8px; }
+  .trust a { color: var(--ink-2); border-bottom: 1px solid var(--line-2); }
+  .trust a:hover { color: var(--accent-text); border-color: var(--accent); }
+
+  /* measured */
+  .proof { padding-block: clamp(28px, 4vw, 48px) clamp(48px, 6vw, 80px); }
+  .proof-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 18px; }
+  .proof-head .h4 { font-size: 15px; font-weight: 500; color: var(--ink-2); letter-spacing: 0; }
+  .figs { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); margin: 0; border-top: 1px solid var(--ink); }
+  .figs > div { display: flex; flex-direction: column; gap: 10px; padding: 18px 24px 4px 0; }
+  .figs > div + div { padding-left: 24px; border-left: 1px solid var(--line); }
+  .figs dt { font-size: 13px; color: var(--ink-3); }
+  .figs dd { margin: 0; display: flex; flex-direction: column; gap: 8px; }
+  .fig { font-size: clamp(40px, 4.6vw, 60px); font-weight: 600; letter-spacing: -0.045em; line-height: 1; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .fig-note { font-size: 13.5px; line-height: 1.5; color: var(--ink-2); max-width: 30ch; }
+
+  /* how it works */
+  .flow { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px 28px; margin-bottom: clamp(28px, 3.5vw, 44px); counter-reset: none; }
+  .flow li { display: flex; flex-direction: column; gap: 8px; padding-top: 14px; border-top: 2px solid var(--line-2); }
+  .flow li:first-child { border-top-color: var(--ink); }
+  .flow b { font-size: 16px; font-weight: 600; letter-spacing: -0.015em; }
+  .flow-tools { display: flex; flex-wrap: wrap; gap: 4px; }
+  .flow-tools code { font-family: var(--mono); font-size: 12px; padding: 2px 7px; border-radius: 6px; background: var(--paper-2); border: 1px solid var(--line); color: var(--ink); }
+  .flow-text { color: var(--ink-2); font-size: 14.5px; line-height: 1.5; }
+  .flow-cost { margin-top: auto; font-size: 12px; color: var(--accent-text); }
+
+  /* compare */
+  .cmp { padding-block: clamp(64px, 8vw, 120px); border-top: 1px solid var(--line); }
+  .cmp .block-head .h2 { max-width: 22ch; }
+  .cmp-scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--paper); }
+  .cmp-scroll:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .cmp-table { width: 100%; min-width: 920px; border-collapse: collapse; font-size: 13.5px; }
+  .cmp-table th, .cmp-table td { padding: 12px 14px; text-align: left; vertical-align: middle; border-bottom: 1px solid var(--line); }
+  .cmp-table tbody tr:last-child > * { border-bottom: 0; }
+  .cmp-table thead th { font-size: 13px; font-weight: 600; color: var(--ink); white-space: nowrap; background: var(--paper-2); }
+  .cmp-table thead a:hover { color: var(--accent-text); }
+  .cmp-table tbody th { font-weight: 400; color: var(--ink-2); min-width: 210px; }
+  .cmp-table .us { background: var(--accent-soft); }
+  .cmp-table thead .us { color: var(--accent-text); background: var(--accent-soft); }
+  .mk { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; color: var(--ink-2); }
+  .mk::before { content: ""; width: 8px; height: 8px; border-radius: 50%; border: 1.5px solid var(--ink-3); }
+  .mk.yes { color: var(--ink); }
+  .mk.yes::before { background: var(--ink); border-color: var(--ink); }
+  .mk.part::before { box-shadow: inset 4px 0 0 var(--ink-2); border-color: var(--ink-2); }
+  .mk.no { color: var(--ink-3); }
+  .cmp-table .price td { font-size: 12.5px; color: var(--ink-2); }
+  .better { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 40px; margin-top: 24px; }
+  .better li { font-size: 14px; line-height: 1.55; color: var(--ink-2); padding-top: 10px; border-top: 1px solid var(--line); }
+  .better b { color: var(--ink); font-weight: 600; }
+  .cmp-note { margin-top: 18px; font-size: 12px; color: var(--ink-3); }
+  .cmp-note a { color: var(--ink-2); text-decoration: underline; text-underline-offset: 3px; }
+
   /* faq + bio */
   .faq { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr); gap: clamp(24px, 4vw, 64px); padding-block: clamp(64px, 8vw, 120px); border-top: 1px solid var(--line); }
   .faq-head { display: flex; flex-direction: column; gap: 12px; }
@@ -512,6 +652,7 @@ const faq = [
     .c-styles { grid-column: 1 / -1; grid-row: auto; }
   }
   @media (max-width: 960px) {
+    .flow { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .hero { grid-template-columns: minmax(0, 1fr); min-height: 0; }
     .agent-grid, .feats { grid-template-columns: minmax(0, 1fr); }
     .feats-head { position: static; }
@@ -522,7 +663,9 @@ const faq = [
     .c-screens { grid-row: auto; }
     .c-styles { flex-direction: column; align-items: flex-start; }
     .style-words { justify-content: flex-start; max-width: none; }
-    .steps, .fgroup ul, .built-row, .pair-row { grid-template-columns: minmax(0, 1fr); }
+    .steps, .fgroup ul, .built-row, .pair-row, .better { grid-template-columns: minmax(0, 1fr); }
+    .flow { grid-template-columns: minmax(0, 1fr); }
+    .figs > div + div { padding-left: 0; border-left: 0; border-top: 1px solid var(--line); }
     .built-head { flex-direction: column; align-items: flex-start; }
     .agent-cap { flex-direction: column; gap: 4px; }
     .cmd code { font-size: 13px; white-space: normal; overflow-wrap: anywhere; line-height: 1.45; }

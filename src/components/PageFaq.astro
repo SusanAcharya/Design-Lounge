@@ -1,0 +1,28 @@
+---
+// The questions a page sends as FAQPage data, shown on the page too: structured data must match what people see.
+interface Props { faq: { q: string; a: string }[]; title?: string }
+const { faq, title = 'Questions' } = Astro.props;
+---
+<section class="pfaq wrap" aria-labelledby="pfaq-h">
+  <h2 class="display h3" id="pfaq-h">{title}</h2>
+  <div class="pfaq-list">
+    {faq.map((f) => (
+      <details class="pfaq-item">
+        <summary>{f.q}</summary>
+        <p>{f.a}</p>
+      </details>
+    ))}
+  </div>
+</section>
+
+<style>
+  .pfaq { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 20px clamp(24px, 4vw, 64px); padding-block: clamp(48px, 6vw, 88px) 0; }
+  .pfaq-list { border-top: 1px solid var(--line); }
+  .pfaq-item { border-bottom: 1px solid var(--line); }
+  .pfaq-item summary { cursor: pointer; list-style: none; display: flex; justify-content: space-between; gap: 16px; padding: 16px 0; font-size: 16px; font-weight: 500; color: var(--ink); }
+  .pfaq-item summary::-webkit-details-marker { display: none; }
+  .pfaq-item summary::after { content: "+"; font-family: var(--mono); color: var(--ink-3); transition: transform var(--t-med) var(--ease-out); }
+  .pfaq-item[open] summary::after { transform: rotate(45deg); }
+  .pfaq-item p { padding: 0 0 18px; max-width: 62ch; color: var(--ink-2); font-size: 15.5px; line-height: 1.6; }
+  @media (max-width: 860px) { .pfaq { grid-template-columns: minmax(0, 1fr); } }
+</style>

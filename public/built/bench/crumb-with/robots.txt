@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://crumbandco.pt/sitemap.xml

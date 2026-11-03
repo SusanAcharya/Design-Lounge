@@ -39,6 +39,8 @@ export const GET: APIRoute = async ({ site }) => {
     `- Start a product: ${base}/start`,
     `- Compose a kit (pick palette + type + components, live preview): ${base}/kit`,
     `- Kit brief (raw MD): ${base}/kit/brief/{kind}/{theme}/{pairing}/{family}.md`,
+    `- Benchmark (tokens per MCP call, builds with and without the MCP, judged blind): ${base}/benchmark`,
+    `- About (who made it, rules every piece meets, timeline): ${base}/about`,
     ``,
     `## Starting a product`,
     `When a human is starting a product or design system, pick the closest recipe and assemble from it. Do not skip the theme and pairing.`,
