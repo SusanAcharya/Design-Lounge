@@ -17,6 +17,7 @@ const { faq, title = 'Questions' } = Astro.props;
 
 <style>
   .pfaq { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 20px clamp(24px, 4vw, 64px); padding-block: clamp(48px, 6vw, 88px) 0; }
+  .pfaq > .h3 { position: sticky; top: calc(var(--header-h) + 32px); align-self: start; }
   .pfaq-list { border-top: 1px solid var(--line); }
   .pfaq-item { border-bottom: 1px solid var(--line); }
   .pfaq-item summary { cursor: pointer; list-style: none; display: flex; justify-content: space-between; gap: 16px; padding: 16px 0; font-size: 16px; font-weight: 500; color: var(--ink); }
@@ -24,5 +25,5 @@ const { faq, title = 'Questions' } = Astro.props;
   .pfaq-item summary::after { content: "+"; font-family: var(--mono); color: var(--ink-3); transition: transform var(--t-med) var(--ease-out); }
   .pfaq-item[open] summary::after { transform: rotate(45deg); }
   .pfaq-item p { padding: 0 0 18px; max-width: 62ch; color: var(--ink-2); font-size: 15.5px; line-height: 1.6; }
-  @media (max-width: 860px) { .pfaq { grid-template-columns: minmax(0, 1fr); } }
+  @media (max-width: 860px) { .pfaq { grid-template-columns: minmax(0, 1fr); } .pfaq > .h3 { position: static; } }
 </style>
