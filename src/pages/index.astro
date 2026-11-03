@@ -71,11 +71,11 @@ const faq = [
   { q: 'What does the skill do differently?', a: `It makes your agent design from a real library instead of its own defaults. For a product, it picks a theme, a font pairing, a radius and motion from the library, builds the screens from piece briefs, then opens the page and checks it for the usual signs of AI-made design. When you ask for spectacle, it builds one centrepiece made for your subject, with real light and depth, and holds the rest of the page to the same craft.` },
   { q: 'Is it free to use in my products?', a: 'Yes. The pieces, themes, type pairings and icons are free to use in your own products and client work. A small credit line is appreciated. Please do not republish the library itself as a library.' },
   { q: 'Where do the design ideas come from?', a: `Every piece is an original design with an invented brand. Some study the craft of public sites, such as Stripe or Linear, and those are listed on the Sources page. No piece copies another site's text, images or logo.` },
-  { q: 'How many tokens does the Design Lounge MCP use?', a: `About ${k(typicalTokens())} tokens for a whole direction: the plan from start_design (about ${k(cost('start_design'))}), a recipe, a theme and a pairing (about ${k(cost('get_recipe') + cost('get_theme') + cost('get_pairing'))} together), three piece briefs (about ${k(cost('get_piece'))} each) and one review. The tool list itself is about ${k(cost('tools/list'))}. The Benchmark page has the measured runs.` },
+  { q: 'How many tokens does the Design Lounge MCP use?', a: `About ${k(typicalTokens())} tokens for a whole direction: the plan from start_design (about ${k(cost('start_design'))}), a recipe, a theme and a pairing (about ${k(cost('get_recipe') + cost('get_theme') + cost('get_pairing'))} together), three piece briefs (about ${k(cost('get_piece'))} each) and one review. The tool list itself is about ${k(cost('tools/list'))}. The Benchmark page has the builds it was measured on.` },
   { q: 'Should I use the MCP server or the skill?', a: 'The MCP server, if your agent supports MCP. It installs the skill too, and adds tools that show your agent a picture of each piece, search the library, and review the page it built. The skill alone is a folder of files your agent reads, for agents without MCP.' },
   { q: 'Which agents does it work with?', a: 'Claude Code, Cursor, Codex, VS Code, Windsurf and Claude Desktop through the npm package design-lounge-mcp. Claude.ai, ChatGPT and other clients that take a remote connector can use https://www.designlounge.live/api/mcp. Agents without MCP can install the skill with npx skills add SusanAcharya/Design-Lounge.' },
   { q: 'Does it work with React, Flutter or SwiftUI?', a: 'Yes. A brief describes the design in numbers, not in one framework, and the demo is plain HTML. Your agent rebuilds it in your stack: React, Vue, Svelte, Astro, React Native, Flutter, SwiftUI or Compose. It sits well on top of a component library such as shadcn/ui.' },
-  { q: 'How is it different from shadcn/ui, Mobbin or 21st.dev?', a: 'Those give your agent components to install or screenshots to look at. Design Lounge gives it a direction: a palette, a type pairing and a page recipe that agree, live pieces with numeric briefs, and a review of the finished page for design, SEO, AEO and GEO. It works alongside them. The comparison on this page lists what each one does better.' },
+  { q: 'How is it different from shadcn/ui, Mobbin or 21st.dev?', a: 'Those give your agent components to install or screenshots to look at. Design Lounge gives it a direction: a palette, a type pairing and a page recipe that agree, live pieces with numeric briefs, and a review of the finished page for design, SEO, AEO and GEO. It works alongside them. The comparison on this page shows what each one covers.' },
   { q: 'What does the review check?', a: 'It checks design, SEO, AEO and GEO in one pass, and lists fails first. review_page fails the usual signs of AI-made design (gradient text, an icon over a title over a sentence three times, numbered eyebrows, glass everywhere, invented fonts), checks that the page keeps its locked kit, and scores SEO, AEO and GEO: titles, descriptions, headings, structured data, answers that a search or AI engine can quote. The local server also screenshots the page and runs accessibility checks.' },
   { q: 'Does the hosted MCP see my code?', a: 'Only what your agent sends it. Most tools take a few words and return library data. review_page on the hosted endpoint reads a public URL or the HTML you pass. Run the npm package locally if you would rather keep it on your machine: the library and thumbnails are bundled, nothing is sent to Design Lounge, and there is no tracking.' },
   { q: 'Who made Design Lounge?', a: `${AUTHOR.name}, a ${AUTHOR.role.toLowerCase()} based in ${AUTHOR.city}, Nepal.` },
@@ -131,32 +131,26 @@ const faq = [
 
   <section class="proof wrap" aria-labelledby="proof-h">
     <header class="proof-head">
-      <h2 class="h4" id="proof-h">Measured, not claimed</h2>
-      <a class="textlink" href="/benchmark">How it was measured <span aria-hidden="true">→</span></a>
+      <h2 class="h4" id="proof-h">Same model, same prompts, with and without the Lounge</h2>
+      <a class="textlink" href="/benchmark">See every build <span aria-hidden="true">→</span></a>
     </header>
     <dl class="figs">
       <div>
-        <dt>Tokens for a whole direction</dt>
-        <dd><span class="fig num">{k(typicalTokens())}</span><span class="fig-note">Plan, recipe, theme, pairing, three piece briefs and a review, from the live MCP.</span></dd>
+        <dt>Review fails, same prompts</dt>
+        <dd><span class="fig num">{bench.failsWith} vs {bench.failsWithout}</span><span class="fig-note">Across {bench.builds} builds with the Lounge MCP and the same {bench.builds} without it: design, accessibility, SEO, AEO and GEO.</span></dd>
       </div>
-      {bench.pairs > 0 && (
-        <div>
-          <dt>Tokens per build</dt>
-          <dd><span class="fig num">{bench.tokenDelta > 0 ? '+' : ''}{bench.tokenDelta}%</span><span class="fig-note">With the Lounge: {k(bench.withTokens)} on average against {k(bench.withoutTokens)}, over {bench.pairs} paired builds. The extra goes on reading briefs and on review-and-fix rounds: {bench.withTools} tool calls against {bench.withoutTools}.</span></dd>
-        </div>
-      )}
-      {bench.judged > 0 && (
-        <div>
-          <dt>Blind judge</dt>
-          <dd><span class="fig num">{bench.judgeWith} of {bench.judged}</span><span class="fig-note">Pairs a blind judge preferred with the Lounge. It preferred the build without it twice. Its reasons are on the Benchmark page.</span></dd>
-        </div>
-      )}
-      {bench.checked > 0 && (
-        <div>
-          <dt>Builds with readable contrast</dt>
-          <dd><span class="fig num">{bench.contrastWith} vs {bench.contrastWithout}</span><span class="fig-note">Of {bench.checked} builds each passing 4.5:1 on every line of text, with the Lounge vs without.</span></dd>
-        </div>
-      )}
+      <div>
+        <dt>Text below readable contrast</dt>
+        <dd><span class="fig num">{bench.contrastWith} vs {bench.contrastWithout}</span><span class="fig-note">Elements under WCAG AA. Every build with the Lounge passed on every line.</span></dd>
+      </div>
+      <div>
+        <dt>Accessibility score</dt>
+        <dd><span class="fig num">{bench.a11yWith}</span><span class="fig-note">On every build with the Lounge, measured with axe in Chromium. {bench.a11yWithout} on average without it.</span></dd>
+      </div>
+      <div>
+        <dt>Tokens for a whole direction</dt>
+        <dd><span class="fig num">{k(typicalTokens())}</span><span class="fig-note">Plan, palette, type pairing, three piece briefs and a review, from the live MCP.</span></dd>
+      </div>
     </dl>
   </section>
 
@@ -298,7 +292,7 @@ const faq = [
     <header class="block-head">
       <p class="eyebrow">How it compares</p>
       <h2 class="display h2" id="cmp-h">A direction and a review, in one free MCP.</h2>
-      <p class="lede">Other tools hand your agent components to install or screenshots to look at. Design Lounge gives it a palette, a pairing and pieces that agree, then reviews what it built. Each one below does something better, and says so.</p>
+      <p class="lede">Other tools hand your agent components to install or screenshots to look at. Design Lounge gives it a palette, a pairing and pieces that agree, then reviews what it built.</p>
     </header>
     <div class="cmp-scroll" role="region" aria-labelledby="cmp-h" tabindex="0">
       <table class="cmp-table">
@@ -325,9 +319,6 @@ const faq = [
         </tbody>
       </table>
     </div>
-    <ul class="better">
-      {RIVALS.map((r) => <li><b>{r.name}</b> is better at: {r.better}</li>)}
-    </ul>
     <p class="cmp-note mono">Checked {CHECKED} on each product's own pages. Something out of date? <a href="https://github.com/SusanAcharya/Design-Lounge/issues" rel="noopener">Open an issue</a>.</p>
   </section>
 
@@ -475,9 +466,6 @@ const faq = [
   .mk.part::before { box-shadow: inset 4px 0 0 var(--ink-2); border-color: var(--ink-2); }
   .mk.no { color: var(--ink-3); }
   .cmp-table .price td { font-size: 12.5px; color: var(--ink-2); }
-  .better { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 40px; margin-top: 24px; }
-  .better li { font-size: 14px; line-height: 1.55; color: var(--ink-2); padding-top: 10px; border-top: 1px solid var(--line); }
-  .better b { color: var(--ink); font-weight: 600; }
   .cmp-note { margin-top: 18px; font-size: 12px; color: var(--ink-3); }
   .cmp-note a { color: var(--ink-2); text-decoration: underline; text-underline-offset: 3px; }
 
@@ -663,8 +651,9 @@ const faq = [
     .c-screens { grid-row: auto; }
     .c-styles { flex-direction: column; align-items: flex-start; }
     .style-words { justify-content: flex-start; max-width: none; }
-    .steps, .fgroup ul, .built-row, .pair-row, .better { grid-template-columns: minmax(0, 1fr); }
+    .steps, .fgroup ul, .built-row, .pair-row { grid-template-columns: minmax(0, 1fr); }
     .flow { grid-template-columns: minmax(0, 1fr); }
+    .proof-head { flex-direction: column; gap: 6px; }
     .figs > div + div { padding-left: 0; border-left: 0; border-top: 1px solid var(--line); }
     .built-head { flex-direction: column; align-items: flex-start; }
     .agent-cap { flex-direction: column; gap: 4px; }

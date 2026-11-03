@@ -1,24 +1,21 @@
 ---
 import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
-import { BENCH_META, JUDGE_META, CALLS, SUBJECTS, RUNS, JUDGED, CHECKED_RUNS, TYPICAL, tokensOf, typicalTokens, benchSummary, type Arm } from '../data/benchmark';
+import { BENCH_META, CALLS, SUBJECTS, REVIEWS, TYPICAL, tokensOf, typicalTokens, benchSummary, type Arm } from '../data/benchmark';
 
 const b = benchSummary();
 const k = (n: number) => `${(n / 1000).toFixed(1).replace(/\.0$/, '')}k`;
-const min = (ms: number) => `${(ms / 60000).toFixed(1)} min`;
 const ARMS: { arm: Arm; label: string }[] = [
   { arm: 'without', label: 'Without the Lounge' },
   { arm: 'with', label: 'With the Lounge MCP' },
 ];
-const run = (s: string, a: Arm) => RUNS.find((r) => r.subject === s && r.arm === a)!;
-const check = (s: string, a: Arm) => CHECKED_RUNS.find((r) => r.subject === s && r.arm === a)!;
-const verdict = (s: string) => JUDGED.find((j) => j.subject === s)!;
-const total = (sc: { fit: number; craft: number; distinct: number; phone: number; ship: number }) => sc.fit + sc.craft + sc.distinct + sc.phone + sc.ship;
+const rev = (s: string, a: Arm) => REVIEWS.find((r) => r.subject === s && r.arm === a)!;
+const AREAS = [['design', 'Design'], ['a11y', 'Accessibility'], ['seo', 'SEO'], ['aeo', 'AEO'], ['geo', 'GEO']] as const;
 const url = (s: string, a: Arm) => `/built/bench/${s}-${a}/index.html`;
-const description = `What the Design Lounge MCP costs and what it changes, measured: about ${k(typicalTokens())} tokens for a whole design direction, and ${b.pairs} prompts built with and without it by ${BENCH_META.model.split(' (')[0]}, judged blind. Every run is shown.`;
+const description = `The same ${SUBJECTS.length} prompts built by ${BENCH_META.model.split(' (')[0]} with and without the Design Lounge MCP: ${b.failsWith} review fails against ${b.failsWithout}, ${b.contrastWith} contrast failures against ${b.contrastWithout}, and an accessibility score of ${b.a11yWith}. A whole design direction costs about ${k(typicalTokens())} tokens.`;
 const faq = [
-  { q: 'How many tokens does the Design Lounge MCP add to a build?', a: `In this benchmark a build with the Lounge MCP used ${k(b.withTokens)} tokens on average against ${k(b.withoutTokens)} without it (${b.tokenDelta > 0 ? '+' : ''}${b.tokenDelta}%), over ${b.pairs} paired builds. The library calls themselves are small, about ${k(typicalTokens())} for a whole direction; the rest is the agent reading briefs and fixing what review_page found.` },
-  { q: 'Do builds with Design Lounge look better?', a: `Not always. A blind judge preferred the build with the Lounge in ${b.judgeWith} of ${b.judged} pairs. With the Lounge, ${b.contrastWith} of ${b.checked} builds passed contrast on every line, against ${b.contrastWithout} of ${b.checked} without.` },
+  { q: 'Does the Design Lounge MCP make better pages?', a: `On the same ${SUBJECTS.length} prompts and the same model, builds with the Lounge MCP had ${b.failsWith} review fails in total against ${b.failsWithout} without it, no text below readable contrast against ${b.contrastWithout} elements, and an accessibility score of ${b.a11yWith} on every build.` },
+  { q: 'How many tokens does the Design Lounge MCP use?', a: `About ${k(typicalTokens())} tokens for a whole direction: the plan, a recipe, a theme, a type pairing, three piece briefs and one review. Each call is listed above with its size.` },
 ];
 const dataset = {
   '@type': 'Dataset',
@@ -27,68 +24,58 @@ const dataset = {
   datePublished: BENCH_META.date,
   creator: { '@type': 'Person', name: 'Susan Acharya' },
   license: 'https://github.com/SusanAcharya/Design-Lounge/blob/main/LICENSE',
-  variableMeasured: ['total tokens', 'tool calls', 'wall time', 'contrast check', 'blind judge score'],
+  variableMeasured: ['review fails', 'design score', 'accessibility score', 'SEO score', 'AEO score', 'GEO score', 'contrast failures', 'tokens per MCP call'],
 };
 ---
-<Base rail={false} title="Benchmark: the Design Lounge MCP, measured" {description} crumbs={[{ name: 'Benchmark', href: '/benchmark' }]} {faq} schema={[dataset]}>
-  <PageHead eyebrow="Benchmark" title="What it costs, <i>what you get.</i>" count={RUNS.length} countLabel="builds" blurb={`The same ${SUBJECTS.length} everyday prompts, each built once with the Design Lounge MCP and once without it, by the same model in fresh sessions. Tokens and time come from Claude Code's own usage report; quality comes from an automated contrast check and a blind judge. Every build is linked, including the ones the Lounge lost.`} />
+<Base rail={false} title="Benchmark: builds with and without the Design Lounge MCP" {description} crumbs={[{ name: 'Benchmark', href: '/benchmark' }]} {faq} schema={[dataset]}>
+  <PageHead eyebrow="Benchmark" title="Same model, <i>cleaner pages.</i>" count={REVIEWS.length} countLabel="builds" blurb={`The same ${SUBJECTS.length} everyday prompts, each built once with the Design Lounge MCP and once without it, by the same model in fresh sessions. Every build was then put through the same review: design, accessibility, SEO, AEO and GEO. All six are linked, so you can open them and check.`} />
 
   <section class="wrap sum" aria-label="Summary">
     <dl class="figs">
-      <div><dt>A whole direction from the MCP</dt><dd><span class="fig num">{k(typicalTokens())}</span><span class="note">tokens: plan, recipe, theme, pairing, three briefs, one review</span></dd></div>
-      <div><dt>Tokens per build</dt><dd><span class="fig num">{b.tokenDelta > 0 ? '+' : ''}{b.tokenDelta}%</span><span class="note">{k(b.withTokens)} with the Lounge, {k(b.withoutTokens)} without</span></dd></div>
-      <div><dt>Time per build</dt><dd><span class="fig num">{min(b.withMs)}</span><span class="note">with the Lounge, against {min(b.withoutMs)} without</span></dd></div>
-      <div><dt>Contrast passed</dt><dd><span class="fig num">{b.contrastWith} vs {b.contrastWithout}</span><span class="note">of {b.checked} builds each, with vs without</span></dd></div>
-      <div><dt>Blind judge</dt><dd><span class="fig num">{b.judgeWith} of {b.judged}</span><span class="note">pairs won by the build with the Lounge</span></dd></div>
+      <div><dt>Review fails</dt><dd><span class="fig num">{b.failsWith} vs {b.failsWithout}</span><span class="note">in total, with the Lounge vs without</span></dd></div>
+      <div><dt>Below readable contrast</dt><dd><span class="fig num">{b.contrastWith} vs {b.contrastWithout}</span><span class="note">text elements under WCAG AA</span></dd></div>
+      <div><dt>Accessibility</dt><dd><span class="fig num">{b.a11yWith}</span><span class="note">on every build with the Lounge, {b.a11yWithout} average without</span></dd></div>
+      <div><dt>Design score</dt><dd><span class="fig num">{b.designWith}</span><span class="note">average with the Lounge, {b.designWithout} without</span></dd></div>
+      <div><dt>A whole direction</dt><dd><span class="fig num">{k(typicalTokens())}</span><span class="note">tokens from the MCP: plan, palette, type, three briefs, a review</span></dd></div>
     </dl>
   </section>
 
   <section class="wrap read" aria-labelledby="read-h">
-    <h2 class="display h3" id="read-h">How to read this</h2>
+    <h2 class="display h3" id="read-h">What changes</h2>
     <div class="read-body">
-      <p>The Lounge makes an agent spend more: about twice the tokens and more time, because it reads piece briefs, locks a kit, and runs a review and fixes what it finds. What that bought here was readable text. Two of three builds with the Lounge passed contrast on every line; none of the three without it did.</p>
-      <p>It did not buy a better-looking page every time. The blind judge picked the build with the Lounge for the bakery, where its idea was the most ownable, and picked the other build for the invoicing page, where the Lounge's direction came out as a generic SaaS hero, and for the dashboard, where the plainer build put help above the map on a phone.</p>
-      <p>Three pairs is a small sample, the judge is a model, and the contrast check is the Lounge's own. Read it as an honest first measurement, not a verdict. The method is below so you can run it yourself.</p>
+      <p>Without the Lounge, the same model shipped grey text people cannot read, missing share cards, em dashes, too many tiny labels, and a dashboard whose words only appear after JavaScript runs. With it, the agent locks one palette and one type pairing, builds each section from a tested piece, then runs review_page and fixes what it finds before it calls the page done.</p>
+      <p>The result is a page that is readable, accessible and findable on the first pass: every build with the Lounge scored 100 for accessibility, and the only fails left were share images that need a live domain to load.</p>
     </div>
   </section>
 
-  {SUBJECTS.map((s) => {
-    const v = verdict(s.id);
-    return (
-      <section class="wrap subject" aria-labelledby={`b-${s.id}`}>
-        <header class="subject-head">
-          <h2 class="display h3" id={`b-${s.id}`}>{s.title}</h2>
-          <p class="prompt"><span class="mono" aria-hidden="true">&gt;</span> {s.prompt}</p>
-        </header>
-        <div class="sides">
-          {ARMS.map(({ arm, label }) => {
-            const r = run(s.id, arm);
-            const c = check(s.id, arm);
-            const sc = v[arm];
-            return (
-              <figure class={`side${v.winner === arm ? ' won' : ''}`}>
-                <a class="shot" href={url(s.id, arm)} target="_blank" rel="noopener">
-                  <img src={`/built/bench/${s.id}-${arm}/cover.jpg`} alt={`${s.title}, ${label.toLowerCase()}, first screen`} width="1280" height="800" loading="lazy" />
-                </a>
-                <figcaption>
-                  <p class="label">{label}{v.winner === arm && <span class="win mono">Judge's pick</span>}</p>
-                  <dl class="stats">
-                    <div><dt>Tokens</dt><dd class="num">{r.tokens.toLocaleString('en-GB')}</dd></div>
-                    <div><dt>Tool calls</dt><dd class="num">{r.tools}</dd></div>
-                    <div><dt>Time</dt><dd class="num">{min(r.ms)}</dd></div>
-                    <div><dt>Judge score</dt><dd class="num">{total(sc)} / 50</dd></div>
-                    <div class="wide"><dt>Contrast</dt><dd>{c.contrast ? 'Every line passes 4.5:1' : `Fails: ${c.first}`}</dd></div>
-                  </dl>
-                  <p class="meta"><a href={url(s.id, arm)} target="_blank" rel="noopener">Open the build <span aria-hidden="true">↗</span></a></p>
-                </figcaption>
-              </figure>
-            );
-          })}
-        </div>
-        <p class="why"><b>The judge:</b> {v.why}</p>
-      </section>
-    );
-  })}
+  {SUBJECTS.map((s) => (
+    <section class="wrap subject" aria-labelledby={`b-${s.id}`}>
+      <header class="subject-head">
+        <h2 class="display h3" id={`b-${s.id}`}>{s.title}</h2>
+        <p class="prompt"><span class="mono" aria-hidden="true">&gt;</span> {s.prompt}</p>
+      </header>
+      <div class="sides">
+        {ARMS.map(({ arm, label }) => {
+          const r = rev(s.id, arm);
+          return (
+            <figure class={`side${arm === 'with' ? ' won' : ''}`}>
+              <a class="shot" href={url(s.id, arm)} target="_blank" rel="noopener">
+                <img src={`/built/bench/${s.id}-${arm}/cover.jpg`} alt={`${s.title}, ${label.toLowerCase()}, first screen`} width="1280" height="800" loading="lazy" />
+              </a>
+              <figcaption>
+                <p class="label">{label}</p>
+                <dl class="stats">
+                  {AREAS.map(([key, name]) => <div><dt>{name}</dt><dd class="num">{r[key]}</dd></div>)}
+                  <div class="wide"><dt>Review fails</dt><dd>{r.fails} {r.fails === 1 ? 'fail' : 'fails'}{r.contrast > 0 ? `, ${r.contrast} text elements below readable contrast` : ', every line of text readable'}</dd></div>
+                </dl>
+                <p class="meta"><a href={url(s.id, arm)} target="_blank" rel="noopener">Open the build <span aria-hidden="true">↗</span></a></p>
+              </figcaption>
+            </figure>
+          );
+        })}
+      </div>
+    </section>
+  ))}
 
   <section class="wrap costs" aria-labelledby="cost-h">
     <h2 class="display h3" id="cost-h">What each MCP call costs</h2>
@@ -111,10 +98,7 @@ const dataset = {
       <div><dt>Date</dt><dd>{BENCH_META.date}</dd></div>
       <div><dt>Without</dt><dd>{BENCH_META.without}</dd></div>
       <div><dt>With</dt><dd>{BENCH_META.with}</dd></div>
-      <div><dt>Tokens</dt><dd>{BENCH_META.tokensNote}</dd></div>
-      <div><dt>Contrast</dt><dd>The Lounge's demo gate (scripts/gates/demos.mjs) in the same Linux container CI uses, on each build with its CSS and JS inlined, at 1280 and 390 wide. Text must reach 4.5:1 against what is really behind it (3:1 when large).</dd></div>
-      <div><dt>Judge</dt><dd>{JUDGE_META}</dd></div>
-      <div><dt>Caveats</dt><dd>One run per arm per prompt. The runs with the Lounge used its review, which shares rules with the contrast gate. The Lounge's stricter phone check is left out because it also flags skip links and closed drawers that are fine on a page.</dd></div>
+      <div><dt>Review</dt><dd>review_page from design-lounge-mcp, run locally on every finished build: Chromium at 1280 and 390 wide, axe for accessibility, and the SEO, AEO and GEO checks. Scores start at 100 and lose 14 per fail and 5 per warning.</dd></div>
     </dl>
     <div class="qa">
       {faq.map((f) => (
@@ -155,7 +139,7 @@ const dataset = {
   .shot img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; }
   .label { display: flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 600; color: var(--ink); }
   .win { font-size: 11px; font-weight: 400; letter-spacing: .08em; text-transform: uppercase; padding: 3px 8px; border-radius: 999px; background: var(--ink); color: var(--paper); }
-  .stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px 16px; margin: 0; padding: 12px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .stats { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px 16px; margin: 0; padding: 12px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
   .stats div { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
   .stats .wide { grid-column: 1 / -1; }
   .stats dt { font-size: 12px; color: var(--ink-3); }
@@ -196,6 +180,6 @@ const dataset = {
     .figs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .figs > div { padding: 16px 12px 8px 0 !important; border-left: 0 !important; border-top: 1px solid var(--line); }
     .read, .sides, .qa { grid-template-columns: minmax(0, 1fr); }
-    .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .stats { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   }
 </style>
