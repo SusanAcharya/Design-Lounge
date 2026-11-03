@@ -1,23 +1,24 @@
 <!doctype html>
-<html lang="en">
+<html lang="en-GB">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Ledgerly · Invoicing for small accounting firms</title>
-<meta name="description" content="Ledgerly is invoicing software for small accounting firms. Send invoices, match each bank deposit to its invoice, and keep a signed record of who approved what.">
-<meta property="og:title" content="Ledgerly · Invoicing for small accounting firms">
-<meta property="og:description" content="Bill clients, match every payment to its invoice, and close the month with a trail a reviewer can follow.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://ledgerly.com/">
-<meta property="og:image" content="https://ledgerly.com/og.png">
+<title>Ledgerly: invoicing for small accounting firms</title>
+<meta name="description" content="Invoicing software for small accounting firms. Partner approval, payment requests to the right account, bank matching and a full change log.">
+<link rel="canonical" href="https://ledgerly.example/">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:url" content="https://ledgerly.example/">
+<meta property="og:image" content="og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="canonical" href="https://ledgerly.com/">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22%3E%3Crect x=%223%22 y=%223%22 width=%2218%22 height=%2218%22 rx=%224%22 fill=%22%230e66eb%22/%3E%3Cpath d=%22M8 8v8h8%22 fill=%22none%22 stroke=%22%23fffdf8%22 stroke-width=%222.2%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3C/svg%3E">
+<meta property="og:title" content="Ledgerly: invoicing for small accounting firms">
+<meta property="og:description" content="Draft, approve, request and reconcile client invoices, with every change logged.">
+<meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Karla:wght@400;500;700&display=swap">
 <link rel="stylesheet" href="styles.css">
 <script type="application/ld+json">
 {
@@ -25,348 +26,381 @@
   "@type": "SoftwareApplication",
   "name": "Ledgerly",
   "applicationCategory": "BusinessApplication",
-  "description": "Invoicing software for small accounting firms. Send invoices, match bank deposits to invoices, require two approvals on payouts, and keep an audit log of every change.",
-  "audience": { "@type": "BusinessAudience", "audienceType": "Small accounting firms" }
+  "operatingSystem": "Web",
+  "description": "Invoicing software for small accounting firms: draft invoices, partner approval, payment requests and bank reconciliation with a full change log."
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Who can send an invoice?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Only someone you have allowed to. An invoice waits in draft until a second person approves it, and the preparer cannot be that second person."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I keep client money apart from our fees?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Each payment request names the account it is paid into, so client money and the firm's fees are requested into different accounts."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What happens when a client pays the wrong amount?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The bank line is marked short or unmatched and stays open. Nothing is closed off until someone at the firm looks at it."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I see who changed an invoice?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Every invoice keeps a history of each change, with the person and the time, from the first draft to the payment."
+      }
+    }
+  ]
 }
 </script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 
-<header class="site-head" id="top">
-  <div class="bar">
-    <a class="logo" href="#top" aria-label="Ledgerly home">
-      <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4" fill="var(--primary)"/><path d="M8 8v8h8" fill="none" stroke="var(--primary-ink)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<header class="top" id="top">
+  <div class="top-in">
+    <a class="logo" href="#main" aria-label="Ledgerly, home">
+      <svg viewBox="0 0 28 28" width="28" height="28" aria-hidden="true"><rect x="1" y="1" width="26" height="26" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8 7v14h12" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 12h8M12 16h8" stroke="var(--primary)" stroke-width="1.6"/></svg>
       <span>Ledgerly</span>
     </a>
-    <nav aria-label="Primary" class="links">
+    <nav class="links" aria-label="Primary">
       <ul>
-        <li><a href="#how" data-link="how">How it works</a></li>
-        <li><a href="#safeguards" data-link="safeguards">Safeguards</a></li>
-        <li><a href="#walkthrough" data-link="walkthrough">Walkthrough</a></li>
+        <li><a href="#draft" data-spy="draft">The invoice</a></li>
+        <li><a href="#controls" data-spy="controls">Controls</a></li>
+        <li><a href="#questions" data-spy="questions">Questions</a></li>
       </ul>
     </nav>
     <div class="actions">
-      <a class="nav-signin" href="#walkthrough">Sign in</a>
-      <a class="btn btn-outline btn-sm" href="#walkthrough">Book a walkthrough</a>
+      <a class="btn btn-quiet" href="#walkthrough">Book a walkthrough</a>
       <button class="menu-btn" type="button" aria-controls="panel" aria-expanded="false" aria-label="Open menu">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><path class="m-open" d="M4 7h16M4 12h16M4 17h16"/><path class="m-close" d="M6 6l12 12M18 6L6 18"/></svg>
+        <svg class="i-menu" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        <svg class="i-close" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
       </button>
     </div>
   </div>
   <div class="panel" id="panel" hidden>
     <ul>
-      <li><a href="#how" data-link="how">How it works</a></li>
-      <li><a href="#safeguards" data-link="safeguards">Safeguards</a></li>
-      <li><a href="#walkthrough" data-link="walkthrough">Walkthrough</a></li>
-      <li><a href="#walkthrough">Sign in</a></li>
+      <li><a href="#draft" data-spy="draft">The invoice</a></li>
+      <li><a href="#controls" data-spy="controls">Controls</a></li>
+      <li><a href="#questions" data-spy="questions">Questions</a></li>
+      <li><a href="#walkthrough">Book a walkthrough</a></li>
     </ul>
   </div>
 </header>
 
 <main id="main">
 
-<!-- Hero · hero-product-window-tilt -->
-<section class="hero" aria-labelledby="hero-title">
-  <div class="hero-text">
-    <h1 id="hero-title">Bill your clients and match every payment <span>with a trail a reviewer can follow.</span></h1>
-    <p class="sub">Ledgerly is invoicing software for small accounting firms. Send the invoice, take the payment, match each bank deposit to the invoice it pays, and keep a record of who approved what.</p>
-    <div class="ctas">
-      <a class="btn btn-primary" href="#walkthrough">Book a walkthrough</a>
-      <a class="btn btn-outline" href="#how">See one invoice through</a>
+  <section class="hero" id="draft" aria-labelledby="hero-title">
+    <div class="hero-head wrap">
+      <h1 id="hero-title">Invoices your clients can check line by line.</h1>
+      <div class="hero-side">
+        <p class="lede">Ledgerly is invoicing for small accounting firms. Draft the bill, have a partner sign it off, send it and match the payment to the bank, with every change written down.</p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="#walkthrough">Book a walkthrough</a>
+          <a class="text-link" href="#controls">See the controls <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </div>
     </div>
-  </div>
 
-  <div class="stage-wrap">
-    <div class="stage" role="img" aria-label="Ledgerly receivables window for a sample firm: outstanding and collected totals, weekly collections, three invoices, and a bank deposit matched to invoice 1042.">
-      <div class="win" aria-hidden="true">
-        <div class="shell">
-          <div class="titlebar">
-            <span class="dots"><i></i><i></i><i></i></span>
-            <span class="url mono">app.ledgerly.com/receivables</span>
-            <span class="kbd mono">Ctrl K</span>
-          </div>
-          <div class="body">
-            <div class="side">
-              <div class="firm"><b>Marsh &amp; Pike</b><small>Sample firm</small></div>
-              <div class="nav-row">Overview</div>
-              <div class="nav-row on">Invoices <em class="mono">14</em></div>
-              <div class="nav-row">Payments</div>
-              <div class="nav-row">Matching <em class="mono warn">2</em></div>
-              <div class="nav-row">Clients</div>
-              <div class="nav-row">Approvals</div>
-              <div class="nav-row">Audit log</div>
-            </div>
-            <div class="main">
-              <div class="mhead">
-                <b>Client receivables</b>
-                <span class="seg"><i>Week</i><i class="on">October</i><i>Quarter</i></span>
+    <div class="wrap">
+      <div class="tool" aria-label="Ledgerly invoice draft, a working sample" role="group">
+        <div class="tool-bar">
+          <p class="crumb">Invoices <span aria-hidden="true">/</span> <strong>Draft RB-2026-041</strong></p>
+          <p class="saved" id="saved"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M5 12l5 5 9-9"/></svg> <span>Saved</span></p>
+          <span class="sample">Sample data. Type your own.</span>
+          <button class="btn btn-tool" type="button" id="send"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M4 12l16-8-6 16-2-7z"/></svg><span>Send to client</span></button>
+        </div>
+
+        <div class="tool-body">
+          <form class="form" id="form" autocomplete="off" onsubmit="return false">
+            <h2 class="form-title">New invoice</h2>
+
+            <fieldset>
+              <legend>Bill to</legend>
+              <div class="picker">
+                <button class="pick-btn" type="button" id="pickBtn" aria-haspopup="listbox" aria-expanded="false" aria-controls="clients" aria-label="Client: Halden Joinery Ltd">
+                  <span class="mono-init" id="pickInit" aria-hidden="true">HJ</span>
+                  <span id="pickName">Halden Joinery Ltd</span>
+                  <svg class="chev" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <ul class="listbox" id="clients" role="listbox" aria-label="Clients" hidden>
+                  <li role="option" tabindex="-1" aria-selected="true" data-init="HJ" data-email="accounts@halden.example">Halden Joinery Ltd</li>
+                  <li role="option" tabindex="-1" aria-selected="false" data-init="CS" data-email="office@corrie.example">Corrie Street Dental</li>
+                  <li role="option" tabindex="-1" aria-selected="false" data-init="MF" data-email="treasurer@mosgrove.example">Mosgrove Farm Trust</li>
+                  <li role="option" tabindex="-1" aria-selected="false" data-init="PW" data-email="hello@pennywhistle.example">Pennywhistle Books</li>
+                </ul>
               </div>
-              <div class="kpis">
-                <div><small>Outstanding</small><b class="mono">$48,217.40</b></div>
-                <div><small>Collected in October</small><b class="mono">$31,906.15</b></div>
-                <div><small>Deposits to match</small><b class="mono">2</b></div>
+            </fieldset>
+
+            <fieldset>
+              <legend>Dates</legend>
+              <div class="row2">
+                <label class="field"><span>Issued</span><input type="date" id="issued" value="2026-11-03"></label>
+                <div class="field"><span id="termsLbl">Terms</span>
+                  <div class="seg" role="group" aria-labelledby="termsLbl">
+                    <button type="button" aria-pressed="false" data-days="14">14 days</button>
+                    <button type="button" aria-pressed="true" data-days="30">30 days</button>
+                    <button type="button" aria-pressed="false" data-days="45">45 days</button>
+                  </div>
+                </div>
               </div>
-              <div class="chart">
-                <div class="chart-head"><small>Collected by week</small><small class="mono">Oct 1 to Oct 31</small></div>
-                <svg viewBox="0 0 560 120" preserveAspectRatio="none" class="bars">
-                  <line x1="0" y1="119.5" x2="560" y2="119.5" stroke="var(--line)"/>
-                  <rect x="24" y="52" width="72" height="68" rx="3" fill="var(--primary-soft)"/>
-                  <rect x="132" y="30" width="72" height="90" rx="3" fill="var(--primary-soft)"/>
-                  <rect x="240" y="61" width="72" height="59" rx="3" fill="var(--primary-soft)"/>
-                  <rect x="348" y="18" width="72" height="102" rx="3" fill="var(--primary)"/>
-                  <rect x="456" y="74" width="72" height="46" rx="3" fill="var(--primary-soft)"/>
-                </svg>
-                <div class="tip mono">Oct 13 to 19 <b>$9,412.80</b></div>
+            </fieldset>
+
+            <fieldset>
+              <legend>Lines</legend>
+              <div class="items-head" aria-hidden="true"><span>Description</span><span>Qty</span><span>Rate</span><span class="r">Amount</span><span></span></div>
+              <div class="items" id="items"></div>
+              <button class="add" type="button" id="addLine"><span aria-hidden="true">+</span> Add line</button>
+            </fieldset>
+
+            <fieldset>
+              <legend>Adjustments</legend>
+              <div class="row2">
+                <div class="field"><span id="discLbl">Discount</span>
+                  <div class="disc">
+                    <input type="text" inputmode="decimal" id="disc" value="0" aria-labelledby="discLbl">
+                    <div class="seg" role="group" aria-label="Discount unit">
+                      <button type="button" aria-pressed="true" data-unit="pct">%</button>
+                      <button type="button" aria-pressed="false" data-unit="amt">£</button>
+                    </div>
+                  </div>
+                </div>
+                <label class="field"><span>VAT %</span><input type="text" inputmode="decimal" id="vat" value="20"></label>
               </div>
-              <div class="rows">
-                <div class="row"><span class="mono">INV-1042</span><span>Harlow Bakery</span><span class="mono">$1,240.00</span><span class="pill ok">Matched</span></div>
-                <div class="row"><span class="mono">INV-1043</span><span>Okafor Dental</span><span class="mono">$3,615.50</span><span class="pill info">Sent</span></div>
-                <div class="row"><span class="mono">INV-1044</span><span>Reyes Landscaping</span><span class="mono">$860.00</span><span class="pill bad">6 days late</span></div>
+            </fieldset>
+
+            <fieldset>
+              <legend>Note to client</legend>
+              <label class="sr" for="note">Note to client</label>
+              <textarea id="note" rows="2">Payment goes to the client account below. Please quote RB-2026-041.</textarea>
+            </fieldset>
+          </form>
+
+          <section class="desk" aria-label="Invoice preview">
+            <article class="sheet" id="sheet">
+              <div class="pg">
+                <header class="pg-head">
+                  <div>
+                    <p class="pg-firm">Rao &amp; Bell</p>
+                    <p class="pg-sub">Chartered Accountants</p>
+                  </div>
+                  <p class="pg-word">Invoice</p>
+                </header>
+                <div class="pg-meta">
+                  <div class="pg-bill"><span>Bill to</span><strong id="pBill">Halden Joinery Ltd</strong><em id="pEmail">accounts@halden.example</em></div>
+                  <div><span>No.</span><strong>RB-2026-041</strong></div>
+                  <div><span>Issued</span><strong id="pIssued">3 Nov 2026</strong></div>
+                  <div><span>Due</span><strong id="pDue">3 Dec 2026</strong></div>
+                </div>
+                <table class="pg-table">
+                  <thead><tr><th scope="col">Description</th><th scope="col" class="r">Qty</th><th scope="col" class="r">Rate</th><th scope="col" class="r">Amount</th></tr></thead>
+                  <tbody id="pLines"></tbody>
+                </table>
+                <dl class="pg-tot">
+                  <div><dt>Subtotal</dt><dd class="num" id="pSub">£0.00</dd></div>
+                  <div id="pDiscRow"><dt id="pDiscLbl">Discount</dt><dd class="num" id="pDisc">£0.00</dd></div>
+                  <div><dt id="pVatLbl">VAT 20%</dt><dd class="num" id="pVat">£0.00</dd></div>
+                  <div class="due"><dt>Total due</dt><dd class="num" id="pTotal">£0.00</dd></div>
+                </dl>
+                <footer class="pg-foot">
+                  <div><span>Pay by bank transfer to</span><strong>Rao &amp; Bell client account</strong><em>Reference RB-2026-041</em></div>
+                  <p id="pNote">Payment goes to the client account below. Please quote RB-2026-041.</p>
+                </footer>
+                <div class="stamp" aria-hidden="true"><span>Sent</span><small id="stampTime">3 NOV, 2:41 PM</small></div>
+              </div>
+            </article>
+
+            <div class="log" aria-labelledby="logTitle">
+              <div class="log-head">
+                <h3 id="logTitle">Change log</h3>
+                <span>Every edit, timed and initialled</span>
+              </div>
+              <ol id="log">
+                <li><time>2:38 pm</time><b>AR</b><span>Draft opened from the November billing run</span></li>
+              </ol>
+            </div>
+          </section>
+        </div>
+        <p class="sr" aria-live="polite" id="live"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="controls" id="controls" aria-labelledby="controls-title">
+    <div class="wrap">
+      <div class="c-head">
+        <h2 id="controls-title">Four checks between a draft<span> and your client's bank.</span></h2>
+        <p>The invoice is the easy part. What a firm answers for is who approved it, where the money was sent and whether it arrived.</p>
+        <button class="pause" type="button" id="pause" aria-pressed="false" aria-label="Pause autoplay">
+          <svg class="i-pause" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M8 5v14M16 5v14"/></svg>
+          <svg class="i-play" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M8 6l12 6-12 6z"/></svg>
+          <span>Autoplay</span>
+        </button>
+      </div>
+
+      <div class="c-grid">
+        <div class="tabs" role="tablist" aria-orientation="vertical" aria-label="Ledgerly controls" id="tabs">
+          <button class="tab" role="tab" id="t-approve" aria-controls="p-approve" aria-selected="true" tabindex="0">
+            <h3>Approve</h3>
+            <span class="d"><span>A second person signs off before anything is sent. The preparer cannot approve their own invoice.</span></span>
+            <span class="bar"><i></i></span>
+          </button>
+          <button class="tab" role="tab" id="t-request" aria-controls="p-request" aria-selected="false" tabindex="-1">
+            <h3>Request</h3>
+            <span class="d"><span>The payment request names the account the money goes to, and you choose it per client: client account or office account.</span></span>
+            <span class="bar"><i></i></span>
+          </button>
+          <button class="tab" role="tab" id="t-match" aria-controls="p-match" aria-selected="false" tabindex="-1">
+            <h3>Reconcile</h3>
+            <span class="d"><span>Bank lines are matched to invoices by reference. Anything short or unmatched waits for a person.</span></span>
+            <span class="bar"><i></i></span>
+          </button>
+          <button class="tab" role="tab" id="t-trail" aria-controls="p-trail" aria-selected="false" tabindex="-1">
+            <h3>Trace</h3>
+            <span class="d"><span>Every invoice keeps its history: who drafted, changed, approved and sent it, and when.</span></span>
+            <span class="bar"><i></i></span>
+          </button>
+        </div>
+
+        <div class="stage">
+          <div class="pane" role="tabpanel" id="p-approve" aria-labelledby="t-approve">
+            <div class="win">
+              <div class="win-h"><strong>RB-2026-041</strong><span>Halden Joinery Ltd</span><span class="chip warn">Awaiting approval</span></div>
+              <div class="win-b">
+                <div class="sign">
+                  <div class="sign-row done"><span class="av">AR</span><div><strong>Prepared</strong><span>A. Rao, 3 Nov, 2:41 pm</span></div><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 12l5 5 9-9"/></svg></div>
+                  <div class="sign-row wait"><span class="av">MB</span><div><strong>Partner approval</strong><span>M. Bell has been asked</span></div><span class="caret" aria-hidden="true"></span></div>
+                </div>
+                <div class="amt-line"><span>Total due</span><strong class="num">£4,035.00</strong></div>
+                <div class="win-actions"><span class="fake-btn line">Return with a note</span><span class="fake-btn fill">Approve and send</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pane" role="tabpanel" id="p-request" aria-labelledby="t-request" hidden>
+            <div class="win">
+              <div class="win-h"><strong>Payment request</strong><span>RB-2026-041</span></div>
+              <div class="win-b">
+                <p class="win-k">Paid into</p>
+                <div class="acct sel"><span class="radio" aria-hidden="true"></span><div><strong>Rao &amp; Bell client account</strong><span>Held for clients, kept apart from fees</span></div></div>
+                <div class="acct"><span class="radio" aria-hidden="true"></span><div><strong>Rao &amp; Bell office account</strong><span>Fees and the firm's own money</span></div></div>
+                <div class="route" aria-hidden="true"><span>Halden Joinery Ltd</span><i class="wire"></i><span>Client account</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pane" role="tabpanel" id="p-match" aria-labelledby="t-match" hidden>
+            <div class="win">
+              <div class="win-h"><strong>Bank lines</strong><span>Client account</span></div>
+              <div class="win-b">
+                <table class="mt">
+                  <thead><tr><th scope="col">Reference</th><th scope="col" class="r">Received</th><th scope="col">Status</th></tr></thead>
+                  <tbody>
+                    <tr><td>RB-2026-038</td><td class="r num">£1,212.40</td><td><span class="chip ok">Matched</span></td></tr>
+                    <tr class="hl"><td>RB-2026-039</td><td class="r num">£900.00</td><td><span class="chip warn">£347.60 short</span></td></tr>
+                    <tr><td>MOSGROVE OCT</td><td class="r num">£2,764.15</td><td><span class="chip">Needs a person</span></td></tr>
+                    <tr><td>RB-2026-040</td><td class="r num">£618.00</td><td><span class="chip ok">Matched</span></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div class="pane" role="tabpanel" id="p-trail" aria-labelledby="t-trail" hidden>
+            <div class="win">
+              <div class="win-h"><strong>History</strong><span>RB-2026-041</span></div>
+              <div class="win-b">
+                <ol class="trail">
+                  <li><time>3 Nov, 2:38 pm</time><span><b>A. Rao</b> opened the draft</span></li>
+                  <li><time>3 Nov, 2:40 pm</time><span><b>A. Rao</b> changed line 2 rate, £600.00 to £640.00</span></li>
+                  <li><time>3 Nov, 2:41 pm</time><span><b>A. Rao</b> sent it for approval</span></li>
+                  <li><time>3 Nov, 4:12 pm</time><span><b>M. Bell</b> approved it</span></li>
+                  <li><time>3 Nov, 4:12 pm</time><span>Sent to accounts@halden.example</span></li>
+                </ol>
               </div>
             </div>
           </div>
         </div>
-        <div class="chip"><i class="ping"></i>Bank feed synced 4 min ago</div>
-        <div class="toast">
-          <span class="t-ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-9"/></svg></span>
-          <span><b>Deposit matched to INV-1042</b><small class="mono">$1,240.00 · Harlow Bakery · Oct 9</small></span>
-        </div>
       </div>
     </div>
-  </div>
-  <p class="caption">Sample firm and clients. The window is drawn, not a screenshot.</p>
-</section>
+  </section>
 
-<!-- Effect · features-sticky-scroll-steps -->
-<section class="steps-sec" id="how" aria-labelledby="how-title">
-  <div class="steps-wrap">
-    <div class="copy">
-      <p class="eyebrow">How it works</p>
-      <h2 id="how-title">One invoice, from draft to a <em>closed month.</em></h2>
-      <p class="lede">Follow INV-1042 through Ledgerly. The card on the right is the same invoice at each stage.</p>
-      <ol class="steps">
-        <li class="step on" data-s="1">
-          <button class="num" type="button" aria-label="Go to step Draft" aria-current="step">1</button>
-          <h3>Draft</h3>
-          <p>Build the invoice from the engagement: line items, tax and payment terms. Nothing leaves the firm until someone sends it.</p>
-          <ul class="facts"><li>Line items from the engagement</li><li>Terms set per client</li></ul>
-        </li>
-        <li class="step" data-s="2">
-          <button class="num" type="button" aria-label="Go to step Send" aria-current="false">2</button>
-          <h3>Send</h3>
-          <p>The client gets a page they can read and pay from. You see when it was opened, and late invoices get a reminder on the schedule you set.</p>
-          <ul class="facts"><li>Opened and paid dates</li><li>Reminders you schedule</li></ul>
-        </li>
-        <li class="step" data-s="3">
-          <button class="num" type="button" aria-label="Go to step Match" aria-current="false">3</button>
-          <h3>Match</h3>
-          <p>When the deposit lands in the bank feed, Ledgerly matches it to the invoice on amount, date and payer. Anything it cannot match waits for a person.</p>
-          <ul class="facts"><li>Matched on three fields</li><li>Unmatched deposits queue for review</li></ul>
-        </li>
-        <li class="step" data-s="4">
-          <button class="num" type="button" aria-label="Go to step Close" aria-current="false">4</button>
-          <h3>Close</h3>
-          <p>At month end, one person closes the period and a second person reviews it. After that, the month is locked and every line keeps its history.</p>
-          <ul class="facts"><li>Preparer and reviewer on record</li><li>Closed months are read only</li></ul>
-        </li>
-      </ol>
-    </div>
-
-    <div class="aside">
-      <div class="sticky">
-        <figure class="viz" data-step="1" aria-label="Invoice INV-1042 at the current step">
-          <div class="vh">
-            <div><b class="mono">INV-1042</b><small>Harlow Bakery · sample client</small></div>
-            <span class="status">
-              <span class="s s1 pill">Draft</span>
-              <span class="s s2 pill info">Sent</span>
-              <span class="s s3 pill ok">Paid · matched</span>
-              <span class="s s4 pill lock">Closed</span>
-            </span>
-          </div>
-          <dl class="meta">
-            <div><dt>Issued</dt><dd class="mono">Oct 2</dd></div>
-            <div><dt>Due</dt><dd class="mono">Oct 16</dd></div>
-            <div><dt>Terms</dt><dd class="mono">14 days</dd></div>
-          </dl>
-          <table class="lines">
-            <caption class="vh-only">Invoice lines</caption>
-            <tbody>
-              <tr><td>Monthly bookkeeping, September</td><td class="mono">$650.00</td></tr>
-              <tr><td>Payroll runs, 2</td><td class="mono">$340.00</td></tr>
-              <tr><td>Sales tax filing, Q3</td><td class="mono">$250.00</td></tr>
-            </tbody>
-            <tfoot><tr><th scope="row">Total</th><td class="mono total">$1,240.00</td></tr></tfoot>
-          </table>
-
-          <div class="match" aria-hidden="true">
-            <div class="mline"><i class="node a"></i><i class="rule"></i><i class="node b"></i></div>
-            <ul class="mon">
-              <li>Amount <b class="mono">$1,240.00</b></li>
-              <li>Date <b class="mono">Oct 9</b></li>
-              <li>Payer <b class="mono">HARLOW BAKERY</b></li>
-            </ul>
-          </div>
-          <div class="deposit">
-            <span><small>Bank deposit</small><b class="mono">HARLOW BAKERY · Oct 9</b></span>
-            <b class="mono amt">$1,240.00</b>
-          </div>
-
-          <div class="foot">
-            <p class="panel-s p1">Draft. Only people in your firm can see it.</p>
-            <p class="panel-s p2">Sent Oct 2. The client opened it Oct 3.</p>
-            <p class="panel-s p3">Matched by Ledgerly on amount, date and payer. No one typed it in.</p>
-            <div class="panel-s p4">
-              <span class="lk"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg></span>
-              <span>October closed by <b>A. Pike</b>, reviewed by <b>J. Marsh</b>. Read only from here.</span>
-            </div>
-          </div>
-        </figure>
+  <section class="faq" id="questions" aria-labelledby="faq-title">
+    <div class="wrap faq-grid">
+      <h2 id="faq-title">Questions a partner asks first.</h2>
+      <div class="qs">
+        <details>
+          <summary>Who can send an invoice?</summary>
+          <p>Only someone you have allowed to. An invoice waits in draft until a second person approves it, and the preparer cannot be that second person.</p>
+        </details>
+        <details>
+          <summary>Can I keep client money apart from our fees?</summary>
+          <p>Yes. Each payment request names the account it is paid into, so client money and the firm's fees are requested into different accounts.</p>
+        </details>
+        <details>
+          <summary>What happens when a client pays the wrong amount?</summary>
+          <p>The bank line is marked short or unmatched and stays open. Nothing is closed off until someone at the firm looks at it.</p>
+        </details>
+        <details>
+          <summary>Can I see who changed an invoice?</summary>
+          <p>Every invoice keeps a history of each change, with the person and the time, from the first draft to the payment.</p>
+        </details>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- Work · features-tabbed-preview -->
-<section class="tabs-sec" id="safeguards" aria-labelledby="safe-title">
-  <div class="tabs-head">
-    <h2 id="safe-title">Built for money <span>that is not yours.</span></h2>
-    <p>Your clients pay you so you can pay others on their behalf. Ledgerly is set up so that money is always in a column you can point to.</p>
-    <button class="pause" type="button" aria-pressed="false" aria-label="Pause autoplay">
-      <svg class="i-pause" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><path d="M8 5v14M16 5v14"/></svg>
-      <svg class="i-play" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round" aria-hidden="true"><path d="M8 6l12 6-12 6z"/></svg>
-      <span class="pause-label">Autoplay</span>
-    </button>
-  </div>
-
-  <div class="tabs-grid">
-    <div class="tabs" role="tablist" aria-orientation="vertical" aria-label="Safeguards">
-      <button class="tab" role="tab" id="t1" aria-controls="p1" aria-selected="true" tabindex="0">
-        <span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h10v18l-2-1.4-2 1.4-2-1.4-2 1.4-2-1.4z"/><path d="M9 8h6M9 12h6M9 16h4"/></svg></span>
-        <span class="tt">Client money in its own column</span>
-        <span class="d"><span>Fees you have earned and money you hold for clients are never added into one balance. Each client has a held balance you can read at a glance.</span></span>
-        <span class="prog"><i></i></span>
-      </button>
-      <button class="tab" role="tab" id="t2" aria-controls="p2" aria-selected="false" tabindex="-1">
-        <span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3"/><path d="M2 20a7 7 0 0114 0"/><circle cx="17" cy="9" r="2.5"/><path d="M16 20a6 6 0 006 0"/></svg></span>
-        <span class="tt">Two people on every payout</span>
-        <span class="d"><span>A payout from client funds needs a second person to approve it. The person who set it up cannot be the one who approves it.</span></span>
-        <span class="prog"><i></i></span>
-      </button>
-      <button class="tab" role="tab" id="t3" aria-controls="p3" aria-selected="false" tabindex="-1">
-        <span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v6l4 2"/></svg></span>
-        <span class="tt">Every change leaves a line</span>
-        <span class="d"><span>Edits, voids, refunds and approvals are written to an audit log with the person and the time. Nothing is deleted, only reversed.</span></span>
-        <span class="prog"><i></i></span>
-      </button>
-      <button class="tab" role="tab" id="t4" aria-controls="p4" aria-selected="false" tabindex="-1">
-        <span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h8l5 5v13H7z"/><path d="M15 3v5h5"/></svg></span>
-        <span class="tt">A pay page clients can read</span>
-        <span class="d"><span>Your client sees what they owe, what it covers and what they have already paid, under your firm's name.</span></span>
-        <span class="prog"><i></i></span>
-      </button>
+  <section class="close" id="walkthrough" aria-labelledby="close-title">
+    <div class="wrap close-in">
+      <h2 id="close-title">Bring one month of your invoices. We will run them through Ledgerly with you.</h2>
+      <a class="btn btn-primary" href="mailto:?subject=Ledgerly%20walkthrough">Book a walkthrough</a>
     </div>
-
-    <div class="stage2">
-      <div class="pane on" role="tabpanel" id="p1" aria-labelledby="t1">
-        <div class="pwin" aria-hidden="true">
-          <div class="ph"><b>Balances</b><span class="chip2">Sample firm</span></div>
-          <div class="cols">
-            <div class="col">
-              <small>Firm fees, earned</small>
-              <b class="mono big">$22,480.00</b>
-              <span class="hint">Operating account</span>
-            </div>
-            <div class="col held">
-              <small>Held for clients</small>
-              <b class="mono big">$9,426.15</b>
-              <span class="hint">Client account</span>
-            </div>
-          </div>
-          <div class="trows">
-            <div><span>Harlow Bakery</span><span class="mono">$2,100.00</span></div>
-            <div><span>Okafor Dental</span><span class="mono">$5,016.15</span></div>
-            <div><span>Reyes Landscaping</span><span class="mono">$2,310.00</span></div>
-          </div>
-        </div>
-      </div>
-      <div class="pane" role="tabpanel" id="p2" aria-labelledby="t2" hidden>
-        <div class="pwin" aria-hidden="true">
-          <div class="ph"><b>Payout to Okafor Dental's payroll</b><span class="pill warn">Needs 1 approval</span></div>
-          <div class="amount mono">$4,180.00</div>
-          <div class="appr">
-            <div class="who done"><span class="av">AP</span><span><b>A. Pike</b><small>Set up · Oct 24, 10:12</small></span><span class="pill ok">Done</span></div>
-            <div class="who wait"><span class="av">JM</span><span><b>J. Marsh</b><small>Reviewer</small></span><span class="pill">Waiting</span></div>
-          </div>
-          <p class="note">A. Pike cannot approve a payout A. Pike set up.</p>
-        </div>
-      </div>
-      <div class="pane" role="tabpanel" id="p3" aria-labelledby="t3" hidden>
-        <div class="pwin" aria-hidden="true">
-          <div class="ph"><b>Audit log · INV-1044</b><span class="chip2">Read only</span></div>
-          <ol class="log">
-            <li><span class="mono">Oct 3 09:41</span><span><b>A. Pike</b> created the invoice for $920.00</span></li>
-            <li><span class="mono">Oct 3 09:58</span><span><b>A. Pike</b> changed line 2 from $320.00 to $260.00</span></li>
-            <li><span class="mono">Oct 3 10:04</span><span><b>J. Marsh</b> approved and sent it</span></li>
-            <li><span class="mono">Oct 24 08:00</span><span>Ledgerly sent a reminder, 6 days late</span></li>
-          </ol>
-        </div>
-      </div>
-      <div class="pane" role="tabpanel" id="p4" aria-labelledby="t4" hidden>
-        <div class="pwin portal" aria-hidden="true">
-          <div class="ph"><b>Marsh &amp; Pike</b><span class="chip2">Invoice INV-1043</span></div>
-          <p class="due">Okafor Dental, you owe <b class="mono">$3,615.50</b> by Oct 30.</p>
-          <div class="trows">
-            <div><span>Monthly bookkeeping, September</span><span class="mono">$1,950.00</span></div>
-            <div><span>Year-end planning meeting</span><span class="mono">$1,165.50</span></div>
-            <div><span>Payroll runs, 2</span><span class="mono">$500.00</span></div>
-          </div>
-          <div class="paybar"><span>Already paid this year <b class="mono">$14,262.00</b></span><span class="fakebtn">Pay $3,615.50</span></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CTA band + footer · footer-enterprise-sitemap -->
-<section class="cta" id="walkthrough" aria-labelledby="cta-title">
-  <h2 id="cta-title">See Ledgerly on your own client list.</h2>
-  <p>A thirty minute walkthrough with your invoices, your bank feed and your approvers.</p>
-  <a class="btn btn-primary" href="mailto:hello@ledgerly.com?subject=Ledgerly%20walkthrough">Book a walkthrough</a>
-</section>
-
+  </section>
 </main>
 
-<footer class="site-foot" aria-label="Site footer">
-  <div class="fhead">
-    <a class="logo" href="#top" aria-label="Ledgerly home">
-      <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4" fill="var(--primary)"/><path d="M8 8v8h8" fill="none" stroke="var(--primary-ink)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      <span>Ledgerly</span>
-    </a>
-    <p class="claim">Invoicing for small accounting firms that hold their clients' money.</p>
-  </div>
-  <nav class="map" aria-label="Sitemap">
-    <div>
-      <h3>Product</h3>
-      <ul><li><a href="#how">Invoices</a></li><li><a href="#how">Bank matching</a></li><li><a href="#safeguards">Payout approvals</a></li><li><a href="#safeguards">Audit log</a></li><li><a href="#safeguards">Client pay page</a></li></ul>
+<footer class="foot" aria-label="Site footer">
+  <div class="wrap">
+    <div class="foot-head">
+      <a class="logo" href="#main" aria-label="Ledgerly, back to top">
+        <svg viewBox="0 0 28 28" width="28" height="28" aria-hidden="true"><rect x="1" y="1" width="26" height="26" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8 7v14h12" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 12h8M12 16h8" stroke="var(--primary)" stroke-width="1.6"/></svg>
+        <span>Ledgerly</span>
+      </a>
+      <p class="claim">Invoicing for small accounting firms that answer for their clients' money.</p>
     </div>
-    <div>
-      <h3>For firms</h3>
-      <ul><li><a href="#how">Month-end close</a></li><li><a href="#safeguards">Client balances</a></li><li><a href="#walkthrough">Book a walkthrough</a></li></ul>
+    <nav class="map" aria-label="Sitemap">
+      <div>
+        <h3>Product</h3>
+        <ul><li><a href="#draft">The invoice</a></li><li><a href="#p-approve" data-tab="t-approve">Approval</a></li><li><a href="#p-request" data-tab="t-request">Payment requests</a></li><li><a href="#p-match" data-tab="t-match">Reconciliation</a></li><li><a href="#p-trail" data-tab="t-trail">History</a></li></ul>
+      </div>
+      <div>
+        <h3>Firm</h3>
+        <ul><li><a href="#questions">Questions</a></li><li><a href="#walkthrough">Book a walkthrough</a></li></ul>
+      </div>
+      <div>
+        <h3>Legal</h3>
+        <ul><li><a href="#top">Privacy</a></li><li><a href="#top">Terms</a></li><li><a href="#top">Accessibility</a></li></ul>
+      </div>
+    </nav>
+    <div class="legal">
+      <p>© 2026 Ledgerly</p>
+      <p>Designed using <a href="https://www.designlounge.live">Design Lounge</a></p>
     </div>
-    <div>
-      <h3>Help</h3>
-      <ul><li><a href="#walkthrough">Contact</a></li><li><a href="#walkthrough">Sign in</a></li></ul>
-    </div>
-    <div>
-      <h3>Legal</h3>
-      <ul><li><a href="#top">Privacy</a></li><li><a href="#top">Terms</a></li></ul>
-    </div>
-  </nav>
-  <div class="legal">
-    <span>© 2026 Ledgerly</span>
-    <span>Designed using <a href="https://www.designlounge.live">Design Lounge</a></span>
   </div>
 </footer>
 

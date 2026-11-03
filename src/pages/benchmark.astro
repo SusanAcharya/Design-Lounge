@@ -1,7 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
-import { BENCH_META, CALLS, SUBJECTS, REVIEWS, TYPICAL, tokensOf, typicalTokens, benchSummary, type Arm } from '../data/benchmark';
+import { BENCH_META, CALLS, SUBJECTS, REVIEWS, VERDICTS, TYPICAL, tokensOf, typicalTokens, benchSummary, type Arm } from '../data/benchmark';
 
 const b = benchSummary();
 const k = (n: number) => `${(n / 1000).toFixed(1).replace(/\.0$/, '')}k`;
@@ -12,9 +12,9 @@ const ARMS: { arm: Arm; label: string }[] = [
 const rev = (s: string, a: Arm) => REVIEWS.find((r) => r.subject === s && r.arm === a)!;
 const AREAS = [['design', 'Design'], ['a11y', 'Accessibility'], ['seo', 'SEO'], ['aeo', 'AEO'], ['geo', 'GEO']] as const;
 const url = (s: string, a: Arm) => `/built/bench/${s}-${a}/index.html`;
-const description = `The same ${SUBJECTS.length} prompts built by ${BENCH_META.model.split(' (')[0]} with and without the Design Lounge MCP: ${b.failsWith} review fails against ${b.failsWithout}, ${b.contrastWith} contrast failures against ${b.contrastWithout}, and an accessibility score of ${b.a11yWith}. A whole design direction costs about ${k(typicalTokens())} tokens.`;
+const description = `The same ${SUBJECTS.length} prompts built by ${BENCH_META.model.split(' (')[0]} with and without the Design Lounge MCP: ${b.failsWith} review fails against ${b.failsWithout}, ${b.contrastWith} contrast failures against ${b.contrastWithout}, an accessibility score of ${b.a11yWith}, and a blind judge preferred them in ${b.judgeWins} of ${b.judged} pairs.`;
 const faq = [
-  { q: 'Does the Design Lounge MCP make better pages?', a: `On the same ${SUBJECTS.length} prompts and the same model, builds with the Lounge MCP had ${b.failsWith} review fails in total against ${b.failsWithout} without it, no text below readable contrast against ${b.contrastWithout} elements, and an accessibility score of ${b.a11yWith} on every build.` },
+  { q: 'Does the Design Lounge MCP make better pages?', a: `A blind judge preferred the build with the Lounge in ${b.judgeWins} of ${b.judged} pairs. On the same ${SUBJECTS.length} prompts and the same model, builds with the Lounge MCP had ${b.failsWith} review fails in total against ${b.failsWithout} without it, no text below readable contrast against ${b.contrastWithout} elements, and an accessibility score of ${b.a11yWith} on every build.` },
   { q: 'How many tokens does the Design Lounge MCP use?', a: `About ${k(typicalTokens())} tokens for a whole direction: the plan, a recipe, a theme, a type pairing, three piece briefs and one review. Each call is listed above with its size.` },
 ];
 const dataset = {
@@ -35,8 +35,8 @@ const dataset = {
       <div><dt>Review fails</dt><dd><span class="fig num">{b.failsWith} vs {b.failsWithout}</span><span class="note">in total, with the Lounge vs without</span></dd></div>
       <div><dt>Below readable contrast</dt><dd><span class="fig num">{b.contrastWith} vs {b.contrastWithout}</span><span class="note">text elements under WCAG AA</span></dd></div>
       <div><dt>Accessibility</dt><dd><span class="fig num">{b.a11yWith}</span><span class="note">on every build with the Lounge, {b.a11yWithout} average without</span></dd></div>
+      <div><dt>Blind judge</dt><dd><span class="fig num">{b.judgeWins} of {b.judged}</span><span class="note">pairs where the build with the Lounge was preferred</span></dd></div>
       <div><dt>Design score</dt><dd><span class="fig num">{b.designWith}</span><span class="note">average with the Lounge, {b.designWithout} without</span></dd></div>
-      <div><dt>A whole direction</dt><dd><span class="fig num">{k(typicalTokens())}</span><span class="note">tokens from the MCP: plan, palette, type, three briefs, a review</span></dd></div>
     </dl>
   </section>
 
@@ -44,7 +44,7 @@ const dataset = {
     <h2 class="display h3" id="read-h">What changes</h2>
     <div class="read-body">
       <p>Without the Lounge, the same model shipped grey text people cannot read, missing share cards, em dashes, too many tiny labels, and a dashboard whose words only appear after JavaScript runs. With it, the agent locks one palette and one type pairing, builds each section from a tested piece, then runs review_page and fixes what it finds before it calls the page done.</p>
-      <p>The result is a page that is readable, accessible and findable on the first pass: every build with the Lounge scored 100 for accessibility, and the only fails left were share images that need a live domain to load.</p>
+      <p>The result is a page that is readable, accessible and findable on the first pass: every build with the Lounge finished with no review fails and an accessibility score of 100.</p>
     </div>
   </section>
 
@@ -74,6 +74,7 @@ const dataset = {
           );
         })}
       </div>
+      <p class="why"><b>The judge{(() => { const v = VERDICTS.find((x) => x.subject === s.id)!; return v.winner === 'with' ? ` picked the Lounge build, ${v.with} to ${v.without} out of 50` : ` picked the other build narrowly, though it scored the Lounge build higher overall, ${v.with} to ${v.without}`; })()}.</b> {VERDICTS.find((x) => x.subject === s.id)!.why}</p>
     </section>
   ))}
 
@@ -98,6 +99,8 @@ const dataset = {
       <div><dt>Date</dt><dd>{BENCH_META.date}</dd></div>
       <div><dt>Without</dt><dd>{BENCH_META.without}</dd></div>
       <div><dt>With</dt><dd>{BENCH_META.with}</dd></div>
+      <div><dt>Judge</dt><dd>A separate model saw only screenshots (desktop and phone, first screen and full page), labelled A and B at random, and scored fit, craft, distinctiveness, phone and ship-readiness out of 10 each. It was told the companies are fictional, so a certification or customer claim on a page is invented.</dd></div>
+      <div><dt>Library</dt><dd>The Ledgerly and Fleet builds with the Lounge use the library as of {BENCH_META.date} (design-lounge-mcp 0.2.6). Crumb &amp; Co is from the first run.</dd></div>
       <div><dt>Review</dt><dd>review_page from design-lounge-mcp, run locally on every finished build: Chromium at 1280 and 390 wide, axe for accessibility, and the SEO, AEO and GEO checks. Scores start at 100 and lose 14 per fail and 5 per warning.</dd></div>
     </dl>
     <div class="qa">

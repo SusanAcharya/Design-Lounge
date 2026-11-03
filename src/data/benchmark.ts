@@ -46,11 +46,23 @@ export interface Review { subject: string; arm: Arm; design: number; a11y: numbe
 
 export const REVIEWS: Review[] = [
   { subject: 'ledgerly', arm: 'without', design: 42, a11y: 86, seo: 56, aeo: 95, geo: 85, fails: 4, contrast: 41 },
-  { subject: 'ledgerly', arm: 'with', design: 95, a11y: 100, seo: 85, aeo: 99, geo: 98, fails: 1, contrast: 0 },
+  { subject: 'ledgerly', arm: 'with', design: 95, a11y: 100, seo: 100, aeo: 100, geo: 98, fails: 0, contrast: 0 },
   { subject: 'crumb', arm: 'without', design: 56, a11y: 86, seo: 60, aeo: 99, geo: 80, fails: 4, contrast: 11 },
   { subject: 'crumb', arm: 'with', design: 100, a11y: 100, seo: 100, aeo: 100, geo: 93, fails: 0, contrast: 0 },
   { subject: 'fleet', arm: 'without', design: 42, a11y: 72, seo: 37, aeo: 100, geo: 80, fails: 8, contrast: 40 },
-  { subject: 'fleet', arm: 'with', design: 95, a11y: 100, seo: 70, aeo: 99, geo: 98, fails: 1, contrast: 0 },
+  { subject: 'fleet', arm: 'with', design: 80, a11y: 100, seo: 84, aeo: 99, geo: 94, fails: 0, contrast: 0 },
+];
+
+export interface Verdict { subject: string; winner: Arm; with: number; without: number; why: string }
+
+/** A separate model judged each pair from screenshots only, labelled A and B at random, scoring fit, craft,
+ *  distinctiveness, phone and ship-readiness out of 10 each. It was told the companies are fictional, so any
+ *  certification or customer claim on a page is invented. The Ledgerly and Fleet builds with the Lounge are from
+ *  the library as of 2026-11-03 (design-lounge-mcp 0.2.6); Crumb & Co is from the first run. */
+export const VERDICTS: Verdict[] = [
+  { subject: 'ledgerly', winner: 'with', with: 38, without: 32, why: 'Builds trust honestly with a working invoice editor, client-account versus office-account routing and a change log, set in a confident italic serif with navy and gold. The other states invented facts as real: 2,500+ practices, FCA authorisation, SOC 2, 99.98% uptime and a named testimonial.' },
+  { subject: 'crumb', winner: 'with', with: 40, without: 39, why: 'Does the whole job: timed trays with live counts, a pickup slip, a grid of 15-minute slots and a phone tab bar. Its "Dear neighbour" letter is truly ownable.' },
+  { subject: 'fleet', winner: 'without', with: 40, without: 39, why: 'The more distinctive board, with pointed actions such as "Send Van 04, 2.4 km" and "Retry tracker". The other won narrowly because its map sits in the first screen.' },
 ];
 
 const avg = (xs: number[]) => (xs.length ? xs.reduce((a, b) => a + b, 0) / xs.length : 0);
@@ -61,6 +73,8 @@ export function benchSummary() {
   const sum = (arm: Arm, key: keyof Review) => of(arm).reduce((n, r) => n + (r[key] as number), 0);
   return {
     builds: of('with').length,
+    judgeWins: VERDICTS.filter((v) => v.winner === 'with').length,
+    judged: VERDICTS.length,
     failsWith: sum('with', 'fails'),
     failsWithout: sum('without', 'fails'),
     contrastWith: sum('with', 'contrast'),

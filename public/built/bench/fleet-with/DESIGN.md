@@ -5,25 +5,28 @@
 Request, word for word:
 "Build a dashboard for a small courier company to watch its 12 delivery vans today: where they are, what's late, and who needs help."
 
-Product: a dispatch dashboard for a small courier company with 12 delivery vans, for today only.
-For: the dispatcher at the depot. In ten seconds: who needs help, which vans are late, where every van is.
-World: depot yard, van plates, the run sheet.
-The one thing: a map of the town where each van is its own number plate, beside a strip of 12 plates that says the whole day in one line.
-Ambition: finished, because "a dashboard for a small courier company to watch its 12 delivery vans"
+Product: a dispatch screen for a small courier company with 12 delivery vans, for today only.
+For: the dispatcher at the depot desk. In ten seconds: who needs a person now, what is running late, where each van is.
+World: depot yard, hi-vis, the dispatch radio.
+The one thing: a board of the 12 vans sorted by who needs a person, with a drawn town map beside it where every van sits.
+Ambition: finished, because "a dashboard ... to watch its 12 delivery vans today"
 Mode: Kit
 Named aesthetic: none
 Stack: plain index.html + styles.css + main.js that works when opened directly
-Missing: company name, driver names, real routes and stop counts, the GPS feed. The page runs on a labelled sample day until a feed is connected.
+Missing: company name, town and street names, driver names, real stop counts and addresses, phone numbers, the GPS feed. The page runs on a sample day (marked as sample in the footer) until a dispatch feed is wired in.
 
 ## Sheet
 
 Direction: yard (the only direction that fits)
-Theme: cinder (light) with night-shift (dark) · Pairing: industrial-label · Family: industrial (2px, no shadow, dense)
-Hero: kanban-board, as the four status columns of the run board
-Shell: collapsing-sidebar-rail
-Map: store-locator-map (pins and rows are one selection)
-Idea: the first screen is 12 van plates in a row, the ones that need help already orange, and the town map with the same plates where the vans are.
-Signature: vans drawn as number plates, on the strip, the map and the board.
-Avoiding: four equal KPI tiles; pins.
+Theme: cinder (light) with night-shift (dark) · https://www.designlounge.live/themes/cinder
+Pairing: industrial-label · https://www.designlounge.live/type/industrial-label
+Family: industrial · radius 2px, solid buttons, dense, no shadow
+Hero: kanban-board (as a status board, not dragged; stacks on phone) · https://www.designlounge.live/demo/kanban-board
+Pieces: collapsing-sidebar-rail, status-badge, store-locator-map (synced map and list), load-failed-retry, list-empty-plain, saved-banner
 
-Default set aside: the kanban brief drags cards between columns. A van's column is computed from its run, so the board does not drag. The dispatcher moves a van out of Needs help with "Mark sorted".
+Idea: The first thing on screen is the column of vans that need a person, each with the one call that fixes it. The other nine vans sit quiet in grey, and the map beside them shows where all twelve are.
+Signature: the slip strip. Every van carries a bar of its stops for the day, filled to the stops done, with an ink tick where the schedule says it should be now. The gap between them, in orange or amber, is how far behind it is.
+Avoiding: four equal KPI tiles, and a map above the queue on a phone.
+Tabs: Board, Map, Settings (one rail).
+
+Default set aside: none.
