@@ -57,7 +57,8 @@ const og = existsSync(publicFile(`og/${piece.id}.jpg`))
 // "with live demo" tail when a long title would push the brand off the end.
 const platformWord = d.platform === 'pwa' ? 'PWA' : pm.label.toLowerCase();
 const what = `${d.title}: ${platformWord} ${TYPE_META[d.type].singular.toLowerCase()}`;
-const pageTitle = what.length + 30 <= 64 ? `${what} with live demo · Design Lounge` : `${what} · Design Lounge`;
+// A title still too long drops the platform words, then the brand, so it fits in 65.
+const pageTitle = what.length + 30 <= 64 ? `${what} with live demo · Design Lounge` : what.length + 16 <= 65 ? `${what} · Design Lounge` : d.title.length + 16 <= 65 ? `${d.title} · Design Lounge` : d.title;
 const schema = {
   '@type': 'CreativeWork',
   '@id': `${new URL(`/p/${piece.id}`, Astro.site)}#piece`,

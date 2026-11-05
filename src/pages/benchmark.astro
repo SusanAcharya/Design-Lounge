@@ -27,7 +27,7 @@ const dataset = {
   variableMeasured: ['review fails', 'design score', 'accessibility score', 'SEO score', 'AEO score', 'GEO score', 'contrast failures', 'tokens per MCP call'],
 };
 ---
-<Base rail={false} title="Benchmark: builds with and without the Design Lounge MCP" {description} crumbs={[{ name: 'Benchmark', href: '/benchmark' }]} {faq} schema={[dataset]}>
+<Base rail={false} title="Benchmark: with and without the MCP" {description} crumbs={[{ name: 'Benchmark', href: '/benchmark' }]} {faq} schema={[dataset]}>
   <PageHead eyebrow="Benchmark" title="Same model, <i>cleaner pages.</i>" count={REVIEWS.length} countLabel="builds" blurb={`The same ${SUBJECTS.length} everyday prompts, each built once with the Design Lounge MCP and once without it, by the same model in fresh sessions. Every build was then put through the same automated review (design, accessibility, SEO, AEO and GEO) and a blind design rating. All six are linked, so you can open them and check.`} />
 
   <section class="wrap sum" aria-label="Summary">
