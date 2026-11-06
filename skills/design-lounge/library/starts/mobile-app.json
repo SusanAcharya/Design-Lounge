@@ -55,7 +55,16 @@
   "premium-manual-camera",
   "motion-spring-throw-sheet",
   "motion-scroll-story",
-  "motion-feedback-ladder"
+  "motion-feedback-ladder",
+  "app-smart-home-rooms",
+  "app-home-widgets-stack",
+  "phone-onboarding-goal-setup",
+  "phone-pricing-plan-slider",
+  "phone-error-update-required",
+  "phone-picker-wheel-time",
+  "style-brutalist-notes",
+  "style-cyber-vpn-shield",
+  "style-riso-gig-guide"
  ],
  "directions": [
   {

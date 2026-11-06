@@ -1,0 +1,213 @@
+<!-- Design Lounge piece: style-cyber-vpn-shield · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hexgate · Shield</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Major+Mono+Display&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#06080C;--panel:#0B1017;--line:#1B2632;--edge:#5A6E83;--dim:#1C2834;
+  --ink:#D6E2EC;--ink-2:#93A7B8;--cyan:#2FF3D6;--cyan-2:#0FA894;--mag:#FF5FA2;
+  --display:"Major Mono Display",ui-monospace,monospace;--mono:"IBM Plex Mono",ui-monospace,monospace;
+  --std:cubic-bezier(0.2,0.7,0.2,1);--expo:cubic-bezier(0.16,1,0.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:400 13px/1.4 var(--mono);overflow:hidden;
+  background-image:repeating-linear-gradient(0deg,rgba(47,243,214,.035) 0 1px,transparent 1px 3px)}
+button{font:inherit;color:inherit;border:0;background:none;padding:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
+.app{max-width:430px;height:100%;min-height:800px;margin:0 auto;padding:54px 20px 34px;display:flex;flex-direction:column}
+.top{display:flex;align-items:center;gap:10px;height:44px}
+.top svg{width:26px;height:26px;color:var(--cyan)}
+.top h1{margin:0;font:400 20px/1 var(--display);letter-spacing:.02em}
+.chip{margin-left:auto;display:flex;align-items:center;gap:8px;height:28px;padding:0 10px;border:1px solid var(--cyan);color:var(--cyan);font:600 11px/1 var(--mono);letter-spacing:.14em;white-space:nowrap;clip-path:polygon(8px 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%,0 8px)}
+.chip i{width:6px;height:6px;background:currentColor}
+.off .chip{color:var(--mag);border-color:var(--mag)}
+.off.linking .chip{color:var(--cyan);border-color:var(--cyan)}
+.card{position:relative;background:var(--panel);border:1px solid var(--line);clip-path:polygon(12px 0,100% 0,100% calc(100% - 12px),calc(100% - 12px) 100%,0 100%,0 12px)}
+.map{margin-top:8px;padding:8px 10px 8px}
+.map svg{display:block;width:100%;height:auto}
+.dot{fill:#24384A}
+.node{fill:var(--ink)}
+.home{fill:var(--mag)}
+.exit{fill:var(--cyan)}
+.ring{fill:none;stroke:var(--cyan);stroke-width:1;transform-box:fill-box;transform-origin:center;animation:ping 2.4s var(--std) infinite}
+@keyframes ping{from{transform:scale(.4);opacity:1}to{transform:scale(2.4);opacity:0}}
+.route{fill:none;stroke:var(--cyan);stroke-width:1.6;stroke-dasharray:var(--len);stroke-dashoffset:0;filter:drop-shadow(0 0 3px rgba(47,243,214,.7))}
+.route.draw{animation:draw 700ms var(--expo) both}
+@keyframes draw{from{stroke-dashoffset:var(--len)}}
+.off .route,.off .ring,.off .pk{visibility:hidden}
+.legend{display:flex;justify-content:space-between;margin-top:6px;color:var(--ink-2);font-size:11px;letter-spacing:.08em;white-space:nowrap}
+.legend b{color:var(--ink);font-weight:500}
+.stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:10px}
+.stat{padding:8px 10px;min-width:0}
+.stat span{display:block;color:var(--ink-2);font-size:10px;letter-spacing:.16em;white-space:nowrap}
+.stat b{display:block;margin-top:4px;font:500 16px/1 var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.ip{display:flex;justify-content:space-between;gap:8px;margin-top:8px;padding:0 2px;font-size:12px;color:var(--ink-2);white-space:nowrap}
+.ip b{color:var(--cyan);font-weight:500;font-variant-numeric:tabular-nums}
+.off .ip b{color:var(--mag)}
+.list{margin:12px 0 0;padding:0;list-style:none;display:grid;gap:6px}
+.srv{width:100%;height:42px;display:grid;grid-template-columns:44px 1fr 40px 52px;align-items:center;gap:8px;padding:0 12px 0 8px;background:var(--panel);border:1px solid var(--edge);text-align:left;transition:border-color 160ms var(--std),background-color 160ms var(--std)}
+.srv .cc{font:600 11px/1 var(--mono);letter-spacing:.1em;color:var(--ink-2);white-space:nowrap}
+.srv .city{font:500 14px/1 var(--mono);white-space:nowrap}
+.srv .city small{display:block;margin-top:3px;font-size:10px;color:var(--ink-2);letter-spacing:.06em}
+.srv .ms{text-align:right;font:500 13px/1 var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.bars{display:flex;align-items:flex-end;gap:3px;height:16px}
+.bars i{width:5px;background:var(--dim)}
+.bars i:nth-child(1){height:5px}.bars i:nth-child(2){height:8px}.bars i:nth-child(3){height:12px}.bars i:nth-child(4){height:16px}
+.bars i.on{background:var(--cyan)}
+.srv[aria-checked=true]{border-color:var(--cyan);background:#0E1D21;box-shadow:inset 3px 0 0 var(--cyan)}
+.srv[aria-checked=true] .cc{color:var(--cyan)}
+.srv:hover{border-color:#8CA0B3}
+.zone{margin-top:auto;display:flex;flex-direction:column;align-items:center}
+.dial{position:relative;width:200px;height:200px;border-radius:50%}
+.dial svg.ticks{position:absolute;inset:0;width:200px;height:200px}
+.tick{stroke:var(--dim);stroke-width:2.4;transition:stroke 0s}
+.lit .tick{stroke:var(--cyan);transition:stroke 60ms var(--std) calc(var(--i) * 30ms)}
+.lit.now .tick{transition:none}
+.core{position:absolute;inset:26px;border-radius:50%;background:radial-gradient(circle at 50% 40%,#10202A,#070B10 70%);border:1px solid var(--edge);overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;transition:border-color 200ms var(--std),box-shadow 300ms var(--std)}
+.locked .core{border-color:var(--cyan);box-shadow:0 0 0 4px rgba(47,243,214,.08),0 0 28px rgba(47,243,214,.25)}
+.core::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(214,226,236,.05) 0 1px,transparent 1px 4px);pointer-events:none}
+.scan{position:absolute;left:0;right:0;top:-10%;height:2px;background:var(--cyan);box-shadow:0 0 10px 2px rgba(47,243,214,.6);opacity:0;pointer-events:none}
+.charging .scan{animation:sweep 520ms linear infinite}
+.sweep .scan{animation:sweep 900ms var(--std) 1}
+@keyframes sweep{0%{top:-4%;opacity:1}100%{top:104%;opacity:1}}
+.lock{width:34px;height:40px;color:var(--ink)}
+.lock .sh{transform:translateY(-5px);transition:transform 260ms cubic-bezier(.5,1.8,.5,1)}
+.locked .lock{color:var(--cyan)}
+.locked .lock .sh{transform:none}
+.word{font:400 20px/1 var(--display);letter-spacing:.04em;white-space:nowrap}
+.locked .word{color:var(--cyan)}
+.pct{font:500 11px/1 var(--mono);letter-spacing:.16em;color:var(--ink-2);white-space:nowrap}
+.note{margin:10px 0 0;text-align:center;color:var(--ink-2);font-size:12px;letter-spacing:.04em}
+.note b{color:var(--ink);font-weight:500}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media (prefers-reduced-motion:reduce){
+  .ring,.route.draw,.scan,.charging .scan,.sweep .scan{animation:none!important}
+  .lit .tick{transition:none}
+}
+</style>
+</head>
+<body>
+<main class="app locked" id="app">
+  <header class="top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 2l8.5 5v10L12 22l-8.5-5V7z"/><path d="M8 12h8M12 8v8"/></svg>
+    <h1>hexgate</h1>
+    <span class="chip" id="chip" role="status"><i></i><span id="chip-t">SHIELDED</span></span>
+  </header>
+  <section class="card map" aria-label="Route map">
+    <svg viewBox="0 0 360 140" id="map" aria-hidden="true"><g id="dots"></g><path class="route" id="route"/><g id="nodes"></g></svg>
+    <div class="legend"><span><b>LIS</b> ▸ <b id="leg-to">MTL</b> · <span id="leg-km">5,231</span> km</span><span>WIREGUARD · AES-256</span></div>
+  </section>
+  <section class="stats" aria-label="Session">
+    <div class="card stat"><span>DOWN</span><b id="down">1.284 GB</b></div>
+    <div class="card stat"><span>UP</span><b id="up">96.4 MB</b></div>
+    <div class="card stat"><span>SESSION</span><b id="time">00:42:17</b></div>
+  </section>
+  <p class="ip"><span>PUBLIC IP</span><b id="ip">149.56.19.145 · Montréal</b></p>
+  <ul class="list" role="radiogroup" aria-label="Exit server" id="list"></ul>
+  <section class="zone">
+    <button class="dial" id="dial" aria-pressed="true" aria-label="Shield on. Tap to turn off">
+      <svg class="ticks" viewBox="0 0 200 200" id="ticks" aria-hidden="true"></svg>
+      <span class="core">
+        <span class="scan"></span>
+        <svg class="lock" viewBox="0 0 34 40" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path class="sh" d="M9 18v-6a8 8 0 0 1 16 0v6"/><rect x="4" y="18" width="26" height="19" rx="2"/><path d="M17 25v5"/></svg>
+        <span class="word" id="word">locked</span>
+        <span class="pct" id="pct">TAP TO DROP</span>
+      </span>
+    </button>
+    <p class="note" id="note">Kill switch <b>on</b> · DNS in tunnel · no logs</p>
+  </section>
+  <p class="sr" aria-live="polite" id="live"></p>
+</main>
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const rows = [[[6,11],[13,15],[25,31]],[[1,12],[13,15],[18,20],[21,35]],[[2,7],[9,12],[17,17],[18,34]],[[3,12],[17,22],[22,33],[34,34]],[[3,11],[17,24],[24,32],[33,33]],[[4,8],[9,9],[16,24],[25,26],[27,30]],[[7,8],[16,23],[23,24],[25,26],[28,30],[31,31]],[[10,13],[17,22],[29,30],[31,31]],[[10,15],[19,22],[29,32],[33,33]],[[10,14],[19,22],[23,23],[30,32]],[[11,14],[19,21],[23,23],[29,33]],[[11,13],[19,20],[29,33]],[[11,12],[35,35]],[[11,11]]];
+  const G = rows.map((r) => { const g = []; r.forEach(([a, b]) => { for (let x = a; x <= b; x++) g[x] = 1; }); return g; });
+  const on = (y, x) => G[y] && G[y][x];
+  let d = '';
+  G.forEach((g, y) => g.forEach((v, x) => { if (!v) return; for (let dy = 0; dy < 2; dy++) for (let dx = 0; dx < 2; dx++) {
+    if (!on(y + (dy ? 1 : -1), x) && !on(y, x + (dx ? 1 : -1))) continue;
+    d += `<circle class="dot" cx="${x * 10 + dx * 5 + 2.5}" cy="${y * 10 + dy * 5 + 2.5}" r="1.25"/>`; } }));
+  $('dots').innerHTML = d;
+  const geo = (lon, lat) => [lon + 180, 80 - lat];
+  const home = geo(-9.1, 38.7);
+  const S = [
+    { cc: 'IS', id: 'RKV', city: 'Reykjavík', sub: 'Geothermal · 31% load', ms: 38, km: '2,946', ip: '185.217.4.66', g: geo(-21.9, 64.1) },
+    { cc: 'CH', id: 'ZRH', city: 'Zürich', sub: 'Double hop · 54% load', ms: 24, km: '1,720', ip: '91.132.137.20', g: geo(8.5, 47.4) },
+    { cc: 'CA', id: 'MTL', city: 'Montréal', sub: 'Streaming · 48% load', ms: 96, km: '5,231', ip: '149.56.19.145', g: geo(-73.6, 45.5) },
+    { cc: 'JP', id: 'TYO', city: 'Tokyo', sub: 'P2P allowed · 62% load', ms: 212, km: '11,140', ip: '45.76.211.8', g: geo(139.7, 35.7) }
+  ];
+  const bars = (ms) => (ms < 40 ? 4 : ms < 100 ? 3 : ms < 180 ? 2 : 1);
+  let sel = 2, state = 'locked', bytes = [1.284e9, 96.4e6], secs = 42 * 60 + 17, timers = [];
+  const later = (fn, ms) => timers.push(setTimeout(fn, ms));
+  $('list').innerHTML = S.map((s, i) => `<li><button class="srv" role="radio" aria-checked="${i === sel}" tabindex="${i === sel ? 0 : -1}" data-i="${i}" aria-label="${s.city}, ${s.ms} milliseconds"><span class="cc">${s.cc}·${s.id}</span><span class="city">${s.city}<small>${s.sub}</small></span><span class="bars" aria-hidden="true">${[1, 2, 3, 4].map((n) => `<i class="${n <= bars(s.ms) ? 'on' : ''}"></i>`).join('')}</span><span class="ms">${s.ms} ms</span></button></li>`).join('');
+  let t = '';
+  for (let i = 0; i < 48; i++) { const a = (i / 48) * Math.PI * 2 - Math.PI / 2, c = Math.cos(a), s = Math.sin(a); t += `<line class="tick" style="--i:${i}" x1="${100 + c * 87}" y1="${100 + s * 87}" x2="${100 + c * (i % 4 ? 95 : 99)}" y2="${100 + s * (i % 4 ? 95 : 99)}"/>`; }
+  $('ticks').innerHTML = t;
+  const app = $('app'), dial = $('dial'), route = $('route');
+  const drawRoute = (anim) => {
+    const [x0, y0] = home, [x1, y1] = S[sel].g, mx = (x0 + x1) / 2, my = Math.min(y0, y1) - Math.max(14, Math.abs(x1 - x0) * 0.28);
+    route.setAttribute('d', `M${x0} ${y0}Q${mx} ${my} ${x1} ${y1}`);
+    const len = Math.ceil(route.getTotalLength()); route.style.setProperty('--len', len);
+    $('nodes').innerHTML = `<circle class="ring" cx="${x1}" cy="${y1}" r="6"/><rect class="home" x="${x0 - 3}" y="${y0 - 3}" width="6" height="6"/><circle class="exit" cx="${x1}" cy="${y1}" r="3.4"/>` +
+      (reduce ? '' : `<circle class="pk" r="2" fill="#D6E2EC"><animateMotion dur="2.2s" repeatCount="indefinite" path="M${x0} ${y0}Q${mx} ${my} ${x1} ${y1}"/></circle>`);
+    route.classList.remove('draw'); if (anim && !reduce) { void route.getBBox(); route.classList.add('draw'); }
+    $('leg-to').textContent = S[sel].id; $('leg-km').textContent = S[sel].km;
+  };
+  const fmt = (b) => (b >= 1e9 ? (b / 1e9).toFixed(3) + ' GB' : (b / 1e6).toFixed(1) + ' MB');
+  const hms = (s) => [s / 3600, (s / 60) % 60, s % 60].map((n) => String(Math.floor(n)).padStart(2, '0')).join(':');
+  const paint = () => { $('down').textContent = fmt(bytes[0]); $('up').textContent = fmt(bytes[1]); $('time').textContent = hms(secs); };
+  const scramble = (final) => {
+    if (reduce) { $('ip').textContent = final; return; }
+    let n = 0; const iv = setInterval(() => { $('ip').textContent = final.replace(/\d/g, () => Math.floor(Math.random() * 10)); if (++n > 8) { clearInterval(iv); $('ip').textContent = final; } }, 50);
+  };
+  const set = (st) => {
+    state = st; app.classList.toggle('off', st !== 'locked'); app.classList.toggle('linking', st === 'charging'); app.classList.toggle('locked', st === 'locked'); dial.classList.toggle('charging', st === 'charging');
+    $('chip-t').textContent = st === 'locked' ? 'SHIELDED' : st === 'charging' ? 'LINKING' : 'EXPOSED';
+    dial.setAttribute('aria-pressed', st !== 'off');
+    dial.setAttribute('aria-label', st === 'locked' ? 'Shield on. Tap to turn off' : st === 'charging' ? 'Connecting' : 'Shield off. Tap to connect');
+  };
+  const connect = () => {
+    set('charging'); dial.classList.remove('now'); dial.classList.add('lit');
+    $('word').textContent = 'linking'; $('note').innerHTML = 'Handshake with <b>' + S[sel].city + '</b> · key rotated';
+    const t0 = performance.now(), dur = reduce ? 300 : 1500;
+    const step = (now) => { const p = Math.min(1, (now - t0) / dur); $('pct').textContent = 'HANDSHAKE ' + String(Math.round(p * 100)).padStart(3, '0') + '%'; if (p < 1 && state === 'charging') requestAnimationFrame(step); };
+    requestAnimationFrame(step);
+    later(() => {
+      set('locked'); $('word').textContent = 'locked'; $('pct').textContent = 'TAP TO DROP';
+      dial.classList.remove('sweep'); void dial.offsetWidth; dial.classList.add('sweep');
+      $('note').innerHTML = 'Kill switch <b>on</b> · DNS in tunnel · no logs';
+      bytes = [0, 0]; secs = 0; paint(); drawRoute(true); scramble(S[sel].ip + ' · ' + S[sel].city);
+      $('live').textContent = 'Shield locked. Exit ' + S[sel].city + ', ' + S[sel].ms + ' milliseconds.';
+    }, dur + 60);
+  };
+  const drop = () => {
+    timers.forEach(clearTimeout); timers = [];
+    set('off'); dial.classList.remove('lit', 'now', 'sweep'); $('word').textContent = 'exposed'; $('pct').textContent = 'TAP TO SHIELD';
+    $('ip').textContent = '94.63.112.8 · Lisbon, visible'; $('note').innerHTML = 'Traffic is <b>not encrypted</b> on this network';
+    $('live').textContent = 'Shield off. Your IP is visible.';
+  };
+  dial.addEventListener('click', () => { if (state === 'off') connect(); else if (state === 'locked') drop(); });
+  $('list').addEventListener('click', (e) => {
+    const b = e.target.closest('.srv'); if (!b) return;
+    sel = +b.dataset.i; document.querySelectorAll('.srv').forEach((x) => { x.setAttribute('aria-checked', x === b); x.tabIndex = x === b ? 0 : -1; });
+    if (state === 'locked') { drawRoute(true); scramble(S[sel].ip + ' · ' + S[sel].city); $('live').textContent = 'Rerouted through ' + S[sel].city + '.'; }
+    else drawRoute(false);
+  });
+  $('list').addEventListener('keydown', (e) => {
+    const k = { ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1 }[e.key]; if (!k) return;
+    e.preventDefault(); const bs = [...document.querySelectorAll('.srv')], n = bs[(sel + k + bs.length) % bs.length]; n.focus(); n.click();
+  });
+  setInterval(() => { if (state !== 'locked') return; bytes[0] += 2e5 + Math.random() * 1.6e6; bytes[1] += 2e4 + Math.random() * 1.2e5; secs++; paint(); }, 1000);
+  dial.classList.add('lit', 'now'); drawRoute(false); paint();
+})();
+</script>
+</body>
+</html>

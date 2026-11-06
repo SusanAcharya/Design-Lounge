@@ -1,0 +1,229 @@
+<!-- Design Lounge piece: app-smart-home-rooms · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Casa Ribeira · Home</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EEEBE5;--card:#FBFAF7;--ink:#1D2320;--ink-2:#575F5A;--line:#DCD7CE;--wall:#2B312D;--floor:#F4F1EB;
+  --teal:#2F5D50;--teal-tint:#DCE7E2;--rust:#A63F1B;--rust-tint:#F8E4D9;--slab:#2A302C;--warm:#F2B45A;
+  --font:"Red Hat Display",system-ui,sans-serif;
+  --std:cubic-bezier(0.2,0.7,0.2,1);--sheet:cubic-bezier(0.32,0.72,0,1);--expo:cubic-bezier(0.16,1,0.3,1);
+  --r-card:20px;--r-chip:14px;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:500 14px/1.35 var(--font);overflow:hidden}
+button{font:inherit;color:inherit;border:0;background:none;padding:0;cursor:pointer}
+:focus-visible{outline:3px solid var(--teal);outline-offset:2px}
+.app{max-width:430px;height:100%;min-height:800px;margin:0 auto;padding:54px 20px 34px;display:flex;flex-direction:column;gap:10px}
+.top{display:flex;align-items:center;gap:12px;height:46px}
+.top h1{margin:0;font:800 24px/1 var(--font);letter-spacing:-.01em}
+.top p{margin:4px 0 0;color:var(--ink-2);font-size:13px}
+.av{margin-left:auto;width:40px;height:40px;border-radius:50%;background:var(--teal);color:#F4F1EB;display:grid;place-items:center;font:700 14px/1 var(--font)}
+.alert{display:grid;grid-template-columns:40px 1fr auto;align-items:center;gap:12px;padding:12px 12px 12px 14px;border-radius:var(--r-card);background:var(--rust-tint);box-shadow:inset 0 0 0 1px #EBC6B3}
+.alert .ic{width:40px;height:40px;border-radius:12px;background:var(--rust);color:#FFF4EE;display:grid;place-items:center}
+.alert .ic svg{width:22px;height:22px}
+.alert b{display:block;font:700 15px/1.2 var(--font)}
+.alert span{display:block;margin-top:2px;font-size:12px;color:#6A2A12}
+.alert button{height:40px;padding:0 14px;border-radius:20px;background:var(--rust);color:#FFF4EE;font:700 13px/1 var(--font);white-space:nowrap}
+.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;padding:4px;border-radius:16px;background:#E2DED6}
+.tab{height:36px;border-radius:12px;font:600 13px/1 var(--font);color:var(--ink-2);display:flex;align-items:center;justify-content:center;gap:6px;white-space:nowrap;transition:background-color 200ms var(--std),color 200ms var(--std)}
+.tab i{width:6px;height:6px;border-radius:50%;background:transparent;transition:background-color 300ms var(--std)}
+.tab i.on{background:#C98418}
+.tab[aria-selected=true]{background:var(--card);color:var(--ink);box-shadow:0 1px 2px rgba(29,35,32,.12)}
+.plan{border-radius:var(--r-card);background:var(--card);padding:10px;position:relative}
+.plan svg{display:block;width:100%;height:auto}
+.room{fill:var(--floor);transition:fill 240ms var(--std);cursor:pointer}
+.room.sel{fill:var(--teal-tint)}
+.room:focus-visible{outline:none;stroke:var(--teal);stroke-width:3}
+.wall{stroke:var(--wall);stroke-width:4;stroke-linecap:square;fill:none}
+.rl{font:700 11px/1 var(--font);fill:var(--ink);letter-spacing:.02em;pointer-events:none}
+.rs{font:500 10px/1 var(--font);fill:var(--ink-2);pointer-events:none}
+.glow{transition:r 600ms var(--expo),opacity 600ms var(--expo),fill 600ms var(--std);transition-delay:var(--d,0ms);pointer-events:none}
+.bulb{transition:fill 400ms var(--std);transition-delay:var(--d,0ms);pointer-events:none}
+.win{stroke:var(--rust);stroke-width:3;stroke-linecap:round}
+.pulse{fill:var(--rust);transform-box:fill-box;transform-origin:center;animation:pl 1.8s var(--std) infinite}
+@keyframes pl{0%{transform:scale(1);opacity:.55}100%{transform:scale(3.2);opacity:0}}
+.flash{animation:fl 900ms var(--std) 2}
+@keyframes fl{50%{stroke-width:7}}
+.scenes{display:flex;gap:8px}
+.chip{flex:1;height:44px;border-radius:var(--r-chip);background:var(--card);box-shadow:inset 0 0 0 1px var(--line);display:flex;align-items:center;justify-content:center;gap:6px;font:600 13px/1 var(--font);white-space:nowrap;transition:background-color 200ms var(--std),color 200ms var(--std),transform 160ms var(--std)}
+.chip svg{width:16px;height:16px}
+.chip:active{transform:scale(.96)}
+.chip[aria-pressed=true]{background:var(--ink);color:#F4F1EB;box-shadow:none}
+.ctl{display:grid;grid-template-columns:1fr 1fr;gap:10px;flex:1;min-height:0}
+.card{border-radius:var(--r-card);background:var(--card);padding:14px 14px 12px;display:flex;flex-direction:column}
+.card h2{margin:0;font:700 13px/1 var(--font);color:var(--ink-2);letter-spacing:.02em;white-space:nowrap}
+.card .big{margin-top:6px;font:800 28px/1 var(--font);font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.card .big small{font-size:14px;font-weight:600;color:var(--ink-2);margin-left:2px}
+.dim{position:relative;margin:12px auto 0;width:92px;flex:1;min-height:120px;max-height:168px;border-radius:26px;background:var(--slab);overflow:hidden;touch-action:none;cursor:ns-resize}
+.dim .fill{position:absolute;left:0;right:0;bottom:0;height:var(--b,0%);background:var(--lc,#F2B45A);transition:height 600ms var(--expo),background-color 600ms var(--std)}
+.dim.drag .fill{transition:background-color 600ms var(--std)}
+.dim svg{position:absolute;left:50%;bottom:14px;width:22px;height:22px;margin-left:-11px;color:var(--ink)}
+.dim[aria-valuenow="0"] svg{color:#D8DDD9}
+.kel{margin-top:12px}
+.kel label{display:flex;justify-content:space-between;font:600 12px/1 var(--font);color:var(--ink-2)}
+.kel label b{color:var(--ink);font-variant-numeric:tabular-nums}
+.kel input{-webkit-appearance:none;appearance:none;display:block;width:100%;height:20px;margin:8px 0 0;border-radius:10px;border:2px solid #747B76;background:linear-gradient(90deg,#FFB46B,#FFE2C0 45%,#DDE8FF)}
+.kel input::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 0 0 2px var(--ink),0 2px 6px rgba(0,0,0,.25)}
+.kel input:disabled{border-color:#8E948F}
+.dial{position:relative;margin:6px auto 0;width:150px;height:136px}
+.dial svg{width:150px;height:150px;display:block}
+.trk{fill:none;stroke:#E4E0D8;stroke-width:12;stroke-linecap:round}
+.arc{fill:none;stroke:url(#heat);stroke-width:12;stroke-linecap:round}
+.paused .arc{stroke:#B9B5AD}
+.dial .mid{position:absolute;left:0;right:0;top:44px;text-align:center}
+.dial .mid b{display:block;font:800 32px/1 var(--font);font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.dial .mid span{display:block;margin-top:4px;font:600 11px/1.2 var(--font);color:var(--ink-2);white-space:nowrap}
+.paused .mid span{color:var(--rust)}
+.air{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:4px 0 12px}
+.air div{padding:8px 10px;border-radius:12px;background:#F1EEE8}
+.air dt{font:600 11px/1 var(--font);color:var(--ink-2)}
+.air dd{margin:4px 0 0;font:700 15px/1 var(--font)}
+.steps{display:flex;justify-content:space-between;margin-top:auto}
+.steps button{width:44px;height:44px;border-radius:50%;background:#E8E4DC;display:grid;place-items:center}
+.steps button svg{width:18px;height:18px}
+.steps output{align-self:center;font:600 12px/1.2 var(--font);color:var(--ink-2);text-align:center;white-space:nowrap}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media (prefers-reduced-motion:reduce){
+  .glow,.bulb,.dim .fill,.room,.tab,.chip{transition-duration:1ms!important;transition-delay:0ms!important}
+  .pulse,.flash{animation:none}
+}
+</style>
+</head>
+<body>
+<main class="app" id="app">
+  <header class="top">
+    <div><h1>Casa Ribeira</h1><p id="sum">3 lights on · 20.8° inside</p></div>
+    <span class="av" aria-hidden="true">IR</span>
+  </header>
+  <section class="alert" role="alert" aria-label="Window open">
+    <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 4h16v16H4zM12 4v16M4 12h4"/><path d="M14 9l5-3"/></svg></span>
+    <div><b>Bedroom window is open</b><span>Open 14 min · 9° outside</span></div>
+    <button id="show">Show</button>
+  </section>
+  <div class="tabs" role="tablist" aria-label="Rooms" id="tabs"></div>
+  <section class="plan" aria-label="Floor plan">
+    <svg viewBox="0 0 350 184" id="plan">
+      <defs><linearGradient id="heat" x1="0" x2="1"><stop offset="0" stop-color="#6E9C8C"/><stop offset=".6" stop-color="#E3A03E"/><stop offset="1" stop-color="#C9532A"/></linearGradient></defs>
+      <g id="rooms"></g>
+      <rect x="112" y="108" width="84" height="76" fill="#EAE6DE" aria-hidden="true"/>
+      <text class="rs" x="124" y="126" aria-hidden="true">Hall</text>
+      <g id="lights"></g>
+      <g id="labels" aria-hidden="true"></g>
+      <g class="wall" aria-hidden="true"><path d="M2 2h346v180H2z"/><path d="M196 2v30M196 54v76M196 152v30M196 76h40M262 76h86M2 108h30M58 108h54M112 108v18M112 150v32M150 108h46"/></g>
+      <g aria-hidden="true"><path d="M348 112v38" stroke="#FBFAF7" stroke-width="6"/><path class="win" id="win" d="M348 112l-24 16"/><circle class="pulse" cx="336" cy="131" r="4"/><circle cx="336" cy="131" r="4" fill="#A63F1B"/></g>
+    </svg>
+  </section>
+  <div class="scenes" role="group" aria-label="Scenes" id="scenes"></div>
+  <div class="ctl">
+    <section class="card" aria-labelledby="lt">
+      <h2 id="lt">Lights · Living</h2>
+      <div class="big" id="bv">45<small>%</small></div>
+      <div class="dim" id="dim" role="slider" tabindex="0" aria-label="Brightness" aria-valuemin="0" aria-valuemax="100"><div class="fill"></div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M5 19l1.5-1.5M17.5 6.5L19 5"/></svg></div>
+      <div class="kel"><label for="k">Warmth <b id="kv">2400 K</b></label><input id="k" type="range" min="2200" max="6500" step="100" value="2400"></div>
+    </section>
+    <section class="card" id="clim" aria-labelledby="ct">
+      <h2 id="ct">Climate · Living</h2>
+      <div class="dial" aria-hidden="true">
+        <svg viewBox="0 0 150 150"><path class="trk" d="M33 117A60 60 0 1 1 117 117"/><path class="arc" id="arc" d="M33 117A60 60 0 1 1 117 117"/><circle id="knob" r="9" fill="#FBFAF7" stroke="#1D2320" stroke-width="3"/></svg>
+        <div class="mid"><b id="tv">21.5°</b><span id="ts">Heating · now 20.8°</span></div>
+      </div>
+      <dl class="air"><div><dt>Humidity</dt><dd>46%</dd></div><div><dt>Air</dt><dd>Good</dd></div></dl>
+      <div class="steps"><button id="minus" aria-label="Lower target"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/></svg></button><output id="eco" aria-live="polite">Eco 17°</output><button id="plus" aria-label="Raise target"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M12 5v14"/></svg></button></div>
+    </section>
+  </div>
+  <p class="sr" aria-live="polite" id="live"></p>
+</main>
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const R = [
+    { id: 'living', name: 'Living', x: 2, y: 2, w: 194, h: 106, lx: 122, ly: 66, b: 45, k: 2400, set: 21.5, now: 20.8 },
+    { id: 'kitchen', name: 'Kitchen', x: 196, y: 2, w: 152, h: 74, lx: 306, ly: 46, b: 60, k: 2700, set: 21, now: 21.2 },
+    { id: 'bedroom', name: 'Bedroom', x: 196, y: 76, w: 152, h: 106, lx: 284, ly: 142, b: 20, k: 2200, set: 19, now: 17.1, open: true },
+    { id: 'study', name: 'Study', x: 2, y: 108, w: 110, h: 74, lx: 84, ly: 158, b: 0, k: 5000, set: 20, now: 19.6 }
+  ];
+  const SC = {
+    Morning: [[70, 4500, 21], [85, 5000, 21], [60, 4000, 20], [70, 5500, 20.5]],
+    Evening: [[45, 2400, 21.5], [60, 2700, 21], [20, 2200, 19], [0, 5000, 20]],
+    Away: [[0, 2700, 16], [0, 2700, 16], [0, 2200, 16], [0, 5000, 16]],
+    Night: [[0, 2400, 18], [0, 2700, 17], [5, 2200, 18], [0, 5000, 17]]
+  };
+  const ICON = { Morning: 'M12 3v2M5 12H3M21 12h-2M6 6l1.4 1.4M18 6l-1.4 1.4M7 16a5 5 0 0 1 10 0M3 19h18', Evening: 'M20 14A8 8 0 1 1 10 4a6 6 0 0 0 10 10z', Away: 'M4 11l8-6 8 6v9H4zM10 20v-5h4v5', Night: 'M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2 2M16 16l2 2M6 18l2-2M16 8l2-2' };
+  let cur = 0, scene = 'Evening';
+  const kc = (k) => { const s = [[2200, [255, 180, 107]], [4000, [255, 226, 192]], [6500, [221, 232, 255]]]; const i = k < 4000 ? 0 : 1, [a, ca] = s[i], [b, cb] = s[i + 1], t = Math.min(1, Math.max(0, (k - a) / (b - a))); return `rgb(${ca.map((v, j) => Math.round(v + (cb[j] - v) * t))})`; };
+  $('rooms').innerHTML = R.map((r, i) => `<rect class="room" data-i="${i}" role="button" tabindex="0" aria-label="${r.name}" x="${r.x}" y="${r.y}" width="${r.w}" height="${r.h}"/>`).join('');
+  $('labels').innerHTML = R.map((r, i) => `<text class="rl" x="${r.x + 12}" y="${r.y + 20}">${r.name}</text><text class="rs" id="rs${i}" x="${r.x + 12}" y="${r.y + 34}"></text>`).join('');
+  $('lights').innerHTML = R.map((r, i) => `<circle class="glow" id="g${i}" cx="${r.lx}" cy="${r.ly}" r="0" style="--d:${i * 70}ms"/><circle class="bulb" id="bu${i}" cx="${r.lx}" cy="${r.ly}" r="4.5" stroke="#2B312D" stroke-width="1.5" style="--d:${i * 70}ms"/>`).join('');
+  $('tabs').innerHTML = R.map((r, i) => `<button class="tab" role="tab" id="tab${i}" aria-selected="${i === 0}" tabindex="${i ? -1 : 0}" data-i="${i}"><i id="dot${i}"></i>${r.name}</button>`).join('');
+  $('scenes').innerHTML = Object.keys(SC).map((n) => `<button class="chip" aria-pressed="${n === scene}" data-s="${n}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${ICON[n]}"/></svg>${n}</button>`).join('');
+  const arc = $('arc'), L = arc.getTotalLength();
+  arc.style.strokeDasharray = L;
+  let shown = { b: R[0].b, t: R[0].set }, raf = 0;
+  const pos = (t) => { const p = (t - 10) / 20, a = (135 + p * 270) * Math.PI / 180; return [75 + 60 * Math.cos(a), 75 + 60 * Math.sin(a)]; };
+  const paintDial = (t) => { arc.style.strokeDashoffset = L * (1 - (t - 10) / 20); const [x, y] = pos(t); $('knob').setAttribute('cx', x); $('knob').setAttribute('cy', y); $('tv').textContent = t.toFixed(1) + '°'; };
+  const tween = (to) => {
+    cancelAnimationFrame(raf); const from = shown.t, t0 = performance.now();
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) { shown.t = to; return paintDial(to); }
+    const step = (now) => { const p = Math.min(1, (now - t0) / 600), e = 1 - Math.pow(1 - p, 3); shown.t = from + (to - from) * e; paintDial(shown.t); if (p < 1) raf = requestAnimationFrame(step); };
+    raf = requestAnimationFrame(step);
+  };
+  const paintRoom = (i) => {
+    const r = R[i], g = $('g' + i);
+    g.setAttribute('r', r.b ? 12 + r.b * 0.2 : 0); g.style.opacity = r.b ? 0.35 + r.b / 200 : 0; g.style.fill = kc(r.k);
+    $('bu' + i).style.fill = r.b ? kc(r.k) : '#FBFAF7';
+    $('rs' + i).innerHTML = `<tspan>${r.b ? r.b + '%' : 'Off'}</tspan><tspan dx="4">·</tspan><tspan dx="4">${r.open ? 'paused' : r.set.toFixed(1) + '°'}</tspan>`;
+    $('dot' + i).classList.toggle('on', r.b > 0);
+  };
+  const paintCtl = () => {
+    const r = R[cur], dim = $('dim');
+    $('lt').textContent = 'Lights · ' + r.name; $('ct').textContent = 'Climate · ' + r.name;
+    $('bv').innerHTML = r.b ? r.b + '<small>%</small>' : 'Off';
+    dim.style.setProperty('--b', r.b + '%'); dim.style.setProperty('--lc', kc(r.k));
+    dim.setAttribute('aria-valuenow', r.b); dim.setAttribute('aria-valuetext', r.b ? r.b + ' percent' : 'Off');
+    $('k').value = r.k; $('kv').textContent = r.k + ' K';
+    $('clim').classList.toggle('paused', !!r.open);
+    $('ts').textContent = r.open ? 'Heat paused' : (r.set > r.now ? 'Heating' : 'Holding') + ' · now ' + r.now.toFixed(1) + '°';
+    tween(r.set);
+  };
+  const paintAll = () => {
+    R.forEach((_, i) => paintRoom(i)); paintCtl();
+    const on = R.filter((r) => r.b).length; $('sum').textContent = (on ? on + (on > 1 ? ' lights' : ' light') + ' on' : 'All lights off') + ' · 20.8° inside';
+  };
+  const pick = (i) => {
+    cur = i; document.querySelectorAll('.tab').forEach((t, n) => { t.setAttribute('aria-selected', n === i); t.tabIndex = n === i ? 0 : -1; });
+    document.querySelectorAll('.room').forEach((t, n) => t.classList.toggle('sel', n === i)); paintCtl();
+  };
+  const custom = () => { scene = ''; document.querySelectorAll('.chip').forEach((c) => c.setAttribute('aria-pressed', 'false')); };
+  $('tabs').addEventListener('click', (e) => { const t = e.target.closest('.tab'); if (t) pick(+t.dataset.i); });
+  $('tabs').addEventListener('keydown', (e) => { const d = { ArrowRight: 1, ArrowLeft: -1 }[e.key]; if (!d) return; const n = (cur + d + 4) % 4; pick(n); $('tab' + n).focus(); });
+  $('rooms').addEventListener('click', (e) => { const r = e.target.closest('.room'); if (r) pick(+r.dataset.i); });
+  $('rooms').addEventListener('keydown', (e) => { const r = e.target.closest('.room'); if (r && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); pick(+r.dataset.i); } });
+  $('scenes').addEventListener('click', (e) => {
+    const c = e.target.closest('.chip'); if (!c) return; scene = c.dataset.s;
+    document.querySelectorAll('.chip').forEach((x) => x.setAttribute('aria-pressed', x === c));
+    SC[scene].forEach(([b, k, t], i) => Object.assign(R[i], { b, k, set: t }));
+    paintAll(); $('live').textContent = scene + ' scene set for 4 rooms.';
+  });
+  $('show').addEventListener('click', () => { pick(2); const w = $('win'); w.classList.remove('flash'); void w.getBBox(); w.classList.add('flash'); $('live').textContent = 'Bedroom selected. The window is open on the east wall.'; });
+  const setB = (v) => { R[cur].b = Math.max(0, Math.min(100, Math.round(v))); custom(); paintRoom(cur); paintCtl(); };
+  const dim = $('dim');
+  const fromY = (e) => { const r = dim.getBoundingClientRect(); setB(((r.bottom - e.clientY) / r.height) * 100); };
+  dim.addEventListener('pointerdown', (e) => { dim.setPointerCapture(e.pointerId); dim.classList.add('drag'); fromY(e); });
+  dim.addEventListener('pointermove', (e) => { if (dim.hasPointerCapture(e.pointerId)) fromY(e); });
+  dim.addEventListener('pointerup', () => dim.classList.remove('drag'));
+  dim.addEventListener('keydown', (e) => { const d = { ArrowUp: 5, ArrowRight: 5, ArrowDown: -5, ArrowLeft: -5, PageUp: 20, PageDown: -20 }[e.key]; if (d == null) return; e.preventDefault(); setB(R[cur].b + d); });
+  $('k').addEventListener('input', (e) => { R[cur].k = +e.target.value; custom(); paintRoom(cur); paintCtl(); });
+  const nudge = (d) => { const r = R[cur]; r.set = Math.max(10, Math.min(30, r.set + d)); custom(); paintRoom(cur); paintCtl(); $('eco').textContent = 'Target ' + r.set.toFixed(1) + '°'; };
+  $('minus').addEventListener('click', () => nudge(-0.5)); $('plus').addEventListener('click', () => nudge(0.5));
+  pick(0); paintAll();
+})();
+</script>
+</body>
+</html>

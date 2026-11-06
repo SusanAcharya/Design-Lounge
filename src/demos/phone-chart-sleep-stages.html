@@ -1,0 +1,203 @@
+<!-- Design Lounge piece: phone-chart-sleep-stages · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nocturne sleep stages</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Chivo:wght@400;500;600;700&family=Chivo+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0B1120;--card:#121A2E;--card-2:#18223A;--line:#243150;--grid:#1C2741;
+  --text:#E8ECF6;--text-2:#9AA6C2;
+  --awake:#F3B27A;--rem:#6FD3C1;--light:#7E9BEA;--deep:#4F6BD0;
+  --sans:"Chivo",system-ui,sans-serif;--mono:"Chivo Mono",ui-monospace,monospace;
+  --ease:cubic-bezier(.2,.7,.2,1);--expo:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:400 14px/1.4 var(--sans);color:var(--text);background:var(--bg);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+button{font:inherit;color:inherit;border:0;background:none;padding:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--text);outline-offset:3px;border-radius:8px}
+.app{max-width:430px;margin:0 auto;padding:56px 16px 34px}
+header{display:flex;justify-content:space-between;align-items:flex-end}
+.k{font:500 11px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--text-2)}
+h1{margin:7px 0 0;font-weight:600;font-size:15px;letter-spacing:.01em}
+.tot{text-align:right}
+.tot b{display:block;font:500 34px/1 var(--mono);letter-spacing:-.03em}
+.tot b small{font-size:17px;color:var(--text-2);margin:0 4px 0 1px}
+.tot span{font:400 12px/1 var(--mono);color:var(--text-2)}
+.card{background:var(--card);border-radius:20px;border:1px solid var(--line)}
+/* hypnogram */
+.hyp{margin-top:12px;padding:12px 12px 10px;position:relative}
+.read{height:40px;display:flex;align-items:center;gap:10px;padding:0 4px}
+.read .sw{width:10px;height:10px;border-radius:3px;flex:none}
+.read .rt{font:500 15px/1 var(--mono)}
+.read .rs{font-weight:600;font-size:14px}
+.read .rr{margin-left:auto;font:400 12px/1 var(--mono);color:var(--text-2);white-space:nowrap}
+.plot{position:relative;height:140px;touch-action:none;cursor:crosshair;margin-top:2px}
+.plot svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.seg{transition:opacity 260ms var(--ease)}
+.dim .seg{opacity:.22}
+.dim .seg.on{opacity:1}
+.seg.hit{stroke:var(--text);stroke-width:1.5}
+.handle{position:absolute;top:0;width:14px;height:14px;margin-left:-7px;margin-top:-7px;border-radius:50%;background:var(--text);border:3px solid var(--bg);pointer-events:none}
+.handle:focus-visible{outline:2px solid var(--text);outline-offset:3px;border-radius:50%}
+.axis{display:flex;justify-content:space-between;padding:6px 0 0 50px;font:400 11px/1 var(--mono);color:var(--text-2)}
+/* totals */
+.tots{margin-top:10px;padding:12px 14px;display:grid;grid-template-columns:112px 1fr;gap:14px;align-items:center}
+.ring{position:relative;width:112px;height:112px}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:13;transition:stroke-dasharray 600ms var(--expo),stroke-dashoffset 600ms var(--expo),opacity 260ms var(--ease)}
+.ring .c{position:absolute;inset:0;display:grid;place-content:center;text-align:center}
+.ring .c b{font:500 18px/1 var(--mono);letter-spacing:-.02em}
+.ring .c span{font-size:11px;white-space:nowrap;min-width:84px;color:var(--text-2);margin-top:4px}
+.legend{list-style:none;margin:0;padding:0}
+.legend button{width:100%;height:34px;display:grid;grid-template-columns:14px 1fr auto 40px;gap:8px;align-items:center;padding:0 6px;border-radius:10px;text-align:left}
+.legend button[aria-pressed=true]{background:var(--card-2)}
+.legend i{width:12px;height:12px;border-radius:4px}
+.legend .n{font-weight:500;font-size:14px;white-space:nowrap}
+.legend .v{font:500 13px/1 var(--mono)}
+.legend .p{font:400 12px/1 var(--mono);color:var(--text-2);text-align:right}
+/* week */
+.week{margin-top:10px;padding:12px 12px 8px}
+.wh{display:flex;justify-content:space-between;align-items:baseline;padding:0 4px}
+.wh h2{margin:0;font-weight:600;font-size:14px}
+.wh span{font:400 11px/1 var(--mono);color:var(--text-2);white-space:nowrap}
+.bars{position:relative;display:grid;grid-template-columns:repeat(7,1fr);height:104px;margin-top:4px;align-items:end}
+.goal{position:absolute;left:0;right:0;border-top:1px dashed #5C6A8C;pointer-events:none}
+.night{height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:6px;border-radius:10px}
+.stack{width:20px;display:flex;flex-direction:column-reverse;border-radius:5px;overflow:hidden;transition:transform 200ms var(--ease)}
+.stack span{display:block}
+.night .d{font:400 11px/1 var(--mono);color:var(--text-2);height:22px;display:flex;align-items:center;padding:0 4px;border-radius:6px;white-space:nowrap}
+.night[aria-pressed=true] .d{background:var(--text);color:var(--bg);font-weight:500}
+.night:hover .stack{transform:scaleY(1.03)}
+.ins{margin-top:10px;padding:14px 16px;display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:start}
+.ins svg{width:24px;height:24px;color:var(--rem);margin-top:1px}
+.ins p{margin:0;font-size:15px;line-height:1.42}
+.ins p b{font-weight:600}
+.fade{animation:fade 360ms var(--ease)}
+@keyframes fade{from{opacity:.2;transform:translateY(4px)}}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:1ms!important}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <div><div class="k" id="kick">Nocturne · Last night</div><h1 id="date">Thu 5 to Fri 6 November</h1></div>
+    <div class="tot"><b id="asleep">7<small>h</small>26<small>m</small></b><span id="bed">in bed 23:14 – 06:52</span></div>
+  </header>
+  <section class="card hyp" aria-label="Sleep stages through the night">
+
+    <div class="read" aria-hidden="true"><i class="sw" id="rsw"></i><span class="rt" id="rt">02:14</span><span class="rs" id="rs">Deep</span><span class="rr" id="rr">01:58–02:36 · 38 min</span></div>
+    <div class="plot" id="plot"><svg id="hsv" aria-hidden="true"></svg><div class="handle" id="handle" role="slider" tabindex="0" aria-label="Time of night" aria-valuemin="0"></div></div>
+    <div class="axis" id="axis" aria-hidden="true"></div>
+  </section>
+  <section class="card tots" aria-label="Time in each stage">
+    <div class="ring"><svg viewBox="0 0 128 128" id="ring" aria-hidden="true"></svg><div class="c"><b id="rc">7h 26m</b><span id="rcl">asleep · 94%</span></div></div>
+    <ul class="legend" id="legend"></ul>
+  </section>
+  <section class="card week" aria-labelledby="wkh">
+    <div class="wh"><h2 id="wkh">Seven nights</h2><span>Goal 7h 30m</span></div>
+    <div class="bars" id="bars"><div class="goal" id="goal"></div></div>
+  </section>
+  <section class="card ins" aria-live="polite"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/><path d="M16 3v3M14.5 4.5h3"/></svg><p id="ins"></p></section>
+  <p class="sr" id="say" aria-live="polite"></p>
+</div>
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const ST = [['Awake', '#F3B27A'], ['REM', '#6FD3C1'], ['Light', '#7E9BEA'], ['Deep', '#4F6BD0']];
+  const NIGHTS = [['Sat', 31, 'Fri 30 to Sat 31 October'], ['Sun', 1, 'Sat 31 October to Sun 1 November'], ['Mon', 2, 'Sun 1 to Mon 2 November'], ['Tue', 3, 'Mon 2 to Tue 3 November'], ['Wed', 4, 'Tue 3 to Wed 4 November'], ['Thu', 5, 'Wed 4 to Thu 5 November'], ['Fri', 6, 'Thu 5 to Fri 6 November']];
+  const rng = (s) => () => ((s = (s * 16807) % 2147483647) - 1) / 2147483646;
+  function night(seed) {
+    const r = rng(seed * 7919 + 13), R = (a, b) => Math.round(a + r() * (b - a));
+    const start = 23 * 60 - 20 + R(0, 50), segs = [[0, R(8, 16)]];
+    for (let c = 0; c < 5; c++) {
+      segs.push([2, R(18, 32)]);
+      const d = c < 2 ? R(28, 46) : c === 2 ? R(12, 22) : R(0, 7); if (d) segs.push([3, d]);
+      segs.push([2, R(12, 24)]); segs.push([1, 8 + c * 7 + R(0, 9)]);
+      if (r() < .5 && c < 4) segs.push([0, R(2, 7)]);
+    }
+    segs.push([0, R(3, 6)]);
+    let m = start; const out = segs.map(([s, d]) => { const o = { s, a: m, b: m + d }; m += d; return o; });
+    return { start, end: m, segs: out };
+  }
+  const DATA = NIGHTS.map((_, i) => night(i + 3));
+  const tot = (n) => { const t = [0, 0, 0, 0]; n.segs.forEach(g => t[g.s] += g.b - g.a); return t; };
+  const clock = (m) => { m = ((Math.round(m) % 1440) + 1440) % 1440; return String(Math.floor(m / 60)).padStart(2, '0') + ':' + String(m % 60).padStart(2, '0'); };
+  const dur = (m) => { m = Math.round(m); return (m >= 60 ? Math.floor(m / 60) + 'h ' : '') + (m % 60) + 'm'; };
+  let cur = 6, focus = -1, pos = 0;
+  const plot = $('plot'), hsv = $('hsv'), handle = $('handle');
+  const L = 50, ROW = 37, TOP = 12, BAR = 14;
+  const X = (m, n, W) => L + (m - n.start) / (n.end - n.start) * (W - L - 4);
+  function drawHyp() {
+    const n = DATA[cur], W = plot.clientWidth; let g = '';
+    ST.forEach((s, i) => { const y = TOP + i * ROW; g += `<line x1="${L}" x2="${W}" y1="${y}" y2="${y}" stroke="#1C2741"/><text x="0" y="${y + 4}" font-family="Chivo Mono" font-size="11" fill="#9AA6C2">${s[0]}</text>`; });
+    for (let h = Math.ceil(n.start / 60) * 60; h < n.end; h += 60) { const x = X(h, n, W); g += `<line x1="${x}" x2="${x}" y1="0" y2="${TOP + 3 * ROW + 10}" stroke="#1C2741"/>`; }
+    n.segs.forEach((s, i) => { const nx = n.segs[i + 1]; if (nx) { const x = X(s.b, n, W); g += `<line x1="${x}" x2="${x}" y1="${TOP + s.s * ROW}" y2="${TOP + nx.s * ROW}" stroke="#3A4870" stroke-width="1.5"/>`; } });
+    n.segs.forEach((s, i) => { const x = X(s.a, n, W), w = Math.max(2, X(s.b, n, W) - x);
+      g += `<rect class="seg${focus === s.s ? ' on' : ''}" data-i="${i}" x="${x.toFixed(1)}" y="${TOP + s.s * ROW - BAR / 2}" width="${w.toFixed(1)}" height="${BAR}" rx="${Math.min(4, w / 2)}" fill="${ST[s.s][1]}"/>`; });
+    g += `<line id="hair" y1="0" y2="${TOP + 3 * ROW + 12}" stroke="#E8ECF6" stroke-width="1" stroke-dasharray="2 3"/>`;
+    hsv.innerHTML = g; plot.classList.toggle('dim', focus >= 0);
+    let ax = ''; const hs = []; for (let h = Math.ceil(n.start / 60) * 60; h < n.end; h += 120) hs.push(h);
+    $('axis').innerHTML = hs.map(h => `<span>${clock(h)}</span>`).join('');
+    handle.setAttribute('aria-valuemax', n.end - n.start); scrub(pos);
+  }
+  function scrub(m) {
+    const n = DATA[cur], W = plot.clientWidth; pos = Math.max(0, Math.min(n.end - n.start - 1, m));
+    const at = n.start + pos, i = n.segs.findIndex(s => at >= s.a && at < s.b), s = n.segs[Math.max(0, i)], x = X(at, n, W);
+    hsv.querySelectorAll('.seg').forEach(r => r.classList.toggle('hit', +r.dataset.i === i));
+    const hair = $('hair'); hair.setAttribute('x1', x); hair.setAttribute('x2', x);
+    handle.style.left = x + 'px'; handle.style.top = (TOP + s.s * ROW) + 'px';
+    $('rt').textContent = clock(at); $('rs').textContent = s.s ? ST[s.s][0] + ' sleep' : 'Awake'; $('rsw').style.background = ST[s.s][1];
+    $('rr').textContent = `${clock(s.a)}–${clock(s.b)} · ${s.b - s.a} min`;
+    handle.setAttribute('aria-valuenow', Math.round(pos)); handle.setAttribute('aria-valuetext', `${clock(at)}, ${ST[s.s][0]}, ${s.b - s.a} minute stretch from ${clock(s.a)}`);
+  }
+  function drawRing() {
+    const t = tot(DATA[cur]), all = t.reduce((a, b) => a + b, 0), C = 2 * Math.PI * 54, gap = 3; let off = 0, g = `<circle cx="64" cy="64" r="54" stroke="#1C2741"/>`;
+    [3, 2, 1, 0].forEach(k => { const len = t[k] / all * C; g += `<circle cx="64" cy="64" r="54" stroke="${ST[k][1]}" stroke-dasharray="${Math.max(0, len - gap)} ${C}" stroke-dashoffset="${-off}" opacity="${focus < 0 || focus === k ? 1 : .25}"/>`; off += len; });
+    $('ring').innerHTML = g;
+    const asleep = all - t[0]; $('rc').textContent = dur(asleep); $('rcl').textContent = `asleep · ${Math.round(asleep / all * 100)}%`;
+    $('legend').innerHTML = [3, 2, 1, 0].map(k => `<li><button aria-pressed="${focus === k}" data-k="${k}" aria-label="${ST[k][0]} ${dur(t[k])}, ${Math.round(t[k] / all * 100)} percent. Highlight in chart"><i style="background:${ST[k][1]}"></i><span class="n">${ST[k][0]}</span><span class="v">${dur(t[k])}</span><span class="p">${Math.round(t[k] / all * 100)}%</span></button></li>`).join('');
+  }
+  const MAXH = 9 * 60, BH = 72;
+  function drawWeek() {
+    $('bars').innerHTML = '<div class="goal" style="bottom:' + (28 + 450 / MAXH * BH) + 'px"></div>' + DATA.map((n, i) => { const t = tot(n), all = t.reduce((a, b) => a + b, 0);
+      return `<button class="night" aria-pressed="${i === cur}" data-i="${i}" aria-label="${NIGHTS[i][2]}, ${dur(all - t[0])} asleep"><span class="stack" style="height:${all / MAXH * BH}px">${[3, 2, 1, 0].map(k => `<span style="height:${t[k] / all * 100}%;background:${ST[k][1]}"></span>`).join('')}</span><span class="d">${NIGHTS[i][0]} ${NIGHTS[i][1]}</span></button>`; }).join('');
+  }
+  function insight() {
+    const n = DATA[cur], t = tot(n), wk = DATA.map(tot), avg = (k) => wk.reduce((a, x) => a + x[k], 0) / 7;
+    const dd = Math.round(t[3] - avg(3)), early = n.segs.filter(s => s.s === 3 && s.a < 26 * 60).reduce((a, s) => a + Math.min(s.b, 26 * 60) - s.a, 0);
+    const wakes = n.segs.filter((s, i) => s.s === 0 && i && i < n.segs.length - 1).length;
+    $('ins').innerHTML = `<b>${dur(t[3])} of deep sleep</b>, ${Math.abs(dd) < 4 ? 'right on your weekly average' : dur(Math.abs(dd)) + (dd > 0 ? ' more' : ' less') + ' than your week'}. ${Math.round(early / t[3] * 100)}% of it came before 02:00, and you woke ${wakes === 0 ? 'only at the end' : wakes === 1 ? 'once' : wakes + ' times'} in the night.`;
+    $('ins').classList.remove('fade'); void $('ins').offsetWidth; $('ins').classList.add('fade');
+  }
+  function header() { const n = DATA[cur], t = tot(n), all = t.reduce((a, b) => a + b, 0), a = all - t[0];
+    $('asleep').innerHTML = `${Math.floor(a / 60)}<small>h</small>${String(a % 60).padStart(2, '0')}<small>m</small>`;
+    $('bed').textContent = `in bed ${clock(n.start)} – ${clock(n.end)}`; $("date").textContent = NIGHTS[cur][2]; $("kick").textContent = "Nocturne · " + (cur === 6 ? "Last night" : NIGHTS[cur][0] + " night"); }
+  function all(first) { header(); drawHyp(); drawRing(); drawWeek(); insight(); }
+  const ptr = (e) => { const n = DATA[cur], r = plot.getBoundingClientRect(), W = r.width; scrub((e.clientX - r.left - L) / (W - L - 4) * (n.end - n.start)); };
+  let drag = false;
+  plot.addEventListener('pointerdown', (e) => { drag = true; plot.setPointerCapture(e.pointerId); ptr(e); });
+  plot.addEventListener('pointermove', (e) => { if (drag) ptr(e); });
+  plot.addEventListener('pointerup', () => { drag = false; });
+  handle.addEventListener('keydown', (e) => { const n = DATA[cur];
+    const i = n.segs.findIndex(s => n.start + pos >= s.a && n.start + pos < s.b);
+    const k = { ArrowRight: 5, ArrowLeft: -5, ArrowUp: 30, ArrowDown: -30 }[e.key];
+    if (k) { e.preventDefault(); scrub(pos + (e.shiftKey ? k * 6 : k)); }
+    else if (e.key === 'PageDown' && n.segs[i + 1]) { e.preventDefault(); scrub(n.segs[i + 1].a - n.start); }
+    else if (e.key === 'PageUp' && n.segs[i - 1]) { e.preventDefault(); scrub(n.segs[i - 1].a - n.start); }
+    else if (e.key === 'Home') scrub(0); else if (e.key === 'End') scrub(1e4); });
+  $('legend').addEventListener('click', (e) => { const b = e.target.closest('button'); if (!b) return; const k = +b.dataset.k; focus = focus === k ? -1 : k; drawHyp(); drawRing();
+    $('say').textContent = focus < 0 ? 'Showing all stages' : 'Highlighting ' + ST[k][0]; $('legend').querySelector(`[data-k="${k}"]`).focus(); });
+  $('bars').addEventListener('click', (e) => { const b = e.target.closest('.night'); if (!b) return; cur = +b.dataset.i; all(); $('bars').querySelector(`[data-i="${cur}"]`).focus(); $('say').textContent = NIGHTS[cur][2]; });
+  addEventListener('resize', drawHyp);
+  const n6 = DATA[6], d0 = n6.segs.find(s => s.s === 3); pos = Math.round((d0.a + d0.b) / 2 - n6.start);
+  all();
+})();
+</script>
+</body>
+</html>

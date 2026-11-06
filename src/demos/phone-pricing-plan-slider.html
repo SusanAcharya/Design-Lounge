@@ -1,0 +1,190 @@
+<!-- Design Lounge piece: phone-pricing-plan-slider · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Postwick plans</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0F1113;--card:#17191C;--raise:#202328;--ink:#F1EFEA;--ink-2:#A2A7AE;--rule:#2A2E33;--track:#6B737D;
+  --mint:#8FD0A8;--mint-ink:#0B1F14;--mint-tint:rgba(143,208,168,.12);
+  --sans:"Inter",system-ui,sans-serif;
+  --r-card:20px;--r-row:16px;--r-btn:16px;--r-pill:999px;
+  --std:cubic-bezier(0.2,0.7,0.2,1);--expo:cubic-bezier(0.16,1,0.3,1);--sheet:cubic-bezier(0.32,0.72,0,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:400 15px/1.45 var(--sans);font-feature-settings:"cv11","ss01";-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;-webkit-tap-highlight-color:transparent}
+:focus-visible{outline:2px solid var(--mint);outline-offset:3px;border-radius:12px}
+.app{max-width:430px;margin:0 auto;padding:54px 16px 160px;min-height:100%;background:var(--bg)}
+.nav{height:44px;display:flex;align-items:center;justify-content:space-between}
+.ib{width:44px;height:44px;border-radius:50%;background:var(--raise);display:grid;place-items:center}
+.ib svg{width:18px;height:18px}
+.brand{display:flex;align-items:center;gap:8px;font-weight:600;font-size:15px}
+.brand svg{width:22px;height:22px}
+.restore{font-size:14px;color:var(--ink-2);height:44px;padding:0 4px}
+h1{font-size:27px;line-height:1.1;letter-spacing:-.025em;font-weight:600;margin:12px 0 4px}
+.lede{margin:0;color:var(--ink-2);font-size:14px}
+/* volume */
+.vol{margin-top:14px;background:var(--card);border-radius:var(--r-card);padding:14px 16px 10px}
+.vlab{display:flex;justify-content:space-between;align-items:baseline;font-size:13px;color:var(--ink-2);font-weight:500}
+.vnum{font-size:46px;line-height:1;font-weight:600;letter-spacing:-.04em;font-variant-numeric:tabular-nums;margin:6px 0 0;display:flex;align-items:baseline;gap:8px}
+.vnum small{font-size:15px;letter-spacing:0;font-weight:500;color:var(--ink-2)}
+input[type=range]{--p:36.4%;appearance:none;-webkit-appearance:none;display:block;width:100%;height:44px;margin:6px 0 0;padding:19px 0;border-radius:4px;background-color:var(--track);background-image:linear-gradient(90deg,var(--mint) 0 var(--p),transparent var(--p));background-clip:content-box;cursor:pointer}
+input[type=range]::-webkit-slider-runnable-track{height:6px;background:transparent}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:30px;height:30px;margin-top:-12px;border-radius:50%;background:var(--ink);box-shadow:0 2px 8px rgba(0,0,0,.5),0 0 0 6px rgba(143,208,168,.18);transition:transform 160ms var(--std)}
+input[type=range]:active::-webkit-slider-thumb{transform:scale(1.12)}
+input[type=range]::-moz-range-track{height:6px;background:transparent}
+input[type=range]::-moz-range-thumb{width:30px;height:30px;border:0;border-radius:50%;background:var(--ink)}
+input[type=range]:focus-visible{outline-offset:6px}
+.ticks{position:relative;height:18px;margin:2px 15px 0;font-size:12px;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.ticks span{position:absolute;transform:translateX(-50%);white-space:nowrap}
+/* toggle */
+.seg{display:grid;grid-template-columns:1fr 1fr;margin-top:12px;background:var(--card);border-radius:var(--r-pill);padding:4px;position:relative}
+.seg::before{content:"";position:absolute;top:4px;bottom:4px;left:4px;width:calc(50% - 4px);border-radius:var(--r-pill);background:var(--raise);box-shadow:inset 0 0 0 1px #3A3F46;transition:transform 320ms var(--sheet)}
+.seg.yr::before{transform:translateX(100%)}
+.seg button{position:relative;height:44px;border-radius:var(--r-pill);font-weight:600;font-size:14px;color:var(--ink-2);transition:color 200ms var(--std);white-space:nowrap}
+.seg button[aria-pressed=true]{color:var(--ink)}
+.seg em{font-style:normal;color:var(--mint);font-weight:600;margin-left:4px}
+/* plans */
+.plans{position:relative;margin-top:12px;display:grid;gap:8px}
+.hl{position:absolute;left:0;right:0;top:0;border-radius:var(--r-row);box-shadow:inset 0 0 0 2px var(--mint);background:var(--mint-tint);pointer-events:none;transition:transform 420ms var(--expo),height 420ms var(--expo);z-index:1}
+.plan{position:relative;display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px;min-height:66px;padding:10px 16px;background:var(--card);border-radius:var(--r-row);text-align:left}
+.plan b{font-size:17px;font-weight:600;display:flex;align-items:center;gap:8px;white-space:nowrap}
+.plan .inc{display:block;font-size:13px;color:var(--ink-2);white-space:nowrap}
+.fit{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--mint-ink);background:var(--mint);border-radius:var(--r-pill);padding:3px 8px;opacity:0;transform:scale(.8);transition:opacity 200ms var(--std),transform 300ms var(--expo)}
+.plan.best .fit{opacity:1;transform:none}
+.pr{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.pr strong{display:block;font-size:20px;font-weight:600;letter-spacing:-.02em}
+.pr span{font-size:12px;color:var(--ink-2)}
+.pr strong.tick{animation:tick 260ms var(--expo)}
+@keyframes tick{from{opacity:.3;transform:translateY(-5px)}}
+/* compare */
+h2{font-size:18px;font-weight:600;letter-spacing:-.01em;margin:28px 0 8px}
+.cmp{width:100%;border-collapse:collapse;font-size:14px}
+.cmp th,.cmp td{padding:12px 0;border-bottom:1px solid var(--rule);text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.cmp th:first-child,.cmp td:first-child{text-align:left;color:var(--ink-2);white-space:normal;padding-right:8px;font-weight:400}
+.cmp td,.cmp thead th:not(:first-child){padding-left:10px}
+.cmp thead th{font-size:13px;font-weight:600;color:var(--ink-2);padding-top:0}
+.cmp td:not(:first-child),.cmp thead th:not(:first-child){width:74px;transition:color 200ms var(--std)}
+.cmp .on{color:var(--mint)!important;font-weight:600}
+.no{color:var(--ink-2)}
+.fine{font-size:13px;color:var(--ink-2);margin:14px 0 0}
+/* bar */
+.bar{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:100%;max-width:430px;padding:14px 16px 34px;background:linear-gradient(rgba(15,17,19,0),var(--bg) 22px);z-index:5}
+.go{width:100%;height:56px;border-radius:var(--r-btn);background:var(--mint);color:var(--mint-ink);font-weight:600;font-size:17px;letter-spacing:-.01em;font-variant-numeric:tabular-nums;transition:transform 120ms var(--std)}
+.go:active{transform:scale(.98)}
+.under{margin:8px 0 0;text-align:center;font-size:13px;color:var(--ink-2)}
+.vh{position:fixed;left:0;top:0;width:300px;height:1px;overflow:hidden;clip-path:inset(50%)}
+@media (max-width:370px){.vnum{font-size:40px}.cmp td:not(:first-child),.cmp thead th:not(:first-child){width:66px}}
+@media (prefers-reduced-motion:reduce){*,*::before{animation:none!important;transition-duration:1ms!important}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="nav">
+    <button class="ib" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <span class="brand"><svg viewBox="0 0 24 24" fill="none" stroke="#8FD0A8" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M3 6.5l9 6 9-6M4 5h16v14H4z"/></svg>Postwick</span>
+    <button class="restore">Restore</button>
+  </header>
+  <h1>Pay for the email you actually send</h1>
+  <p class="lede">Slide to your volume. We pick the cheapest plan for it.</p>
+  <section class="vol" aria-labelledby="volLab">
+    <div class="vlab"><span id="volLab">Emails a month</span><span id="perK">€0.15 per 1,000</span></div>
+    <div class="vnum"><span id="vol">200,000</span><small>emails</small></div>
+    <input type="range" id="slide" min="0" max="11" step="1" value="4" aria-labelledby="volLab" aria-valuetext="200,000 emails a month">
+    <div class="ticks" aria-hidden="true" id="ticks"></div>
+  </section>
+  <div class="seg yr" id="seg" role="group" aria-label="Billing period">
+    <button aria-pressed="false" data-b="m">Monthly</button>
+    <button aria-pressed="true" data-b="y">Annual<em>2 months free</em></button>
+  </div>
+  <div class="plans" id="plans" role="group" aria-label="Plans">
+    <div class="hl" id="hl" aria-hidden="true"></div>
+  </div>
+  <h2>What each plan includes</h2>
+  <table class="cmp" id="cmp">
+    <thead><tr><th scope="col">Feature</th><th scope="col">Starter</th><th scope="col">Growth</th><th scope="col">Scale</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">Emails included</th><td>50k</td><td>300k</td><td>1.5M</td></tr>
+      <tr><th scope="row">Extra per 1,000</th><td>€0.40</td><td>€0.25</td><td>€0.12</td></tr>
+      <tr><th scope="row">Log retention</th><td>3 days</td><td>15 days</td><td>30 days</td></tr>
+      <tr><th scope="row">Dedicated IP</th><td class="no">No</td><td class="no">No</td><td>Included</td></tr>
+      <tr><th scope="row">Team seats</th><td>2</td><td>10</td><td>Unlimited</td></tr>
+      <tr><th scope="row">Support</th><td>Email</td><td>24h email</td><td>4h chat</td></tr>
+    </tbody>
+  </table>
+  <p class="fine">Prices exclude VAT. Extra emails are billed monthly at the end of each month, on either billing period. Annual pays the base price for 10 months and covers 12.</p>
+</div>
+<div class="bar">
+  <button class="go" id="go">Start Growth · €37.50 / mo</button>
+  <p class="under" id="under">€450 billed yearly · you save €90 · 14-day trial</p>
+</div>
+<div class="vh" aria-live="polite" id="live"></div>
+<script>
+(() => {
+const $ = (id) => document.getElementById(id);
+const STOPS = [10e3, 25e3, 50e3, 100e3, 200e3, 300e3, 500e3, 750e3, 1e6, 1.5e6, 2e6, 3e6];
+const PLANS = [
+  { id: 'Starter', base: 15, inc: 50e3, over: 0.40, incL: '50,000 included' },
+  { id: 'Growth', base: 45, inc: 300e3, over: 0.25, incL: '300,000 included' },
+  { id: 'Scale', base: 110, inc: 1.5e6, over: 0.12, incL: '1.5 million included' }
+];
+const st = { i: 4, yr: true, pick: null };
+const money = (n) => '€' + (Math.round(n * 100) % 100 ? n.toFixed(2) : String(Math.round(n))).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+const fmt = (n) => n.toLocaleString('en-GB');
+const short = (n) => n >= 1e6 ? (n / 1e6) + 'M' : (n / 1e3) + 'k';
+$('ticks').innerHTML = [0, 3, 6, 8, 11].map((i) => `<span style="left:${i / 11 * 100}%">${short(STOPS[i])}</span>`).join('');
+$('plans').insertAdjacentHTML('beforeend', PLANS.map((p, n) => `<button class="plan" data-n="${n}" aria-pressed="false"><span><b>${p.id}<span class="fit">Best fit</span></b><span class="inc">${p.incL}</span></span><span class="pr"><strong></strong><span></span></span></button>`).join(''));
+const rows = [...document.querySelectorAll('.plan')];
+const cost = (p, v, yr) => {
+  const extra = Math.max(0, v - p.inc) / 1000 * p.over, base = yr ? p.base * 10 / 12 : p.base;
+  return { base, extra, month: base + extra };
+};
+function render(fromSlide) {
+  const v = STOPS[st.i], costs = PLANS.map((p) => cost(p, v, st.yr));
+  let best = 0; costs.forEach((c, n) => { if (c.month < costs[best].month - 1e-9) best = n; });
+  if (fromSlide || st.pick === null) st.pick = best;
+  const sel = PLANS[st.pick], c = costs[st.pick];
+  $('vol').textContent = fmt(v);
+  $('slide').style.setProperty('--p', (st.i / 11 * 100) + '%');
+  $('slide').setAttribute('aria-valuetext', `${fmt(v)} emails a month`);
+  $('perK').textContent = `${money(c.month / (v / 1000))} per 1,000`;
+  rows.forEach((r, n) => {
+    const k = costs[n], s = r.querySelector('.pr strong'), next = money(k.month);
+    if (s.textContent !== next) { s.textContent = next; if (fromSlide) { s.classList.remove('tick'); void s.offsetWidth; s.classList.add('tick'); } }
+    r.querySelector('.pr span').textContent = k.extra ? `incl. ${money(k.extra)} extra` : st.yr ? 'a month, yearly' : 'a month';
+    r.classList.toggle('best', n === best);
+    r.setAttribute('aria-pressed', n === st.pick);
+    r.setAttribute('aria-label', `${PLANS[n].id}, ${PLANS[n].incL}, ${money(k.month)} a month at this volume${n === best ? ', best fit' : ''}`);
+  });
+  const row = rows[st.pick];
+  $('hl').style.transform = `translateY(${row.offsetTop}px)`; $('hl').style.height = row.offsetHeight + 'px';
+  document.querySelectorAll('#cmp tr').forEach((tr) => [...tr.children].forEach((td, n) => td.classList.toggle('on', n === st.pick + 1)));
+  $('go').textContent = `Start ${sel.id} · ${money(c.month)} / mo`;
+  const save = sel.base * 2;
+  $('under').textContent = st.yr
+    ? `${money(sel.base * 10)} billed yearly${c.extra ? ' + extra monthly' : ''} · you save ${money(save)}`
+    : `Billed monthly · annual would save ${money(save)} a year`;
+  $('live').textContent = `${fmt(v)} emails. ${sel.id} at ${money(c.month)} a month${st.pick === best ? ' is the best fit' : ''}.`;
+}
+$('slide').addEventListener('input', (e) => { st.i = +e.target.value; render(true); });
+$('seg').addEventListener('click', (e) => {
+  const b = e.target.closest('button'); if (!b) return;
+  st.yr = b.dataset.b === 'y'; $('seg').classList.toggle('yr', st.yr);
+  $('seg').querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', x === b));
+  render(false);
+});
+$('plans').addEventListener('click', (e) => { const r = e.target.closest('.plan'); if (r) { st.pick = +r.dataset.n; render(false); } });
+$('go').onclick = () => { const t = $('go').textContent; $('go').textContent = 'Starting your trial'; setTimeout(() => { $('go').textContent = t; }, 1400); };
+render(false); $('live').textContent = '';
+addEventListener('resize', () => render(false));
+})();
+</script>
+</body>
+</html>

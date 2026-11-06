@@ -39,3 +39,16 @@ People name a style in many words. Find their word here, then route. The Route c
 | Ventogrid, vectorgrid | **Unknown.** Not a style this skill knows. Say so, and ask what they mean. | Nothing is routed until the word is defined. |
 
 If the style they named is not a row here, or the row says not in the library, say so in the pick line ("X is not in the library; the nearest is Y, because ...") before you build. Never substitute silently.
+
+## On a phone
+
+A named style on a phone app still starts from the row above for the theme and pairing. Then take the phone piece that already carries the style, rather than shrinking a web kit:
+
+- Y2K, chrome: `style-y2k-friend-profile`. Text stays on solid plates.
+- Brutalist, raw: `style-brutalist-notes`. Hard cuts, no easing, and still readable.
+- Pixel, 8-bit (not a game): `style-pixel-pet-care`. `steps()`, a 4px grid, and no blur.
+- Cyber, neon: `style-cyber-vpn-shield`. Body text passes 4.5:1 on the black.
+- Riso, two inks: `style-riso-gig-guide`. Overprint and misregistration on the art, never on the reading text.
+- Bauhaus, primary shapes: `style-bauhaus-habit-grid`.
+- Luxe, premium: `premium-metal-card-tilt`, `premium-watch-vault`, `premium-boarding-pass`.
+- Cute, for children: the `kids-app` recipe.

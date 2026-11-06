@@ -1,0 +1,251 @@
+<!-- Design Lounge piece: app-stay-booking-dates · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Casa do Vale dates</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F3F0EA;--surface:#FFFDF8;--ink:#1E1C18;--ink-2:#625D55;--off:#6F6A62;--rule:#E1DBD0;--edge:#8D867B;
+  --olive:#3E5A2B;--olive-ink:#FAF8F1;--band:#DFE6D2;--warn:#7A3B12;--warn-bg:#F6E7D8;
+  --glass:rgba(251,249,244,.9);
+  --serif:"Newsreader",Georgia,serif;
+  --r-card:20px;--r-cell:22px;--r-btn:14px;--r-pill:999px;
+  --std:cubic-bezier(0.2,0.7,0.2,1);--sheet:cubic-bezier(0.32,0.72,0,1);--expo:cubic-bezier(0.16,1,0.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:400 16px/1.4 var(--serif);font-optical-sizing:auto;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;-webkit-tap-highlight-color:transparent}
+:focus-visible{outline:2px solid var(--olive);outline-offset:2px;border-radius:12px}
+.app{max-width:430px;margin:0 auto;padding:54px 16px 150px;min-height:100%;background:var(--bg)}
+.nav{height:44px;display:flex;align-items:center;justify-content:space-between}
+.nav h1{font-size:17px;font-weight:600;margin:0}
+.ib{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:var(--surface);border:1px solid var(--rule)}
+.ib svg{width:20px;height:20px}
+/* listing */
+.listing{display:flex;gap:14px;align-items:center;padding:12px;margin-top:8px;background:var(--surface);border-radius:var(--r-card);border:1px solid var(--rule)}
+.pic{width:84px;height:84px;flex:none;border-radius:14px;position:relative;overflow:hidden;
+  background:linear-gradient(#B9CFDA 0 46%,#D8C9A6 46% 60%,#C99A52 60% 100%)}
+.pic i{position:absolute;display:block}
+.pic .hill{left:-10px;right:-10px;top:36px;height:24px;border-radius:50% 50% 0 0;background:#9AA77A}
+.pic .house{left:20px;top:38px;width:34px;height:20px;background:#F7F3EA;box-shadow:inset 0 -3px 0 #E4DCCB}
+.pic .roof{left:18px;top:33px;width:38px;height:6px;background:#B4532C;border-radius:2px 2px 0 0}
+.pic .door{left:33px;top:47px;width:7px;height:11px;background:#3E5A2B}
+.pic .tree{left:58px;top:30px;width:22px;height:18px;border-radius:50%;background:#4F6236;box-shadow:-62px 16px 0 -4px #5B6E3F}
+.pic .trunk{left:67px;top:46px;width:3px;height:10px;background:#5A3D24}
+.pic .sun{right:10px;top:8px;width:14px;height:14px;border-radius:50%;background:#F4E4B8}
+.lt{min-width:0}
+.lt h2{margin:0;font-size:22px;font-weight:500;line-height:1.1;letter-spacing:-.01em}
+.lt p{margin:3px 0 0;font-size:14px;color:var(--ink-2)}
+.lt .rate{display:flex;gap:6px;align-items:center;color:var(--ink);font-size:14px}
+.lt .rate svg{width:14px;height:14px;fill:var(--ink)}
+/* dates summary */
+.when{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;margin-top:16px;background:var(--surface);border:1px solid var(--rule);border-radius:var(--r-card);padding:6px}
+.field{padding:8px 12px;border-radius:14px;text-align:left;min-height:56px;transition:background 200ms var(--std),box-shadow 200ms var(--std)}
+.field small{display:block;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);font-weight:500;white-space:nowrap}
+.field b{display:block;font-size:18px;font-weight:500;white-space:nowrap}
+.field.next{background:var(--bg);box-shadow:inset 0 0 0 2px var(--ink)}
+.field.empty b{color:var(--ink-2)}
+.nights{font-size:13px;font-weight:600;padding:5px 10px;border-radius:var(--r-pill);background:var(--band);white-space:nowrap}
+/* calendar */
+.cal{margin-top:16px}
+.mh{display:flex;align-items:center;justify-content:space-between;height:44px}
+.mh h3{margin:0;font-size:24px;font-weight:500;letter-spacing:-.01em}
+.mh div{display:flex;gap:8px}
+.mh .ib:disabled{color:#9A948A;cursor:default}
+.wk,.grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr))}
+.wk{margin-top:6px}
+.wk span{text-align:center;font-size:12px;font-weight:600;color:var(--ink-2);letter-spacing:.04em;height:24px;line-height:24px}
+.grid{row-gap:4px}
+.d{position:relative;height:54px;padding:0;display:flex;flex-direction:column;align-items:center;justify-content:center;font-variant-numeric:tabular-nums}
+.d .n{position:relative;z-index:1;width:46px;height:50px;border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:18px;line-height:1;transition:background 200ms var(--std),color 200ms var(--std)}
+.d .p{font-size:11px;color:var(--ink-2);margin-top:4px;letter-spacing:.01em;text-decoration:none;display:block}
+.d.off{cursor:default}
+.d.off .n{color:var(--off)}
+.d.off .n b{font-weight:400;text-decoration:line-through;text-decoration-thickness:1.5px}
+.d.out .p{color:var(--olive);font-weight:600;font-size:10px;white-space:nowrap}
+.d.out.co .p{color:var(--surface)}
+.d.in::before,.rng .d.ci::before,.d.co::before{content:"";position:absolute;top:2px;bottom:2px;left:0;right:0;background:var(--band);transform-origin:left;animation:band 360ms var(--expo) backwards;animation-delay:calc(var(--i,0) * 18ms)}
+.rng .d.ci::before{left:50%}
+.d.co::before{right:50%}
+.d.ci.co::before{display:none}
+.d.ci .n,.d.co .n{background:var(--ink);color:var(--surface)}
+.d.ci .p,.d.co .p{color:var(--surface)}
+.d:not(.off):not(.ci):not(.co):hover .n{background:#E8E3D9}
+
+.still .d::before{animation:none!important}
+.d .n b{font-weight:400}
+@keyframes band{from{transform:scaleX(0)}to{transform:none}}
+.note{min-height:22px;margin:8px 0 0;font-size:14px;color:var(--ink-2)}
+.note.warn{color:var(--warn);background:var(--warn-bg);padding:8px 12px;border-radius:12px}
+/* guests */
+.card{margin-top:16px;background:var(--surface);border:1px solid var(--rule);border-radius:var(--r-card);padding:4px 16px}
+.row{display:flex;align-items:center;justify-content:space-between;min-height:64px;gap:12px}
+.row+.row{border-top:1px solid var(--rule)}
+.row b{display:block;font-weight:500;font-size:17px}
+.row small{font-size:14px;color:var(--ink-2)}
+.stp{display:flex;align-items:center;gap:6px}
+.stp button{width:40px;height:40px;border-radius:50%;border:1.5px solid var(--edge);display:grid;place-items:center;background:var(--surface)}
+.stp button:disabled{border-color:#C9C2B6;color:#9A948A;cursor:default}
+.stp svg{width:16px;height:16px}
+.stp output{width:28px;text-align:center;font-size:18px;font-variant-numeric:tabular-nums}
+h4{margin:24px 4px 0;font-size:20px;font-weight:500}
+.bd .row{min-height:48px;font-size:16px}
+.bd .row span:last-child{font-variant-numeric:tabular-nums;white-space:nowrap}
+.bd .row small{display:block}
+.bd .sum{font-weight:600;font-size:18px;min-height:60px}
+.fine{font-size:13px;color:var(--ink-2);margin:10px 4px 0}
+/* bottom bar */
+.bar{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:100%;max-width:430px;padding:12px 16px 34px;background:var(--glass);-webkit-backdrop-filter:blur(20px) saturate(1.4);backdrop-filter:blur(20px) saturate(1.4);border-top:1px solid var(--rule);display:flex;align-items:center;gap:12px;z-index:10}
+.tot{flex:1;min-width:0}
+.tot b{display:block;font-size:26px;font-weight:600;line-height:1.05;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.tot b.tick{animation:tick 320ms var(--expo)}
+@keyframes tick{from{opacity:.2;transform:translateY(6px)}}
+.tot span{display:block;font-size:13px;color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.go{height:52px;padding:0 26px;border-radius:var(--r-btn);background:var(--olive);color:var(--olive-ink);font-weight:600;font-size:17px;flex:none;transition:transform 120ms var(--std)}
+.go:active{transform:scale(.97)}
+.go:disabled{background:#B9B3A8;color:var(--ink);cursor:default}
+.vh{position:fixed;left:0;top:0;width:300px;height:1px;overflow:hidden;clip-path:inset(50%)}
+@media (prefers-reduced-motion:reduce){*,*::before{animation:none!important;transition-duration:1ms!important}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="nav">
+    <button class="ib" aria-label="Back to listing"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+    <h1>Choose your dates</h1>
+    <button class="ib" aria-label="Share listing"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V4M8 8l4-4 4 4M6 12v7h12v-7"/></svg></button>
+  </header>
+  <article class="listing" aria-label="Casa do Vale">
+    <div class="pic" aria-hidden="true"><i class="sun"></i><i class="hill"></i><i class="roof"></i><i class="house"></i><i class="door"></i><i class="trunk"></i><i class="tree"></i></div>
+    <div class="lt">
+      <h2>Casa do Vale</h2>
+      <p>Stone cottage · Monsaraz, Alentejo</p>
+      <p class="rate"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.7 5.6 6.1.8-4.5 4.2 1.1 6L12 16.7 6.6 19.6l1.1-6L3.2 9.4l6.1-.8z"/></svg>4.92 · 138 reviews · Sleeps 4</p>
+    </div>
+  </article>
+  <div class="when">
+    <button class="field" id="fCi"><small>Check-in</small><b id="vCi">Fri 11 Dec</b></button>
+    <span class="nights" id="nights">4 nights</span>
+    <button class="field" id="fCo"><small>Check-out</small><b id="vCo">Tue 15 Dec</b></button>
+  </div>
+  <section class="cal" aria-labelledby="mTitle">
+    <div class="mh"><h3 id="mTitle">December 2026</h3><div>
+      <button class="ib" id="prev" aria-label="Previous month"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <button class="ib" id="next" aria-label="Next month"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button></div></div>
+    <div class="wk" aria-hidden="true"><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span></div>
+    <div class="grid" id="grid" role="group" aria-labelledby="mTitle"></div>
+    <p class="note" id="note" aria-live="polite">Friday and Saturday nights are €158. Struck dates are booked.</p>
+  </section>
+  <div class="card" role="group" aria-label="Guests">
+    <div class="row"><div><b>Adults</b><small>Age 13 and over</small></div><div class="stp" data-k="a"><button data-d="-1" aria-label="Fewer adults"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/></svg></button><output id="oa" aria-live="polite">2</output><button data-d="1" aria-label="More adults"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button></div></div>
+    <div class="row"><div><b>Children</b><small>Ages 2 to 12, no tourist tax</small></div><div class="stp" data-k="c"><button data-d="-1" aria-label="Fewer children"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/></svg></button><output id="oc" aria-live="polite">0</output><button data-d="1" aria-label="More children"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button></div></div>
+  </div>
+  <h4>Price for your stay</h4>
+  <div class="card bd" id="bd"></div>
+  <p class="fine">VAT is included. Free cancellation until 27 Nov; after that the first night is non-refundable.</p>
+</div>
+<div class="bar">
+  <div class="tot"><b id="tot">€661</b><span id="totSub">Total for 4 nights · all fees included</span></div>
+  <button class="go" id="go">Reserve</button>
+</div>
+<div class="vh" aria-live="polite" id="live"></div>
+<script>
+(() => {
+const $ = (id) => document.getElementById(id);
+const MON = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+const DAY = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const iso = (d) => d.toISOString().slice(0, 10);
+const D = (s) => new Date(s + 'T12:00:00Z');
+const add = (s, n) => { const d = D(s); d.setUTCDate(d.getUTCDate() + n); return iso(d); };
+const short = (s) => { const d = D(s); return `${DAY[d.getUTCDay()]} ${d.getUTCDate()} ${MON[d.getUTCMonth()].slice(0, 3)}`; };
+const BOOKED = new Set(['2026-12-01','2026-12-02','2026-12-03','2026-12-18','2026-12-19','2026-12-20','2026-12-21','2026-12-26','2026-12-27','2026-12-31','2027-01-01','2027-01-02','2027-01-09','2027-01-10','2027-01-23','2027-01-24','2027-01-25']);
+const rate = (s) => { const w = D(s).getUTCDay(); return w === 5 || w === 6 ? 158 : 142; };
+let booting = false;
+const CLEAN = 45, TAX = 2;
+const st = { ci: '2026-12-11', co: '2026-12-15', next: 'ci', m: 11, y: 2026, a: 2, c: 0 };
+const months = [[2026, 11], [2027, 0]];
+const firstBooked = (ci) => { for (let x = add(ci, 1), i = 0; i < 62; x = add(x, 1), i++) if (BOOKED.has(x)) return x; return null; };
+const nightsOf = () => { const out = []; if (!st.co) return out; for (let s = st.ci; s < st.co; s = add(s, 1)) out.push(s); return out; };
+function draw(animate) {
+  const first = new Date(Date.UTC(st.y, st.m, 1, 12)), lead = (first.getUTCDay() + 6) % 7;
+  const len = new Date(Date.UTC(st.y, st.m + 1, 0, 12)).getUTCDate();
+  $('mTitle').textContent = `${MON[st.m]} ${st.y}`;
+  $('prev').disabled = st.m === 11; $('next').disabled = st.m === 0;
+  let h = '', k = 0;
+  for (let i = 0; i < lead; i++) h += '<span class="d" aria-hidden="true"></span>';
+  const outOnly = st.next === 'co' && !st.co ? firstBooked(st.ci) : null;
+  for (let day = 1; day <= len; day++) {
+    const s = iso(new Date(Date.UTC(st.y, st.m, day, 12))), isCo0 = s === st.co, out = s === outOnly || (isCo0 && BOOKED.has(s)), off = BOOKED.has(s) && !out;
+    const isCi = s === st.ci, isCo = s === st.co, inR = st.co && s > st.ci && s < st.co;
+    const cls = ['d', off && 'off', out && 'out', isCi && 'ci', isCo && 'co', inR && 'in'].filter(Boolean).join(' ');
+    const lab = `${short(s)}${off ? ', booked' : out ? ', check-out only' : `, €${rate(s)} a night`}${isCi ? ', check-in' : ''}${isCo ? ', check-out' : ''}`;
+    const style = (inR || isCo) && animate ? ` style="--i:${k++}"` : '';
+    h += `<button class="${cls}" data-s="${s}" aria-label="${lab}" ${off ? 'aria-disabled="true"' : ''} aria-pressed="${isCi || isCo}"${style}><span class="n" aria-hidden="true"><b>${day}</b><span class="p">${off ? '&nbsp;' : out ? (isCo0 ? 'out' : 'out only') : '€' + rate(s)}</span></span></button>`;
+  }
+  $('grid').innerHTML = h; $('grid').classList.toggle('rng', !!st.co); $('grid').classList.toggle('still', !animate);
+  $('vCi').textContent = short(st.ci); $('vCo').textContent = st.co ? short(st.co) : 'Add date';
+  $('fCo').classList.toggle('empty', !st.co);
+  $('fCi').classList.toggle('next', st.next === 'ci'); $('fCo').classList.toggle('next', st.next === 'co');
+  $('fCi').setAttribute('aria-label', `Check-in ${short(st.ci)}${st.next === 'ci' ? ', next tap sets this' : ''}`);
+  $('fCo').setAttribute('aria-label', `Check-out ${st.co ? short(st.co) : 'not set'}${st.next === 'co' ? ', next tap sets this' : ''}`);
+  price();
+}
+function price() {
+  const nn = nightsOf(), n = nn.length;
+  $('nights').textContent = n ? `${n} night${n > 1 ? 's' : ''}` : '0 nights';
+  const lo = nn.filter((s) => rate(s) === 142).length, hi = n - lo;
+  const stay = lo * 142 + hi * 158, tax = TAX * st.a * Math.min(n, 7), total = n ? stay + CLEAN + tax : 0;
+  const parts = [lo && `${lo} × €142`, hi && `${hi} × €158`].filter(Boolean).join(' + ');
+  $('bd').innerHTML = n ? `<div class="row"><span>${n} night${n > 1 ? 's' : ''}<small>${parts}</small></span><span>€${stay}</span></div>
+    <div class="row"><span>Cleaning<small>Once per stay</small></span><span>€${CLEAN}</span></div>
+    <div class="row"><span>Tourist tax<small>€${TAX} × ${st.a} adult${st.a > 1 ? 's' : ''} × ${Math.min(n, 7)} night${n > 1 ? 's' : ''}</small></span><span>€${tax}</span></div>
+    <div class="row"><span>Service fee<small>None on this stay</small></span><span>€0</span></div>
+    <div class="row sum"><span>Total</span><span>€${total}</span></div>`
+    : '<div class="row"><span>Pick a check-out date to see the total</span></div>';
+  const t = $('tot'), next = n ? `€${total}` : `€${rate(st.ci)}`;
+  if (t.textContent !== next) { t.textContent = next; t.classList.remove('tick'); void t.offsetWidth; t.classList.add('tick'); }
+  $('totSub').textContent = n ? `Total for ${n} night${n > 1 ? 's' : ''} · all fees included` : 'a night · pick check-out for the total';
+  $('go').disabled = !n;
+  if (!booting) $('live').textContent = n ? `${n} nights, ${short(st.ci)} to ${short(st.co)}. Total €${total} including cleaning and tax.` : `Check-in ${short(st.ci)}. Now choose check-out.`;
+}
+const note = (t, warn) => { const el = $('note'); el.textContent = t; el.classList.toggle('warn', !!warn); };
+$('grid').addEventListener('click', (e) => {
+  const b = e.target.closest('.d[data-s]'); if (!b) return;
+  const s = b.dataset.s;
+  const outOk = st.next === 'co' && !st.co && s === firstBooked(st.ci);
+  if (BOOKED.has(s) && !outOk) return note(`${short(s)} is already booked.`, true);
+  if (st.next === 'ci' || s <= st.ci) { st.ci = s; st.co = null; st.next = 'co'; note('Now tap your check-out date.'); return draw(false), refocus(s); }
+  for (let x = st.ci; x < s; x = add(x, 1)) if (BOOKED.has(x)) { note(`The night of ${short(x)} is booked, so check out on ${short(x)} at the latest.`, true); return; }
+  if (nightsOrder(s) < 2) { note('Casa do Vale has a 2-night minimum.', true); return; }
+  st.co = s; st.next = 'ci'; note('Friday and Saturday nights are €158. Struck dates are booked.'); draw(true); refocus(s);
+});
+const nightsOrder = (s) => Math.round((D(s) - D(st.ci)) / 864e5);
+const refocus = (s) => { const el = $('grid').querySelector(`[data-s="${s}"]`); if (el) el.focus(); };
+$('fCi').onclick = () => { st.next = 'ci'; note('Tap a new check-in date.'); draw(false); };
+$('fCo').onclick = () => { st.next = 'co'; note('Tap a new check-out date.'); draw(false); };
+$('prev').onclick = () => { st.y = 2026; st.m = 11; draw(false); };
+$('next').onclick = () => { st.y = 2027; st.m = 0; draw(false); };
+document.querySelectorAll('.stp').forEach((g) => g.addEventListener('click', (e) => {
+  const b = e.target.closest('button'); if (!b) return;
+  const k = g.dataset.k, d = +b.dataset.d;
+  st[k] = Math.max(k === 'a' ? 1 : 0, Math.min(k === 'a' ? 4 : 3, st[k] + d));
+  if (st.a + st.c > 4) st[k] -= d;
+  steppers(); price();
+}));
+function steppers() {
+  $('oa').textContent = st.a; $('oc').textContent = st.c;
+  const [aM, aP] = document.querySelectorAll('[data-k=a] button'), [cM, cP] = document.querySelectorAll('[data-k=c] button');
+  aM.disabled = st.a <= 1; cM.disabled = st.c <= 0; aP.disabled = cP.disabled = st.a + st.c >= 4;
+}
+$('go').onclick = () => { $('go').textContent = 'Requested'; setTimeout(() => { $('go').textContent = 'Reserve'; }, 1600); };
+booting = true; steppers(); draw(true); booting = false;
+})();
+</script>
+</body>
+</html>

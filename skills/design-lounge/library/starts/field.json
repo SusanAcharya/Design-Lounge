@@ -28,7 +28,8 @@
   "phone-calendar-agenda",
   "game-hud",
   "week-schedule",
-  "tablet-kiosk-checkin"
+  "tablet-kiosk-checkin",
+  "app-turn-by-turn-nav"
  ],
  "directions": [
   {

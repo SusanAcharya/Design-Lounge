@@ -654,3 +654,27 @@ motion-spring-throw-sheet | mobile-app | overlays | Throwable sheet with spring 
 motion-feedback-ladder | mobile-app | micro | Feedback ladder on a send button | dark minimal | press haptics payment feedback button
 motion-scroll-story | mobile-app | scroll | Scroll-driven trail guide | editorial organic | scroll parallax map outdoors story
 motion-sticker-peel | mobile-app | micro | Peel-and-place reward sticker | paper playful | drag reward sticker journal peel
+style-y2k-friend-profile | mobile-app | profile | Y2K friend profile with stickers | y2k playful | profile stickers drag press social
+style-brutalist-notes | mobile-app | utility | Brutalist notes with hard-cut swipe | brutalist minimal | notes swipe press list archive
+app-dating-swipe-deck | mobile-app | social | Dating swipe deck with match screen | soft playful | swipe drag cards dating press
+phone-picker-seat-map | mobile-app | pickers | Cinema seat map with tap-to-zoom | dark deco | seats booking select press map
+style-pixel-pet-care | mobile-app | games | Pixel pet care screen | pixel playful retro | pet pixel-art sprite press meters
+style-cyber-vpn-shield | mobile-app | utility | Cyber VPN shield | cyber dark terminal | vpn privacy map press select
+app-smart-home-rooms | mobile-app | dashboard | Smart home rooms | soft minimal | smart-home floor-plan thermostat select slide
+phone-error-update-required | mobile-app | error | Update required and outage screens | minimal soft | error update outage offline press
+style-riso-gig-guide | mobile-app | media | Handbill riso gig guide | riso paper playful | events music listings save press select
+style-bauhaus-habit-grid | mobile-app | utility | Werk Bauhaus habit grid | bauhaus swiss minimal | habits tracker grid shapes press select
+app-podcast-chapters | mobile-app | media | Slow Archive podcast player | dark editorial minimal | podcast audio player transcript drag press
+phone-chart-sleep-stages | mobile-app | charts | Nocturne sleep stages chart | dark minimal soft | sleep hypnogram health chart drag select
+kids-letter-tracing | mobile-app | games | Kids letter tracing with Pom | playful soft | kids learning tracing drag press speech
+kids-parent-gate | mobile-app | overlays | Kids app parental gate | playful soft | kids parental-gate sheet press settings purchases
+kids-story-shelf | mobile-app | reading | Kids bedtime story shelf | soft dark playful | kids reading speech swipe press night-mode
+kids-colouring-canvas | mobile-app | utility | Kids colouring canvas | playful organic | kids drawing canvas press drag stickers
+app-food-menu-basket | mobile-app | ecommerce | Restaurant menu with a growing basket | material organic | food-delivery menu basket stepper press scroll
+app-stay-booking-dates | mobile-app | ecommerce | Stay booking with an honest total | editorial soft | booking date-range calendar travel press select
+phone-pricing-plan-slider | mobile-app | pricing | Usage slider that picks your plan | dark minimal | pricing slider plans billing slide select
+phone-onboarding-goal-setup | mobile-app | onboarding | Goal setup that builds your plan | material organic | onboarding personalisation chips plan select slide
+app-turn-by-turn-nav | mobile-app | utility | Wayline turn-by-turn navigation | dark industrial minimal | navigation maps driving live press
+app-fitness-set-logger | mobile-app | utility | Rackwell strength set logger | material industrial soft | fitness workout logger timer press
+app-home-widgets-stack | mobile-app | widgets | Juniper home screen widget stack | glass minimal dark | widgets home-screen smart-stack swipe press drag
+phone-picker-wheel-time | mobile-app | pickers | Lantern alarm wheel time picker | paper editorial minimal | picker wheel time alarm drag scroll

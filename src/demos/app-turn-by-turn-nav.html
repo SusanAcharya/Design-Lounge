@@ -1,0 +1,194 @@
+<!-- Design Lounge piece: app-turn-by-turn-nav · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wayline turn-by-turn</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ground:#0E1216;--block:#171D24;--road:#2A333E;--road-edge:#3A4552;--water:#10263A;--park:#15241D;
+  --sig:#F4C430;--sig-ink:#17130A;--sig-band:#1C1810;--lane-off:#6E6852;
+  --plate:#161B21;--plate-2:#202731;--line:rgba(255,255,255,.08);
+  --ink:#F2F4F6;--ink-2:#A9B3BE;--calm:#DCE6EE;--calm-ink:#14202E;--stop:#E5484D;
+  --display:"Bebas Neue",Impact,sans-serif;--sans:"IBM Plex Sans",system-ui,sans-serif;
+  --r-card:26px;--r-plate:20px;--r-pill:999px;
+  --ease:cubic-bezier(.2,.7,.2,1);--sheet:cubic-bezier(.32,.72,0,1);--expo:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--ground);color:var(--ink);font:15px/1.35 var(--sans);overflow:hidden;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;border:0;background:none;padding:0;cursor:pointer}
+:focus-visible{outline:3px solid var(--sig);outline-offset:3px}
+.stage{position:fixed;inset:0;overflow:hidden;perspective:420px;perspective-origin:50% 22%}
+.plane{position:absolute;left:50%;top:-1150px;width:1800px;height:2300px;margin-left:-900px;transform-origin:900px 1750px;transform:rotateX(63deg)}
+.plane svg{display:block}
+.haze{position:fixed;left:0;right:0;top:0;height:360px;background:linear-gradient(180deg,var(--ground) 35%,rgba(14,18,22,0));pointer-events:none}
+.puck{position:fixed;left:50%;top:600px;width:44px;height:44px;margin:-22px 0 0 -22px;border-radius:50%;background:#F2F4F6;box-shadow:0 0 0 7px rgba(244,196,48,.28),0 6px 16px rgba(0,0,0,.5);display:grid;place-items:center}
+.puck::after{content:"";position:absolute;inset:-7px;border-radius:50%;border:2px solid var(--sig);animation:ping 2.6s var(--ease) infinite}
+.puck svg{width:24px;height:24px}
+@keyframes ping{0%{transform:scale(1);opacity:.8}70%,100%{transform:scale(1.9);opacity:0}}
+
+.card{position:fixed;top:62px;left:12px;right:12px;max-width:440px;margin:0 auto;border-radius:var(--r-card);background:var(--sig);color:var(--sig-ink);box-shadow:0 18px 40px -16px rgba(0,0,0,.7);overflow:hidden}
+.mv{display:grid;grid-template-columns:84px 1fr;gap:6px;align-items:center;padding:16px 20px 14px 14px;min-height:124px}
+.mv.swap{animation:swap 320ms var(--expo)}
+@keyframes swap{from{transform:translateY(22px);opacity:0}to{transform:none;opacity:1}}
+.arrow{width:84px;height:84px}
+.dist{font:400 78px/0.86 var(--display);letter-spacing:.01em;font-variant-numeric:tabular-nums;display:flex;align-items:baseline;gap:6px}
+.dist small{font-size:32px}
+.street{font-weight:700;font-size:25px;letter-spacing:-.015em;line-height:1.1;margin-top:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.band{background:var(--sig-band);color:var(--ink);display:flex;align-items:center;justify-content:space-between;padding:8px 16px 10px;gap:10px}
+.lanes{display:flex;gap:4px}
+.lane{width:40px;height:44px;border-radius:10px;display:grid;place-items:center;color:var(--lane-off);border:1px solid rgba(255,255,255,.07)}
+.lane.on{color:var(--sig);background:rgba(244,196,48,.12);border-color:rgba(244,196,48,.4)}
+.lane svg{width:26px;height:26px}
+.then{display:flex;align-items:center;gap:6px;font-size:14px;color:var(--ink-2);white-space:nowrap}
+.then b{color:var(--ink);font-weight:600}
+.then svg{width:18px;height:18px;color:var(--ink)}
+
+.banner{position:fixed;left:24px;right:24px;max-width:416px;margin:0 auto;top:282px;background:var(--calm);color:var(--calm-ink);border-radius:18px;padding:12px 12px 12px 16px;display:flex;align-items:center;gap:12px;box-shadow:0 12px 30px -12px rgba(0,0,0,.6);transform:translateY(-10px);opacity:0;visibility:hidden;transition:opacity 280ms var(--ease),transform 380ms var(--sheet),visibility 0s 380ms}
+.banner.show{opacity:1;transform:none;visibility:visible;transition-delay:0s}
+.banner .ic{width:36px;height:36px;border-radius:50%;background:#C6D4E0;display:grid;place-items:center;flex:none}
+.banner .ic svg{width:20px;height:20px}
+.banner.busy .ic svg{animation:spin 1.1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.banner p{margin:0;flex:1;font-size:14px;line-height:1.3}
+.banner p b{display:block;font-size:15px}
+.banner button{height:40px;padding:0 14px;border-radius:var(--r-pill);background:var(--calm-ink);color:var(--calm);font-weight:600;font-size:14px}
+.banner.busy button{display:none}
+
+.side{position:fixed;right:16px;top:520px;display:grid;gap:10px}
+.fab{width:52px;height:52px;border-radius:50%;background:var(--plate);border:1px solid var(--road-edge);display:grid;place-items:center;color:var(--ink)}
+.fab svg{width:24px;height:24px}
+.fab[aria-pressed=true]{background:var(--ink);color:var(--plate)}
+
+.speed{position:fixed;left:16px;top:560px;display:flex;align-items:center;gap:8px;background:var(--plate);border:1px solid var(--road-edge);border-radius:var(--r-plate);padding:8px 10px 8px 14px}
+.speed .now{font:400 44px/0.9 var(--display);font-variant-numeric:tabular-nums;width:50px;text-align:center}
+.speed .u{font-size:11px;font-weight:600;letter-spacing:.08em;color:var(--ink-2);display:block;text-align:center;margin-top:2px}
+.limit{width:50px;height:50px;border-radius:50%;background:#FFFFFF;border:5px solid var(--stop);display:grid;place-items:center;color:#111;font:400 25px/1 var(--display);padding-top:2px}
+
+.bar{position:fixed;left:0;right:0;bottom:0;padding:16px 20px 46px;background:var(--plate);border-radius:28px 28px 0 0;border-top:1px solid var(--line);display:flex;align-items:center;gap:14px}
+.bar .grab{position:absolute;left:50%;top:7px;width:36px;height:4px;margin-left:-18px;border-radius:2px;background:#3A4552}
+.eta{flex:1;display:grid;grid-template-columns:auto auto auto;justify-content:start;column-gap:22px}
+.eta div{font:400 34px/1 var(--display);font-variant-numeric:tabular-nums}
+.eta div.go{color:var(--sig)}
+.eta span{display:block;font:500 12px/1.2 var(--sans);color:var(--ink-2);margin-top:3px;white-space:nowrap}
+.end{height:52px;padding:0 22px;border-radius:var(--r-pill);background:#C8383D;color:#fff;font-weight:700;font-size:16px;min-width:96px}
+.sr{position:absolute;left:0;top:0;width:300px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+@media (prefers-reduced-motion:reduce){.puck::after,.banner.busy .ic svg{animation:none}.mv.swap{animation:fade 200ms ease-out}.banner{transform:none;transition:opacity 200ms,visibility 0s 200ms}}
+@keyframes fade{from{opacity:0}}
+</style>
+</head>
+<body>
+<div class="stage" aria-hidden="true">
+  <div class="plane"><svg id="map" width="1800" height="2300" viewBox="0 0 1800 2300"><g id="world"><g id="base"></g><path id="route" fill="none" stroke="#F4C430" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/><path id="routeIn" fill="none" stroke="#FFE38A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2 14"/><g id="pin"><circle r="16" fill="#F4C430" stroke="#17130A" stroke-width="5"/><circle r="5" fill="#17130A"/></g></g></svg></div>
+  <div class="haze"></div>
+</div>
+<div class="puck" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3l7 17-7-4-7 4z" fill="#0E1216"/></svg></div>
+
+<section class="card" aria-label="Next manoeuvre">
+  <div class="mv" id="mv">
+    <svg class="arrow" id="arrow" viewBox="0 0 84 84" aria-hidden="true"><path id="arrowP" fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <div><div class="dist" id="dist">350<small>m</small></div><div class="street" id="street">Mill Lane</div></div>
+  </div>
+  <div class="band">
+    <div class="lanes" id="lanes" role="img" aria-label="Use the right lane"></div>
+    <div class="then" id="then"><span>Then</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M16 20v-8a3 3 0 0 0-3-3H6M9 5L5 9l4 4"/></svg><b>Harrow St</b></div>
+  </div>
+</section>
+
+<div class="banner" id="banner" role="status"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path id="bannerI" d="M20 12a8 8 0 1 1-2.3-5.6M20 4v5h-5"/></svg></div><p id="bannerT"><b>Finding a new route</b>Keep going on Mill Lane</p><button id="ok">OK</button></div>
+
+<div class="speed" aria-label="Speed"><div><div class="now" id="spd">47</div><span class="u">KM/H</span></div><div class="limit" id="lim" role="img" aria-label="Speed limit 50">50</div></div>
+<div class="side">
+  <button class="fab" id="mute" aria-pressed="false" aria-label="Mute voice guidance"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9z"/><path id="wave" d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg></button>
+</div>
+
+<footer class="bar">
+  <span class="grab"></span>
+  <div class="eta" aria-live="off">
+    <div class="go" id="eta">14:51<span>arrival</span></div>
+    <div id="mins">5<span>min</span></div>
+    <div id="km">1.7<span>km</span></div>
+  </div>
+  <button class="end" id="end">End</button>
+</footer>
+<div class="sr" aria-live="polite" id="live"></div>
+<script>
+(() => {
+const $=id=>document.getElementById(id),reduce=matchMedia('(prefers-reduced-motion: reduce)').matches,NS='http://www.w3.org/2000/svg';
+const SC=1.05,PX=900,PY=1750,SIM=2.4,AVG=6.2,START=14*3600+46*60;
+/* the path the car actually drives (it misses the Harrow Street turn) and the route planned before the miss */
+const A=[[0,0],[0,-350],[600,-350],[600,-900],[760,-900]],R=[[0,0],[0,-350],[420,-350],[420,-900],[760,-900]];
+const cum=p=>{const c=[0];for(let i=1;i<p.length;i++)c.push(c[i-1]+Math.hypot(p[i][0]-p[i-1][0],p[i][1]-p[i-1][1]));return c};
+const CA=cum(A),CR=cum(R),TOT=CA[CA.length-1];
+const LIM=[50,30,30,40],CRU=[13,8.3,8.3,10.5];
+const L='M42 74V40l-20-20',I={
+ right:'M30 76V44a12 12 0 0 1 12-12h20M52 20l12 12-12 12',
+ left:'M54 76V44a12 12 0 0 0-12-12H22M32 20L20 32l12 12',
+ arrive:'M42 76V50M42 50a14 14 0 1 1 .1 0M42 26v.1'};
+const LN={s:'M12 21V4M7 9l5-5 5 5',r:'M8 21v-8a5 5 0 0 1 5-5h7M16 4l4 4-4 4',l:'M16 21v-8a5 5 0 0 0-5-5H4M8 4L4 8l4 4',sr:'M10 21V4M5 9l5-5 5 5M10 14a5 5 0 0 1 5-5h4M17 6l3 3-3 3',sl:'M14 21V4M9 9l5-5 5 5M14 14a5 5 0 0 0-5-5H5M7 6L4 9l3 3'};
+const PRE=[{at:350,t:'right',st:'Mill Lane',ln:[['l',0],['s',0],['sr',1]],nx:['left','Harrow St']},{at:770,t:'left',st:'Harrow Street',ln:[['sl',1],['s',0],['r',0]],nx:['right','Quay Rd']},{at:1320,t:'right',st:'Quay Road',ln:[['s',0],['r',1]],nx:['arrive','Fennick Studios']}];
+const POST=[{at:950,t:'left',st:'Tanner Street',ln:[['l',1],['s',0],['s',0]],nx:['right','Quay Rd']},{at:1500,t:'right',st:'Quay Road',ln:[['s',0],['sr',1]],nx:['arrive','Fennick Studios']},{at:TOT,t:'arrive',st:'Fennick Studios',ln:[['s',1]],nx:null}];
+let s=0,v=13,clock=START,rer=false,busy=false,done=false,paused=false,cur=null,last=0,acc=0,raf=0,muted=false,bt=0;
+const el=(n,a)=>{const e=document.createElementNS(NS,n);for(const k in a)e.setAttribute(k,a[k]);return e};
+/* map: blocks, river, park, then roads with an edge stroke under a fill stroke */
+(function base(){const g=$('base'),xs=[-560,-300,-140,0,200,420,600,760,960,1180],ys=[420,250,100,-150,-350,-600,-900,-1160];
+ g.appendChild(el('rect',{x:-1400,y:-2200,width:3200,height:3200,fill:'#0E1216'}));
+ for(let i=0;i<xs.length-1;i++)for(let j=0;j<ys.length-1;j++){const x=xs[i]+12,y=ys[j+1]+12,w=xs[i+1]-xs[i]-24,h=ys[j]-ys[j+1]-24;if(w>0&&h>0){const pk=(i*7+j*3)%9===0;g.appendChild(el('rect',{x,y,width:w,height:h,rx:6,fill:pk?'#15241D':'#171D24'}));if(!pk){const n=w>150?3:2;for(let k=0;k<n;k++)g.appendChild(el('rect',{x:x+8+k*(w-8)/n,y:y+8+((i+k)%2)*h*.18,width:(w-8)/n-8,height:h*(.82-((i+k+j)%2)*.18)-16,rx:3,fill:(i+j+k)%3?'#1D242D':'#1A2129'}))}}}
+ g.appendChild(el('path',{d:'M-1400 -1010C-700 -1060 -100 -960 600 -1040S1500 -980 1800 -1030V-1140C1200 -1100 700 -1160 0 -1120S-900 -1150 -1400 -1110Z',fill:'#10263A'}));
+ const road=(d,w)=>{g.appendChild(el('path',{d,stroke:'#3A4552','stroke-width':w+4,fill:'none'}));g.appendChild(el('path',{d,stroke:'#2A333E','stroke-width':w,fill:'none'}))};
+ xs.forEach((x,i)=>road('M'+x+' 900V'+(i%3?-1000:-1500),i===3||i===6?26:16));ys.forEach((y,j)=>road('M-1400 '+y+'H1800',j===4||j===6?24:14));
+ const p=$('pin');p.setAttribute('transform','translate(760 -900)');
+})();
+const at=(P,C,d)=>{let i=1;while(i<C.length-1&&C[i]<d)i++;const k=Math.max(0,Math.min(1,(d-C[i-1])/(C[i]-C[i-1])));return[P[i-1][0]+(P[i][0]-P[i-1][0])*k,P[i-1][1]+(P[i][1]-P[i-1][1])*k]};
+const seg=d=>{let i=1;while(i<CA.length-1&&CA[i]<=d)i++;return i-1};
+const fmtD=d=>d>=1000?[(d/1000).toFixed(1),'km']:d<15?['Now','']:[String(d>=100?Math.round(d/10)*10:Math.round(d/5)*5),'m'];
+const hm=t=>{t=Math.round(t/60);return String(Math.floor(t/60)%24).padStart(2,'0')+':'+String(t%60).padStart(2,'0')};
+function lanes(ln){$('lanes').innerHTML=ln.map(([k,on])=>'<span class="lane'+(on?' on':'')+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="'+LN[k]+'"/></svg></span>').join('');
+ const n=ln.map((x,i)=>x[1]?i:-1).filter(i=>i>=0),c=ln.length;$('lanes').setAttribute('aria-label',c===1?'Stay in lane':n.length>1?'Use the left two lanes':n[0]===c-1?'Use the right lane':n[0]===0?'Use the left lane':'Use the middle lane')}
+function setMv(m){cur=m;const mv=$('mv');mv.classList.remove('swap');void mv.offsetWidth;mv.classList.add('swap');
+ $('arrowP').setAttribute('d',I[m.t]);$('street').textContent=m.st;lanes(m.ln);
+ const th=$('then');if(m.nx){th.style.visibility='';th.querySelector('svg path').setAttribute('d',m.nx[0]==='arrive'?'M12 21v-5M12 16a5 5 0 1 1 .1 0':m.nx[0]==='left'?'M16 20v-8a3 3 0 0 0-3-3H6M9 5L5 9l4 4':'M8 20v-8a3 3 0 0 1 3-3h7M15 5l4 4-4 4');th.querySelector('b').textContent=m.nx[1]}else th.style.visibility='hidden';
+ say((m.t==='arrive'?'Destination ':'In '+Math.round((m.at-s)/10)*10+' metres, turn '+m.t+' onto ')+m.st)}
+function say(t){$('live').textContent=t}
+function banner(kind){const b=$('banner');clearTimeout(bt);
+ if(kind==='busy'){b.className='banner show busy';$('bannerI').setAttribute('d','M20 12a8 8 0 1 1-2.3-5.6M20 4v5h-5');$('bannerT').innerHTML='<b>Finding a new route</b>Keep going on Mill Lane';say('Missed turn. Finding a new route.')}
+ else if(kind==='new'){b.className='banner show';$('bannerI').setAttribute('d','M5 12.5l4.5 4.5L19 7.5');const e=hm(clock+(TOT-s)/AVG);$('bannerT').innerHTML='<b>New route via Tanner Street</b>You still arrive at '+e;say('New route via Tanner Street. You still arrive at '+e);bt=setTimeout(()=>banner(),6000)}
+ else b.className='banner'}
+function draw(){
+ const [x,y]=at(A,CA,s),[ax,ay]=at(A,CA,Math.min(TOT,s+14)),[bx,by]=at(A,CA,Math.max(0,s-14));
+ let h=Math.atan2(ax-bx,-(ay-by))*180/Math.PI;if(s>=TOT-14){const [cx,cy]=at(A,CA,TOT-28);h=Math.atan2(760-cx,-(-900-cy))*180/Math.PI}
+ $('world').setAttribute('transform','translate('+PX+' '+PY+') scale('+SC+') rotate('+(-h).toFixed(2)+') translate('+(-x).toFixed(1)+' '+(-y).toFixed(1)+')');
+ let pts=[[x,y]];if(!busy){const P=rer?A:R,C=rer?CA:CR;for(let i=1;i<P.length;i++)if(C[i]>s)pts.push(P[i])}
+ const d=pts.length>1?'M'+pts.map(p=>p[0].toFixed(1)+' '+p[1].toFixed(1)).join('L'):'';$('route').setAttribute('d',d);$('routeIn').setAttribute('d',d);
+}
+function hud(){
+ const left=TOT-s,[n,u]=fmtD(Math.max(0,cur.at-s));$('dist').innerHTML=cur.t==='arrive'&&left<15?'Arrived':n+(u?'<small>'+u+'</small>':'');
+ $('spd').textContent=Math.round(v*3.6);
+ const lim=LIM[seg(Math.min(s,TOT-1))];$('lim').textContent=lim;$('lim').setAttribute('aria-label','Speed limit '+lim);
+ const sec=left/AVG;$('eta').firstChild.nodeValue=hm(clock+sec);$('mins').firstChild.nodeValue=Math.max(1,Math.ceil(sec/60));$('km').firstChild.nodeValue=(left/1000).toFixed(1);
+}
+function step(dt){
+ if(done||paused)return;const i=seg(Math.min(s,TOT-1));let target=CRU[i];
+ const turns=[350,950,1500];for(const t of turns){const d=t-s;if(d>-12&&d<60)target=Math.min(target,5.5)}if(TOT-s<90)target=Math.min(target,Math.max(1.6,(TOT-s)/7));
+ v+=(target-v)*Math.min(1,dt*1.6);s=Math.min(TOT,s+v*SIM*dt);clock+=dt*SIM;
+ if(!rer&&!busy&&s>=775){busy=true;banner('busy');setTimeout(()=>{busy=false;rer=true;setMv(POST[0]);banner('new')},1300)}
+ const list=rer?POST:PRE;if(!busy){const m=list.find(m=>m.at>s-1)||list[list.length-1];if(m!==cur&&!(m===list[list.length-1]&&cur===m))setMv(m)}
+ if(s>=TOT-.5){done=true;v=0;say('You have arrived at Fennick Studios, on the right');$('end').textContent='Again';setTimeout(()=>done&&reset(),7000)}
+}
+function frame(ts){const dt=Math.min(.05,(ts-(last||ts))/1000);last=ts;step(dt);
+ if(reduce){acc+=dt;if(acc>=1||!draw.once){acc=0;draw();draw.once=1}}else draw();hud();raf=requestAnimationFrame(frame)}
+function reset(){s=0;v=13;clock=START;rer=false;busy=false;done=false;paused=false;cur=null;$('end').textContent='End';banner();setMv(PRE[0]);draw();hud()}
+$('ok').onclick=()=>banner();
+$('mute').onclick=e=>{muted=!muted;const b=e.currentTarget;b.setAttribute('aria-pressed',muted);b.setAttribute('aria-label',muted?'Unmute voice guidance':'Mute voice guidance');$('wave').setAttribute('d',muted?'M16 9l6 6M22 9l-6 6':'M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12')};
+$('end').onclick=()=>{if(done){reset();return}paused=!paused;last=0;$('end').textContent=paused?'Resume':'End';say(paused?'Guidance paused':'Guidance resumed')};
+document.addEventListener('keydown',e=>{if(e.key===' '&&e.target===document.body){e.preventDefault();$('end').click()}});
+document.addEventListener('visibilitychange',()=>{last=0});
+reset();raf=requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>

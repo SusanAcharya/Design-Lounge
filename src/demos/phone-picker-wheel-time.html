@@ -1,0 +1,142 @@
+<!-- Design Lounge piece: phone-picker-wheel-time · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lantern alarm wheel picker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400..700&family=Oswald:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F4EEE4;--card:#FBF7F0;--band:#E6DCCB;--band-tick:#D3C3A8;--line:#DDD2C1;
+  --ink:#2A2320;--ink-2:#5E534A;--dim:#6A5F55;--tom:#B83D27;--tom-ink:#FFFFFF;--edge:#8C7F70;
+  --serif:"Literata",Georgia,serif;--cond:"Oswald","Arial Narrow",sans-serif;
+  --item:44px;--r-card:24px;--r-band:14px;--r-pill:999px;
+  --ease:cubic-bezier(.2,.7,.2,1);--expo:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:400 16px/1.35 var(--serif);-webkit-font-smoothing:antialiased;overflow:hidden}
+button,input{font:inherit;color:inherit}
+button{border:0;background:none;padding:0;cursor:pointer}
+:focus-visible{outline:3px solid var(--tom);outline-offset:3px}
+.wrap{position:absolute;inset:0;padding:54px 16px 34px;max-width:440px;margin:0 auto;display:flex;flex-direction:column}
+.top{height:56px;display:grid;grid-template-columns:88px 1fr 88px;align-items:center}
+.top h1{margin:0;text-align:center;font:500 15px/1 var(--cond);letter-spacing:.16em;text-transform:uppercase}
+.cancel{height:44px;justify-self:start;padding:0 4px;color:var(--tom);font-size:16px;font-weight:500}
+.save{height:40px;justify-self:end;padding:0 18px;border-radius:var(--r-pill);background:var(--tom);color:var(--tom-ink);font:600 15px/1 var(--cond);letter-spacing:.08em;text-transform:uppercase}
+.pick{position:relative;margin-top:10px;height:284px;background:var(--card);border-radius:var(--r-card);border:1px solid var(--line);display:flex;justify-content:center;align-items:center;gap:2px;overflow:hidden}
+.band{position:absolute;left:12px;right:12px;top:50%;height:var(--item);margin-top:calc(var(--item)/-2);border-radius:var(--r-band);background:var(--band)}
+.band::before,.band::after{content:"";position:absolute;top:13px;bottom:13px;width:3px;border-radius:2px;background:var(--band-tick);transition:background 160ms}
+.band::before{left:8px}.band::after{right:8px}
+.band.tk{animation:tk 120ms var(--ease)}
+.band.tk::before,.band.tk::after{background:var(--tom);transition:none}
+@keyframes tk{40%{transform:scaleY(.94)}}
+.wheel{position:relative;height:264px;perspective:900px;touch-action:none;user-select:none;-webkit-user-select:none;cursor:grab;border-radius:12px;outline-offset:-2px}
+.wheel:active{cursor:grabbing}
+.wheel.h,.wheel.m{width:96px}.wheel.p{width:80px}
+.it{position:absolute;left:0;right:0;top:50%;height:var(--item);margin-top:calc(var(--item)/-2);display:grid;place-items:center;font:400 27px/1 var(--serif);font-variant-numeric:lining-nums tabular-nums;color:var(--dim);backface-visibility:hidden;font-variation-settings:"opsz" 40}
+.wheel.p .it{font:500 20px/1 var(--cond);letter-spacing:.08em}
+.it.on{color:var(--ink);font-weight:600}
+.colon{font:600 28px/1 var(--serif);color:var(--ink);position:relative;top:-2px;width:14px;text-align:center}
+.rings{margin:14px 4px 0;font-size:15px;color:var(--ink-2);min-height:22px}
+.rings b{color:var(--ink);font-weight:600}
+h2{margin:22px 4px 10px;font:500 12px/1 var(--cond);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2);display:flex;justify-content:space-between}
+h2 span{letter-spacing:.06em;text-transform:none;font-size:13px;color:var(--ink)}
+.days{display:flex;justify-content:space-between}
+.days button{width:44px;height:44px;border-radius:50%;border:1.5px solid var(--edge);font:500 15px/1 var(--cond);letter-spacing:.04em;transition:background 160ms var(--ease),color 160ms,border-color 160ms}
+.days button[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.days button.pop{animation:dpop 260ms var(--expo)}
+@keyframes dpop{40%{transform:scale(.88)}}
+.field{display:block;margin-top:0}
+.field input{width:100%;height:52px;border:1.5px solid var(--edge);border-radius:16px;background:var(--card);padding:0 16px;font-size:17px}
+.field input::placeholder{color:var(--dim);opacity:1}
+.list{margin-top:14px;background:var(--card);border:1px solid var(--line);border-radius:20px}
+.row{display:flex;align-items:center;justify-content:space-between;min-height:56px;padding:0 16px;width:100%;text-align:left;font-size:16px}
+.row+.row{border-top:1px solid var(--line)}
+.row em{font-style:normal;color:var(--ink-2);display:flex;align-items:center;gap:4px}
+.row em svg{width:18px;height:18px}
+.sw{width:52px;height:32px;border-radius:16px;background:#CFC4B4;border:1.5px solid var(--edge);position:relative;transition:background 200ms var(--ease)}
+.sw::after{content:"";position:absolute;top:2px;left:2px;width:25px;height:25px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(42,35,32,.35);transition:transform 240ms var(--expo)}
+.sw[aria-checked=true]{background:var(--ink);border-color:var(--ink)}
+.sw[aria-checked=true]::after{transform:translateX(20px)}
+.del{margin-top:auto;height:48px;border-radius:16px;color:var(--tom);font-weight:500;font-size:16px;border:1.5px solid #E2C9BE}
+.sr{position:absolute;left:0;top:0;width:300px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+@media (prefers-reduced-motion:reduce){.band.tk,.days button.pop{animation:none}.sw::after,.sw{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top"><button class="cancel">Cancel</button><h1>Edit alarm</h1><button class="save" id="save">Save</button></header>
+  <div class="pick" role="group" aria-label="Alarm time">
+    <div class="band" id="band" aria-hidden="true"></div>
+    <div class="wheel h" data-w="0" tabindex="0" role="spinbutton" aria-label="Hour"></div>
+    <span class="colon" aria-hidden="true">:</span>
+    <div class="wheel m" data-w="1" tabindex="0" role="spinbutton" aria-label="Minute"></div>
+    <div class="wheel p" data-w="2" tabindex="0" role="spinbutton" aria-label="AM or PM"></div>
+  </div>
+  <p class="rings" id="rings" aria-live="polite"></p>
+  <h2 id="repL">Repeat <span id="repS">Weekdays</span></h2>
+  <div class="days" id="days" role="group" aria-labelledby="repL"></div>
+  <h2><label for="lab">Label</label></h2>
+  <label class="field"><input id="lab" value="Ferry to Ilha Verde" placeholder="Alarm" maxlength="32"></label>
+  <div class="list">
+    <button class="row" id="snd"><span>Sound</span><em><span id="sndV">Harbour bell</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></em></button>
+    <div class="row"><span id="snzL">Snooze, 9 min</span><button class="sw" role="switch" aria-checked="true" aria-labelledby="snzL" id="snz"></button></div>
+  </div>
+  <button class="del" id="del">Delete alarm</button>
+</div>
+<div class="sr" aria-live="polite" id="live"></div>
+<script>
+(() => {
+const $=id=>document.getElementById(id),reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const IH=44,STEP=18,R=IH/2/Math.tan(STEP/2*Math.PI/180),SLOTS=11;
+const pad=n=>String(n).padStart(2,'0');
+const W=[{vals:[...Array(12)].map((_,i)=>String(i+1)),loop:true,pos:5,name:'Hour'},{vals:[...Array(60)].map((_,i)=>pad(i)),loop:true,pos:40,name:'Minute'},{vals:['AM','PM'],loop:false,pos:0,name:'Period'}];
+const mod=(a,n)=>((a%n)+n)%n;
+document.querySelectorAll('.wheel').forEach((el,k)=>{const w=W[k];w.el=el;w.nodes=[];for(let i=0;i<SLOTS;i++){const d=document.createElement('div');d.className='it';d.setAttribute('aria-hidden','true');el.appendChild(d);w.nodes.push(d)}w.last=Math.round(w.pos);draw(w)});
+function sel(w){const r=Math.round(w.pos);return w.loop?mod(r,w.vals.length):Math.max(0,Math.min(w.vals.length-1,r))}
+function draw(w){const base=Math.round(w.pos),n=w.vals.length;
+ w.nodes.forEach((d,s)=>{const i=base+s-5,a=(i-w.pos)*STEP,ok=w.loop||(i>=0&&i<n);
+  if(!ok||Math.abs(a)>66){d.style.visibility='hidden';return}d.style.visibility='';d.textContent=w.vals[mod(i,n)];
+  d.style.transform='translateZ('+(-R).toFixed(1)+'px) rotateX('+(-a).toFixed(2)+'deg) translateZ('+R.toFixed(1)+'px)';d.classList.toggle('on',i===base)});
+ const r=Math.round(w.pos);if(r!==w.last){w.last=r;tick()}
+ w.el.setAttribute('aria-valuenow',sel(w));w.el.setAttribute('aria-valuetext',w.vals[sel(w)]);w.el.setAttribute('aria-valuemin',0);w.el.setAttribute('aria-valuemax',n-1)}
+let tt=0;function tick(){if(reduce)return;const b=$('band');b.classList.remove('tk');void b.offsetWidth;b.classList.add('tk');clearTimeout(tt);tt=setTimeout(()=>b.classList.remove('tk'),130)}
+/* glide: one ease-out curve from the release point to the projected, snapped detent */
+function glide(w,to,ms){cancelAnimationFrame(w.raf);if(!w.loop)to=Math.max(0,Math.min(w.vals.length-1,to));const from=w.pos,t0=performance.now();
+ if(reduce||ms<=0){w.pos=to;draw(w);done(w);return}
+ const f=ts=>{const k=Math.min(1,(ts-t0)/ms),e=1-Math.pow(1-k,3);w.pos=from+(to-from)*e;draw(w);if(k<1)w.raf=requestAnimationFrame(f);else done(w)};w.raf=requestAnimationFrame(f)}
+function done(w){if(w.loop){const n=w.vals.length;const r=Math.round(w.pos);w.pos=r;}update(true,w)}
+W.forEach(w=>{const el=w.el;let drag=null;
+ el.addEventListener('pointerdown',e=>{cancelAnimationFrame(w.raf);el.setPointerCapture(e.pointerId);drag={y:e.clientY,p:w.pos,hist:[[performance.now(),w.pos]]}});
+ el.addEventListener('pointermove',e=>{if(!drag)return;let p=drag.p-(e.clientY-drag.y)/IH;if(!w.loop){const n=w.vals.length-1;if(p<0)p=p/3;if(p>n)p=n+(p-n)/3}w.pos=p;draw(w);const now=performance.now();drag.hist.push([now,p]);while(drag.hist.length>2&&now-drag.hist[0][0]>100)drag.hist.shift()});
+ const up=()=>{if(!drag)return;const h=drag.hist,a=h[0],b=h[h.length-1],dt=Math.max(16,b[0]-a[0]),v=(b[1]-a[1])/dt;drag=null;
+  if(performance.now()-b[0]>80){glide(w,Math.round(w.pos),220);return}
+  const proj=w.pos+v*320,to=Math.round(proj),ms=Math.max(240,Math.min(1400,Math.abs(to-w.pos)*70+200));glide(w,to,reduce?0:ms)};
+ el.addEventListener('pointerup',up);el.addEventListener('pointercancel',up);
+ el.addEventListener('wheel',e=>{e.preventDefault();cancelAnimationFrame(w.raf);w.acc=(w.acc||0)+e.deltaY;if(Math.abs(w.acc)>=40){const s=Math.sign(w.acc);w.acc=0;glide(w,Math.round(w.pos)+s,160)}},{passive:false});
+ el.addEventListener('keydown',e=>{const n=w.vals.length,m={ArrowDown:1,ArrowUp:-1,PageDown:w===W[1]?5:1,PageUp:w===W[1]?-5:-1}[e.key];
+  if(m){e.preventDefault();glide(w,Math.round(w.pos)+m,170)}else if(e.key==='Home'){e.preventDefault();glide(w,Math.round(w.pos)-sel(w),260)}else if(e.key==='End'){e.preventDefault();glide(w,Math.round(w.pos)+(n-1-sel(w)),260)}
+  else if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();const k=W.indexOf(w)+(e.key==='ArrowRight'?1:-1);if(W[k])W[k].el.focus()}});
+});
+/* repeat days and the "rings in" line; now is Thursday 22:18 */
+const DN=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],NOW={d:4,m:22*60+18};let rep=[false,true,true,true,true,true,false];
+$('days').innerHTML=DN.map((d,i)=>'<button aria-pressed="'+rep[i]+'" aria-label="'+d+'">'+d[0]+'</button>').join('');
+[...$('days').children].forEach((b,i)=>b.onclick=()=>{rep[i]=!rep[i];b.setAttribute('aria-pressed',rep[i]);b.classList.remove('pop');void b.offsetWidth;b.classList.add('pop');update(true)});
+function mins(){const h=+W[0].vals[sel(W[0])]%12,m=sel(W[1]),pm=sel(W[2])===1;return(h+(pm?12:0))*60+m}
+function summary(){const on=rep.map((v,i)=>v?i:-1).filter(i=>i>=0),s=on.join();return!on.length?'Never':on.length===7?'Every day':s==='1,2,3,4,5'?'Weekdays':s==='0,6'?'Weekends':on.map(i=>DN[i].slice(0,3)).join(' ')}
+function update(say,w){const t=mins();let best=null;for(let k=0;k<8;k++){const d=(NOW.d+k)%7;if(rep.some(Boolean)&&!rep[d])continue;const dm=k*1440+t-NOW.m;if(dm>0){best={k,d,dm};break}}
+ const hh=Math.floor(best.dm/60),mm=best.dm%60,when=best.k===0?'later today':best.k===1?'tomorrow':'on '+DN[best.d];
+ $('rings').innerHTML='Rings '+when+' in <b>'+hh+' h '+mm+' min</b>';$('repS').textContent=summary();
+ if(say&&w)$('live').textContent=w.name+' '+w.vals[sel(w)]}
+$('snz').onclick=e=>{const b=e.currentTarget,on=b.getAttribute('aria-checked')!=='true';b.setAttribute('aria-checked',on)};
+const SN=['Harbour bell','Low reed','Morning gull','Paper chime'];let si=0;$('snd').onclick=()=>{si=(si+1)%SN.length;$('sndV').textContent=SN[si];$('live').textContent='Sound '+SN[si]};
+$('save').onclick=()=>{const h=W[0].vals[sel(W[0])],m=W[1].vals[sel(W[1])],p=W[2].vals[sel(W[2])];$('live').textContent='Alarm saved for '+h+':'+m+' '+p+', '+summary()};
+$('del').onclick=()=>{$('live').textContent='Delete is disabled in this demo'};
+update(false);
+})();
+</script>
+</body>
+</html>

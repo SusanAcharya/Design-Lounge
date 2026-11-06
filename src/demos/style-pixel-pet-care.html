@@ -1,0 +1,213 @@
+<!-- Design Lounge piece: style-pixel-pet-care · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Burrowpal · Tuft</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;600;700&family=VT323&display=swap" rel="stylesheet">
+<style>
+:root{
+  --plum:#2B1E3A;--plum-2:#3A2A4E;--cream:#F6EBD3;--cream-2:#E9D9B6;--ink:#2B1E3A;--ink-2:#5A4466;
+  --fed:#E07A2E;--joy:#D9487A;--energy:#2E8C86;--empty:#D8C59F;
+  --day-1:#8ED0F0;--day-2:#A9DCF2;--day-3:#C8E9F4;--night-1:#1A1C46;--night-2:#23286A;--night-3:#2E3784;
+  --grass:#5FAF4E;--grass-2:#4A9440;--dirt:#8A5A3B;
+  --px:4px;--pet:12px;
+  --display:"Pixelify Sans",system-ui,sans-serif;--mono:"VT323",ui-monospace,monospace;
+  --hard:4px 4px 0 var(--plum);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--plum);color:var(--cream);font:400 16px/1.3 var(--display);overflow:hidden;image-rendering:pixelated;-webkit-font-smoothing:none}
+button{font:inherit;color:inherit;border:0;background:none;padding:0;cursor:pointer}
+:focus-visible{outline:4px solid #FFD25A;outline-offset:2px}
+.app{position:relative;max-width:430px;height:100%;min-height:800px;margin:0 auto;display:flex;flex-direction:column}
+.scene{position:relative;height:452px;flex:none;overflow:hidden}
+.sky{position:absolute;inset:0;background:linear-gradient(var(--day-1) 0 44%,var(--day-2) 44% 68%,var(--day-3) 68% 100%)}
+.sky.night{background:linear-gradient(var(--night-1) 0 44%,var(--night-2) 44% 68%,var(--night-3) 68% 100%);opacity:0;transition:opacity 800ms steps(4,end)}
+.app.asleep .sky.night{opacity:1}
+.sun{position:absolute;left:300px;top:132px;width:40px;height:40px;background:#FFD25A;box-shadow:0 -8px 0 -4px #FFD25A,0 8px 0 -4px #FFD25A,-8px 0 0 -4px #FFD25A,8px 0 0 -4px #FFD25A;transition:transform 800ms steps(4,end)}
+.app.asleep .sun{transform:translateY(240px)}
+.moon{position:absolute;left:44px;top:124px;width:40px;height:40px;transform:translateY(240px);transition:transform 800ms steps(4,end)}
+.app.asleep .moon{transform:none}
+.cloud{position:absolute;width:48px;height:12px;background:#fff;box-shadow:12px -8px 0 #fff,24px -8px 0 #fff,8px 0 0 #fff,28px 0 0 #fff;animation:drift 24s steps(48,end) infinite}
+.cloud.a{left:40px;top:180px}.cloud.b{left:220px;top:226px;animation-duration:32s}
+@keyframes drift{to{transform:translateX(96px)}}
+.app.asleep .cloud{opacity:0}
+.star{position:absolute;width:4px;height:4px;background:#F6EBD3;opacity:0;transition:opacity 800ms steps(4,end)}
+.app.asleep .star{opacity:1;animation:twinkle 2.4s steps(2,end) infinite}
+@keyframes twinkle{50%{background:#8E93D8}}
+.ground{position:absolute;left:0;right:0;bottom:0;height:76px;background:linear-gradient(var(--grass) 0 16px,var(--grass-2) 16px 24px,var(--dirt) 24px)}
+.ground::before{content:"";position:absolute;left:0;right:0;top:-8px;height:8px;background:repeating-linear-gradient(90deg,var(--grass) 0 8px,transparent 8px 20px,var(--grass) 20px 24px,transparent 24px 36px)}
+.app.asleep .ground{filter:brightness(.55)}
+.top{position:absolute;left:16px;right:16px;top:58px;display:flex;align-items:center;gap:12px;background:var(--cream);color:var(--ink);border:4px solid var(--plum);box-shadow:var(--hard);padding:6px 12px;z-index:3}
+.top h1{margin:0;font:700 24px/1 var(--display)}
+.top .age{font:400 20px/1 var(--mono);color:var(--ink-2)}
+.top .clock{margin-left:auto;font:400 26px/1 var(--mono);letter-spacing:.04em}
+.mood{position:absolute;margin:0;left:50%;top:132px;transform:translateX(-50%);background:var(--cream);color:var(--ink);border:4px solid var(--plum);padding:4px 12px;font:400 22px/1 var(--mono);white-space:nowrap;z-index:3}
+.mood::after{content:"";position:absolute;left:50%;bottom:-12px;width:8px;height:8px;margin-left:-4px;background:var(--cream);box-shadow:0 4px 0 var(--plum),4px 0 0 var(--plum),-4px 0 0 var(--plum)}
+.pet{position:absolute;left:calc(50% - 96px);bottom:72px;width:192px;height:168px;animation:bob 1.2s steps(1,end) infinite;z-index:2}
+.pet::after{content:"";position:absolute;left:36px;right:36px;bottom:-8px;height:8px;background:rgba(43,30,58,.28)}
+.window{width:192px;height:168px;overflow:hidden}
+.strip{display:block;animation:blink 3.2s steps(1,end) infinite}
+@keyframes blink{0%{transform:translateX(0)}92%{transform:translateX(-192px)}100%{transform:translateX(-192px)}}
+@keyframes bob{0%{transform:none}50%{transform:translateY(4px)}}
+@keyframes flip2{to{transform:translateX(-384px)}}
+@keyframes hop{0%{transform:none}25%{transform:translateY(-24px)}50%{transform:none}75%{transform:translateY(-12px)}}
+.pet.happy{animation:hop 640ms steps(1,end) 3}
+.pet.happy .strip{animation:flip2 320ms steps(2,end) infinite}
+.pet.eat .strip{animation:flip2 360ms steps(2,end) infinite}
+.pet.sleep{animation:none}
+.pet.sleep .strip{animation:flip2 1.6s steps(2,end) infinite}
+.zz{position:absolute;right:92px;top:236px;font:700 24px/1 var(--display);color:var(--cream);opacity:0;z-index:3}
+.app.asleep .zz{opacity:1;animation:zz 2.4s steps(4,end) infinite}
+@keyframes zz{to{transform:translate(16px,-32px)}}
+.fx{position:absolute;width:28px;height:24px;z-index:4;pointer-events:none;animation:rise 960ms steps(6,end) forwards}
+@keyframes rise{to{transform:translateY(-72px);opacity:0}}
+.berry{position:absolute;left:183px;top:132px;width:24px;height:24px;z-index:4;animation:drop 600ms steps(6,end) forwards}
+@keyframes drop{to{transform:translateY(176px)}80%{opacity:1}100%{opacity:0;transform:translateY(176px)}}
+.panel{margin:16px 16px 0;background:var(--cream);color:var(--ink);border:4px solid var(--plum);box-shadow:0 0 0 4px var(--cream-2);padding:10px 12px}
+.meter{display:grid;grid-template-columns:24px 68px 1fr 52px;align-items:center;gap:8px;height:32px}
+.meter svg{width:20px;height:20px}
+.meter .lab{font:600 18px/1 var(--display);white-space:nowrap}
+.segs{display:grid;grid-template-columns:repeat(10,1fr);gap:4px;height:16px}
+.segs i{background:var(--empty);transition:background-color 200ms steps(1,end)}
+.segs i.on{background:var(--c)}
+.segs i.pop{animation:seg 360ms steps(2,end)}
+@keyframes seg{50%{transform:translateY(-4px)}}
+.meter .val{font:400 22px/1 var(--mono);text-align:right;white-space:nowrap}
+.log{margin:14px 16px 0;padding:0 4px;list-style:none;font:400 20px/24px var(--mono);height:72px;overflow:hidden}
+.log li{display:flex;gap:12px;color:#CDBFD8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.log li:first-child{color:var(--cream)}
+.log li:first-child::before{content:"";flex:none;width:8px;height:8px;margin:8px -4px 0 -16px;background:#FFD25A}
+.log time{flex:none;color:#FFD25A}
+.log{padding-left:20px}
+.actions{margin-top:auto;padding:0 16px 34px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.act{height:96px;background:var(--cream);color:var(--ink);border:4px solid var(--plum);box-shadow:0 0 0 4px var(--cream-2),6px 6px 0 4px #170F21;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;font:700 20px/1 var(--display);transition:transform 80ms steps(1,end)}
+.act:active{transform:translate(4px,4px)}
+.act svg{width:36px;height:36px}
+.act[data-a=feed] svg{color:var(--fed)}.act[data-a=play] svg{color:var(--joy)}.act[data-a=sleep] svg{color:var(--energy)}
+.app.asleep .act[data-a=sleep]{background:#FFD25A}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media (prefers-reduced-motion:reduce){
+  .pet,.pet.happy,.strip,.pet .strip,.cloud,.app.asleep .zz,.app.asleep .star,.segs i.pop{animation:none!important}
+  .sky.night,.sun,.moon,.star{transition:opacity 200ms linear}
+  .fx,.berry{display:none}
+}
+</style>
+</head>
+<body>
+<main class="app" id="app">
+  <section class="scene" aria-label="Tuft's meadow">
+    <div class="sky"></div><div class="sky night"></div>
+    <div class="sun"></div><svg class="moon" viewBox="0 0 8 8" shape-rendering="crispEdges" aria-hidden="true"><path fill="#F6EBD3" d="M2 0h4v1h-4zM1 1h3v1h-3zM0 2h3v1h-3zM0 3h3v1h-3zM0 4h3v1h-3zM0 5h3v1h-3zM1 6h3v1h-3zM2 7h4v1h-4z"/></svg>
+    <div class="cloud a"></div><div class="cloud b"></div>
+    <div class="star" style="left:120px;top:176px"></div><div class="star" style="left:212px;top:150px"></div><div class="star" style="left:300px;top:204px"></div><div class="star" style="left:164px;top:240px"></div><div class="star" style="left:340px;top:148px"></div><div class="star" style="left:28px;top:220px"></div>
+    <header class="top"><h1>Tuft</h1><span class="age">day 12</span><span class="clock" id="clock">18:40</span></header>
+    <p class="mood" id="mood">cosy and curious</p>
+    <div class="pet" id="pet" role="img" aria-label="Tuft, a round peach creature with a leaf sprout, looking around"><div class="window"><svg class="strip" id="strip" viewBox="0 0 32 14" width="384" height="168" shape-rendering="crispEdges" aria-hidden="true"></svg></div></div>
+    <span class="zz" aria-hidden="true">z Z</span>
+    <div class="ground"></div>
+  </section>
+  <section class="panel" aria-label="Needs">
+    <div class="meter" style="--c:var(--fed)"><svg viewBox="0 0 5 5" shape-rendering="crispEdges" aria-hidden="true"><path fill="#4FA35A" d="M2 0h1v1H2z"/><path fill="#E07A2E" d="M1 1h3v1h1v2H4v1H1V4H0V2h1z"/></svg><span class="lab" id="l-fed">Fed</span><div class="segs" role="meter" aria-labelledby="l-fed" aria-valuemin="0" aria-valuemax="10" data-k="fed"></div><span class="val" data-v="fed"></span></div>
+    <div class="meter" style="--c:var(--joy)"><svg viewBox="0 0 5 5" shape-rendering="crispEdges" aria-hidden="true"><path fill="#D9487A" d="M0 1h1V0h1v1h1V0h1v1h1v2H4v1H3v1H2V4H1V3H0z"/></svg><span class="lab" id="l-joy">Joy</span><div class="segs" role="meter" aria-labelledby="l-joy" aria-valuemin="0" aria-valuemax="10" data-k="joy"></div><span class="val" data-v="joy"></span></div>
+    <div class="meter" style="--c:var(--energy)"><svg viewBox="0 0 5 5" shape-rendering="crispEdges" aria-hidden="true"><path fill="#2E8C86" d="M2 0h2v1H3v1h2v1H4v1H3v1H1V4h1V3H0V2h1V1h1z"/></svg><span class="lab" id="l-energy">Energy</span><div class="segs" role="meter" aria-labelledby="l-energy" aria-valuemin="0" aria-valuemax="10" data-k="energy"></div><span class="val" data-v="energy"></span></div>
+  </section>
+  <ol class="log" id="log" aria-label="What happened" aria-live="polite"></ol>
+  <nav class="actions" aria-label="Care">
+    <button class="act" data-a="feed"><svg viewBox="0 0 9 9" shape-rendering="crispEdges" aria-hidden="true"><path fill="#4FA35A" d="M4 0h2v1H5v1H4z"/><path fill="currentColor" d="M2 2h5v1h1v4H7v1H2V7H1V3h1z"/><path fill="#fff" d="M3 3h1v1H3z"/></svg>Feed</button>
+    <button class="act" data-a="play"><svg viewBox="0 0 9 9" shape-rendering="crispEdges" aria-hidden="true"><path fill="currentColor" d="M3 1h3v1h1v1h1v3H7v1H6v1H3V7H2V6H1V3h1V2h1z"/><path fill="#F6EBD3" d="M3 3h1v1H3zM5 5h1v1H5z"/></svg>Play</button>
+    <button class="act" data-a="sleep" aria-pressed="false"><svg viewBox="0 0 9 9" shape-rendering="crispEdges" aria-hidden="true"><path fill="currentColor" d="M3 1h3v1H5v1H4v3h1v1h3v1H7v1H3V7H2V6H1V3h1V2h1z"/></svg><span id="sleep-l">Sleep</span></button>
+  </nav>
+</main>
+<script>
+(() => {
+  const C = { o:'#2B1E3A', b:'#F2A65A', l:'#FBE3B6', e:'#2B1E3A', w:'#FFFFFF', c:'#EC6F8C', m:'#6B2340', p:'#EC6F8C', s:'#4FA35A' };
+  const base = ['......ss.ss.....','........s.......','.....oooooo.....','...oobbbbbboo...','..obbbbbbbbbbo..','.obbbbbbbbbbbbo.','.obbwebbbbwebbo.','.obbeebbbbeebbo.','.obcbbbmmbbbcbo.','.obbbbllllbbbbo.','.obbbllllllbbbo.','..obbllllllbbo..','...oobbbbbboo...','....oo....oo....'];
+  const edit = (rows) => base.map((r, i) => rows[i] || r);
+  const F = {
+    idle: [base, edit({ 6: '.obbbbbbbbbbbbo.', 7: '.obbeebbbbeebbo.' })],
+    happy: [edit({ 6: '.obbeebbbbeebbo.', 7: '.obebbebbebbebo.', 8: '.obcbbmmmmbbcbo.', 9: '.obbbblpplbbbbo.' }),
+            edit({ 0: '.....ss...ss....', 6: '.obbeebbbbeebbo.', 7: '.obebbebbebbebo.', 8: '.obcbbbmmbbbcbo.' })],
+    eat: [edit({ 8: '.obcbbmmmmbbcbo.', 9: '.obbbblmmlbbbbo.' }), edit({ 8: '.occbbbmmbbbcco.', 7: '.obbeebbbbeebbo.' })],
+    sleep: [edit({ 6: '.obbbbbbbbbbbbo.', 7: '.obeeebbbbeeebo.', 8: '.obcbbbbbbbbcbo.' }),
+            edit({ 0: '................', 1: '......sssss.....', 6: '.obbbbbbbbbbbbo.', 7: '.obeeebbbbeeebo.', 8: '.obcbbbbbbbbcbo.' })]
+  };
+  const svg = (frames) => frames.map((rows, f) => rows.map((r, y) => {
+    let out = '', x = 0;
+    while (x < r.length) { const ch = r[x]; let n = 1; while (r[x + n] === ch) n++; if (ch !== '.') out += `<path fill="${C[ch]}" d="M${f * 16 + x} ${y}h${n}v1h-${n}z"/>`; x += n; }
+    return out;
+  }).join('')).join('');
+  const app = document.getElementById('app'), pet = document.getElementById('pet'), strip = document.getElementById('strip');
+  const mood = document.getElementById('mood'), clock = document.getElementById('clock'), log = document.getElementById('log');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const s = { fed: 6, joy: 7, energy: 5, asleep: false, min: 18 * 60, day: 12 };
+  let back = 0;
+  const pose = (name, label) => {
+    strip.innerHTML = svg(F[name]); pet.className = 'pet' + (name === 'idle' ? '' : ' ' + name);
+    pet.setAttribute('aria-label', 'Tuft, ' + label);
+  };
+  const t = () => String(Math.floor(s.min / 60) % 24).padStart(2, '0') + ':' + String(s.min % 60).padStart(2, '0');
+  const say = (msg) => {
+    const li = document.createElement('li'); li.innerHTML = `<time>${t()}</time><span></span>`; li.lastChild.textContent = msg;
+    log.prepend(li); while (log.children.length > 3) log.lastChild.remove();
+  };
+  const draw = (changed) => {
+    document.querySelectorAll('.segs').forEach((el) => {
+      const k = el.dataset.k, v = s[k];
+      if (!el.children.length) el.innerHTML = '<i></i>'.repeat(10);
+      [...el.children].forEach((i, n) => { const on = n < v; if (on && !i.classList.contains('on') && changed === k) { i.classList.remove('pop'); void i.offsetWidth; i.classList.add('pop'); } i.classList.toggle('on', on); });
+      el.setAttribute('aria-valuenow', v); el.setAttribute('aria-valuetext', v + ' of 10');
+      document.querySelector(`[data-v=${k}]`).textContent = v + '/10';
+    });
+    mood.textContent = s.asleep ? 'dreaming of berries' : s.fed < 4 ? 'a little peckish' : s.energy < 3 ? 'getting sleepy' : s.joy > 8 ? 'bouncy and bright' : 'cosy and curious';
+    clock.textContent = t();
+  };
+  const settle = (ms) => { clearTimeout(back); back = setTimeout(() => { if (!s.asleep) pose('idle', 'looking around'); }, ms); };
+  const fx = (kind) => {
+    if (reduce) return;
+    if (kind === 'berry') {
+      const b = document.createElement('div'); b.className = 'berry';
+      b.innerHTML = '<svg viewBox="0 0 6 6" width="24" height="24" shape-rendering="crispEdges"><path fill="#4FA35A" d="M3 0h1v1H3z"/><path fill="#E07A2E" d="M1 1h4v1h1v3H5v1H1V5H0V2h1z"/><path fill="#fff" d="M1 2h1v1H1z"/></svg>';
+      document.querySelector('.scene').append(b); setTimeout(() => b.remove(), 700); return;
+    }
+    [0, 1, 2].forEach((n) => setTimeout(() => {
+      const h = document.createElement('div'); h.className = 'fx';
+      h.style.left = 140 + n * 44 + 'px'; h.style.top = 210 - (n % 2) * 16 + 'px';
+      h.innerHTML = '<svg viewBox="0 0 7 6" width="28" height="24" shape-rendering="crispEdges"><path fill="#D9487A" d="M1 0h2v1h1V0h2v1h1v2H6v1H5v1H4v1H3V5H2V4H1V3H0V1h1z"/></svg>';
+      document.querySelector('.scene').append(h); setTimeout(() => h.remove(), 1000);
+    }, n * 140));
+  };
+  const act = (a) => {
+    s.min += 6;
+    if (a === 'sleep') {
+      s.asleep = !s.asleep; app.classList.toggle('asleep', s.asleep);
+      const b = document.querySelector('[data-a=sleep]'); b.setAttribute('aria-pressed', s.asleep); document.getElementById('sleep-l').textContent = s.asleep ? 'Wake' : 'Sleep';
+      if (s.asleep) { pose('sleep', 'curled up asleep'); say('Tuft curled up under the moon.'); }
+      else { s.min = (Math.floor(s.min / 1440) + 1) * 1440 + 444; s.day++; document.querySelector('.age').textContent = 'day ' + s.day; pose('happy', 'stretching awake'); say('Morning! Tuft stretched, energy ' + s.energy + '/10.'); fx('hearts'); settle(1900); }
+    } else if (s.asleep) { say('Shh. Tuft is dreaming. Wake first?'); }
+    else if (a === 'feed') {
+      if (s.fed >= 10) { pose('happy', 'patting a full tummy'); say('Tuft is full and patted its tummy.'); }
+      else { s.fed = Math.min(10, s.fed + 3); pose('eat', 'munching a sunberry'); say('Tuft munched a sunberry.'); fx('berry'); }
+      settle(1800);
+    } else if (a === 'play') {
+      if (s.energy <= 1) { s.joy = Math.min(10, s.joy + 1); say('Tuft yawned mid-game. A nap would help.'); pose('idle', 'yawning'); }
+      else { s.joy = Math.min(10, s.joy + 3); s.energy -= 1; pose('happy', 'hopping with joy'); say('Tuft chased the pebble. Joy ' + s.joy + '/10.'); fx('hearts'); settle(1920); }
+    }
+    draw(a === 'feed' ? 'fed' : a === 'play' ? 'joy' : 'energy');
+  };
+  document.querySelectorAll('.act').forEach((b) => b.addEventListener('click', () => act(b.dataset.a)));
+  setInterval(() => {
+    s.min += 1;
+    if (s.asleep) { if (s.energy < 10) { s.energy++; draw('energy'); return; } }
+    else if (s.min % 20 === 0) { if (s.fed > 3) s.fed--; else if (s.joy > 3) s.joy--; }
+    draw();
+  }, 1500);
+  say('Tuft woke from a nap by the pond.'); s.min += 18; say('Tuft found a shiny pebble.'); s.min += 22; say('Tuft is watching the clouds.');
+  pose('idle', 'looking around'); draw();
+})();
+</script>
+</body>
+</html>

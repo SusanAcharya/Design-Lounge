@@ -1,0 +1,218 @@
+<!-- Design Lounge piece: kids-parent-gate · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Burrow parental gate</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Mona+Sans:wdth,wght@75..125,400..900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --butter:#FBE8BE;--plate:#FFFCF4;--line:#EAD9B3;--ink:#24203A;--ink-2:#4B4660;
+  --tomato:#EF6A47;--tomato-d:#B9432A;--teal:#1F9C8F;--teal-d:#167267;--cobalt:#3D63D6;--cobalt-d:#2B48A6;--sun:#FFC94A;
+  --ok:#1F7A55;--off:#8C8496;--scrim:rgba(36,32,58,.45);
+  --sans:"Mona Sans",system-ui,sans-serif;
+  --r-tile:32px;--r-sheet:32px;--r-key:20px;--r-pill:999px;--hit:64px;
+  --lip:0 5px 0 rgba(36,32,58,.14);--sheet-sh:0 -14px 40px rgba(36,32,58,.22);
+  --ease:cubic-bezier(.2,.7,.2,1);--sheet-ease:cubic-bezier(.32,.72,0,1);--spring:cubic-bezier(.34,1.56,.64,1);
+  --t-micro:160ms;--t-layout:320ms;--t-sheet:420ms;--hold:3000ms;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--butter);color:var(--ink);font:500 16px/1.35 var(--sans);overflow:hidden;-webkit-font-smoothing:antialiased;user-select:none;-webkit-user-select:none}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none;padding:0}
+:focus-visible{outline:4px solid var(--ink);outline-offset:4px}
+.home{max-width:390px;height:100%;margin:0 auto;padding:54px 16px 34px;display:flex;flex-direction:column;gap:12px}
+.top{display:flex;align-items:center;justify-content:space-between;height:64px}
+.kid{display:flex;align-items:center;gap:10px;font:800 24px/1 var(--sans);font-stretch:125%;letter-spacing:-.01em}
+.kid svg{width:56px;height:56px}
+.parents{height:var(--hit);padding:0 22px 0 18px;border-radius:var(--r-pill);background:var(--plate);box-shadow:var(--lip);display:flex;align-items:center;gap:8px;font:700 17px/1 var(--sans);white-space:nowrap}
+.parents svg{width:22px;height:22px}
+.tile{position:relative;border-radius:var(--r-tile);overflow:hidden;display:block;width:100%;text-align:left;transition:transform var(--t-micro) var(--spring)}
+.tile:active{transform:scale(.97)}
+.tile svg.art{position:absolute;inset:0;width:100%;height:100%}
+.tile .lab{position:absolute;left:14px;bottom:14px;height:56px;padding:0 22px;border-radius:var(--r-pill);background:var(--plate);display:flex;align-items:center;font:800 26px/1 var(--sans);font-stretch:125%;letter-spacing:-.01em;box-shadow:var(--lip)}
+.big{height:240px;background:var(--tomato);box-shadow:0 6px 0 var(--tomato-d)}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.duo .tile{height:210px}
+.draw{background:var(--teal);box-shadow:0 6px 0 var(--teal-d)}
+.sound{background:var(--cobalt);box-shadow:0 6px 0 var(--cobalt-d)}
+.pack{display:flex;align-items:center;gap:12px;height:118px;padding:0 14px;border-radius:28px;background:var(--plate);box-shadow:var(--lip)}
+.pack svg{width:84px;height:84px;flex:none}
+.pack div{flex:1;min-width:0}
+.pack b{display:block;font:800 20px/1.1 var(--sans);font-stretch:112%}
+.pack span{display:block;font-size:15px;color:var(--ink-2);margin-top:4px;white-space:nowrap}
+.get{height:var(--hit);min-width:104px;padding:0 16px;border-radius:var(--r-pill);background:var(--ink);color:var(--plate);display:flex;align-items:center;justify-content:center;gap:6px;font:700 17px/1 var(--sans);white-space:nowrap}
+.get svg{width:18px;height:18px}
+.scrim{position:fixed;inset:0;background:var(--scrim);opacity:0;visibility:hidden;transition:opacity var(--t-sheet) var(--ease),visibility 0s var(--t-sheet)}
+.scrim.on{opacity:1;visibility:visible;transition:opacity var(--t-sheet) var(--ease)}
+.sheet{position:fixed;left:50%;bottom:0;width:100%;max-width:390px;height:500px;transform:translate(-50%,104%);visibility:hidden;background:var(--plate);border-radius:var(--r-sheet) var(--r-sheet) 0 0;box-shadow:var(--sheet-sh);padding:22px 24px 34px;display:flex;flex-direction:column;transition:transform var(--t-sheet) var(--sheet-ease),visibility 0s var(--t-sheet)}
+.sheet.on{transform:translate(-50%,0);visibility:visible;transition:transform var(--t-sheet) var(--sheet-ease)}
+.instant,.instant *{transition:none!important}
+.sh-top{display:flex;align-items:flex-start;gap:12px}
+.sh-top div{flex:1}
+.kick{display:block;font:700 13px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--tomato-d)}
+.sheet h2{margin:8px 0 0;font:800 27px/1.1 var(--sans);font-stretch:110%;letter-spacing:-.015em}
+.x{width:var(--hit);height:var(--hit);flex:none;margin:-6px -8px 0 0;border-radius:50%;background:#F3EAD7;display:grid;place-items:center}
+.x svg{width:24px;height:24px}
+.seg{margin-top:14px;display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:4px;height:60px;border-radius:var(--r-pill);background:#F3EAD7}
+.seg button{border-radius:var(--r-pill);font:700 16px/1 var(--sans);color:var(--ink-2)}
+.seg button[aria-selected="true"]{background:var(--plate);color:var(--ink);box-shadow:0 2px 0 rgba(36,32,58,.12)}
+.panel{flex:1;display:flex;flex-direction:column;align-items:center;margin-top:14px}
+.panel[hidden]{display:none}
+.hold{position:relative;width:230px;height:230px;margin-top:2px;touch-action:none}
+.hold svg.ring{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}
+.ring .track{fill:none;stroke:#F3EAD7;stroke-width:14}
+.ring .fill{fill:none;stroke:var(--tomato);stroke-width:14;stroke-linecap:round;stroke-dasharray:628.3;stroke-dashoffset:628.3}
+.dot{position:absolute;width:72px;height:72px;margin:-36px 0 0 -36px;border-radius:50%;background:var(--ink);box-shadow:0 5px 0 #0F0C1F;transition:transform var(--t-micro) var(--spring),background var(--t-micro)}
+.dot::after{content:"";position:absolute;inset:24px;border-radius:50%;background:var(--plate);opacity:.9}
+.dot.on{transform:scale(.9);background:var(--tomato-d);box-shadow:0 2px 0 #7A2A18}
+.dot.on::after{background:var(--sun)}
+.hint{margin:8px 0 0;font:600 16px/1.35 var(--sans);color:var(--ink-2);text-align:center;min-height:44px;max-width:300px}
+.hint b{color:var(--ink);font-variant-numeric:tabular-nums}
+.q{margin:4px 0 0;font:800 32px/1.1 var(--sans);font-stretch:112%;letter-spacing:-.01em;text-align:center}
+.ans{margin-top:10px;width:180px;height:64px;border-radius:18px;border:2px solid #9A8F7A;display:flex;align-items:center;justify-content:center;font:800 32px/1 var(--sans);font-variant-numeric:tabular-nums;letter-spacing:.1em;color:var(--ink)}
+.ans:empty::before{content:"?";color:var(--ink-2)}
+.pad{margin-top:14px;display:grid;grid-template-columns:repeat(5,1fr);gap:8px;width:100%}
+.pad button{height:64px;border-radius:var(--r-key);background:#F3EAD7;font:700 24px/1 var(--sans);box-shadow:0 3px 0 var(--line)}
+.pad button:active{transform:translateY(2px);box-shadow:none}
+.grown{position:fixed;inset:0;max-width:390px;margin:0 auto;background:#F6F1E6;padding:54px 16px 34px;overflow-y:auto;transform:translateX(104%);visibility:hidden;transition:transform var(--t-sheet) var(--sheet-ease),visibility 0s var(--t-sheet)}
+.grown.on{transform:none;visibility:visible;transition:transform var(--t-sheet) var(--sheet-ease)}
+.g-top{display:flex;align-items:center;justify-content:space-between;height:64px}
+.g-top h2{margin:0;font:800 30px/1 var(--sans);letter-spacing:-.02em}
+.done{height:52px;padding:0 22px;border-radius:var(--r-pill);background:var(--ink);color:var(--plate);font:700 16px/1 var(--sans)}
+.card{margin-top:14px;padding:18px;border-radius:24px;background:var(--plate);border:1px solid var(--line)}
+.card.flash{animation:flash 1.2s var(--ease)}
+.card h3{margin:0;font:700 13px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2)}
+.use{display:flex;align-items:baseline;gap:8px;margin-top:12px}
+.use b{font:800 34px/1 var(--sans);font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.use span{font-size:15px;color:var(--ink-2)}
+.bar{margin-top:10px;height:10px;border-radius:5px;background:#EFE6D2;overflow:hidden}
+.bar i{display:block;height:100%;width:75%;border-radius:5px;background:var(--teal);transition:width var(--t-layout) var(--ease)}
+.limit{margin-top:14px;display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.limit button{height:48px;border-radius:14px;border:1.5px solid var(--line);font:700 15px/1 var(--sans);white-space:nowrap}
+.limit button[aria-pressed="true"]{background:var(--ink);color:var(--plate);border-color:var(--ink)}
+.rowt{display:flex;align-items:center;gap:12px;min-height:60px;margin-top:8px;border-top:1px solid #EFE6D2;padding-top:8px}
+.rowt div{flex:1}
+.rowt b{display:block;font-weight:700;font-size:16px}
+.rowt span{display:block;font-size:14px;color:var(--ink-2);margin-top:2px}
+.sw{position:relative;width:60px;height:36px;flex:none;border-radius:18px;background:var(--off);transition:background var(--t-micro)}
+.sw::after{content:"";position:absolute;left:3px;top:3px;width:30px;height:30px;border-radius:50%;background:#fff;transition:transform var(--t-layout) var(--spring)}
+.sw[aria-checked="true"]{background:var(--ok)}
+.sw[aria-checked="true"]::after{transform:translateX(24px)}
+.buy{height:48px;padding:0 18px;border-radius:var(--r-pill);background:var(--ink);color:var(--plate);font:700 15px/1 var(--sans);white-space:nowrap}
+.buy:disabled{background:#E6DCC6;color:#5A5468;cursor:default}
+.note{margin:12px 2px 0;font-size:14px;color:var(--ink-2)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@keyframes flash{0%,60%{box-shadow:0 0 0 4px var(--sun)}100%{box-shadow:0 0 0 0 var(--sun)}}
+@media (prefers-reduced-motion:reduce){
+  .sheet,.sheet.on,.grown,.grown.on{transition:opacity 200ms,visibility 0s;transform:translate(-50%,0)}
+  .grown,.grown.on{transform:none}
+  .sheet:not(.on),.grown:not(.on){opacity:0}
+  .card.flash{animation:none;box-shadow:0 0 0 4px var(--sun)}
+  .tile,.dot,.sw::after{transition:none}
+}
+</style>
+</head>
+<body>
+<main class="home" id="home">
+  <div class="top">
+    <div class="kid"><svg viewBox="0 0 56 56" aria-hidden="true"><circle cx="28" cy="28" r="28" fill="var(--sun)"/><path d="M13 22l5-11 8 8M43 22l-5-11-8 8" fill="#E2793C"/><ellipse cx="28" cy="32" rx="16" ry="14" fill="#E2793C"/><path d="M18 36q10 10 20 0q-10-4-20 0z" fill="#FFF3E0"/><circle cx="22" cy="29" r="2.6" fill="#24203A"/><circle cx="34" cy="29" r="2.6" fill="#24203A"/><circle cx="28" cy="37" r="2.4" fill="#24203A"/></svg>Juno</div>
+    <button class="parents" id="parentsBtn" type="button" aria-haspopup="dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>Parents</button>
+  </div>
+  <button class="tile big" type="button"><svg class="art" viewBox="0 0 358 240" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><circle cx="292" cy="62" r="34" fill="#FFE7A6"/><circle cx="306" cy="52" r="30" fill="var(--tomato)"/><path d="M60 40l4 9 9 1-7 6 2 9-8-5-8 5 2-9-7-6 9-1zM232 112l3 6 6 1-5 4 1 6-5-3-5 3 1-6-5-4 6-1z" fill="#FFE7A6"/><path d="M96 196c30-18 62-18 84-6 22-12 54-12 84 6V100c-30-18-62-18-84-6-22-12-54-12-84 6z" fill="var(--plate)"/><path d="M180 94v96" stroke="#E9C9B8" stroke-width="4"/><path d="M112 118c18-8 36-8 52-2M112 138c18-8 36-8 52-2M196 116c16-6 34-6 52 2M196 136c16-6 34-6 52 2" stroke="#F2B49F" stroke-width="5" stroke-linecap="round"/></svg><span class="lab">Stories</span></button>
+  <div class="duo">
+    <button class="tile draw" type="button"><svg class="art" viewBox="0 0 173 210" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><path d="M24 70c24-30 50 10 76-14s40-6 50 6" fill="none" stroke="#9FE3D8" stroke-width="7" stroke-linecap="round"/><g transform="rotate(-24 86 100)"><rect x="46" y="60" width="22" height="84" rx="6" fill="var(--sun)"/><path d="M46 60l11-22 11 22z" fill="var(--sun)"/><rect x="76" y="70" width="22" height="84" rx="6" fill="var(--tomato)"/><path d="M76 70l11-22 11 22z" fill="var(--tomato)"/><rect x="106" y="60" width="22" height="84" rx="6" fill="var(--plate)"/><path d="M106 60l11-22 11 22z" fill="var(--plate)"/></g></svg><span class="lab">Draw</span></button>
+    <button class="tile sound" type="button"><svg class="art" viewBox="0 0 173 210" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><path d="M40 40l40 46M134 40l-40 46" stroke="var(--plate)" stroke-width="7" stroke-linecap="round"/><circle cx="40" cy="38" r="9" fill="var(--sun)"/><circle cx="134" cy="38" r="9" fill="var(--sun)"/><ellipse cx="87" cy="96" rx="52" ry="16" fill="var(--plate)"/><path d="M35 96v40c0 9 23 16 52 16s52-7 52-16V96c0 9-23 16-52 16s-52-7-52-16z" fill="var(--tomato)"/><path d="M45 110l20 36 22-34 22 34 20-36" fill="none" stroke="var(--sun)" stroke-width="5" stroke-linejoin="round"/></svg><span class="lab">Sounds</span></button>
+  </div>
+  <div class="pack">
+    <svg viewBox="0 0 84 84" aria-hidden="true"><rect width="84" height="84" rx="22" fill="#CFE6F2"/><path d="M0 58c14-8 28 8 42 0s28 8 42 0v26H0z" fill="#7FB6D8"/><path d="M20 38c10-12 30-12 40 0-10 12-30 12-40 0zM60 38l10-8v16z" fill="var(--tomato)"/><circle cx="30" cy="36" r="3" fill="#24203A"/></svg>
+    <div><b>Ocean pack</b><span>6 new stories</span></div>
+    <button class="get" id="buyBtn" type="button" aria-haspopup="dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>£2.99</button>
+  </div>
+</main>
+
+<div class="scrim" id="scrim"></div>
+<section class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="gTitle">
+  <div class="sh-top"><div><span class="kick">For grown-ups</span><h2 id="gTitle">Hold the three dots</h2></div>
+    <button class="x" id="closeG" type="button" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+  <div class="seg" role="tablist" aria-label="Check method">
+    <button type="button" role="tab" id="tHold" aria-selected="true" aria-controls="pHold">Hold</button>
+    <button type="button" role="tab" id="tSum" aria-selected="false" aria-controls="pSum">Sum</button>
+  </div>
+  <div class="panel" id="pHold" role="tabpanel" aria-labelledby="tHold">
+    <div class="hold" id="hold" tabindex="0" role="button" aria-label="Hold all three dots for 3 seconds. Keyboard: hold Space.">
+      <svg class="ring" viewBox="0 0 230 230" aria-hidden="true"><circle class="track" cx="115" cy="115" r="100"/><circle class="fill" id="fill" cx="115" cy="115" r="100"/></svg>
+      <span class="dot" style="left:115px;top:66px" data-d="0"></span>
+      <span class="dot" style="left:70px;top:146px" data-d="1"></span>
+      <span class="dot" style="left:160px;top:146px" data-d="2"></span>
+    </div>
+    <p class="hint" id="hint">Use three fingers, hold <b>3</b> seconds</p>
+  </div>
+  <div class="panel" id="pSum" role="tabpanel" aria-labelledby="tSum" hidden>
+    <p class="q" id="q">seven plus five</p>
+    <div class="ans" id="ans" role="status" aria-label="Your answer"></div>
+    <div class="pad" id="pad" aria-label="Number keys"></div>
+  </div>
+</section>
+
+<section class="grown" id="grown" role="dialog" aria-modal="true" aria-labelledby="pTitle">
+  <div class="g-top"><h2 id="pTitle">Grown-ups</h2><button class="done" id="doneBtn" type="button">Back to Burrow</button></div>
+  <div class="card"><h3>Screen time today</h3>
+    <div class="use"><b>34 min</b><span id="ofLimit">of 45 min</span></div>
+    <div class="bar"><i id="bar"></i></div>
+    <div class="limit" id="limit" role="group" aria-label="Daily limit"><button type="button" aria-pressed="false" data-m="30">30 min</button><button type="button" aria-pressed="true" data-m="45">45 min</button><button type="button" aria-pressed="false" data-m="60">1 hour</button><button type="button" aria-pressed="false" data-m="0">None</button></div>
+    <div class="rowt"><div><b>Wind-down at 7:30 pm</b><span>Stories only, then sleep</span></div><button class="sw" type="button" role="switch" aria-checked="true" aria-label="Wind-down at 7:30 pm"></button></div>
+  </div>
+  <div class="card" id="buyCard"><h3>Purchases</h3>
+    <div class="rowt" style="border:0;margin:0"><div><b>Allow purchases</b><span id="pState">Off. No one can buy.</span></div><button class="sw" id="allow" type="button" role="switch" aria-checked="false" aria-label="Allow purchases"></button></div>
+    <div class="rowt"><div><b>Ocean pack</b><span>6 stories · one-off £2.99</span></div><button class="buy" id="buy" type="button" disabled>Buy £2.99</button></div>
+    <p class="note">Burrow has no ads and no links out of the app.</p>
+  </div>
+  <div class="card"><h3>Child</h3>
+    <div class="rowt" style="border:0;margin:0"><svg width="48" height="48" viewBox="0 0 56 56" aria-hidden="true"><circle cx="28" cy="28" r="28" fill="var(--sun)"/><ellipse cx="28" cy="32" rx="16" ry="14" fill="#E2793C"/><circle cx="22" cy="29" r="2.6" fill="#24203A"/><circle cx="34" cy="29" r="2.6" fill="#24203A"/></svg><div><b>Juno, age 5</b><span>Read-to-me on · Pictures first</span></div></div>
+  </div>
+</section>
+<div class="sr" id="live" aria-live="polite"></div>
+<script>
+(()=>{
+const $=id=>document.getElementById(id);
+const W=['zero','one','two','three','four','five','six','seven','eight','nine'];
+const FINE=matchMedia('(pointer: fine)').matches,HOLD=3000,C=628.3;
+let p=0,last=0,raf=0,held=new Set(),key=false,taps=0,down=0,ans='',target=12,from='parents',opener=null;
+const sheet=$('sheet'),grown=$('grown'),home=$('home');
+function live(t){$('live').textContent=t}
+function setTab(sum){$('tHold').setAttribute('aria-selected',!sum);$('tSum').setAttribute('aria-selected',sum);$('pHold').hidden=sum;$('pSum').hidden=!sum;$('gTitle').textContent=sum?'Solve the sum':'Hold the three dots';if(sum)newSum()}
+function newSum(){const a=3+Math.floor(Math.random()*7),b=3+Math.floor(Math.random()*7);target=a+b;$('q').textContent=W[a]+' plus '+W[b];ans='';$('ans').textContent=''}
+function open(src,instant){from=src;opener=document.activeElement;reset();setTab(false);if(instant){sheet.classList.add('instant');$('scrim').classList.add('instant')}sheet.classList.add('on');$('scrim').classList.add('on');home.inert=true;if(instant)requestAnimationFrame(()=>requestAnimationFrame(()=>{sheet.classList.remove('instant');$('scrim').classList.remove('instant')}));else setTimeout(()=>$('hold').focus({preventScroll:true}),60)}
+function close(){sheet.classList.remove('on');$('scrim').classList.remove('on');home.inert=false;reset();if(opener&&opener.focus)opener.focus({preventScroll:true})}
+function reset(){held.clear();key=false;p=0;taps=0;cancelAnimationFrame(raf);raf=0;paint()}
+function paint(){$('fill').style.strokeDashoffset=C*(1-p);document.querySelectorAll('.dot').forEach(d=>d.classList.toggle('on',held.has(+d.dataset.d)||key||(FINE&&held.size>0)));const n=Math.ceil(3-p*3-0.001);$('hint').innerHTML=p>0?(p>=1?'Thank you':'Keep holding, <b>'+n+'</b>'):'Use three fingers, hold <b>3</b> seconds'}
+function enough(){return key||held.size>=(FINE?1:3)}
+function tick(ts){const dt=Math.min(ts-(last||ts),50);last=ts;p=enough()?Math.min(1,p+dt/HOLD):Math.max(0,p-dt/400);paint();if(p>=1){raf=0;return pass()}if(p<=0&&!enough()){raf=0;return}raf=requestAnimationFrame(tick)}
+function run(){if(!raf){last=0;raf=requestAnimationFrame(tick)}}
+function pass(){live('Grown-up check passed.');setTimeout(()=>{sheet.classList.remove('on');$('scrim').classList.remove('on');reset();grown.classList.add('on');if(from==='buy'){const c=$('buyCard');c.classList.remove('flash');void c.offsetWidth;c.classList.add('flash');c.scrollIntoView({block:'nearest'})}setTimeout(()=>$('doneBtn').focus({preventScroll:true}),80)},260)}
+function calmFail(){setTimeout(close,300)}
+const hold=$('hold');
+hold.addEventListener('pointerdown',e=>{const d=e.target.closest('.dot');if(!d)return;e.preventDefault();hold.setPointerCapture&&hold.setPointerCapture(e.pointerId);held.add(+d.dataset.d);e.target._pid=e.pointerId;hold['p'+e.pointerId]=+d.dataset.d;if(held.size===1)down=performance.now();run()});
+const up=e=>{const d=hold['p'+e.pointerId];if(d===undefined)return;delete hold['p'+e.pointerId];held.delete(d);if(!held.size&&p<1){if(performance.now()-down<500&&++taps>=3)return calmFail()}run()};
+['pointerup','pointercancel'].forEach(t=>hold.addEventListener(t,up));
+hold.addEventListener('keydown',e=>{if(e.key===' '){e.preventDefault();if(!e.repeat){key=true;run()}}});
+hold.addEventListener('keyup',e=>{if(e.key===' '){key=false;run()}});
+$('pad').innerHTML=[1,2,3,4,5,6,7,8,9,0].map(n=>`<button type="button" data-n="${n}">${n}</button>`).join('');
+$('pad').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;ans+=b.dataset.n;$('ans').textContent=ans;if(ans.length>=String(target).length){if(+ans===target)pass();else calmFail()}});
+sheet.addEventListener('keydown',e=>{if(e.key==='Escape')close();if(!$('pSum').hidden&&/^[0-9]$/.test(e.key)){const b=$('pad').querySelector(`[data-n="${e.key}"]`);b&&b.click()}});
+$('tHold').onclick=()=>setTab(false);$('tSum').onclick=()=>setTab(true);
+$('closeG').onclick=close;$('scrim').onclick=close;
+$('parentsBtn').onclick=()=>open('parents');$('buyBtn').onclick=()=>open('buy');
+$('doneBtn').onclick=()=>{grown.classList.remove('on');home.inert=false;$('parentsBtn').focus({preventScroll:true})};
+grown.addEventListener('keydown',e=>{if(e.key==='Escape')$('doneBtn').click()});
+$('limit').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;$('limit').querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));const m=+b.dataset.m;$('ofLimit').textContent=m?'of '+(m===60?'1 hour':m+' min'):'no daily limit';$('bar').style.width=m?Math.min(100,34/m*100)+'%':'0%'});
+document.querySelectorAll('.sw').forEach(s=>s.addEventListener('click',()=>{const on=s.getAttribute('aria-checked')!=='true';s.setAttribute('aria-checked',on);if(s.id==='allow'){$('buy').disabled=!on;$('pState').textContent=on?'On. Each buy asks for your passcode.':'Off. No one can buy.'}}));
+$('buy').onclick=()=>{$('buy').textContent='Bought';$('buy').disabled=true;live('Ocean pack bought.')};
+open('parents',true);
+})();
+</script>
+</body>
+</html>

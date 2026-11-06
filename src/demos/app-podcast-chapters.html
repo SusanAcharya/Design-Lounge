@@ -1,0 +1,227 @@
+<!-- Design Lounge piece: app-podcast-chapters · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Slow Archive podcast player</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#17120F;--surface:#221B17;--surface-2:#2C231E;--line:#3A302A;
+  --text:#F1E9DF;--text-2:#B8ABA0;--accent:#F0925E;--accent-ink:#2A1209;--wave:#5A4C43;
+  --serif:"Instrument Serif",Georgia,serif;--sans:"DM Sans",system-ui,sans-serif;
+  --ease:cubic-bezier(.2,.7,.2,1);--sheet:cubic-bezier(.32,.72,0,1);--expo:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:400 14px/1.4 var(--sans);color:var(--text);background:radial-gradient(120% 60% at 50% 0,#2A1D16 0,var(--bg) 60%) var(--bg);-webkit-font-smoothing:antialiased;overflow:hidden}
+button{font:inherit;color:inherit;border:0;background:none;padding:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:10px}
+.app{max-width:430px;height:100%;margin:0 auto;padding:54px 16px 34px;display:flex;flex-direction:column}
+.bar{height:44px;display:flex;align-items:center;justify-content:space-between}
+.ib{width:44px;height:44px;display:grid;place-items:center;border-radius:50%}
+.ib svg{width:22px;height:22px}
+.bar p{margin:0;text-align:center;font-size:12px;color:var(--text-2);line-height:1.3}
+.bar p b{display:block;color:var(--text);font-weight:600;font-size:13px}
+.ep{display:grid;grid-template-columns:116px 1fr;gap:16px;align-items:center;margin-top:10px}
+.art{width:116px;height:116px;border-radius:16px;overflow:hidden;box-shadow:0 18px 40px -16px rgba(0,0,0,.7),inset 0 0 0 1px rgba(255,255,255,.06)}
+.art svg{display:block;width:100%;height:100%}
+.ep .k{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+.ep h1{margin:4px 0 6px;font:400 27px/1.02 var(--serif);letter-spacing:-.01em}
+.ep h1 i{font-style:italic}
+.ep .by{font-size:13px;color:var(--text-2)}
+/* transcript */
+.tx{margin-top:16px;background:var(--surface);border-radius:20px;padding:14px 16px 14px;height:150px;overflow:hidden;position:relative}
+.tx .h{display:flex;justify-content:space-between;align-items:center;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-2)}
+.tx .h span{display:flex;align-items:center;gap:6px}
+.tx .h i{width:6px;height:6px;border-radius:50%;background:var(--accent)}
+.playing .tx .h i{animation:live 1.6s var(--ease) infinite}
+@keyframes live{50%{opacity:.3}}
+.lines{margin-top:8px}
+.ln{margin:0;font-size:13px;color:var(--text-2);display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
+.ln.cur{font:400 21px/1.18 var(--serif);color:var(--text-2);-webkit-line-clamp:3;margin:5px 0}
+.ln.cur span{transition:color 200ms var(--ease)}
+.ln.cur span.s{color:var(--text)}
+.ln .who{font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin-right:6px;vertical-align:2px}
+.swap{animation:rise 320ms var(--expo)}
+@keyframes rise{from{transform:translateY(10px);opacity:.4}}
+/* chapters */
+.chh{display:flex;justify-content:space-between;align-items:baseline;margin:16px 4px 4px}
+.chh h2{margin:0;font:400 22px/1 var(--serif)}
+.chh span{font-size:12px;white-space:nowrap;min-width:64px;text-align:right;color:var(--text-2)}
+.chs{list-style:none;margin:0;padding:0;flex:1;min-height:0;overflow-y:auto;scrollbar-width:none}
+.chs::-webkit-scrollbar{display:none}
+.ch{width:100%;display:grid;grid-template-columns:28px 1fr auto;gap:10px;align-items:center;height:44px;padding:0 10px;border-radius:12px;text-align:left;position:relative;overflow:hidden}
+.ch .n{font-size:12px;color:var(--text-2);font-variant-numeric:tabular-nums}
+.ch .t{font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ch .d{font-size:12px;color:var(--text-2);font-variant-numeric:tabular-nums}
+.ch[aria-current=true]{background:var(--surface-2)}
+.ch[aria-current=true] .t{font-weight:600}
+.ch[aria-current=true] .n{color:var(--accent)}
+.ch .pg{position:absolute;left:0;bottom:0;height:2px;background:var(--accent);width:0}
+.ch:not([aria-current=true]) .pg{display:none}
+/* player */
+.pl{margin-top:8px}
+.wave{position:relative;height:56px;touch-action:none;cursor:pointer}
+.wave svg{width:100%;height:100%;display:block}
+.wave .knob{position:absolute;top:2px;bottom:2px;width:2px;margin-left:-1px;background:var(--text);border-radius:2px;pointer-events:none}
+.wave .knob::after{content:"";position:absolute;left:50%;top:-5px;width:10px;height:10px;margin-left:-5px;border-radius:50%;background:var(--text)}
+.knob:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:2px}
+.times{display:flex;justify-content:space-between;font-size:12px;color:var(--text-2);font-variant-numeric:tabular-nums;margin-top:4px}
+.times b{color:var(--text);font-weight:600}
+.ctl{display:grid;grid-template-columns:64px 1fr 72px 1fr 64px;align-items:center;justify-items:center;margin-top:8px;height:76px}
+.pill{height:36px;min-width:58px;padding:0 10px;border-radius:18px;border:1px solid #6E625A;font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;display:flex;align-items:center;justify-content:center;gap:5px;white-space:nowrap}
+.pill svg{width:15px;height:15px}
+.pill.on{background:var(--text);color:var(--bg);border-color:var(--text)}
+.skip{width:56px;height:56px;display:grid;place-items:center;position:relative;transition:transform 160ms var(--ease)}
+.skip svg{width:34px;height:34px}
+.skip b{position:absolute;font-size:11px;font-weight:600;top:50%;left:50%;transform:translate(-50%,-38%)}
+.skip.spin svg{animation:spin 360ms var(--expo)}
+@keyframes spin{from{transform:rotate(var(--r,-40deg))}}
+.play{width:72px;height:72px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;box-shadow:0 10px 28px -10px rgba(240,146,94,.7);transition:transform 160ms var(--ease)}
+.play:active,.skip:active{transform:scale(.92)}
+.play svg{width:30px;height:30px}
+/* sleep sheet */
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,.5);opacity:0;visibility:hidden;transition:opacity 240ms var(--ease),visibility 0s 240ms;z-index:4}
+.sheet{position:fixed;left:8px;right:8px;bottom:8px;max-width:414px;margin:0 auto;background:var(--surface-2);border-radius:28px;padding:18px 16px 30px;z-index:5;transform:translateY(110%);visibility:hidden;transition:transform 380ms var(--sheet),visibility 0s 380ms}
+.open .scrim{opacity:1;visibility:visible;transition-delay:0s}
+.open .sheet{transform:none;visibility:visible;transition:transform 380ms var(--sheet)}
+.sheet h3{margin:0 4px 10px;font:400 24px/1 var(--serif)}
+.sheet .opt{width:100%;height:48px;display:flex;justify-content:space-between;align-items:center;padding:0 12px;border-radius:14px;font-size:15px}
+.sheet .opt span{color:var(--text-2);font-size:13px}
+.sheet .opt[aria-checked=true]{background:var(--line)}
+.sheet .opt[aria-checked=true]::after{content:"";width:8px;height:8px;border-radius:50%;background:var(--accent)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:1ms!important}}
+</style>
+</head>
+<body>
+<div class="app playing" id="app">
+  <div class="bar">
+    <button class="ib" aria-label="Minimise player"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></button>
+    <p>Playing from<b>Slow Archive</b></p>
+    <button class="ib" aria-label="More"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="19" cy="12" r="1.8"/></svg></button>
+  </div>
+  <section class="ep">
+    <div class="art" aria-hidden="true"><svg viewBox="0 0 116 116">
+      <defs><linearGradient id="sk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1F3B3E"/><stop offset=".62" stop-color="#B9603D"/><stop offset="1" stop-color="#F0B27A"/></linearGradient></defs>
+      <rect width="116" height="116" fill="url(#sk)"/>
+      <circle cx="80" cy="74" r="17" fill="#F7D3A6"/>
+      <g fill="none" stroke="#F4E6D3" stroke-width="1.4" stroke-linecap="round" opacity=".9"><path d="M-4 30c22-10 38 8 60-2s36-10 64 0"/><path d="M-4 42c26-12 40 10 64-2s34-6 60 4"/><path d="M-4 56c20-6 30 6 50 0"/><path d="M58 52c14-5 26 0 40 8"/><path d="M-4 92c30-10 50 6 80-2s28-4 44 2"/></g>
+      <path d="M24 20l4 10 4-10-4 4z" fill="#F4E6D3"/><circle cx="28" cy="24" r="9" fill="none" stroke="#F4E6D3" stroke-width="1"/>
+      <text x="10" y="108" font-family="Instrument Serif" font-size="15" fill="#2A1209" font-style="italic">No. 48</text>
+    </svg></div>
+    <div><div class="k">Episode 48 · 6 Nov</div><h1>The cartographer who drew <i>the wind</i></h1><div class="by">Mara Lindqvist with Tomás Ruel</div></div>
+  </section>
+  <section class="tx" aria-labelledby="txh">
+    <div class="h"><span id="txh"><i></i>Transcript</span><span id="txt">17:42</span></div>
+    <div class="lines" id="lines" aria-live="off"></div>
+  </section>
+  <div class="chh"><h2>Chapters</h2><span id="chc">4 of 7</span></div>
+  <ol class="chs" id="chs" aria-label="Chapters"></ol>
+  <section class="pl">
+    <div class="wave" id="wave"><svg id="wsv" preserveAspectRatio="none" aria-hidden="true"></svg><div class="knob" id="knob" role="slider" tabindex="0" aria-label="Seek" aria-valuemin="0" aria-valuemax="2892" aria-valuenow="1062"></div></div>
+    <div class="times"><b id="tcur">17:42</b><span id="tch">Drawing what you can't see</span><span id="trem">−30:30</span></div>
+    <div class="ctl">
+      <button class="pill" id="speed" aria-label="Playback speed 1 times">1×</button>
+      <button class="skip" id="back" aria-label="Back 15 seconds" style="--r:40deg"><svg viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M9 9a11 11 0 1 1-3 8"/><path d="M9 4v5h5"/></svg><b>15</b></button>
+      <button class="play" id="play" aria-label="Pause"><svg viewBox="0 0 30 30" fill="currentColor" id="pi"><rect x="8" y="6" width="5" height="18" rx="1.5"/><rect x="17" y="6" width="5" height="18" rx="1.5"/></svg></button>
+      <button class="skip" id="fwd" aria-label="Forward 30 seconds"><svg viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M25 9a11 11 0 1 0 3 8"/><path d="M25 4v5h-5"/></svg><b>30</b></button>
+      <button class="pill" id="sleep" aria-haspopup="dialog" aria-label="Sleep timer off"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg><span id="sl">Off</span></button>
+    </div>
+  </section>
+  <div class="scrim" id="scrim"></div>
+  <section class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="slh">
+    <h3 id="slh">Sleep timer</h3>
+    <div role="radiogroup" aria-labelledby="slh" id="opts"></div>
+  </section>
+  <p class="sr" id="say" aria-live="polite"></p>
+</div>
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const DUR = 2892;
+  const CH = [[0,'Cold open'],[130,'A map with no coastlines'],[585,'The 1871 storm diaries'],[1025,"Drawing what you can't see"],[1590,'Sailors, kites and the first isobars'],[2090,'What the satellites got wrong'],[2535,'Listener letters']];
+  const C4 = [['Mara','So you are sitting in a reading room in Bergen with the storm diaries open.'],['Tomás','Yes, and every page is a person guessing at something they could only feel on their face.'],['Tomás','Nobody had drawn wind before as a shape, only as arrows, little flags on the coast.'],['Mara','And you decided the flags were the wrong way round.'],['Tomás','I decided the gaps between the flags were the interesting part.'],['Tomás','If two ships an hour apart both write "gale from the west", the gale is the line between them.'],['Mara','So the map is drawn in the places where nobody was standing.'],['Tomás','Exactly, it is a map of the inference, not the observation.'],['Mara','Which is a strange thing to sell to an admiralty in 1874.'],['Tomás','They hated it. They wanted coastlines, and I gave them weather.'],['Mara','Let us hear one of the letters he got back.'],['Tomás','"Sir, your chart is very beautiful and of no use whatever to a captain."']];
+  const OTHER = {0:['This is Slow Archive, I am Mara Lindqvist.','Today, a man who tried to draw something invisible.'],1:['The first maps Tomás showed me had no land on them at all.','Just lines, curling, like fingerprints.','He calls them his blank charts.'],2:['In the winter of 1871 a storm sat on the North Sea for nine days.','Forty ship logs survive from those nine days.','Tomás has read every one of them.'],4:['Kites changed everything.','For the first time someone measured wind above the deck.','The lines on his map finally had a second source.'],5:['The first satellite pictures made his charts look naive.','And then, slowly, they made them look right.'],6:['We got a lot of mail about the last episode.','Here are three of our favourites.']};
+  const TX = [];
+  CH.forEach(([s], i) => { const next = (CH[i + 1] || [DUR])[0];
+    if (i === 3) C4.forEach((l, k) => TX.push({ t: s + 6 + k * 9, w: l[0], s: l[1] }));
+    else { const L = OTHER[i]; L.forEach((x, k) => TX.push({ t: s + Math.round(k * (next - s) / L.length), w: i === 4 ? 'Tomás' : 'Mara', s: x })); } });
+  const SPEEDS = [1, 1.25, 1.5, 2, .8];
+  const SLEEP = [['Off', 0], ['15 minutes', 900], ['30 minutes', 1800], ['45 minutes', 2700], ['End of chapter', -1]];
+  let t = 1062, playing = true, si = 0, sleepLeft = 0, sleepMode = 0, last = 0, curS = -1, curC = -1;
+  const fmt = (s) => { s = Math.max(0, Math.round(s)); const h = Math.floor(s / 3600), m = Math.floor(s / 60) % 60, x = s % 60; return (h ? h + ':' + String(m).padStart(2, '0') : m) + ':' + String(x).padStart(2, '0'); };
+  // waveform
+  const N = 96, W = 358, H = 56, bw = W / N; let svg = '';
+  for (let i = 0; i < N; i++) { const at = i / N * DUR; const r = Math.abs(Math.sin(i * 12.9898) * 43758.5453) % 1;
+    const a = .28 + .55 * Math.abs(Math.sin(i * .37) * Math.cos(i * .11)) + .2 * r; const h = Math.min(46, Math.max(6, a * 44));
+    const gap = CH.some(c => c[0] > 0 && Math.abs(c[0] - at) < DUR / N * .9);
+    svg += gap ? '' : `<rect class="b" data-t="${at}" x="${(i * bw + .7).toFixed(1)}" y="${((H - h) / 2).toFixed(1)}" width="${(bw - 1.4).toFixed(1)}" height="${h.toFixed(1)}" rx="1"/>`; }
+  CH.slice(1).forEach(c => { svg += `<circle cx="${(c[0] / DUR * W).toFixed(1)}" cy="${H - 2}" r="2" fill="#B8ABA0"/>`; });
+  const wsv = $('wsv'); wsv.setAttribute('viewBox', `0 0 ${W} ${H}`); wsv.innerHTML = svg;
+  const bars = [...wsv.querySelectorAll('.b')];
+  $('chs').innerHTML = CH.map((c, i) => { const len = (CH[i + 1] || [DUR])[0] - c[0];
+    return `<li><button class="ch" data-i="${i}"><span class="n">${String(i + 1).padStart(2, '0')}</span><span class="t">${c[1]}</span><span class="d">${fmt(c[0])}</span><i class="pg"></i></button></li>`; }).join('');
+  const chBtns = [...document.querySelectorAll('.ch')];
+  $('opts').innerHTML = SLEEP.map((o, i) => `<button class="opt" role="radio" aria-checked="${i === 0}" data-i="${i}">${o[0]}<span>${i === 4 ? '<b id="eoc"></b>' : ''}</span></button>`).join('');
+  function chapterAt(x) { let i = 0; while (i < CH.length - 1 && CH[i + 1][0] <= x) i++; return i; }
+  function draw() {
+    const c = chapterAt(t), cs = CH[c][0], ce = (CH[c + 1] || [DUR])[0];
+    $('tcur').textContent = fmt(t); $('trem').textContent = '−' + fmt(DUR - t); $('txt').textContent = fmt(t);
+    $('knob').style.left = (t / DUR * 100) + '%';
+    const kb = $("knob"); kb.setAttribute("aria-valuenow", Math.round(t)); kb.setAttribute('aria-valuetext', `${fmt(t)} of ${fmt(DUR)}, chapter ${c + 1}, ${CH[c][1]}`);
+    bars.forEach(b => b.setAttribute('fill', +b.dataset.t < t ? '#F0925E' : (+b.dataset.t >= cs && +b.dataset.t < ce ? '#7A6A5F' : '#4A3E37')));
+    if (c !== curC) { curC = c; chBtns.forEach((b, i) => b.setAttribute('aria-current', i === c));
+      $('chc').textContent = `${c + 1} of ${CH.length}`; $('tch').textContent = CH[c][1];
+      chBtns[c].scrollIntoView({ block: 'nearest', behavior: 'smooth' }); }
+    chBtns[c].querySelector('.pg').style.width = ((t - cs) / (ce - cs) * 100) + '%';
+    let s = 0; while (s < TX.length - 1 && TX[s + 1].t <= t) s++;
+    const sEnd = (TX[s + 1] || { t: DUR }).t, words = TX[s].s.split(' ');
+    const said = Math.ceil(Math.min(1, (t - TX[s].t) / Math.min(8.5, sEnd - TX[s].t)) * words.length);
+    if (s !== curS) { curS = s; const p = TX[s - 1], n = TX[s + 1];
+      $('lines').innerHTML = `<p class="ln">${p ? p.s : ''}</p><p class="ln cur swap"><span class="who">${TX[s].w}</span>${words.map(w => `<span>${w} </span>`).join('')}</p><p class="ln">${n ? n.s : ''}</p>`; }
+    [...$('lines').querySelectorAll('.cur span:not(.who)')].forEach((w, i) => w.classList.toggle('s', i < said));
+    if (sleepMode) $('sl').textContent = sleepMode === 4 ? 'Chapter' : fmt(sleepLeft);
+  }
+  function setPlay(p) { playing = p; $('app').classList.toggle('playing', p); $('play').setAttribute('aria-label', p ? 'Pause' : 'Play');
+    $('pi').innerHTML = p ? '<rect x="8" y="6" width="5" height="18" rx="1.5"/><rect x="17" y="6" width="5" height="18" rx="1.5"/>' : '<path d="M10 6.5v17a1 1 0 0 0 1.5.9l13-8.5a1 1 0 0 0 0-1.8l-13-8.5A1 1 0 0 0 10 6.5z"/>';
+    if (p) { last = 0; requestAnimationFrame(tick); } }
+  function tick(now) { if (!playing) return; const dt = last ? Math.min(.1, (now - last) / 1000) : 0; last = now;
+    const before = chapterAt(t); t = Math.min(DUR, t + dt * SPEEDS[si]);
+    if (sleepMode && sleepMode !== 4) { sleepLeft -= dt; if (sleepLeft <= 0) { endSleep(); } }
+    if (sleepMode === 4 && chapterAt(t) !== before) endSleep();
+    if (t >= DUR) setPlay(false); draw(); if (playing) requestAnimationFrame(tick); }
+  function endSleep() { sleepMode = 0; $('sl').textContent = 'Off'; $('sleep').classList.remove('on'); setPlay(false); $('say').textContent = 'Sleep timer ended, paused'; }
+  const seek = (x) => { t = Math.max(0, Math.min(DUR, x)); draw(); };
+  const skip = (b, d) => { seek(t + d); b.classList.remove('spin'); void b.offsetWidth; b.classList.add('spin'); };
+  $('play').onclick = () => setPlay(!playing);
+  $('back').onclick = (e) => skip(e.currentTarget, -15);
+  $('fwd').onclick = (e) => skip(e.currentTarget, 30);
+  $('speed').onclick = (e) => { si = (si + 1) % SPEEDS.length; const v = SPEEDS[si]; e.currentTarget.textContent = v + '×'; e.currentTarget.classList.toggle('on', v !== 1); e.currentTarget.setAttribute('aria-label', `Playback speed ${v} times`); };
+  $('chs').onclick = (e) => { const b = e.target.closest('.ch'); if (b) { seek(CH[+b.dataset.i][0]); $('say').textContent = 'Chapter ' + (+b.dataset.i + 1) + ', ' + CH[+b.dataset.i][1]; } };
+  const wave = $('wave'); let drag = false;
+  const at = (e) => { const r = wave.getBoundingClientRect(); seek((e.clientX - r.left) / r.width * DUR); };
+  wave.addEventListener('pointerdown', (e) => { drag = true; wave.setPointerCapture(e.pointerId); at(e); });
+  wave.addEventListener('pointermove', (e) => { if (drag) at(e); });
+  wave.addEventListener('pointerup', () => { drag = false; });
+  $("knob").addEventListener("keydown", (e) => { const k = { ArrowRight: 5, ArrowLeft: -5, ArrowUp: 30, ArrowDown: -30 }[e.key];
+    if (k) { e.preventDefault(); seek(t + k); } else if (e.key === 'Home') seek(0); else if (e.key === 'End') seek(DUR - 1);
+    else if (e.key === 'PageDown' || e.key === 'PageUp') { e.preventDefault(); const c = chapterAt(t) + (e.key === 'PageDown' ? 1 : (t - CH[chapterAt(t)][0] < 3 ? -1 : 0)); seek(CH[Math.max(0, Math.min(CH.length - 1, c))][0]); } });
+  document.addEventListener('keydown', (e) => { if (e.key === ' ' && e.target === document.body) { e.preventDefault(); setPlay(!playing); } if (e.key === 'Escape') open(false); });
+  const app = $('app');
+  const open = (o) => { if (!o && !app.classList.contains('open')) return; if (o) { const c = chapterAt(t); $("eoc").textContent = "in " + fmt(((CH[c + 1] || [DUR])[0] - t) / SPEEDS[si]); } app.classList.toggle('open', o); if (o) setTimeout(() => $('opts').querySelector('[aria-checked=true]').focus(), 60); else $('sleep').focus(); };
+  $('sleep').onclick = () => open(true); $('scrim').onclick = () => open(false);
+  $('opts').onclick = (e) => { const b = e.target.closest('.opt'); if (!b) return; const i = +b.dataset.i;
+    $('opts').querySelectorAll('.opt').forEach(o => o.setAttribute('aria-checked', o === b));
+    sleepMode = i; sleepLeft = SLEEP[i][1]; $('sleep').classList.toggle('on', i > 0);
+    $('sl').textContent = i === 0 ? 'Off' : i === 4 ? 'Chapter' : fmt(sleepLeft);
+    $('sleep').setAttribute('aria-label', 'Sleep timer ' + SLEEP[i][0].toLowerCase()); $('say').textContent = 'Sleep timer ' + SLEEP[i][0];
+    setTimeout(() => open(false), 220); };
+  draw(); setPlay(true);
+})();
+</script>
+</body>
+</html>

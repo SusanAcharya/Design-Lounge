@@ -1,0 +1,224 @@
+<!-- Design Lounge piece: phone-picker-seat-map · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lumen · Choose seats</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Monoton&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#120e10;--surface:#1c1619;--raise:#261e22;--line:#3a3035;--ink:#f4ece2;--ink-2:#b9aba0;
+  --brass:#e0b252;--brass-ink:#1a1206;--rose:#d0698a;--rose-fill:#2c1a22;--rose-ink:#f3bfd0;--avail:#8f8189;--taken:#2e272b;
+  --mono:"JetBrains Mono",ui-monospace,monospace;--neon:"Monoton",system-ui,sans-serif;
+  --out:cubic-bezier(.16,1,.3,1);--pop:cubic-bezier(.34,1.56,.64,1);--ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:13px/1.4 var(--mono);color:var(--ink);background:var(--bg);overflow:hidden;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;border:0;background:none;padding:0;cursor:pointer;-webkit-tap-highlight-color:transparent}
+:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.app{position:relative;height:100%;max-width:430px;margin:0 auto;padding-top:54px;display:flex;flex-direction:column;overflow:hidden}
+
+.top{display:grid;grid-template-columns:44px minmax(0,1fr) 44px;align-items:center;gap:8px;padding:4px 16px 0;flex:none}
+.ib{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:var(--surface);border:1px solid var(--line)}
+.ib svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.top h1{margin:0;text-align:center;font:400 30px/1 var(--neon);color:var(--brass);letter-spacing:.04em;text-shadow:0 0 14px rgba(224,178,82,.35)}
+.top p{margin:7px 0 0;text-align:center;font-size:12px;line-height:1.35;color:var(--ink-2);white-space:nowrap}
+.top p b{display:block;color:var(--ink);font-weight:500;font-size:13px}
+
+.legend{display:flex;justify-content:space-between;padding:14px 16px 0;flex:none}
+.legend span{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:var(--ink-2);white-space:nowrap}
+.sw{width:14px;height:14px;border-radius:4px 4px 2px 2px;flex:none}
+.sw.a{border:2px solid var(--avail)}
+.sw.p{border:2px solid var(--rose);background:var(--rose-fill)}
+.sw.t{background:var(--taken);position:relative;overflow:hidden}
+.sw.t::after,.seat.t::after{content:"";position:absolute;left:50%;top:18%;bottom:18%;width:1.5px;background:#5e5358;transform:rotate(45deg)}
+.sw.s{background:var(--brass)}
+
+.screen{flex:none;margin:12px 16px 0;height:34px;position:relative}
+.screen svg{width:100%;height:34px;display:block}
+.screen span{position:absolute;left:0;right:0;top:15px;text-align:center;font-size:10px;letter-spacing:.3em;color:var(--ink-2)}
+
+.view{position:relative;flex:1;min-height:0;margin:2px 0 0;overflow:auto;display:grid;align-content:safe center;justify-content:safe center;scrollbar-width:none;overscroll-behavior:contain}
+.view::-webkit-scrollbar{display:none}
+.map{--p:20.5px;position:relative;display:grid;grid-template-columns:calc(var(--p)*.9) repeat(4,var(--p)) calc(var(--p)*.8) repeat(6,var(--p)) calc(var(--p)*.8) repeat(4,var(--p)) calc(var(--p)*.9);grid-auto-rows:calc(var(--p)*1.3);width:max-content;margin:0;padding:calc(var(--p)*.3) 0 calc(var(--p)*.6)}
+.map .gap{grid-column:1/-1;display:flex;align-items:center;gap:calc(var(--p)*.4);padding:0 calc(var(--p)*.9);font-size:calc(var(--p)*.4);letter-spacing:.14em;color:var(--rose-ink);white-space:nowrap}
+.map .gap::before,.map .gap::after{content:"";flex:1;height:1px;background:var(--line)}
+.rl{display:grid;place-items:center;font-size:calc(var(--p)*.46);font-weight:500;color:var(--ink-2)}
+.seat{position:relative;width:100%;height:100%}
+.seat::before{content:"";position:absolute;inset:calc(var(--p)*.13) calc(var(--p)*.1) calc(var(--p)*.17);border:calc(var(--p)*.09) solid var(--avail);border-radius:calc(var(--p)*.3) calc(var(--p)*.3) calc(var(--p)*.12) calc(var(--p)*.12);background:var(--bg);transition:background 140ms var(--ease),border-color 140ms var(--ease)}
+.seat span{position:absolute;inset:0 0 calc(var(--p)*.04);display:none;place-items:center;font-size:calc(var(--p)*.3);font-weight:500;color:var(--ink-2)}
+.z .seat span{display:grid}
+.seat.p::before{border-color:var(--rose);background:var(--rose-fill)}
+.seat.p span{color:var(--rose-ink)}
+.seat.t{cursor:not-allowed}
+.seat.t::before{border-color:transparent;background:var(--taken)}
+.seat.t::after{top:26%;bottom:30%;width:calc(var(--p)*.06)}
+.seat.t span{display:none!important}
+.seat:not(.t):hover::before{border-color:var(--ink)}
+.seat[aria-pressed=true]::before{background:var(--brass);border-color:var(--brass)}
+.seat[aria-pressed=true] span{color:var(--brass-ink);font-weight:700}
+.seat.pop::before{animation:pop 360ms var(--pop)}
+@keyframes pop{0%{scale:.7}55%{scale:1.22}100%{scale:1}}
+.seat.hint::before{animation:hint 900ms var(--ease) 2}
+@keyframes hint{50%{border-color:var(--brass);box-shadow:0 0 0 calc(var(--p)*.12) rgba(224,178,82,.28)}}
+
+.zo{position:absolute;right:16px;height:36px;padding:0 12px;border-radius:18px;background:var(--raise);border:1px solid var(--line);display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:500;visibility:hidden;opacity:0;transition:opacity 200ms var(--ease),visibility 0s 200ms}
+.zo svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+.zo.on{visibility:visible;opacity:1;transition:opacity 200ms var(--ease)}
+.tip{position:absolute;left:16px;height:36px;display:flex;align-items:center;font-size:12px;color:var(--ink-2);white-space:nowrap}
+.mapwrap{position:relative;flex:1;min-height:0;display:flex;flex-direction:column}
+.under{flex:none;height:44px;position:relative}
+.under .zo,.under .tip{top:4px}
+
+.sheet{flex:none;background:var(--surface);border-top:1px solid var(--line);border-radius:22px 22px 0 0;padding:14px 16px 34px}
+.best{width:100%;height:46px;border-radius:23px;border:1.5px solid var(--brass);color:var(--brass);display:flex;align-items:center;justify-content:center;gap:8px;font-weight:700;font-size:13px;transition:transform 160ms var(--pop),background 160ms var(--ease)}
+.best svg{width:18px;height:18px;fill:currentColor}
+.best:active{transform:scale(.97);background:rgba(224,178,82,.12)}
+.chips{display:flex;gap:6px;height:32px;margin:12px 0 0;overflow-x:auto;scrollbar-width:none;align-items:center}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;height:30px;padding:0 10px;border-radius:15px;background:var(--raise);border:1px solid var(--line);display:inline-flex;align-items:center;gap:6px;font-size:12px;white-space:nowrap}
+.chip b{color:var(--brass);font-weight:700}
+.chips .none{color:var(--ink-2);font-size:12px;white-space:nowrap}
+.tot{display:flex;align-items:center;justify-content:space-between;margin-top:12px;gap:12px}
+.tot div{min-width:110px}
+.tot strong{display:block;font-size:24px;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.tot small{display:block;font-size:11px;color:var(--ink-2);white-space:nowrap}
+.go{height:52px;flex:1;max-width:190px;border-radius:26px;background:var(--brass);color:var(--brass-ink);font-weight:700;font-size:14px;white-space:nowrap}
+.go:disabled{background:var(--raise);color:var(--ink-2);cursor:not-allowed;border:1px solid var(--line)}
+.go:not(:disabled):active{transform:scale(.97)}
+@media (prefers-reduced-motion:reduce){.seat.pop::before,.seat.hint::before{animation:none}.seat::before,.zo,.best{transition:none}}
+</style>
+</head>
+<body>
+<main class="app">
+  <header class="top">
+    <button class="ib" aria-label="Back to showtimes"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+    <div><h1>LUMEN</h1><p><b>The Lantern Keeper</b>Sat 7 Nov · 20:15 · Screen 3</p></div>
+    <button class="ib" aria-label="Screen 3 details"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg></button>
+  </header>
+  <div class="legend" aria-hidden="true">
+    <span><i class="sw a"></i>€12</span><span><i class="sw p"></i>Recliner €17</span><span><i class="sw t"></i>Taken</span><span><i class="sw s"></i>Yours</span>
+  </div>
+  <div class="screen" aria-hidden="true"><svg viewBox="0 0 358 34" preserveAspectRatio="none"><defs><linearGradient id="gl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4ece2" stop-opacity=".22"/><stop offset="1" stop-color="#f4ece2" stop-opacity="0"/></linearGradient></defs><path d="M8 12 Q179 -4 350 12 L340 34 Q179 18 18 34z" fill="url(#gl)"/><path d="M8 12 Q179 -4 350 12" fill="none" stroke="#f4ece2" stroke-width="2.5" stroke-linecap="round"/></svg><span>SCREEN</span></div>
+  <div class="mapwrap">
+    <div class="view" id="view"><div class="map" id="map" role="group" aria-label="Seat map, rows A to K. Front of the cinema at the top."></div></div>
+    <div class="under"><span class="tip" id="tip">Tap a block to zoom in</span><button class="zo" id="zo"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>All seats</button></div>
+  </div>
+  <section class="sheet" aria-label="Your seats">
+    <button class="best" id="best"><svg viewBox="0 0 24 24"><path d="M12 2l1.8 6.2L20 10l-6.2 1.8L12 18l-1.8-6.2L4 10l6.2-1.8z"/></svg>Best available for 2</button>
+    <div class="chips" id="chips"></div>
+    <div class="tot"><div><strong id="sum">€0.00</strong><small id="cnt">No seats yet</small></div><button class="go" id="go" disabled>Choose seats</button></div>
+  </section>
+  <p class="vh" aria-live="polite" id="live"></p>
+</main>
+<script>
+(() => {
+  const $ = (s) => document.querySelector(s);
+  const map = $('#map'), view = $('#view'), live = $('#live'), zo = $('#zo'), tip = $('#tip');
+  const rm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const ROWS = 'ABCDEFGHJK'.split(''), N = 14, MAX = 8;
+  const price = (r) => r >= 8 ? 17 : 12;
+  const TAKEN = new Set('A3 A4 B5 B6 B7 C1 C2 C9 C10 D6 D7 D8 E4 E5 E10 E11 E12 F5 F6 F9 F10 G6 G7 G8 G9 H2 H3 H8 J5 J6 J7 J10 K1 K2 K7 K8 K13 K14'.split(' '));
+  const sel = [];
+  let html = '';
+  ROWS.forEach((r, ri) => {
+    if (r === 'J') html += '<div class="gap" aria-hidden="true">RECLINERS</div>';
+    html += `<span class="rl" aria-hidden="true">${r}</span>`;
+    for (let n = 1; n <= N; n++) {
+      if (n === 5 || n === 11) html += '<i aria-hidden="true"></i>';
+      const id = r + n, t = TAKEN.has(id), p = price(ri);
+      html += `<button class="seat${ri >= 8 ? ' p' : ''}${t ? ' t' : ''}" data-id="${id}" data-r="${ri}" data-n="${n}" ${t ? 'aria-disabled="true"' : 'aria-pressed="false"'} aria-label="Row ${r}, seat ${n}, ${t ? 'taken' : '€' + p + (ri >= 8 ? ', recliner' : '')}"><span aria-hidden="true">${n}</span></button>`;
+    }
+    html += `<span class="rl" aria-hidden="true">${r}</span>`;
+  });
+  map.innerHTML = html;
+  const seats = [...map.querySelectorAll('.seat')], byId = (id) => map.querySelector(`[data-id="${id}"]`);
+
+  const P0 = Math.min(20.5, (view.clientWidth - 2) / 17.4), P1 = Math.round(P0 * 2.1 * 10) / 10;
+  let p = P0, zoomed = false, anim = 0;
+  map.style.setProperty('--p', P0 + 'px');
+  const zoom = (to, ax, ay) => { // ax, ay: anchor in content px at the current size
+    cancelAnimationFrame(anim);
+    const from = p, k0 = p, vw = view.clientWidth, vh = view.clientHeight, t0 = performance.now(), D = rm ? 0 : 420;
+    zoomed = to > P0; map.classList.toggle('z', zoomed); zo.classList.toggle('on', zoomed);
+    tip.textContent = zoomed ? 'Drag to look around' : 'Tap a block to zoom in';
+    const step = (now) => {
+      const t = D ? Math.min(1, (now - t0) / D) : 1, e = 1 - Math.pow(1 - t, 4);
+      p = from + (to - from) * e; map.style.setProperty('--p', p + 'px');
+      const k = p / k0, ml = Math.max(0, (vw - map.offsetWidth) / 2), mt = Math.max(0, (vh - map.offsetHeight) / 2);
+      view.scrollLeft = ax * k + ml - vw / 2; view.scrollTop = ay * k + mt - vh / 2;
+      if (t < 1) anim = requestAnimationFrame(step);
+    };
+    anim = requestAnimationFrame(step);
+  };
+  const anchorOf = (el, block) => {
+    const m = map.getBoundingClientRect(), r = el.getBoundingClientRect();
+    let x = r.left + r.width / 2 - m.left;
+    if (block) { const n = +el.dataset.n, a = n <= 4 ? [1, 4] : n <= 10 ? [5, 10] : [11, 14];
+      const L = byId(el.dataset.id.replace(/\d+$/, a[0])).getBoundingClientRect(), R = byId(el.dataset.id.replace(/\d+$/, a[1])).getBoundingClientRect();
+      x = (L.left + R.right) / 2 - m.left; }
+    return [x, r.top + r.height / 2 - m.top];
+  };
+  zo.addEventListener('click', () => { zoom(P0, map.offsetWidth / 2, map.offsetHeight / 2); live.textContent = 'Showing all seats.'; });
+
+  const fmt = (v) => '€' + v.toFixed(2);
+  const render = () => {
+    const tot = sel.reduce((s, id) => s + price(ROWS.indexOf(id[0])), 0);
+    $('#chips').innerHTML = sel.length ? sel.map((id) => `<span class="chip">Row ${id[0]} <b>${id.slice(1)}</b> ${fmt(price(ROWS.indexOf(id[0])))}</span>`).join('') : '<span class="none">Pick seats on the map, or let us choose.</span>';
+    $('#sum').textContent = fmt(tot);
+    $('#cnt').textContent = sel.length ? sel.length + (sel.length > 1 ? ' seats' : ' seat') + ' · no booking fee' : 'No seats yet';
+    const go = $('#go'); go.disabled = !sel.length; go.textContent = sel.length ? `Continue · ${sel.length} ${sel.length > 1 ? 'seats' : 'seat'}` : 'Choose seats';
+  };
+  const toggle = (el, quiet) => {
+    const id = el.dataset.id, on = el.getAttribute('aria-pressed') === 'true';
+    if (!on && sel.length >= MAX) { live.textContent = 'You can choose up to 8 seats.'; return; }
+    el.setAttribute('aria-pressed', !on);
+    if (on) sel.splice(sel.indexOf(id), 1); else { sel.push(id); el.classList.remove('pop'); void el.offsetWidth; el.classList.add('pop'); }
+    render();
+    if (!quiet) live.textContent = `Row ${id[0]}, seat ${id.slice(1)} ${on ? 'removed' : 'added'}. Total ${$('#sum').textContent}.`;
+  };
+  let down = null;
+  view.addEventListener('pointerdown', (e) => { down = [e.clientX, e.clientY]; });
+  map.addEventListener('click', (e) => {
+    const el = e.target.closest('.seat'); if (!el) return;
+    if (down && e.detail && Math.hypot(e.clientX - down[0], e.clientY - down[1]) > 8) return;
+    if (!zoomed && e.detail) { const [x, y] = anchorOf(el, true); zoom(P1, x, y); live.textContent = 'Zoomed in. Seats are now large enough to tap.'; return; }
+    if (el.classList.contains('t')) { live.textContent = `Row ${el.dataset.id[0]}, seat ${el.dataset.n} is taken.`; return; }
+    toggle(el);
+  });
+  map.addEventListener('keydown', (e) => { // arrow keys move across seats
+    const el = e.target.closest('.seat'); if (!el) return;
+    const d = { ArrowLeft: [0, -1], ArrowRight: [0, 1], ArrowUp: [-1, 0], ArrowDown: [1, 0] }[e.key]; if (!d) return;
+    e.preventDefault();
+    const r = Math.max(0, Math.min(9, +el.dataset.r + d[0])), n = Math.max(1, Math.min(N, +el.dataset.n + d[1]));
+    const nx = byId(ROWS[r] + n); if (nx) { el.tabIndex = -1; nx.tabIndex = 0; nx.focus(); }
+  });
+  seats.forEach((s, i) => (s.tabIndex = s.dataset.id === 'F7' ? 0 : -1));
+
+  $('#best').addEventListener('click', () => {
+    let best = null, bs = 1e9;
+    for (let ri = 2; ri < 8; ri++) for (let n = 1; n < N; n++) {
+      if (n === 4 || n === 10) continue; // a pair never spans an aisle
+      const a = ROWS[ri] + n, b = ROWS[ri] + (n + 1);
+      if (TAKEN.has(a) || TAKEN.has(b) || sel.includes(a) || sel.includes(b)) continue;
+      const s = Math.abs(ri - 5.2) * 1.3 + Math.abs(n + .5 - 7.5);
+      if (s < bs) { bs = s; best = [a, b]; }
+    }
+    if (!best) { live.textContent = 'No two seats together are left in the standard rows.'; return; }
+    seats.forEach((s) => { if (s.getAttribute('aria-pressed') === 'true') { s.setAttribute('aria-pressed', 'false'); } });
+    sel.length = 0;
+    best.forEach((id) => toggle(byId(id), true));
+    const [x, y] = anchorOf(byId(best[0])), w = byId(best[0]).getBoundingClientRect().width;
+    if (!zoomed) zoom(P1, x + w / 2, y);
+    live.textContent = `Best available: row ${best[0][0]}, seats ${best[0].slice(1)} and ${best[1].slice(1)}. Total ${$('#sum').textContent}.`;
+  });
+  render();
+  const h = byId('F7'); if (!rm) { setTimeout(() => h.classList.add('hint'), 600); h.addEventListener('animationend', () => h.classList.remove('hint'), { once: false }); }
+})();
+</script>
+</body>
+</html>

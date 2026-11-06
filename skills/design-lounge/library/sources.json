@@ -58,7 +58,11 @@
         "fintech-crypto-send",
         "email-receipt-transactional",
         "product-configurator-material",
-        "premium-watch-vault"
+        "premium-watch-vault",
+        "phone-chart-sleep-stages",
+        "app-food-menu-basket",
+        "app-stay-booking-dates",
+        "phone-pricing-plan-slider"
       ]
     },
     {
@@ -86,7 +90,8 @@
         "m3-sign-in",
         "phone-composer",
         "phone-forgot-password",
-        "voice-note-recorder"
+        "voice-note-recorder",
+        "phone-onboarding-goal-setup"
       ]
     },
     {
@@ -198,7 +203,9 @@
         "email-product-launch",
         "newsletter-mailbox-flag",
         "hover-link-peek",
-        "minigame-word-trace"
+        "minigame-word-trace",
+        "phone-picker-seat-map",
+        "app-smart-home-rooms"
       ]
     },
     {
@@ -231,7 +238,8 @@
         "testimonials-masonry-wall",
         "phone-photo-viewer",
         "slider-clip-trim",
-        "premium-manual-camera"
+        "premium-manual-camera",
+        "app-podcast-chapters"
       ]
     },
     {
@@ -285,7 +293,9 @@
         "features-ai-chat-demo",
         "dialog-wizard-steps",
         "drag-avatar-crop",
-        "minigame-peg-drop"
+        "minigame-peg-drop",
+        "style-pixel-pet-care",
+        "kids-letter-tracing"
       ]
     },
     {
@@ -323,7 +333,8 @@
         "game-phone-level-results",
         "game-phone-daily-shop",
         "game-phone-hero-select",
-        "motion-spring-throw-sheet"
+        "motion-spring-throw-sheet",
+        "kids-parent-gate"
       ]
     },
     {
@@ -431,7 +442,13 @@
         "minigame-pair-recall",
         "premium-sleep-breath",
         "minigame-tile-slide",
-        "premium-boarding-pass"
+        "premium-boarding-pass",
+        "style-brutalist-notes",
+        "style-cyber-vpn-shield",
+        "phone-error-update-required",
+        "style-bauhaus-habit-grid",
+        "kids-story-shelf",
+        "app-turn-by-turn-nav"
       ]
     },
     {
@@ -546,7 +563,8 @@
         "card-wrapped-story",
         "swipe-flashcard-review",
         "game-phone-weekly-league",
-        "minigame-lane-dodge"
+        "minigame-lane-dodge",
+        "app-home-widgets-stack"
       ]
     },
     {
@@ -611,7 +629,8 @@
         "media-controls-tactile",
         "retro-os-desktop-portfolio",
         "board-moodboard-canvas",
-        "vinyl-record-player"
+        "vinyl-record-player",
+        "style-riso-gig-guide"
       ]
     },
     {
@@ -744,7 +763,9 @@
         "dashboard-ai-insights",
         "signature-pad-sign",
         "dynamic-island-activity",
-        "minigame-stack-drop"
+        "minigame-stack-drop",
+        "style-y2k-friend-profile",
+        "app-dating-swipe-deck"
       ]
     },
     {
@@ -935,7 +956,10 @@
         "reaction-burst-picker",
         "slider-range-histogram",
         "loader-blur-up-gallery",
-        "premium-metal-card-tilt"
+        "premium-metal-card-tilt",
+        "kids-colouring-canvas",
+        "app-fitness-set-logger",
+        "phone-picker-wheel-time"
       ]
     }
   ]

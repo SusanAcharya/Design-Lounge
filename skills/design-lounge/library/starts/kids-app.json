@@ -1,0 +1,61 @@
+{
+ "id": "kids-app",
+ "surface": "app",
+ "title": "An app for children",
+ "kicker": "Kids",
+ "blurb": "Big pictures, few words, sound first, and a parent gate before anything that costs money or leaves the app.",
+ "when": "An app children of 4 to 8 use themselves: learning, stories, drawing, a small game. Not a parenting app for adults.",
+ "theme": "playroom",
+ "pairing": "candy-clay",
+ "shelf": "native-feel",
+ "categories": [
+  "games",
+  "reading",
+  "overlays"
+ ],
+ "pieces": [
+  "kids-parent-gate",
+  "kids-letter-tracing",
+  "kids-story-shelf",
+  "kids-colouring-canvas",
+  "minigame-pair-recall",
+  "minigame-tile-slide",
+  "style-pixel-pet-care",
+  "motion-sticker-peel",
+  "streak-hold-confetti",
+  "phone-splash-launch",
+  "phone-onboarding-goal-setup"
+ ],
+ "directions": [
+  {
+   "id": "crayon-day",
+   "name": "Crayon day",
+   "mood": "Bright and safe for ages 4 to 8: big picture tiles, a grown-up corner behind a gate",
+   "theme": "playroom",
+   "pairing": "candy-clay",
+   "family": "soft",
+   "hero": "kids-parent-gate",
+   "effect": "kids-letter-tracing"
+  },
+  {
+   "id": "story-night",
+   "name": "Story night",
+   "mood": "Bedtime: a navy room, big covers, words that light up as they are read",
+   "theme": "bedtime",
+   "pairing": "garden-journal",
+   "family": "soft",
+   "hero": "kids-story-shelf",
+   "effect": null
+  },
+  {
+   "id": "paint-box",
+   "name": "Paint box",
+   "mood": "Two inks and a crayon tray: make something, then keep it",
+   "theme": "festival",
+   "pairing": "candy-clay",
+   "family": "soft",
+   "hero": "kids-colouring-canvas",
+   "effect": "motion-sticker-peel"
+  }
+ ]
+}

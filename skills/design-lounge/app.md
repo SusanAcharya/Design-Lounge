@@ -43,6 +43,9 @@ On Android, or when the family is Material, use the `m3-` piece when one is name
 - A rating ask is `phone-rating-prompt`, after a success, never on first launch, then the system prompt.
 - Premium, when the product is: one material on a calm screen. A private bank card is `premium-metal-card-tilt`. A wind-down or sleep timer is `premium-sleep-breath`. A ticket or pass is `premium-boarding-pass`. A collection someone owns is `premium-watch-vault`. A camera with real controls is `premium-manual-camera`. A chart that is the whole screen is `premium-tide-chart`.
 - Motion a phone owes the touch: a sheet thrown to its detent with a spring is `motion-spring-throw-sheet`. Press, success and error that feel different is `motion-feedback-ladder`. A story read by scrolling is `motion-scroll-story`. These follow the finger; they do not play on their own.
+- An app children use: the `kids-app` recipe. Tap targets 64px or more, a picture and a sound before a word, no fail sound, no streak guilt. Anything that buys or leaves the app sits behind `kids-parent-gate`.
+- The job pieces a phone app often lacks: personalised first run `phone-onboarding-goal-setup`, a price that moves with usage `phone-pricing-plan-slider`, can't-continue screens (update, outage, offline) `phone-error-update-required`, a time `phone-picker-wheel-time`, a seat `phone-picker-seat-map`, dates for a stay `app-stay-booking-dates`.
+- App types: dating `app-dating-swipe-deck`, food delivery `app-food-menu-basket`, navigation `app-turn-by-turn-nav`, smart home `app-smart-home-rooms`, podcast `app-podcast-chapters`, a workout log `app-fitness-set-logger`, home-screen widgets `app-home-widgets-stack`, sleep `phone-chart-sleep-stages`.
 - A game, or a small game inside the app: the `mobile-game` recipe and Games in [taste.md](taste.md).
 - Large text: build every screen so it survives `phone-large-text-layout`. Rows grow. A two-column row stacks. Nothing ends in "...".
 

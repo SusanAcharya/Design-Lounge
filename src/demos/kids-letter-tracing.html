@@ -1,0 +1,221 @@
+<!-- Design Lounge piece: kids-letter-tracing · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pom letter tracing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Gochi+Hand&family=Hubot+Sans:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sky:#BFE2EC;--hill:#A6D4A0;--hill-2:#8CC487;--card:#FFFDF7;--card-line:#E6DFCF;
+  --ink:#1D2B45;--ink-2:#3F4A60;--guide:#B4AC9C;--crayon:#E2452A;--go:#B4321B;--start:#23874C;
+  --sun:#FFC83D;--sun-2:#F29A2E;--cheek:#F47B6A;--star:#F5B321;
+  --hand:"Gochi Hand","Comic Sans MS",cursive;--sans:"Hubot Sans",system-ui,sans-serif;
+  --r-card:36px;--r-chip:22px;--r-pill:999px;--hit:64px;
+  --plate:0 4px 0 rgba(29,43,69,.10);--lift:0 10px 24px rgba(29,43,69,.16);
+  --ease:cubic-bezier(.2,.7,.2,1);--expo:cubic-bezier(.16,1,.3,1);--spring:cubic-bezier(.34,1.56,.64,1);
+  --t-micro:160ms;--t-layout:320ms;--t-hero:600ms;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--sky);color:var(--ink);font:500 16px/1.3 var(--sans);overflow:hidden;user-select:none;-webkit-user-select:none;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none;padding:0}
+:focus-visible{outline:4px solid var(--ink);outline-offset:4px}
+.hills{position:fixed;left:0;right:0;bottom:0;width:100%;height:260px;pointer-events:none}
+.app{position:relative;max-width:390px;height:100%;margin:0 auto;padding:54px 16px 34px;display:flex;flex-direction:column}
+header{display:flex;align-items:center;gap:10px;height:64px}
+.round{width:var(--hit);height:var(--hit);flex:none;border-radius:50%;background:var(--card);box-shadow:var(--plate);display:grid;place-items:center}
+.round svg{width:30px;height:30px}
+.round:active{transform:scale(.94)}
+.stars{flex:1;min-width:0;height:56px;border-radius:var(--r-pill);background:var(--card);box-shadow:var(--plate);display:flex;align-items:center;gap:4px;padding:0 14px;overflow:hidden}
+.stars svg{width:30px;height:30px;flex:none}
+.stars .slot{color:#D9D1BF}
+.stars .got{color:var(--star)}
+.stars .got.pop{animation:pop 520ms var(--spring)}
+.stars b{margin-left:auto;font:800 20px/1 var(--sans);font-variant-numeric:tabular-nums;white-space:nowrap;padding-left:6px}
+.card{position:relative;margin-top:14px;height:398px;border-radius:var(--r-card);background:var(--card);box-shadow:var(--lift);touch-action:none;outline-offset:6px}
+.prompt{position:absolute;left:20px;top:16px;font:30px/1 var(--hand);color:var(--ink);white-space:nowrap}
+.card svg.board{position:absolute;left:14px;top:48px;width:330px;height:330px;overflow:visible}
+.card.done svg.board{animation:squash 460ms var(--spring)}
+.dots{fill:none;stroke:var(--guide);stroke-width:7;stroke-linecap:round;stroke-dasharray:.1 15}
+.ghost-line{fill:none;stroke:#F1ECE0;stroke-width:30;stroke-linecap:round;stroke-linejoin:round}
+.paint{fill:none;stroke:var(--crayon);stroke-width:28;stroke-linecap:round;stroke-linejoin:round}
+.startdot circle{fill:var(--start)}
+.startdot text{fill:#fff;font:800 17px/1 var(--sans);text-anchor:middle;dominant-baseline:central}
+.startdot .halo{fill:none;stroke:var(--start);stroke-width:4;opacity:.5;transform-box:fill-box;transform-origin:center;animation:halo 1.6s var(--ease) infinite}
+.arrow{fill:none;stroke:var(--start);stroke-width:5;stroke-linecap:round;stroke-linejoin:round}
+.bead{fill:var(--card);stroke:var(--ink);stroke-width:5}
+.bead-ring{fill:none;stroke:var(--sun-2);stroke-width:6;opacity:0;transform-box:fill-box;transform-origin:center}
+.drift .bead-ring{opacity:1;animation:halo 900ms var(--ease) infinite}
+.hand{pointer-events:none;transition:opacity var(--t-layout)}
+.char{position:relative;height:150px;display:flex;align-items:flex-end;gap:6px;padding-left:4px}
+.pom{width:118px;height:128px;flex:none;transform-origin:50% 100%;animation:bob 3.2s var(--ease) infinite}
+.pom.cheer{animation:jump 760ms var(--spring)}
+.pom.nudge{animation:tilt 700ms var(--ease)}
+.pom .eyes{transition:transform var(--t-micro) var(--ease)}
+.bubble{position:relative;margin-bottom:46px;min-height:64px;max-width:228px;display:flex;align-items:center;gap:10px;padding:10px 18px;border-radius:26px;background:var(--card);box-shadow:var(--plate);font:28px/1.05 var(--hand);color:var(--ink);transition:transform var(--t-layout) var(--spring),opacity var(--t-layout)}
+.bubble::before{content:"";position:absolute;left:-9px;bottom:16px;width:20px;height:20px;background:var(--card);transform:rotate(45deg);border-radius:4px}
+.bubble.say{animation:pop 480ms var(--spring)}
+.bubble svg{width:48px;height:48px;flex:none}
+.bubble svg:empty{display:none}
+.row{margin-top:auto;display:flex;align-items:center;gap:10px;height:80px}
+.chips{flex:1;display:flex;gap:8px}
+.chip{position:relative;width:var(--hit);height:var(--hit);border-radius:var(--r-chip);background:var(--card);box-shadow:var(--plate);font:800 30px/1 var(--sans);display:grid;place-items:center;transition:transform var(--t-micro) var(--spring)}
+.chip[aria-current="true"]{box-shadow:inset 0 0 0 4px var(--ink),var(--plate)}
+.chip i{position:absolute;right:-6px;top:-6px;width:26px;height:26px;color:var(--star);display:none}
+.chip.won i{display:block}.chip i svg{width:26px;height:26px;display:block}
+.chip:active{transform:scale(.92)}
+.show{width:72px;height:72px;background:var(--sun);box-shadow:0 4px 0 var(--sun-2)}
+.show svg{width:34px;height:34px}
+.next{position:absolute;left:16px;right:16px;bottom:34px;height:80px;border-radius:var(--r-pill);background:var(--go);color:#fff;font:800 26px/1 var(--sans);display:flex;align-items:center;justify-content:center;gap:12px;box-shadow:0 6px 0 #7E2010;transform:translateY(130%);visibility:hidden;transition:transform 420ms var(--spring),visibility 0s 420ms}
+.next.on{transform:none;visibility:visible;transition:transform 420ms var(--spring)}
+.next svg{width:30px;height:30px}
+.fx{position:fixed;inset:0;pointer-events:none;overflow:hidden}
+.bit{position:absolute;width:14px;height:22px;border-radius:7px;background:var(--c);animation:fly 1100ms var(--expo) forwards}
+.flystar{position:absolute;width:56px;height:56px;color:var(--star);transition:transform 700ms var(--expo),opacity 200ms 600ms}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@keyframes pop{0%{transform:scale(.4)}100%{transform:none}}
+@keyframes halo{0%{transform:scale(1);opacity:.6}100%{transform:scale(1.7);opacity:0}}
+@keyframes bob{0%,100%{transform:none}50%{transform:translateY(-5px)}}
+@keyframes jump{0%{transform:scale(1.12,.86)}35%{transform:translateY(-34px) scale(.92,1.1)}70%{transform:scale(1.1,.9)}100%{transform:none}}
+@keyframes tilt{0%,100%{transform:none}40%{transform:rotate(-7deg)}70%{transform:rotate(4deg)}}
+@keyframes squash{0%{transform:scale(1)}30%{transform:scale(1.07,.94)}60%{transform:scale(.97,1.04)}100%{transform:none}}
+@keyframes fly{0%{transform:translate(0,0) rotate(0)}100%{transform:translate(var(--dx),var(--dy)) rotate(var(--r));opacity:0}}
+@media (prefers-reduced-motion:reduce){
+  .pom,.pom.cheer,.pom.nudge,.card.done svg.board,.bubble.say,.stars .got.pop,.startdot .halo{animation:none}
+  .drift .bead-ring{animation:none;opacity:1}
+  .next,.next.on{transition:opacity 200ms,visibility 0s;transform:none;opacity:0}.next.on{opacity:1}
+  .flystar,.bit{display:none}
+}
+</style>
+</head>
+<body>
+<svg class="hills" viewBox="0 0 390 260" preserveAspectRatio="none" aria-hidden="true"><path d="M0 120C80 70 160 80 230 120S350 150 390 110V260H0Z" fill="var(--hill)"/><path d="M0 190C90 150 170 165 250 190S360 200 390 180V260H0Z" fill="var(--hill-2)"/></svg>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <filter id="wax" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="4"/><feColorMatrix values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -1.6 1.55"/><feComposite in="SourceGraphic" operator="in" result="g"/><feTurbulence type="fractalNoise" baseFrequency=".04" seed="2" result="w"/><feDisplacementMap in="g" in2="w" scale="5"/></filter>
+  <symbol id="star" viewBox="0 0 24 24"><path fill="currentColor" stroke="#1D2B45" stroke-width="1.4" stroke-linejoin="round" d="M12 2.6l2.8 5.8 6.3.8-4.6 4.4 1.2 6.3L12 16.9 6.3 19.9l1.2-6.3L2.9 9.2l6.3-.8z"/></symbol>
+</svg>
+<main class="app">
+  <header>
+    <button class="round" type="button" aria-label="Home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11l8-7 8 7"/><path d="M6 9.5V20h12V9.5"/></svg></button>
+    <div class="stars" id="stars" role="img" aria-label="Stars earned: 1"></div>
+    <button class="round" id="hear" type="button" aria-label="Hear the letter"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button>
+  </header>
+
+  <section class="card" id="card" tabindex="0" aria-label="Tracing board. Drag your finger along the dots from the green dot. Press Space to watch it traced.">
+    <div class="prompt" id="prompt" aria-hidden="true">Trace B</div>
+    <svg class="board" id="board" viewBox="0 0 300 300" aria-hidden="true">
+      <g id="under"></g><g id="dotsG"></g><g id="paintG" filter="url(#wax)"></g>
+      <path class="arrow" id="arrow" d="M-8 -9L4 0L-8 9"/>
+      <g id="beadG"><circle class="bead-ring" id="ring" r="14"/><circle class="bead" id="bead" r="9"/></g>
+      <g class="startdot" id="startdot"><circle class="halo" r="22"/><circle r="18"/><text id="num">1</text></g>
+      <g class="hand" id="hand"><circle r="26" fill="#1D2B45" opacity=".14"/><path d="M-4 -2v-20a5 5 0 0 1 10 0v14l9 2a6 6 0 0 1 5 7l-2 13H-1l-11-14a4.5 4.5 0 0 1 7-5z" fill="#FFFDF7" stroke="#1D2B45" stroke-width="3" stroke-linejoin="round"/></g>
+    </svg>
+  </section>
+
+  <div class="char">
+    <svg class="pom" id="pom" viewBox="0 0 118 128" aria-hidden="true">
+      <path d="M58 22c-4-12-16-16-22-14 2 8 10 14 22 14zM60 22c3-10 13-15 21-13-3 8-11 13-21 13z" fill="#5BA84F"/>
+      <ellipse cx="59" cy="76" rx="52" ry="48" fill="var(--sun)"/>
+      <ellipse cx="59" cy="96" rx="34" ry="20" fill="#FFE08A"/>
+      <g class="eyes" id="eyes"><ellipse cx="42" cy="66" rx="7" ry="9" fill="#1D2B45"/><ellipse cx="76" cy="66" rx="7" ry="9" fill="#1D2B45"/><circle cx="44" cy="63" r="2.4" fill="#fff"/><circle cx="78" cy="63" r="2.4" fill="#fff"/></g>
+      <circle cx="30" cy="82" r="7" fill="var(--cheek)" opacity=".7"/><circle cx="88" cy="82" r="7" fill="var(--cheek)" opacity=".7"/>
+      <path id="mouth" d="M50 84q9 8 18 0" fill="none" stroke="#1D2B45" stroke-width="3.5" stroke-linecap="round"/>
+    </svg>
+    <div class="bubble" id="bubble"><svg id="pic" viewBox="0 0 48 48" aria-hidden="true"></svg><span id="say">Start at the green dot</span></div>
+  </div>
+
+  <div class="row">
+    <div class="chips" id="chips" role="group" aria-label="Letters"></div>
+    <button class="round show" id="show" type="button" aria-label="Show me"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11V5a1.6 1.6 0 0 1 3.2 0v5l4 .8a2 2 0 0 1 1.6 2.3L17 18H10.4L6.6 13.4a1.5 1.5 0 0 1 2.4-1.8z"/></svg></button>
+  </div>
+  <button class="next" id="next" type="button"><span id="nextTxt">Next letter</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+  <div class="sr" id="live" aria-live="polite"></div>
+</main>
+<div class="fx" id="fx" aria-hidden="true"></div>
+<script>
+(()=>{
+const $=id=>document.getElementById(id),NS='http://www.w3.org/2000/svg';
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const LETTERS=[
+ {L:'A',w:'apple',s:['M150 40L78 258','M150 40L222 258','M104 182H196'],pic:'<circle cx="24" cy="28" r="15" fill="#E2452A"/><path d="M24 14c0-5 3-8 7-9M25 13c4-4 9-3 11 0-4 3-8 3-11 0" fill="#5BA84F" stroke="#1D2B45" stroke-width="2"/>'},
+ {L:'B',w:'ball',s:['M100 42V258','M100 42H158C214 42 214 148 158 148H100','M100 148H166C228 148 228 258 166 258H100'],pic:'<circle cx="24" cy="24" r="18" fill="#3C8DD9"/><path d="M24 6a18 18 0 0 1 0 36a8 18 0 0 0 0-36z" fill="#FFC83D"/><path d="M24 6a8 18 0 0 0 0 36" fill="#fff" opacity=".9"/><circle cx="24" cy="24" r="18" fill="none" stroke="#1D2B45" stroke-width="2.4"/>'},
+ {L:'C',w:'cat',s:['M220 82C196 46 150 38 118 54C66 82 66 218 118 246C150 262 198 254 222 218'],pic:'<path d="M9 14l6 8h18l6-8 1 18c0 8-7 12-16 12S8 40 8 32z" fill="#F29A2E" stroke="#1D2B45" stroke-width="2.4" stroke-linejoin="round"/><circle cx="18" cy="30" r="2.4" fill="#1D2B45"/><circle cx="30" cy="30" r="2.4" fill="#1D2B45"/>'},
+ {L:'D',w:'duck',s:['M94 42V258','M94 42H138C246 42 246 258 138 258H94'],pic:'<ellipse cx="22" cy="32" rx="16" ry="11" fill="#FFC83D" stroke="#1D2B45" stroke-width="2.4"/><circle cx="30" cy="16" r="8" fill="#FFC83D" stroke="#1D2B45" stroke-width="2.4"/><path d="M37 16l8 2-8 3" fill="#F29A2E" stroke="#1D2B45" stroke-width="2"/>'}
+];
+const STEP=5,TOL=34,DRIFT=48;
+let li=1,si=0,prog=0,tracing=false,done=false,stars=1,won=new Set([0]),strokes=[],ghost=null,auto=null;
+function say(t){try{const s=window.speechSynthesis;if(!s||!window.SpeechSynthesisUtterance)return;s.cancel();const u=new SpeechSynthesisUtterance(t);u.rate=.85;u.pitch=1.15;s.speak(u)}catch(e){}}
+function el(t,a,p){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);p.appendChild(e);return e}
+function bubble(t,pic){$('say').textContent=t;$('pic').innerHTML=pic||'';const b=$('bubble');b.classList.remove('say');void b.offsetWidth;b.classList.add('say')}
+function drawStars(pop){const s=$('stars'),n=Math.min(stars,5);let h='';for(let i=0;i<5;i++)h+=`<svg class="${i<n?'got':'slot'}${pop&&i===n-1?' pop':''}"><use href="#star"/></svg>`;s.innerHTML=h+`<b>${stars}</b>`;s.setAttribute('aria-label','Stars earned: '+stars)}
+function drawChips(){$('chips').innerHTML=LETTERS.map((x,i)=>`<button class="chip${won.has(i)?' won':''}" type="button" data-i="${i}" aria-current="${i===li}" aria-label="Letter ${x.L}${won.has(i)?', star earned':''}">${x.L}<i><svg><use href="#star"/></svg></i></button>`).join('')}
+function load(i){
+  li=i;si=0;prog=0;done=false;tracing=false;cancelAnimationFrame(auto);
+  ['under','dotsG','paintG'].forEach(g=>$(g).innerHTML='');
+  strokes=LETTERS[i].s.map(d=>{el('path',{d,class:'ghost-line'},$('under'));const g=el('path',{d,class:'dots'},$('dotsG'));const p=el('path',{d,class:'paint'},$('paintG'));const len=g.getTotalLength(),n=Math.ceil(len/STEP),pts=[];for(let k=0;k<=n;k++){const q=g.getPointAtLength(len*k/n);pts.push([q.x,q.y])}p.style.strokeDasharray=len+' '+(len+40);p.style.strokeDashoffset=len;return{p,len,pts}});
+  $('prompt').textContent='Trace '+LETTERS[i].L;$('card').classList.remove('done');$('next').classList.remove('on');
+  drawChips();mark();bubble('Start at the green dot');
+}
+function mark(){
+  const s=strokes[si];if(!s)return;const [x,y]=s.pts[prog],[a,b]=s.pts[0],[c,d]=s.pts[Math.min(6,s.pts.length-1)];
+  $('startdot').setAttribute('transform',`translate(${a} ${b})`);$('num').textContent=si+1;$('startdot').style.display=prog?'none':'';
+  $('arrow').setAttribute('transform',`translate(${a+(c-a)*1.9} ${b+(d-b)*1.9}) rotate(${Math.atan2(d-b,c-a)*57.3})`);$('arrow').style.display=prog?'none':'';
+  $('beadG').setAttribute('transform',`translate(${x} ${y})`);$('beadG').style.display=prog?'':'none';
+  s.p.style.strokeDashoffset=s.len*(1-prog/(s.pts.length-1));
+}
+function toSvg(e){const r=$('board').getBoundingClientRect();return[(e.clientX-r.left)*300/r.width,(e.clientY-r.top)*300/r.height]}
+function advance(x,y){
+  const s=strokes[si];let best=-1;
+  for(let k=prog;k<Math.min(s.pts.length,prog+10);k++){const[a,b]=s.pts[k];if(Math.hypot(x-a,y-b)<TOL)best=k}
+  const[a,b]=s.pts[prog],far=Math.hypot(x-a,y-b)>DRIFT;
+  $('board').classList.toggle('drift',far&&best<0);
+  if(far&&best<0&&!$('pom').classList.contains('nudge')){$('pom').classList.add('nudge');bubble('This way, follow the dots');setTimeout(()=>$('pom').classList.remove('nudge'),700)}
+  if(best>prog){prog=best;if(prog>=s.pts.length-1){prog=s.pts.length-1;mark();nextStroke();return}mark()}
+}
+function nextStroke(){tracing=false;$('board').classList.remove('drift');si++;prog=0;if(si>=strokes.length)return finish();mark();bubble(['Yes!','Nice line!','Keep going'][si%3]);announce('Line '+si+' done. Now line '+(si+1)+'.')}
+function announce(t){$('live').textContent=t}
+function finish(){
+  done=true;const L=LETTERS[li];$('beadG').style.display='none';$('startdot').style.display='none';$('arrow').style.display='none';
+  setTimeout(()=>{$('card').classList.add('done');confetti()},60);
+  setTimeout(()=>{const p=$('pom');p.classList.remove('nudge','cheer');void p.offsetWidth;p.classList.add('cheer');$('mouth').setAttribute('d','M48 82q11 16 22 0z');$('mouth').setAttribute('fill','#1D2B45')},220);
+  setTimeout(()=>{bubble(L.L+', '+L.w+'!',L.pic);say(L.L+'. '+L.L+' is for '+L.w+'.')},520);
+  setTimeout(flyStar,900);
+  setTimeout(()=>{$('nextTxt').textContent=li===LETTERS.length-1?'Start again':'Next letter';$('next').classList.add('on');$('next').focus({preventScroll:true});announce(L.L+' done. '+L.L+' is for '+L.w+'. You have '+stars+' stars.')},1500);
+}
+function flyStar(){
+  stars++;won.add(li);const f=document.createElement('div');f.className='flystar';f.innerHTML='<svg width="56" height="56"><use href="#star"/></svg>';
+  const c=$('card').getBoundingClientRect(),t=$('stars').getBoundingClientRect();f.style.left=(c.left+c.width/2-28)+'px';f.style.top=(c.top+c.height/2-28)+'px';$('fx').appendChild(f);
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{f.style.transform=`translate(${t.left+20+Math.min(stars-1,4)*34-c.left-c.width/2}px,${t.top+28-c.top-c.height/2}px) scale(.55)`;f.style.opacity='0'}));
+  setTimeout(()=>{f.remove();drawStars(true);drawChips()},RM?0:700);
+}
+function confetti(){if(RM)return;const c=$('card').getBoundingClientRect(),cols=['#E2452A','#FFC83D','#3C8DD9','#23874C','#F47B6A'];for(let i=0;i<22;i++){const b=document.createElement('i');b.className='bit';const a=Math.random()*6.28,r=110+Math.random()*120;b.style.cssText=`left:${c.left+c.width/2}px;top:${c.top+c.height/2}px;--c:${cols[i%5]};--dx:${Math.cos(a)*r}px;--dy:${Math.sin(a)*r-60}px;--r:${Math.random()*540-270}deg`;$('fx').appendChild(b);setTimeout(()=>b.remove(),1200)}}
+function stopGhost(){if(ghost){cancelAnimationFrame(ghost.id);ghost=null}$('hand').style.opacity=0}
+function runGhost(){
+  if(RM){$('hand').style.opacity=0;return}const s=strokes[si];let t0=0,loops=0;
+  const f=ts=>{if(!t0)t0=ts;let k=(ts-t0)/1800;if(k>=1){loops++;t0=ts;k=0}if(loops>=2)return stopGhost();const q=s.pts[Math.floor(Math.min(.55,k)*(s.pts.length-1))];$('hand').setAttribute('transform',`translate(${q[0]+14} ${q[1]+18})`);$('hand').style.opacity=k>.8?0:1;ghost.id=requestAnimationFrame(f)};
+  ghost={id:requestAnimationFrame(f)};
+}
+function showMe(){
+  if(done)return;stopGhost();let last=0,fp=prog;
+  const f=ts=>{const s=strokes[si];if(!s)return;const dt=last?Math.min(ts-last,50):0;last=ts;fp+=dt/12;prog=Math.min(s.pts.length-1,Math.floor(fp));if(prog>=s.pts.length-1){mark();nextStroke();return}mark();auto=requestAnimationFrame(f)};
+  cancelAnimationFrame(auto);auto=requestAnimationFrame(f);
+}
+const card=$('card');
+card.addEventListener('pointerdown',e=>{if(done)return;stopGhost();cancelAnimationFrame(auto);prog=Math.floor(prog);const[x,y]=toSvg(e),[a,b]=strokes[si].pts[prog];if(Math.hypot(x-a,y-b)<TOL*1.4){tracing=true;card.setPointerCapture(e.pointerId);advance(x,y)}else{$('board').classList.add('drift');bubble(prog?'Pick up at the dot':'Start at the green dot');setTimeout(()=>$('board').classList.remove('drift'),900)}});
+card.addEventListener('pointermove',e=>{const[x,y]=toSvg(e);$('eyes').style.transform=`translateX(${Math.max(-4,Math.min(4,(x-150)/30))}px)`;if(tracing&&!done)advance(x,y)});
+['pointerup','pointercancel'].forEach(t=>card.addEventListener(t,()=>{tracing=false;$('board').classList.remove('drift')}));
+card.addEventListener('keydown',e=>{if(e.key===' '||e.key==='Enter'){e.preventDefault();showMe()}});
+$('show').onclick=showMe;
+$('hear').onclick=()=>{const L=LETTERS[li];say(L.L+'. Trace the letter '+L.L+'.');bubble('This is '+L.L)};
+$('next').onclick=()=>{$('mouth').setAttribute('d','M50 84q9 8 18 0');$('mouth').setAttribute('fill','none');load((li+1)%LETTERS.length);card.focus({preventScroll:true})};
+$('chips').onclick=e=>{const b=e.target.closest('.chip');if(b){load(+b.dataset.i);$('mouth').setAttribute('d','M50 84q9 8 18 0');$('mouth').setAttribute('fill','none')}};
+drawStars();load(1);
+/* hero frame: first line of B already traced */
+prog=strokes[0].pts.length-1;mark();si=1;prog=0;mark();bubble('Yes! Now line 2');runGhost();
+})();
+</script>
+</body>
+</html>

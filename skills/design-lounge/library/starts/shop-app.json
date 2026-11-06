@@ -30,7 +30,10 @@
   "phone-orders",
   "shop-collection",
   "luxe-product-detail",
-  "premium-watch-vault"
+  "premium-watch-vault",
+  "app-food-menu-basket",
+  "app-stay-booking-dates",
+  "phone-picker-seat-map"
  ],
  "directions": [
   {

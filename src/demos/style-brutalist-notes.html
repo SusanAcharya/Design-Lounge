@@ -1,0 +1,184 @@
+<!-- Design Lounge piece: style-brutalist-notes · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BLOCK notes · Friday 6 November</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#ffffff;--ink:#000000;--grey:#4a4a4a;--sig:#ffe600;--rule:6px;--line:3px;
+  --black:"Archivo Black",Impact,sans-serif;--sys:"Helvetica Neue",Helvetica,Arial,system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:15px/1.35 var(--sys);color:var(--ink);background:var(--paper);overflow:hidden;-webkit-font-smoothing:antialiased}
+button,input,textarea{font:inherit;color:inherit;background:none;border:0;padding:0;margin:0;border-radius:0}
+button{cursor:pointer;-webkit-tap-highlight-color:transparent}
+:focus-visible{outline:4px solid var(--sig);outline-offset:0;box-shadow:0 0 0 7px var(--ink)}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.app{position:relative;height:100%;max-width:430px;margin:0 auto;padding:54px 0 34px;display:flex;flex-direction:column;overflow:hidden}
+
+.bar{display:flex;justify-content:space-between;align-items:center;height:40px;padding:0 16px;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.bar b{font:16px/1 var(--black);letter-spacing:0}
+.rule{height:var(--rule);background:var(--ink);flex:none}
+.date{display:flex;align-items:stretch;border-bottom:var(--rule) solid var(--ink);flex:none}
+.date .d{font:178px/.78 var(--black);letter-spacing:-.07em;padding:16px 4px 0 10px;margin:0}
+.date ul{list-style:none;margin:0;padding:0;flex:1;display:flex;flex-direction:column;border-left:var(--line) solid var(--ink)}
+.date li{flex:1;display:flex;align-items:center;padding:0 12px;font-size:19px;font-weight:700;text-transform:uppercase;letter-spacing:.02em;border-bottom:var(--line) solid var(--ink)}
+.date li:last-child{border-bottom:0;font-size:13px;letter-spacing:.08em}
+.date li span{margin-left:auto;font-weight:400}
+
+.tabs{display:flex;flex:none;border-bottom:var(--line) solid var(--ink)}
+.tabs button{flex:1;height:48px;font-size:14px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;border-right:var(--line) solid var(--ink);white-space:nowrap}
+.tabs button:last-child{border-right:0}
+.tabs button[aria-selected=true]{background:var(--ink);color:var(--paper)}
+.tabs button:active{background:var(--sig);color:var(--ink)}
+
+.list{flex:1;overflow-y:auto;list-style:none;margin:0;padding:0;scrollbar-width:none;overscroll-behavior:contain}
+.list::-webkit-scrollbar{display:none}
+.list li{position:relative;border-bottom:var(--line) solid var(--ink);overflow:hidden}
+.under{position:absolute;inset:0;background:var(--sig);display:flex;align-items:center;justify-content:flex-end;padding-right:16px;font:20px/1 var(--black);text-transform:uppercase}
+.note{position:relative;display:block;width:100%;padding:14px 16px 13px;background:var(--paper);touch-action:pan-y;cursor:grab;user-select:none;-webkit-user-select:none}
+.note h3{margin:0;font-size:18px;font-weight:700;line-height:1.15;letter-spacing:-.01em;display:flex;gap:8px;align-items:baseline}
+.note h3 i{font-style:normal;flex:none;font-size:11px;font-weight:700;letter-spacing:.08em;padding:3px 5px 2px;background:var(--sig);color:var(--ink);border:2px solid var(--ink)}
+.note p{margin:6px 0 0;font-size:15px;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.note small{display:block;margin-top:8px;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--grey)}
+.note:active,.note.armed{background:var(--ink);color:var(--paper)}
+.note:active small,.note.armed small{color:#d6d6d6}
+.empty{padding:40px 16px;font-size:15px}
+.empty b{display:block;font:34px/1 var(--black);text-transform:uppercase;margin-bottom:10px}
+
+.undo{display:flex;align-items:center;justify-content:space-between;height:52px;padding:0 0 0 16px;border-top:var(--line) solid var(--ink);background:var(--sig);font-size:14px;font-weight:700;flex:none}
+.undo[hidden]{display:none}
+.undo span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.undo button{height:100%;padding:0 18px;border-left:var(--line) solid var(--ink);font:16px/1 var(--black);text-transform:uppercase}
+.undo button:active{background:var(--ink);color:var(--sig)}
+
+.new{flex:none;display:flex;align-items:center;justify-content:space-between;height:76px;margin:0;padding:0 18px;border-top:var(--rule) solid var(--ink);border-bottom:var(--rule) solid var(--ink);font:26px/1 var(--black);text-transform:uppercase;letter-spacing:-.01em}
+.new svg{width:36px;height:36px;stroke:currentColor;stroke-width:5;fill:none;stroke-linecap:square}
+.new:active{background:var(--ink);color:var(--paper)}
+
+.ed{position:absolute;inset:0;z-index:5;background:var(--paper);display:flex;flex-direction:column;padding:54px 0 34px;visibility:hidden}
+.ed.open{visibility:visible}
+.ed .bar{border-bottom:var(--rule) solid var(--ink);height:52px}
+.ed label{display:block;padding:12px 16px 6px;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.ed input{display:block;width:calc(100% - 32px);margin:0 16px;height:56px;padding:0 12px;border:var(--line) solid var(--ink);font:24px/1 var(--black);text-transform:uppercase}
+.ed textarea{display:block;width:calc(100% - 32px);flex:1;margin:0 16px;padding:12px;border:var(--line) solid var(--ink);font-size:17px;line-height:1.4;resize:none}
+.ed input:focus,.ed textarea:focus{outline:0;box-shadow:inset 0 0 0 3px var(--sig)}
+.ed .row{display:flex;margin:16px 0 0;border-top:var(--rule) solid var(--ink);border-bottom:var(--rule) solid var(--ink)}
+.ed .row button{flex:1;height:76px;font:22px/1 var(--black);text-transform:uppercase}
+.ed .row button+button{border-left:var(--rule) solid var(--ink);background:var(--ink);color:var(--paper)}
+.ed .row button:active{background:var(--sig);color:var(--ink)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<main class="app" id="app">
+  <div class="bar"><b>BLOCK</b><span id="tally">6 notes / 2 archived</span></div>
+  <div class="rule"></div>
+  <header class="date">
+    <h1 class="d" aria-label="Friday 6 November 2026">06</h1>
+    <ul aria-hidden="true"><li>Nov<span>2026</span></li><li>Friday</li><li>Week 45<span>09:41</span></li></ul>
+  </header>
+  <div class="tabs" role="tablist" aria-label="Filter notes">
+    <button role="tab" aria-selected="true" data-f="all">All</button>
+    <button role="tab" aria-selected="false" data-f="pin">Pinned</button>
+    <button role="tab" aria-selected="false" data-f="arc">Archive</button>
+  </div>
+  <ul class="list" id="list" aria-label="Notes"></ul>
+  <div class="undo" id="undo" hidden><span id="undot">Archived</span><button id="undob">Undo</button></div>
+  <button class="new" id="new"><span>New note</span><svg viewBox="0 0 36 36" aria-hidden="true"><path d="M18 4v28M4 18h28"/></svg></button>
+
+  <section class="ed" id="ed" role="dialog" aria-modal="true" aria-labelledby="edh">
+    <div class="bar"><b id="edh">NEW NOTE</b><span>Fri 6 Nov</span></div>
+    <label for="ti">Title</label>
+    <input id="ti" autocomplete="off" value="">
+    <label for="tx">Note</label>
+    <textarea id="tx"></textarea>
+    <div class="row"><button id="cancel">Cancel</button><button id="save">Save</button></div>
+  </section>
+  <p class="vh" aria-live="polite" id="live"></p>
+</main>
+<script>
+(() => {
+  const $ = (s) => document.querySelector(s);
+  const list = $('#list'), live = $('#live'), undo = $('#undo');
+  let notes = [
+    { t: 'Rent split, November', b: 'Ines 640, me 610, Dario 590. Heating up 38 on last month. Transfer by the 9th, reference FLAT 4B.', m: '14:32 · 22 words', pin: 1 },
+    { t: 'Ferry times to Hvar', b: '07:30 and 13:15 from Split. Car deck closes 20 min before. Buy at the kiosk, the site charges a fee.', m: 'Yesterday · 24 words' },
+    { t: 'Ask Dr. Varga', b: 'Knee after stairs. The new dose, morning or night. Whether swimming counts as the exercise.', m: 'Wed · 16 words', pin: 1 },
+    { t: 'Kitchen shelf', b: '92 cm wall, three brackets, oak 18 mm. Screws are in the blue box under the sink.', m: 'Tue · 17 words' },
+    { t: 'Book club, 19 Nov', b: 'Chapter 9 to the end. Bring the plum cake. Marta hosts, flat 3, ring twice.', m: '2 Nov · 16 words' },
+    { t: 'Gifts for Mum', b: 'The linen apron from the Saturday market, seeds for the balcony, a printed photo from Brac.', m: '28 Oct · 17 words' },
+    { t: 'Boiler code', b: 'E119 means low pressure. Top up to 1.5 bar with the grey tap.', m: '12 Oct · 13 words', arc: 1 },
+    { t: 'Moving boxes', b: 'Gave the last eight to Petra downstairs.', m: '3 Oct · 7 words', arc: 1 }
+  ];
+  let filter = 'all', last = null, undoT = 0;
+  const shown = () => notes.filter((n) => filter === 'arc' ? n.arc : !n.arc && (filter === 'all' || n.pin));
+  const tally = () => { const a = notes.filter((n) => n.arc).length; $('#tally').textContent = (notes.length - a) + ' notes / ' + a + ' archived'; };
+  const render = () => {
+    const s = shown();
+    if (!s.length) { list.innerHTML = `<li class="empty"><b>${filter === 'arc' ? 'Nothing archived' : 'No notes'}</b>Swipe a note left to archive it.</li>`; tally(); return; }
+    list.innerHTML = s.map((n) => `<li><div class="under" aria-hidden="true">${n.arc ? 'Restore' : 'Archive'}</div><div class="note" tabindex="0" role="button" data-i="${notes.indexOf(n)}" aria-label="${n.t}. ${n.m}. Press Delete to ${n.arc ? 'restore' : 'archive'}."><h3>${n.pin ? '<i>PIN</i>' : ''}${n.t}</h3><p>${n.b}</p><small>${n.m}</small></div></li>`).join('');
+    tally();
+  };
+  const archive = (i) => {
+    const n = notes[i]; n.arc = n.arc ? 0 : 1; last = n;
+    render();
+    $('#undot').textContent = (n.arc ? 'Archived: ' : 'Restored: ') + n.t;
+    undo.hidden = false; live.textContent = (n.arc ? 'Archived ' : 'Restored ') + n.t + '. Undo available.';
+    clearTimeout(undoT); undoT = setTimeout(() => { undo.hidden = true; }, 5000);
+  };
+  $('#undob').addEventListener('click', () => { if (!last) return; last.arc = last.arc ? 0 : 1; render(); undo.hidden = true; live.textContent = 'Undone.'; last = null; });
+
+  document.querySelectorAll('.tabs button').forEach((b) => b.addEventListener('click', () => {
+    document.querySelectorAll('.tabs button').forEach((x) => x.setAttribute('aria-selected', x === b));
+    filter = b.dataset.f; render(); list.scrollTop = 0;
+  }));
+
+  // swipe: 1:1 follow, hard cut at release
+  const TH = 110; let sw = null;
+  list.addEventListener('pointerdown', (e) => {
+    const el = e.target.closest('.note'); if (!el) return;
+    sw = { el, x: e.clientX, y: e.clientY, id: e.pointerId, dx: 0, live: false, armed: false, lab: el.previousElementSibling.textContent };
+  });
+  list.addEventListener('pointermove', (e) => {
+    if (!sw || e.pointerId !== sw.id) return;
+    const dx = Math.min(0, e.clientX - sw.x), dy = e.clientY - sw.y;
+    if (!sw.live) { if (Math.abs(dx) > 8 && Math.abs(dx) > Math.abs(dy)) { sw.live = true; sw.el.setPointerCapture(e.pointerId); } else return; }
+    sw.dx = dx; sw.el.style.transform = `translateX(${dx}px)`;
+    const a = dx < -TH; if (a !== sw.armed) { sw.armed = a; sw.el.classList.toggle('armed', a); sw.el.previousElementSibling.textContent = a ? 'Release' : sw.lab; }
+  });
+  const up = (e) => {
+    if (!sw || e.pointerId !== sw.id) return;
+    const { el, dx } = sw, sw0lab = sw.lab; sw = null;
+    if (dx < -TH) { archive(+el.dataset.i); return; }
+    el.style.transform = ''; el.classList.remove('armed'); el.previousElementSibling.textContent = sw0lab;
+  };
+  list.addEventListener('pointerup', up); list.addEventListener('pointercancel', up);
+  list.addEventListener('keydown', (e) => {
+    const el = e.target.closest('.note'); if (!el) return;
+    if (e.key === 'Delete' || e.key === 'Backspace') { e.preventDefault(); archive(+el.dataset.i); const f = list.querySelector('.note'); if (f) f.focus(); }
+  });
+
+  // compose: hard cut in and out
+  const ed = $('#ed'), ti = $('#ti'), tx = $('#tx');
+  const close = () => { ed.classList.remove('open'); $('#new').focus(); };
+  $('#new').addEventListener('click', () => { ti.value = ''; tx.value = ''; ed.classList.add('open'); ti.focus(); });
+  $('#cancel').addEventListener('click', close);
+  ed.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+  $('#save').addEventListener('click', () => {
+    const t = ti.value.trim() || 'Untitled', b = tx.value.trim() || 'Empty note.';
+    const w = b.split(/\s+/).filter(Boolean).length;
+    notes.unshift({ t, b, m: '09:41 · ' + w + (w === 1 ? ' word' : ' words') });
+    if (filter !== 'all') { filter = 'all'; document.querySelectorAll('.tabs button').forEach((x) => x.setAttribute('aria-selected', x.dataset.f === 'all')); }
+    render(); list.scrollTop = 0; close(); live.textContent = 'Saved ' + t + '.';
+  });
+  render();
+})();
+</script>
+</body>
+</html>

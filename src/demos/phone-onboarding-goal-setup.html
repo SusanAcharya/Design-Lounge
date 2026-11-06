@@ -1,0 +1,268 @@
+<!-- Design Lounge piece: phone-onboarding-goal-setup · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fernway goal setup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EEF0E6;--surface:#F8F9F3;--tonal:#DCE7DE;--ink:#18231F;--ink-2:#4F5B55;--edge:#7C8A83;--rule:#D4DAD0;
+  --pine:#1F4D45;--on-pine:#F4F1E6;--pine-2:#BFD3C8;--pine-3:#2D6359;
+  --serif:"Playfair Display",Georgia,serif;--sans:"Public Sans",system-ui,sans-serif;
+  --r-chip:20px;--r-chip-on:32px;--r-card:32px;--r-pill:999px;
+  --std:cubic-bezier(0.2,0.7,0.2,1);--emph:cubic-bezier(0.2,0,0,1);--expo:cubic-bezier(0.16,1,0.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:400 16px/1.45 var(--sans);-webkit-font-smoothing:antialiased;overflow:hidden}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;-webkit-tap-highlight-color:transparent}
+:focus-visible{outline:3px solid var(--pine);outline-offset:3px;border-radius:14px}
+.app{max-width:430px;height:100%;min-height:760px;margin:0 auto;position:relative;display:flex;flex-direction:column;padding:54px 0 34px;background:var(--bg)}
+.top{display:flex;align-items:center;gap:12px;height:56px;padding:0 12px 0 8px}
+.ib{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;flex:none;transition:opacity 200ms var(--std)}
+.ib svg{width:22px;height:22px}
+.ib[disabled]{visibility:hidden}
+.prog{flex:1;display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.prog i{height:6px;border-radius:3px;background:var(--pine-2);overflow:hidden}
+.prog i::after{content:"";display:block;height:100%;background:var(--pine);border-radius:3px;transform:scaleX(var(--f,0));transform-origin:left;transition:transform 480ms var(--emph)}
+.skip{height:44px;padding:0 12px;font-weight:600;font-size:15px;color:var(--pine);border-radius:22px;flex:none}
+.stage{position:relative;flex:1;overflow:hidden}
+.step{position:absolute;inset:0;padding:12px 20px 0;overflow-y:auto;visibility:hidden;opacity:0;transform:translateX(28px);transition:opacity 280ms var(--std),transform 420ms var(--emph),visibility 0s 420ms}
+.step.on{visibility:visible;opacity:1;transform:none;transition:opacity 280ms var(--std) 80ms,transform 420ms var(--emph)}
+.step.out{transform:translateX(-28px)}
+.kick{font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);margin:0}
+h1{font:500 34px/1.08 var(--serif);letter-spacing:-.01em;margin:8px 0 8px}
+h1 em{font-style:italic;color:var(--pine)}
+.step h1:focus{outline:none}
+.help{margin:0 0 20px;color:var(--ink-2);font-size:15px}
+/* chips */
+.chips{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.chip{min-height:112px;border-radius:var(--r-chip);background:var(--surface);box-shadow:inset 0 0 0 1.5px var(--rule);padding:14px;text-align:left;display:flex;flex-direction:column;justify-content:space-between;gap:10px;font-weight:600;font-size:16px;line-height:1.2;transition:border-radius 320ms var(--emph),background 200ms var(--std),color 200ms var(--std),transform 160ms var(--std)}
+.chip:active{transform:scale(.97)}
+.chip svg{width:28px;height:28px;flex:none}
+.chip .ck{position:absolute;opacity:0}
+.chip[aria-pressed=true]{background:var(--pine);color:var(--on-pine);border-radius:var(--r-chip-on);box-shadow:none}
+.chip-h{display:flex;justify-content:space-between;align-items:start}
+.tick{width:24px;height:24px;border-radius:50%;box-shadow:inset 0 0 0 1.5px var(--edge);display:grid;place-items:center}
+.tick svg{width:14px;height:14px;opacity:0;transform:scale(.4);transition:opacity 160ms var(--std),transform 260ms var(--expo)}
+.chip[aria-pressed=true] .tick{background:var(--on-pine);box-shadow:none;color:var(--pine)}
+.chip[aria-pressed=true] .tick svg{opacity:1;transform:none}
+.count{margin:14px 2px 0;font-size:14px;color:var(--ink-2)}
+/* level */
+.lvl{background:var(--surface);border-radius:var(--r-card);padding:22px 20px 18px;box-shadow:inset 0 0 0 1.5px var(--rule)}
+.stairs{display:flex;align-items:flex-end;gap:8px;height:150px}
+.stairs i{flex:1;border-radius:12px 12px 6px 6px;background:var(--tonal);transition:background 240ms var(--std),transform 360ms var(--expo);transform-origin:bottom}
+.stairs i.on{background:var(--pine)}
+.stairs i:nth-child(1){height:20%}.stairs i:nth-child(2){height:38%}.stairs i:nth-child(3){height:56%}.stairs i:nth-child(4){height:76%}.stairs i:nth-child(5){height:100%}
+.lname{font:500 28px/1.1 var(--serif);margin:18px 0 2px}
+.ldesc{margin:0;color:var(--ink-2);font-size:15px;min-height:44px}
+input[type=range]{appearance:none;-webkit-appearance:none;display:block;width:100%;height:48px;margin:10px 0 0;padding:20px 0;border-radius:4px;background-color:var(--edge);background-image:linear-gradient(90deg,var(--pine) 0 var(--p,25%),transparent var(--p,25%));background-clip:content-box;cursor:pointer}
+input[type=range]::-webkit-slider-runnable-track{height:8px;background:transparent}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:32px;height:32px;margin-top:-12px;border-radius:50%;background:var(--pine);box-shadow:0 0 0 5px var(--surface),0 2px 8px rgba(24,35,31,.3)}
+input[type=range]::-moz-range-thumb{width:32px;height:32px;border:0;border-radius:50%;background:var(--pine)}
+input[type=range]:focus-visible{outline-offset:8px}
+.ends{display:flex;justify-content:space-between;font-size:13px;color:var(--ink-2)}
+/* days */
+.week{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
+.day{height:76px;border-radius:24px;background:var(--surface);box-shadow:inset 0 0 0 1.5px var(--rule);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-weight:600;font-size:14px;transition:background 200ms var(--std),color 200ms var(--std),border-radius 320ms var(--emph)}
+.day small{width:6px;height:6px;border-radius:50%;background:transparent;margin-top:4px}
+.day.rec small{background:var(--pine)}
+.day[aria-pressed=true]{background:var(--pine);color:var(--on-pine);border-radius:38px;box-shadow:none}
+.day[aria-pressed=true].rec small{background:var(--on-pine)}
+.sugg{display:flex;gap:12px;align-items:center;margin-top:18px;padding:14px 16px;border-radius:20px;background:var(--tonal);font-size:15px}
+.sugg svg{width:24px;height:24px;flex:none;color:var(--pine)}
+.sugg b{font-weight:600}
+/* plan */
+.card{background:var(--pine);color:var(--on-pine);border-radius:var(--r-card);padding:22px 20px 20px;margin-top:4px}
+.card>*{animation:rise 520ms var(--expo) backwards;animation-delay:calc(var(--i) * 110ms + 120ms)}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}}
+.card .kick{color:var(--pine-2)}
+.card h2{font:500 28px/1.12 var(--serif);margin:6px 0 16px}
+.card h2 em{font-style:italic}
+.gl{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.gl span{font-size:13px;font-weight:600;padding:6px 12px;border-radius:var(--r-pill);background:var(--pine-3)}
+.fact{display:grid;grid-template-columns:28px 1fr;gap:12px;align-items:start;padding:12px 0;border-top:1px solid rgba(244,241,230,.2)}
+.fact svg{width:24px;height:24px;color:var(--pine-2)}
+.fact b{display:block;font-weight:600}
+.fact span{font-size:14px;color:var(--pine-2)}
+.ramp{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;align-items:end;height:104px;padding-top:12px;border-top:1px solid rgba(244,241,230,.2)}
+.ramp div{display:flex;flex-direction:column;justify-content:flex-end;height:100%;gap:6px;text-align:center}
+.ramp i{display:block;width:100%;max-width:40px;margin:0 auto;border-radius:10px 10px 4px 4px;background:var(--on-pine);transform-origin:bottom;animation:bar 640ms var(--expo) backwards;animation-delay:calc(var(--i) * 110ms + var(--j) * 70ms + 160ms)}
+.ramp small{font-size:12px;color:var(--pine-2);white-space:nowrap}
+@keyframes bar{from{transform:scaleY(0)}}
+.times{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+.time{min-height:72px;border-radius:20px;background:var(--surface);box-shadow:inset 0 0 0 1.5px var(--rule);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-weight:600;font-size:15px;transition:background 200ms var(--std),color 200ms var(--std),border-radius 320ms var(--emph)}
+.time small{font-size:13px;font-weight:500;color:var(--ink-2)}
+.time[aria-pressed=true]{background:var(--pine);color:var(--on-pine);border-radius:36px;box-shadow:none}
+.time[aria-pressed=true] small{color:var(--pine-2)}
+.lab{margin:24px 2px 0;font-weight:600;font-size:15px}
+.again{display:block;margin:14px auto 0;height:44px;padding:0 16px;font-weight:600;color:var(--pine);font-size:15px;border-radius:22px}
+/* bottom */
+.foot{padding:12px 20px 0}
+.cta{width:100%;height:60px;border-radius:var(--r-pill);background:var(--pine);color:var(--on-pine);font-weight:600;font-size:17px;display:flex;align-items:center;justify-content:center;gap:10px;transition:transform 160ms var(--std),background 200ms var(--std),border-radius 320ms var(--emph)}
+.cta svg{width:20px;height:20px}
+.cta:active{transform:scale(.98);border-radius:20px}
+.cta:disabled{background:var(--tonal);color:var(--ink-2);cursor:default}
+.vh{position:fixed;left:0;top:0;width:300px;height:1px;overflow:hidden;clip-path:inset(50%)}
+@media (max-width:370px){h1{font-size:30px}.day{font-size:13px}}
+@media (prefers-reduced-motion:reduce){.step,.step.out{transform:none!important}.card>*,.ramp i{animation:fade 200ms linear backwards!important;animation-delay:0ms!important}*{transition-duration:1ms!important}.step{transition:opacity 200ms linear,visibility 0s 200ms!important}.step.on{transition:opacity 200ms linear!important}}
+@keyframes fade{from{opacity:0}}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="top">
+    <button class="ib" id="back" aria-label="Back" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+    <div class="prog" id="prog" role="progressbar" aria-label="Setup progress" aria-valuemin="0" aria-valuemax="3" aria-valuenow="1"><i></i><i></i><i></i></div>
+    <button class="skip" id="skip">Skip</button>
+  </div>
+  <main class="stage" id="stage">
+    <section class="step on" data-step="0" aria-labelledby="t0">
+      <p class="kick">Step 1 of 3</p>
+      <h1 id="t0">What would you like <em>more of?</em></h1>
+      <p class="help">Pick up to three. Your plan starts from these.</p>
+      <div class="chips" id="chips"></div>
+      <p class="count" id="count" aria-live="polite">2 of 3 picked</p>
+    </section>
+    <section class="step" data-step="1" aria-labelledby="t1">
+      <p class="kick">Step 2 of 3</p>
+      <h1 id="t1">How active are you <em>right now?</em></h1>
+      <p class="help">Be honest. We start a step below where you are.</p>
+      <div class="lvl">
+        <div class="stairs" id="stairs" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+        <p class="lname" id="lname">Light walks</p>
+        <p class="ldesc" id="ldesc">A short walk most days, not much else.</p>
+        <input type="range" id="level" min="1" max="5" step="1" value="2" aria-labelledby="t1">
+        <div class="ends" aria-hidden="true"><span>Mostly sitting</span><span>Training hard</span></div>
+      </div>
+    </section>
+    <section class="step" data-step="2" aria-labelledby="t2">
+      <p class="kick">Step 3 of 3</p>
+      <h1 id="t2">Which days <em>suit you?</em></h1>
+      <p class="help">Tap the days you can usually find time.</p>
+      <div class="week" id="week" role="group" aria-labelledby="t2"></div>
+      <div class="sugg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v2M5.6 5.6L7 7M3 12h2M18.4 5.6L17 7M21 12h-2M8 16a4 4 0 1 1 8 0v2H8z"/></svg><span id="sugg">For <b>light walks</b> we suggest <b>3 days</b>, marked with a dot.</span></div>
+      <p class="lab" id="tl">Remind me in the</p>
+      <div class="times" id="times" role="group" aria-labelledby="tl"><button class="time" data-t="0" aria-pressed="true">Morning<small>7:30</small></button><button class="time" data-t="1" aria-pressed="false">Lunch<small>12:30</small></button><button class="time" data-t="2" aria-pressed="false">Evening<small>18:30</small></button></div>
+    </section>
+    <section class="step" data-step="3" aria-labelledby="t3">
+      <h1 id="t3" class="vh">Your plan</h1>
+      <div class="card" id="card"></div>
+      <button class="again" id="again">Edit answers</button>
+    </section>
+  </main>
+  <div class="foot"><button class="cta" id="cta">Continue<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>
+</div>
+<div class="vh" aria-live="polite" id="live"></div>
+<script>
+(() => {
+const $ = (id) => document.getElementById(id);
+const svg = (d) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`;
+const GOALS = [
+  ['walk', 'Walk further', 'walk further', 'brisk walk and stretch', '<path d="M13 4a1.5 1.5 0 1 0 0 .1M10 21l2-6 3 3v3M9 11l3-3 3 2 2 3M12 8l-2 5"/>'],
+  ['sleep', 'Sleep better', 'sleep better', 'evening wind-down', '<path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/>'],
+  ['back', 'Ease back pain', 'ease your back', 'mobility flow', '<path d="M12 3v18M8 6h8M7 10h10M8 14h8M9 18h6"/>'],
+  ['str', 'Build strength', 'build strength', 'bodyweight strength', '<path d="M4 9v6M7 7v10M17 7v10M20 9v6M7 12h10"/>'],
+  ['calm', 'Feel calmer', 'feel calmer', 'breathing walk', '<path d="M4 12c2.5-3 5.5-3 8 0s5.5 3 8 0M4 17c2.5-3 5.5-3 8 0s5.5 3 8 0M4 7c2.5-3 5.5-3 8 0s5.5 3 8 0"/>'],
+  ['run', 'Run 5 km', 'run your first 5 km', 'walk–run intervals', '<path d="M5 19l4-8 4 3 3-6 3 2M15 4h4v4"/>']
+];
+const LEVELS = [
+  ['Mostly sitting', 'Desk days, a little walking between rooms.', 15, 2],
+  ['Light walks', 'A short walk most days, not much else.', 20, 3],
+  ['Active a few days', 'Something that gets you warm two or three times a week.', 25, 3],
+  ['Active most days', 'You move with intent four or five days a week.', 30, 4],
+  ['Training hard', 'Structured sessions and the odd early start.', 35, 5]
+];
+const DAYS = [['M', 'Mon', 'Monday'], ['T', 'Tue', 'Tuesday'], ['W', 'Wed', 'Wednesday'], ['T', 'Thu', 'Thursday'], ['F', 'Fri', 'Friday'], ['S', 'Sat', 'Saturday'], ['S', 'Sun', 'Sunday']];
+const REC = [[0, 3], [0, 2, 5], [0, 2, 5], [0, 1, 3, 5], [0, 1, 3, 4, 6]];
+const DEF = { goals: ['walk', 'sleep'], level: 2, days: [0, 2, 5] };
+let booting = false;
+const st = { step: 0, goals: [...DEF.goals], level: DEF.level, days: [...DEF.days], t: 0 };
+const TIMES = [['mornings', '7:30'], ['lunchtimes', '12:30'], ['evenings', '18:30']];
+const tickSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+$('chips').innerHTML = GOALS.map(([k, n, , , d]) => `<button class="chip" data-k="${k}" aria-pressed="false"><span class="chip-h">${svg(d)}<span class="tick">${tickSvg}</span></span>${n}</button>`).join('');
+$('week').innerHTML = DAYS.map(([s, , l], i) => `<button class="day" data-d="${i}" aria-pressed="false" aria-label="${l}"><span aria-hidden="true">${DAYS[i][1]}</span><small aria-hidden="true"></small></button>`).join('');
+const live = (t) => { $('live').textContent = t; };
+const list = (a) => a.length < 2 ? a.join('') : a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1];
+function syncChips() {
+  document.querySelectorAll('.chip').forEach((c) => c.setAttribute('aria-pressed', st.goals.includes(c.dataset.k)));
+  $('count').textContent = st.goals.length === 3 ? '3 of 3 picked. Unpick one to swap.' : `${st.goals.length} of 3 picked`;
+}
+function syncLevel() {
+  const L = LEVELS[st.level - 1], r = $('level');
+  r.value = st.level; r.style.setProperty('--p', ((st.level - 1) / 4 * 100) + '%');
+  r.setAttribute('aria-valuetext', `${L[0]}. ${L[1]}`);
+  $('lname').textContent = L[0]; $('ldesc').textContent = L[1];
+  document.querySelectorAll('#stairs i').forEach((b, i) => b.classList.toggle('on', i < st.level));
+  $('sugg').innerHTML = `For <b>${L[0].toLowerCase()}</b> we suggest <b>${REC[st.level - 1].length} days</b>, marked with a dot.`;
+}
+function syncDays() { const rec = REC[st.level - 1]; document.querySelectorAll('.day').forEach((d) => { const n = +d.dataset.d; d.setAttribute('aria-pressed', st.days.includes(n)); d.classList.toggle('rec', rec.includes(n)); d.setAttribute('aria-label', DAYS[n][2] + (rec.includes(n) ? ', suggested' : '')); }); }
+function plan() {
+  const L = LEVELS[st.level - 1], g = GOALS.filter((x) => st.goals.includes(x[0]));
+  const goals = g.length ? g : [GOALS[0]], days = [...st.days].sort((a, b) => a - b), n = days.length || 3;
+  const mins = L[2], weeks = [0, 1, 2, 3].map((w) => Math.round(n * mins * (1 + w * 0.12) / 5) * 5), top = Math.max(...weeks);
+  const first = days.find((d) => d > 4) ?? days[0] ?? 0; // today is Friday 6 Nov; Saturday is index 5
+  const firstDate = first >= 5 ? `${DAYS[first][1]} ${first === 5 ? 7 : 8} Nov` : `${DAYS[first][1]} ${9 + first} Nov`;
+  const rows = [
+    [`<p class="kick">Your plan · 4 weeks</p>`],
+    [`<h2>Four weeks to <em>${list(goals.map((x) => x[2]))}</em>.</h2>`],
+    [`<div class="gl">${goals.map((x) => `<span>${x[1]}</span>`).join('')}<span>${L[0]}</span></div>`],
+    [`<div class="fact">${svg('<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/>')}<div><b>${n} sessions a week</b><span>${list(days.map((d) => DAYS[d][1]))}, ${TIMES[st.t][0]} at ${TIMES[st.t][1]}</span></div></div>`],
+    [`<div class="fact">${svg('<circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M10 2h4"/>')}<div><b>${mins} minutes each, ${goals[0][3]}</b><span>First one ${firstDate}, then it grows about 12% a week</span></div></div>`],
+    [`<div class="ramp" aria-label="Minutes per week: ${weeks.join(', ')}">${weeks.map((w, j) => `<div><i style="height:${Math.round(w / top * 64)}px;--j:${j}"></i><small>W${j + 1} · ${w}m</small></div>`).join('')}</div>`]
+  ];
+  $('card').innerHTML = rows.map((r, i) => r[0].replace(/^<(\w+)/, `<$1 style="--i:${i}"`)).join('');
+  $('card').querySelectorAll('.ramp i').forEach((b) => b.style.setProperty('--i', 5));
+  live(`Your plan: ${n} sessions a week of ${mins} minutes, starting ${firstDate}.`);
+}
+function go(to) {
+  const steps = [...document.querySelectorAll('.step')];
+  steps.forEach((s, i) => { s.classList.toggle('out', i < to); s.classList.toggle('on', i === to); s.setAttribute('aria-hidden', i !== to); });
+  st.step = to;
+  document.querySelectorAll('#prog i').forEach((b, i) => b.style.setProperty('--f', to >= 3 ? 1 : i < to ? 1 : i === to ? .5 : 0));
+  $('prog').setAttribute('aria-valuenow', Math.min(3, to + 1));
+  $('back').disabled = to === 0 || to === 3;
+  $('skip').style.visibility = to === 3 ? 'hidden' : 'visible';
+  if (to === 3) plan();
+  $('cta').firstChild.textContent = to === 3 ? 'Start my plan' : to === 2 ? 'Build my plan' : 'Continue';
+  valid();
+  const h = steps[to].querySelector('h1'); if (h && to !== 3 && !booting) { h.tabIndex = -1; h.focus({ preventScroll: true }); }
+}
+function valid() { $('cta').disabled = (st.step === 0 && !st.goals.length) || (st.step === 2 && !st.days.length); }
+$('chips').addEventListener('click', (e) => {
+  const c = e.target.closest('.chip'); if (!c) return;
+  const k = c.dataset.k, i = st.goals.indexOf(k);
+  if (i > -1) st.goals.splice(i, 1); else if (st.goals.length < 3) st.goals.push(k); else return live('You can pick three. Unpick one to swap.');
+  syncChips(); valid();
+});
+$('level').addEventListener('input', (e) => {
+  st.level = +e.target.value; const want = LEVELS[st.level - 1][3];
+  st.days = REC[st.level - 1].slice(0, want);
+  syncLevel(); syncDays();
+});
+$('week').addEventListener('click', (e) => {
+  const d = e.target.closest('.day'); if (!d) return;
+  const n = +d.dataset.d, i = st.days.indexOf(n);
+  if (i > -1) st.days.splice(i, 1); else st.days.push(n);
+  syncDays(); valid();
+});
+$('times').addEventListener('click', (e) => {
+  const b = e.target.closest('.time'); if (!b) return;
+  st.t = +b.dataset.t; document.querySelectorAll('.time').forEach((x) => x.setAttribute('aria-pressed', x === b));
+});
+$('cta').onclick = () => {
+  if (st.step < 3) return go(st.step + 1);
+  const b = $('cta'); b.firstChild.textContent = 'Plan saved'; setTimeout(() => { b.firstChild.textContent = 'Start my plan'; }, 1400);
+};
+$('back').onclick = () => go(Math.max(0, st.step - 1));
+$('skip').onclick = () => go(3);
+$('again').onclick = () => go(0);
+booting = true; syncChips(); syncLevel(); syncDays(); go(0); booting = false;
+})();
+</script>
+</body>
+</html>
