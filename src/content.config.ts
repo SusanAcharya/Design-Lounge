@@ -13,7 +13,7 @@ export const CATEGORIES = [
   // page sections
   'hero', 'navbar', 'footer', 'features', 'pricing', 'testimonials', 'faq', 'cta', 'contact', 'logos', 'stats', 'team', 'newsletter', 'blog', 'gallery',
   // whole pages & screens
-  'portfolio', 'landing', 'auth', 'ecommerce', 'dashboard', 'onboarding', 'settings', 'profile', 'messaging', 'media', 'reading', 'error', 'utility',
+  'portfolio', 'landing', 'auth', 'ecommerce', 'dashboard', 'onboarding', 'settings', 'profile', 'messaging', 'media', 'reading', 'error', 'utility', 'games',
   // components
   'navigation', 'buttons', 'inputs', 'cards', 'overlays', 'feedback', 'data', 'pickers', 'charts', 'widgets', 'social', 'mockups',
   // motion

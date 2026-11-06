@@ -3,7 +3,7 @@ title: "Pebbleline attract screen"
 summary: "A Pebbleline coin-op attract screen: bezel, looping ledge demo, blinking Press start, high score, and a credit that opens Stage 1."
 platform: web
 type: screen
-category: landing
+category: games
 tags: [arcade, attract, pixel, title, credits]
 styles: [pixel, retro]
 motion: subtle

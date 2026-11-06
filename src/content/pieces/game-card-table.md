@@ -3,7 +3,7 @@ title: "Linnet pairs table"
 summary: "A 4 by 4 felt table of drawn cards. Flip two, a match stays, a miss turns back, moves count, and the win line names the moves."
 platform: web
 type: screen
-category: media
+category: games
 tags: [cards, memory, table, keyboard]
 styles: [organic, soft]
 motion: subtle

@@ -1,0 +1,264 @@
+<!-- Design Lounge piece: minigame-word-trace · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Knotwork word trace</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Onest:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F1ECE1;--paper-2:#E8E1D2;--tile:#FFFCF5;--tile-line:#D6CCB8;--ink:#17303B;--ink-2:#4A5A60;--ink-3:#5E6A6C;
+  --rope:#B8792A;--pick:#17303B;--pick-ink:#FFFCF5;--bad:#A8432F;
+  --w0:#9FD2C3;--w1:#F2C46B;--w2:#F2AA92;--w3:#B9CBEA;--w4:#CFDC92;
+  --serif:"Young Serif",Georgia,serif;--sans:"Onest",system-ui,sans-serif;
+  --tile-s:62px;--gap:10px;--r-tile:14px;--r-chip:9px;--r-pill:999px;
+  --lift:0 6px 14px rgba(23,48,59,.22);--sheet:0 -12px 40px rgba(23,48,59,.18);
+  --ease:cubic-bezier(.2,.7,.2,1);--sheet-ease:cubic-bezier(.32,.72,0,1);--expo:cubic-bezier(.16,1,.3,1);--spring:cubic-bezier(.34,1.56,.64,1);
+  --t-micro:160ms;--t-layout:320ms;--t-fly:520ms;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--paper);color:var(--ink);font:15px/1.4 var(--sans);-webkit-font-smoothing:antialiased;overflow:hidden;user-select:none;-webkit-user-select:none}
+.app{position:relative;max-width:390px;height:100%;margin:0 auto;padding:54px 20px 34px;display:flex;flex-direction:column}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2.5px solid var(--rope);outline-offset:3px}
+header{display:flex;align-items:center;gap:10px;height:48px}
+.brand{flex:1;min-width:0}
+.brand b{display:block;font:20px/1 var(--serif);letter-spacing:-.01em}
+.brand span{display:block;font-size:12px;color:var(--ink-3);margin-top:4px;white-space:nowrap}
+.timer{display:flex;align-items:center;gap:6px;height:40px;padding:0 14px;border-radius:var(--r-pill);background:var(--tile);border:1px solid var(--tile-line);font-weight:600;font-variant-numeric:tabular-nums;min-width:88px;justify-content:center}
+.timer svg{width:16px;height:16px}
+.timer.low{color:var(--bad)}
+.icon-btn{width:44px;height:44px;border-radius:50%;border:1px solid var(--tile-line);background:var(--tile);display:grid;place-items:center}
+.icon-btn svg{width:18px;height:18px}
+.theme{margin-top:14px;display:flex;align-items:flex-end;justify-content:space-between}
+.theme small{display:block;font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+.theme h1{margin:2px 0 0;font:400 44px/1 var(--serif);letter-spacing:-.02em}
+.count{font-size:13px;color:var(--ink-2);padding-bottom:6px;white-space:nowrap}
+.count b{font-weight:700;color:var(--ink)}
+.words{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 0;padding:0;list-style:none;min-height:68px;align-content:flex-start}
+.chip{height:30px;display:flex;align-items:center;gap:3px;padding:0 10px;border-radius:var(--r-chip);background:var(--paper-2);transition:background var(--t-layout) var(--ease)}
+.chip i{width:12px;height:12px;border-radius:3px;border:1.5px solid #9C9381;display:grid;place-items:center;font:normal 10px/1 var(--serif)}
+.chip i.hint{width:auto;min-width:12px;height:auto;border:0;font-size:15px;color:var(--ink);padding:0 1px}
+.chip.found{background:var(--c);font:13px/1 var(--serif);letter-spacing:.08em;color:var(--ink)}
+.chip.found.pop{animation:pop 380ms var(--spring)}
+.readout{margin-top:22px;height:44px;display:flex;align-items:center;justify-content:center}
+.readout p{margin:0;height:40px;display:flex;align-items:center;padding:0 18px;border-radius:var(--r-pill);font-size:14px;color:var(--ink-2)}
+.readout p.live{background:var(--ink);color:var(--pick-ink);font:20px/1 var(--serif);letter-spacing:.18em}
+.readout p.bad{background:var(--bad);color:#FFF8F2;font:600 14px/1 var(--sans);letter-spacing:0}
+.readout p.ok{background:var(--tile);color:var(--ink);border:1px solid var(--tile-line);font-weight:600}
+.board{position:relative;margin:16px auto 0;width:calc(var(--tile-s)*5 + var(--gap)*4);touch-action:none}
+.grid{display:grid;grid-template-columns:repeat(5,var(--tile-s));gap:var(--gap)}
+.tile{height:var(--tile-s);border-radius:var(--r-tile);background:var(--tile);box-shadow:inset 0 0 0 1px var(--tile-line),0 2px 0 var(--tile-line);display:grid;place-items:center;font:28px/1 var(--serif);color:var(--ink);transition:transform var(--t-micro) var(--spring),background var(--t-layout) var(--ease),box-shadow var(--t-micro) var(--ease),color var(--t-micro)}
+.tile.on{background:var(--pick);color:var(--pick-ink);transform:translateY(-4px) scale(1.06);box-shadow:var(--lift)}
+.tile.lock{background:var(--c);box-shadow:inset 0 0 0 1px rgba(23,48,59,.12),0 2px 0 rgba(23,48,59,.14)}
+.tile.lock.on{background:var(--pick)}
+.tile.shake{animation:shake 360ms var(--ease)}
+.tile.cue{animation:cue 1.2s var(--ease) infinite}
+.rope{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
+.rope path{fill:none;stroke:var(--rope);stroke-width:7;stroke-linecap:round;stroke-dasharray:1 9;stroke-dashoffset:0}
+.rope .core{stroke-dasharray:none;stroke-width:3;stroke:#E3B46A}
+.ghost{position:absolute;left:0;top:0;width:44px;height:44px;margin:-22px 0 0 -22px;border-radius:50%;background:rgba(23,48,59,.16);border:2px solid rgba(23,48,59,.5);pointer-events:none;opacity:0;animation:ghost 2.6s var(--ease) 600ms 2}
+.controls{margin-top:auto;display:flex;gap:8px;align-items:center}
+.hint-btn{height:52px;padding:0 14px;border-radius:16px;border:1px solid var(--tile-line);background:var(--tile);display:flex;align-items:center;gap:6px;font-weight:600;font-size:14px;white-space:nowrap}
+.hint-btn svg{width:18px;height:18px}
+.hint-btn:disabled{color:var(--ink-3);cursor:default}
+form{flex:1;display:flex;gap:8px;min-width:0}
+input{flex:1;min-width:0;height:52px;border-radius:16px;border:1.5px solid #8F8574;background:var(--tile);padding:0 14px;font:600 15px var(--sans);color:var(--ink);letter-spacing:.06em;text-transform:uppercase}
+input::placeholder{text-transform:none;letter-spacing:0;color:var(--ink-3);font-weight:500}
+input:focus-visible{outline-offset:1px}
+.go{width:52px;height:52px;border-radius:16px;border:0;background:var(--ink);color:var(--pick-ink);display:grid;place-items:center;flex:none}
+.go svg{width:20px;height:20px}
+.flyer{position:fixed;z-index:20;font:20px/1 var(--serif);letter-spacing:.12em;padding:8px 12px;border-radius:var(--r-chip);background:var(--c);color:var(--ink);pointer-events:none}
+.scrim{position:fixed;inset:0;z-index:30;background:rgba(23,48,59,.4);opacity:0;visibility:hidden;transition:opacity var(--t-layout) var(--ease),visibility 0s linear var(--t-layout)}
+.sheet{position:fixed;z-index:31;left:50%;bottom:0;width:100%;max-width:390px;background:var(--paper);border-radius:28px 28px 0 0;padding:28px 24px 46px;box-shadow:var(--sheet);transform:translate(-50%,104%);visibility:hidden;transition:transform 420ms var(--sheet-ease),visibility 0s linear 420ms}
+.open .scrim,.sheet.open{visibility:visible;transition-delay:0s}
+.open .scrim{opacity:1}
+.sheet.open{transform:translate(-50%,0)}
+.sheet small{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+.sheet h2{margin:6px 0 4px;font:400 34px/1.05 var(--serif);letter-spacing:-.02em}
+.sheet p{margin:0;color:var(--ink-2)}
+.knots{display:flex;gap:14px;margin:20px 0 16px}
+.knots svg{width:44px;height:44px;color:var(--tile-line);transition:color 200ms}
+.knots svg.got{color:var(--rope);animation:stamp 420ms var(--spring)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--tile-line);border-bottom:1px solid var(--tile-line);margin-bottom:20px}
+.stats div{padding:12px 0}
+.stats div+div{border-left:1px solid var(--tile-line);padding-left:14px}
+.stats dt{font-size:12px;color:var(--ink-3)}
+.stats dd{margin:2px 0 0;font:24px/1.1 var(--serif);font-variant-numeric:tabular-nums}
+.row{display:flex;gap:10px}
+.primary,.secondary{height:54px;border-radius:18px;font-weight:600;font-size:16px;flex:1}
+.primary{background:var(--ink);color:var(--pick-ink);border:0}
+.secondary{background:var(--tile);border:1px solid var(--tile-line)}
+.sheet .stack{display:grid;gap:10px;margin-top:22px}
+.app.paused .board,.app.paused .words{filter:blur(8px)}
+.sr{position:absolute;left:0;top:0;width:300px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+@keyframes shake{0%,100%{transform:none}20%{transform:translateX(-7px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(2px)}}
+@keyframes pop{0%{transform:scale(.8)}100%{transform:none}}
+@keyframes stamp{0%{transform:scale(1.5) rotate(-12deg);opacity:0}100%{transform:none;opacity:1}}
+@keyframes cue{0%,100%{box-shadow:inset 0 0 0 1px var(--tile-line),0 0 0 0 rgba(184,121,42,.55)}50%{box-shadow:inset 0 0 0 2px var(--rope),0 0 0 8px rgba(184,121,42,0)}}
+@keyframes ghost{0%{opacity:0;transform:translate(var(--x0),var(--y0)) scale(.8)}12%{opacity:1;transform:translate(var(--x0),var(--y0)) scale(1)}70%{opacity:1;transform:translate(var(--x1),var(--y1))}100%{opacity:0;transform:translate(var(--x1),var(--y1))}}
+@media (max-width:370px){:root{--tile-s:56px;--gap:9px}}
+@media (prefers-reduced-motion:reduce){
+  .tile,.chip,.sheet,.scrim{transition-duration:0s!important}
+  .tile.on{transform:none}
+  .tile.shake,.chip.pop,.knots svg.got,.ghost{animation:none!important}
+  .ghost{display:none}
+  .tile.cue{animation:none;box-shadow:inset 0 0 0 2.5px var(--rope)}
+}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+  <header>
+    <div class="brand"><b>Knotwork</b><span id="boardNo">Board 1 of 3 · Thursday</span></div>
+    <div class="timer" id="timer" role="timer" aria-label="Time left"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M10 2h4"/></svg><span id="clock">2:31</span></div>
+    <button class="icon-btn" id="pauseBtn" aria-label="Pause" aria-expanded="false"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1.5"/><rect x="14" y="5" width="4" height="14" rx="1.5"/></svg></button>
+  </header>
+  <div class="theme">
+    <div><small>Hidden theme</small><h1 id="theme">Harbour</h1></div>
+    <div class="count" id="count"><b>1</b> of 5 found</div>
+  </div>
+  <ul class="words" id="words" aria-label="Words to find"></ul>
+  <div class="readout" aria-hidden="true"><p id="readout">Drag across touching letters</p></div>
+  <div class="board" id="board" role="application" aria-label="Letter grid. Drag across touching letters, or type a word below.">
+    <div class="grid" id="grid"></div>
+    <svg class="rope" id="rope" aria-hidden="true"><path id="ropeA" class="core"/><path id="ropeB"/></svg>
+    <div class="ghost" id="ghost" aria-hidden="true"></div>
+  </div>
+  <div class="controls">
+    <button class="hint-btn" id="hintBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/></svg><span id="hintTxt">Hint 2</span></button>
+    <form id="form" autocomplete="off"><input id="type" aria-label="Type a word" maxlength="7" placeholder="Type a word" enterkeyhint="go"><button class="go" aria-label="Check word"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg></button></form>
+  </div>
+  <div class="sr" aria-live="polite" id="live"></div>
+  <div class="scrim" id="scrim"></div>
+</div>
+<section class="sheet" id="pauseSheet" role="dialog" aria-modal="true" aria-labelledby="pT">
+  <small>Paused</small><h2 id="pT">The tide can wait</h2><p>The clock stops and the board is hidden.</p>
+  <div class="stack"><button class="primary" id="resume">Resume</button><button class="secondary" id="newP">New puzzle</button></div>
+</section>
+<section class="sheet" id="doneSheet" role="dialog" aria-modal="true" aria-labelledby="dT">
+  <small id="dK">Board cleared</small><h2 id="dT">Harbour, tied off</h2><p id="dP">Every word found with time to spare.</p>
+  <div class="knots" id="knots" aria-hidden="true"></div>
+  <dl class="stats"><div><dt>Words</dt><dd id="sW">5/5</dd></div><div><dt>Time</dt><dd id="sT">1:12</dd></div><div><dt>Score</dt><dd id="sS">0</dd></div></dl>
+  <div class="row"><button class="secondary" id="again">Replay</button><button class="primary" id="next">Next board</button></div>
+</section>
+<script>
+(() => {
+const BOARDS=[
+ {t:'Harbour',g:'GUTOLATANKSMNYBHCTUOORIDE',w:['ANCHOR','KNOT','BUOY','MAST','TIDE'],ghost:[20,12]},
+ {t:'Orchard',g:'PLAEPFRUPPGIMLARDTERECIEE',w:['APPLE','CIDER','PEAR','PLUM','FIG'],ghost:[10,2]},
+ {t:'Night sky',g:'SASKUTRKSDMEROTOTBINCMOOY',w:['COMET','MOON','STAR','DUSK','ORBIT'],ghost:[20,4]}];
+const LIMIT=180, $=id=>document.getElementById(id);
+const app=$('app'),grid=$('grid'),words=$('words'),readout=$('readout'),live=$('live'),board=$('board');
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const KNOT='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 12c-2.6-3.2-6.5-3.2-6.5 0s3.9 3.2 6.5 0 6.5-3.2 6.5 0-3.9 3.2-6.5 0z"/><circle cx="12" cy="12" r="10.5" stroke-width="1.4"/></svg>';
+let B,bi=0,found,hints,hinted,path=[],drag=false,left,state='play',last=0,score=0,shown=-1,pointer=null;
+const pitch=()=>grid.children[0].offsetWidth+parseFloat(getComputedStyle(grid).columnGap);
+function center(i){const s=grid.children[0].offsetWidth,p=pitch();return[(i%5)*p+s/2,Math.floor(i/5)*p+s/2]}
+function load(n,pre){
+  bi=n;B=BOARDS[n];found=new Map();hints=2;hinted=new Set();left=LIMIT;score=0;path=[];
+  $('theme').textContent=B.t;$('boardNo').textContent='Board '+(n+1)+' of 3 · Thursday';
+  grid.innerHTML=[...B.g].map((ch,i)=>'<div class="tile" data-i="'+i+'">'+ch+'</div>').join('');
+  words.innerHTML=B.w.map((w,k)=>'<li class="chip" data-k="'+k+'" style="--c:var(--w'+k+')" aria-label="'+w.length+' letters, not found">'+'<i></i>'.repeat(w.length)+'</li>').join('');
+  if(pre){left=151;const p=solve(B.w[2]);if(p)lock(2,p,true)}
+  const [a,b]=B.ghost.map(center),gh=$('ghost');
+  gh.style.cssText='--x0:'+a[0]+'px;--y0:'+a[1]+'px;--x1:'+b[0]+'px;--y1:'+b[1]+'px';
+  gh.style.animation='none';gh.offsetWidth;gh.style.animation='';
+  drawRope();setReadout('Drag across touching letters','');tick(0);updHint();count();
+}
+function solve(w,from){let out=null;const dfs=(p,i,acc)=>{if(out||B.g[p]!==w[i]||acc.includes(p))return;acc=[...acc,p];if(i===w.length-1){out=acc;return}const r=p/5|0,c=p%5;for(let dr=-1;dr<=1;dr++)for(let dc=-1;dc<=1;dc++){const R=r+dr,C=c+dc;if((dr||dc)&&R>=0&&R<5&&C>=0&&C<5)dfs(R*5+C,i+1,acc)}};for(let p=0;p<25;p++)dfs(p,0,[]);return out}
+function setReadout(t,cls){readout.textContent=t;readout.className=cls}
+function count(){$('count').innerHTML='<b>'+found.size+'</b> of '+B.w.length+' found'}
+function updHint(){$('hintTxt').textContent='Hint '+hints;$('hintBtn').disabled=!hints||state!=='play';$('hintBtn').setAttribute('aria-label',hints+' hints left')}
+function drawRope(end){
+  const pts=path.map(center);if(end&&pts.length)pts.push(end);
+  let d='';const s=grid.children[0].offsetWidth*.44;
+  for(let k=1;k<pts.length;k++){const[a,b]=[pts[k-1],pts[k]];const dx=b[0]-a[0],dy=b[1]-a[1],L=Math.hypot(dx,dy)||1;const tEnd=(end&&k===pts.length-1)?0:s;if(L<s+tEnd+2)continue;d+='M'+(a[0]+dx/L*s)+' '+(a[1]+dy/L*s)+'L'+(b[0]-dx/L*tEnd)+' '+(b[1]-dy/L*tEnd)}
+  $('ropeA').setAttribute('d',d);$('ropeB').setAttribute('d',d);
+}
+function word(){return path.map(i=>B.g[i]).join('')}
+function tileAt(x,y){const r=grid.getBoundingClientRect(),p=pitch(),s=grid.children[0].offsetWidth;const lx=x-r.left,ly=y-r.top,c=Math.floor(lx/p),rw=Math.floor(ly/p);if(c<0||c>4||rw<0||rw>4)return -1;const cx=c*p+s/2,cy=rw*p+s/2;return Math.hypot(lx-cx,ly-cy)<s*.5?rw*5+c:-1}
+function adj(a,b){return Math.abs((a/5|0)-(b/5|0))<=1&&Math.abs(a%5-b%5)<=1&&a!==b}
+function mark(){[...grid.children].forEach((t,i)=>t.classList.toggle('on',path.includes(i)));if(path.length)setReadout(word(),'live')}
+function move(e){
+  if(!drag)return;const r=grid.getBoundingClientRect();const i=tileAt(e.clientX,e.clientY);
+  if(i>=0){if(path.length>1&&i===path[path.length-2]){path.pop();mark()}else if(!path.includes(i)&&adj(path[path.length-1],i)&&path.length<7){path.push(i);mark()}}
+  drawRope([e.clientX-r.left,e.clientY-r.top]);
+}
+board.addEventListener('pointerdown',e=>{if(state!=='play')return;const i=tileAt(e.clientX,e.clientY);if(i<0)return;drag=true;board.setPointerCapture(e.pointerId);path=[i];mark();drawRope();$('ghost').style.display='none'});
+board.addEventListener('pointermove',move);
+const up=()=>{if(!drag)return;drag=false;check(path.slice(),word())};
+board.addEventListener('pointerup',up);board.addEventListener('pointercancel',()=>{drag=false;clear()});
+function clear(){path=[];mark();drawRope();if(state==='play')setReadout('Drag across touching letters','')}
+function check(p,w){
+  const k=B.w.indexOf(w);
+  if(w.length<3){clear();return}
+  if(k>=0&&!found.has(k)){lock(k,p);return}
+  setReadout(k>=0?'Already found':w+' is not hidden here','bad');live.textContent=k>=0?w+' already found.':w+' is not one of the words.';
+  p.forEach(i=>{const t=grid.children[i];t.classList.remove('shake');void t.offsetWidth;t.classList.add('shake')});
+  path=[];drawRope();setTimeout(()=>{mark();if(state==='play')setReadout('Drag across touching letters','')},reduce?500:420);
+}
+function lock(k,p,quiet){
+  found.set(k,p);const chip=words.children[k];
+  p.forEach(i=>{const t=grid.children[i];t.classList.add('lock');t.style.setProperty('--c','var(--w'+k+')');t.classList.remove('cue')});
+  if(!quiet){score+=B.w[k].length*40;live.textContent=B.w[k]+' found. '+found.size+' of '+B.w.length+'.';fly(k,chip,p)}else fillChip(chip,k,false);
+  path=[];mark();drawRope();count();
+  if(!quiet){setReadout(B.w[k]+'  +'+B.w[k].length*40,'ok');setTimeout(()=>{if(state==='play'&&!drag)setReadout('Drag across touching letters','')},1100)}
+  if(found.size===B.w.length)setTimeout(()=>finish(true),reduce?300:700);
+}
+function fillChip(chip,k,pop){chip.className='chip found'+(pop?' pop':'');chip.textContent=B.w[k];chip.setAttribute('aria-label',B.w[k]+', found')}
+function fly(k,chip,p){
+  if(reduce||!chip.animate){fillChip(chip,k,false);return}
+  const f=document.createElement('div');f.className='flyer';f.textContent=B.w[k];f.style.setProperty('--c','var(--w'+k+')');document.body.appendChild(f);
+  const a=readout.getBoundingClientRect(),b=chip.getBoundingClientRect(),fr=f.getBoundingClientRect();
+  const x0=a.left+a.width/2-fr.width/2,y0=a.top+a.height/2-fr.height/2;f.style.left=x0+'px';f.style.top=y0+'px';
+  const dx=b.left+b.width/2-x0-fr.width/2,dy=b.top+b.height/2-y0-fr.height/2;
+  f.animate([{transform:'none'},{transform:'translate('+dx*.5+'px,'+(dy*.5-26)+'px) scale(1.08)',offset:.5},{transform:'translate('+dx+'px,'+dy+'px) scale(.72)'}],{duration:520,easing:'cubic-bezier(.16,1,.3,1)'}).onfinish=()=>{f.remove();fillChip(chip,k,true)};
+}
+$('hintBtn').onclick=()=>{
+  const k=B.w.findIndex((w,j)=>!found.has(j)&&!hinted.has(j));if(k<0||!hints)return;
+  hints--;hinted.add(k);score-=30;const chip=words.children[k];chip.firstChild.className='hint';chip.firstChild.textContent=B.w[k][0];
+  chip.setAttribute('aria-label',B.w[k].length+' letters, starts with '+B.w[k][0]);
+  const p=solve(B.w[k]);if(p)grid.children[p[0]].classList.add('cue');
+  live.textContent='Hint: a '+B.w[k].length+' letter word starts with '+B.w[k][0]+'.';updHint();
+};
+$('form').onsubmit=e=>{e.preventDefault();if(state!=='play')return;const inp=$('type'),w=inp.value.trim().toUpperCase();inp.value='';if(!w)return;const k=B.w.indexOf(w);const p=solve(w);
+  if(p&&k>=0&&!found.has(k)){lock(k,p);return}
+  if(!p&&w.length>=3){setReadout(w+' cannot be traced','bad');live.textContent=w+' cannot be traced on this board.';setTimeout(()=>state==='play'&&setReadout('Drag across touching letters',''),1200);return}
+  check(p||[],w)};
+function fmt(s){s=Math.max(0,Math.ceil(s));return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')}
+function tick(dt){left-=dt;const s=Math.ceil(left);if(s!==shown){shown=s;$('clock').textContent=fmt(left);$('timer').classList.toggle('low',left<=30)}if(left<=0&&state==='play')finish(false)}
+function loop(t){if(state!=='play'){last=0;return}const dt=last?Math.min(t-last,100)/1000:0;last=t;tick(dt);if(state==='play')requestAnimationFrame(loop)}
+function run(){state='play';last=0;requestAnimationFrame(loop);updHint()}
+function sheet(el,on){el.classList.toggle('open',on);app.classList.toggle('open',on)}
+function pause(on){
+  if(state==='done')return;state=on?'pause':'play';app.classList.toggle('paused',on);sheet($('pauseSheet'),on);$('pauseBtn').setAttribute('aria-expanded',on);
+  if(on){$('resume').focus();live.textContent='Paused.'}else{$('pauseBtn').focus();run()}updHint();
+}
+$('pauseBtn').onclick=()=>pause(state==='play');$('resume').onclick=()=>pause(false);
+$('newP').onclick=()=>{pause(false);load((bi+1)%3);};
+function finish(won){
+  state='done';drag=false;clear();updHint();const used=LIMIT-Math.max(0,left);
+  const final=Math.max(0,score+(won?Math.round(left)*5:0));const stars=won?(left>90?3:left>40?2:1):(found.size>=3?1:0);
+  $('dK').textContent=won?'Board cleared':'Time is up';
+  $('dT').textContent=won?B.t+', tied off':found.size+' of '+B.w.length+' found';
+  $('dP').textContent=won?'Every word found with '+fmt(left)+' to spare.':'The rest were '+B.w.filter((w,j)=>!found.has(j)).join(', ')+'.';
+  $('sW').textContent=found.size+'/'+B.w.length;$('sT').textContent=fmt(used);$('sS').textContent='0';
+  const kn=$('knots');kn.innerHTML=KNOT.repeat(3);
+  sheet($('doneSheet'),true);live.textContent=$('dT').textContent+'. Score '+final+'.';
+  const st=reduce?0:260;
+  [...kn.children].forEach((s,j)=>{if(j<stars)setTimeout(()=>s.classList.add('got'),reduce?0:500+j*st)});
+  const t0=500+stars*st;setTimeout(()=>{if(reduce){$('sS').textContent=final;return}let s0=0;const step=t=>{s0=s0||t;const k=Math.min(1,(t-s0)/700);$('sS').textContent=Math.round(final*(1-Math.pow(1-k,3)));if(k<1&&state==='done')requestAnimationFrame(step)};requestAnimationFrame(step)},reduce?0:t0);
+  setTimeout(()=>$('next').focus(),reduce?0:t0+200);
+}
+function restart(n){sheet($('doneSheet'),false);load(n);run()}
+$('again').onclick=()=>restart(bi);$('next').onclick=()=>restart((bi+1)%3);
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&state!=='done'){pause(state==='play')}});
+load(0,true);run();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,282 @@
+<!-- Design Lounge piece: premium-watch-vault · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Vault · private collection</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --wall:#f3f2ef;--card:#fbfaf8;--ink:#1b1a18;--ink-2:#5c5850;--rule:#dedad3;
+  --gold:#c4a167;--gold-hi:#ecd9b0;--gold-lo:#8a6d3e;--bronze:#77592b;--up:#2f5b3a;--down:#8b2f24;
+  --serif:"Bodoni Moda",Didot,Georgia,serif;
+  --out:cubic-bezier(.16,1,.3,1);--ease:cubic-bezier(.2,.7,.2,1);--sheet:cubic-bezier(.32,.72,0,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--wall);color:var(--ink);font:400 15px/1.45 var(--serif);font-optical-sizing:auto;-webkit-font-smoothing:antialiased;overflow:hidden}
+button{font:inherit;color:inherit;border:0;background:none;padding:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+svg{display:block}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.caps{font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase}
+
+/* grid view */
+.view{position:fixed;inset:0;overflow-y:auto;overflow-x:hidden;transition:opacity 360ms var(--ease),transform 480ms var(--out),visibility 0s}
+.list{padding:62px 20px 40px}
+.list .caps{color:var(--bronze)}
+.list h1{margin:10px 0 4px;font:400 46px/1 var(--serif);letter-spacing:-.01em}
+.list h1 em{font-style:italic}
+.sum{margin:0 0 22px;color:var(--ink-2);font-size:15px}
+.sum b{color:var(--ink);font-weight:600;font-variant-numeric:lining-nums}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.w{position:relative;background:var(--card);border-radius:4px;box-shadow:inset 0 0 0 1px var(--rule);padding:16px 14px 14px;text-align:left;display:flex;flex-direction:column;align-items:stretch;transition:box-shadow 200ms var(--ease),transform 200ms var(--ease)}
+.w:hover{box-shadow:inset 0 0 0 1px var(--gold)}
+.w:active{transform:scale(.98)}
+.w .pic{width:92px;height:92px;margin:0 auto 12px}
+.w .caps{font-size:10px;letter-spacing:.2em;white-space:nowrap}
+.w .nm{font:italic 400 18px/1.15 var(--serif);margin:3px 0 6px}
+.w .v{display:flex;justify-content:space-between;align-items:baseline;font-size:13px;font-variant-numeric:lining-nums tabular-nums;border-top:1px solid var(--rule);padding-top:7px}
+.chg{font-size:12px;white-space:nowrap}
+.chg.u{color:var(--up)}.chg.d{color:var(--down)}
+.away .list{opacity:0;transform:scale(.97);visibility:hidden;transition:opacity 300ms var(--ease),transform 480ms var(--out),visibility 0s 480ms}
+
+/* hero view */
+.hero{opacity:0;visibility:hidden;background:var(--wall);transition:opacity 300ms var(--ease),visibility 0s 300ms}
+.away .hero{opacity:1;visibility:visible;transition:opacity 300ms var(--ease)}
+.bar{position:sticky;top:0;z-index:4;display:flex;align-items:center;gap:12px;padding:54px 16px 8px;background:linear-gradient(var(--wall) 82%,rgba(243,242,239,0))}
+.back{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;box-shadow:inset 0 0 0 1px var(--rule);background:var(--card)}
+.back svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.bar .caps{color:var(--ink-2);white-space:nowrap}
+.pg{margin-left:auto;font-variant-numeric:lining-nums}
+.ttl{padding:6px 24px 0;text-align:center}
+.ttl .caps{color:var(--bronze)}
+.ttl h2{margin:6px 0 0;font:italic 400 38px/1.05 var(--serif)}
+.stage{position:relative;height:320px;margin-top:4px;perspective:900px;cursor:grab;touch-action:pan-y;outline-offset:-6px}
+.stage:active{cursor:grabbing}
+.plinth{position:absolute;left:50%;bottom:22px;width:230px;height:34px;margin-left:-115px;border-radius:50%;background:radial-gradient(closest-side,rgba(27,26,24,.22),rgba(27,26,24,0))}
+.tt{position:absolute;left:50%;top:50%;width:180px;height:180px;margin:-100px 0 0 -90px;transform-style:preserve-3d;transform:rotateY(var(--a,0deg))}
+.tt>*{position:absolute;inset:0}
+.face,.cb{backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.face{transform:translateZ(8px)}
+.cb{transform:rotateY(180deg) translateZ(8px)}
+.sl{border-radius:50%;border:5px solid var(--gold-lo);inset:4px}
+.strap{left:52px;right:52px;background:linear-gradient(90deg,#3a2a1d,#5a4130 50%,#3a2a1d);border-radius:10px}
+.strap.t{top:-70px;bottom:auto;height:84px;transform:translateZ(-2px);-webkit-mask:linear-gradient(transparent,#000 70%);mask:linear-gradient(transparent,#000 70%)}
+.strap.b{bottom:-70px;top:auto;height:84px;transform:translateZ(-2px);-webkit-mask:linear-gradient(#000 30%,transparent);mask:linear-gradient(#000 30%,transparent)}
+.band{left:82px;right:auto;width:16px;top:2px;bottom:2px;border-radius:8px;background:linear-gradient(#7d6035,#ecd9b0 22%,#c4a167 50%,#ecd9b0 78%,#7d6035);transform:rotateY(90deg)}
+.ss{left:87px;right:auto;width:6px;border-radius:3px;background:#3a2a1d;transform:rotateY(90deg) translateX(1px)}
+.ss.t{top:-62px;height:72px;-webkit-mask:linear-gradient(transparent,#000 70%);mask:linear-gradient(transparent,#000 70%)}
+.ss.b{top:auto;bottom:-62px;height:72px;-webkit-mask:linear-gradient(#000 30%,transparent);mask:linear-gradient(#000 30%,transparent)}
+.cap{inset:auto;left:79px;top:79px;width:22px;height:22px;border-radius:50%;background:repeating-conic-gradient(#8a6d3e 0 10deg,#d6b97f 10deg 20deg);box-shadow:inset 0 0 0 3px #c4a167;transform:rotateY(90deg) translateZ(102px)}
+.crown{left:auto;right:-13px;top:78px;width:16px;height:24px;border-radius:3px;background:repeating-linear-gradient(90deg,var(--gold-lo) 0 2px,var(--gold) 2px 4px)}
+.sec{transform-origin:100px 100px;animation:tick 60s steps(60) infinite}
+@keyframes tick{to{transform:rotate(360deg)}}
+.hint{position:absolute;left:50%;bottom:0;transform:translateX(-50%);display:flex;align-items:center;gap:8px;color:var(--ink-2);white-space:nowrap;font-size:13px;font-style:italic}
+.hint svg{width:34px;height:12px;fill:none;stroke:currentColor;stroke-width:1.2}
+.seg{display:flex;justify-content:center;gap:4px;margin:14px auto 0;padding:4px;border-radius:24px;box-shadow:inset 0 0 0 1px var(--rule);width:max-content}
+.seg button{height:40px;padding:0 16px;border-radius:20px;font-size:14px;color:var(--ink-2);transition:background 200ms var(--ease),color 200ms var(--ease)}
+.seg button[aria-pressed=true]{background:var(--ink);color:var(--wall)}
+.sheet{padding:28px 24px 130px}
+.val{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;padding-bottom:20px;border-bottom:1px solid var(--rule)}
+.val .caps{color:var(--ink-2);display:block;margin-bottom:6px}
+.val b{display:block;font:400 40px/1 var(--serif);font-variant-numeric:lining-nums;letter-spacing:-.01em}
+.val .chg{display:block;margin-top:8px;font-size:13px}
+.spark{width:120px;height:44px;flex:none}
+.spark polyline{fill:none;stroke:var(--gold-lo);stroke-width:1.4}
+dl{margin:0;display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--rule)}
+dl div{padding:16px 0;border-top:1px solid var(--rule)}
+dl div:nth-child(-n+2){border-top:0}
+dl div:nth-child(odd){padding-right:12px}
+dl div.full{grid-column:1/-1}
+dt{color:var(--ink-2)}
+dd{margin:4px 0 0;font-size:17px;font-variant-numeric:lining-nums}
+h3{margin:28px 0 10px;font:italic 400 22px/1.2 var(--serif)}
+ol{list-style:none;margin:0;padding:0;position:relative}
+ol::before{content:"";position:absolute;left:5px;top:10px;bottom:10px;width:1px;background:var(--rule)}
+ol li{position:relative;padding:8px 0 12px 28px}
+ol li::before{content:"";position:absolute;left:0;top:14px;width:9px;height:9px;border-radius:50%;background:var(--wall);box-shadow:inset 0 0 0 1.5px var(--gold-lo)}
+ol li:first-child::before{background:var(--gold)}
+ol time{display:block;color:var(--ink-2);font-size:13px;font-variant-numeric:lining-nums}
+ol b{display:block;font-weight:500;font-size:16px}
+ol span{color:var(--ink-2);font-size:14px}
+.cta{position:fixed;left:20px;right:20px;bottom:34px;max-width:400px;margin:0 auto;height:56px;border-radius:28px;background:var(--ink);color:var(--wall);font-size:17px;letter-spacing:.02em;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 10px 24px rgba(27,26,24,.18);transition:background 200ms var(--ease)}
+.cta:hover{background:#33302b}
+.cta i{width:24px;height:1px;background:var(--gold)}
+.fly{position:fixed;z-index:20;pointer-events:none;transform-origin:0 0}
+
+@media (prefers-reduced-motion:reduce){
+  .view,.away .list,.away .hero,.hero{transition:opacity 240ms linear,visibility 0s 240ms;transform:none}
+  .away .hero{transition:opacity 240ms linear}
+  .sec{animation:none}
+}
+</style>
+</head>
+<body>
+<main class="view list" id="list" aria-labelledby="h1">
+  <div class="caps">Private collection · Ishaan Rao</div>
+  <h1 id="h1">The <em>Vault</em></h1>
+  <p class="sum"><span id="cnt">Six pieces</span> · insured at <b id="tot">£0</b></p>
+  <div class="grid" id="grid"></div>
+</main>
+
+<section class="view hero" id="hero" aria-labelledby="ht" aria-hidden="true">
+  <div class="bar">
+    <button class="back" id="back" type="button" aria-label="Back to the vault"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+    <span class="caps">The Vault</span>
+    <span class="caps pg" id="pg">3 of 6</span>
+  </div>
+  <div class="ttl"><div class="caps" id="hm"></div><h2 id="ht"></h2></div>
+  <div class="stage" id="stage" tabindex="0" role="slider" aria-label="Turn the watch" aria-valuemin="-180" aria-valuemax="180" aria-valuenow="0" aria-valuetext="Dial, 0 degrees">
+    <div class="plinth"></div>
+    <div class="tt" id="tt"></div>
+    <div class="hint" id="hint"><svg viewBox="0 0 34 12"><path d="M4 6h26M8 2 4 6l4 4M26 2l4 4-4 4"/></svg>Drag to turn</div>
+  </div>
+  <div class="seg" role="group" aria-label="View angle">
+    <button type="button" data-a="0" aria-pressed="true">Dial</button>
+    <button type="button" data-a="90" aria-pressed="false">Profile</button>
+    <button type="button" data-a="180" aria-pressed="false">Caseback</button>
+  </div>
+  <div class="sheet">
+    <div class="val">
+      <div><span class="caps">Valuation · Oct 2026</span><b id="hv"></b><span class="chg" id="hc"></span></div>
+      <svg class="spark" viewBox="0 0 120 44" aria-hidden="true"><polyline id="sp" points=""/></svg>
+    </div>
+    <dl>
+      <div><dt class="caps">Reference</dt><dd id="dr"></dd></div>
+      <div><dt class="caps">Year</dt><dd id="dy"></dd></div>
+      <div class="full"><dt class="caps">Movement</dt><dd id="dmv"></dd></div>
+      <div><dt class="caps">Case</dt><dd id="dc"></dd></div>
+      <div><dt class="caps">Provenance</dt><dd id="dp"></dd></div>
+    </dl>
+    <h3>Service history</h3>
+    <ol id="sv"></ol>
+  </div>
+  <button class="cta" id="cta" type="button"><i></i>Arrange a viewing<i></i></button>
+</section>
+<p class="vh" aria-live="polite" id="live"></p>
+
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  const W = [
+    { m: 'Maison Arvelle', n: 'Méridienne', r: 'AV 2207', y: 1962, dial: '#efe8d8', ink: '#2a2620', ix: 'baton', sub: 1, mv: 'Calibre A.19 · manual wind · 18,000 vph · 44 h reserve', c: '36 mm, 18k yellow gold', p: 'Geneva auction, 2011', v: 48200, d: 6.1, s: [['Mar 2024', 'Full service', 'Atelier Brenet, Geneva'], ['Jun 2016', 'Crystal replaced', 'Arvelle London'], ['Sep 2011', 'Authenticated', 'Arvelle heritage dept.']] },
+    { m: 'Haussler & Fils', n: 'Nachtwache', r: 'HF 611.3', y: 1971, dial: '#16161a', ink: '#e9e2cf', ix: 'dot', date: 1, mv: 'Calibre H-38 · automatic · 28,800 vph · 40 h reserve', c: '38 mm, 18k gold, screw back', p: 'Original owner, Hamburg', v: 61750, d: 2.4, s: [['Jan 2025', 'Full service', 'Haussler Glashütte'], ['Aug 2019', 'Gasket and pressure test', 'Uhrwerk Kessler, Munich']] },
+    { m: 'Corvin Genève', n: 'Saumon', r: 'CG 3448', y: 1953, dial: '#e8b9a0', ink: '#3a2219', ix: 'roman', chrono: 1, mv: 'Calibre 13‴ · manual chronograph · 18,000 vph · 46 h reserve', c: '35 mm, 18k rose-toned gold', p: 'Estate of a Lyon surgeon', v: 112000, d: 9.8, s: [['Nov 2023', 'Full service, pushers rebuilt', 'Atelier Brenet, Geneva'], ['May 2014', 'Dial left untouched, documented', 'Corvin archive'], ['Feb 2009', 'Authenticated', 'Corvin archive']] },
+    { m: 'Okuda Tokei', n: 'Shinrin', r: 'OT-1180', y: 1984, dial: '#1f3b31', ink: '#e8e0c8', ix: 'baton', date: 1, mv: 'Calibre 61K · automatic · 21,600 vph · 50 h reserve', c: '37 mm, gold-capped steel', p: 'Dealer, Osaka', v: 22400, d: -1.3, s: [['Jul 2022', 'Full service', 'Okuda service centre, Osaka']] },
+    { m: 'Ravensworth London', n: 'Admiralty', r: 'RL 74/2', y: 1947, dial: '#f7f5ef', ink: '#1d1c1a', ix: 'roman', sub: 1, mv: 'Calibre R.12 · manual wind · 18,000 vph · 38 h reserve', c: '34 mm, 9ct gold, hallmarked 1947', p: 'Naval family, Portsmouth', v: 74500, d: 3.0, s: [['Apr 2024', 'Full service, enamel inspected', 'Ravensworth workshop, Clerkenwell'], ['Oct 2005', 'Mainspring replaced', 'Ravensworth workshop']] },
+    { m: 'Ballin Frères', n: 'Ardoise', r: 'BF 908', y: 1999, dial: '#3d4a5a', ink: '#ede7d6', ix: 'diamond', sub: 1, mv: 'Calibre B.220 · automatic · 28,800 vph · 72 h reserve', c: '39 mm, 18k white-gold bezel', p: 'Boutique, Paris, full set', v: 93750, d: 5.5, s: [['Feb 2025', 'Full service', 'Ballin Frères, Paris'], ['Mar 2017', 'Bracelet refitted to strap', 'Ballin Frères, Paris']] }
+  ];
+  const gbp = n => '£' + Math.round(n).toLocaleString('en-GB');
+  const pct = d => (d >= 0 ? '+' : '−') + Math.abs(d).toFixed(1) + '%';
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function face(w, big) {
+    let t = '';
+    for (let i = 0; i < 12; i++) {
+      const a = i * 30, main = i % 3 === 0;
+      if (w.ix === 'baton') t += `<rect x="98.5" y="${main ? 22 : 24}" width="3" height="${main ? 16 : 11}" fill="${w.ink}" transform="rotate(${a} 100 100)"/>`;
+      if (w.ix === 'dot') t += `<circle cx="100" cy="30" r="${main ? 4.6 : 3}" fill="${w.ink}" transform="rotate(${a} 100 100)"/>`;
+      if (w.ix === 'roman') t += main ? `<g transform="rotate(${a} 100 100)" fill="${w.ink}"><rect x="96" y="22" width="2.2" height="15"/><rect x="101.8" y="22" width="2.2" height="15"/></g>` : `<rect x="99" y="23" width="2" height="9" fill="${w.ink}" transform="rotate(${a} 100 100)"/>`;
+      if (w.ix === 'diamond') t += `<path d="M100 ${main ? 21 : 24}l3.5 ${main ? 8 : 6}-3.5 ${main ? 8 : 6}-3.5-${main ? 8 : 6}z" fill="${w.ink}" transform="rotate(${a} 100 100)"/>`;
+    }
+    for (let i = 0; i < 60; i++) if (i % 5) t += `<rect x="99.6" y="18" width=".8" height="3" fill="${w.ink}" opacity=".7" transform="rotate(${i * 6} 100 100)"/>`;
+    const subd = (cx, cy) => `<circle cx="${cx}" cy="${cy}" r="15" fill="none" stroke="${w.ink}" stroke-width=".7" opacity=".7"/><circle cx="${cx}" cy="${cy}" r="12.5" fill="${w.ink}" opacity=".06"/>`;
+    if (w.sub) t += subd(100, 136) + `<g class="${big ? 'sec' : ''}" style="transform-origin:100px 136px"><rect x="99.5" y="123" width="1" height="14" fill="#8a6d3e"/></g>`;
+    if (w.chrono) t += subd(70, 104) + subd(130, 104);
+    if (w.date) t += `<rect x="134" y="94" width="16" height="12" rx="1" fill="#f7f3ea" stroke="${w.ink}" stroke-width=".6"/><rect x="138" y="99" width="8" height="1.6" fill="#1b1a18"/>`;
+    t += `<rect x="88" y="58" width="24" height="2.2" rx="1" fill="${w.ink}" opacity=".85"/><rect x="93" y="63" width="14" height="1.2" fill="${w.ink}" opacity=".6"/>`;
+    t += `<g fill="#d6b97f" stroke="#6e5530" stroke-width=".5"><path d="M100 100 L98 52 L100 46 L102 52z" transform="rotate(54 100 100)"/><path d="M100 100 L97.6 64 L100 58 L102.4 64z" transform="rotate(-62 100 100)"/></g>`;
+    if (w.chrono) t += `<g class="${big ? 'sec' : ''}"><rect x="99.5" y="26" width="1" height="86" fill="#8b2f24"/></g>`;
+    t += `<circle cx="100" cy="100" r="3.4" fill="#d6b97f" stroke="#6e5530" stroke-width=".5"/>`;
+    return `<svg viewBox="0 0 200 200" aria-hidden="true"><defs><radialGradient id="g${big ? 'b' : ''}${w.r.replace(/\W/g, '')}" cx=".35" cy=".3" r=".9"><stop offset="0" stop-color="#f6e7c2"/><stop offset=".45" stop-color="#c4a167"/><stop offset="1" stop-color="#7d6035"/></radialGradient></defs>
+      <circle cx="100" cy="100" r="98" fill="url(#g${big ? 'b' : ''}${w.r.replace(/\W/g, '')})"/><circle cx="100" cy="100" r="90" fill="#8a6d3e"/>
+      <circle cx="100" cy="100" r="88" fill="${w.dial}"/><circle cx="100" cy="100" r="88" fill="url(#sheen)" opacity=".5"/>${t}
+      <path d="M40 46a88 88 0 0 1 80-30" stroke="#fff" stroke-opacity=".35" stroke-width="10" fill="none" stroke-linecap="round"/></svg>`;
+  }
+  function back(w) {
+    let rings = ''; for (let r = 20; r < 76; r += 6) rings += `<circle cx="100" cy="100" r="${r}" fill="none" stroke="#6e5530" stroke-opacity=".35" stroke-width=".6"/>`;
+    return `<svg viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="98" fill="#b8955c"/><circle cx="100" cy="100" r="86" fill="#d2b47c"/>${rings}
+      <circle cx="100" cy="100" r="86" fill="none" stroke="#7d6035" stroke-width="1"/><path d="M60 100h80M100 60v80" stroke="#7d6035" stroke-opacity=".4" stroke-width=".6"/>
+      <rect x="74" y="140" width="52" height="2" fill="#6e5530"/><rect x="82" y="146" width="36" height="1.4" fill="#6e5530" opacity=".7"/>
+      ${[0, 60, 120, 180, 240, 300].map(a => `<rect x="97" y="8" width="6" height="7" rx="1" fill="#8a6d3e" transform="rotate(${a} 100 100)"/>`).join('')}</svg>`;
+  }
+  const sheen = '<svg width="0" height="0" style="position:absolute"><defs><radialGradient id="sheen" cx=".3" cy=".25" r=".8"><stop offset="0" stop-color="#fff" stop-opacity=".45"/><stop offset=".6" stop-color="#fff" stop-opacity="0"/></radialGradient></defs></svg>';
+  document.body.insertAdjacentHTML('afterbegin', sheen);
+
+  $('tot').textContent = gbp(W.reduce((a, w) => a + w.v, 0));
+  $('grid').innerHTML = W.map((w, i) => `<button class="w" type="button" data-i="${i}" aria-label="${w.m} ${w.n}, ${w.y}, ${gbp(w.v)}">
+    <span class="pic">${face(w, false)}</span><span class="caps" style="color:var(--bronze)">${w.m}</span>
+    <span class="nm">${w.n}</span><span class="v"><span>${gbp(w.v)}</span><span class="chg ${w.d >= 0 ? 'u' : 'd'}">${pct(w.d)}</span></span></button>`).join('');
+
+  const tt = $('tt'), stage = $('stage'), body = document.body;
+  let cur = 0, ang = 0, vel = 0, raf = 0, from = null;
+  function setA(a) {
+    ang = a; tt.style.setProperty('--a', a + 'deg');
+    const n = ((Math.round(a) % 360) + 540) % 360 - 180, abs = Math.abs(n);
+    const name = abs < 45 ? 'Dial' : abs > 135 ? 'Caseback' : 'Profile';
+    stage.setAttribute('aria-valuenow', n); stage.setAttribute('aria-valuetext', `${name}, ${n} degrees`);
+    document.querySelectorAll('.seg button').forEach(b => b.setAttribute('aria-pressed', b.textContent === name));
+  }
+  function spin(to) {
+    cancelAnimationFrame(raf);
+    if (reduce) return setA(to);
+    const a0 = ang, t0 = performance.now();
+    const k = now => { const t = Math.min(1, (now - t0) / 700), e = 1 - Math.pow(1 - t, 4); setA(a0 + (to - a0) * e); if (t < 1) raf = requestAnimationFrame(k); };
+    raf = requestAnimationFrame(k);
+  }
+  function open(i, src) {
+    const w = W[cur = i];
+    tt.innerHTML = `<div class="strap t"></div><div class="strap b"></div>` + Array.from({ length: 5 }, (_, k) => `<div class="sl" style="transform:translateZ(${k * 4 - 8}px);border-color:${k % 2 ? '#a8874f' : '#8a6d3e'}"></div>`).join('') + `<div class="band"></div><div class="ss t"></div><div class="ss b"></div><div class="cap"></div>` +
+      `<div class="crown"></div><div class="cb">${back(w)}</div><div class="face">${face(w, true)}</div>`;
+    $('hm').textContent = w.m; $('ht').textContent = w.n; $('pg').textContent = `${i + 1} of ${W.length}`;
+    $('hv').textContent = gbp(w.v);
+    const dv = Math.round(w.v * w.d / (100 + w.d));
+    $('hc').textContent = `${w.d >= 0 ? '+' : '−'}${gbp(Math.abs(dv))} (${pct(w.d)}) in 12 months`; $('hc').className = 'chg ' + (w.d >= 0 ? 'u' : 'd');
+    let s = 9; const pts = Array.from({ length: 12 }, (_, k) => { s = (s * 31 + w.y) % 97; const y = 36 - (k / 11) * (w.d * 2.4) - (s % 9) + 4; return `${4 + k * 10},${Math.max(4, Math.min(40, y)).toFixed(1)}`; });
+    $('sp').setAttribute('points', pts.join(' '));
+    $('dr').textContent = w.r; $('dy').textContent = w.y; $('dmv').textContent = w.mv; $('dc').textContent = w.c; $('dp').textContent = w.p;
+    $('sv').innerHTML = w.s.map(([d, a, b]) => `<li><time>${d}</time><b>${a}</b><span>${b}</span></li>`).join('');
+    setA(reduce ? 0 : -38); $('hero').scrollTop = 0;
+    body.classList.add('away'); $('hero').setAttribute('aria-hidden', 'false'); $('list').setAttribute('aria-hidden', 'true');
+    if (src && !reduce) flyFrom(src);
+    spin(0);
+    $('live').textContent = `${w.m} ${w.n}, ${w.y}. Valued at ${gbp(w.v)}.`;
+    setTimeout(() => $('back').focus({ preventScroll: true }), 80);
+  }
+  function flyFrom(src) {
+    const a = src.getBoundingClientRect(), b = tt.getBoundingClientRect();
+    tt.style.transition = 'none'; tt.style.opacity = '0';
+    const f = document.createElement('div'); f.className = 'fly'; f.innerHTML = src.innerHTML;
+    Object.assign(f.style, { left: a.left + 'px', top: a.top + 'px', width: a.width + 'px', height: a.height + 'px' });
+    body.appendChild(f);
+    const s = 180 / a.width;
+    f.animate([{ transform: 'none' }, { transform: `translate(${b.left + b.width / 2 - 90 - a.left}px,${b.top + b.height / 2 - 90 - a.top}px) scale(${s})` }], { duration: 520, easing: 'cubic-bezier(.32,.72,0,1)', fill: 'forwards' })
+      .finished.then(() => { tt.style.opacity = ''; f.remove(); });
+  }
+  function close() {
+    body.classList.remove('away'); $('hero').setAttribute('aria-hidden', 'true'); $('list').setAttribute('aria-hidden', 'false');
+    const card = document.querySelector(`.w[data-i="${cur}"]`); card && card.focus({ preventScroll: true });
+  }
+  $('grid').addEventListener('click', e => { const c = e.target.closest('.w'); if (c) open(+c.dataset.i, c.querySelector('.pic')); });
+  $('back').addEventListener('click', close);
+  $('cta').addEventListener('click', () => { $('live').textContent = `Viewing requested for the ${W[cur].n}. The vault will confirm a slot within one working day.`; $('cta').lastChild.previousSibling.textContent = 'Viewing requested'; });
+  addEventListener('keydown', e => { if (e.key === 'Escape' && body.classList.contains('away')) close(); });
+  document.querySelectorAll('.seg button').forEach(b => b.addEventListener('click', () => { const t = +b.dataset.a; spin(ang + ((((t - ang) % 360) + 540) % 360 - 180)); }));
+  stage.addEventListener('keydown', e => { if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') { e.preventDefault(); spin(ang + (e.key === 'ArrowRight' ? 30 : -30)); } });
+  let lx = 0, lt = 0;
+  stage.addEventListener('pointerdown', e => { cancelAnimationFrame(raf); from = e.clientX; lx = e.clientX; lt = e.timeStamp; vel = 0; stage.setPointerCapture(e.pointerId); $('hint').style.opacity = 0; });
+  stage.addEventListener('pointermove', e => { if (from === null) return; const dx = e.clientX - lx, dt = Math.max(1, e.timeStamp - lt); vel = dx / dt * .6; lx = e.clientX; lt = e.timeStamp; setA(ang + dx * .6); });
+  const up = () => {
+    if (from === null) return; from = null;
+    if (reduce) return;
+    let v = vel * 16; const k = () => { v *= .94; setA(ang + v); if (Math.abs(v) > .05) raf = requestAnimationFrame(k); };
+    raf = requestAnimationFrame(k);
+  };
+  stage.addEventListener('pointerup', up); stage.addEventListener('pointercancel', up);
+})();
+</script>
+</body>
+</html>

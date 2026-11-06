@@ -3,7 +3,7 @@ title: "Fantasy RPG inventory"
 summary: "An ornate RPG satchel: an 8 by 6 slot grid with rarity frames, an equipped paper doll, and a pinned item card with stats, lore and a compare line."
 platform: web
 type: screen
-category: widgets
+category: games
 tags: [game, inventory, rpg, fantasy, tooltip, grid]
 styles: [luxe, dark, deco]
 motion: subtle

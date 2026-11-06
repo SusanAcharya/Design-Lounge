@@ -1,0 +1,208 @@
+<!-- Design Lounge piece: motion-scroll-story · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cairnline · Hollin Edge</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=Sora:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sky-1:#f7e6c8;--sky-2:#f2c89a;--sky-3:#e9a877;--sun:#fbefd9;--far:#d79a7b;--mid:#8e8d7c;--near:#4a6556;--pine:#22392f;
+  --paper:#f1ece2;--paper-2:#e6dfd1;--ink:#1b2a26;--ink-2:#4d5a55;--cream:#f1ece2;--cream-2:#b9c7be;--contour:#3a5448;
+  --route:#f07a4a;--route-ink:#a63e1a;
+  --display:"Big Shoulders Display",system-ui,sans-serif;--sans:"Sora",system-ui,sans-serif;
+  --ease:cubic-bezier(.2,.7,.2,1);--out:cubic-bezier(.16,1,.3,1);
+  --hero:470px;--bar:106px;--panel:200px;
+}
+*{box-sizing:border-box}
+html{background:var(--paper)}
+html,body{margin:0}
+body{font:15px/1.6 var(--sans);color:var(--ink);background:var(--paper);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+:focus-visible{outline:3px solid var(--route-ink);outline-offset:3px;border-radius:12px}
+.ico{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.wrap{max-width:430px;margin:0 auto;position:relative}
+
+.hero{position:relative;height:var(--hero);overflow:hidden;background:linear-gradient(180deg,var(--sky-1) 0%,var(--sky-2) 52%,var(--sky-3) 100%)}
+.plate{position:absolute;left:0;bottom:0;width:100%;height:100%;display:block;will-change:transform}
+.htext{position:absolute;left:20px;right:20px;top:106px;will-change:transform,opacity}
+.eyebrow{margin:0;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+.htext h1{margin:6px 0 0;font:800 104px/.84 var(--display);letter-spacing:-.01em;text-transform:uppercase}
+.meta{position:absolute;left:20px;right:20px;bottom:22px;margin:0;font-size:12px;font-weight:600;display:flex;gap:6px;flex-wrap:wrap}
+.meta span{height:30px;padding:0 10px;border-radius:15px;background:var(--paper);display:flex;align-items:center;white-space:nowrap}
+.hbtn{position:absolute;top:58px;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:var(--paper);color:var(--ink)}
+.hbtn.l{left:16px}.hbtn.r{right:16px}
+
+.bar{position:fixed;left:0;right:0;top:0;z-index:5;max-width:430px;margin:0 auto;height:var(--bar);padding:54px 16px 0;background:var(--paper);border-bottom:1px solid var(--paper-2);display:flex;align-items:center;gap:12px;opacity:0;visibility:hidden}
+.bar b{font:700 26px/1 var(--display);text-transform:uppercase;letter-spacing:.01em;flex:1}
+.bar span{font-size:13px;font-weight:600;color:var(--ink-2)}
+.bar .b2{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;border:1.5px solid #8a8f88}
+.prog{position:absolute;left:0;right:0;bottom:-1px;height:3px;background:var(--route);transform-origin:0 50%;transform:scaleX(0)}
+
+.panel{position:sticky;top:var(--bar);z-index:3;height:var(--panel);background:var(--pine);color:var(--cream);display:grid;grid-template-columns:128px 1fr;margin-top:-1px}
+.count{padding:22px 0 0 20px}
+.count small{display:block;font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--cream-2)}
+.num{display:flex;align-items:baseline;gap:4px;margin-top:4px;height:76px;overflow:hidden}
+.num b{font:800 84px/.9 var(--display);font-variant-numeric:tabular-nums;display:block}
+.num b.in{animation:numIn 260ms var(--out)}
+@keyframes numIn{from{transform:translateY(22px);opacity:0}}
+.num span{font:600 22px var(--display);color:var(--cream-2)}
+.count p{margin:8px 0 0;font-size:13px;line-height:1.35;font-weight:500;padding-right:6px}
+.map{width:100%;height:100%;display:block}
+
+.steps{padding:8px 20px 150px}
+.step{min-height:390px;padding:34px 0 0;border-top:1px solid var(--paper-2)}
+.step:first-child{border-top:0}
+.km{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--route-ink)}
+.step h2{margin:6px 0 10px;font:700 40px/.95 var(--display);text-transform:uppercase}
+.step p{margin:0;max-width:34ch;color:var(--ink)}
+.facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:18px}
+.facts div{border-top:2px solid var(--ink);padding-top:8px}
+.facts b{display:block;font:700 24px/1 var(--display)}
+.facts small{display:block;font-size:12px;color:var(--ink-2);margin-top:2px}
+.foot{margin:28px 0 0;padding-top:16px;border-top:1px solid var(--paper-2);font-size:13px;color:var(--ink-2);max-width:36ch}
+.dock{position:fixed;left:0;right:0;bottom:0;z-index:4;max-width:430px;margin:0 auto;padding:14px 16px 34px;background:linear-gradient(180deg,rgba(241,236,226,0) 0,var(--paper) 22px);display:flex;gap:10px}
+.go{flex:1;height:56px;border-radius:18px;background:var(--pine);color:var(--cream);font-weight:600;font-size:16px;display:flex;align-items:center;justify-content:center;gap:10px}
+.save{width:56px;height:56px;border-radius:18px;border:1.5px solid #7b827c;display:grid;place-items:center;background:var(--paper)}
+
+/* Scroll-driven, where supported. JS writes the same values otherwise. */
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .plate,.htext,.bar,.prog{animation-timing-function:linear;animation-fill-mode:both;animation-timeline:scroll(root)}
+    .p-sun{animation-name:pSun;animation-range:0 470px}
+    .p-far{animation-name:pFar;animation-range:0 470px}
+    .p-mid{animation-name:pMid;animation-range:0 470px}
+    .p-near{animation-name:pNear;animation-range:0 470px}
+    .htext{animation-name:hText;animation-range:0 340px}
+    .bar{animation-name:barIn;animation-range:250px 350px}
+    .prog{animation-name:grow;animation-range:364px 100%}
+    .step>*{animation:rise linear both;animation-timeline:view();animation-range:entry 0% entry 30%}
+  }
+}
+@keyframes pSun{to{transform:translateY(340px)}}
+@keyframes pFar{to{transform:translateY(220px)}}
+@keyframes pMid{to{transform:translateY(140px)}}
+@keyframes pNear{to{transform:translateY(60px)}}
+@keyframes hText{to{transform:translateY(290px);opacity:0}}
+@keyframes barIn{from{opacity:0;visibility:hidden}1%{visibility:visible}to{opacity:1;visibility:visible}}
+@keyframes grow{to{transform:scaleX(1)}}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}}
+.bar.on{opacity:1;visibility:visible}
+@media (prefers-reduced-motion:reduce){
+  .bar{transition:opacity 200ms var(--ease),visibility 0s 200ms}
+  .bar.on{transition:opacity 200ms var(--ease)}
+  .num b.in{animation:fade 200ms var(--ease)}
+}
+@keyframes fade{from{opacity:0}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="bar" id="bar" aria-hidden="true">
+    <button class="b2" tabindex="-1" aria-label="Back"><svg class="ico" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>
+    <b>Hollin Edge</b><span>11.4 km · loop</span>
+    <i class="prog" id="prog"></i>
+  </header>
+
+  <section class="hero" aria-label="Route of the day">
+    <svg class="plate p-sun" viewBox="0 0 390 470" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><circle cx="300" cy="300" r="46" fill="#fbefd9"/></svg>
+    <div class="htext">
+      <p class="eyebrow">Route of the day · Sat 7 Nov</p>
+      <h1>Hollin<br>Edge</h1>
+    </div>
+    <svg class="plate p-far" viewBox="0 0 390 470" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><path d="M0 372 L46 346 L92 358 L150 318 L196 338 L250 306 L300 334 L346 314 L390 330 V470 H0Z" fill="#d79a7b"/></svg>
+    <svg class="plate p-mid" viewBox="0 0 390 470" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><path d="M0 396 C40 386 70 368 110 374 S170 350 210 356 L252 340 C290 350 320 372 390 362 V470 H0Z" fill="#8e8d7c"/><path d="M226 350 l26 -10 l14 8" fill="none" stroke="#f1ece2" stroke-width="2" stroke-linecap="round" opacity=".7"/></svg>
+    <svg class="plate p-near" viewBox="0 0 390 470" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><path d="M0 416 C60 402 120 410 180 398 S300 402 390 392 V470 H0Z" fill="#4a6556"/></svg>
+    <svg class="plate p-pine" viewBox="0 0 390 470" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><path d="M0 436 L14 436 L22 408 L30 436 L48 436 L58 396 L68 436 L96 436 L104 418 L112 436 L240 438 L250 412 L260 438 L278 438 L290 400 L302 438 L326 438 L334 420 L342 438 L360 438 L372 404 L384 438 L390 438 V470 H0Z" fill="#22392f"/></svg>
+    <p class="meta"><span>11.4 km loop</span><span>640 m up</span><span>4h 10m</span><span>Moderate</span></p>
+    <button class="hbtn l" aria-label="Back"><svg class="ico" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>
+    <button class="hbtn r" aria-label="Share route"><svg class="ico" viewBox="0 0 24 24"><path d="M12 3v12M7 8l5-5 5 5M5 14v6h14v-6"/></svg></button>
+  </section>
+
+  <div class="panel" id="panel" role="group" aria-label="Route progress">
+    <div class="count">
+      <small>Step</small>
+      <div class="num"><b id="num">01</b><span>/05</span></div>
+      <p id="stepName" aria-live="polite">Thrushfold car park</p>
+    </div>
+    <svg class="map" viewBox="0 0 262 200" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+      <g fill="none" stroke="#3a5448" stroke-width="1.2"><ellipse cx="150" cy="86" rx="84" ry="50"/><ellipse cx="156" cy="80" rx="60" ry="34"/><ellipse cx="162" cy="74" rx="36" ry="19"/><ellipse cx="166" cy="70" rx="14" ry="7"/><path d="M0 170 C60 150 120 180 262 160"/></g>
+      <ellipse cx="104" cy="186" rx="20" ry="7" fill="#5c87a0"/>
+      <path id="base" d="M36 168 C60 160 72 150 84 132 S104 96 126 84 S176 52 206 60 S240 92 226 120 S186 150 150 160 S70 182 36 168" fill="none" stroke="#5e7a6d" stroke-width="2" stroke-dasharray="3 5"/>
+      <path id="route" d="M36 168 C60 160 72 150 84 132 S104 96 126 84 S176 52 206 60 S240 92 226 120 S186 150 150 160 S70 182 36 168" fill="none" stroke="#f07a4a" stroke-width="3.5" stroke-linecap="round"/>
+      <g id="wps" fill="#22392f" stroke="#b9c7be" stroke-width="2"></g>
+      <circle id="dot" r="7" fill="#f07a4a" stroke="#f1ece2" stroke-width="3" cx="36" cy="168"/>
+    </svg>
+  </div>
+
+  <main class="steps" id="steps">
+    <article class="step"><span class="km">KM 0.0 · start</span><h2>Thrushfold car park</h2><p>Pay at the honesty box by the gate (£4 all day). Take the stony lane past Low Thrush farm and keep the beck on your left.</p><div class="facts"><div><b>0.0</b><small>km</small></div><div><b>112</b><small>m above sea</small></div><div><b>08:30</b><small>suggested start</small></div></div></article>
+    <article class="step"><span class="km">KM 1.8</span><h2>Over the packhorse bridge</h2><p>The bridge is single file and slick after rain. Beyond it, a green track climbs gently through birch to a wall stile.</p><div class="facts"><div><b>1.8</b><small>km</small></div><div><b>+60</b><small>m climbed</small></div><div><b>0:30</b><small>elapsed</small></div></div></article>
+    <article class="step"><span class="km">KM 4.2</span><h2>Climb to Hollin Edge</h2><p>The steep part: 310 m in a little over a kilometre on pitched stone. Rest at the sheepfold halfway; the view opens to the west.</p><div class="facts"><div><b>4.2</b><small>km</small></div><div><b>+370</b><small>m climbed</small></div><div><b>1:45</b><small>elapsed</small></div></div></article>
+    <article class="step"><span class="km">KM 7.6</span><h2>Along the ridge to Cold Knott</h2><p>Three easy kilometres on the crest. In cloud, follow the old fence posts; the cairn at Cold Knott is the highest point at 752 m.</p><div class="facts"><div><b>7.6</b><small>km</small></div><div><b>752</b><small>m summit</small></div><div><b>2:50</b><small>elapsed</small></div></div></article>
+    <article class="step"><span class="km">KM 11.4 · finish</span><h2>Down by Seavy Tarn</h2><p>Drop south on grassy zigzags to the tarn, then the lane back to Thrushfold. The Drovers Rest serves food until 20:30.</p><div class="facts"><div><b>11.4</b><small>km</small></div><div><b>640</b><small>m total up</small></div><div><b>4:10</b><small>moving time</small></div></div></article>
+    <p class="foot">Route checked by Cairnline rangers on 2 Nov 2026. Grid ref NY 412 087 for the car park.</p>
+  </main>
+
+  <div class="dock">
+    <button class="go"><svg class="ico" viewBox="0 0 24 24"><path d="M5 20 12 4l7 16-7-4z"/></svg>Start route</button>
+    <button class="save" aria-label="Save map offline"><svg class="ico" viewBox="0 0 24 24"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg></button>
+  </div>
+</div>
+
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const CSS_SCROLL = window.CSS && CSS.supports && CSS.supports('animation-timeline: scroll()');
+  const route = $('route'), dot = $('dot'), num = $('num'), name = $('stepName'), bar = $('bar'), prog = $('prog');
+  const steps = [...document.querySelectorAll('.step')];
+  const STOPS = [0, 0.16, 0.37, 0.67, 1];              // where each step sits along the route
+  const L = route.getTotalLength();
+  route.style.strokeDasharray = L; route.style.strokeDashoffset = L;
+  const wps = $('wps');
+  STOPS.forEach((f) => { const pt = route.getPointAtLength(f * L); const c = document.createElementNS(route.namespaceURI, 'circle'); c.setAttribute('cx', pt.x); c.setAttribute('cy', pt.y); c.setAttribute('r', 4); wps.appendChild(c); });
+  const plates = [['.p-sun', 340], ['.p-far', 220], ['.p-mid', 140], ['.p-near', 60]].map(([s, d]) => [document.querySelector(s), d]);
+  const htext = document.querySelector('.htext');
+  const clamp = (v) => Math.max(0, Math.min(1, v));
+  let cur = -1, ticking = false;
+
+  const frame = () => {
+    ticking = false;
+    const s = scrollY, H = innerHeight, panelBottom = 106 + 200;
+    const st = $('steps'), top = st.offsetTop, len = st.offsetHeight - 150 - (H - panelBottom);
+    const p = clamp((s - (top - panelBottom)) / Math.max(1, len));
+    // which step is under the panel
+    let i = 0; steps.forEach((el, k) => { if (el.getBoundingClientRect().top < panelBottom + 120) i = k; });
+    if (p >= 0.999) i = steps.length - 1;
+    // route length follows the step stops, interpolated inside each step
+    const a = STOPS[i], b = STOPS[Math.min(i + 1, 4)];
+    const r = steps[i].getBoundingClientRect(), inStep = i === 4 ? 1 : clamp((panelBottom + 120 - r.top) / r.height);
+    const f = i === 4 ? 1 : a + (b - a) * inStep;
+    route.style.strokeDashoffset = L * (1 - f);
+    const pt = route.getPointAtLength(f * L); dot.setAttribute('cx', pt.x); dot.setAttribute('cy', pt.y);
+    if (i !== cur) {
+      cur = i; num.textContent = String(i + 1).padStart(2, '0'); name.textContent = steps[i].querySelector('h2').textContent;
+      num.classList.remove('in'); num.offsetWidth; num.classList.add('in');
+    }
+    // fallback for browsers without scroll timelines, and the reduced-motion fades
+    if (!CSS_SCROLL || RM) {
+      bar.classList.toggle('on', s > 300);
+      prog.style.transform = `scaleX(${clamp((s - 364) / Math.max(1, document.documentElement.scrollHeight - H - 364))})`;
+      if (!RM) {
+        const h = clamp(s / 470);
+        plates.forEach(([el, d]) => { el.style.transform = `translateY(${h * d}px)`; });
+        const t = clamp(s / 340); htext.style.transform = `translateY(${t * 290}px)`; htext.style.opacity = 1 - t;
+      }
+    }
+  };
+  const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(frame); } };
+  addEventListener('scroll', onScroll, { passive: true });
+  addEventListener('resize', onScroll);
+  frame();
+})();
+</script>
+</body>
+</html>

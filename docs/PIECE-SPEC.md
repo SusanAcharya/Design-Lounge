@@ -88,7 +88,7 @@ Fixed `styles` list: `editorial`, `swiss`, `brutalist`, `glass`, `material`, `mi
 Fixed `category` list (the single source of truth is `src/content.config.ts`):
 
 - Website sections: `hero`, `navbar`, `footer`, `features`, `pricing`, `testimonials`, `faq`, `cta`, `contact`, `logos`, `stats`, `team`, `newsletter`, `blog`, `gallery`
-- Pages & screens: `portfolio`, `landing`, `auth`, `ecommerce`, `dashboard`, `onboarding`, `settings`, `profile`, `messaging`, `media`, `reading`, `error`, `utility`
+- Pages & screens: `portfolio`, `landing`, `auth`, `ecommerce`, `dashboard`, `onboarding`, `settings`, `profile`, `messaging`, `media`, `reading`, `error`, `utility`, `games`
 - Components: `navigation`, `buttons`, `inputs`, `cards`, `overlays`, `feedback`, `data`, `pickers`, `charts`, `widgets`, `social`, `mockups`
 - Motion: `text-motion`, `scroll`, `cursor`, `transitions`, `loaders`, `micro`, `backgrounds`
 - Kits: `design-language`

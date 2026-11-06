@@ -17,7 +17,7 @@ export function readRequest(request, lib) {
   signals.brand = has(/\b(?:look|feel)s? like (?:stripe|linear|apple|notion|vercel|airbnb|figma|github|spotify|framer|arc|raycast|[a-z]+\.(?:com|io|app))\b|\bin the style of [a-z]+\b|\blike (?:stripe|linear|apple|notion|vercel)'?s?\b/, s);
   signals.platform = has(/\b(?:react native|expo|flutter|swiftui|jetpack compose|compose)\b/, s) || has(/\b(?:ios|android|iphone|phone app|mobile app)\b/, s) || has(/\bpwa\b|progressive web app/, s) || has(/\b(?:electron|tauri|desktop app|mac app)\b/, s);
   signals.app = has(/\b(?:dashboard|admin|back ?office|ops|internal tool|crm|web app|logged[- ]in|saas app|portal)\b/, s);
-  signals.game = has(/\b(?:game|lobby|leaderboard|scoreboard|arcade)\b/, s);
+  signals.game = has(/\b(?:game|mini-?games?|lobby|leaderboard|scoreboard|arcade|level map|season pass|battle pass|puzzle game)\b/, s);
   signals.three = has(/\b(?:three\.?js|3d scene|webgl|orbit)\b/, s);
   signals.handwritten = has(/\b(?:handwritten|hand-lettered|hand lettered)\b/, s);
   signals.brandKit = has(/\b(?:brand kit|brand board|identity|logo system|logo|brand guidelines)\b/, s);
@@ -41,6 +41,7 @@ export function readRequest(request, lib) {
   else if (signals.piece) { flow = 'Piece flow: search_pieces, then get_piece, inside the locked kit if one exists'; why = signals.piece; }
   else if (signals.brandKit) { flow = 'Kit flow, then Brand board in taste.md'; why = signals.brandKit; }
   else if (signals.three && !signals.spectacle) { flow = 'Kit flow, recipe game, direction Orbit'; why = signals.three; }
+  else if (signals.game && (signals.platform || /\b(?:mobile|phone|iphone|android|ios|app store|play store)\b/.test(s)) && !/pwa|electron|tauri|desktop|mac app/.test(signals.platform || '')) { flow = 'Kit flow, recipe mobile-game, then Games and Three.js in taste.md and native.md'; why = `${signals.game} on a phone`; }
   else if (signals.game) { flow = 'Kit flow, recipe game, then Games and Three.js in taste.md'; why = signals.game; }
   else if (signals.handwritten) { flow = 'Kit flow, recipe notebook'; why = signals.handwritten; }
   else if (signals.platform) { flow = 'Kit flow, then the app short path (flows.md) and native.md'; why = signals.platform; }

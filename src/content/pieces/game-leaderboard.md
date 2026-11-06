@@ -3,7 +3,7 @@ title: "Quern score ladder"
 summary: "Today, This week, and All reorder twelve Quern scores. Your row stays marked, and a few rows show places gained or lost."
 platform: web
 type: screen
-category: data
+category: games
 tags: [leaderboard, ranks, tabs, scores]
 styles: [swiss, minimal]
 motion: subtle

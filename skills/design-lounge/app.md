@@ -41,6 +41,9 @@ On Android, or when the family is Material, use the `m3-` piece when one is name
 - Settings: `ios-grouped-settings` or `m3-settings-list`. Then only the rows the product has: `phone-account-edit`, `phone-notification-settings`, `phone-privacy-data`, `phone-subscription-manage`.
 - An account the person can create needs `phone-delete-account`. A price needs `phone-paywall-plans` or `phone-subscription-manage`, with the date and the monthly price.
 - A rating ask is `phone-rating-prompt`, after a success, never on first launch, then the system prompt.
+- Premium, when the product is: one material on a calm screen. A private bank card is `premium-metal-card-tilt`. A wind-down or sleep timer is `premium-sleep-breath`. A ticket or pass is `premium-boarding-pass`. A collection someone owns is `premium-watch-vault`. A camera with real controls is `premium-manual-camera`. A chart that is the whole screen is `premium-tide-chart`.
+- Motion a phone owes the touch: a sheet thrown to its detent with a spring is `motion-spring-throw-sheet`. Press, success and error that feel different is `motion-feedback-ladder`. A story read by scrolling is `motion-scroll-story`. These follow the finger; they do not play on their own.
+- A game, or a small game inside the app: the `mobile-game` recipe and Games in [taste.md](taste.md).
 - Large text: build every screen so it survives `phone-large-text-layout`. Rows grow. A two-column row stacks. Nothing ends in "...".
 
 ## After the action

@@ -1,0 +1,81 @@
+{
+ "id": "mobile-game",
+ "surface": "app",
+ "title": "A mobile game",
+ "kicker": "Play",
+ "blurb": "A level map, a game you can finish, the results, and the screens that bring people back: league, streak, season, shop.",
+ "when": "A game on a phone, or a small game inside an app. Controls in the thumb zone, rewards that land one at a time. Not a web game squeezed into 390px.",
+ "theme": "playroom",
+ "pairing": "candy-clay",
+ "shelf": "native-feel",
+ "categories": [
+  "games",
+  "feedback",
+  "overlays"
+ ],
+ "pieces": [
+  "game-phone-level-map",
+  "game-phone-level-results",
+  "game-phone-touch-hud",
+  "game-phone-hero-select",
+  "game-phone-daily-reward",
+  "game-phone-weekly-league",
+  "game-phone-season-track",
+  "game-phone-daily-shop",
+  "minigame-stack-drop",
+  "minigame-pair-recall",
+  "minigame-tile-slide",
+  "minigame-lane-dodge",
+  "minigame-word-trace",
+  "minigame-peg-drop",
+  "game-gacha-pull-reveal",
+  "streak-hold-confetti",
+  "motion-feedback-ladder",
+  "motion-sticker-peel",
+  "phone-splash-launch",
+  "phone-paywall-plans",
+  "phone-rating-prompt"
+ ],
+ "directions": [
+  {
+   "id": "reef-saga",
+   "name": "Reef saga",
+   "mood": "A bright puzzle world on a phone: a level path to climb, stars that stamp in, a soft round type",
+   "theme": "playroom",
+   "pairing": "candy-clay",
+   "family": "soft",
+   "hero": "game-phone-level-map",
+   "effect": "game-phone-level-results"
+  },
+  {
+   "id": "lantern-run",
+   "name": "Lantern run",
+   "mood": "An arcade runner at night: swipe lanes, a sparse HUD in the thumb zone, condensed numbers",
+   "theme": "night-market",
+   "pairing": "industrial-label",
+   "family": "sharp",
+   "hero": "minigame-lane-dodge",
+   "effect": "game-phone-touch-hud"
+  },
+  {
+   "id": "league-night",
+   "name": "League night",
+   "mood": "A live game you come back to: the weekly league, the login streak and the season track",
+   "theme": "bedtime",
+   "pairing": "candy-clay",
+   "family": "soft",
+   "hero": "game-phone-weekly-league",
+   "effect": "game-phone-daily-reward"
+  },
+  {
+   "id": "kiln-yard",
+   "name": "Kiln yard",
+   "mood": "A hero game in loud colour: pick a fighter, a shop with honest prices, cut-corner type",
+   "theme": "arcade-day",
+   "pairing": "hud",
+   "family": "sharp",
+   "hero": "game-phone-hero-select",
+   "effect": "game-phone-season-track"
+  }
+ ]
+}

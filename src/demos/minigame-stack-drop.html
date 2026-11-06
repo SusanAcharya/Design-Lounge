@@ -1,0 +1,216 @@
+<!-- Design Lounge piece: minigame-stack-drop · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cairn · Stack before dark</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Geist+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --night:#141A2C; --dusk:#3B3557; --ember:#E8875A; --ember-ink:#2A160C; --bone:#F3EADB; --ink:#1B1A24; --sub:#5A5560;
+  --plate:#141A2C; --on-plate:#F3EADB; --on-plate-2:#B9B6C8; --edge:#4A4866;
+  --display:"Bricolage Grotesque",system-ui,sans-serif; --mono:"Geist Mono",ui-monospace,monospace;
+  --ease:cubic-bezier(.2,.7,.2,1); --pop:cubic-bezier(.34,1.56,.64,1); --sheet:cubic-bezier(.32,.72,0,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--night);color:var(--on-plate);font:500 15px/1.3 var(--display);overflow:hidden;user-select:none;-webkit-user-select:none;touch-action:manipulation}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none;padding:0}
+:focus-visible{outline:3px solid var(--ember);outline-offset:3px}
+canvas{position:fixed;inset:0;width:100%;height:100%;display:block}
+.hud{position:fixed;top:0;left:50%;width:min(390px,100%);transform:translateX(-50%);padding:58px 16px 0;display:grid;grid-template-columns:96px 1fr 96px;align-items:start;pointer-events:none}
+.mark{font:600 12px/1 var(--mono);letter-spacing:.18em;color:var(--on-plate-2);padding-top:14px;white-space:nowrap}
+.score{text-align:center;font:800 76px/.9 var(--display);font-variation-settings:"opsz" 96;letter-spacing:-.03em;font-variant-numeric:tabular-nums;color:var(--bone)}
+.score.bump{animation:bump .24s var(--pop)}
+.best{display:block;text-align:center;font:500 12px/1 var(--mono);letter-spacing:.14em;color:var(--on-plate-2);margin-top:8px;white-space:nowrap}
+.pause{pointer-events:auto;justify-self:end;width:44px;height:44px;border-radius:50%;background:var(--plate);box-shadow:inset 0 0 0 1.5px var(--edge);display:grid;place-items:center}
+.pause svg{width:18px;height:18px}
+.combo{position:fixed;left:50%;top:0;transform:translate(-50%,0);background:var(--bone);color:var(--ink);font:700 15px/1 var(--display);padding:8px 14px 7px;border-radius:999px;white-space:nowrap;opacity:0;visibility:hidden;pointer-events:none}
+.combo.on{visibility:visible;animation:combo .9s var(--ease) both}
+.combo b{color:#9A3E14}
+.hint{position:fixed;left:50%;bottom:58px;transform:translateX(-50%);display:flex;align-items:center;gap:10px;background:var(--plate);color:var(--on-plate);border-radius:999px;padding:10px 18px 10px 12px;box-shadow:inset 0 0 0 1.5px var(--edge);font:600 15px/1 var(--display);white-space:nowrap;transition:opacity .3s var(--ease),visibility 0s}
+.hint.off{opacity:0;visibility:hidden;transition:opacity .3s var(--ease),visibility 0s .3s}
+.hint i{width:26px;height:26px;border-radius:50%;background:var(--ember);position:relative;flex:none}
+.hint i::after{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid var(--ember);animation:ping 1.4s var(--ease) infinite}
+.hint kbd{font:500 12px/1 var(--mono);color:var(--on-plate-2);border:1px solid var(--edge);border-radius:6px;padding:4px 6px}
+.layer{position:fixed;inset:0;display:grid;place-items:end center;padding:0 16px 34px;background:rgba(10,13,24,.72);opacity:0;visibility:hidden;transition:opacity .25s var(--ease),visibility 0s .25s}
+.layer.on{opacity:1;visibility:visible;transition:opacity .25s var(--ease)}
+.panel{width:min(358px,100%);background:var(--bone);color:var(--ink);border-radius:28px;padding:24px 22px 20px;transform:translateY(24px);transition:transform .4s var(--sheet)}
+.layer.on .panel{transform:none}
+.panel .k{font:600 12px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--sub)}
+.panel h2{margin:8px 0 0;font:800 34px/1 var(--display);letter-spacing:-.02em}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px 0 0}
+.stats div{border:1.5px solid #CDBFA9;border-radius:16px;padding:12px 14px}
+.stats b{display:block;font:800 40px/1 var(--display);letter-spacing:-.02em;font-variant-numeric:tabular-nums;margin-top:6px}
+.nb{display:inline-block;margin-top:12px;background:#9A3E14;color:#fff;font:600 12px/1 var(--mono);letter-spacing:.1em;padding:6px 9px;border-radius:6px}
+.nb[hidden]{display:none}
+.row{display:grid;gap:10px;margin-top:18px}
+.primary{height:58px;border-radius:18px;background:var(--ember);color:var(--ember-ink);font:700 19px/1 var(--display);display:flex;align-items:center;justify-content:center;gap:10px}
+.primary:active{transform:scale(.98)}
+.primary svg{width:20px;height:20px}
+.ghost{height:50px;border-radius:16px;box-shadow:inset 0 0 0 1.5px var(--ink);font:600 16px/1 var(--display)}
+.foot{margin:12px 0 0;font:500 12px/1.3 var(--mono);color:var(--sub);text-align:center}
+@keyframes bump{40%{transform:scale(1.12)}}
+@keyframes ping{0%{transform:scale(1);opacity:.9}80%,100%{transform:scale(1.9);opacity:0}}
+@keyframes combo{0%{opacity:0;transform:translate(-50%,10px) scale(.8)}18%{opacity:1;transform:translate(-50%,0) scale(1)}75%{opacity:1}100%{opacity:0;transform:translate(-50%,-14px)}}
+@media (prefers-reduced-motion:reduce){
+  .score.bump,.hint i::after{animation:none}
+  .combo.on{animation:fadeio .9s linear both}
+  .panel{transform:none;transition:none}
+}
+@keyframes fadeio{0%,100%{opacity:0}15%,75%{opacity:1}}
+</style>
+</head>
+<body>
+<canvas id="cv" aria-label="Cairn stacking game board" role="img"></canvas>
+<header class="hud">
+  <div class="mark">CAIRN</div>
+  <div><div class="score" id="score" aria-live="polite" aria-label="Score">0</div><span class="best">BEST <span id="best">0</span></span></div>
+  <button class="pause" id="pauseBtn" aria-label="Pause"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1.2"/><rect x="14" y="5" width="4" height="14" rx="1.2"/></svg></button>
+</header>
+<div class="combo" id="combo" role="status"></div>
+<div class="hint" id="hint"><i></i>Tap to set the stone<kbd>SPACE</kbd></div>
+
+<div class="layer" id="pauseL" role="dialog" aria-modal="true" aria-labelledby="pt">
+  <div class="panel">
+    <div class="k">Paused · height <span id="ph">0</span></div>
+    <h2 id="pt">The wind can wait.</h2>
+    <div class="row"><button class="primary" id="resume"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l13-7.5z"/></svg>Resume</button><button class="ghost" id="restart1">Start a new cairn</button></div>
+    <p class="foot">P or Esc to resume</p>
+  </div>
+</div>
+<div class="layer" id="overL" role="dialog" aria-modal="true" aria-labelledby="ot">
+  <div class="panel">
+    <div class="k">Game over · dusk on the ridge</div>
+    <h2 id="ot">The cairn held 0 stones.</h2>
+    <div class="stats"><div><span class="k">Score</span><b id="os">0</b></div><div><span class="k">Best</span><b id="ob">0</b></div></div>
+    <span class="nb" id="nb" hidden>NEW BEST</span>
+    <div class="row"><button class="primary" id="restart2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 1 0 2.4-5.7"/><path d="M4 4v4.6h4.6"/></svg>Stack again</button></div>
+    <p class="foot">Longest perfect run <span id="orun">0</span> · Enter to restart</p>
+  </div>
+</div>
+
+<script>
+(() => {
+  const RM = matchMedia('(prefers-reduced-motion: reduce)').matches, $ = (id) => document.getElementById(id);
+  const cv = $('cv'), ctx = cv.getContext('2d');
+  const BH = 28, START_W = 176, PERFECT = 4;
+  const STONES = ['#D9C3A5', '#A7756A', '#8E9A8A', '#C7A15A', '#9FB1B8', '#B98B6E', '#E2B08C', '#7F8C6E'];
+  let W, H, ox, ground, dpr, best = 0;
+  let stack, mover, chips, cam, camT, state, combo, run, glow, raf = 0, last = 0, t = 0;
+  function size() {
+    dpr = Math.min(2, devicePixelRatio || 1); W = innerWidth; H = innerHeight;
+    cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ox = (W - 390) / 2; ground = H - 196; if (state && state !== 'play') draw();
+  }
+  const BASE = 3, score = () => stack.length - BASE;
+  const speed = () => Math.min(460, 150 + score() * 10);
+  function newMover() { const top = stack[stack.length - 1], fromLeft = stack.length % 2 === 0; mover = { x: fromLeft ? 8 : 382 - top.w, w: top.w, dir: fromLeft ? 1 : -1, c: stack.length % STONES.length }; }
+  function reset() {
+    stack = [{ x: 85, w: 220, c: 7 }, { x: 96, w: 198, c: 5 }, { x: 195 - START_W / 2 + 4, w: START_W, c: 0 }]; chips = []; cam = camT = 0; combo = 0; run = 0; glow = null; t = 0;
+    newMover(); state = 'ready'; if (document.activeElement && document.activeElement !== document.body) document.activeElement.blur(); $('score').textContent = '0'; $('hint').classList.remove('off'); hide();
+    start();
+  }
+  const hide = () => { $('pauseL').classList.remove('on'); $('overL').classList.remove('on'); };
+  function start() { if (!raf) { last = performance.now(); raf = requestAnimationFrame(loop); } }
+  function stop() { cancelAnimationFrame(raf); raf = 0; }
+  function drop() {
+    if (state === 'over' || state === 'paused') return;
+    if (state === 'ready') { state = 'play'; $('hint').classList.add('off'); }
+    const top = stack[stack.length - 1], m = mover, dx = m.x - top.x, y = stack.length;
+    if (Math.abs(dx) <= PERFECT) {
+      stack.push({ x: top.x, w: top.w, c: m.c }); combo++; run = Math.max(run, combo); glow = { y, t: 0, k: combo };
+      if (combo >= 2) { const c = $('combo'); c.innerHTML = `Perfect <b>×${combo}</b>`; c.classList.remove('on'); void c.offsetWidth; c.classList.add('on'); }
+    } else {
+      const l = Math.max(m.x, top.x), r = Math.min(m.x + m.w, top.x + top.w);
+      if (r - l <= 0) { chips.push({ x: m.x, w: m.w, y, vy: 0, rot: 0, vr: m.dir * 1.2, c: m.c }); state = 'over'; setTimeout(over, RM ? 200 : 650); return; }
+      stack.push({ x: l, w: r - l, c: m.c }); combo = 0;
+      const cx = dx > 0 ? r : m.x, cw = m.w - (r - l);
+      chips.push({ x: cx, w: cw, y, vy: 0, rot: 0, vr: (dx > 0 ? 1 : -1) * 2.2, c: m.c });
+    }
+    const s = $('score'); s.textContent = score(); s.classList.remove('bump'); void s.offsetWidth; s.classList.add('bump');
+    camT = Math.max(0, (stack.length + 1) * BH - (ground - 380));
+    newMover();
+  }
+  function over() {
+    const sc = score(), nb = sc > best && sc > 0; if (sc > best) best = sc;
+    $('best').textContent = best; $('os').textContent = sc; $('ob').textContent = best; $('orun').textContent = run;
+    $('ot').textContent = `The cairn held ${sc} stone${sc === 1 ? '' : 's'}.`; $('nb').hidden = !nb;
+    $('overL').classList.add('on'); setTimeout(() => $('restart2').focus(), 60);
+    setTimeout(stop, 1200);
+  }
+  function pause(on) {
+    if (state === 'over') return;
+    if (on && state !== 'paused') { state = 'paused'; stop(); $('ph').textContent = score(); $('pauseL').classList.add('on'); $('resume').focus(); }
+    else if (!on && state === 'paused') { state = score() > 0 ? 'play' : 'ready'; hide(); document.activeElement.blur(); start(); }
+  }
+  function loop(now) {
+    const dt = Math.min(1 / 30, (now - last) / 1000); last = now; t += dt;
+    if (state === 'play' || state === 'ready') {
+      const m = mover, v = state === 'ready' ? 110 : speed();
+      m.x += m.dir * v * dt;
+      if (m.x < 8) { m.x = 8; m.dir = 1; } if (m.x + m.w > 382) { m.x = 382 - m.w; m.dir = -1; }
+    }
+    for (const c of chips) { c.vy += 1900 * dt; c.y -= c.vy * dt / BH; c.rot += c.vr * dt; }
+    chips = chips.filter((c) => screenY(c.y) < H + 200);
+    cam += (camT - cam) * Math.min(1, dt * (RM ? 30 : 6));
+    if (glow) { glow.t += dt; if (glow.t > .7) glow = null; }
+    draw();
+    raf = requestAnimationFrame(loop);
+  }
+  const screenY = (i) => ground - (i + 1) * BH + cam;
+  function shade(hex, f) { const n = parseInt(hex.slice(1), 16), ch = [n >> 16, (n >> 8) & 255, n & 255].map((v) => Math.round(f > 0 ? v + (255 - v) * f : v * (1 + f))); return `rgb(${ch})`; }
+  function stone(x, y, w, c, a) {
+    const col = STONES[c]; ctx.globalAlpha = a ?? 1;
+    ctx.fillStyle = shade(col, -.35); ctx.beginPath(); ctx.roundRect(x, y + 3, w, BH - 2, 6); ctx.fill();
+    ctx.fillStyle = col; ctx.beginPath(); ctx.roundRect(x, y, w, BH - 4, 6); ctx.fill();
+    ctx.fillStyle = shade(col, .28); ctx.beginPath(); ctx.roundRect(x + 3, y + 2, w - 6, 5, 3); ctx.fill();
+    ctx.globalAlpha = 1;
+  }
+  function ridge(base, amp, seed, col, par) {
+    ctx.fillStyle = col; ctx.beginPath(); ctx.moveTo(0, H);
+    const yb = base + cam * par;
+    for (let x = 0; x <= W + 20; x += 20) ctx.lineTo(x, yb - amp * (.55 + .45 * Math.sin(x * .011 + seed) * Math.cos(x * .023 + seed * 2)));
+    ctx.lineTo(W, H); ctx.fill();
+  }
+  function draw() {
+    const night = Math.min(1, score() / 30);
+    const g = ctx.createLinearGradient(0, 0, 0, H);
+    g.addColorStop(0, '#141A2C'); g.addColorStop(.42, night > .5 ? '#1E2440' : '#2C2A48'); g.addColorStop(.78, mix('#D9826A', '#33406A', night)); g.addColorStop(1, mix('#F0B183', '#3E4C78', night));
+    ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+    ctx.fillStyle = 'rgba(243,234,219,' + (.25 + .6 * night) + ')';
+    for (let i = 0; i < 26; i++) { const sx = (i * 137.5) % W, sy = 220 + ((i * 61) % 300) + cam * .05; if (sy < ground - 120) ctx.fillRect(sx, sy, 1.6, 1.6); }
+    ctx.fillStyle = mix('#F6D2A8', '#E9E4D6', night); ctx.beginPath(); ctx.arc(ox + 310, ground - 300 + cam * .04, 22, 0, 7); ctx.fill();
+    ridge(ground - 90, 130, 1.3, mix('#6B5874', '#3A3E5E', night), .08);
+    ridge(ground - 30, 90, 4.1, mix('#4A3E57', '#2A2D48', night), .2);
+    ridge(ground + 40, 60, 7.7, '#1F1B2B', .45);
+    ctx.fillStyle = '#17141F'; ctx.beginPath(); ctx.roundRect(ox + 60, ground + cam, 270, H, [18, 18, 0, 0]); ctx.fill();
+    ctx.fillStyle = '#2A2536'; ctx.fillRect(ox + 72, ground + cam + 6, 246, 3);
+    stack.forEach((s, i) => { const y = screenY(i); if (y < H && y > -BH) stone(ox + s.x, y, s.w, s.c); });
+    if (glow) {
+      const s = stack[glow.y], y = screenY(glow.y), k = glow.t / .7, sp = 3 + k * (10 + glow.k * 3);
+      ctx.strokeStyle = `rgba(255,217,160,${(1 - k) * Math.min(1, .5 + glow.k * .2)})`; ctx.lineWidth = 2 + glow.k;
+      ctx.beginPath(); ctx.roundRect(ox + s.x - sp, y - sp, s.w + sp * 2, BH - 4 + sp * 2, 8 + sp); ctx.stroke();
+    }
+    if (state !== 'over' || !chips.length) { if (state !== 'over') stone(ox + mover.x, screenY(stack.length) - (state === 'ready' ? 2 * Math.sin(t * 4) : 0), mover.w, mover.c); }
+    for (const c of chips) { const y = screenY(c.y); ctx.save(); ctx.translate(ox + c.x + c.w / 2, y + BH / 2); ctx.rotate(c.rot); stone(-c.w / 2, -BH / 2, c.w, c.c, .95); ctx.restore(); }
+  }
+  function mix(a, b, k) { const p = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16)); const A = p(a), B = p(b); return `rgb(${A.map((v, i) => Math.round(v + (B[i] - v) * k))})`; }
+  cv.addEventListener('pointerdown', (e) => { e.preventDefault(); drop(); });
+  addEventListener('keydown', (e) => {
+    const k = e.key;
+    if ((k === 'p' || k === 'P' || k === 'Escape') && state !== 'over') { e.preventDefault(); pause(state !== 'paused'); return; }
+    if (state === 'over' && (k === 'Enter' || k === ' ')) { e.preventDefault(); reset(); return; }
+    const inLayer = document.activeElement && document.activeElement.closest('.layer, .pause');
+    if ((k === ' ' || k === 'ArrowDown' || k === 'Enter') && !inLayer && (state === 'play' || state === 'ready')) { e.preventDefault(); drop(); }
+  });
+  $('pauseBtn').onclick = () => pause(true); $('resume').onclick = () => pause(false);
+  $('restart1').onclick = reset; $('restart2').onclick = reset;
+  document.addEventListener('visibilitychange', () => { if (document.hidden && state === 'play') pause(true); });
+  addEventListener('resize', size);
+  size(); reset();
+})();
+</script>
+</body>
+</html>

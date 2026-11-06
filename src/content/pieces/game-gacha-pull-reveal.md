@@ -3,7 +3,7 @@ title: "Gacha pull reveal"
 summary: "A manga-styled summon on a phone: focus lines and a spinning seal charge up, a flash bursts, and a character card flips in lit by its rarity colour."
 platform: mobile-app
 type: animation
-category: widgets
+category: games
 tags: [game, gacha, reveal, anime, card, summon]
 styles: [playful, kinetic, riso]
 motion: rich

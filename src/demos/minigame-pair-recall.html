@@ -1,0 +1,253 @@
+<!-- Design Lounge piece: minigame-pair-recall · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Picnic Pairs</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fbf3e6; --ink:#2b1b14; --ink-2:#6b5246; --line:#ecdcc4; --chip:#fffaf1;
+  --back:#c8462b; --back-2:#a83621; --dot:#f6d9b8; --face:#fffaf1; --ok:#2f7d5b; --ok-bg:#e3f1e6; --star:#e8a317; --star-off:#e7d8c2;
+  --font:"Nunito",system-ui,sans-serif;
+  --card-w:80px; --card-h:108px; --gap:10px; --r-card:16px; --r-pill:999px;
+  --ease:cubic-bezier(.2,.7,.2,1); --ease-out:cubic-bezier(.16,1,.3,1); --spring:cubic-bezier(.34,1.56,.64,1); --sheet:cubic-bezier(.32,.72,0,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:700 14px/1.35 var(--font);overflow:hidden;-webkit-tap-highlight-color:transparent;user-select:none}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none;padding:0}
+:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+.app{position:relative;height:100%;max-width:430px;margin:0 auto;padding:54px 20px 34px;display:flex;flex-direction:column;overflow:hidden;
+  background:radial-gradient(circle at 1px 1px,#efe1cb 1.2px,transparent 1.6px) 0 0/18px 18px,var(--bg)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+header{display:flex;justify-content:space-between;align-items:center;padding-top:8px}
+h1{margin:0;font-size:28px;font-weight:900;letter-spacing:-.02em;line-height:1}
+.sub{margin:4px 0 0;font-size:13px;color:var(--ink-2)}
+.ic-btn{width:44px;height:44px;border-radius:50%;background:var(--chip);border:1.5px solid #d9c4a6;display:grid;place-items:center}
+.ic-btn svg{width:20px;height:20px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:18px}
+.stat{background:var(--chip);border:1.5px solid var(--line);border-radius:14px;padding:8px 12px}
+.stat small{display:block;font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)}
+.stat b{display:block;font-size:22px;font-weight:900;font-variant-numeric:tabular-nums;line-height:1.15}
+.stat b em{font-style:normal;font-size:13px;font-weight:700;color:var(--ink-2);margin-left:3px}
+.board{display:grid;grid-template-columns:repeat(4,var(--card-w));grid-auto-rows:var(--card-h);gap:var(--gap);justify-content:center;margin:22px 0 0;perspective:900px}
+.card{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform 420ms var(--ease-out);border-radius:var(--r-card)}
+.card .f,.card .b{position:absolute;inset:0;border-radius:var(--r-card);backface-visibility:hidden;-webkit-backface-visibility:hidden;display:grid;place-items:center}
+.card .b{background:radial-gradient(circle,var(--dot) 1.6px,transparent 2px) 0 0/12px 12px,var(--back);box-shadow:inset 0 0 0 5px var(--back),inset 0 0 0 6.5px var(--dot),0 3px 0 var(--back-2)}
+.card .b::after{content:"";width:30px;height:30px;border-radius:50%;background:var(--back);box-shadow:0 0 0 2px var(--dot)}
+.card .f{background:var(--face);transform:rotateY(180deg);box-shadow:inset 0 0 0 1.5px var(--line),0 3px 0 #e2cfb3}
+.card .f svg{width:58px;height:58px}
+.card.up{transform:rotateY(180deg)}
+.card.done .f{box-shadow:inset 0 0 0 2px var(--ok),0 3px 0 #b9d8c4;background:var(--ok-bg)}
+.card.pop{animation:pop 380ms var(--spring) 40ms both}
+@keyframes pop{0%{transform:rotateY(180deg) scale(1)}45%{transform:rotateY(180deg) scale(1.13,1.07)}70%{transform:rotateY(180deg) scale(.97,1.02)}100%{transform:rotateY(180deg) scale(1)}}
+.card.shake{animation:shake 360ms var(--ease)}
+@keyframes shake{0%,100%{transform:rotateY(180deg) translateX(0)}20%{transform:rotateY(180deg) translateX(-6px)}40%{transform:rotateY(180deg) translateX(6px)}60%{transform:rotateY(180deg) translateX(-4px)}80%{transform:rotateY(180deg) translateX(3px)}}
+.spark{position:absolute;left:50%;top:50%;width:7px;height:7px;margin:-3.5px;border-radius:50%;background:var(--star);pointer-events:none;animation:spark 520ms var(--ease-out) forwards;z-index:2}
+@keyframes spark{0%{transform:translate(0,0) scale(1);opacity:1}100%{transform:translate(var(--x),var(--y)) scale(.3);opacity:0}}
+.hint{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:var(--face);color:var(--ink);font-size:13px;font-weight:900;padding:4px 11px;border-radius:var(--r-pill);white-space:nowrap;pointer-events:none;z-index:3;box-shadow:0 2px 0 var(--back-2)}
+.cell{position:relative}
+.cell.ghost .card .b{animation:ghost 1.6s var(--ease) infinite}
+@keyframes ghost{0%,100%{box-shadow:inset 0 0 0 5px var(--back),inset 0 0 0 6.5px var(--dot),0 3px 0 var(--back-2),0 0 0 0 rgba(200,70,43,.45)}50%{box-shadow:inset 0 0 0 5px var(--back),inset 0 0 0 6.5px var(--dot),0 3px 0 var(--back-2),0 0 0 9px rgba(200,70,43,0)}}
+.cell button.card:focus-visible{outline-offset:4px}
+.foot{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.goal{font-size:12.5px;color:var(--ink-2);line-height:1.4}
+.goal b{color:var(--ink)}
+.pill{height:48px;padding:0 20px;border-radius:var(--r-pill);display:inline-flex;align-items:center;gap:8px;font-weight:800;font-size:15px;white-space:nowrap}
+.pill svg{width:18px;height:18px}
+.pill.sec{background:var(--chip);border:1.5px solid #d9c4a6}
+.pill.pri{background:var(--ink);color:var(--face)}
+.layer{position:absolute;inset:0;z-index:10;display:flex;align-items:flex-end;justify-content:center;padding:0 16px 34px;background:rgba(43,27,20,.55);opacity:0;visibility:hidden;transition:opacity 240ms var(--ease),visibility 0s 240ms}
+.layer.on{opacity:1;visibility:visible;transition:opacity 240ms var(--ease)}
+.panel{width:100%;background:var(--face);border-radius:28px;padding:26px 22px 22px;text-align:center;transform:translateY(24px);transition:transform 420ms var(--sheet)}
+.layer.on .panel{transform:none}
+.panel h2{margin:0;font-size:26px;font-weight:900;letter-spacing:-.02em}
+.panel p{margin:6px 0 0;color:var(--ink-2);font-size:14px}
+.panel .acts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px}
+.panel .acts .pill{justify-content:center}
+.stars{display:flex;justify-content:center;gap:10px;margin:18px 0 6px}
+.stars svg{width:52px;height:52px;color:var(--star-off);transform:scale(.4);opacity:0}
+.stars svg.on{color:var(--star)}
+.stars svg.in{animation:star 420ms var(--spring) forwards}
+.stars svg:nth-child(2){width:64px;height:64px;margin-top:-10px}
+@keyframes star{0%{transform:scale(.4) rotate(-30deg);opacity:0}100%{transform:none;opacity:1}}
+.res{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:14px;opacity:0;transition:opacity 300ms var(--ease)}
+.res.in{opacity:1}
+.res div{background:#f6ecdc;border-radius:14px;padding:8px 6px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
+.res b{display:block;font-size:20px;letter-spacing:0;text-transform:none;color:var(--ink);font-variant-numeric:tabular-nums}
+.win .acts{opacity:0;transition:opacity 300ms var(--ease)}
+.win .acts.in{opacity:1}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition-duration:1ms!important}
+  .card,.card.up{transform:none}
+  .card .f{transform:none;opacity:0;transition:opacity 260ms linear!important}
+  .card .b{transition:opacity 260ms linear!important}
+  .card.up .f{opacity:1}.card.up .b{opacity:0}
+  .stars svg{transform:none;opacity:1}
+  .spark{display:none}
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="pear" viewBox="0 0 48 48"><path d="M24 12c-5 0-6 6-6 9-4 3-7 7-7 12 0 6 6 10 13 10s13-4 13-10c0-5-3-9-7-12 0-3-1-9-6-9z" fill="#8db33a"/><path d="M18 33c0 4 3 6 6 6" stroke="#5f7f22" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M24 12c0-3 1-5 3-7" stroke="#6b4a2a" stroke-width="2.4" stroke-linecap="round"/><path d="M26 9c4-3 8-2 10 0-3 3-7 3-10 0z" fill="#4f8a3a"/></symbol>
+  <symbol id="teapot" viewBox="0 0 48 48"><path d="M12 22h24c0 9-5 16-12 16s-12-7-12-16z" fill="#3e7cb1"/><path d="M36 25c5-1 6 4 2 7M12 26 5 20" stroke="#2b5a85" stroke-width="3" fill="none" stroke-linecap="round"/><rect x="15" y="17" width="18" height="5" rx="2.5" fill="#2b5a85"/><circle cx="24" cy="14" r="3" fill="#2b5a85"/><path d="M17 30h14" stroke="#cfe2f2" stroke-width="2.4" stroke-linecap="round"/></symbol>
+  <symbol id="snail" viewBox="0 0 48 48"><path d="M6 38h32c4 0 6-3 6-6l-4-2v4H6z" fill="#c9a27a"/><circle cx="22" cy="24" r="12" fill="#e08a2e"/><path d="M22 24a3 3 0 1 1 3 3 6 6 0 1 1-6-6 9 9 0 1 1 9 9" stroke="#9c5418" stroke-width="2.2" fill="none" stroke-linecap="round"/><path d="M40 30 38 20M43 30l2-9" stroke="#8a6a4a" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="shroom" viewBox="0 0 48 48"><path d="M19 26h10l2 14H17z" fill="#f1e3cc"/><path d="M6 27c0-10 8-17 18-17s18 7 18 17z" fill="#d2412c"/><circle cx="16" cy="19" r="3" fill="#fffaf1"/><circle cx="27" cy="15" r="2.4" fill="#fffaf1"/><circle cx="33" cy="22" r="2.8" fill="#fffaf1"/><path d="M17 40h14" stroke="#c9b08c" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="bee" viewBox="0 0 48 48"><ellipse cx="17" cy="15" rx="7" ry="9" fill="#bfe0f2" transform="rotate(-25 17 15)"/><ellipse cx="31" cy="15" rx="7" ry="9" fill="#bfe0f2" transform="rotate(25 31 15)"/><ellipse cx="24" cy="29" rx="13" ry="10" fill="#f2b632"/><path d="M19 20v18M27 20v18" stroke="#2b1b14" stroke-width="3.4"/><circle cx="34" cy="27" r="1.6" fill="#2b1b14"/></symbol>
+  <symbol id="tulip" viewBox="0 0 48 48"><path d="M24 26v16M24 36c-5-1-8-5-8-9 5 1 8 4 8 9z" stroke="#4f8a3a" stroke-width="2.6" fill="#6aa84f" stroke-linejoin="round"/><path d="M14 10l5 5 5-8 5 8 5-5v10c0 6-5 9-10 9s-10-3-10-9z" fill="#e2557a"/><path d="M24 7v20" stroke="#c13d61" stroke-width="1.6"/></symbol>
+  <symbol id="berry" viewBox="0 0 48 48"><path d="M10 18c0-3 6-5 14-5s14 2 14 5c0 12-8 24-14 24S10 30 10 18z" fill="#d8333f"/><path d="M14 14l5 3 5-6 5 6 5-3-3 6H17z" fill="#4f8a3a"/><g fill="#f6d36b"><circle cx="18" cy="24" r="1.3"/><circle cx="25" cy="22" r="1.3"/><circle cx="31" cy="25" r="1.3"/><circle cx="21" cy="31" r="1.3"/><circle cx="28" cy="31" r="1.3"/><circle cx="24" cy="37" r="1.3"/></g></symbol>
+  <symbol id="can" viewBox="0 0 48 48"><path d="M10 20h22v18H10z" fill="#2f9c95"/><path d="M32 26l9-9 2 3-9 10" fill="#2f9c95"/><path d="M14 20c0-7 14-7 14 0" stroke="#1f6e69" stroke-width="3" fill="none"/><path d="M41 15l3-3M43 19l4-1" stroke="#7ac7e8" stroke-width="2" stroke-linecap="round"/><path d="M10 30h22" stroke="#bfe6e2" stroke-width="2.4"/></symbol>
+  <symbol id="star" viewBox="0 0 24 24"><path d="M12 2.5l2.9 6 6.6.8-4.9 4.5 1.3 6.5L12 17l-5.9 3.3 1.3-6.5L2.5 9.3l6.6-.8z" fill="currentColor"/></symbol>
+</svg>
+<div class="app" id="app">
+  <header>
+    <div><h1>Picnic Pairs</h1><p class="sub">Round 3 · The garden table</p></div>
+    <button class="ic-btn" id="pauseBtn" aria-label="Pause"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1.5" fill="currentColor"/><rect x="14" y="5" width="4" height="14" rx="1.5" fill="currentColor"/></svg></button>
+  </header>
+  <div class="stats">
+    <div class="stat"><small>Moves</small><b id="mv">2</b></div>
+    <div class="stat"><small>Time</small><b id="tm">0:14</b></div>
+    <div class="stat"><small>Best</small><b id="bs">22<em>moves</em></b></div>
+  </div>
+  <div class="board" id="board" role="group" aria-label="16 cards, 4 by 4. Arrow keys move, Enter flips."></div>
+  <div class="foot">
+    <p class="goal"><b>3 stars</b> in 14 moves or fewer<br><b>2 stars</b> in 20 or fewer</p>
+    <button class="pill sec" id="restart"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.3-5.7M4 4v4h4" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Reshuffle</button>
+  </div>
+  <div class="layer" id="pauseL" role="dialog" aria-modal="true" aria-labelledby="pT">
+    <div class="panel"><h2 id="pT">Paused</h2><p id="pInfo">2 of 8 pairs found · 0:14</p>
+      <div class="acts"><button class="pill sec" id="pRestart">Reshuffle</button><button class="pill pri" id="resume">Resume</button></div></div>
+  </div>
+  <div class="layer win" id="winL" role="dialog" aria-modal="true" aria-labelledby="wT">
+    <div class="panel"><h2 id="wT">Table cleared</h2><p id="wSub">All 8 pairs found.</p>
+      <div class="stars" id="stars"><svg aria-hidden="true"><use href="#star"/></svg><svg aria-hidden="true"><use href="#star"/></svg><svg aria-hidden="true"><use href="#star"/></svg></div>
+      <div class="res" id="res"><div>Moves<b id="rM">0</b></div><div>Time<b id="rT">0:00</b></div><div>Best<b id="rB">22</b></div></div>
+      <div class="acts" id="wActs"><button class="pill sec" id="wClose">See board</button><button class="pill pri" id="again">Play again</button></div></div>
+  </div>
+  <p class="sr" aria-live="polite" id="live"></p>
+</div>
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const NAMES = { pear: 'pear', teapot: 'teapot', snail: 'snail', shroom: 'mushroom', bee: 'bee', tulip: 'tulip', berry: 'strawberry', can: 'watering can' };
+  const KEYS = Object.keys(NAMES);
+  const START = ['bee', 'pear', 'tulip', 'snail', 'berry', 'teapot', 'can', 'bee', 'shroom', 'snail', 'pear', 'berry', 'teapot', 'can', 'tulip', 'shroom'];
+  let deck, open, lock, moves, found, time, best = 22, running, paused, raf = 0, last = 0, started;
+  const board = $('board');
+  const fmt = (s) => Math.floor(s / 60) + ':' + String(Math.floor(s % 60)).padStart(2, '0');
+  const build = (order, pre) => {
+    deck = order.map((k, i) => ({ k, i, up: false, done: false }));
+    open = []; lock = false; moves = 0; found = 0; time = 0; started = false;
+    for (const k of pre) deck.filter((c) => c.k === k).forEach((c) => { c.up = c.done = true; });
+    if (pre.length) { found = pre.length; moves = pre.length; time = 14; }
+    const firstDown = deck.find((c) => !c.done).i;
+    board.innerHTML = deck.map((c) => `<div class="cell${c.i === firstDown ? ' ghost' : ''}" id="cl${c.i}">${c.i === firstDown ? '<span class="hint" aria-hidden="true">Tap</span>' : ''}<button class="card${c.up ? ' up' : ''}${c.done ? ' done' : ''}" data-i="${c.i}" tabindex="${c.i === firstDown ? 0 : -1}"><span class="b"></span><span class="f"><svg aria-hidden="true"><use href="#${c.k}"/></svg></span></button></div>`).join('');
+    deck.forEach(label);
+    $('mv').textContent = moves; $('tm').textContent = fmt(time);
+  };
+  const el = (i) => board.querySelector(`[data-i="${i}"]`);
+  const label = (c) => el(c.i).setAttribute('aria-label', `Card ${c.i + 1}, ` + (c.done ? NAMES[c.k] + ', matched' : c.up ? NAMES[c.k] : 'face down'));
+  const loop = (now) => {
+    if (!running || paused) return;
+    time += Math.min(0.1, (now - last) / 1000); last = now;
+    $('tm').textContent = fmt(time);
+    raf = requestAnimationFrame(loop);
+  };
+  const run = () => { running = true; last = performance.now(); cancelAnimationFrame(raf); raf = requestAnimationFrame(loop); };
+  const stop = () => { running = false; cancelAnimationFrame(raf); };
+  const sparks = (cell) => {
+    if (reduce) return;
+    for (let j = 0; j < 7; j++) {
+      const s = document.createElement('i'), a = j / 7 * Math.PI * 2;
+      s.className = 'spark'; s.style.setProperty('--x', Math.cos(a) * 52 + 'px'); s.style.setProperty('--y', Math.sin(a) * 58 + 'px');
+      s.style.animationDelay = '40ms'; cell.appendChild(s); setTimeout(() => s.remove(), 700);
+    }
+  };
+  const flip = (i) => {
+    const c = deck[i];
+    if (lock || paused || c.up || c.done) return;
+    const g = board.querySelector('.ghost'); if (g) { g.classList.remove('ghost'); g.querySelector('.hint')?.remove(); }
+    if (!started) { started = true; run(); }
+    c.up = true; el(i).classList.add('up'); label(c); open.push(c);
+    if (open.length < 2) return;
+    moves++; $('mv').textContent = moves; lock = true;
+    const [a, b] = open; open = [];
+    if (a.k === b.k) {
+      setTimeout(() => {
+        [a, b].forEach((x) => { x.done = true; const e = el(x.i); e.classList.add('done'); if (!reduce) e.classList.add('pop'); sparks(e.parentElement); label(x); });
+        found++; lock = false; $('live').textContent = 'Match: ' + NAMES[a.k] + '. ' + found + ' of 8.';
+        if (found === 8) setTimeout(win, reduce ? 200 : 650);
+      }, 420);
+    } else {
+      $('live').textContent = 'No match: ' + NAMES[a.k] + ' and ' + NAMES[b.k] + '.';
+      setTimeout(() => { if (!reduce) [a, b].forEach((x) => el(x.i).classList.add('shake')); }, 520);
+      setTimeout(() => {
+        [a, b].forEach((x) => { x.up = false; const e = el(x.i); e.classList.remove('up', 'shake'); label(x); });
+        lock = false;
+      }, reduce ? 900 : 980);
+    }
+  };
+  board.addEventListener('click', (e) => { const b = e.target.closest('.card'); if (b) { focusCard(+b.dataset.i); flip(+b.dataset.i); } });
+  board.addEventListener('animationend', (e) => e.target.classList.remove('pop'));
+  const focusCard = (i) => { board.querySelectorAll('.card').forEach((b) => b.tabIndex = -1); const b = el(i); b.tabIndex = 0; b.focus(); };
+  board.addEventListener('keydown', (e) => {
+    const b = e.target.closest('.card'); if (!b) return;
+    const i = +b.dataset.i, d = { ArrowLeft: -1, ArrowRight: 1, ArrowUp: -4, ArrowDown: 4 }[e.key];
+    if (d === undefined) return;
+    e.preventDefault();
+    const n = i + d;
+    if (n < 0 || n > 15 || (Math.abs(d) === 1 && Math.floor(n / 4) !== Math.floor(i / 4))) return;
+    focusCard(n);
+  });
+  const layer = (id, on, focus) => { $(id).classList.toggle('on', on); if (on && focus) setTimeout(() => $(focus).focus(), 50); };
+  const pause = () => {
+    if (paused || found === 8) return;
+    paused = true; stop(); $('pInfo').textContent = `${found} of 8 pairs found · ${fmt(time)}`;
+    layer('pauseL', true, 'resume');
+  };
+  const resume = () => { paused = false; layer('pauseL', false); if (started) run(); $('pauseBtn').focus(); };
+  const restart = () => {
+    paused = false; stop(); layer('pauseL', false); layer('winL', false);
+    const o = KEYS.concat(KEYS);
+    for (let i = o.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [o[i], o[j]] = [o[j], o[i]]; }
+    build(o, []); focusCard(0); $('live').textContent = 'New table. 8 pairs to find.';
+  };
+  const win = () => {
+    stop();
+    const st = moves <= 14 ? 3 : moves <= 20 ? 2 : 1, nb = moves < best;
+    if (nb) best = moves;
+    $('bs').innerHTML = best + '<em>moves</em>';
+    $('wT').textContent = st === 3 ? 'Table cleared' : st === 2 ? 'Nicely done' : 'All pairs found';
+    $('wSub').textContent = nb ? 'New best. ' + moves + ' moves.' : 'All 8 pairs found.';
+    $('rM').textContent = '0'; $('rT').textContent = '0:00'; $('rB').textContent = best;
+    const ss = [...$('stars').children];
+    ss.forEach((s) => s.classList.remove('on', 'in'));
+    $('res').classList.remove('in'); $('wActs').classList.remove('in');
+    layer('winL', true);
+    const T = reduce ? 0 : 1;
+    ss.forEach((s, k) => setTimeout(() => { if (k < st) s.classList.add('on'); s.classList.add('in'); }, T * (320 + k * 260)));
+    setTimeout(() => {
+      $('res').classList.add('in');
+      let t0 = performance.now();
+      const cnt = (now) => { const k = reduce ? 1 : Math.min(1, (now - t0) / 600); $('rM').textContent = Math.round(moves * k); $('rT').textContent = fmt(time * k); if (k < 1) requestAnimationFrame(cnt); };
+      requestAnimationFrame(cnt);
+    }, T * 1180);
+    setTimeout(() => { $('wActs').classList.add('in'); $('again').focus(); }, T * 1900);
+    $('live').textContent = `${st} star${st > 1 ? 's' : ''}. ${moves} moves in ${fmt(time)}.`;
+  };
+  $('pauseBtn').onclick = pause; $('resume').onclick = resume;
+  $('restart').onclick = restart; $('pRestart').onclick = restart; $('again').onclick = restart;
+  $('wClose').onclick = () => { layer('winL', false); $('restart').focus(); };
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' || e.key.toLowerCase() === 'p') { if ($('winL').classList.contains('on')) return; paused ? resume() : pause(); }
+  });
+  document.addEventListener('visibilitychange', () => { if (document.hidden && running) pause(); });
+  build(START, ['bee', 'snail']);
+})();
+</script>
+</body>
+</html>

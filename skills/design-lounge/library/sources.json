@@ -45,7 +45,9 @@
         "pricing-usage-slider",
         "phone-wallet-cards",
         "shot-callout-pins",
+        "game-card-table",
         "m3-dialog",
+        "game-playfield",
         "phone-checkout",
         "phone-orders",
         "phone-cart",
@@ -55,7 +57,8 @@
         "fintech-card-controls",
         "fintech-crypto-send",
         "email-receipt-transactional",
-        "product-configurator-material"
+        "product-configurator-material",
+        "premium-watch-vault"
       ]
     },
     {
@@ -124,7 +127,8 @@
         "popup-exit-offer",
         "fintech-budget-envelopes",
         "store-locator-map",
-        "toggle-liquid-squish"
+        "toggle-liquid-squish",
+        "game-phone-daily-reward"
       ]
     },
     {
@@ -193,7 +197,8 @@
         "email-newsletter-editorial",
         "email-product-launch",
         "newsletter-mailbox-flag",
-        "hover-link-peek"
+        "hover-link-peek",
+        "minigame-word-trace"
       ]
     },
     {
@@ -225,8 +230,8 @@
         "phone-video-player",
         "testimonials-masonry-wall",
         "phone-photo-viewer",
-        "game-card-table",
-        "slider-clip-trim"
+        "slider-clip-trim",
+        "premium-manual-camera"
       ]
     },
     {
@@ -279,7 +284,8 @@
         "features-accordion-media-swap",
         "features-ai-chat-demo",
         "dialog-wizard-steps",
-        "drag-avatar-crop"
+        "drag-avatar-crop",
+        "minigame-peg-drop"
       ]
     },
     {
@@ -313,7 +319,11 @@
         "hero-brutal-stack",
         "game-cozy-farm-hud",
         "features-pencil-annotations",
-        "features-paper-cutout-steps"
+        "features-paper-cutout-steps",
+        "game-phone-level-results",
+        "game-phone-daily-shop",
+        "game-phone-hero-select",
+        "motion-spring-throw-sheet"
       ]
     },
     {
@@ -355,7 +365,9 @@
         "footer-terminal-prompt",
         "game-quest-map",
         "fintech-portfolio-dashboard",
-        "features-telescope-focus"
+        "features-telescope-focus",
+        "game-phone-season-track",
+        "premium-tide-chart"
       ]
     },
     {
@@ -413,7 +425,13 @@
         "phone-large-text-layout",
         "handwritten-style",
         "m3-search-results",
-        "field-label-morph"
+        "game-leaderboard",
+        "field-label-morph",
+        "game-phone-level-map",
+        "minigame-pair-recall",
+        "premium-sleep-breath",
+        "minigame-tile-slide",
+        "premium-boarding-pass"
       ]
     },
     {
@@ -526,7 +544,9 @@
         "hero-liquid-glass-layers",
         "game-gacha-pull-reveal",
         "card-wrapped-story",
-        "swipe-flashcard-review"
+        "swipe-flashcard-review",
+        "game-phone-weekly-league",
+        "minigame-lane-dodge"
       ]
     },
     {
@@ -587,7 +607,6 @@
         "phone-feed-posts",
         "spring-deck",
         "card-stamped-document",
-        "game-playfield",
         "agent-approval-card",
         "media-controls-tactile",
         "retro-os-desktop-portfolio",
@@ -616,7 +635,6 @@
         "restaurant-menu-page",
         "smooth-scroll-inertia",
         "text-mask-scroll-reveal",
-        "game-title-screen",
         "moonlit-ridge-hero",
         "scroll-space-voyage",
         "features-before-after-slider",
@@ -682,8 +700,10 @@
         "phone-permission-prompt",
         "phone-account-edit",
         "m3-modal-bottom-sheet",
+        "game-title-screen",
         "chart-scrub-readout",
-        "popup-onboarding-tour"
+        "popup-onboarding-tour",
+        "game-phone-touch-hud"
       ]
     },
     {
@@ -723,7 +743,8 @@
         "features-giant-numeral-steps",
         "dashboard-ai-insights",
         "signature-pad-sign",
-        "dynamic-island-activity"
+        "dynamic-island-activity",
+        "minigame-stack-drop"
       ]
     },
     {
@@ -774,7 +795,8 @@
         "parallax-cursor-gallery",
         "footer-constellation-links",
         "footer-sleepy-cat",
-        "footer-growing-vine"
+        "footer-growing-vine",
+        "motion-scroll-story"
       ]
     },
     {
@@ -849,7 +871,6 @@
         "m3-list-detail",
         "m3-snackbar",
         "phone-rating-prompt",
-        "game-leaderboard",
         "phone-skeleton-list",
         "toolbar-selection-swap",
         "agent-tool-chip",
@@ -862,7 +883,9 @@
         "nav-lighthouse-spotlight-menu",
         "drag-slingshot-launch",
         "swipe-tab-pager",
-        "loader-export-render"
+        "loader-export-render",
+        "motion-feedback-ladder",
+        "motion-sticker-peel"
       ]
     },
     {
@@ -911,7 +934,8 @@
         "spatial-glass-windows",
         "reaction-burst-picker",
         "slider-range-histogram",
-        "loader-blur-up-gallery"
+        "loader-blur-up-gallery",
+        "premium-metal-card-tilt"
       ]
     }
   ]

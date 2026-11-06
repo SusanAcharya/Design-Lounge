@@ -481,19 +481,19 @@ winding-ribbon-scroll-story | web | scroll | Winding ribbon scroll story | playf
 phone-lesson-quiz | mobile-app | feedback | Word-bank lesson card | playful clay | lesson quiz language tiles streak
 onboarding-workspace-setup | web | onboarding | Workspace setup with live preview | bauhaus minimal | onboarding workspace form preview invite
 widget-world-clocks | web | widgets | World clocks meeting planner | swiss minimal | clock timezone meeting scheduler slider
-game-lobby | web | social | Bramble parlour lobby | editorial soft | lobby multiplayer ready room
+game-lobby | web | games | Bramble parlour lobby | editorial soft | lobby multiplayer ready room
 shot-callout-pins | web | overlays | Callouts on a review still | editorial minimal | annotation callout review screenshot
 phone-code-entry | mobile-app | auth | Chitthi code entry | editorial minimal | auth otp phone ios
 phone-app-lock | mobile-app | auth | Coffer drawer lock | luxe dark | auth lock biometric phone ios
 phone-delete-account | mobile-app | settings | Delete account with a 30-day undo | dark minimal | settings account delete destructive confirmation ios
-game-hud | web | overlays | Duskwell mission HUD | cyber dark | hud pause minimap overlay wave
+game-hud | web | games | Duskwell mission HUD | cyber dark | hud pause minimap overlay wave
 phone-account-edit | mobile-app | profile | Edit profile with live username check | paper minimal | profile account forms username validation ios
 phone-photo-viewer | mobile-app | media | Full-bleed photo viewer | dark editorial | photos viewer swipe zoom phone
 handwritten-homepage | web | landing | Handwritten homepage | paper | letter handwriting landing paper personal
 handwritten-letter | web | reading | Handwritten night letter | paper editorial | letter handwriting reading paper night
 phone-large-text-layout | mobile-app | utility | Large text layout rules | dark minimal | accessibility dynamic-type layout text-size reflow
 handwritten-style | web | design-language | Letter hand kit | paper | handwriting kit paper type buttons
-game-card-table | web | media | Linnet pairs table | organic soft | cards memory table keyboard
+game-card-table | web | games | Linnet pairs table | organic soft | cards memory table keyboard
 three-orbit-object | web | mockups | Lit study on a quiet stage | dark minimal | mockup webgl orbit lighting architecture
 live-cursors-board | web | cursor | Live cursors on a board | editorial paper | cursor collaboration board presence
 three-room-look | web | hero | Look around a small room | editorial soft | hero webgl room camera interior
@@ -505,17 +505,17 @@ m3-search-results | mobile-app | utility | M3 search results | material organic 
 m3-settings-list | mobile-app | settings | M3 settings list | material minimal | material android settings switch dialog list
 m3-sign-in | mobile-app | auth | M3 sign-in with passkey | material soft | sign-in form passkey android material
 m3-snackbar | mobile-app | feedback | M3 snackbar with undo | material dark | material snackbar android undo list
-game-playfield | web | media | Mallow Court brick rally | playful soft | game breakout paddle canvas pause
+game-playfield | web | games | Mallow Court brick rally | playful soft | game breakout paddle canvas pause
 phone-subscription-manage | mobile-app | settings | Manage subscription, honest cancel | editorial minimal | settings subscription billing pricing cancel ios
 phone-composer | mobile-app | messaging | New note composer | paper editorial | composer notes sheet phone ios
-game-title-screen | web | landing | Pebbleline attract screen | pixel retro | arcade attract pixel title credits
+game-title-screen | web | games | Pebbleline attract screen | pixel retro | arcade attract pixel title credits
 phone-checkout | mobile-app | ecommerce | Phone checkout | minimal swiss | checkout delivery payment phone ios
 phone-notification-settings | mobile-app | settings | Phone notification settings | minimal organic | settings notifications ios time-picker toggles
 phone-orders | mobile-app | ecommerce | Phone past orders | paper editorial | orders receipt shop phone ios
 phone-privacy-data | mobile-app | settings | Phone privacy and data | dark editorial minimal | settings privacy permissions export ios
 phone-rating-prompt | mobile-app | feedback | Phone rating prompt | soft playful paper | rating review feedback bottom-sheet ios
 phone-cart | mobile-app | ecommerce | Phone shopping bag | editorial soft | cart shop phone ios quantity
-game-leaderboard | web | data | Quern score ladder | swiss minimal | leaderboard ranks tabs scores
+game-leaderboard | web | games | Quern score ladder | swiss minimal | leaderboard ranks tabs scores
 label-roll-button | web | buttons | Rolling label row | editorial kinetic | buttons motion type menu
 three-scroll-world | web | scroll | Scroll past three path models | editorial organic | scroll webgl camera chapters landscape
 chart-scrub-readout | web | charts | Scrub a firing curve | dark industrial | charts line scrub dashboard
@@ -574,12 +574,12 @@ dialog-share-invite | web | overlays | Share and invite dialog | minimal paper |
 popup-exit-offer | web | overlays | Honest exit-intent offer popup | editorial paper | popup modal marketing ecommerce email
 popup-whats-new-slides | web | overlays | What's new slides modal | dark minimal | modal carousel announcement onboarding calendar
 popup-onboarding-tour | web | overlays | Spotlight onboarding tour | minimal swiss | onboarding tour coachmark popover spotlight
-game-fantasy-inventory | web | widgets | Fantasy RPG inventory | luxe dark deco | game inventory rpg fantasy tooltip grid
-game-scifi-loadout | web | widgets | Sci-fi loadout screen | cyber dark industrial | game loadout sci-fi hologram stats comparison
-game-cozy-farm-hud | web | widgets | Cozy farm HUD | soft playful organic | game hud farming hotbar quest cozy
-game-racing-results | web | widgets | Motorsport race results | swiss industrial kinetic | game racing results table podium broadcast
-game-quest-map | web | widgets | Adventure quest map | playful organic brutalist | game map quest adventure svg journal
-game-gacha-pull-reveal | mobile-app | widgets | Gacha pull reveal | playful kinetic riso | game gacha reveal anime card summon
+game-fantasy-inventory | web | games | Fantasy RPG inventory | luxe dark deco | game inventory rpg fantasy tooltip grid
+game-scifi-loadout | web | games | Sci-fi loadout screen | cyber dark industrial | game loadout sci-fi hologram stats comparison
+game-cozy-farm-hud | web | games | Cozy farm HUD | soft playful organic | game hud farming hotbar quest cozy
+game-racing-results | web | games | Motorsport race results | swiss industrial kinetic | game racing results table podium broadcast
+game-quest-map | web | games | Adventure quest map | playful organic brutalist | game map quest adventure svg journal
+game-gacha-pull-reveal | mobile-app | games | Gacha pull reveal | playful kinetic riso | game gacha reveal anime card summon
 fintech-portfolio-dashboard | web | dashboard | Portfolio dashboard | minimal editorial | fintech investing chart table portfolio
 fintech-card-controls | mobile-app | settings | Card controls with frost freeze | minimal soft | fintech banking card toggle slider
 fintech-budget-envelopes | mobile-app | dashboard | Budget envelopes | material playful | fintech budgeting drag bottom-sheet material
@@ -630,3 +630,27 @@ loader-export-render | web | loaders | Export render with a settling ETA | minim
 loader-blur-up-gallery | web | gallery | Blur-up photo album | paper soft editorial | loading skeleton gallery photos progressive
 drag-avatar-crop | mobile-app | inputs | Drag to crop a profile photo | soft paper minimal | drag slide crop avatar pinch keyboard
 hover-link-peek | web | reading | Link peek with a safe area | editorial paper minimal | hover tooltip preview footnotes links keyboard
+game-phone-level-map | mobile-app | games | Phone level map | playful organic | game map levels scroll press progression
+game-phone-level-results | mobile-app | games | Phone level results | playful kinetic | game results rewards stars press celebration
+minigame-stack-drop | mobile-app | games | Stack drop mini-game | minimal dark organic | game minigame stacking press timing canvas
+premium-metal-card-tilt | mobile-app | cards | Premium metal card tilt | luxe minimal | card fintech banking drag press wallet
+game-phone-season-track | mobile-app | games | Season pass track | playful dark | game season-pass rewards press scroll
+game-phone-daily-shop | mobile-app | games | Daily game shop | playful paper soft | game shop store press select
+minigame-pair-recall | mobile-app | games | Pair recall memory game | playful soft | game minigame memory cards press select
+premium-sleep-breath | mobile-app | utility | Sleep breath wind-down | luxe dark minimal | sleep breathing wellness timer drag press
+game-phone-hero-select | mobile-app | games | Riftline hero select | playful bauhaus | character-select carousel swipe select press
+game-phone-daily-reward | mobile-app | games | Lanternfield daily reward | playful dark | daily-reward streak calendar press reward
+minigame-tile-slide | mobile-app | games | Tessel sliding tile puzzle | paper minimal | puzzle minigame press swipe slide
+premium-boarding-pass | mobile-app | utility | Larkspur paper boarding pass | luxe paper | boarding-pass wallet travel live-activity press
+game-phone-weekly-league | mobile-app | games | Weekly league with promotion climb | minimal soft | leaderboard league ranking press scroll results
+game-phone-touch-hud | mobile-app | games | Touch HUD for a portrait action game | dark kinetic | hud thumbstick drag press cooldown pause
+minigame-lane-dodge | mobile-app | games | Lane dodge on a night tram line | dark kinetic playful | minigame swipe press runner canvas score
+premium-watch-vault | mobile-app | ecommerce | Collector's watch vault with turntable | luxe editorial minimal | watches collection drag select 3d luxury
+minigame-word-trace | mobile-app | games | Knotwork word trace | paper playful | word puzzle drag press timer keyboard
+minigame-peg-drop | mobile-app | games | Pebblefall peg drop | clay playful | physics drag press canvas keyboard score
+premium-manual-camera | mobile-app | media | Kestrel manual camera | dark industrial minimal | camera dial drag slide histogram press
+premium-tide-chart | mobile-app | charts | Saltmere tide chart | glass minimal organic | tide chart scrub drag weather select
+motion-spring-throw-sheet | mobile-app | overlays | Throwable sheet with spring detents | minimal soft | drag swipe sheet spring map physics
+motion-feedback-ladder | mobile-app | micro | Feedback ladder on a send button | dark minimal | press haptics payment feedback button
+motion-scroll-story | mobile-app | scroll | Scroll-driven trail guide | editorial organic | scroll parallax map outdoors story
+motion-sticker-peel | mobile-app | micro | Peel-and-place reward sticker | paper playful | drag reward sticker journal peel

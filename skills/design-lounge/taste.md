@@ -162,6 +162,13 @@ Use the `game` recipe. Coin-op is the dark cabinet. Ticket booth is the daylight
 - Friends: `game-lobby`. A room code, ready states, then the table. Script the other players. Do not leave a spinner that never resolves.
 - Scores: `game-leaderboard`. The player's own row is marked. Ranks are computed, not typed in as a picture.
 - Other game languages, not pixel: an RPG inventory with rarity frames is `game-fantasy-inventory`. A sci-fi loadout is `game-scifi-loadout`. A cozy sim HUD is `game-cozy-farm-hud`. A race results board is `game-racing-results`. A world map of quests is `game-quest-map`. A collectible pull or reveal is `game-gacha-pull-reveal`. Invent the world and characters; never a real game or franchise.
+- A game on a phone is the `mobile-game` recipe, not the web one. Reef saga is a bright puzzle world, Lantern run an arcade runner at night, League night a live game people come back to, Kiln yard a hero game in loud colour.
+  - The world and the path: `game-phone-level-map`. The end of a level: `game-phone-level-results`, with stars one at a time, then the count-up, then Next.
+  - Chrome over play: `game-phone-touch-hud`. The stick bottom-left, abilities bottom-right, health and pause in the corners. Nothing in the middle third.
+  - Coming back: `game-phone-daily-reward` (streak), `game-phone-weekly-league` (ranks computed, your row marked), `game-phone-season-track` (free and premium lanes). Choosing: `game-phone-hero-select`. Buying: `game-phone-daily-shop`, with the real price and a plain refresh timer. No fake scarcity.
+  - A small game you can finish, on a phone or inside an app: `minigame-stack-drop` (one-tap timing), `minigame-pair-recall` (memory), `minigame-tile-slide` (sliding puzzle), `minigame-lane-dodge` (swipe lanes), `minigame-word-trace` (trace words), `minigame-peg-drop` (physics). Each one has a ready state, pause, an end with a score, and restart. Touch and keys both work.
+  - A reward inside a normal app (a habit, a lesson, a trip) is `motion-sticker-peel`, `streak-hold-confetti` or `game-gacha-pull-reveal`, once, after the thing was done. Not on every tap.
+  - Reduced motion keeps the game playable: crossfades for fly-ins, no shake, no parallax.
 - Motion snaps. Pixel work uses `steps()`, a 4px grid, and no blur. The Arcade pairing's caution still applies: that mono is for the game, not for a long article.
 
 Three.js is for a scene: a camera, lights, and meshes. It is not for a gradient.

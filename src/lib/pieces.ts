@@ -137,7 +137,7 @@ export const SECTION_NAV: { id: Category; label: string }[] = [
 
 export const CATEGORY_GROUPS: { key: string; label: string; items: Category[] }[] = [
   { key: 'sections', label: 'Website sections', items: ['hero', 'navbar', 'features', 'pricing', 'testimonials', 'faq', 'cta', 'contact', 'logos', 'stats', 'team', 'newsletter', 'blog', 'gallery', 'footer'] },
-  { key: 'pages', label: 'Pages & screens', items: ['portfolio', 'landing', 'auth', 'ecommerce', 'dashboard', 'onboarding', 'settings', 'profile', 'messaging', 'media', 'reading', 'error', 'utility'] },
+  { key: 'pages', label: 'Pages & screens', items: ['portfolio', 'landing', 'auth', 'ecommerce', 'dashboard', 'onboarding', 'settings', 'profile', 'messaging', 'media', 'reading', 'error', 'utility', 'games'] },
   { key: 'components', label: 'Components', items: ['navigation', 'buttons', 'inputs', 'cards', 'overlays', 'feedback', 'data', 'pickers', 'charts', 'widgets', 'social', 'mockups'] },
   { key: 'motion', label: 'Motion', items: ['text-motion', 'scroll', 'cursor', 'transitions', 'loaders', 'micro', 'backgrounds'] },
   { key: 'kits', label: 'Kits', items: ['design-language'] },
@@ -172,6 +172,7 @@ export const CATEGORY_META: Record<Category, { label: string; blurb: string }> =
   reading: { label: 'Reading & docs', blurb: 'Articles, readers, documentation.' },
   error: { label: 'Errors & 404s', blurb: 'The pages nobody plans for, planned.' },
   utility: { label: 'Tools & utilities', blurb: 'Editors, palettes, calculators, trackers.' },
+  games: { label: 'Games', blurb: 'Level maps, results, shops, HUDs and small games you can play to the end.' },
   navigation: { label: 'Navigation', blurb: 'Sidebars, tabs, rails, palettes, breadcrumbs.' },
   buttons: { label: 'Buttons & toggles', blurb: 'Every way to press something.' },
   inputs: { label: 'Inputs & forms', blurb: 'Fields, validation, steppers, uploads.' },

@@ -1,0 +1,204 @@
+<!-- Design Lounge piece: game-phone-hero-select · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Riftline · Choose your vanguard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Chakra+Petch:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --c:#F0642F;
+  --ink:#141016;--ink-2:#2E2833;--cream:#F6F1E8;--mute:#B9B0A6;
+  --display:"Bungee",Impact,sans-serif;--ui:"Chakra Petch",system-ui,sans-serif;
+  --spring:cubic-bezier(0.34,1.4,0.5,1);--std:cubic-bezier(0.2,0.7,0.2,1);--expo:cubic-bezier(0.16,1,0.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--c);color:var(--ink);font:500 14px/1.35 var(--ui);overflow:hidden;transition:background-color 520ms var(--std);
+  background-image:repeating-linear-gradient(-58deg,rgba(20,16,22,.07) 0 2px,transparent 2px 22px)}
+button{font:inherit;color:inherit;border:0;background:none;padding:0;cursor:pointer}
+:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+.app{position:relative;max-width:430px;height:100%;min-height:760px;margin:0 auto;display:flex;flex-direction:column;padding:54px 0 34px}
+.top{display:flex;align-items:center;gap:12px;padding:0 20px;height:48px}
+.brand{font:400 18px/1 var(--display);letter-spacing:.02em}
+.sub{font:600 12px/1.2 var(--ui);letter-spacing:.06em;text-transform:uppercase;margin-top:4px;white-space:nowrap}
+.timer{margin-left:auto;position:relative;width:48px;height:48px;display:grid;place-items:center;font:700 16px/1 var(--ui);background:var(--ink);color:var(--cream);border-radius:50%}
+.timer svg{position:absolute;inset:0;transform:rotate(-90deg)}
+.timer circle{fill:none;stroke:var(--c);stroke-width:3;stroke-dasharray:138;transition:stroke-dashoffset 1s linear,stroke 520ms}
+.stage{position:relative;height:318px;overflow:hidden;touch-action:pan-y;cursor:grab;user-select:none}
+.stage.drag{cursor:grabbing}
+.ground{position:absolute;left:50%;bottom:16px;width:250px;height:34px;margin-left:-125px;border-radius:50%;background:rgba(20,16,22,.22)}
+.halo{position:absolute;left:50%;top:26px;width:268px;height:268px;margin-left:-134px;border-radius:50%;border:2px solid rgba(20,16,22,.18);
+  box-shadow:inset 0 0 0 18px rgba(246,241,232,.14)}
+.slide{position:absolute;left:50%;top:10px;width:236px;height:292px;margin-left:-118px;transform-origin:50% 100%;
+  transform:translateX(calc(var(--o) * 168px + var(--dx, 0px))) scale(var(--s));opacity:var(--a);
+  transition:transform 460ms var(--spring),opacity 300ms var(--std)}
+.slide svg{width:100%;height:100%;display:block}
+.slide[data-o="0"]{--s:1;--a:1;z-index:2}
+.slide[data-o="1"],.slide[data-o="-1"]{--s:.5;--a:.5}
+.slide[data-o="2"],.slide[data-o="-2"]{--s:.3;--a:0;visibility:hidden}
+.drag .slide{transition:none}
+.locked .slide[data-o="0"]{transform:translateX(0) scale(1.14);transition:transform 520ms var(--spring)}
+.locked .slide:not([data-o="0"]){opacity:0;visibility:hidden}
+.arrow{position:absolute;top:136px;z-index:3;width:44px;height:44px;border-radius:50%;background:var(--ink);color:var(--cream);display:grid;place-items:center;transition:transform 160ms var(--std)}
+.arrow:active{transform:scale(.9)}
+.arrow.prev{left:14px}.arrow.next{right:14px}
+.arrow svg{width:22px;height:22px}
+.locked .arrow{visibility:hidden}
+.stamp{position:absolute;z-index:4;left:50%;top:120px;transform:translateX(-50%) rotate(-8deg) scale(1.6);opacity:0;visibility:hidden;background:var(--ink);color:var(--cream);
+  font:400 30px/1 var(--display);padding:10px 18px 8px;border:3px solid var(--cream);transition:transform 360ms var(--spring) 140ms,opacity 200ms 140ms}
+.locked .stamp{opacity:1;visibility:visible;transform:translateX(-50%) rotate(-8deg) scale(1)}
+.ident{padding:0 20px;display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-top:-6px}
+.name{font:400 50px/.9 var(--display);margin:0;letter-spacing:.01em}
+.role{display:inline-flex;align-items:center;gap:6px;margin-top:8px;background:var(--ink);color:var(--c);font:700 12px/1 var(--ui);letter-spacing:.12em;text-transform:uppercase;padding:7px 10px;border-radius:4px;transition:color 520ms}
+.role svg{width:14px;height:14px}
+.dots{display:flex;gap:2px;margin-bottom:2px}
+.dot{width:24px;height:40px;display:grid;place-items:center}
+.dot::before{content:"";width:8px;height:8px;border-radius:50%;background:rgba(20,16,22,.4);transition:width 260ms var(--expo),background 200ms}
+.dot[aria-current="true"]::before{width:20px;border-radius:4px;background:var(--ink)}
+.plate{margin:14px 12px 0;background:var(--ink);color:var(--cream);border-radius:18px;padding:16px 16px 14px;clip-path:polygon(0 0,calc(100% - 22px) 0,100% 22px,100% 100%,22px 100%,0 calc(100% - 22px))}
+.stat{display:grid;grid-template-columns:74px 1fr 34px;align-items:center;gap:10px;height:24px}
+.stat span{font:600 12px/1 var(--ui);letter-spacing:.12em;text-transform:uppercase;color:var(--mute);white-space:nowrap}
+.stat b{font:700 15px/1 var(--ui);text-align:right;font-variant-numeric:tabular-nums}
+.bar{height:10px;background:var(--ink-2);position:relative;overflow:hidden;clip-path:polygon(0 0,100% 0,calc(100% - 6px) 100%,0 100%)}
+.bar i{position:absolute;inset:0 auto 0 0;width:0;background:var(--c);transition:width 520ms var(--spring),background-color 520ms;
+  background-image:repeating-linear-gradient(90deg,transparent 0 14px,var(--ink) 14px 17px)}
+.stat:nth-child(2) i{transition-delay:40ms}.stat:nth-child(3) i{transition-delay:80ms}.stat:nth-child(4) i{transition-delay:120ms}
+.ability{display:grid;grid-template-columns:44px 1fr;gap:12px;margin-top:12px;padding-top:12px;border-top:1px solid #3A3340}
+.ab-ico{width:44px;height:44px;border-radius:10px;background:var(--c);color:var(--ink);display:grid;place-items:center;transition:background-color 520ms}
+.ab-ico svg{width:24px;height:24px}
+.ab-h{display:flex;align-items:baseline;gap:8px;font:700 15px/1.2 var(--ui)}
+.ab-h small{margin-left:auto;font:600 12px/1 var(--ui);color:var(--mute);letter-spacing:.08em;white-space:nowrap;min-width:64px;text-align:right}
+.ab-t{margin:4px 0 0;color:#D9D1C7;font:500 13px/1.4 var(--ui)}
+.fx{animation:in 380ms var(--expo)}
+@keyframes in{from{opacity:0;transform:translateY(6px)}}
+.cta{margin:auto 12px 0;display:flex;gap:10px;padding-top:14px}
+.lock{flex:1;height:60px;border-radius:14px;background:var(--ink);color:var(--c);font:400 22px/1 var(--display);letter-spacing:.04em;display:flex;align-items:center;justify-content:center;gap:10px;
+  box-shadow:0 5px 0 rgba(20,16,22,.35);transition:transform 120ms var(--std),box-shadow 120ms,color 520ms}
+.lock:active{transform:translateY(4px);box-shadow:0 1px 0 rgba(20,16,22,.35)}
+.locked .lock{background:var(--cream);color:var(--ink)}
+.undo{width:60px;height:60px;border-radius:14px;background:var(--cream);color:var(--ink);display:none;place-items:center}
+.undo svg{width:24px;height:24px}
+.locked .undo{display:grid}
+.flash{position:fixed;inset:0;background:var(--cream);opacity:0;pointer-events:none;z-index:9}
+.flash.go{animation:flash 460ms var(--std)}
+@keyframes flash{0%{opacity:0}12%{opacity:.9}100%{opacity:0}}
+.sr{position:absolute;left:0;width:320px;height:1px;margin:0;overflow:hidden;clip-path:inset(50%)}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{transition-duration:160ms!important;transition-delay:0ms!important;animation:none!important}
+  .slide{transition-property:opacity!important}
+  .locked .slide[data-o="0"]{transform:translateX(0) scale(1)}
+}
+</style>
+</head>
+<body>
+<main class="app" id="app">
+  <header class="top">
+    <div><div class="brand">RIFTLINE</div><div class="sub">Ranked draft · Pick 3 of 5</div></div>
+    <div class="timer" role="timer" aria-label="Seconds left to pick"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="22" id="ring"/></svg><span id="sec">45</span></div>
+  </header>
+
+  <section class="stage" id="stage" aria-roledescription="carousel" aria-label="Characters">
+    <div class="halo"></div><div class="ground"></div>
+    <div id="track"></div>
+    <button class="arrow prev" id="prev" aria-label="Previous character"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+    <button class="arrow next" id="next" aria-label="Next character"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
+    <div class="stamp" aria-hidden="true">READY</div>
+  </section>
+
+  <div class="ident">
+    <div><h1 class="name" id="name">BRASK</h1><div class="role" id="role"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z"/></svg><span id="roleT">Vanguard</span></div></div>
+    <div class="dots" id="dots" role="group" aria-label="Choose character"></div>
+  </div>
+
+  <section class="plate" aria-label="Stats and ability">
+    <div id="stats"></div>
+    <div class="ability">
+      <div class="ab-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg></div>
+      <div id="ab"><div class="ab-h"><span id="abN">Kiln Slam</span><small id="abC">E · 12s</small></div><p class="ab-t" id="abT"></p></div>
+    </div>
+  </section>
+
+  <div class="cta">
+    <button class="lock" id="lock"><span id="lockT">LOCK IN</span></button>
+    <button class="undo" id="undo" aria-label="Change pick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h11a5 5 0 010 10H9M4 9l4-4M4 9l4 4"/></svg></button>
+  </div>
+  <p class="sr" aria-live="polite" id="live"></p>
+</main>
+<div class="flash" id="flash"></div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <g id="brask" fill="#141016"><path d="M70 270l14-84h26l4 84zM126 270l-2-84h26l16 84z"/><path d="M52 112q68-30 136 0l-12 92q-56 18-112 0z"/><circle cx="56" cy="122" r="32"/><circle cx="184" cy="122" r="32"/><path d="M30 136l-14 78 26 6 20-74zM210 136l14 78-26 6-20-74z"/><path d="M98 66h44v44H98z"/><rect x="104" y="82" width="32" height="6" fill="#F6F1E8"/><path d="M176 40l12-6 46 128-12 6z"/><path d="M150 10l52-20 16 42-52 20z"/><path d="M96 140l24 22 24-22v12l-24 22-24-22z" style="fill:var(--c)"/></g>
+    <g id="sola" fill="#141016"><path d="M92 270l18-90h18l-14 90zM132 270l-8-90h18l20 88z"/><path d="M96 104q24-12 48 0l-6 84h-36z"/><circle cx="120" cy="80" r="20"/><path d="M134 70q40 6 52 46-26-26-50-28z"/><path d="M96 112l-26 54 14 6 22-44zM144 112l30 40-10 10-28-34z"/><path d="M40 252L206 20l6 4L46 256z"/><path d="M200 8l22-6-8 22-12 4z" fill="#F6F1E8"/><path d="M112 78h18v5h-18z" fill="#F6F1E8"/><path d="M100 150q20 10 40 0l2 10q-22 10-44 0z" fill="#F6F1E8" opacity=".55"/></g>
+    <g id="quill" fill="#141016"><path d="M120 30l46 84-10 156H84L74 114z"/><path d="M74 114q-34 80-44 156h54zM166 114q34 80 44 156h-54z"/><path d="M100 82q20-12 40 0v20h-40z" fill="#F6F1E8" opacity=".25"/><rect x="104" y="88" width="10" height="4" fill="#F6F1E8"/><rect x="126" y="88" width="10" height="4" fill="#F6F1E8"/><path d="M8 150h196v10H8z"/><path d="M176 142h30v26h-30z"/><path d="M2 146h14v18H2z" fill="#F6F1E8"/><path d="M150 160l8 30-10 2-8-30z"/></g>
+    <g id="mott" fill="#141016"><path d="M78 270l8-60h24v60zM130 270v-60h24l8 60z"/><path d="M76 96q44-20 88 0v120H76z"/><path d="M92 50h56v48H92z"/><path d="M114 14h12l10 36h-32z"/><rect x="98" y="70" width="44" height="6" fill="#F6F1E8"/><circle cx="112" cy="176" r="76"/><circle cx="112" cy="176" r="58" fill="none" stroke="#F6F1E8" stroke-width="4" opacity=".55"/><circle cx="112" cy="176" r="16" fill="#F6F1E8"/><path d="M182 120l26 30-8 70-18-10z"/></g>
+    <g id="vessa" fill="#141016"><path d="M64 270l30-70 22 10-24 60zM176 270l-30-66-22 10 26 56z"/><path d="M84 132q36-16 72 0l10 82H74z"/><path d="M74 140L28 268l40-30 10 32 18-30 24 30 24-30 18 30 10-32 40 30-46-128z" opacity=".85"/><circle cx="120" cy="108" r="22"/><path d="M102 96L80 56l30 30zM138 96l22-40-30 30z"/><path d="M104 104l12 4-12 4zM136 104l-12 4 12 4z" fill="#F6F1E8"/><path d="M80 150Q30 150 14 104q30 30 66 34zM160 150q50 0 66-46-30 30-66 34z"/><path d="M16 106l-8-18 18 10zM224 106l8-18-18 10z" fill="#F6F1E8"/></g>
+  </defs>
+</svg>
+
+<script>
+(function(){
+  var C=[
+    {id:'brask',name:'BRASK',role:'Vanguard',col:'#F0642F',st:[88,34,22,76],ab:['Kiln Slam','E · 12s','Leap to a point and crack the floor. Everyone inside 4 m is slowed by 40% for 2 s.']},
+    {id:'sola',name:'SOLA',role:'Striker',col:'#F4C534',st:[72,86,38,30],ab:['Sunlance','E · 8s','Dash 6 m through enemies. Each one you pass adds a charge to your next throw.']},
+    {id:'quill',name:'QUILL',role:'Marksman',col:'#2BC4B4',st:[64,46,94,24],ab:['Long Draw','E · 14s','Hold to charge for up to 1.5 s. A full draw pierces shields and thin walls.']},
+    {id:'mott',name:'MOTT',role:'Warden',col:'#9BCB3F',st:[40,30,36,96],ab:['Bulwark','E · 16s','Plant the shield. Allies behind it take 60% less damage for 4 s.']},
+    {id:'vessa',name:'VESSA',role:'Phantom',col:'#F27BA6',st:[78,94,28,20],ab:['Ashstep','E · 10s','Vanish for 1.2 s and reappear behind the nearest enemy within 8 m.']}
+  ];
+  var L=['Power','Speed','Range','Defence'];
+  var $=function(s){return document.getElementById(s)};
+  var app=$('app'),track=$('track'),stage=$('stage'),dots=$('dots'),stats=$('stats');
+  var i=0,locked=false,sec=45,count=0,tick=null,startX=null,dx=0,shown=[0,0,0,0];
+  C.forEach(function(c,k){
+    var s=document.createElement('div');s.className='slide';s.setAttribute('aria-hidden','true');
+    s.innerHTML='<svg viewBox="0 0 240 280"><use href="#'+c.id+'"/></svg>';track.appendChild(s);
+    var d=document.createElement('button');d.className='dot';d.setAttribute('aria-label','Show '+c.name.charAt(0)+c.name.slice(1).toLowerCase()+', '+c.role);
+    d.onclick=function(){go(k)};dots.appendChild(d);
+  });
+  L.forEach(function(l){var r=document.createElement('div');r.className='stat';r.innerHTML='<span>'+l+'</span><div class="bar"><i></i></div><b>0</b>';stats.appendChild(r)});
+  function countTo(to){
+    var from=shown.slice(),t0=performance.now();
+    (function f(t){var p=Math.min(1,(t-t0)/420),e=1-Math.pow(1-p,3);
+      stats.querySelectorAll('b').forEach(function(b,k){shown[k]=Math.round(from[k]+(to[k]-from[k])*e);b.textContent=shown[k]});
+      if(p<1)requestAnimationFrame(f)})(t0);
+  }
+  function render(anim){
+    var c=C[i];
+    document.documentElement.style.setProperty('--c',c.col);
+    [].forEach.call(track.children,function(s,k){var o=((k-i)%5+5)%5;if(o>2)o-=5;s.dataset.o=o;s.style.setProperty('--o',o)});
+    [].forEach.call(dots.children,function(d,k){d.setAttribute('aria-current',k===i)});
+    $('name').textContent=c.name;$('roleT').textContent=c.role;
+    $('abN').textContent=c.ab[0];$('abC').textContent=c.ab[1];$('abT').textContent=c.ab[2];
+    stats.querySelectorAll('i').forEach(function(b,k){b.style.width=c.st[k]+'%'});
+    if(anim){$('ab').classList.remove('fx');void $('ab').offsetWidth;$('ab').classList.add('fx');countTo(c.st)}
+    else{shown=c.st.slice();stats.querySelectorAll('b').forEach(function(b,k){b.textContent=c.st[k]})}
+    $('live').textContent=c.name+', '+c.role+'. '+L.map(function(l,k){return l+' '+c.st[k]}).join(', ')+'. '+c.ab[0]+': '+c.ab[2];
+  }
+  function go(k){if(locked)return;i=(k+5)%5;render(true)}
+  $('prev').onclick=function(){go(i-1)};$('next').onclick=function(){go(i+1)};
+  document.addEventListener('keydown',function(e){if(e.key==='ArrowLeft')go(i-1);if(e.key==='ArrowRight')go(i+1)});
+  stage.addEventListener('pointerdown',function(e){if(locked||e.target.closest('button'))return;startX=e.clientX;dx=0;stage.classList.add('drag');stage.setPointerCapture(e.pointerId)});
+  stage.addEventListener('pointermove',function(e){if(startX===null)return;dx=e.clientX-startX;track.style.setProperty('--dx',dx+'px')});
+  function end(){if(startX===null)return;startX=null;stage.classList.remove('drag');track.style.setProperty('--dx','0px');if(dx<-48)go(i+1);else if(dx>48)go(i-1)}
+  stage.addEventListener('pointerup',end);stage.addEventListener('pointercancel',end);
+  function setRing(){$('sec').textContent=sec;$('ring').style.strokeDashoffset=138-138*sec/45}
+  function clock(){tick=setTimeout(function(){if(locked)return;sec--;setRing();if(sec<=0)lock();else clock()},1000)}
+  function lock(){
+    if(locked)return;locked=true;clearTimeout(tick);app.classList.add('locked');
+    var f=$('flash');f.classList.remove('go');void f.offsetWidth;f.classList.add('go');
+    count=5;$('lockT').textContent='READY · 0:0'+count;
+    $('live').textContent=C[i].name+' locked in. Match starts in 5 seconds.';
+    (function cd(){tick=setTimeout(function(){count--;
+      if(count>0){$('lockT').textContent='READY · 0:0'+count;cd()}
+      else{$('lockT').textContent='ENTERING KILN YARD';$('live').textContent='Match starting.'}},1000)})();
+  }
+  function unlock(){clearTimeout(tick);locked=false;app.classList.remove('locked');$('lockT').textContent='LOCK IN';sec=45;setRing();clock();$('lock').focus()}
+  $('lock').onclick=function(){if(!locked)lock()};$('undo').onclick=unlock;
+  render(false);setRing();clock();
+})();
+</script>
+</body>
+</html>

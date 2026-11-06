@@ -1,0 +1,300 @@
+<!-- Design Lounge piece: game-phone-weekly-league · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lanternfall · Garnet League, week 45</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Krona+One&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ground:#edf1ee;--card:#ffffff;--ink:#13221e;--ink-2:#4a5a55;--rule:#d5ddd9;
+  --up:#1d7a45;--up-band:#dcefe2;--up-ink:#155f35;
+  --down:#9b1c31;--down-band:#f7e4e3;--down-ink:#8a1a2c;
+  --garnet:#a3203a;--garnet-2:#d2455d;--jade:#1f8a5e;--jade-2:#6fd1a1;
+  --you:#13221e;--on-you:#f3f6f4;
+  --display:"Krona One",system-ui,sans-serif;--ui:"Instrument Sans",system-ui,sans-serif;
+  --row:50px;--r:14px;
+  --out:cubic-bezier(.16,1,.3,1);--ease:cubic-bezier(.2,.7,.2,1);--sheet:cubic-bezier(.32,.72,0,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--ground);color:var(--ink);font:15px/1.35 var(--ui);-webkit-font-smoothing:antialiased;overflow:hidden}
+button{font:inherit;color:inherit;border:0;background:none;padding:0;cursor:pointer}
+:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+svg{display:block}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.app{height:100%;max-width:460px;margin:0 auto;display:flex;flex-direction:column}
+
+/* header */
+.head{padding:58px 20px 12px;display:grid;grid-template-columns:64px 1fr;gap:4px 14px;align-items:center}
+.badge{grid-row:span 2;width:64px;height:64px}
+.eyebrow{font:600 12px/1 var(--ui);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2);display:flex;gap:8px;align-items:center;white-space:nowrap}
+.eyebrow i{width:4px;height:4px;border-radius:50%;background:var(--ink-2)}
+h1{margin:0;font:400 22px/1.15 var(--display);letter-spacing:-.01em}
+.meta{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;margin-top:14px}
+.left{display:flex;align-items:center;gap:6px;font:600 14px/1 var(--ui);white-space:nowrap}
+.left svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+.ladder{display:flex;gap:6px;align-items:center}
+.ladder span{width:12px;height:12px;transform:rotate(45deg);border-radius:2px;background:#b8c4bf}
+.ladder .done{background:#6e7f79}
+.ladder .now{width:16px;height:16px;background:var(--garnet);box-shadow:0 0 0 3px #f3d3d9}
+.ladder .next{background:none;border:2px solid var(--jade)}
+
+/* list */
+.board{position:relative;flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;margin:0 12px;border-radius:var(--r) var(--r) 0 0;background:var(--card);box-shadow:0 0 0 1px var(--rule);scroll-behavior:smooth;overscroll-behavior:contain}
+.inner{position:relative;height:calc(28px * 2 + 12px + var(--row) * 20 + 16px)}
+.band{position:absolute;left:0;right:0;pointer-events:none}
+.band.up{top:0;height:calc(28px + var(--row) * 5);background:var(--up-band)}
+.band.down{top:calc(28px + 12px + var(--row) * 16);height:calc(28px + var(--row) * 4);background:var(--down-band)}
+.zl{position:absolute;left:16px;right:16px;height:28px;display:flex;align-items:center;justify-content:space-between;font:700 11px/1 var(--ui);letter-spacing:.1em;text-transform:uppercase;white-space:nowrap}
+.zl.up{top:0;color:var(--up-ink)}
+.zl.down{top:calc(28px + 12px + var(--row) * 16);color:var(--down-ink)}
+.zl svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.zl b{display:flex;gap:6px;align-items:center}
+.zl em{font-style:normal;font-weight:600;letter-spacing:.04em;text-transform:none;font-size:12px}
+.safe{position:absolute;left:16px;right:16px;top:calc(28px + var(--row) * 5 + 5.5px);height:1px;background:var(--rule)}
+ol{list-style:none;margin:0;padding:0}
+.p{position:absolute;left:8px;right:8px;top:0;height:calc(var(--row) - 4px);margin-top:2px;display:grid;grid-template-columns:34px 34px 1fr auto;gap:10px;align-items:center;padding:0 12px 0 6px;border-radius:12px;transition:transform 420ms var(--out),box-shadow 240ms var(--ease);will-change:transform}
+.rk{font:400 13px/1 var(--display);text-align:center;font-variant-numeric:tabular-nums}
+.av{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font:700 12px/1 var(--ui);color:#13221e;background:var(--h)}
+.nm{font:600 15px/1.1 var(--ui);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.nm small{display:block;font:500 12px/1.2 var(--ui);color:var(--ink-2);margin-top:2px}
+.xp{font:600 14px/1 var(--ui);font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+.xp small{font-weight:500;font-size:11px;color:var(--ink-2);margin-left:3px}
+.p.zup .rk{color:var(--up-ink)}
+.p.zdown .rk{color:var(--down-ink)}
+.p.me{background:var(--you);color:var(--on-you);z-index:3;box-shadow:0 6px 16px rgba(19,34,30,.18)}
+.p.me .nm small,.p.me .xp small{color:#b9c7c2}
+.p.me .rk{color:var(--on-you)}
+.p.me .av{box-shadow:0 0 0 2px var(--on-you)}
+.p.me.climb{box-shadow:0 14px 30px rgba(19,34,30,.32);transition:transform 260ms var(--out),box-shadow 240ms var(--ease)}
+.delta{display:none;align-items:center;gap:2px;font:700 12px/1 var(--ui);color:#8ee0b0;margin-right:8px}
+.delta svg{width:12px;height:12px;fill:currentColor}
+.p.me.moved .delta{display:inline-flex}
+
+/* bottom bar */
+.dock{flex:none;background:var(--card);border-top:1px solid var(--rule);padding:12px 20px 34px;display:flex;align-items:center;gap:14px;position:relative;z-index:5}
+.mine{flex:1;min-width:0}
+.mine b{display:block;font:400 18px/1.1 var(--display);font-variant-numeric:tabular-nums;white-space:nowrap}
+.mine span{display:block;font:500 13px/1.3 var(--ui);color:var(--ink-2);white-space:nowrap}
+.go{height:52px;padding:0 22px;border-radius:26px;background:var(--ink);color:var(--on-you);font:600 16px/1 var(--ui);display:flex;align-items:center;gap:8px;white-space:nowrap;transition:transform 160ms var(--ease),background 160ms var(--ease)}
+.go:hover{background:#24403a}
+.go:active{transform:scale(.96)}
+.go:disabled{background:#4a5a55;cursor:default}
+.go svg{width:18px;height:18px;fill:currentColor}
+
+/* result */
+.scrim{position:fixed;inset:0;background:rgba(19,34,30,.42);opacity:0;visibility:hidden;transition:opacity 300ms var(--ease),visibility 0s 300ms;z-index:8}
+.res{position:fixed;left:12px;right:12px;bottom:34px;max-width:436px;margin:0 auto;background:var(--card);border-radius:28px;padding:28px 24px 20px;text-align:center;transform:translateY(calc(100% + 40px));visibility:hidden;transition:transform 520ms var(--sheet),visibility 0s 520ms;z-index:9}
+.open .scrim{opacity:1;visibility:visible;transition:opacity 300ms var(--ease)}
+.open .res{transform:none;visibility:visible;transition:transform 520ms var(--sheet)}
+.gem{width:92px;height:92px;margin:0 auto 14px;position:relative}
+.gem svg{width:92px;height:92px}
+.ray{position:absolute;left:50%;top:50%;width:3px;height:14px;margin:-7px 0 0 -1.5px;border-radius:2px;background:var(--jade);opacity:0}
+.st{opacity:0;transform:translateY(10px)}
+.open .st{opacity:1;transform:none;transition:opacity 360ms var(--ease) var(--d),transform 460ms var(--out) var(--d)}
+.open .gem{animation:pop 640ms var(--out) 220ms both}
+.open .ray{animation:ray 700ms var(--out) 380ms both}
+@keyframes pop{0%{transform:scale(.3) rotate(-25deg)}60%{transform:scale(1.12) rotate(4deg)}100%{transform:none}}
+@keyframes ray{0%{opacity:1;transform:rotate(var(--a)) translateY(-30px) scaleY(.4)}100%{opacity:0;transform:rotate(var(--a)) translateY(-64px) scaleY(1)}}
+.res .ey{font:700 12px/1 var(--ui);letter-spacing:.14em;text-transform:uppercase;color:var(--up-ink)}
+.res h2{margin:8px 0 6px;font:400 26px/1.15 var(--display)}
+.res p{margin:0 auto;max-width:300px;color:var(--ink-2);font-size:14px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);margin:18px 0;border-block:1px solid var(--rule)}
+.stats div{padding:12px 4px}
+.stats div+div{border-left:1px solid var(--rule)}
+.stats b{display:block;font:400 17px/1.1 var(--display);font-variant-numeric:tabular-nums}
+.stats span{font:500 12px/1.3 var(--ui);color:var(--ink-2)}
+.acts{display:grid;grid-template-columns:1fr 1.4fr;gap:10px}
+.ghost,.prim{height:52px;border-radius:26px;font:600 15px/1 var(--ui)}
+.ghost{box-shadow:inset 0 0 0 1.5px var(--ink)}
+.prim{background:var(--jade);color:#fff;background:#17704c}
+.prim:hover{background:#125d3f}
+.ghost:hover{background:#e3eae6}
+
+@media (prefers-reduced-motion:reduce){
+  .p,.p.me.climb{transition:opacity 200ms linear}
+  .res,.open .res{transform:none;transition:opacity 240ms linear,visibility 0s 240ms;opacity:0}
+  .open .res{opacity:1;transition:opacity 240ms linear}
+  .open .st{transition:opacity 240ms linear var(--d);transform:none}
+  .st{transform:none}
+  .open .gem,.open .ray{animation:none}
+  .board{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+  <header class="head">
+    <svg class="badge" viewBox="0 0 64 64" aria-hidden="true">
+      <path d="M32 3 57 17v30L32 61 7 47V17z" fill="#7d1529"/>
+      <path d="M32 3 57 17 32 26 7 17z" fill="#e0607a"/>
+      <path d="M7 17 32 26v35L7 47z" fill="#a3203a"/>
+      <path d="M57 17 32 26v35l25-14z" fill="#c2334e"/>
+      <path d="M32 26 20 21l12-9 12 9z" fill="#f2a2b2"/>
+      <path d="M32 3 57 17v30L32 61 7 47V17z" fill="none" stroke="#5a0e1d" stroke-width="2"/>
+    </svg>
+    <div class="eyebrow">Lanternfall<i></i>Week 45</div>
+    <h1>Garnet League</h1>
+    <div class="meta">
+      <span class="left" id="left"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6"/></svg><span>2 days 14 h left</span></span>
+      <span class="ladder" role="img" aria-label="Tier 5 of 7: Garnet. Next: Jade."><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="now"></span><span class="next"></span><span></span></span>
+    </div>
+  </header>
+
+  <section class="board" id="board" aria-label="Garnet League standings">
+    <div class="inner">
+      <div class="band up"></div><div class="band down"></div><div class="safe"></div>
+      <div class="zl up"><b><svg viewBox="0 0 24 24"><path d="m6 15 6-6 6 6"/></svg>Promotion zone</b><em>Top 5 go to Jade</em></div>
+      <div class="zl down"><b><svg viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>Demotion zone</b><em>Bottom 4 drop to Gilt</em></div>
+      <ol id="list"></ol>
+    </div>
+  </section>
+
+  <footer class="dock">
+    <div class="mine"><b id="myxp">1,240 XP</b><span id="myrank">9th · 255 XP to promotion</span></div>
+    <button class="go" id="go" type="button"><svg viewBox="0 0 24 24"><path d="M7 4.5v15l12-7.5z"/></svg><span>End of week</span></button>
+  </footer>
+</div>
+
+<div class="scrim" id="scrim"></div>
+<section class="res" id="res" role="dialog" aria-modal="true" aria-labelledby="rt" aria-describedby="rd">
+  <div class="gem st" style="--d:120ms" aria-hidden="true">
+    <svg viewBox="0 0 64 64"><path d="M32 3 57 17v30L32 61 7 47V17z" fill="#145c3e"/><path d="M32 3 57 17 32 26 7 17z" fill="#6fd1a1"/><path d="M7 17 32 26v35L7 47z" fill="#1f8a5e"/><path d="M57 17 32 26v35l25-14z" fill="#2ea872"/><path d="M32 26 20 21l12-9 12 9z" fill="#c4f0d9"/></svg>
+    <i class="ray" style="--a:0deg"></i><i class="ray" style="--a:45deg"></i><i class="ray" style="--a:90deg"></i><i class="ray" style="--a:135deg"></i><i class="ray" style="--a:180deg"></i><i class="ray" style="--a:225deg"></i><i class="ray" style="--a:270deg"></i><i class="ray" style="--a:315deg"></i>
+  </div>
+  <div class="ey st" style="--d:380ms">Promoted</div>
+  <h2 class="st" id="rt" style="--d:460ms">Jade League</h2>
+  <p class="st" id="rd" style="--d:560ms">You finished 4th of 20. Week 46 starts Monday at 00:00 with 20 new rivals.</p>
+  <div class="stats st" style="--d:700ms">
+    <div><b id="s1">4th</b><span>Final rank</span></div>
+    <div><b id="s2">+665</b><span>XP this week</span></div>
+    <div><b id="s3">5</b><span>Places climbed</span></div>
+  </div>
+  <div class="acts st" style="--d:860ms">
+    <button class="ghost" id="again" type="button">Replay week</button>
+    <button class="prim" id="ok" type="button">Enter Jade</button>
+  </div>
+</section>
+<p class="vh" aria-live="polite" id="live"></p>
+
+<script>
+(() => {
+  const P = [
+    ['Tamsin Vale', 2110, 2380, 'Antwerp', '#cfe3f2'], ['Obi Ranelagh', 1985, 2240, 'Lagos', '#f2dcc4'],
+    ['Juno Achterberg', 1760, 2015, 'Utrecht', '#e4d7f0'], ['Kit Moreau', 1580, 1870, 'Lyon', '#d6ecd4'],
+    ['Ravi Sundaram', 1495, 1760, 'Chennai', '#f3d6d6'], ['Lio Castellan', 1410, 1690, 'Valencia', '#d7e8ec'],
+    ['Hana Ishikawa', 1360, 1540, 'Sapporo', '#efe4c4'], ['Pell Arnaud', 1290, 1470, 'Quebec', '#dcdcef'],
+    ['You', 1240, 1905, 'Ness Varga', '#ffd98a'], ['Esme Dalgaard', 1190, 1305, 'Aarhus', '#cfe9df'],
+    ['Noor Haddad', 1105, 1230, 'Amman', '#f0d5e4'], ['Bram Otieno', 1020, 1180, 'Kisumu', '#e1e9c9'],
+    ['Ines Valcarcel', 980, 1090, 'Bilbao', '#d4e0f4'], ['Teodor Vasile', 905, 1010, 'Cluj', '#f1ddc9'],
+    ['Zia Mbeki', 860, 940, 'Durban', '#dbeed9'], ['Ola Fjeld', 790, 880, 'Bergen', '#e3daf0'],
+    ['Cass Whitlow', 610, 700, 'Leeds', '#f1d9d4'], ['Dev Arora', 540, 590, 'Pune', '#d3e9ee'],
+    ['Pim Steenbergen', 420, 445, 'Delft', '#ece6c8'], ['Aya Lindqvist', 260, 300, 'Umea', '#e0e0e8']
+  ].map(([n, a, b, sub, h], i) => ({ n, a, b, sub, h, xp: a, me: n === 'You', id: i }));
+  const ME = P.find(p => p.me), UP = 5, DOWN = 16, ROW = 50;
+  const list = document.getElementById('list'), board = document.getElementById('board');
+  const go = document.getElementById('go'), app = document.body, live = document.getElementById('live');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const fmt = n => Math.round(n).toLocaleString('en-GB');
+  const ord = n => n + (['th', 'st', 'nd', 'rd'][(n % 100 - 20) % 10] || ['th', 'st', 'nd', 'rd'][n % 100] || 'th');
+  const ini = n => n === 'You' ? 'NV' : n.split(' ').map(w => w[0]).join('');
+  const yOf = i => 28 + i * ROW + (i >= UP ? 12 : 0) + (i >= DOWN ? 28 : 0);
+
+  P.forEach(p => {
+    const li = document.createElement('li');
+    li.className = 'p' + (p.me ? ' me' : '');
+    li.innerHTML = `<span class="rk"></span><span class="av" style="--h:${p.h}" aria-hidden="true">${ini(p.n)}</span>` +
+      `<span class="nm">${p.n}<small>${p.sub}</small></span><span class="xp"><span class="delta"><svg viewBox="0 0 24 24"><path d="M12 5l8 12H4z"/></svg><span></span></span><span class="v"></span><small>XP</small></span>`;
+    p.el = li; p.rk = li.querySelector('.rk'); p.v = li.querySelector('.v');
+    list.appendChild(li);
+  });
+
+  let order = [], startRank = 0;
+  function rank(announce) {
+    const next = [...P].sort((x, y) => y.xp - x.xp || x.id - y.id);
+    const was = order.indexOf(ME), now = next.indexOf(ME);
+    next.forEach((p, i) => {
+      if (order[i] !== p) p.el.style.transform = `translateY(${yOf(i)}px)`;
+      p.rk.textContent = i + 1;
+      p.el.classList.toggle('zup', i < UP); p.el.classList.toggle('zdown', i >= DOWN);
+      p.el.setAttribute('aria-label', `${ord(i + 1)}, ${p.me ? 'you, Ness Varga' : p.n}, ${fmt(p.xp)} XP`);
+    });
+    if (announce && was > -1 && now < was) {
+      live.textContent = `You passed ${order[now].n}. Now ${ord(now + 1)}.`;
+    }
+    order = next;
+    if (!announce) list.replaceChildren(...next.map(p => p.el));
+    return now;
+  }
+  function paint() {
+    P.forEach(p => { p.v.textContent = fmt(p.xp); });
+    const r = order.indexOf(ME) + 1, need = order[UP - 1].xp - ME.xp + 1;
+    document.getElementById('myxp').textContent = fmt(ME.xp) + ' XP';
+    document.getElementById('myrank').textContent = ord(r) + (r <= UP ? ' · in the promotion zone' : ` · ${fmt(need)} XP to promotion`);
+  }
+  function reset() {
+    P.forEach(p => { p.xp = p.a; });
+    order = []; rank(false); paint();
+    ME.el.classList.remove('moved', 'climb');
+    startRank = order.indexOf(ME);
+    board.scrollTop = 0;
+    document.querySelector('#left span').textContent = '2 days 14 h left';
+  }
+
+  let raf = 0;
+  function play() {
+    if (raf) return;
+    reset();
+    go.disabled = true;
+    document.querySelector('#left span').textContent = 'Final day';
+    const D = reduce ? 0 : 3600;
+    let t0 = 0;
+    ME.el.classList.add('climb');
+    const tick = now => {
+      if (!t0) t0 = now;
+      const t = D ? Math.min(1, (now - t0) / D) : 1;
+      const e = .5 - Math.cos(Math.PI * t) / 2;
+      P.forEach(p => { p.xp = p.a + (p.b - p.a) * e; });
+      paint();
+      const before = order.indexOf(ME);
+      if (([...P].sort((x, y) => y.xp - x.xp || x.id - y.id)).indexOf(ME) !== before) rank(true);
+      else order.forEach((p, i) => p.rk.textContent = i + 1);
+      if (t < 1) { raf = requestAnimationFrame(tick); return; }
+      raf = 0; finish();
+    };
+    raf = requestAnimationFrame(tick);
+  }
+  function finish() {
+    P.forEach(p => { p.xp = p.b; }); rank(false); paint();
+    const r = order.indexOf(ME);
+    ME.el.classList.remove('climb'); ME.el.classList.add('moved');
+    ME.el.querySelector('.delta span').textContent = startRank - r;
+    document.querySelector('#left span').textContent = 'Week ended';
+    document.getElementById('s1').textContent = ord(r + 1);
+    document.getElementById('s2').textContent = '+' + fmt(ME.b - ME.a);
+    document.getElementById('s3').textContent = startRank - r;
+    setTimeout(() => {
+      app.classList.add('open');
+      live.textContent = `Week over. You finished ${ord(r + 1)} and were promoted to Jade League.`;
+      setTimeout(() => document.getElementById('ok').focus({ preventScroll: true }), 520);
+    }, reduce ? 200 : 700);
+  }
+  function close() {
+    app.classList.remove('open');
+    go.disabled = false;
+    go.querySelector('span').textContent = 'Replay week';
+    go.focus({ preventScroll: true });
+  }
+  go.addEventListener('click', play);
+  document.getElementById('ok').addEventListener('click', close);
+  document.getElementById('scrim').addEventListener('click', close);
+  document.getElementById('again').addEventListener('click', () => { close(); setTimeout(play, reduce ? 0 : 420); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && app.classList.contains('open')) close(); });
+  reset();
+})();
+</script>
+</body>
+</html>

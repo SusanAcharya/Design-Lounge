@@ -3,7 +3,7 @@ title: "Duskwell mission HUD"
 summary: "Duskwell chrome over a still night ridge: score, lives, wave, a minimap, and a pause menu that opens on P."
 platform: web
 type: screen
-category: overlays
+category: games
 tags: [hud, pause, minimap, overlay, wave]
 styles: [cyber, dark]
 motion: subtle

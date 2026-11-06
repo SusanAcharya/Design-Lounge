@@ -1,0 +1,230 @@
+<!-- Design Lounge piece: game-phone-daily-shop · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hollowmere Trader's Cart</title>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4efe4; --card:#fffdf8; --ink:#201c17; --ink-2:#5e564b; --line:#e2d9c8;
+  --acorn:#a4521f; --moon:#2f5fc4; --deep:#1f3b33; --deep-2:#2b4f45; --cream:#f6efdc; --mint:#bfe3cf; --bad:#a3301f; --bad-bg:#fbe7e1;
+  --common:#6f6a60; --rare:#1f7a62; --epic:#a1356a; --legend:#8c5e00; --legend-hi:#e0a92b;
+  --font:"Rubik",system-ui,sans-serif;
+  --r-card:18px; --r-big:24px; --r-pill:999px;
+  --ease:cubic-bezier(.2,.7,.2,1); --ease-out:cubic-bezier(.16,1,.3,1); --sheet:cubic-bezier(.32,.72,0,1); --spring:cubic-bezier(.34,1.56,.64,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:400 14px/1.35 var(--font);overflow:hidden;-webkit-tap-highlight-color:transparent}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none;padding:0;text-align:inherit}
+:focus-visible{outline:2.5px solid var(--moon);outline-offset:3px}
+.app{position:relative;height:100%;max-width:430px;margin:0 auto;padding:54px 0 34px;display:flex;flex-direction:column;overflow:hidden}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+header{display:flex;align-items:flex-end;justify-content:space-between;padding:12px 20px 0;gap:10px}
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
+h1{margin:3px 0 0;font-size:24px;font-weight:800;letter-spacing:-.02em;line-height:1;white-space:nowrap}
+.wallet{display:flex;gap:6px}
+.cur{display:flex;align-items:center;gap:6px;height:36px;padding:0 12px 0 6px;border-radius:var(--r-pill);background:var(--card);border:1px solid var(--line);font-weight:700;font-size:14px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.cur svg{width:24px;height:24px;flex:none}
+.cur.hit{animation:hit 520ms var(--ease-out)}
+@keyframes hit{0%{transform:scale(1)}30%{transform:scale(1.08)}100%{transform:scale(1)}}
+main{flex:1;overflow-y:auto;overflow-x:hidden;padding:16px 20px 8px;scrollbar-width:none}
+main::-webkit-scrollbar{display:none}
+.feat{position:relative;display:grid;grid-template-columns:124px 1fr;gap:6px;width:100%;min-height:150px;border-radius:var(--r-big);background:var(--deep);color:var(--cream);overflow:hidden;padding:0 16px 0 0}
+.feat .art{position:relative;background:radial-gradient(80% 70% at 50% 75%,#3f6b5d 0%,transparent 70%),linear-gradient(180deg,#25463d,#1a332c)}
+.feat .art svg{position:absolute;left:8px;bottom:6px;width:112px;height:128px}
+.feat .tx{padding:16px 0 14px;display:flex;flex-direction:column}
+.tag{display:inline-block;align-self:flex-start;font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 8px;border-radius:6px;background:var(--mint);color:var(--deep)}
+.feat h2{margin:8px 0 4px;font-size:19px;font-weight:800;letter-spacing:-.01em}
+.feat p{margin:0;font-size:12.5px;line-height:1.4;color:#d9e4dc}
+.feat .row{margin-top:auto;padding-top:10px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.feat .until{font-size:12px;color:#c9d8cf}
+.price-btn{height:40px;min-width:92px;padding:0 16px;border-radius:var(--r-pill);background:var(--cream);color:var(--deep);font-weight:800;font-size:15px;display:grid;place-items:center;white-space:nowrap}
+.sec{display:flex;justify-content:space-between;align-items:baseline;margin:22px 0 10px}
+.sec h3{margin:0;font-size:17px;font-weight:800;letter-spacing:-.01em}
+.timer{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:500;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.timer svg{width:15px;height:15px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;perspective:700px}
+.item{--rc:var(--common);position:relative;display:flex;flex-direction:column;align-items:stretch;min-height:142px;border-radius:var(--r-card);background:var(--card);border:2px solid var(--rc);padding:10px 12px 10px;transform-style:preserve-3d;transition:transform 160ms var(--ease)}
+.item::before{content:"";position:absolute;inset:0;border-radius:15px;background:linear-gradient(180deg,color-mix(in srgb,var(--rc) 14%,transparent),transparent 62%);pointer-events:none}
+.item:active{transform:scale(.97)}
+.item.rare{--rc:var(--rare)}.item.epic{--rc:var(--epic)}
+.item.legend{--rc:var(--legend);box-shadow:inset 0 0 0 2px var(--card),inset 0 0 0 3px var(--legend-hi)}
+.item .rt{position:relative;align-self:flex-start;font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:3px 7px;border-radius:6px;background:var(--rc);color:#fff}
+.item svg.pic{position:relative;width:52px;height:52px;margin:4px auto 6px;display:block;color:var(--rc)}
+.item .nm{position:relative;font-size:13.5px;font-weight:700;line-height:1.2}
+.item .pr{position:relative;display:flex;align-items:center;gap:5px;margin-top:4px;font-size:14px;font-weight:700;font-variant-numeric:tabular-nums}
+.item .pr svg{width:18px;height:18px}
+.item .pr.short{color:var(--bad)}
+.item.owned .pr{color:var(--rare)}
+.item.owned{border-style:dashed}
+.item.tilt{animation:tilt 640ms var(--spring)}
+@keyframes tilt{0%{transform:none}30%{transform:translateY(-6px) rotateY(-16deg) rotateZ(-2.5deg)}60%{transform:translateY(-2px) rotateY(8deg) rotateZ(1deg)}100%{transform:none}}
+.foot-note{margin:14px 0 0;font-size:12px;color:var(--ink-2);text-align:center}
+.scrim{position:fixed;inset:0;background:rgba(32,28,23,.5);opacity:0;visibility:hidden;transition:opacity 260ms var(--ease),visibility 0s 260ms;z-index:30}
+.sheet{position:fixed;left:0;right:0;bottom:0;max-width:430px;margin:0 auto;background:var(--card);border-radius:28px 28px 0 0;padding:12px 22px 34px;transform:translateY(100%);visibility:hidden;transition:transform 360ms var(--sheet),visibility 0s 360ms;z-index:31}
+.open .scrim{opacity:1;visibility:visible;transition:opacity 260ms var(--ease)}
+.open .sheet{transform:none;visibility:visible;transition:transform 420ms var(--sheet)}
+.grab{width:40px;height:5px;border-radius:3px;background:#d8cfbd;margin:0 auto 16px}
+.sh-top{display:flex;gap:14px;align-items:center}
+.sh-pic{width:72px;height:72px;border-radius:18px;display:grid;place-items:center;border:2px solid var(--rc,var(--common));color:var(--rc,var(--common));background:color-mix(in srgb,var(--rc,#6f6a60) 10%,#fff);flex:none}
+.sh-pic svg{width:48px;height:48px}
+.sheet h2{margin:0;font-size:20px;font-weight:800;letter-spacing:-.01em}
+.sheet .sub{margin:3px 0 0;font-size:13px;color:var(--ink-2)}
+.lines{margin:18px 0 0;padding:0;list-style:none;border-top:1px solid var(--line)}
+.lines li{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--line);font-size:14px}
+.lines li b{display:flex;align-items:center;gap:6px;font-variant-numeric:tabular-nums}
+.lines li b svg{width:18px;height:18px}
+.msg{margin:14px 0 0;padding:12px 14px;border-radius:14px;background:var(--bad-bg);color:var(--bad);font-size:13.5px;font-weight:500;line-height:1.4;display:none}
+.msg.on{display:block}
+.acts{display:grid;grid-template-columns:1fr 1.7fr;gap:10px;margin-top:18px}
+.acts button{height:52px;border-radius:var(--r-pill);font-weight:700;font-size:15px;text-align:center}
+.cancel{background:#efe8da}
+.go{background:var(--ink);color:var(--card)}
+.go[disabled]{background:#e4dccd;color:#5e564b;cursor:not-allowed}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition-duration:1ms!important}
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="acorn" viewBox="0 0 24 24"><path d="M6 10c0-3 2.7-5 6-5s6 2 6 5z" fill="#6b3a17"/><path d="M7 10h10c0 5-2.2 9-5 10-2.8-1-5-5-5-10z" fill="#c46c2e"/><path d="M12 5V3" stroke="#6b3a17" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="moon" viewBox="0 0 24 24"><path d="M12 3 19 9l-7 12L5 9z" fill="#5b86e0"/><path d="M5 9h14l-7 12z" fill="#2f5fc4"/><path d="M9 9l3-6 3 6-3 12z" fill="#8fb0f0" opacity=".7"/></symbol>
+  <symbol id="tonic" viewBox="0 0 48 48"><path d="M19 6h10v8l7 9v16a4 4 0 0 1-4 4H16a4 4 0 0 1-4-4V23l7-9z" fill="currentColor" opacity=".14"/><path d="M19 6h10v8l7 9v16a4 4 0 0 1-4 4H16a4 4 0 0 1-4-4V23l7-9zM12 28h24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/><circle cx="21" cy="34" r="2" fill="currentColor"/><circle cx="28" cy="37" r="1.5" fill="currentColor"/></symbol>
+  <symbol id="map" viewBox="0 0 48 48"><path d="M6 12l12-4 12 4 12-4v28l-12 4-12-4-12 4z" fill="currentColor" opacity=".14"/><path d="M6 12l12-4 12 4 12-4v28l-12 4-12-4-12 4zM18 8v28M30 12v28" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/><path d="M10 26c3-1 4 3 7 1M33 20l4 4m0-4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></symbol>
+  <symbol id="quill" viewBox="0 0 48 48"><path d="M40 6C24 8 14 18 12 34l4 2C26 30 36 20 40 6z" fill="currentColor" opacity=".16"/><path d="M40 6C24 8 14 18 12 34l4 2C26 30 36 20 40 6zM8 42l8-10M22 22l6 2M18 28l6 1" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="boots" viewBox="0 0 48 48"><path d="M14 6h12v20l12 6v8H10V26z" fill="currentColor" opacity=".14"/><path d="M14 6h12v20l12 6v8H10V26zM10 34h28M14 14h12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/></symbol>
+  <symbol id="lantern" viewBox="0 0 48 48"><path d="M16 14h16l2 22H14z" fill="currentColor" opacity=".16"/><path d="M18 8h12M24 4v4M16 14h16l2 22H14zM12 36h24v4H12zM20 14v22M28 14v22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/><circle cx="24" cy="25" r="3.5" fill="currentColor"/></symbol>
+  <symbol id="crown" viewBox="0 0 48 48"><path d="M8 16l9 8 7-12 7 12 9-8-3 22H11z" fill="currentColor" opacity=".18"/><path d="M8 16l9 8 7-12 7 12 9-8-3 22H11zM11 32h26" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/><circle cx="24" cy="12" r="2.4" fill="currentColor"/><circle cx="8" cy="16" r="2" fill="currentColor"/><circle cx="40" cy="16" r="2" fill="currentColor"/></symbol>
+</svg>
+<div class="app" id="app">
+  <header>
+    <div><div class="eyebrow">Hollowmere</div><h1>Trader's Cart</h1></div>
+    <div class="wallet" aria-label="Wallet">
+      <div class="cur" id="cA" role="status" aria-label="12,480 acorns"><svg aria-hidden="true"><use href="#acorn"/></svg><span id="nA">12,480</span></div>
+      <div class="cur" id="cM" role="status" aria-label="340 moonstones"><svg aria-hidden="true"><use href="#moon"/></svg><span id="nM">340</span></div>
+    </div>
+  </header>
+  <main>
+    <button class="feat" id="feat" aria-haspopup="dialog">
+      <div class="art" aria-hidden="true">
+        <svg viewBox="0 0 112 128"><ellipse cx="56" cy="122" rx="46" ry="5" fill="#0f241e"/><path d="M34 52 20 118h72L78 52z" fill="#5f8f5a"/><path d="M46 60l-8 58M66 60l8 58" stroke="#3f6b3c" stroke-width="2"/><path d="M56 14c-16 0-25 12-25 27 0 6 2 11 5 13h40c3-2 5-7 5-13 0-15-9-27-25-27z" fill="#7eae6f"/><ellipse cx="56" cy="42" rx="11" ry="13" fill="#163029"/><circle cx="56" cy="60" r="4.5" fill="#e0a92b"/><g transform="translate(64 66)"><path d="M8 0h16l2 26H6z" fill="#f2c55c"/><path d="M8 0h16l2 26H6zM4 26h24v5H4zM16-8v8M10-4h12" fill="none" stroke="#6b4a10" stroke-width="2.2" stroke-linejoin="round"/><circle cx="16" cy="13" r="4" fill="#fff4cc"/></g></svg>
+      </div>
+      <div class="tx">
+        <span class="tag">Featured bundle</span>
+        <h2>Wayfarer's bundle</h2>
+        <p>Moss cloak, brass lantern and 600 Moonstones.</p>
+        <div class="row"><span class="until">Until 13 Nov</span><span class="price-btn" id="featP">€4.99</span></div>
+      </div>
+    </button>
+    <div class="sec"><h3>Daily stock</h3><span class="timer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.3-5.7M20 4v4h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Refreshes in <span id="rf">06:14:22</span></span></span></div>
+    <div class="grid" id="grid"></div>
+    <p class="foot-note">Same price for everyone. Stock does not run out.</p>
+  </main>
+  <div class="scrim" id="scrim"></div>
+  <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sT">
+    <div class="grab" aria-hidden="true"></div>
+    <div class="sh-top"><div class="sh-pic" id="sPic"><svg aria-hidden="true"><use href="#tonic"/></svg></div><div><h2 id="sT">Ember tonic</h2><p class="sub" id="sSub">Common · restores 40 warmth</p></div></div>
+    <ul class="lines" id="sLines"></ul>
+    <p class="msg" id="sMsg" role="alert"></p>
+    <div class="acts"><button class="cancel" id="sNo">Cancel</button><button class="go" id="sGo">Buy</button></div>
+  </div>
+  <p class="sr" aria-live="polite" id="live"></p>
+</div>
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const W = { a: 12480, m: 340 };
+  const NAME = { a: 'Acorns', m: 'Moonstones' };
+  const items = [
+    { id: 'tonic', n: 'Ember tonic', r: 'common', d: 'Restores 40 warmth on the trail', p: 450, c: 'a' },
+    { id: 'map', n: 'Fernway map', r: 'common', d: 'Reveals the Fernway shortcut', p: 900, c: 'a' },
+    { id: 'quill', n: 'Owl quill', r: 'rare', d: 'Journal entries give +10% lore', p: 2400, c: 'a' },
+    { id: 'boots', n: 'Tidewalker boots', r: 'rare', d: 'Cross shallow water without slowing', p: 120, c: 'm' },
+    { id: 'lantern', n: 'Starglass lantern', r: 'epic', d: 'Lights caves a full screen wide', p: 280, c: 'm' },
+    { id: 'crown', n: 'Hollow crown', r: 'legend', d: 'Cosmetic. The cart-keeper bows', p: 600, c: 'm' }
+  ];
+  const RN = { common: 'Common', rare: 'Rare', epic: 'Epic', legend: 'Legendary' };
+  const fmt = (n) => n.toLocaleString('en-GB');
+  const grid = $('grid');
+  const draw = () => {
+    grid.innerHTML = items.map((it, i) => {
+      const short = !it.own && W[it.c] < it.p;
+      const pr = it.own ? '<span>Owned</span>' : `<svg aria-hidden="true"><use href="#${it.c === 'a' ? 'acorn' : 'moon'}"/></svg><span>${fmt(it.p)}</span>`;
+      const lbl = `${it.n}, ${RN[it.r]}, ${it.own ? 'owned' : fmt(it.p) + ' ' + NAME[it.c] + (short ? ', not enough' : '')}`;
+      return `<button class="item ${it.r}${it.own ? ' owned' : ''}" data-i="${i}" aria-haspopup="dialog" aria-label="${lbl}"><span class="rt">${RN[it.r]}</span><svg class="pic" aria-hidden="true"><use href="#${it.id}"/></svg><span class="nm">${it.n}</span><span class="pr${short ? ' short' : ''}">${pr}</span></button>`;
+    }).join('');
+  };
+  const wallet = (k, to) => {
+    const el = $(k === 'a' ? 'nA' : 'nM'), chip = $(k === 'a' ? 'cA' : 'cM'), from = W[k];
+    W[k] = to; chip.setAttribute('aria-label', fmt(to) + ' ' + NAME[k].toLowerCase());
+    if (reduce) { el.textContent = fmt(to); return; }
+    chip.classList.remove('hit'); void chip.offsetWidth; chip.classList.add('hit');
+    let t = 0, last = performance.now();
+    const step = (now) => {
+      t += Math.min(48, now - last); last = now;
+      const k2 = Math.min(1, t / 720), e = 1 - Math.pow(1 - k2, 3);
+      el.textContent = fmt(Math.round(from + (to - from) * e));
+      if (k2 < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  };
+  const app = $('app'); let cur = null, opener = null;
+  const line = (a, b) => `<li><span>${a}</span><b>${b}</b></li>`;
+  const coin = (c, n) => `<svg aria-hidden="true"><use href="#${c === 'a' ? 'acorn' : 'moon'}"/></svg>${fmt(n)} ${NAME[c]}`;
+  const open = (it, from) => {
+    cur = it; opener = from;
+    const pic = $('sPic');
+    pic.style.setProperty('--rc', `var(--${it.r === 'legend' ? 'legend' : it.r})`);
+    pic.querySelector('use').setAttribute('href', '#' + it.id);
+    $('sT').textContent = it.n;
+    const msg = $('sMsg'), go = $('sGo');
+    if (it.bundle) {
+      $('sSub').textContent = 'Featured bundle · until 13 Nov';
+      $('sLines').innerHTML = line('Moss cloak', 'Cosmetic') + line('Brass lantern', 'Cosmetic') + line('Moonstones', coin('m', 600)) + line('Price, incl. VAT', '€4.99');
+      msg.className = 'msg'; go.disabled = false; go.textContent = 'Pay €4.99';
+    } else {
+      const have = W[it.c], short = it.p - have;
+      $('sSub').textContent = RN[it.r] + ' · ' + it.d;
+      $('sLines').innerHTML = line('Price', coin(it.c, it.p)) + line('You have', coin(it.c, have)) + line('After buying', short > 0 ? '—' : coin(it.c, have - it.p));
+      if (short > 0) { msg.textContent = `You need ${fmt(short)} more ${NAME[it.c]}. Nothing has been charged.`; msg.className = 'msg on'; go.disabled = true; go.textContent = 'Not enough ' + NAME[it.c]; }
+      else { msg.className = 'msg'; go.disabled = false; go.textContent = `Buy for ${fmt(it.p)}`; }
+    }
+    app.classList.add('open');
+    setTimeout(() => (go.disabled ? $('sNo') : go).focus(), 60);
+  };
+  const close = () => { app.classList.remove('open'); if (opener && opener.isConnected) opener.focus(); };
+  const feat = { id: 'lantern', n: "Wayfarer's bundle", r: 'rare', bundle: true };
+  $('feat').onclick = (e) => { if (!feat.own) open(feat, e.currentTarget); };
+  grid.addEventListener('click', (e) => { const b = e.target.closest('.item'); if (!b) return; const it = items[+b.dataset.i]; if (!it.own) open(it, b); });
+  $('sNo').onclick = close; $('scrim').onclick = close;
+  $('sheet').addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') close();
+    if (e.key === 'Tab') { const f = [$('sNo'), $('sGo')].filter((b) => !b.disabled), i = f.indexOf(document.activeElement); if (e.shiftKey ? i <= 0 : i === f.length - 1) { e.preventDefault(); f[e.shiftKey ? f.length - 1 : 0].focus(); } }
+  });
+  $('sGo').onclick = () => {
+    const it = cur; if (!it) return;
+    app.classList.remove('open');
+    if (it.bundle) {
+      it.own = true; wallet('m', W.m + 600); $('featP').textContent = 'Owned'; $('feat').setAttribute('aria-label', "Wayfarer's bundle, owned");
+      draw(); $('feat').focus(); $('live').textContent = "Wayfarer's bundle bought. 600 Moonstones added.";
+      return;
+    }
+    it.own = true; wallet(it.c, W[it.c] - it.p); draw();
+    const card = grid.querySelector(`[data-i="${items.indexOf(it)}"]`);
+    if (!reduce) card.classList.add('tilt');
+    card.focus();
+    $('live').textContent = `${it.n} bought for ${fmt(it.p)} ${NAME[it.c]}.`;
+  };
+  let left = 6 * 3600 + 14 * 60 + 22;
+  const p2 = (n) => String(n).padStart(2, '0');
+  const tick = () => { left = Math.max(0, left - 1); $('rf').textContent = `${p2(Math.floor(left / 3600))}:${p2(Math.floor(left % 3600 / 60))}:${p2(left % 60)}`; setTimeout(tick, 1000); };
+  draw(); setTimeout(tick, 1000);
+})();
+</script>
+</body>
+</html>

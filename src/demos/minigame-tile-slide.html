@@ -1,0 +1,253 @@
+<!-- Design Lounge piece: minigame-tile-slide · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tessel · Harbour Light</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#E9E4D8;--card:#F4F0E6;--ink:#1E1E24;--ink-2:#55535C;--line:#CFC8B8;--frame:#1E1E24;
+  --home:#276B4D;--accent:#C8402E;--chip:#F4EFE6;
+  --mono:"Space Mono",ui-monospace,monospace;
+  --pitch:83px;--tile:80px;
+  --spring:cubic-bezier(0.34,1.56,0.64,1);--std:cubic-bezier(0.2,0.7,0.2,1);--sheet:cubic-bezier(0.32,0.72,0,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:400 14px/1.4 var(--mono);overflow:hidden}
+button{font:inherit;color:inherit;border:0;background:none;padding:0;cursor:pointer}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.app{position:relative;max-width:430px;height:100%;min-height:800px;margin:0 auto;padding:54px 23px 34px;display:flex;flex-direction:column;overflow:hidden}
+.top{display:flex;align-items:center;gap:12px;height:48px}
+.top h1{margin:0;font:700 22px/1 var(--mono);letter-spacing:-.02em}
+.top p{margin:4px 0 0;font-size:12px;color:var(--ink-2);white-space:nowrap}
+.icon{width:44px;height:44px;border-radius:12px;border:1px solid var(--ink);display:grid;place-items:center;margin-left:auto;background:var(--card)}
+.icon svg{width:20px;height:20px}
+.hud{display:grid;grid-template-columns:repeat(3,1fr);margin:18px 0 16px;border-top:1px solid var(--ink);border-bottom:1px solid var(--line)}
+.hud div{padding:10px 0 8px}
+.hud div+div{border-left:1px solid var(--line);padding-left:12px}
+.hud span{display:block;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2);white-space:nowrap}
+.hud b{display:block;font:700 26px/1.1 var(--mono);font-variant-numeric:tabular-nums;margin-top:4px}
+.prog{display:grid;grid-template-columns:56px 1fr;gap:12px;align-items:center;margin:0 0 auto;padding:10px;border:1px solid var(--line);border-radius:14px;background:var(--card)}
+.prog svg{width:56px;height:56px;border-radius:8px;display:block}
+.prog b{display:block;font:700 14px/1.2 var(--mono)}
+.prog span{display:block;font-size:12px;color:var(--ink-2);margin-top:2px;white-space:nowrap}
+.segs{display:grid;grid-template-columns:repeat(15,1fr);gap:3px;margin-top:8px}
+.segs i{height:6px;border-radius:2px;background:var(--line);transition:background-color 200ms}
+.segs i.on{background:var(--home)}
+.boardwrap{position:relative;width:344px;height:344px;margin:16px auto 0}
+.board{position:absolute;inset:0;background:var(--frame);border-radius:18px;padding:6px;touch-action:none;box-shadow:0 18px 30px -18px rgba(30,30,36,.6)}
+.cells{position:relative;width:332px;height:332px}
+.t{position:absolute;left:0;top:0;width:var(--tile);height:var(--tile);border-radius:9px;overflow:hidden;background:#333;
+  transform:translate(calc(var(--x) * var(--pitch)),calc(var(--y) * var(--pitch)));transition:transform 260ms var(--spring)}
+.t svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+.t i{position:absolute;left:5px;top:5px;min-width:24px;height:20px;padding:0 5px;border-radius:5px;background:var(--ink);color:var(--chip);font:700 12px/20px var(--mono);font-style:normal;text-align:center;transition:background-color 200ms}
+.t.home i{background:var(--home)}
+.t.hint{box-shadow:0 0 0 3px var(--chip);animation:nudge 1.4s var(--std) infinite}
+@keyframes nudge{0%,60%,100%{translate:0 0}30%{translate:var(--hx) var(--hy)}}
+.t.last{opacity:0;transition:opacity 500ms var(--std)}
+.solved .t.last{opacity:1}
+.solved .t{animation:ripple 520ms var(--spring) both;animation-delay:var(--d)}
+.solved .t i{opacity:0;transition:opacity 300ms 600ms}
+@keyframes ripple{40%{transform:translate(calc(var(--x) * var(--pitch)),calc(var(--y) * var(--pitch))) scale(1.07)}}
+.peek,.paused{position:absolute;inset:0;border-radius:18px;visibility:hidden;opacity:0;transition:opacity 200ms var(--std),visibility 0s 200ms}
+.peek{padding:6px;background:var(--frame)}
+.peek svg{width:332px;height:332px;border-radius:12px;display:block}
+.peek span{position:absolute;left:14px;bottom:14px;background:var(--ink);color:var(--chip);font-size:12px;padding:4px 8px;border-radius:6px}
+.peeking .peek,.is-paused .paused{visibility:visible;opacity:1;transition:opacity 200ms var(--std)}
+.paused{background:var(--ink);color:var(--chip);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px}
+.paused h2{margin:0 0 6px;font:700 28px/1 var(--mono)}
+.paused button{width:220px;height:48px;border-radius:12px;border:1px solid #8A8892;font-weight:700}
+.paused button.primary{background:var(--chip);color:var(--ink);border-color:var(--chip)}
+.note{margin:14px 0 0;text-align:center;font-size:13px;color:var(--ink-2);min-height:20px}
+.note b{color:var(--ink)}
+.controls{margin-top:20px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn{height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;gap:8px;font:700 15px/1 var(--mono);border:1px solid var(--ink);background:var(--card);transition:transform 120ms var(--std)}
+.btn:active{transform:scale(.97)}
+.btn svg{width:20px;height:20px}
+.btn[aria-pressed="true"],.btn.dark{background:var(--ink);color:var(--chip)}
+.result{position:absolute;left:12px;right:12px;bottom:34px;background:var(--card);border:1px solid var(--ink);border-radius:22px;padding:20px 20px 16px;
+  transform:translateY(120%);visibility:hidden;transition:transform 480ms var(--sheet),visibility 0s 480ms;box-shadow:0 -10px 40px -20px rgba(30,30,36,.5)}
+.won .result{transform:none;visibility:visible;transition:transform 520ms var(--sheet) 700ms}
+.result small{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--home);font-weight:700}
+.result h2{margin:6px 0 14px;font:700 24px/1.1 var(--mono)}
+.rs{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-bottom:14px}
+.rs div{padding:10px 0}
+.rs div+div{padding-left:12px;border-left:1px solid var(--line)}
+.rs span{display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2)}
+.rs b{font:700 22px/1.2 var(--mono)}
+.result .btn{width:100%}
+.sr{position:absolute;left:0;width:320px;height:1px;margin:0;overflow:hidden;clip-path:inset(50%)}
+@media (prefers-reduced-motion: reduce){
+  .t{transition:transform 90ms var(--std)}
+  .t.hint{animation:none}
+  .solved .t{animation:none}
+  .result,.won .result{transition:visibility 0s,opacity 200ms;transform:none}
+  .result{opacity:0}.won .result{opacity:1}
+}
+</style>
+</head>
+<body>
+<main class="app" id="app">
+  <header class="top">
+    <div><h1>Tessel</h1><p>Nº 12 · Harbour Light</p></div>
+    <button class="icon" id="pause" aria-label="Pause"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg></button>
+  </header>
+  <section class="hud" aria-label="Score">
+    <div><span>Moves</span><b id="mv">0</b></div>
+    <div><span>Time</span><b id="tm" role="timer">0:00</b></div>
+    <div><span>Best</span><b id="bs">1:58</b></div>
+  </section>
+  <section class="prog" aria-label="Progress">
+    <svg viewBox="0 0 332 332" aria-hidden="true"><use href="#pic"/></svg>
+    <div><b>Harbour Light</b><span id="pg">0 of 15 tiles in place</span><div class="segs" id="segs" aria-hidden="true"></div></div>
+  </section>
+  <div class="boardwrap" id="wrap">
+    <div class="board" id="board" aria-label="Sliding puzzle, 4 by 4" role="group"><div class="cells" id="cells"></div></div>
+    <div class="peek" aria-hidden="true"><svg viewBox="0 0 332 332"><use href="#pic"/></svg><span>Solved picture</span></div>
+    <div class="paused" id="pausedSheet" role="dialog" aria-label="Paused">
+      <h2>Paused</h2>
+      <button class="primary" id="resume">Resume</button>
+      <button id="again">Restart this shuffle</button>
+      <button id="easy">New easy shuffle</button>
+    </div>
+  </div>
+  <p class="note" id="note"><b>Slide</b> a tile into the gap</p>
+  <div class="controls">
+    <button class="btn" id="peekBtn" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>Peek</button>
+    <button class="btn dark" id="newBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 108-8H8M8 4L5 7l3 3"/></svg>Shuffle</button>
+  </div>
+  <section class="result" id="result" aria-live="polite">
+    <small id="rTag">Picture restored</small>
+    <h2>Harbour Light, done.</h2>
+    <div class="rs"><div><span>Moves</span><b id="rMv">0</b></div><div><span>Time</span><b id="rTm">0:00</b></div><div><span>Best</span><b id="rBs">1:58</b></div></div>
+    <button class="btn dark" id="replay">Play again</button>
+  </section>
+  <p class="sr" aria-live="polite" id="live"></p>
+</main>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F6C77A"/><stop offset="1" stop-color="#EE8A5B"/></linearGradient>
+  <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2E5F80"/><stop offset="1" stop-color="#173A52"/></linearGradient>
+  <g id="pic">
+    <rect width="332" height="210" fill="url(#sky)"/><circle cx="236" cy="150" r="46" fill="#FCE6AE"/>
+    <path d="M150 196q40-26 80-14t102-6v34H150z" fill="#B5604E"/><path d="M190 202q50-14 142-10v18H190z" fill="#8F4A44"/>
+    <rect y="206" width="332" height="126" fill="url(#sea)"/>
+    <g fill="#F3B276"><rect x="200" y="214" width="72" height="5" rx="2.5"/><rect x="212" y="228" width="50" height="4" rx="2"/><rect x="222" y="242" width="30" height="4" rx="2"/><rect x="230" y="256" width="16" height="3" rx="1.5"/></g>
+    <g fill="none" stroke="#4A7EA0" stroke-width="3" stroke-linecap="round"><path d="M150 290q12-6 24 0t24 0M250 300q12-6 24 0t24 0M180 318q12-6 24 0t24 0"/></g>
+    <path d="M0 154l64 6 58 30 28 46 6 96H0z" fill="#2E2C2A"/><path d="M0 154l64 6 58 30-8 4-52-26L0 164z" fill="#5E7A44"/>
+    <path d="M124 96l196-34v40z" fill="#FCE6AE" opacity=".45"/>
+    <path d="M54 166l6-84h20l6 84z" fill="#F4EFE6"/><path d="M58 108h24l1 16H57zM56 140h28l1 16H55z" fill="#C8402E"/>
+    <rect x="58" y="66" width="24" height="18" fill="#1E1E24"/><rect x="62" y="70" width="16" height="10" fill="#FCE6AE"/><path d="M54 66l16-14 16 14z" fill="#C8402E"/><rect x="50" y="84" width="40" height="4" fill="#1E1E24"/>
+    <path d="M212 270h56l-8 14h-42z" fill="#1E1E24"/><path d="M240 268v-50l24 50z" fill="#F4EFE6"/><path d="M236 268v-38l-18 38z" fill="#E4D9C6"/>
+    <g fill="none" stroke="#1E1E24" stroke-width="2.2" stroke-linecap="round"><path d="M150 60l7 6 7-6M176 44l6 5 6-5M266 92l5 4 5-4"/></g>
+  </g>
+</defs></svg>
+
+<script>
+(function(){
+  var $=function(s){return document.getElementById(s)};
+  var app=$('app'),cells=$('cells'),board=$('board'),mvEl=$('mv'),tmEl=$('tm'),note=$('note');
+  var N=4,pos=[],tiles=[],moves=0,ms=0,best=118000,running=false,paused=false,won=false,last=0,raf=0,seed=46,shuffleStart=null,hinted=true;
+  function rnd(){seed=(seed*1103515245+12345)%2147483648;return seed/2147483648}
+  for(var q=0;q<15;q++)$('segs').appendChild(document.createElement('i'));
+  for(var k=1;k<=16;k++){
+    var t=document.createElement('button');t.className='t'+(k===16?' last':'');t.tabIndex=-1;
+    var c=(k-1)%N,r=Math.floor((k-1)/N);
+    t.innerHTML='<svg viewBox="'+(c*83)+' '+(r*83)+' 80 80" aria-hidden="true"><use href="#pic"/></svg>'+(k<16?'<i>'+k+'</i>':'');
+    t.style.setProperty('--d',((r+c)*55)+'ms');
+    if(k===16)t.setAttribute('aria-hidden','true');
+    (function(k){t.onclick=function(){tap(pos.indexOf(k))}})(k);
+    cells.appendChild(t);tiles[k]=t;
+  }
+  function fmt(m){var s=Math.floor(m/1000);return Math.floor(s/60)+':'+(s%60<10?'0':'')+s%60}
+  function gap(){return pos.indexOf(0)}
+  function nb(g){var a=[];if(g%N)a.push(g-1);if(g%N<N-1)a.push(g+1);if(g>=N)a.push(g-N);if(g<N*N-N)a.push(g+N);return a}
+  function paint(){
+    var inPlace=0;
+    pos.forEach(function(id,cell){if(!id)return;var t=tiles[id];t.style.setProperty('--x',cell%N);t.style.setProperty('--y',Math.floor(cell/N));
+      var h=id===cell+1;t.classList.toggle('home',h);if(h)inPlace++;
+      t.setAttribute('aria-label','Tile '+id+(h?', in place':''))});
+    tiles[16].style.setProperty('--x',3);tiles[16].style.setProperty('--y',3);
+    mvEl.textContent=moves;
+    $('pg').textContent=inPlace+' of 15 tiles in place';
+    [].forEach.call($('segs').children,function(x,k){x.classList.toggle('on',k<inPlace)});
+    if(!hinted&&!won)note.innerHTML='Tap, swipe or use the <b>arrow keys</b>';
+    return inPlace;
+  }
+  function setHint(){
+    tiles.forEach(function(t){t&&t.classList.remove('hint')});
+    if(!hinted)return;var g=gap(),c=nb(g)[0],t=tiles[pos[c]];
+    t.style.setProperty('--hx',((g%N)-(c%N))*8+'px');t.style.setProperty('--hy',(Math.floor(g/N)-Math.floor(c/N))*8+'px');t.classList.add('hint');
+  }
+  function shuffle(n){
+    pos=[];for(var i=1;i<16;i++)pos.push(i);pos.push(0);
+    var prev=-1;
+    for(var s=0;s<n||pos[15]===0&&s<n+40;s++){var g=gap(),o=nb(g).filter(function(x){return x!==prev});var m=o[Math.floor(rnd()*o.length)];pos[g]=pos[m];pos[m]=0;prev=g}
+    shuffleStart=pos.slice();
+  }
+  function start(keep){
+    cancelAnimationFrame(raf);running=false;paused=false;won=false;moves=0;ms=0;tmEl.textContent='0:00';
+    if(keep&&shuffleStart)pos=shuffleStart.slice();
+    app.classList.remove('solved','won','is-paused','peeking');$('peekBtn').setAttribute('aria-pressed','false');
+    hinted=true;note.innerHTML='<b>Slide</b> a tile into the gap';paint();setHint();
+  }
+  function loop(t){
+    var dt=Math.min(100,t-last);last=t;ms+=dt;tmEl.textContent=fmt(ms);
+    if(running&&!paused&&!won)raf=requestAnimationFrame(loop);
+  }
+  function tap(cell){
+    if(won||paused||cell<0)return;
+    var g=gap(),gr=Math.floor(g/N),gc=g%N,cr=Math.floor(cell/N),cc=cell%N;
+    if(cell===g||(gr!==cr&&gc!==cc))return;
+    var step=gr===cr?(cc<gc?-1:1):(cr<gr?-N:N);
+    while(g!==cell){var nx=g+step;pos[g]=pos[nx];pos[nx]=0;g=nx;moves++}
+    if(!running){running=true;last=performance.now();raf=requestAnimationFrame(loop)}
+    hinted=false;setHint();
+    if(paint()===15&&pos[15]===0)win();
+  }
+  function win(){
+    won=true;running=false;cancelAnimationFrame(raf);
+    var nb2=ms<best;if(nb2)best=ms;
+    app.classList.add('solved','won');
+    $('rMv').textContent=moves;$('rTm').textContent=fmt(ms);$('rBs').textContent=fmt(best);$('bs').textContent=fmt(best);
+    $('rTag').textContent=nb2?'New best time':'Picture restored';
+    note.innerHTML='<b>Solved</b> in '+moves+' moves';
+    setTimeout(function(){$('replay').focus()},900);
+  }
+  function setPause(p){
+    if(won)return;paused=p;app.classList.toggle('is-paused',p);$('pause').setAttribute('aria-label',p?'Resume':'Pause');
+    if(p){cancelAnimationFrame(raf);$('resume').focus()}
+    else if(running){last=performance.now();raf=requestAnimationFrame(loop)}
+    $('live').textContent=p?'Paused. Timer stopped at '+fmt(ms)+'.':'Resumed.';
+  }
+  function peek(on){if(paused||won)return;app.classList.toggle('peeking',on);$('peekBtn').setAttribute('aria-pressed',on)}
+  $('pause').onclick=function(){setPause(!paused)};$('resume').onclick=function(){setPause(false)};
+  $('again').onclick=function(){start(true)};$('easy').onclick=function(){seed=Date.now()%2147483648;shuffle(24);start(false)};
+  $('newBtn').onclick=function(){seed=Date.now()%2147483648;shuffle(220);start(false)};
+  $('replay').onclick=function(){seed=Date.now()%2147483648;shuffle(220);start(false);$('newBtn').focus()};
+  $('peekBtn').onclick=function(){peek(!app.classList.contains('peeking'))};
+  document.addEventListener('keydown',function(e){
+    var g=gap(),m={ArrowLeft:g%N<N-1?g+1:-1,ArrowRight:g%N?g-1:-1,ArrowUp:g<12?g+N:-1,ArrowDown:g>=N?g-N:-1}[e.key];
+    if(m!==undefined){e.preventDefault();tap(m)}
+    else if(e.key===' '&&!won&&e.target.tagName!=='BUTTON'){e.preventDefault();setPause(!paused)}
+    else if(e.key==='p'||e.key==='P')peek(!app.classList.contains('peeking'));
+    else if(e.key==='Escape'&&paused)setPause(false);
+  });
+  var sx=null,sy=0;
+  board.addEventListener('pointerdown',function(e){sx=e.clientX;sy=e.clientY});
+  board.addEventListener('pointerup',function(e){
+    if(sx===null)return;var dx=e.clientX-sx,dy=e.clientY-sy;sx=null;
+    if(Math.max(Math.abs(dx),Math.abs(dy))<24)return;
+    var g=gap(),m=Math.abs(dx)>Math.abs(dy)?(dx<0?(g%N<N-1?g+1:-1):(g%N?g-1:-1)):(dy<0?(g<12?g+N:-1):(g>=N?g-N:-1));
+    tap(m);board.dataset.swiped='1';setTimeout(function(){board.dataset.swiped=''},0);
+  });
+  cells.addEventListener('click',function(e){if(board.dataset.swiped)e.stopPropagation()},true);
+  shuffle(220);start(false);
+})();
+</script>
+</body>
+</html>

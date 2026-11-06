@@ -1,0 +1,164 @@
+<!-- Design Lounge piece: premium-tide-chart · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Saltmere tide chart</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sky-a:#7BA6D2;--sky-b:#E9D9C6;
+  --sea-top:#2C6A88;--sea-deep:#0B2C41;--crest:#F4FAFC;
+  --glass:rgba(250,252,253,.8);--glass-line:rgba(255,255,255,.7);--glass-dark:rgba(7,25,37,.72);
+  --ink:#0E2233;--ink-2:#3A5163;--ink-inv:#EEF5F8;--ink-inv-2:#C3D5DF;--sun:#F2A55C;--accent:#0E2233;
+  --sans:"Schibsted Grotesk",system-ui,sans-serif;--mono:"DM Mono",ui-monospace,monospace;
+  --r-card:22px;--r-pill:999px;--blur:saturate(1.4) blur(18px);
+  --shadow:0 10px 30px -12px rgba(7,25,37,.35);
+  --ease:cubic-bezier(.2,.7,.2,1);--expo:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:15px/1.35 var(--sans);color:var(--ink);background:linear-gradient(180deg,var(--sky-a),var(--sky-b) 62%);-webkit-font-smoothing:antialiased;overflow:hidden;user-select:none;-webkit-user-select:none}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none;padding:0}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+svg.chart{position:fixed;inset:0;width:100%;height:100%;touch-action:none;cursor:crosshair}
+.handle{position:fixed;left:0;top:0;width:22px;height:22px;margin:-11px 0 0 -11px;border-radius:50%;background:#0E2233;border:3px solid #F4FAFC;box-shadow:0 2px 8px rgba(7,25,37,.4);pointer-events:none}
+.handle:focus-visible{outline:2px solid #F4FAFC;outline-offset:3px;box-shadow:0 0 0 7px #0E2233}
+.card{position:fixed;left:16px;right:16px;max-width:420px;margin:0 auto;background:var(--glass);-webkit-backdrop-filter:var(--blur);backdrop-filter:var(--blur);border:1px solid var(--glass-line);border-radius:var(--r-card);box-shadow:var(--shadow)}
+.head{top:62px;padding:14px 16px 13px}
+.head small{display:block;font:500 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
+.head h1{margin:6px 0 0;font-size:24px;font-weight:600;letter-spacing:-.02em;line-height:1.1}
+.ext{display:flex;justify-content:space-between;gap:6px;margin:10px 0 0;padding:10px 0 0;border-top:1px solid rgba(14,34,51,.12);list-style:none;font:400 11px/1.2 var(--mono);color:var(--ink-2);white-space:nowrap}
+.ext li{display:flex;align-items:center;gap:4px}
+.ext b{font-weight:500;color:var(--ink)}
+.ext svg{width:10px;height:10px}
+.read{position:fixed;left:0;top:0;width:176px;padding:11px 14px 12px;border-radius:18px;pointer-events:none;background:var(--glass);-webkit-backdrop-filter:var(--blur);backdrop-filter:var(--blur);border:1px solid var(--glass-line);box-shadow:var(--shadow);transition:opacity 200ms var(--ease)}
+.read .t{font:500 12px/1 var(--mono);color:var(--ink-2);letter-spacing:.04em;display:flex;justify-content:space-between}
+.read .h{font-size:34px;font-weight:600;letter-spacing:-.03em;line-height:1;margin-top:6px;font-variant-numeric:tabular-nums}
+.read .h span{font-size:16px;font-weight:500;margin-left:3px;letter-spacing:0}
+.read .tr{display:flex;align-items:center;gap:5px;margin-top:7px;font-size:13px;font-weight:500;white-space:nowrap}
+.read .tr svg{width:14px;height:14px;transition:transform 240ms var(--ease)}
+.read .nx{margin-top:3px;font:400 11px/1.3 var(--mono);color:var(--ink-2);white-space:nowrap}
+.now{position:absolute;right:12px;top:10px;height:32px;padding:0 14px;border-radius:var(--r-pill);background:var(--ink);color:var(--ink-inv);font-weight:600;font-size:13px;display:flex;align-items:center;gap:6px;opacity:0;visibility:hidden;transition:opacity 200ms var(--ease),visibility 0s linear 200ms}
+.now.show{opacity:1;visibility:visible;transition-delay:0s}
+.days{bottom:34px;padding:6px;display:grid;grid-template-columns:repeat(7,1fr);gap:2px;background:var(--glass-dark);border-color:rgba(255,255,255,.12)}
+.day{height:48px;border-radius:16px;color:var(--ink-inv);display:grid;place-content:center;text-align:center;line-height:1.1;transition:background 200ms var(--ease),color 200ms}
+.day small{display:block;font:500 10px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-inv-2)}
+.day span{display:block;font-size:17px;font-weight:600;margin-top:4px}
+.day[aria-pressed=true]{background:var(--ink-inv);color:var(--ink)}
+.day[aria-pressed=true] small{color:var(--ink-2)}
+.lab{font:500 11px var(--mono);fill:var(--ink-inv)}
+.tag{font:500 11px var(--mono);fill:var(--ink-inv)}
+.pulse{animation:pulse 2.4s var(--ease) infinite;transform-box:fill-box;transform-origin:center}
+.sr{position:absolute;left:0;top:0;width:300px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+@keyframes pulse{0%{transform:scale(1);opacity:.6}80%,100%{transform:scale(3.2);opacity:0}}
+@media (prefers-reduced-motion:reduce){.pulse{animation:none;opacity:0}.read,.now,.day,.read .tr svg{transition:none}}
+</style>
+</head>
+<body>
+<svg class="chart" id="chart" aria-hidden="true">
+  <defs>
+    <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2C6A88" stop-opacity=".9"/><stop offset=".45" stop-color="#14435E"/><stop offset="1" stop-color="#0B2C41"/></linearGradient>
+    <linearGradient id="sheen" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".22"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+  </defs>
+  <g id="sunm"></g>
+  <path id="fill" fill="url(#sea)"/>
+  <g id="grid"></g>
+  <path id="sheenP" fill="url(#sheen)"/>
+  <path id="line" fill="none" stroke="#F4FAFC" stroke-width="2" stroke-linejoin="round"/>
+  <g id="exts"></g>
+  <g id="axis"></g>
+  <g id="nowm"><circle id="nowP" class="pulse" r="5" fill="#F4FAFC"/><circle id="nowD" r="4" fill="#F4FAFC" stroke="#0E2233" stroke-width="2"/></g>
+  <line class="hair" id="hair" stroke="#0E2233" stroke-opacity=".55" stroke-width="1.25" stroke-dasharray="3 4"/>
+</svg>
+<header class="card head">
+  <small>Saltmere Harbour · Tides</small>
+  <h1 id="date">Thursday 6 November</h1>
+  <ul class="ext" id="ext" aria-label="High and low water"></ul>
+  <button class="now" id="nowBtn" aria-label="Back to now, 14:20"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg>Now</button>
+</header>
+<div class="handle" id="handle" tabindex="0" role="slider" aria-label="Tide height through the day" aria-valuemin="0" aria-valuemax="1439" aria-valuenow="860" aria-valuetext="14:20, 1.73 metres, rising" aria-keyshortcuts="ArrowLeft ArrowRight PageUp PageDown"></div>
+<div class="read" id="read" aria-hidden="true">
+  <div class="t"><span id="rT">14:20</span><span id="rD">THU</span></div>
+  <div class="h" id="rH">2.84<span>m</span></div>
+  <div class="tr"><svg id="rA" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M6 11l6-6 6 6"/></svg><span id="rR">Rising 0.42 m/h</span></div>
+  <div class="nx" id="rN">High 18:11 in 3h 51m</div>
+</div>
+
+<nav class="card days" id="days" aria-label="Choose a day"></nav>
+<div class="sr" aria-live="polite" id="live"></div>
+<script>
+(() => {
+const $=id=>document.getElementById(id),reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const NS='http://www.w3.org/2000/svg',DAYS=['Thursday','Friday','Saturday','Sunday','Monday','Tuesday','Wednesday'],NOW=14+20/60,STEP=.25;
+let day=0,t=NOW,W,H,top,bot,pts=[],shown=[],anim=0;
+const el=(n,a)=>{const e=document.createElementNS(NS,n);for(const k in a)e.setAttribute(k,a[k]);return e};
+const pad=n=>String(n).padStart(2,'0'),hm=h=>{h=((h%24)+24)%24;let m=Math.round(h*60);return pad(Math.floor(m/60)%24)+':'+pad(m%60)};
+/* semi-diurnal tide with a diurnal inequality and a spring-neap envelope */
+function tide(d,h){const tH=5.8+.84*d,A=1.9+.32*Math.cos(2*Math.PI*(d+1)/14.77),x=h-tH;return 2.66+A*Math.cos(2*Math.PI*x/12.42)+.16*Math.cos(2*Math.PI*x/24.84)}
+const rate=(d,h)=>(tide(d,h+.05)-tide(d,h-.05))/.1;
+function extremes(d){const out=[];for(let h=0;h<24;h+=.05){const a=rate(d,h),b=rate(d,h+.05);if(a>0&&b<=0||a<0&&b>=0){let lo=h,hi=h+.05;for(let i=0;i<20;i++){const m=(lo+hi)/2;(rate(d,m)>0)===(a>0)?lo=m:hi=m}out.push({h:lo,v:tide(d,lo),hi:a>0})}}return out}
+const sunrise=d=>7+11/60+d*2/60,sunset=d=>16+26/60-d*1.5/60;
+/* sky keyframes by hour: [hour, top, bottom] */
+const SKY=[[0,'#0B1426','#1C2A44'],[5.2,'#101C36','#2B3656'],[6.6,'#2D3E6A','#D9937E'],[8.2,'#6F9CCB','#F1D2B6'],[12,'#7FB2DE','#DCEBF4'],[15,'#7BA6D2','#E9D9C6'],[16.4,'#3E5584','#F0A779'],[17.6,'#1A2648','#5B4D6E'],[20,'#0E1830','#1F2B48'],[24,'#0B1426','#1C2A44']];
+const mix=(a,b,k)=>{const p=s=>[1,3,5].map(i=>parseInt(s.slice(i,i+2),16));const A=p(a),B=p(b);return'#'+A.map((v,i)=>pad(Math.round(v+(B[i]-v)*k).toString(16))).join('')};
+function sky(h){let i=0;while(SKY[i+1][0]<h)i++;const [h0,a0,b0]=SKY[i],[h1,a1,b1]=SKY[i+1],k=(h-h0)/(h1-h0),e=k*k*(3-2*k);document.body.style.setProperty('--sky-a',mix(a0,a1,e));document.body.style.setProperty('--sky-b',mix(b0,b1,e))}
+const X=h=>h/24*W,Y=v=>bot-v/5.2*(bot-top);
+function size(){W=innerWidth;H=innerHeight;top=Math.max(250,H*.3);bot=H-150;$('chart').setAttribute('viewBox','0 0 '+W+' '+H);
+  const g=$('grid');g.innerHTML='';for(let m=1;m<=4;m++){g.appendChild(el('line',{x1:0,x2:W,y1:Y(m),y2:Y(m),stroke:'#fff','stroke-opacity':.28,'stroke-dasharray':'2 6'}));const r=el('rect',{x:W-46,y:Y(m)-10,width:34,height:20,rx:10,fill:'rgba(7,25,37,.72)'});g.appendChild(r);const tx=el('text',{x:W-29,y:Y(m)+4,'text-anchor':'middle',class:'lab'});tx.textContent=m+' m';g.appendChild(tx)}
+  const a=$('axis');a.innerHTML='';for(let h=3;h<24;h+=3){const tx=el('text',{x:X(h),y:H-122,'text-anchor':'middle',class:'lab','fill-opacity':.9});tx.textContent=pad(h);a.appendChild(tx);a.appendChild(el('line',{x1:X(h),x2:X(h),y1:H-138,y2:H-134,stroke:'#C3D5DF','stroke-opacity':.7}))}
+}
+const curve=d=>{const a=[];for(let h=0;h<=24+1e-6;h+=STEP)a.push(tide(d,h));return a};
+function draw(vals){
+  shown=vals;let d='';vals.forEach((v,i)=>d+=(i?'L':'M')+X(i*STEP).toFixed(1)+' '+Y(v).toFixed(1));
+  $('line').setAttribute('d',d);$('fill').setAttribute('d',d+'L'+W+' '+H+'L0 '+H+'Z');
+  let s='';vals.forEach((v,i)=>s+=(i?'L':'M')+X(i*STEP).toFixed(1)+' '+Y(v).toFixed(1));$('sheenP').setAttribute('d',s+'L'+W+' '+(bot+40)+'L0 '+(bot+40)+'Z');
+}
+const at=h=>{const i=Math.min(shown.length-2,Math.floor(h/STEP)),k=h/STEP-i;return shown[i]+(shown[i+1]-shown[i])*k};
+function marks(){
+  const sm=$('sunm');sm.innerHTML='';[[sunrise(day),'Sunrise'],[sunset(day),'Sunset']].forEach(([h,n])=>{const x=X(h);sm.appendChild(el('line',{x1:x,x2:x,y1:top-34,y2:H-142,stroke:'#F2A55C','stroke-width':1.5,'stroke-dasharray':'1 5','stroke-linecap':'round'}));
+    const w=106,bx=Math.max(8,Math.min(W-w-8,x-w/2));sm.appendChild(el('rect',{x:bx,y:top-58,width:w,height:24,rx:12,fill:'rgba(7,25,37,.72)'}));
+    sm.appendChild(el('path',{d:'M'+(bx+12)+' '+(top-41)+'h14M'+(bx+15)+' '+(top-41)+'a4 4 0 0 1 8 0',stroke:'#F2A55C','stroke-width':1.6,fill:'none','stroke-linecap':'round'}));
+    const tx=el('text',{x:bx+32,y:top-42,class:'tag'});tx.textContent=(n==='Sunrise'?'Rise ':'Set ')+hm(h);sm.appendChild(tx)});
+  const ex=extremes(day),eg=$('exts');eg.innerHTML='';ex.forEach(e=>eg.appendChild(el('circle',{cx:X(e.h),cy:Y(e.v),r:3.5,fill:'#0E2233',stroke:'#F4FAFC','stroke-width':1.5})));
+  const up='<svg viewBox="0 0 10 10"><path d="M5 1l4 7H1z" fill="currentColor"/></svg>',dn='<svg viewBox="0 0 10 10"><path d="M5 9L1 2h8z" fill="currentColor"/></svg>';
+  $('ext').innerHTML=ex.map(e=>'<li aria-label="'+(e.hi?'High':'Low')+' '+e.v.toFixed(2)+' metres at '+hm(e.h)+'">'+(e.hi?up:dn)+'<b>'+hm(e.h)+'</b>'+e.v.toFixed(1)+'</li>').join('');
+  $('date').textContent=DAYS[day]+' '+(6+day)+' November';
+  $('nowm').style.display=day===0?'':'none';if(day===0){const v=at(NOW);['nowP','nowD'].forEach(i=>{$(i).setAttribute('cx',X(NOW));$(i).setAttribute('cy',Y(v))})}
+}
+function scrub(h,say){
+  t=Math.max(0,Math.min(23.99,h));const v=at(t),x=X(t),y=Y(v),r=rate(day,t);
+  $('hair').setAttribute('x1',x);$('hair').setAttribute('x2',x);$('hair').setAttribute('y1',top-28);$('hair').setAttribute('y2',H-142);
+  $('handle').style.transform='translate('+x+'px,'+y+'px)';
+  $('rT').textContent=hm(t);$('rD').textContent=DAYS[day].slice(0,3).toUpperCase();$('rH').firstChild.nodeValue=v.toFixed(2);
+  const slack=Math.abs(r)<.08,rising=r>0;$('rR').textContent=slack?'Slack water':(rising?'Rising ':'Falling ')+Math.abs(r).toFixed(2)+' m/h';
+  $('rA').style.transform=slack?'rotate(90deg)':rising?'none':'rotate(180deg)';
+  const nx=extremes(day).find(e=>e.h>t)||(extremes(day+1).map(e=>({...e,h:e.h+24}))[0]);const m=Math.round((nx.h-t)*60);$('rN').textContent=(nx.hi?'High ':'Low ')+hm(nx.h)+' in '+Math.floor(m/60)+'h '+pad(m%60)+'m';
+  const rd=$('read'),cw=176,ch=rd.offsetHeight||104;let lx=Math.max(12,Math.min(W-cw-12,x-cw/2)),ly=y-ch-22;if(ly<top-10)ly=y+24;rd.style.transform='translate('+lx+'px,'+ly+'px)';
+  sky(t);const c=$('handle');c.setAttribute('aria-valuenow',Math.round(t*60));const vt=hm(t)+', '+v.toFixed(2)+' metres, '+(slack?'slack':rising?'rising':'falling');c.setAttribute('aria-valuetext',vt);
+  $('nowBtn').classList.toggle('show',!(day===0&&Math.abs(t-NOW)<.02));if(say)$('live').textContent=vt;
+}
+function setDay(d,say){
+  if(d===day&&shown.length)return;const from=shown.slice(),to=curve(d);day=d;
+  [...$('days').children].forEach((b,i)=>b.setAttribute('aria-pressed',i===d));marks();
+  cancelAnimationFrame(anim);if(reduce||!from.length){draw(to);marks();scrub(t,say);return}
+  let s0=0;const step=ts=>{s0=s0||ts;const k=Math.min(1,(ts-s0)/520),e=1-Math.pow(1-k,4);draw(from.map((v,i)=>v+(to[i]-v)*e));marks();scrub(t,false);if(k<1)anim=requestAnimationFrame(step);else if(say)$('live').textContent=$('date').textContent+'. '+$('handle').getAttribute('aria-valuetext')};anim=requestAnimationFrame(step);
+}
+$('days').innerHTML=DAYS.map((n,i)=>'<button class="day" aria-pressed="'+(i===0)+'" aria-label="'+n+' '+(6+i)+' November"><small>'+n.slice(0,3)+'</small><span>'+(6+i)+'</span></button>').join('');
+[...$('days').children].forEach((b,i)=>b.onclick=()=>setDay(i,true));
+const c=$('chart');let drag=false;const hx=e=>(e.clientX/W)*24;
+c.addEventListener('pointerdown',e=>{if(e.clientY<top-70)return;drag=true;c.setPointerCapture(e.pointerId);scrub(hx(e))});
+c.addEventListener('pointermove',e=>{if(drag)scrub(hx(e))});
+const hd=$('handle');const up=()=>{if(drag){drag=false;$('live').textContent=hd.getAttribute('aria-valuetext')}};c.addEventListener('pointerup',up);c.addEventListener('pointercancel',up);
+hd.addEventListener('keydown',e=>{const m={ArrowRight:1,ArrowUp:1,ArrowLeft:-1,ArrowDown:-1}[e.key];
+  if(m){e.preventDefault();scrub(Math.round((t*60+m*(e.shiftKey?60:10))/10)*10/60,true)}else if(e.key==='Home'){e.preventDefault();scrub(0,true)}else if(e.key==='End'){e.preventDefault();scrub(23.99,true)}
+  else if(e.key==='PageDown'){e.preventDefault();setDay(Math.min(6,day+1),true)}else if(e.key==='PageUp'){e.preventDefault();setDay(Math.max(0,day-1),true)}});
+$('nowBtn').onclick=()=>{setDay(0,false);scrub(NOW,true);hd.focus()};
+addEventListener('resize',()=>{size();draw(curve(day));marks();scrub(t)});
+size();draw(curve(0));marks();scrub(NOW);
+})();
+</script>
+</body>
+</html>

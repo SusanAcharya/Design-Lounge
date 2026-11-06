@@ -1,0 +1,224 @@
+<!-- Design Lounge piece: premium-sleep-breath · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hushwell Wind-down</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;1,400;1,500&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b0f14; --surface:#141a22; --line:#263040; --text:#ece6da; --text-2:#a9b0ba; --text-3:#8d95a1;
+  --c1:#e6ecf7; --c2:#8fa7cf; --c3:#1e3a5c; --glow:rgba(143,167,207,.32);
+  --serif:"Cormorant Garamond",Georgia,serif; --sans:"Hanken Grotesk",system-ui,sans-serif;
+  --ring:300px; --orb:196px; --r-pill:999px;
+  --ease:cubic-bezier(.2,.7,.2,1); --ease-out:cubic-bezier(.16,1,.3,1); --calm:cubic-bezier(.45,0,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--text);font:400 15px/1.45 var(--sans);overflow:hidden;-webkit-tap-highlight-color:transparent}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none;padding:0}
+:focus-visible{outline:2px solid var(--text);outline-offset:4px}
+.app{position:relative;height:100%;max-width:430px;margin:0 auto;padding:54px 24px 34px;display:flex;flex-direction:column;align-items:center;overflow:hidden;
+  background:radial-gradient(70% 45% at 50% 34%,color-mix(in srgb,var(--c3) 45%,transparent),transparent 70%),var(--bg)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.chrome{transition:opacity 1400ms var(--calm),visibility 0s 1400ms}
+.session .chrome{opacity:0;visibility:hidden}
+header{width:100%;display:flex;justify-content:space-between;align-items:baseline;padding-top:10px}
+.mark{font:italic 500 26px/1 var(--serif);letter-spacing:.01em}
+.when{font-size:13px;color:var(--text-2);font-variant-numeric:tabular-nums}
+.dial{position:relative;width:var(--ring);height:var(--ring);margin-top:26px;flex:none;touch-action:none}
+.dial svg.track{position:absolute;inset:0;overflow:visible}
+.orb{position:absolute;left:50%;top:50%;width:var(--orb);height:var(--orb);margin:calc(var(--orb) / -2);border-radius:50%;
+  background:radial-gradient(circle at 38% 30%,var(--c1) 0%,var(--c2) 46%,var(--c3) 100%);box-shadow:inset -14px -18px 40px rgba(0,0,0,.28);transform:scale(.72)}
+.halo{position:absolute;left:50%;top:50%;width:340px;height:340px;margin:-170px;border-radius:50%;background:radial-gradient(circle,var(--glow) 28%,transparent 70%);transform:scale(.72);pointer-events:none}
+.done .orb,.done .halo{opacity:.2!important;transition:opacity 3s var(--calm)}
+.knob{position:absolute;left:0;top:0;width:26px;height:26px;margin:-13px;border-radius:50%;background:var(--text);box-shadow:0 0 0 5px var(--bg),0 2px 10px rgba(0,0,0,.5);cursor:grab;touch-action:none}
+.knob::before{content:"";position:absolute;inset:-10px;border-radius:50%}
+.knob:active{cursor:grabbing}
+.end{position:absolute;font-size:12px;color:var(--text-3);font-variant-numeric:tabular-nums;white-space:nowrap}
+.phase{margin-top:14px;text-align:center}
+.phase b{display:block;font:italic 400 46px/1 var(--serif);letter-spacing:.01em}
+.phase span{display:block;margin-top:8px;font-size:14px;color:var(--text-2)}
+.cyc{display:flex;gap:6px;width:228px;margin:18px auto 0}
+.cyc div{display:flex;flex-direction:column;gap:7px;font-size:12px;color:var(--text-3);font-variant-numeric:tabular-nums;white-space:nowrap}
+.cyc i{display:block;height:3px;border-radius:2px;background:var(--line);overflow:hidden}
+.cyc i::after{content:"";display:block;height:100%;width:var(--p,0%);background:var(--text-2)}
+.cyc div.on{color:var(--text)}
+.len{text-align:center;font-size:14px;color:var(--text-2);margin-top:22px;font-variant-numeric:tabular-nums}
+.len strong{font:500 22px/1 var(--serif);font-variant-numeric:lining-nums;color:var(--text);margin-right:4px}
+.left{position:absolute;z-index:6;left:0;right:0;top:calc(54px + 36px + 26px + var(--ring) + 150px);text-align:center;opacity:0;visibility:hidden;transition:opacity 1400ms var(--calm),visibility 0s 1400ms}
+.session .left{opacity:1;visibility:visible;transition:opacity 1400ms var(--calm) 600ms}
+.left b{display:block;font:500 40px/1 var(--serif);font-variant-numeric:lining-nums tabular-nums;color:var(--text-2)}
+.left span{display:block;margin-top:6px;font-size:13px;color:var(--text-3)}
+.sounds{display:flex;gap:8px;margin-top:auto;width:100%}
+.chip{flex:1;height:48px;border-radius:var(--r-pill);border:1px solid var(--line);background:var(--surface);color:var(--text-2);display:flex;align-items:center;justify-content:center;gap:7px;font-size:14px;font-weight:500;white-space:nowrap;transition:background 200ms var(--ease),color 200ms var(--ease),border-color 200ms var(--ease)}
+.chip svg{width:18px;height:18px;flex:none}
+.chip[aria-pressed=true]{background:#232c39;border-color:#5b6b82;color:var(--text)}
+.start{width:100%;height:56px;margin-top:14px;border-radius:var(--r-pill);background:var(--text);color:var(--bg);font-size:16px;font-weight:600;letter-spacing:.01em;transition:transform 160ms var(--ease)}
+.start:active{transform:scale(.98)}
+.stopb{position:absolute;z-index:6;left:50%;bottom:34px;transform:translateX(-50%);height:44px;padding:0 22px;border-radius:var(--r-pill);border:1px solid #3a4352;color:var(--text-2);font-size:14px;opacity:0;visibility:hidden;transition:opacity 1400ms var(--calm),visibility 0s 1400ms}
+.session .stopb{opacity:1;visibility:visible;transition:opacity 1400ms var(--calm) 900ms}
+.veil{position:absolute;inset:0;z-index:5;background:#030507;opacity:0;pointer-events:none;transition:opacity 1800ms var(--calm)}
+.session .veil{opacity:.35}
+@media (prefers-reduced-motion:reduce){
+  .orb,.halo{transform:none!important;transition:opacity 1s linear}
+  .chrome,.left,.stopb,.veil{transition-duration:400ms!important}
+}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+  <div class="veil" id="veil" aria-hidden="true"></div>
+  <header class="chrome"><span class="mark">Hushwell</span><span class="when" id="when">22:41 · Night</span></header>
+  <div class="dial" id="dial">
+    <svg class="track" viewBox="0 0 300 300" aria-hidden="true">
+      <path id="trk" fill="none" stroke="#263040" stroke-width="3" stroke-linecap="round"/>
+      <path id="arc" class="chrome" fill="none" stroke="#c9cfd8" stroke-width="3" stroke-linecap="round"/>
+      <g id="ticks" class="chrome" stroke="#3a4352" stroke-width="1.5"></g>
+    </svg>
+    <div class="halo" id="halo" aria-hidden="true"></div>
+    <div class="orb" id="orb" aria-hidden="true"></div>
+    <span class="end chrome" style="left:44px;top:252px">5</span>
+    <span class="end chrome" style="right:40px;top:252px">45</span>
+    <div class="knob chrome" id="knob" role="slider" tabindex="0" aria-label="Session length" aria-valuemin="5" aria-valuemax="45" aria-valuenow="20" aria-valuetext="20 minutes"></div>
+  </div>
+  <div class="phase" aria-hidden="true"><b id="ph">Inhale</b><span id="phs">through the nose · 4</span>
+    <div class="cyc" id="cyc"><div style="flex:4"><i></i>In 4</div><div style="flex:7"><i></i>Hold 7</div><div style="flex:8"><i></i>Out 8</div></div></div>
+  <p class="len chrome" id="len"><strong>20 min</strong> · ends 23:01</p>
+  <div class="left" id="left" aria-hidden="true"><b id="leftT">20:00</b><span id="leftS">Rain, fading out with you</span></div>
+  <div class="sounds chrome" role="group" aria-label="Sound">
+    <button class="chip" data-s="rain" aria-pressed="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 15a4 4 0 0 1 .5-8A5.5 5.5 0 0 1 18 8.5 3.3 3.3 0 0 1 17 15zM8 18l-1 2.5M12 18l-1 2.5M16 18l-1 2.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>Rain</button>
+    <button class="chip" data-s="brown" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h2l2-5 3 10 3-12 3 9 2-4h3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Brown noise</button>
+    <button class="chip" data-s="harbour" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 16c2 0 2-1.5 4.5-1.5S10 16 12 16s2-1.5 4.5-1.5S19 16 21 16M3 20c2 0 2-1.5 4.5-1.5S10 20 12 20s2-1.5 4.5-1.5S19 20 21 20M12 3v9M8 8l4-5 4 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Harbour</button>
+  </div>
+  <button class="start chrome" id="start">Start wind-down</button>
+  <button class="stopb" id="stop">End session</button>
+  <p class="sr" aria-live="polite" id="live"></p>
+</div>
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const halo = document.getElementById('halo'), cyc = [...document.querySelectorAll('#cyc div')], app = $('app'), orb = $('orb'), knob = $('knob'), dial = $('dial');
+  const TOD = [
+    [5, 'Dawn', '#ffe3c8', '#f2a584', '#6e3a4a', 'rgba(242,165,132,.30)'],
+    [9, 'Day', '#fff4d6', '#e9c27a', '#4e6f76', 'rgba(233,194,122,.28)'],
+    [17, 'Dusk', '#ffd9a8', '#e0835a', '#4f2f45', 'rgba(224,131,90,.30)'],
+    [21, 'Night', '#e6ecf7', '#8fa7cf', '#1e3a5c', 'rgba(143,167,207,.32)']
+  ];
+  const p2 = (n) => String(n).padStart(2, '0');
+  const hm = (d) => p2(d.getHours()) + ':' + p2(d.getMinutes());
+  const paint = () => {
+    const d = new Date(), h = d.getHours();
+    const t = h >= 21 || h < 5 ? TOD[3] : h >= 17 ? TOD[2] : h >= 9 ? TOD[1] : TOD[0];
+    ['--c1', '--c2', '--c3', '--glow'].forEach((k, i) => app.style.setProperty(k, t[i + 2]));
+    $('when').textContent = hm(d) + ' · ' + t[1];
+  };
+  // dial geometry: 300° arc, gap at the bottom; 0° points up
+  const C = 150, R = 140, A0 = -150, SPAN = 300;
+  const pt = (deg, r = R) => { const a = (deg - 90) * Math.PI / 180; return [C + r * Math.cos(a), C + r * Math.sin(a)]; };
+  const arcD = (a, b) => { const [x1, y1] = pt(a), [x2, y2] = pt(b); return `M${x1} ${y1}A${R} ${R} 0 ${b - a > 180 ? 1 : 0} 1 ${x2} ${y2}`; };
+  $('trk').setAttribute('d', arcD(A0, A0 + SPAN));
+  $('ticks').innerHTML = Array.from({ length: 9 }, (_, i) => { const a = A0 + i * SPAN / 8, [x1, y1] = pt(a, R - 10), [x2, y2] = pt(a, R - 4); return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"/>`; }).join('');
+  let mins = 20;
+  const setMins = (m) => {
+    mins = Math.max(5, Math.min(45, Math.round(m)));
+    const a = A0 + (mins - 5) / 40 * SPAN, [x, y] = pt(a);
+    knob.style.transform = `translate(${x}px,${y}px)`;
+    $('arc').setAttribute('d', arcD(A0, Math.max(A0 + .01, a)));
+    knob.setAttribute('aria-valuenow', mins); knob.setAttribute('aria-valuetext', mins + ' minutes');
+    const end = new Date(Date.now() + mins * 60000);
+    $('len').innerHTML = `<strong>${mins} min</strong> · ends ${hm(end)}`;
+  };
+  const fromPointer = (e) => {
+    const r = dial.getBoundingClientRect(), x = e.clientX - r.left - r.width / 2, y = e.clientY - r.top - r.height / 2;
+    let deg = Math.atan2(x, -y) * 180 / Math.PI; // 0 up, clockwise
+    deg = Math.max(A0, Math.min(A0 + SPAN, deg));
+    setMins(5 + (deg - A0) / SPAN * 40);
+  };
+  let drag = false;
+  knob.addEventListener('pointerdown', (e) => { drag = true; knob.setPointerCapture(e.pointerId); e.preventDefault(); knob.focus(); });
+  knob.addEventListener('pointermove', (e) => { if (drag) fromPointer(e); });
+  knob.addEventListener('pointerup', () => { drag = false; });
+  dial.addEventListener('pointerdown', (e) => { if (e.target === knob || app.classList.contains('session')) return; const r = dial.getBoundingClientRect(), dx = e.clientX - r.left - C, dy = e.clientY - r.top - C, d = Math.hypot(dx, dy); if (d > R - 28 && d < R + 24) fromPointer(e); });
+  knob.addEventListener('keydown', (e) => {
+    const k = { ArrowUp: 1, ArrowRight: 1, ArrowDown: -1, ArrowLeft: -1, PageUp: 5, PageDown: -5 }[e.key];
+    if (k) { e.preventDefault(); setMins(mins + k); } else if (e.key === 'Home') { e.preventDefault(); setMins(5); } else if (e.key === 'End') { e.preventDefault(); setMins(45); }
+  });
+  // sounds: synthesised locally with Web Audio, nothing fetched
+  let sound = 'rain', ac = null, out = null, nodes = [];
+  document.querySelectorAll('.chip').forEach((c) => c.addEventListener('click', () => {
+    const on = c.getAttribute('aria-pressed') !== 'true';
+    document.querySelectorAll('.chip').forEach((x) => x.setAttribute('aria-pressed', 'false'));
+    c.setAttribute('aria-pressed', String(on)); sound = on ? c.dataset.s : null;
+  }));
+  const noise = (brown) => {
+    const n = ac.sampleRate * 3, b = ac.createBuffer(1, n, ac.sampleRate), d = b.getChannelData(0);
+    let l = 0; for (let i = 0; i < n; i++) { const w = Math.random() * 2 - 1; if (brown) { l = (l + .02 * w) / 1.02; d[i] = l * 3.5; } else d[i] = w; }
+    const s = ac.createBufferSource(); s.buffer = b; s.loop = true; return s;
+  };
+  const play = () => {
+    if (!sound) return;
+    try {
+      ac = ac || new (window.AudioContext || window.webkitAudioContext)();
+      out = ac.createGain(); out.gain.value = 0; out.connect(ac.destination);
+      const src = noise(sound !== 'rain'), f = ac.createBiquadFilter();
+      f.type = sound === 'rain' ? 'bandpass' : 'lowpass'; f.frequency.value = sound === 'rain' ? 2400 : sound === 'brown' ? 520 : 320; f.Q.value = sound === 'rain' ? .4 : .7;
+      src.connect(f); f.connect(out); nodes = [src];
+      if (sound === 'harbour') { const lfo = ac.createOscillator(), lg = ac.createGain(); lfo.frequency.value = .09; lg.gain.value = .25; lfo.connect(lg); lg.connect(out.gain); lfo.start(); nodes.push(lfo); }
+      src.start(); out.gain.setTargetAtTime(sound === 'rain' ? .18 : .45, ac.currentTime, 2);
+    } catch (e) { ac = null; }
+  };
+  const silence = (slow) => { if (!out) return; out.gain.setTargetAtTime(0, ac.currentTime, slow ? 3 : .3); const n = nodes; setTimeout(() => n.forEach((x) => { try { x.stop(); } catch (e) {} }), slow ? 9000 : 1200); out = null; };
+  // breath and session loop
+  const PH = [['Inhale', 'through the nose', 4], ['Hold', 'softly, no strain', 7], ['Exhale', 'slowly, through the mouth', 8]];
+  let t0 = performance.now(), sess = null, lastPh = -1;
+  const ease = (x) => x < .5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2;
+  const frame = (now) => {
+    const c = ((now - t0) / 1000) % 19;
+    const i = c < 4 ? 0 : c < 11 ? 1 : 2, into = i === 0 ? c : i === 1 ? c - 4 : c - 11;
+    const k = i === 0 ? ease(into / 4) : i === 1 ? 1 : 1 - ease(into / 8);
+    let dim = 1;
+    if (sess) {
+      const el = (now - sess.start) / 1000, total = sess.mins * 60, rem = Math.max(0, total - el), fw = Math.min(120, total * .2);
+      const f = rem < fw ? rem / fw : 1; dim = .25 + .75 * f;
+      $('veil').style.opacity = String(.35 + (1 - f) * .6);
+      $('leftT').textContent = Math.floor(rem / 60) + ':' + p2(Math.floor(rem % 60));
+      if (out && rem < fw && !sess.fading) { sess.fading = true; out.gain.setTargetAtTime(0, ac.currentTime, fw / 4); }
+      if (rem <= 0) return finish();
+    }
+    if (reduce) { orb.style.opacity = halo.style.opacity = String((.55 + .45 * k) * dim); }
+    else { orb.style.transform = halo.style.transform = `scale(${.72 + .28 * k})`; orb.style.opacity = halo.style.opacity = String(dim); }
+    if (i !== lastPh) { lastPh = i; $('ph').textContent = PH[i][0]; }
+    $('phs').textContent = PH[i][1] + ' · ' + Math.ceil(PH[i][2] - into);
+    cyc.forEach((d, j) => { d.classList.toggle('on', j === i); d.style.setProperty('--p', (j < i ? 100 : j === i ? into / PH[i][2] * 100 : 0) + '%'); });
+    requestAnimationFrame(frame);
+  };
+  const begin = () => {
+    sess = { start: performance.now(), mins, fading: false }; t0 = sess.start; lastPh = -1;
+    app.classList.add('session'); app.classList.remove('done');
+    const names = { rain: 'Rain', brown: 'Brown noise', harbour: 'Harbour' };
+    $('leftS').textContent = sound ? names[sound] + ', fading out with you' : 'Silence, screen dims at the end';
+    play(); $('live').textContent = `Wind-down started, ${mins} minutes. Breathe in for 4, hold for 7, out for 8.`;
+    setTimeout(() => $('stop').focus(), 50);
+  };
+  const finish = () => {
+    sess = null; silence(true); app.classList.add('done');
+    $('leftT').textContent = 'Sleep well'; $('leftS').textContent = 'Session complete';
+    $('live').textContent = 'Session complete. Sleep well.';
+    setTimeout(() => { app.classList.remove('session', 'done'); $('veil').style.opacity = ''; orb.style.opacity = halo.style.opacity = ''; t0 = performance.now(); requestAnimationFrame(frame); $('start').focus(); }, 6000);
+  };
+  const stop = () => {
+    if (!sess) return; sess = null; silence(false);
+    app.classList.remove('session'); $('veil').style.opacity = ''; orb.style.opacity = halo.style.opacity = '';
+    $('live').textContent = 'Session ended.'; $('start').focus();
+  };
+  $('start').onclick = begin; $('stop').onclick = stop;
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') stop(); });
+  paint(); setMins(20); requestAnimationFrame(frame);
+  setInterval(paint, 60000);
+})();
+</script>
+</body>
+</html>

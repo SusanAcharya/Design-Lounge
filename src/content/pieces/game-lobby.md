@@ -3,7 +3,7 @@ title: "Bramble parlour lobby"
 summary: "Four seats in Parlour 4, a copyable room code, one ready toggle, and a host Start that stays off until two players are ready, then a one-line deal."
 platform: web
 type: screen
-category: social
+category: games
 tags: [lobby, multiplayer, ready, room]
 styles: [editorial, soft]
 motion: subtle

@@ -414,6 +414,12 @@ const DIRECTIONS: Record<string, Direction[]> = {
     ['orbit', 'Orbit', 'A lit object you turn, then a world you scroll through', 'night-desk', 'wide-tech', 'quiet', 'three-orbit-object', 'three-scroll-world'],
     ['neon-drive', 'Neon drive', 'A retro racer, a magenta sun and a cyan grid, the score in tube letters', 'midnight-drive', 'neon-marquee', 'sharp', 'sunset-grid-hero', 'sunset-grid-hero'],
   ]),
+  'mobile-game': d([
+    ['reef-saga', 'Reef saga', 'A bright puzzle world on a phone: a level path to climb, stars that stamp in, a soft round type', 'playroom', 'candy-clay', 'soft', 'game-phone-level-map', 'game-phone-level-results'],
+    ['lantern-run', 'Lantern run', 'An arcade runner at night: swipe lanes, a sparse HUD in the thumb zone, condensed numbers', 'night-market', 'industrial-label', 'sharp', 'minigame-lane-dodge', 'game-phone-touch-hud'],
+    ['league-night', 'League night', 'A live game you come back to: the weekly league, the login streak and the season track', 'bedtime', 'candy-clay', 'soft', 'game-phone-weekly-league', 'game-phone-daily-reward'],
+    ['kiln-yard', 'Kiln yard', 'A hero game in loud colour: pick a fighter, a shop with honest prices, cut-corner type', 'arcade-day', 'hud', 'sharp', 'game-phone-hero-select', 'game-phone-season-track'],
+  ]),
   notebook: d([
     ['inkwell', 'Inkwell', 'A letter on warm paper, the whole site in a hand', 'inkwell', 'letter-hand', 'soft', 'handwritten-homepage', 'text-annotated-underlines'],
     ['lamp-desk', 'Lamp desk', 'The same letter after dark', 'lamp-desk', 'letter-hand', 'editorial', 'handwritten-letter', 'text-marker-highlight-draw'],
@@ -428,7 +434,7 @@ export const SURFACES: { id: Surface; title: string; blurb: string }[] = [
 
 const ORDER = [
   'marketing-site', 'saas', 'web-app', 'portfolio', 'portfolio-builder', 'commerce', 'fintech', 'fashion', 'food', 'wellness', 'hotel', 'agency', 'editorial', 'docs', 'music', 'personal-site', 'event', 'museum', 'landing', 'real-estate', 'restaurant', 'education', 'jobs', 'nonprofit', 'clinic', 'gym', 'professional', 'game', 'notebook', 'dashboard', 'design-system',
-  'mobile-app', 'personal', 'bank', 'health', 'messages', 'music-app', 'news', 'shop-app', 'social', 'weather', 'field', 'tablet',
+  'mobile-app', 'mobile-game', 'personal', 'bank', 'health', 'messages', 'music-app', 'news', 'shop-app', 'social', 'weather', 'field', 'tablet',
 ];
 
 export function startsOn(surface: Surface) {
@@ -712,7 +718,7 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'geometric-modern',
     shelf: 'native-feel',
     categories: ['navigation', 'overlays', 'media', 'onboarding', 'settings'],
-    pieces: ['ios-weather-hourly-scrub', 'ios-glass-tab-bar', 'mobile-inbox-list', 'mobile-run-detail', 'mobile-list-empty', 'mobile-load-failed', 'm3-expressive-home', 'ios-onboarding-carousel', 'pwa-install-sheet', 'phone-splash-launch', 'phone-sign-in', 'phone-sign-up-steps', 'phone-profile-header', 'phone-notifications-list', 'phone-permission-prompt', 'm3-navigation-bar', 'phone-form-fields', 'phone-search-results', 'phone-feed-posts', 'phone-calendar-agenda', 'phone-booking-slots', 'phone-account-edit', 'phone-notification-settings', 'phone-large-text-layout', 'm3-sign-in', 'm3-settings-list', 'phone-forgot-password', 'phone-code-entry', 'phone-skeleton-list', 'm3-dialog', 'm3-snackbar', 'm3-search-results', 'bento-feature-grid', 'ai-chat-workspace', 'pwa-app-shell'],
+    pieces: ['ios-weather-hourly-scrub', 'ios-glass-tab-bar', 'mobile-inbox-list', 'mobile-run-detail', 'mobile-list-empty', 'mobile-load-failed', 'm3-expressive-home', 'ios-onboarding-carousel', 'pwa-install-sheet', 'phone-splash-launch', 'phone-sign-in', 'phone-sign-up-steps', 'phone-profile-header', 'phone-notifications-list', 'phone-permission-prompt', 'm3-navigation-bar', 'phone-form-fields', 'phone-search-results', 'phone-feed-posts', 'phone-calendar-agenda', 'phone-booking-slots', 'phone-account-edit', 'phone-notification-settings', 'phone-large-text-layout', 'm3-sign-in', 'm3-settings-list', 'phone-forgot-password', 'phone-code-entry', 'phone-skeleton-list', 'm3-dialog', 'm3-snackbar', 'm3-search-results', 'bento-feature-grid', 'ai-chat-workspace', 'pwa-app-shell', 'premium-boarding-pass', 'premium-manual-camera', 'motion-spring-throw-sheet', 'motion-scroll-story', 'motion-feedback-ladder'],
   },
   {
     id: 'design-system',
@@ -803,7 +809,7 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'friendly-saas',
     shelf: 'native-feel',
     categories: ['dashboard', 'navigation', 'settings', 'auth'],
-    pieces: ['ios-fintech-home', 'phone-tab-plain', 'ios-grouped-settings', 'auth-passkey-setup', 'ios-large-title-collapse', 'mobile-list-empty', 'phone-sign-in', 'phone-notifications-list', 'phone-wallet-cards', 'phone-qr-scanner', 'phone-delete-account', 'phone-privacy-data', 'phone-account-edit', 'phone-code-entry', 'phone-app-lock', 'crypto-exchange-trade', 'table-transactions-ledger', 'spend-list'],
+    pieces: ['ios-fintech-home', 'phone-tab-plain', 'ios-grouped-settings', 'auth-passkey-setup', 'ios-large-title-collapse', 'mobile-list-empty', 'phone-sign-in', 'phone-notifications-list', 'phone-wallet-cards', 'phone-qr-scanner', 'phone-delete-account', 'phone-privacy-data', 'phone-account-edit', 'phone-code-entry', 'phone-app-lock', 'crypto-exchange-trade', 'table-transactions-ledger', 'spend-list', 'premium-metal-card-tilt'],
   },
   {
     id: 'health',
@@ -816,7 +822,7 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'geometric-modern',
     shelf: 'native-feel',
     categories: ['dashboard', 'navigation', 'settings', 'onboarding'],
-    pieces: ['ios-health-activity-rings', 'phone-tab-plain', 'ios-grouped-settings', 'ios-onboarding-carousel', 'ios-pull-to-refresh', 'phone-paywall-plans', 'phone-permission-prompt', 'phone-workout-timer', 'phone-booking-slots', 'phone-subscription-manage', 'phone-notification-settings', 'phone-rating-prompt', 'phone-app-lock', 'mobile-run-detail', 'card-progress-goals', 'phone-calendar-agenda'],
+    pieces: ['ios-health-activity-rings', 'phone-tab-plain', 'ios-grouped-settings', 'ios-onboarding-carousel', 'ios-pull-to-refresh', 'phone-paywall-plans', 'phone-permission-prompt', 'phone-workout-timer', 'phone-booking-slots', 'phone-subscription-manage', 'phone-notification-settings', 'phone-rating-prompt', 'phone-app-lock', 'mobile-run-detail', 'card-progress-goals', 'phone-calendar-agenda', 'premium-sleep-breath'],
   },
   {
     id: 'messages',
@@ -868,7 +874,7 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'atelier',
     shelf: 'first-impressions',
     categories: ['ecommerce', 'inputs'],
-    pieces: ['mobile-filter-chips-list', 'shop-product', 'qty-stepper', 'mobile-one-page-checkout', 'order-confirmed', 'phone-product-detail', 'phone-sign-in', 'phone-order-tracking', 'phone-wallet-cards', 'phone-search-results', 'phone-rating-prompt', 'm3-modal-bottom-sheet', 'phone-cart', 'phone-checkout', 'phone-orders', 'shop-collection', 'luxe-product-detail'],
+    pieces: ['mobile-filter-chips-list', 'shop-product', 'qty-stepper', 'mobile-one-page-checkout', 'order-confirmed', 'phone-product-detail', 'phone-sign-in', 'phone-order-tracking', 'phone-wallet-cards', 'phone-search-results', 'phone-rating-prompt', 'm3-modal-bottom-sheet', 'phone-cart', 'phone-checkout', 'phone-orders', 'shop-collection', 'luxe-product-detail', 'premium-watch-vault'],
   },
   {
     id: 'social',
@@ -894,7 +900,7 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'geometric-modern',
     shelf: 'native-feel',
     categories: ['utility', 'scroll', 'navigation'],
-    pieces: ['ios-weather-hourly-scrub', 'ios-large-title-collapse', 'phone-tab-plain', 'ios-pull-to-refresh', 'phone-permission-prompt', 'phone-map-listings', 'hero-engraved-moonrise-plate', 'week-schedule', 'mobile-run-detail', 'bento-feature-grid'],
+    pieces: ['ios-weather-hourly-scrub', 'ios-large-title-collapse', 'phone-tab-plain', 'ios-pull-to-refresh', 'phone-permission-prompt', 'phone-map-listings', 'hero-engraved-moonrise-plate', 'week-schedule', 'mobile-run-detail', 'bento-feature-grid', 'premium-tide-chart'],
   },
   {
     id: 'field',
@@ -934,6 +940,19 @@ const BASE: Omit<Start, 'directions'>[] = [
     shelf: 'first-impressions',
     categories: ['landing', 'media', 'data', 'social'],
     pieces: ['game-title-screen', 'game-playfield', 'game-hud', 'game-card-table', 'game-lobby', 'game-leaderboard', 'pixel-arcade-style', 'three-orbit-object', 'three-scroll-world', 'three-room-look', 'webgl-shader-hero', 'object-3d-turntable'],
+  },
+  {
+    id: 'mobile-game',
+    surface: 'app',
+    title: 'A mobile game',
+    kicker: 'Play',
+    blurb: 'A level map, a game you can finish, the results, and the screens that bring people back: league, streak, season, shop.',
+    when: 'A game on a phone, or a small game inside an app. Controls in the thumb zone, rewards that land one at a time. Not a web game squeezed into 390px.',
+    theme: 'playroom',
+    pairing: 'candy-clay',
+    shelf: 'native-feel',
+    categories: ['games', 'feedback', 'overlays'],
+    pieces: ['game-phone-level-map', 'game-phone-level-results', 'game-phone-touch-hud', 'game-phone-hero-select', 'game-phone-daily-reward', 'game-phone-weekly-league', 'game-phone-season-track', 'game-phone-daily-shop', 'minigame-stack-drop', 'minigame-pair-recall', 'minigame-tile-slide', 'minigame-lane-dodge', 'minigame-word-trace', 'minigame-peg-drop', 'game-gacha-pull-reveal', 'streak-hold-confetti', 'motion-feedback-ladder', 'motion-sticker-peel', 'phone-splash-launch', 'phone-paywall-plans', 'phone-rating-prompt'],
   },
   {
     id: 'notebook',

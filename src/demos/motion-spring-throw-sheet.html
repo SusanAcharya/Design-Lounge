@@ -1,0 +1,290 @@
+<!-- Design Lounge piece: motion-spring-throw-sheet · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nightjar · Late kitchens in Portmore</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --land:#ece6da;--block:#e2dacb;--water:#9fc3cc;--water-2:#8ab4bf;--park:#c9d9b4;--road:#fbfaf7;--road-edge:#d3c9b7;
+  --sheet:#fbfaf7;--card:#f3efe7;--ink:#1d1b18;--ink-2:#595349;--line:#e4ddd0;--chip-line:#8c8577;
+  --accent:#c23e26;--accent-soft:#f6ddd5;--you:#2a64c8;
+  --sans:"Plus Jakarta Sans",system-ui,sans-serif;
+  --k:420;--c:28;--m:1;
+  --ios:cubic-bezier(.32,.72,0,1);--ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:15px/1.4 var(--sans);color:var(--ink);background:var(--land);overflow:hidden;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+:focus-visible{outline:3px solid var(--you);outline-offset:2px;border-radius:12px}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.map{position:fixed;inset:0;width:100%;height:100%;display:block}
+.scrim{position:fixed;inset:0;background:#1d1b18;opacity:0;pointer-events:none}
+.top{position:fixed;left:0;right:0;top:0;padding:58px 16px 0;display:flex;gap:10px;max-width:430px;margin:0 auto}
+.search{flex:1;height:48px;border-radius:24px;display:flex;align-items:center;gap:10px;padding:0 16px;background:rgba(251,250,247,.9);backdrop-filter:blur(14px) saturate(1.4);-webkit-backdrop-filter:blur(14px) saturate(1.4);box-shadow:0 1px 0 rgba(29,27,24,.06),0 8px 24px rgba(29,27,24,.12);font-weight:500;color:var(--ink-2)}
+.search svg,.ico{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.me{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;background:var(--ink);color:#fbfaf7;font-weight:700;font-size:15px;box-shadow:0 8px 24px rgba(29,27,24,.18)}
+.locate{position:fixed;right:16px;width:48px;height:48px;border-radius:50%;display:grid;place-items:center;background:var(--sheet);color:var(--you);box-shadow:0 6px 18px rgba(29,27,24,.16)}
+
+.sheet{position:fixed;left:0;right:0;bottom:0;top:404px;max-width:430px;margin:0 auto;background:var(--sheet);border-radius:22px 22px 0 0;box-shadow:0 -1px 0 rgba(29,27,24,.08),0 -12px 40px rgba(29,27,24,.16);display:flex;flex-direction:column;touch-action:none;will-change:top}
+.grab{padding:8px 20px 0;cursor:grab;user-select:none}
+.grab:active{cursor:grabbing}
+.handle{display:block;width:100%;height:24px;display:grid;place-items:center}
+.handle i{display:block;width:40px;height:5px;border-radius:3px;background:#a39b8c}
+.head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-top:2px}
+.head h1{margin:0;font-size:22px;line-height:1.15;font-weight:800;letter-spacing:-.02em}
+.head span{font-size:13px;font-weight:600;color:var(--ink-2);white-space:nowrap}
+.sub{margin:4px 0 0;font-size:13px;color:var(--ink-2)}
+.chips{display:flex;gap:8px;padding:14px 20px 4px;overflow-x:auto;scrollbar-width:none;flex:none}
+.chips::-webkit-scrollbar{display:none}
+.cw{flex:none;display:flex;transition:width 280ms var(--ios),margin 280ms var(--ios);touch-action:pan-x}
+.chip{height:40px;padding:0 16px;border-radius:20px;border:1.5px solid var(--chip-line);background:var(--sheet);font-size:14px;font-weight:600;white-space:nowrap;display:flex;align-items:center;gap:6px;will-change:transform;touch-action:pan-x}
+.chip[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:#fbfaf7}
+.chip svg{width:16px;height:16px}
+.hint{margin:6px 20px 0;font-size:12px;font-weight:600;color:var(--ink-2);display:flex;align-items:center;gap:6px;transition:opacity 240ms var(--ease)}
+.hint svg{width:14px;height:14px}
+.hint.gone{opacity:0;visibility:hidden}
+.list{list-style:none;margin:8px 0 0;padding:0 20px 40px;overflow:hidden;flex:1;min-height:0}
+.full .list{overflow-y:auto;touch-action:pan-y}
+.row{display:grid;grid-template-columns:52px 1fr auto;gap:14px;align-items:center;padding:12px 0;border-top:1px solid var(--line)}
+.tile{width:52px;height:52px;border-radius:14px;display:grid;place-items:center;position:relative;overflow:hidden}
+.tile svg{width:26px;height:26px;fill:none;stroke:#1d1b18;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;position:relative}
+.row b{display:block;font-size:16px;font-weight:700;letter-spacing:-.01em}
+.row small{display:block;font-size:13px;color:var(--ink-2);margin-top:2px}
+.row .r{text-align:right;font-size:13px;font-weight:700;white-space:nowrap}
+.row .r em{display:block;font-style:normal;font-weight:600;color:var(--accent);margin-top:2px}
+.toast{position:fixed;left:16px;right:16px;top:118px;max-width:398px;margin:0 auto;height:52px;border-radius:16px;background:var(--ink);color:#fbfaf7;display:flex;align-items:center;justify-content:space-between;padding:0 8px 0 16px;font-size:14px;font-weight:500;box-shadow:0 12px 30px rgba(29,27,24,.28);transform:translateY(-12px);opacity:0;visibility:hidden;transition:transform 320ms var(--ios),opacity 200ms var(--ease),visibility 0s 320ms}
+.toast.on{transform:none;opacity:1;visibility:visible;transition:transform 320ms var(--ios),opacity 200ms var(--ease)}
+.toast button{height:40px;padding:0 14px;border-radius:12px;color:#ffd7cc;font-weight:700;background:#3a3530}
+@media (prefers-reduced-motion:reduce){.cw,.toast,.hint{transition-duration:1ms!important}}
+</style>
+</head>
+<body>
+<svg class="map" viewBox="0 0 390 844" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+  <rect width="390" height="844" fill="#ece6da"/>
+  <g fill="#e2dacb"><rect x="22" y="128" width="70" height="52" rx="4"/><rect x="104" y="128" width="58" height="52" rx="4"/><rect x="22" y="196" width="140" height="60" rx="4"/><rect x="232" y="118" width="64" height="70" rx="4"/><rect x="308" y="118" width="70" height="70" rx="4"/><rect x="232" y="204" width="146" height="54" rx="4"/><rect x="188" y="300" width="80" height="58" rx="4"/><rect x="284" y="300" width="94" height="58" rx="4"/><rect x="24" y="470" width="120" height="80" rx="4"/><rect x="250" y="470" width="128" height="80" rx="4"/></g>
+  <path d="M0 268 C80 300 120 250 190 278 S300 360 390 330 L390 380 C310 410 250 330 180 326 S70 352 0 318Z" fill="#9fc3cc"/>
+  <path d="M0 290 C80 318 120 272 190 298 S300 380 390 352" fill="none" stroke="#8ab4bf" stroke-width="1.5" stroke-dasharray="4 6"/>
+  <path d="M30 360 h120 v84 h-120z M170 400 h60 c20 0 30 30 30 50 h-90z" fill="#c9d9b4"/>
+  <g fill="none" stroke-linecap="round"><g stroke="#d3c9b7" stroke-width="13"><path d="M0 112 H390 M210 0 V600 M0 456 H390 M100 112 L170 460 M330 112 V460"/></g><g stroke="#fbfaf7" stroke-width="10"><path d="M0 112 H390 M210 0 V600 M0 456 H390 M100 112 L170 460 M330 112 V460"/></g><g stroke="#f4efe5" stroke-width="5"><path d="M0 190 H210 M210 196 H390 M160 380 H390 M0 560 H390"/></g></g>
+  <text x="34" y="148" font-family="Plus Jakarta Sans,sans-serif" font-size="10" font-weight="700" letter-spacing="2" fill="#4f493f">OLD QUAY</text>
+  <text x="244" y="238" font-family="Plus Jakarta Sans,sans-serif" font-size="10" font-weight="700" letter-spacing="2" fill="#4f493f">ROPEWORKS</text>
+  <g font-family="Plus Jakarta Sans,sans-serif" font-size="12" font-weight="800" text-anchor="middle">
+    <g transform="translate(70 230)"><circle cy="-12" r="14" fill="#c23e26"/><path d="M-6 -1 L0 6 L6 -1Z" fill="#c23e26"/><text y="-8" fill="#fff">1</text></g>
+    <g transform="translate(268 168)"><circle cy="-12" r="14" fill="#c23e26"/><path d="M-6 -1 L0 6 L6 -1Z" fill="#c23e26"/><text y="-8" fill="#fff">2</text></g>
+    <g transform="translate(150 166)"><circle cy="-12" r="14" fill="#c23e26"/><path d="M-6 -1 L0 6 L6 -1Z" fill="#c23e26"/><text y="-8" fill="#fff">3</text></g>
+    <g transform="translate(356 262)"><circle cy="-12" r="14" fill="#c23e26"/><path d="M-6 -1 L0 6 L6 -1Z" fill="#c23e26"/><text y="-8" fill="#fff">4</text></g>
+    <g transform="translate(240 350)"><circle cy="-12" r="14" fill="#c23e26"/><path d="M-6 -1 L0 6 L6 -1Z" fill="#c23e26"/><text y="-8" fill="#fff">5</text></g>
+  </g>
+  <circle cx="196" cy="226" r="22" fill="#2a64c8" opacity=".16"/><circle cx="196" cy="226" r="8" fill="#2a64c8" stroke="#fff" stroke-width="3"/>
+</svg>
+<div class="scrim" id="scrim"></div>
+
+<header class="top">
+  <div class="search" role="search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>Search Portmore</div>
+  <button class="me" aria-label="Account, Ines Varga">IV</button>
+</header>
+<button class="locate" id="locate" aria-label="Centre on my location"><svg class="ico" viewBox="0 0 24 24"><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="6"/></svg></button>
+
+<div class="toast" id="toast" role="status" aria-live="polite"><span id="toastText">Removed filter</span><button id="undo">Undo</button></div>
+
+<section class="sheet" id="sheet" aria-label="Kitchens near you">
+  <div class="grab" id="grab">
+    <button class="handle" id="handle" aria-label="Resize list. Now half height. Arrow keys change height."><i></i></button>
+    <div class="head"><h1 id="count">14 kitchens open past 11</h1><span>Fri 22:48</span></div>
+    <p class="sub">Within 15 minutes on foot of Harbour Street</p>
+  </div>
+  <div class="chips" id="chips" role="group" aria-label="Filters. Flick a filter up or press Delete to drop it.">
+    <div class="cw"><button class="chip" aria-pressed="true" data-w="3">Open now</button></div>
+    <div class="cw"><button class="chip" aria-pressed="false" data-w="5">Under £15</button></div>
+    <div class="cw"><button class="chip" aria-pressed="true" data-w="2">Noodles</button></div>
+    <div class="cw"><button class="chip" aria-pressed="false" data-w="4">Takeaway</button></div>
+    <div class="cw"><button class="chip" aria-pressed="false" data-w="6">Vegetarian</button></div>
+    <div class="cw"><button class="chip" aria-pressed="false" data-w="1">Seats 4+</button></div>
+  </div>
+  <p class="hint" id="hint"><svg class="ico" viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6"/></svg>Flick a filter up to drop it</p>
+  <ul class="list" id="list">
+    <li class="row"><span class="tile" style="background:#f6ddd5"><svg viewBox="0 0 24 24"><path d="M3 11h18a9 9 0 0 1-18 0zM8 7l2-4M13 7l2-4"/></svg></span><span><b>Salt Lamp Ramen</b><small>Tonkotsu, gyoza · £11–16 · 4 min</small></span><span class="r">4.7<em>till 01:00</em></span></li>
+    <li class="row"><span class="tile" style="background:#dfe8d2"><svg viewBox="0 0 24 24"><path d="M4 14c0-5 4-9 8-9s8 4 8 9H4zM3 17h18M8 20h8"/></svg></span><span><b>Ropeworks Canteen</b><small>Dumplings, chilli oil · £8–12 · 6 min</small></span><span class="r">4.5<em>till 00:30</em></span></li>
+    <li class="row"><span class="tile" style="background:#d9e6ea"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="9" ry="6"/><path d="M8 11h.01M12 13h.01M15 10h.01"/></svg></span><span><b>Mira's Flatbread Bar</b><small>Manakish, labneh · £7–10 · 7 min</small></span><span class="r">4.8<em>till 02:00</em></span></li>
+    <li class="row"><span class="tile" style="background:#efe2c8"><svg viewBox="0 0 24 24"><path d="M12 3c3 4 6 6 6 11a6 6 0 0 1-12 0c0-3 2-4 3-5 0 2 1 3 2 3 0-4-1-6 1-9z"/></svg></span><span><b>Harbour Lights Grill</b><small>Skewers, flatbreads · £12–19 · 9 min</small></span><span class="r">4.4<em>till 23:45</em></span></li>
+    <li class="row"><span class="tile" style="background:#e7dcef"><svg viewBox="0 0 24 24"><path d="M3 12h18a9 9 0 0 1-18 0zM14 9l6-6M10 9l7-6"/></svg></span><span><b>Noodle Signal</b><small>Cumin lamb noodles · £10–14 · 11 min</small></span><span class="r">4.6<em>till 01:30</em></span></li>
+    <li class="row"><span class="tile" style="background:#f6ddd5"><svg viewBox="0 0 24 24"><path d="M4 15a8 6 0 0 1 16 0v3H4zM9 11v3M12 10v4M15 11v3"/></svg></span><span><b>Pier Nine Bakehouse</b><small>Late pastries, soup · £4–9 · 12 min</small></span><span class="r">4.3<em>till 00:00</em></span></li>
+    <li class="row"><span class="tile" style="background:#dfe8d2"><svg viewBox="0 0 24 24"><path d="M3 11h18a9 9 0 0 1-18 0zM7 8c1-1 1-3 0-4M12 8c1-1 1-3 0-4M17 8c1-1 1-3 0-4"/></svg></span><span><b>Ferry Steps Pho</b><small>Pho, banh mi · £9–13 · 14 min</small></span><span class="r">4.5<em>till 01:00</em></span></li>
+  </ul>
+</section>
+<p class="vh" id="live" aria-live="polite"></p>
+
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const sheet = $('sheet'), scrim = $('scrim'), locate = $('locate'), handle = $('handle'), live = $('live');
+  const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const K = 420, C = 28, M = 1;               // sheet spring: stiffness, damping, mass
+  const names = ['full', 'half', 'peek'];
+  let H = innerHeight, det = [], y = 0, v = 0, target = 0, raf = 0, idx = 1;
+  const layout = () => { H = innerHeight; det = [64, Math.round(H * 0.48), H - 176]; };
+  const paint = () => {
+    sheet.style.top = y + 'px';
+    const t = Math.max(0, Math.min(1, (det[1] - y) / (det[1] - det[0])));
+    scrim.style.opacity = (t * 0.32).toFixed(3);
+    locate.style.top = Math.max(118, y - 64) + 'px';
+    locate.style.opacity = y < det[1] - 40 ? 0 : 1;
+    sheet.classList.toggle('full', idx === 0 && Math.abs(y - det[0]) < 2);
+  };
+  // Semi-implicit Euler, fixed 1/240s substeps. Carries the release velocity, so a hard throw overshoots.
+  const step = (spring, dt) => {
+    for (let n = Math.ceil(dt / (1 / 240)), h = dt / n; n--;) {
+      spring.v += ((-spring.k * (spring.x - spring.to) - spring.c * spring.v) / spring.m) * h;
+      spring.x += spring.v * h;
+    }
+    return Math.abs(spring.v) < 4 && Math.abs(spring.x - spring.to) < 0.4;
+  };
+  let last = 0;
+  const run = (now) => {
+    const dt = Math.min(0.032, (now - (last || now)) / 1000); last = now;
+    const s = { x: y, v, to: target, k: K, c: C, m: M }, done = step(s, dt);
+    y = s.x; v = s.v;
+    if (done) { y = target; v = 0; raf = 0; last = 0; paint(); return; }
+    paint(); raf = requestAnimationFrame(run);
+  };
+  const settle = (i, vel = 0) => {
+    idx = i; target = det[i]; v = vel;
+    handle.setAttribute('aria-label', `Resize list. Now ${names[i]} height. Arrow keys change height.`);
+    live.textContent = 'List ' + names[i];
+    if (RM) { y = target; v = 0; sheet.style.transition = 'top 200ms cubic-bezier(.2,.7,.2,1)'; paint(); setTimeout(() => { sheet.style.transition = ''; }, 220); return; }
+    if (!raf) raf = requestAnimationFrame(run);
+  };
+  // Project where the throw would come to rest (0.2s of travel), then pick the nearest detent.
+  const pick = (vel) => {
+    const proj = y + vel * 0.2;
+    let best = 0;
+    det.forEach((d, i) => { if (Math.abs(d - proj) < Math.abs(det[best] - proj)) best = i; });
+    if (Math.abs(vel) > 900 && best === idx) best = Math.max(0, Math.min(2, idx + Math.sign(vel)));
+    return best;
+  };
+  const rubber = (raw) => {
+    if (raw < det[0]) return det[0] - (1 - 1 / ((det[0] - raw) * 0.55 / 200 + 1)) * 200;
+    if (raw > det[2]) return det[2] + (1 - 1 / ((raw - det[2]) * 0.55 / 200 + 1)) * 200;
+    return raw;
+  };
+  const tracker = () => { const pts = []; return {
+    add(t, p) { pts.push([t, p]); while (pts.length > 2 && t - pts[0][0] > 80) pts.shift(); },
+    vel() { if (pts.length < 2) return 0; const [a, b] = [pts[0], pts[pts.length - 1]]; return b[0] > a[0] ? ((b[1] - a[1]) / (b[0] - a[0])) * 1000 : 0; } }; };
+
+  let drag = null;
+  sheet.addEventListener('pointerdown', (e) => {
+    if (e.target.closest('.chips') || e.target.closest('#toast')) return;
+    if (idx === 0 && e.target.closest('#list')) return;
+    cancelAnimationFrame(raf); raf = 0; last = 0;
+    drag = { grab: !!e.target.closest('.grab'), id: e.pointerId, y0: e.clientY, s0: y, moved: 0, tr: tracker() };
+    drag.tr.add(e.timeStamp, e.clientY);
+    sheet.setPointerCapture(e.pointerId);
+  });
+  sheet.addEventListener('pointermove', (e) => {
+    if (!drag || e.pointerId !== drag.id) return;
+    drag.moved = Math.max(drag.moved, Math.abs(e.clientY - drag.y0));
+    drag.tr.add(e.timeStamp, e.clientY);
+    y = rubber(drag.s0 + e.clientY - drag.y0); v = 0; paint();
+  });
+  const end = (e) => {
+    if (!drag || e.pointerId !== drag.id) return;
+    const vel = drag.tr.vel(), tap = drag.moved < 6, onGrab = drag.grab;
+    drag = null;
+    if (tap) { if (onGrab) settle(idx === 1 ? 0 : 1); else settle(idx); return; }
+    settle(pick(vel), vel);
+  };
+  sheet.addEventListener('pointerup', end); sheet.addEventListener('pointercancel', end);
+  handle.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowUp') { e.preventDefault(); settle(Math.max(0, idx - 1), -1400); }
+    if (e.key === 'ArrowDown') { e.preventDefault(); settle(Math.min(2, idx + 1), 1400); }
+  });
+  handle.addEventListener('click', (e) => { if (e.detail === 0) settle(idx === 1 ? 0 : 1); });
+
+  /* chips: flick up or down to throw a filter away; Undo springs it back */
+  const chips = $('chips'), toast = $('toast'), hint = $('hint'), count = $('count');
+  let removed = null, toastT = 0, cd = null;
+  const recount = () => {
+    let n = 19;
+    chips.querySelectorAll('.cw:not([data-gone]) .chip[aria-pressed=true]').forEach((c) => { n -= +c.dataset.w; });
+    count.textContent = `${n} kitchens open past 11`;
+  };
+  const throwOff = (chip, vy, dx) => {
+    const w = chip.parentElement, dir = vy < 0 ? -1 : 1;
+    let ty = cd ? cd.dy : 0, vel = dir * Math.max(1600, Math.abs(vy)), rot = dx * 0.08, t0 = 0, op = 1;
+    hint.classList.add('gone');
+    removed = w; toast.classList.add('on'); $('toastText').textContent = `Removed “${chip.textContent}”`;
+    clearTimeout(toastT); toastT = setTimeout(() => toast.classList.remove('on'), 4000);
+    const collapse = () => { w.style.width = w.offsetWidth + 'px'; w.offsetWidth; w.style.width = '0px'; w.style.marginRight = '-8px'; w.style.visibility = 'hidden'; w.dataset.gone = '1'; recount(); };
+    if (RM) { chip.style.opacity = 0; collapse(); return; }
+    const fly = (now) => {
+      const dt = Math.min(0.032, (now - (t0 || now)) / 1000); t0 = now;
+      ty += vel * dt; rot += dir * 260 * dt; op -= dt * 3.2;
+      chip.style.transform = `translateY(${ty}px) rotate(${rot}deg)`; chip.style.opacity = Math.max(0, op);
+      if (op > 0) requestAnimationFrame(fly); else collapse();
+    };
+    requestAnimationFrame(fly);
+  };
+  const springBack = (chip, x0, v0) => {
+    const s = { x: x0, v: v0, to: 0, k: 600, c: 24, m: 1 }; let t0 = 0;
+    if (RM) { chip.style.transform = ''; return; }
+    const go = (now) => {
+      const dt = Math.min(0.032, (now - (t0 || now)) / 1000); t0 = now;
+      const done = step(s, dt);
+      chip.style.transform = done ? '' : `translateY(${s.x}px) rotate(${s.x * -0.04}deg)`;
+      if (!done) requestAnimationFrame(go);
+    };
+    requestAnimationFrame(go);
+  };
+  chips.addEventListener('pointerdown', (e) => {
+    const chip = e.target.closest('.chip'); if (!chip) return;
+    cd = { chip, id: e.pointerId, x0: e.clientX, y0: e.clientY, dy: 0, dx: 0, live: false, tr: tracker() };
+    cd.tr.add(e.timeStamp, e.clientY);
+  });
+  chips.addEventListener('pointermove', (e) => {
+    if (!cd || e.pointerId !== cd.id) return;
+    cd.dx = e.clientX - cd.x0; cd.dy = e.clientY - cd.y0; cd.tr.add(e.timeStamp, e.clientY);
+    if (!cd.live && Math.abs(cd.dy) > 8 && Math.abs(cd.dy) > Math.abs(cd.dx)) { cd.live = true; cd.chip.setPointerCapture(e.pointerId); }
+    if (cd.live) cd.chip.style.transform = `translateY(${cd.dy}px) rotate(${cd.dx * 0.08}deg)`;
+  });
+  const cend = (e) => {
+    if (!cd || e.pointerId !== cd.id) return;
+    const { chip, live: wasLive, dy } = cd, vy = cd.tr.vel();
+    if (wasLive) {
+      e.preventDefault();
+      if (Math.abs(dy) > 70 || Math.abs(vy) > 700) throwOff(chip, Math.abs(vy) > 700 ? vy : dy * 20, cd.dx);
+      else springBack(chip, dy, vy);
+      chip.dataset.skip = '1';
+    }
+    cd = null;
+  };
+  chips.addEventListener('pointerup', cend); chips.addEventListener('pointercancel', (e) => { if (cd && cd.live) springBack(cd.chip, cd.dy, 0); cd = null; });
+  chips.addEventListener('click', (e) => {
+    const chip = e.target.closest('.chip'); if (!chip) return;
+    if (chip.dataset.skip) { delete chip.dataset.skip; return; }
+    chip.setAttribute('aria-pressed', chip.getAttribute('aria-pressed') !== 'true'); recount();
+  });
+  chips.addEventListener('keydown', (e) => {
+    const chip = e.target.closest('.chip');
+    if (chip && (e.key === 'Delete' || e.key === 'Backspace')) { e.preventDefault(); throwOff(chip, -1800, 0); $('undo').focus(); }
+  });
+  $('undo').addEventListener('click', () => {
+    if (!removed) return;
+    const w = removed, chip = w.querySelector('.chip'); removed = null;
+    delete w.dataset.gone; w.style.visibility = ''; w.style.width = chip.offsetWidth + 'px'; w.style.marginRight = '';
+    chip.style.opacity = 1; chip.style.transform = 'translateY(-56px)';
+    setTimeout(() => { w.style.width = ''; }, 300);
+    springBack(chip, -56, 900); recount();
+    toast.classList.remove('on'); chip.focus({ preventScroll: true });
+  });
+
+  layout(); y = target = det[1]; paint();
+  addEventListener('resize', () => { layout(); y = target = det[idx]; paint(); });
+})();
+</script>
+</body>
+</html>

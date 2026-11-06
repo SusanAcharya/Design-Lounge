@@ -50,7 +50,12 @@
   "m3-search-results",
   "bento-feature-grid",
   "ai-chat-workspace",
-  "pwa-app-shell"
+  "pwa-app-shell",
+  "premium-boarding-pass",
+  "premium-manual-camera",
+  "motion-spring-throw-sheet",
+  "motion-scroll-story",
+  "motion-feedback-ladder"
  ],
  "directions": [
   {

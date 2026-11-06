@@ -3,7 +3,7 @@ title: "Motorsport race results"
 summary: "A broadcast-style results screen: a rising podium with giant numerals, a lap table with purple, green and yellow sectors, gap or interval, and a next race card."
 platform: web
 type: screen
-category: widgets
+category: games
 tags: [game, racing, results, table, podium, broadcast]
 styles: [swiss, industrial, kinetic]
 motion: rich

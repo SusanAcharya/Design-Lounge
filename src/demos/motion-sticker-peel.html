@@ -1,0 +1,259 @@
+<!-- Design Lounge piece: motion-sticker-peel · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wayfolio · Porto, day 7</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --desk:#e8dcc6;--page:#fbf7ee;--rule:#e9e0cf;--ink:#2b241c;--ink-2:#62574a;--margin:#e7a48f;
+  --blue:#2f5da8;--blue-deep:#1f3f78;--yellow:#f2b632;--liner:#dfe5e6;--liner-2:#cfd8da;--back:#f4f1ea;
+  --sans:"Syne",system-ui,sans-serif;
+  --ease:cubic-bezier(.2,.7,.2,1);--out:cubic-bezier(.16,1,.3,1);
+  --S:164px;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:15px/1.5 var(--sans);color:var(--ink);background:var(--desk);-webkit-font-smoothing:antialiased;overflow:hidden}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+:focus-visible{outline:3px solid var(--blue);outline-offset:3px;border-radius:12px}
+.ico{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.app{position:relative;overflow:clip;max-width:430px;height:100%;margin:0 auto;padding:56px 16px 34px;display:flex;flex-direction:column}
+.top{display:flex;align-items:center;gap:12px;height:48px}
+.round{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:var(--page);box-shadow:0 1px 0 rgba(43,36,28,.08)}
+.top div{flex:1}
+.top b{display:block;font-weight:700;font-size:16px;line-height:1.2}
+.top small{display:block;font-size:13px;color:var(--ink-2)}
+
+.page{position:relative;margin-top:12px;height:452px;border-radius:6px 18px 18px 6px;background:var(--page);background-image:repeating-linear-gradient(180deg,transparent 0 27px,var(--rule) 27px 28px);background-position:0 60px;box-shadow:0 1px 0 rgba(43,36,28,.06),0 14px 30px -12px rgba(43,36,28,.28);padding:20px 20px 0 34px;overflow:hidden}
+.page::before{content:"";position:absolute;left:24px;top:0;bottom:0;width:1.5px;background:var(--margin)}
+.page h1{margin:0;font-weight:800;font-size:26px;line-height:1;letter-spacing:-.02em}
+.page .date{display:block;margin-top:6px;font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)}
+.entry{margin:14px 0 0;font-size:15px;line-height:28px;max-width:300px}
+.slot{position:absolute;right:16px;top:232px;width:var(--S);height:var(--S);border-radius:26px;border:2px dashed #a89b86;display:grid;place-items:center;text-align:center;font-size:12px;font-weight:600;color:var(--ink-2);transition:opacity 200ms var(--ease),border-color 200ms var(--ease)}
+.slot.hot{border-color:var(--blue);color:var(--blue-deep)}
+.slot.gone{opacity:0;visibility:hidden}
+.mini{position:absolute;display:block}
+
+.reward{margin-top:auto;display:grid;grid-template-columns:1fr auto;gap:14px;align-items:end}
+.reward h2{margin:0;font-weight:800;font-size:22px;line-height:1.05;letter-spacing:-.02em}
+.reward p{margin:8px 0 0;font-size:13px;color:var(--ink-2)}
+.hint{display:inline-flex;align-items:center;gap:6px;margin-top:12px;height:32px;padding:0 12px 0 10px;border-radius:16px;background:var(--page);white-space:nowrap;font-size:12px;font-weight:600;color:var(--ink)}
+.hint svg{width:16px;height:16px}
+.replay{height:40px;padding:0 14px;border-radius:20px;border:1.5px solid #8d806d;font-weight:600;font-size:14px;display:inline-flex;align-items:center;gap:6px;margin-top:12px}
+.replay[hidden],.hint[hidden]{display:none}
+.liner{position:relative;width:188px;height:212px;border-radius:14px;background:linear-gradient(135deg,#e9eeef 0%,var(--liner) 45%,#eef2f2 60%,var(--liner-2) 100%);box-shadow:inset 0 0 0 1px rgba(43,36,28,.08),0 10px 22px -10px rgba(43,36,28,.4);padding:12px}
+.liner .ghost{position:absolute;left:12px;top:12px;width:var(--S);height:var(--S);border-radius:26px;box-shadow:inset 0 0 0 1px rgba(43,36,28,.16)}
+.liner small{position:absolute;left:12px;right:12px;bottom:9px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#4b5557;display:flex;justify-content:space-between}
+
+.stk{position:absolute;left:0;top:0;width:var(--S);height:var(--S);transform-origin:50% 50%;z-index:5;touch-action:none;border-radius:26px;will-change:transform}
+.stk .in{position:absolute;inset:0}
+.basew{position:absolute;inset:0;filter:drop-shadow(0 1px 1px rgba(43,36,28,.25))}
+.stk.up .basew{filter:drop-shadow(0 18px 18px rgba(43,36,28,.3)) drop-shadow(0 2px 3px rgba(43,36,28,.2))}
+.base{position:absolute;inset:0}
+.face{position:absolute;inset:0;border-radius:26px;background:#fff;padding:6px;overflow:hidden}
+.face svg{display:block;width:100%;height:100%;border-radius:20px}
+.crease{position:absolute;inset:0;border-radius:26px;pointer-events:none}
+.flapw{position:absolute;left:0;top:0;width:100%;height:100%;transform-origin:0 0;filter:drop-shadow(-3px 4px 5px rgba(43,36,28,.32));pointer-events:none}
+.flap{position:absolute;inset:0;border-radius:26px}
+.gloss{position:absolute;inset:6px;border-radius:20px;overflow:hidden;pointer-events:none}
+.gloss::after{content:"";position:absolute;top:-20%;bottom:-20%;width:40%;left:-60%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.75),transparent);transform:skewX(-12deg)}
+.stk.press .in{animation:press 460ms var(--out)}
+.stk.press .gloss::after{animation:shine 700ms 120ms var(--ease)}
+@keyframes press{0%{transform:scale(1.06)}38%{transform:scale(.955)}70%{transform:scale(1.012)}100%{transform:scale(1)}}
+@keyframes shine{to{left:130%}}
+.dust{position:absolute;left:50%;top:50%;width:6px;height:6px;margin:-3px;border-radius:50%;background:var(--yellow);opacity:0;pointer-events:none}
+.stk.press .dust{animation:dust 520ms var(--out)}
+@keyframes dust{0%{opacity:1;transform:rotate(var(--a)) translateX(70px) scale(1)}100%{opacity:0;transform:rotate(var(--a)) translateX(104px) scale(.3)}}
+.stk.snap{transition:transform 180ms var(--out)}
+@media (prefers-reduced-motion:reduce){
+  .stk.press .in,.stk.press .gloss::after,.stk.press .dust{animation:none}
+  .stk.snap{transition:opacity 200ms var(--ease)}
+  .hint svg{animation:none}
+}
+.hint svg{animation:nudge 1800ms var(--ease) 600ms 3}
+@keyframes nudge{0%,100%{transform:none}40%{transform:translate(-3px,-3px)}}
+</style>
+</head>
+<body>
+<main class="app" id="app">
+  <header class="top">
+    <button class="round" aria-label="Back to journal"><svg class="ico" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>
+    <div><b>Porto, week one</b><small>Day 7 of 7 · Wayfolio journal</small></div>
+    <button class="round" aria-label="Add photo"><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="14" rx="3"/><circle cx="12" cy="13" r="3.5"/><path d="M9 6l1.5-2h3L15 6"/></svg></button>
+  </header>
+
+  <article class="page" id="page" aria-label="Journal page, Saturday 7 November">
+    <h1>Ribeira to Foz</h1>
+    <span class="date">Sat 7 Nov · 11.8 km</span>
+    <p class="entry">Tram 1 out along the river, walked back from the lighthouse at Foz. Grilled sardines at a counter with four stools. Last day, and my legs finally stopped arguing.</p>
+    <div class="slot" id="slot" aria-hidden="true">Sticker<br>goes here</div>
+    <svg class="mini" style="left:44px;bottom:26px;width:80px;height:80px;transform:rotate(-8deg)" viewBox="0 0 74 74" aria-hidden="true"><circle cx="37" cy="37" r="35" fill="#fff"/><circle cx="37" cy="37" r="30" fill="#f6dc9a"/><circle cx="37" cy="37" r="22" fill="#e9a43c"/><path d="M27 33c4-5 16-5 20 0M30 42c3 3 11 3 14 0" stroke="#8b4a12" stroke-width="2.4" fill="none" stroke-linecap="round"/></svg>
+    <svg class="mini" style="left:40px;top:244px;width:118px;height:56px;transform:rotate(-4deg)" viewBox="0 0 118 56" aria-hidden="true"><path d="M3 3h112v16a6 6 0 0 0 0 12v22H3V31a6 6 0 0 0 0-12z" fill="#fff"/><path d="M8 8h102v10a6 6 0 0 0 0 14v16H8V32a6 6 0 0 0 0-14z" fill="#d9e4f3"/><path d="M30 8v40" stroke="#2f5da8" stroke-width="1.5" stroke-dasharray="3 3"/><text x="18" y="31" font-family="Syne,sans-serif" font-size="11" font-weight="800" fill="#1f3f78" text-anchor="middle" transform="rotate(-90 18 27)">28</text><text x="38" y="26" font-family="Syne,sans-serif" font-size="10" font-weight="800" fill="#1f3f78">LINHA 28</text><text x="38" y="39" font-family="Syne,sans-serif" font-size="9" font-weight="600" fill="#1f3f78">€3.00, Tue</text></svg>
+  </article>
+
+  <section class="reward" aria-label="Reward">
+    <div>
+      <h2>Seven days on foot in Porto</h2>
+      <p>64.2 km walked · streak sticker earned</p>
+      <span class="hint" id="hint"><svg class="ico" viewBox="0 0 24 24"><path d="M19 19 9 9M9 15V9h6"/></svg>Peel the corner</span>
+      <button class="replay" id="replay" hidden><svg class="ico" viewBox="0 0 24 24" style="width:16px;height:16px"><path d="M4 12a8 8 0 1 0 3-6.2M4 4v4h4"/></svg>Replay</button>
+    </div>
+    <div class="liner" id="liner"><span class="ghost"></span><small><span>Earned</span><span>7/7</span></small></div>
+  </section>
+
+  <button class="stk" id="stk" aria-label="Porto week sticker. Press Enter to peel it and place it on today's page.">
+    <span class="in">
+      <span class="basew"><span class="base" id="base">
+        <span class="face"><svg viewBox="0 0 152 152" aria-hidden="true">
+          <defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f9d58a"/><stop offset="1" stop-color="#f4a66b"/></linearGradient>
+          <pattern id="az" width="19" height="19" patternUnits="userSpaceOnUse"><rect width="19" height="19" fill="#2f5da8"/><path d="M9.5 2l3 7.5-3 7.5-3-7.5z M2 9.5l7.5-3 7.5 3-7.5 3z" fill="#e8eef8"/><circle cx="9.5" cy="9.5" r="2" fill="#2f5da8"/></pattern></defs>
+          <rect width="152" height="152" fill="url(#sky)"/>
+          <circle cx="112" cy="40" r="16" fill="#fff3d6"/>
+          <path d="M0 92 L18 70 L30 78 L44 58 L58 74 L72 62 L90 80 L104 66 L120 78 L152 64 V104 H0Z" fill="#e27d55"/>
+          <g fill="#c55a3a"><rect x="20" y="78" width="12" height="16"/><rect x="50" y="72" width="10" height="22"/><rect x="96" y="76" width="14" height="18"/></g>
+          <rect y="104" width="152" height="48" fill="url(#az)"/>
+          <path d="M0 120 H152" stroke="#1f3f78" stroke-width="2"/>
+          <g transform="translate(30 70)"><path d="M14 0 h12 l4 8" stroke="#2b241c" stroke-width="2" fill="none"/><rect x="0" y="8" width="64" height="34" rx="7" fill="#f2b632" stroke="#2b241c" stroke-width="2.4"/><rect x="6" y="14" width="12" height="11" rx="2" fill="#fff8e6" stroke="#2b241c" stroke-width="1.8"/><rect x="22" y="14" width="12" height="11" rx="2" fill="#fff8e6" stroke="#2b241c" stroke-width="1.8"/><rect x="38" y="14" width="12" height="11" rx="2" fill="#fff8e6" stroke="#2b241c" stroke-width="1.8"/><path d="M54 14 h5 v20 h-5z" fill="#fff8e6" stroke="#2b241c" stroke-width="1.8"/><path d="M0 32 H64" stroke="#2b241c" stroke-width="2"/><circle cx="14" cy="44" r="4" fill="#2b241c"/><circle cx="50" cy="44" r="4" fill="#2b241c"/></g>
+          <text x="12" y="30" font-family="Syne,sans-serif" font-size="22" font-weight="800" fill="#2b241c" letter-spacing="-.5">PORTO</text>
+          <text x="12" y="46" font-family="Syne,sans-serif" font-size="10" font-weight="700" fill="#2b241c" letter-spacing="1.5">WEEK ONE</text>
+          <rect x="8" y="124" width="100" height="20" rx="10" fill="#fbf7ee"/><text x="58" y="138" font-family="Syne,sans-serif" font-size="10.5" font-weight="800" fill="#1f3f78" text-anchor="middle">7 / 7 DAYS</text>
+        </svg></span>
+        <span class="crease" id="crease"></span>
+      </span></span>
+      <span class="gloss"></span>
+      <span class="flapw" id="flapw"><span class="flap" id="flap"></span></span>
+      <i class="dust" style="--a:0deg"></i><i class="dust" style="--a:60deg"></i><i class="dust" style="--a:120deg"></i><i class="dust" style="--a:180deg"></i><i class="dust" style="--a:240deg"></i><i class="dust" style="--a:300deg"></i>
+    </span>
+  </button>
+  <p class="vh" id="live" aria-live="polite"></p>
+</main>
+
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const app = $('app'), stk = $('stk'), base = $('base'), crease = $('crease'), flapw = $('flapw'), flap = $('flap');
+  const page = $('page'), slot = $('slot'), liner = $('liner'), hint = $('hint'), replay = $('replay'), live = $('live');
+  const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const S = 164, C = { x: S, y: S }, REST = { x: S - 24, y: S - 24 }, LIFT = 1.3 * S;
+  let mode = 'home', P = { ...REST }, pos = { x: 0, y: 0 }, rot = 0, sc = 1, home = { x: 0, y: 0 }, raf = 0;
+  const rel = (el) => { const a = app.getBoundingClientRect(), r = el.getBoundingClientRect(); return { x: r.left - a.left, y: r.top - a.top, w: r.width, h: r.height }; };
+  const place = () => { stk.style.transform = `translate(${pos.x}px,${pos.y}px) rotate(${rot}deg) scale(${sc})`; };
+  const poly = (pts) => pts.length ? 'polygon(' + pts.map((p) => `${p.x.toFixed(1)}px ${p.y.toFixed(1)}px`).join(',') + ')' : 'polygon(0 0,0 0,0 0)';
+  // Keep the part of the square on one side of the fold line (Sutherland–Hodgman, one plane).
+  const cut = (M, n, sign) => {
+    const sq = [{ x: 0, y: 0 }, { x: S, y: 0 }, { x: S, y: S }, { x: 0, y: S }], out = [];
+    const f = (p) => sign * ((p.x - M.x) * n.x + (p.y - M.y) * n.y);
+    for (let i = 0; i < 4; i++) {
+      const a = sq[i], b = sq[(i + 1) % 4], fa = f(a), fb = f(b);
+      if (fa <= 0) out.push(a);
+      if ((fa <= 0) !== (fb <= 0)) { const t = fa / (fa - fb); out.push({ x: a.x + (b.x - a.x) * t, y: a.y + (b.y - a.y) * t }); }
+    }
+    return out;
+  };
+  const curl = () => {
+    const dx = C.x - P.x, dy = C.y - P.y, len = Math.hypot(dx, dy);
+    if (len < 1) { base.style.clipPath = 'none'; flapw.style.display = 'none'; crease.style.background = 'none'; return; }
+    const n = { x: dx / len, y: dy / len }, M = { x: (C.x + P.x) / 2, y: (C.y + P.y) / 2 };
+    base.style.clipPath = poly(cut(M, n, 1));
+    flap.style.clipPath = poly(cut(M, n, -1));
+    // reflection across the fold line: X' = (I − 2nnᵀ)X + 2(M·n)n
+    const k = 2 * (M.x * n.x + M.y * n.y);
+    flapw.style.display = 'block';
+    flapw.style.transform = `matrix(${1 - 2 * n.x * n.x},${-2 * n.x * n.y},${-2 * n.x * n.y},${1 - 2 * n.y * n.y},${k * n.x},${k * n.y})`;
+    const ang = Math.atan2(n.x, -n.y) * 180 / Math.PI, Lg = Math.abs(S * n.x) + Math.abs(S * n.y);
+    const at = (((M.x - S / 2) * n.x + (M.y - S / 2) * n.y) / Lg + 0.5) * 100;
+    flap.style.background = `linear-gradient(${ang}deg,#f4f1ea ${at - 1}%,#ffffff ${at}%,#f1ede4 ${at + 7}%,#d4ccbd ${Math.min(100, at + 40)}%)`;
+    crease.style.background = `linear-gradient(${ang}deg,transparent ${at - 9}%,rgba(43,36,28,.22) ${at}%)`;
+  };
+  const flat = () => { P = { ...C }; curl(); };
+  const spring = (get, set, to, k, c, done) => {
+    cancelAnimationFrame(raf); let v = { x: 0, y: 0 }, t0 = 0;
+    const go = (now) => {
+      const dt = Math.min(0.032, (now - (t0 || now)) / 1000); t0 = now; const p = get();
+      for (let n = 4, h = dt / n; n--;) { v.x += (-k * (p.x - to.x) - c * v.x) * h; v.y += (-k * (p.y - to.y) - c * v.y) * h; p.x += v.x * h; p.y += v.y * h; }
+      set(p);
+      if (Math.hypot(v.x, v.y) < 3 && Math.hypot(p.x - to.x, p.y - to.y) < 0.5) { set({ ...to }); raf = 0; done && done(); return; }
+      raf = requestAnimationFrame(go);
+    };
+    raf = requestAnimationFrame(go);
+  };
+  const goHome = () => {
+    const l = rel(liner); home = { x: l.x + 12, y: l.y + 12 };
+    if (mode === 'home') { pos = { ...home }; place(); }
+  };
+  const slotAt = () => { const r = rel(slot); return { x: r.x, y: r.y }; };
+  const inPage = (x, y) => { const r = rel(page); return x > r.x && x < r.x + r.w && y > r.y && y < r.y + r.h; };
+
+  const lift = (fx, fy) => {
+    mode = 'lifted'; flat(); stk.classList.add('up'); hint.hidden = true;
+    rot = -6; sc = 1.06; pos = { x: fx - S / 2, y: fy - S / 2 };
+    stk.classList.add('snap'); place(); setTimeout(() => stk.classList.remove('snap'), 190);
+  };
+  const press = (to) => {
+    mode = 'placed'; stk.classList.remove('up'); slot.classList.add('gone');
+    const fin = () => { rot = -3; sc = 1; place(); stk.classList.remove('press'); stk.offsetWidth; stk.classList.add('press'); replay.hidden = false; live.textContent = 'Sticker placed on Saturday’s page.'; };
+    if (RM) { pos = to; fin(); return; }
+    spring(() => ({ ...pos }), (p) => { pos = p; place(); }, to, 520, 40, fin);
+  };
+  const back = () => {
+    stk.classList.remove('up'); rot = 0; sc = 1; mode = 'returning';
+    const done = () => { mode = 'home'; P = { x: S, y: S }; spring(() => ({ ...P }), (p) => { P = p; curl(); }, REST, 500, 30); hint.hidden = false; };
+    if (RM) { pos = { ...home }; place(); done(); return; }
+    spring(() => ({ ...pos }), (p) => { pos = p; place(); }, home, 300, 26, done);
+  };
+
+  let drag = null;
+  stk.addEventListener('pointerdown', (e) => {
+    if (mode === 'placed' || mode === 'returning') return;
+    cancelAnimationFrame(raf); stk.setPointerCapture(e.pointerId);
+    const a = app.getBoundingClientRect();
+    drag = { id: e.pointerId, x0: e.clientX, y0: e.clientY, P0: { ...P }, off: { x: e.clientX - a.left - pos.x, y: e.clientY - a.top - pos.y } };
+  });
+  stk.addEventListener('pointermove', (e) => {
+    if (!drag || e.pointerId !== drag.id) return;
+    const a = app.getBoundingClientRect(), fx = e.clientX - a.left, fy = e.clientY - a.top;
+    if (mode === 'home') {
+      P = { x: drag.P0.x + e.clientX - drag.x0, y: drag.P0.y + e.clientY - drag.y0 }; curl();
+      if (Math.hypot(C.x - P.x, C.y - P.y) > LIFT) lift(fx, fy);
+    } else if (mode === 'lifted') {
+      pos = { x: fx - S / 2, y: fy - S / 2 }; place();
+      const s = slotAt(); slot.classList.toggle('hot', Math.hypot(pos.x - s.x, pos.y - s.y) < 80);
+    }
+  });
+  const end = (e) => {
+    if (!drag || e.pointerId !== drag.id) return; drag = null;
+    if (mode === 'home') spring(() => ({ ...P }), (p) => { P = p; curl(); }, REST, 500, 30);
+    else if (mode === 'lifted') {
+      const cx = pos.x + S / 2, cy = pos.y + S / 2, s = slotAt(); slot.classList.remove('hot');
+      if (Math.hypot(pos.x - s.x, pos.y - s.y) < 80) press(s);
+      else if (inPage(cx, cy)) { const r = rel(page); press({ x: Math.max(r.x + 8, Math.min(pos.x, r.x + r.w - S - 8)), y: Math.max(r.y + 8, Math.min(pos.y, r.y + r.h - S - 8)) }); }
+      else back();
+    }
+  };
+  stk.addEventListener('pointerup', end); stk.addEventListener('pointercancel', end);
+
+  // Keyboard and Enter: play the same gesture.
+  const tween = (ms, fn, done) => { const t0 = performance.now(); const go = (now) => { const t = Math.min(1, (now - t0) / ms), e = 1 - Math.pow(1 - t, 3); fn(e); if (t < 1) raf = requestAnimationFrame(go); else done(); }; raf = requestAnimationFrame(go); };
+  stk.addEventListener('click', (e) => {
+    if (e.detail !== 0 || mode !== 'home') return;
+    const from = { ...P }, to = { x: C.x - LIFT * 0.78, y: C.y - LIFT * 0.78 };
+    const finish = () => { lift(pos.x + S / 2, pos.y + S / 2 - 40); setTimeout(() => press(slotAt()), RM ? 0 : 260); };
+    if (RM) { finish(); return; }
+    tween(620, (t) => { P = { x: from.x + (to.x - from.x) * t, y: from.y + (to.y - from.y) * t }; curl(); }, finish);
+  });
+  replay.addEventListener('click', () => {
+    cancelAnimationFrame(raf); stk.classList.remove('press', 'up'); mode = 'home'; rot = 0; sc = 1;
+    slot.classList.remove('gone'); replay.hidden = true; hint.hidden = false; live.textContent = '';
+    goHome(); P = { ...REST }; curl(); stk.focus({ preventScroll: true });
+  });
+  addEventListener('resize', () => { if (mode === 'home') goHome(); else if (mode === 'placed') { pos = slotAt(); place(); } });
+  goHome(); curl();
+})();
+</script>
+</body>
+</html>

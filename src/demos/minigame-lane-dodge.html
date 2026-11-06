@@ -1,0 +1,321 @@
+<!-- Design Lounge piece: minigame-lane-dodge · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lantern Line · night tram</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+<style>
+:root{
+  --night:#0f1320;--plate:#0c0f19;--plate-2:#171b29;--line:#2c3244;
+  --text:#f6ecdc;--text-2:#b9b2a6;--lamp:#ffc15e;--vermilion:#ff6a3d;--jade:#5fd3a8;
+  --font:"Anton","Impact",system-ui,sans-serif;
+  --out:cubic-bezier(.16,1,.3,1);--ease:cubic-bezier(.2,.7,.2,1);--spring:cubic-bezier(.34,1.4,.5,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--night);color:var(--text);font:400 16px/1.2 var(--font);letter-spacing:.04em;overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none}
+button{font:inherit;color:inherit;border:0;background:none;padding:0;cursor:pointer;letter-spacing:inherit}
+:focus-visible{outline:3px solid var(--lamp);outline-offset:3px}
+svg{display:block}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+#cv{position:fixed;inset:0;width:100%;height:100%;display:block}
+.shake #cv{animation:shake 320ms var(--ease)}
+@keyframes shake{20%{transform:translate(-7px,3px)}40%{transform:translate(6px,-4px)}60%{transform:translate(-4px,2px)}80%{transform:translate(2px,-1px)}}
+
+.hud{position:fixed;top:54px;left:16px;right:16px;display:flex;align-items:flex-start;gap:10px;pointer-events:none}
+.plate{background:var(--plate);border-radius:14px;padding:9px 14px 10px;box-shadow:inset 0 0 0 1px var(--line)}
+.dist{min-width:100px}
+.dist b{display:block;font-size:30px;line-height:1;font-variant-numeric:tabular-nums}
+.dist small,.lan small{display:block;font-size:12px;letter-spacing:.16em;color:var(--text-2);margin-top:4px;white-space:nowrap}
+.lan{display:flex;align-items:center;gap:8px}
+.lan b{font-size:22px;line-height:1;font-variant-numeric:tabular-nums}
+.lan svg{width:18px;height:22px}
+.mult{align-self:stretch;display:flex;align-items:center;font-size:22px;color:var(--lamp);padding:0 12px;min-width:60px;justify-content:center}
+.mult.bump{animation:bump 360ms var(--spring)}
+@keyframes bump{40%{transform:scale(1.3)}}
+.sp{flex:1}
+.pz{pointer-events:auto;width:48px;height:48px;border-radius:50%;background:var(--plate);box-shadow:inset 0 0 0 1px var(--line);display:grid;place-items:center}
+.pz svg{width:18px;height:18px;fill:var(--text)}
+
+.toast{position:fixed;left:50%;top:44%;transform:translate(-50%,-50%);padding:8px 14px;border-radius:10px;background:var(--plate);color:var(--lamp);font-size:20px;letter-spacing:.1em;white-space:nowrap;opacity:0;visibility:hidden;pointer-events:none}
+.toast.on{animation:toast 700ms var(--out)}
+@keyframes toast{0%{opacity:0;visibility:visible;transform:translate(-50%,-30%) scale(.8)}25%{opacity:1;visibility:visible;transform:translate(-50%,-50%) scale(1.05)}75%{opacity:1;visibility:visible}100%{opacity:0;visibility:hidden;transform:translate(-50%,-80%)}}
+
+.ready{position:fixed;left:50%;bottom:330px;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:12px;pointer-events:none;transition:opacity 260ms var(--ease),visibility 0s 260ms}
+.ready.gone{opacity:0;visibility:hidden}
+.ready .chip{display:flex;align-items:center;gap:14px;background:var(--plate);padding:10px 16px;border-radius:14px;box-shadow:inset 0 0 0 1px var(--line);font-size:22px;letter-spacing:.12em;white-space:nowrap}
+.ready svg{width:22px;height:22px;fill:none;stroke:var(--lamp);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.ready .l{animation:nudgeL 1400ms var(--ease) infinite}
+.ready .r{animation:nudgeR 1400ms var(--ease) infinite}
+@keyframes nudgeL{50%{transform:translateX(-6px)}}
+@keyframes nudgeR{50%{transform:translateX(6px)}}
+.ready small{background:var(--plate);padding:5px 10px;border-radius:8px;font-size:13px;letter-spacing:.14em;color:var(--text-2);white-space:nowrap}
+
+.scrim{position:fixed;inset:0;background:rgba(8,10,18,.66);opacity:0;visibility:hidden;transition:opacity 260ms var(--ease),visibility 0s 260ms}
+.card{position:fixed;left:20px;right:20px;bottom:48px;max-width:380px;margin:0 auto;background:var(--plate-2);border-radius:26px;padding:24px 22px 20px;box-shadow:inset 0 0 0 1px var(--line),0 30px 60px rgba(0,0,0,.5);transform:translateY(40px);opacity:0;visibility:hidden;transition:transform 460ms var(--out),opacity 260ms var(--ease),visibility 0s 460ms}
+.show .scrim,.show .card{opacity:1;visibility:visible;transform:none;transition:transform 460ms var(--out),opacity 260ms var(--ease)}
+.card .ey{font-size:14px;letter-spacing:.22em;color:var(--vermilion)}
+.card h2 b{font-weight:400}
+.card h2{margin:6px 0 0;font-size:76px;line-height:.95;font-weight:400;letter-spacing:.01em;font-variant-numeric:tabular-nums}
+.card h2 span{font-size:30px;color:var(--text-2);margin-left:6px}
+.card p{margin:8px 0 16px;font-size:15px;letter-spacing:.08em;color:var(--text-2)}
+.stats{border-top:1px solid var(--line)}
+.stat{display:flex;justify-content:space-between;align-items:baseline;padding:12px 0;border-bottom:1px solid var(--line);font-size:16px;letter-spacing:.12em;color:var(--text-2);opacity:0;transform:translateX(-10px)}
+.stat b{font-size:24px;letter-spacing:.04em;color:var(--text);font-variant-numeric:tabular-nums}
+.stat.in{opacity:1;transform:none;transition:opacity 260ms var(--ease),transform 380ms var(--out)}
+.best{display:inline-block;margin-left:10px;font-style:normal;padding:2px 7px;border-radius:6px;background:var(--jade);color:#0b2a1f;font-size:12px;letter-spacing:.12em;vertical-align:26px}
+.again{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;height:56px;margin-top:18px;border-radius:28px;background:var(--lamp);color:#24160a;font-size:20px;letter-spacing:.12em;opacity:0;transform:scale(.9)}
+.again.in{opacity:1;transform:none;transition:opacity 200ms var(--ease),transform 420ms var(--spring)}
+.again:hover{background:#ffd283}
+.again svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+.card .res{display:none}
+.card.paused .res{display:block}
+.card.paused .over{display:none}
+.card .res h2{font-size:52px}
+
+@media (prefers-reduced-motion:reduce){
+  .shake #cv,.mult.bump,.ready .l,.ready .r{animation:none}
+  .toast.on{animation:fade 700ms linear}
+  @keyframes fade{0%,100%{opacity:0;visibility:visible}20%,80%{opacity:1;visibility:visible}}
+  .card,.show .card,.stat,.stat.in,.again,.again.in{transform:none}
+}
+</style>
+</head>
+<body>
+<canvas id="cv" role="img" aria-label="A night tram line running into a city of paper lanterns. Three lanes of track, with market barrows and lanterns coming toward your tram."></canvas>
+
+<div class="hud">
+  <div class="plate dist"><b id="dist">0 M</b><small>Distance</small></div>
+  <div class="plate mult" id="mult" aria-label="Multiplier">x1</div>
+  <div class="plate lan"><svg viewBox="0 0 18 22" aria-hidden="true"><path d="M6 1h6M9 1v3" stroke="#ffc15e" stroke-width="1.6"/><rect x="2" y="4" width="14" height="15" rx="6" fill="#ff6a3d"/><path d="M2 9h14M2 14h14" stroke="#ffc15e" stroke-width="1.2"/><path d="M6 19v2h6v-2" fill="#ffc15e"/></svg><div><b id="lan">0</b><small>Lanterns</small></div></div>
+  <span class="sp"></span>
+  <button class="pz" id="pz" type="button" aria-label="Pause" aria-keyshortcuts="P Escape"><svg viewBox="0 0 24 24"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg></button>
+</div>
+<div class="toast" id="toast" aria-hidden="true">Near miss</div>
+
+<div class="ready" id="ready">
+  <div class="chip"><svg class="l" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>Swipe to ride<svg class="r" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></div>
+  <small>Or arrow keys · A / D</small>
+</div>
+
+<div class="scrim" id="scrim"></div>
+<section class="card" id="card" role="dialog" aria-modal="true" aria-labelledby="ct">
+  <div class="over">
+    <div class="ey">Line closed · Stop 14</div>
+    <h2 id="ct"><b id="rd">0</b><span>m</span><i class="best" id="bb" hidden>Best</i></h2>
+    <p id="why">Ran into a market barrow on Lamplighter Row.</p>
+    <div class="stats">
+      <div class="stat">Score<b id="rs">0</b></div>
+      <div class="stat">Lanterns<b id="rl">0</b></div>
+      <div class="stat">Best multiplier<b id="rm">x1</b></div>
+    </div>
+  </div>
+  <div class="res">
+    <div class="ey">Paused</div>
+    <h2 id="pt">Tram held</h2>
+    <p>Passengers are waiting on the platform.</p>
+  </div>
+  <button class="again" id="again" type="button"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 2.4-5.7M4 4v5h5"/></svg><span>Ride again</span></button>
+</section>
+<p class="vh" aria-live="polite" id="live"></p>
+
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  const cv = $('cv'), g = cv.getContext('2d'), body = document.body;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let W, H, dpr, HY, CX;
+  const LW = 120, F = 12, ZMAX = 130, TZ = 2.4;
+  function size() { W = innerWidth; H = innerHeight; dpr = Math.min(2, devicePixelRatio || 1); cv.width = W * dpr; cv.height = H * dpr; HY = H * .36; CX = W / 2; }
+  size(); addEventListener('resize', () => { size(); draw(); });
+  const sc = z => F / (F + Math.max(z, -F * .6));
+  const px = (lane, z) => CX + lane * LW * sc(z), py = z => HY + (H - HY) * sc(z);
+  let seed = 11; const sr = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+  const city = []; for (let x = -10; x < 420; ) { const w = 18 + sr() * 34; city.push({ x, w, h: 30 + sr() * 90, win: Math.floor(sr() * 1e6) }); x += w + 2; }
+  const stars = Array.from({ length: 36 }, () => ({ x: sr() * 390, y: sr(), r: sr() < .2 ? 2 : 1 }));
+  let S;
+  function init() {
+    S = { st: 'ready', lane: 0, pos: 0, tilt: 0, z: 0, sp: 14, dist: 0, lan: 0, mult: 1, best: 1, score: 0, t: 0, from: 0, moved: -9, next: 26, objs: [], sparks: [], stop: 0, squash: 0 };
+    [[-1, 30, 'b'], [1, 48, 'b'], [0, 66, 'l'], [0, 88, 'b'], [-1, 88, 'l'], [1, 112, 'b']].forEach(([l, z, k]) => S.objs.push({ l, z, k }));
+    S.next = 128;
+  }
+  init();
+  const fmt = n => Math.floor(n).toLocaleString('en-GB');
+  function hud() { $('dist').textContent = fmt(S.dist) + ' M'; $('lan').textContent = S.lan; $('mult').textContent = 'x' + S.mult; }
+  function bump() { const m = $('mult'); m.classList.remove('bump'); void m.offsetWidth; m.classList.add('bump'); }
+  function toast(t) { const el = $('toast'); el.textContent = t; el.classList.remove('on'); void el.offsetWidth; el.classList.add('on'); }
+
+  function move(d) {
+    if (S.st === 'over' || S.st === 'paused') return;
+    if (S.st === 'ready') { S.st = 'run'; $('ready').classList.add('gone'); last = 0; raf = requestAnimationFrame(loop); }
+    const n = Math.max(-1, Math.min(1, S.lane + d)); if (n === S.lane) return;
+    S.from = S.lane; S.lane = n; S.moved = S.t; S.tilt = d;
+  }
+  function spawn() {
+    const free = Math.floor(Math.random() * 3) - 1, n = S.sp > 22 && Math.random() < .5 ? 2 : 1;
+    const lanes = [-1, 0, 1].filter(l => l !== free).sort(() => Math.random() - .5).slice(0, n);
+    lanes.forEach(l => S.objs.push({ l, z: ZMAX, k: 'b' }));
+    if (Math.random() < .6) S.objs.push({ l: free, z: ZMAX + (Math.random() < .5 ? 0 : 6), k: 'l' });
+    S.next = ZMAX + Math.max(15, 28 - S.sp * .35);
+  }
+  function crash() {
+    S.st = 'over'; S.stop = reduce ? 0 : .05; S.squash = 1;
+    if (!reduce) { body.classList.remove('shake'); void body.offsetWidth; body.classList.add('shake'); }
+    S.score = Math.floor(S.dist) + S.score;
+    const prev = +(body.dataset.best || 0), best = S.dist > prev; if (best) body.dataset.best = Math.floor(S.dist);
+    $('live').textContent = `Crashed at ${fmt(S.dist)} metres. Score ${fmt(S.score)}.`;
+    setTimeout(() => result(best), reduce ? 200 : 650);
+  }
+  function result(best) {
+    $('card').classList.remove('paused'); $('again').querySelector('span').textContent = 'Ride again';
+    body.classList.add('show');
+    const stats = [...document.querySelectorAll('.stat')], ag = $('again');
+    stats.forEach(s => s.classList.remove('in')); ag.classList.remove('in');
+    $('bb').hidden = true; $('rl').textContent = S.lan; $('rm').textContent = 'x' + S.best; $('rs').textContent = '0';
+    const D = reduce ? 0 : 700, t0 = performance.now();
+    const count = now => { const k = D ? Math.min(1, (now - t0) / D) : 1, e = 1 - Math.pow(1 - k, 3);
+      $('rd').textContent = fmt(S.dist * e); if (k < 1) requestAnimationFrame(count);
+      else { $('rd').textContent = fmt(S.dist); $('bb').hidden = !best; } };
+    requestAnimationFrame(count);
+    stats.forEach((s, i) => setTimeout(() => { s.classList.add('in'); if (i === 0) $('rs').textContent = fmt(S.score); }, (reduce ? 0 : 520) + i * (reduce ? 0 : 160)));
+    setTimeout(() => { ag.classList.add('in'); ag.focus(); }, reduce ? 0 : 1100);
+  }
+  function pause() {
+    if (S.st !== 'run') return;
+    S.st = 'paused'; cancelAnimationFrame(raf); raf = 0;
+    $('card').classList.add('paused'); $('again').querySelector('span').textContent = 'Resume';
+    $('pt').textContent = fmt(S.dist) + ' m';
+    body.classList.add('show'); $('again').classList.add('in'); $('again').focus();
+  }
+  function resume() { body.classList.remove('show'); S.st = 'run'; last = 0; raf = requestAnimationFrame(loop); $('pz').focus(); }
+  function restart() {
+    if (S.st === 'paused') return resume();
+    body.classList.remove('show'); init(); hud(); $('ready').classList.remove('gone'); draw(); $('pz').focus();
+  }
+  $('again').addEventListener('click', restart);
+  $('pz').addEventListener('click', () => S.st === 'paused' ? resume() : pause());
+  addEventListener('keydown', e => {
+    const k = e.key;
+    if (k === 'ArrowLeft' || k === 'a' || k === 'A') { move(-1); e.preventDefault(); }
+    else if (k === 'ArrowRight' || k === 'd' || k === 'D') { move(1); e.preventDefault(); }
+    else if (k === 'p' || k === 'P' || k === 'Escape') { S.st === 'paused' ? resume() : pause(); }
+    else if ((k === ' ' || k === 'Enter') && S.st === 'ready' && e.target === body) { move(0); e.preventDefault(); }
+  });
+  let sx = null, sy = 0;
+  cv.addEventListener('pointerdown', e => { sx = e.clientX; sy = e.clientY; });
+  cv.addEventListener('pointermove', e => { if (sx === null) return; const dx = e.clientX - sx; if (Math.abs(dx) > 34 && Math.abs(dx) > Math.abs(e.clientY - sy)) { move(Math.sign(dx)); sx = null; } });
+  cv.addEventListener('pointerup', e => { if (sx === null) return; sx = null; move(e.clientX < W / 2 ? -1 : 1); });
+
+  let last = 0, raf = 0;
+  function loop(now) {
+    raf = 0;
+    const dt = last ? Math.min(.033, (now - last) / 1000) : .016; last = now;
+    if (S.stop > 0) { S.stop -= dt; draw(); raf = requestAnimationFrame(loop); return; }
+    if (S.st === 'run') step(dt);
+    S.squash = Math.max(0, S.squash - dt * 3);
+    S.sparks = S.sparks.filter(p => (p.t += dt) < .5);
+    S.sparks.forEach(p => { p.x += p.vx * dt; p.y += p.vy * dt; p.vy += 900 * dt; });
+    draw();
+    if (S.st === 'run' || S.sparks.length || S.squash > 0) raf = requestAnimationFrame(loop);
+  }
+  function step(dt) {
+    S.t += dt; S.sp = Math.min(36, 14 + S.t * .4);
+    const d = S.sp * dt; S.dist += d; S.z += d; S.next -= d;
+    S.pos += (S.lane - S.pos) * Math.min(1, dt * 16); S.tilt *= Math.pow(.02, dt);
+    if (S.next <= ZMAX) spawn();
+    const tramX = S.pos;
+    for (const o of S.objs) {
+      o.z -= d;
+      if (o.k === 'b' && !o.done && o.z < TZ + 1.1 && o.z > TZ - .9 && Math.abs(o.l - tramX) < .55) return crash();
+      if (o.k === 'l' && !o.done && o.z < TZ + 1.3 && o.z > TZ - 1.1 && Math.abs(o.l - tramX) < .6) {
+        o.done = 1; S.lan++; S.score += 50 * S.mult; $('live').textContent = `Lantern. ${S.lan} collected.`;
+      }
+      if (o.k === 'b' && !o.passed && o.z < TZ - .9) {
+        o.passed = 1;
+        if (o.l === S.from && o.l !== S.lane && S.t - S.moved < .45) {
+          S.mult = Math.min(5, S.mult + 1); S.best = Math.max(S.best, S.mult); bump(); toast('Near miss x' + S.mult);
+          const sxp = px(S.pos, TZ) + (o.l < S.lane ? -44 : 44), syp = py(TZ) - 50;
+          for (let i = 0; i < (reduce ? 4 : 14); i++) S.sparks.push({ x: sxp, y: syp, vx: (Math.random() - .5) * 340, vy: -Math.random() * 360, t: 0 });
+        }
+      }
+    }
+    S.objs = S.objs.filter(o => o.z > -3 && !(o.k === 'l' && o.done));
+    hud();
+  }
+  function draw() {
+    g.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const sky = g.createLinearGradient(0, 0, 0, HY);
+    sky.addColorStop(0, '#0d111c'); sky.addColorStop(.7, '#1d1a26'); sky.addColorStop(1, '#4a2620');
+    g.fillStyle = sky; g.fillRect(0, 0, W, HY + 1);
+    g.fillStyle = 'rgba(246,236,220,.5)'; for (const st of stars) g.fillRect(st.x, st.y * HY * .8, st.r, st.r);
+    g.fillStyle = '#efe2c4'; g.beginPath(); g.arc(W * .8, HY - 128, 22, 0, 7); g.fill();
+    g.fillStyle = '#1b1a26'; g.beginPath(); g.arc(W * .8 + 9, HY - 133, 20, 0, 7); g.fill();
+    for (const b of city) {
+      g.fillStyle = '#141826'; g.fillRect(b.x, HY - b.h, b.w, b.h);
+      let s = b.win; g.fillStyle = 'rgba(255,193,94,.55)';
+      for (let y = HY - b.h + 8; y < HY - 6; y += 11) for (let x = b.x + 4; x < b.x + b.w - 5; x += 8) { s = (s * 9301 + 49297) % 233280; if (s % 5 === 0) g.fillRect(x, y, 3, 4); }
+    }
+    const gr = g.createLinearGradient(0, HY, 0, H); gr.addColorStop(0, '#2a1d1f'); gr.addColorStop(.25, '#1a1820'); gr.addColorStop(1, '#13141c');
+    g.fillStyle = gr; g.fillRect(0, HY, W, H - HY);
+    const zo = S.z % 2.2;
+    g.strokeStyle = '#262735'; g.lineWidth = 1;
+    for (let z = 2.2 - zo - 2.2; z < ZMAX; z += 2.2) { const y = py(z), w = LW * 1.6 * sc(z); g.lineWidth = Math.max(1, 6 * sc(z)); g.beginPath(); g.moveTo(CX - w, y); g.lineTo(CX + w, y); g.stroke(); }
+    g.strokeStyle = '#7b8494';
+    for (const l of [-1, 0, 1]) for (const o of [-.3, .3]) { g.lineWidth = 2; g.beginPath(); g.moveTo(px(l + o, ZMAX), py(ZMAX)); g.lineTo(px(l + o, -3), py(-3)); g.stroke(); }
+    const items = [];
+    for (let z = 16 - (S.z % 16); z < ZMAX; z += 16) items.push({ k: 'arch', z });
+    S.objs.forEach(o => items.push(o));
+    items.sort((a, b) => b.z - a.z);
+    const T = performance.now() / 1000;
+    for (const it of items) {
+      const s = sc(it.z), y = py(it.z); g.globalAlpha = Math.max(0, Math.min(1, (ZMAX - it.z) / 30));
+      if (it.k === 'arch') {
+        const xl = px(-2.1, it.z), xr = px(2.1, it.z), top = y - 420 * s;
+        g.strokeStyle = '#3a3242'; g.lineWidth = Math.max(1, 7 * s);
+        g.beginPath(); g.moveTo(xl, y); g.lineTo(xl, top); g.moveTo(xr, y); g.lineTo(xr, top); g.stroke();
+        g.strokeStyle = 'rgba(246,236,220,.25)'; g.lineWidth = Math.max(.5, 1.5 * s);
+        g.beginPath(); g.moveTo(xl, top); g.quadraticCurveTo(CX, top + 130 * s, xr, top); g.stroke();
+        for (let i = 1; i < 8; i++) {
+          const t = i / 8, lx = xl + (xr - xl) * t, ly = top + 2 * t * (1 - t) * 130 * s + 12 * s, r = 9 * s;
+          g.fillStyle = 'rgba(255,106,61,.16)'; g.beginPath(); g.arc(lx, ly, r * 2.6, 0, 7); g.fill();
+          g.fillStyle = i % 3 ? '#ff6a3d' : '#ffc15e'; g.beginPath(); g.ellipse(lx, ly, r, r * 1.2, 0, 0, 7); g.fill();
+        }
+      } else if (it.k === 'b') {
+        const x = px(it.l, it.z), w = LW * .78 * s, h = 64 * s;
+        g.fillStyle = 'rgba(0,0,0,.4)'; g.fillRect(x - w / 2, y - 3 * s, w, 6 * s);
+        g.fillStyle = '#6e2a24'; g.fillRect(x - w / 2, y - h, w, h);
+        g.fillStyle = '#9a3d2f'; g.fillRect(x - w / 2, y - h, w, h * .22);
+        g.fillStyle = '#e8c27a'; g.fillRect(x - w / 2, y - h * .55, w, h * .1);
+        g.fillStyle = '#2b1714'; g.beginPath(); g.arc(x - w * .3, y - 2 * s, 8 * s, 0, 7); g.arc(x + w * .3, y - 2 * s, 8 * s, 0, 7); g.fill();
+      } else if (it.k === 'l' && !it.done) {
+        const x = px(it.l, it.z), r = 13 * s, ly = y - 42 * s + Math.sin(T * 3 + it.z) * 4 * s * (reduce ? 0 : 1);
+        g.fillStyle = 'rgba(255,193,94,.22)'; g.beginPath(); g.arc(x, ly, r * 2.8, 0, 7); g.fill();
+        g.fillStyle = '#ff6a3d'; g.beginPath(); g.ellipse(x, ly, r, r * 1.25, 0, 0, 7); g.fill();
+        g.fillStyle = '#ffc15e'; g.fillRect(x - r * .5, ly - r * 1.45, r, r * .35); g.fillRect(x - r * .5, ly + r * 1.1, r, r * .35);
+      }
+    }
+    g.globalAlpha = 1;
+    // tram, seen from behind
+    const tz = TZ, ts = sc(tz), tx = px(S.pos, tz), ty = py(tz);
+    const sq = S.squash, tw = 92 * ts * (1 + sq * .18), th = 150 * ts * (1 - sq * .14);
+    g.save(); g.translate(tx, ty); g.rotate(reduce ? 0 : S.tilt * .07);
+    g.fillStyle = 'rgba(0,0,0,.45)'; g.beginPath(); g.ellipse(0, 4, tw * .62, 10, 0, 0, 7); g.fill();
+    g.strokeStyle = '#3b4150'; g.lineWidth = 2; g.beginPath(); g.moveTo(-10, -th); g.lineTo(0, -th - 40 * ts); g.lineTo(10, -th); g.stroke();
+    g.fillStyle = '#efe6d2'; g.beginPath(); g.roundRect(-tw / 2, -th, tw, th, [18 * ts, 18 * ts, 6 * ts, 6 * ts]); g.fill();
+    g.fillStyle = '#1f5c4f'; g.fillRect(-tw / 2, -th * .38, tw, th * .3);
+    g.fillStyle = '#1b1f2b'; g.beginPath(); g.roundRect(-tw * .38, -th * .86, tw * .76, th * .36, 8 * ts); g.fill();
+    g.fillStyle = 'rgba(255,193,94,.55)'; g.fillRect(-tw * .3, -th * .62, tw * .6, th * .1);
+    g.fillStyle = '#ff3d2e'; g.beginPath(); g.arc(-tw * .34, -th * .2, 6 * ts, 0, 7); g.arc(tw * .34, -th * .2, 6 * ts, 0, 7); g.fill();
+    g.fillStyle = '#f6ecdc'; g.font = `${14 * ts}px Anton, Impact, sans-serif`; g.textAlign = 'center'; g.fillText('14', 0, -th * .2 + 5 * ts);
+    g.restore();
+    for (const p of S.sparks) { g.fillStyle = `rgba(255,${190 + Math.random() * 60 | 0},94,${1 - p.t * 2})`; g.fillRect(p.x, p.y, 3, 3); }
+  }
+  hud(); draw();
+  if (document.fonts) document.fonts.ready.then(draw);
+})();
+</script>
+</body>
+</html>

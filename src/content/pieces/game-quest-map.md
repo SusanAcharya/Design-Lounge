@@ -3,7 +3,7 @@ title: "Adventure quest map"
 summary: "An island world map in SVG with quest nodes that are done, active, open or locked, a dotted trail that draws to the chosen quest, and a quest panel."
 platform: web
 type: screen
-category: widgets
+category: games
 tags: [game, map, quest, adventure, svg, journal]
 styles: [playful, organic, brutalist]
 motion: subtle

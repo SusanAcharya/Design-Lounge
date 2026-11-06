@@ -3,7 +3,7 @@ title: "Sci-fi loadout screen"
 summary: "A sci-fi armoury: cut-corner panels, a weapon and module list, a hologram drawn in SVG that redraws on swap, and stat bars that show gains and losses."
 platform: web
 type: screen
-category: widgets
+category: games
 tags: [game, loadout, sci-fi, hologram, stats, comparison]
 styles: [cyber, dark, industrial]
 motion: rich

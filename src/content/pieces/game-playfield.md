@@ -3,7 +3,7 @@ title: "Mallow Court brick rally"
 summary: "A finishable Mallow Court rally: paddle, bricks, three lives, a score from cleared bricks, Esc to pause, and Play again."
 platform: web
 type: screen
-category: media
+category: games
 tags: [game, breakout, paddle, canvas, pause]
 styles: [playful, soft]
 motion: rich

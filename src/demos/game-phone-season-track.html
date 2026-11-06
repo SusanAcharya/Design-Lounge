@@ -1,0 +1,278 @@
+<!-- Design Lounge piece: game-phone-season-track · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kitecrest Season Track</title>
+<link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Figtree:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0e2620; --surface:#16352d; --surface-2:#1e443a; --line:#2f5e50; --text:#f3eedf; --text-2:#b9c8be; --text-3:#9fb3a7;
+  --free:#8be3b9; --free-ink:#06281c; --prem:#ffc24b; --prem-ink:#2a1a00; --locked:#c9b98f;
+  --display:"Bagel Fat One",system-ui,sans-serif; --ui:"Figtree",system-ui,sans-serif;
+  --col:92px; --cell-h:128px; --r-cell:16px; --r-pill:999px;
+  --ease:cubic-bezier(.2,.7,.2,1); --ease-out:cubic-bezier(.16,1,.3,1); --sheet:cubic-bezier(.32,.72,0,1); --spring:cubic-bezier(.34,1.56,.64,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--text);font:500 14px/1.35 var(--ui);overflow:hidden;-webkit-tap-highlight-color:transparent}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none;padding:0}
+:focus-visible{outline:2px solid var(--free);outline-offset:3px}
+.app{position:relative;height:100%;max-width:430px;margin:0 auto;display:flex;flex-direction:column;padding:54px 0 34px;overflow:hidden;
+  background:radial-gradient(120% 60% at 85% 0%,#1d4a3f 0%,transparent 60%),var(--bg)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+header{display:flex;align-items:center;justify-content:space-between;padding:10px 20px 0}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text-2)}
+h1{font:400 28px/1 var(--display);margin:4px 0 0;letter-spacing:.005em}
+.bag{display:flex;align-items:center;gap:8px;height:44px;padding:0 14px 0 10px;border-radius:var(--r-pill);background:var(--surface-2);border:1px solid var(--line);font-weight:800;font-size:15px}
+.bag svg{width:24px;height:24px;color:var(--free)}
+.bag.bump{animation:bump 420ms var(--spring)}
+@keyframes bump{0%{transform:scale(1)}35%{transform:scale(1.18)}100%{transform:scale(1)}}
+.hero{display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:end;padding:22px 20px 0}
+.tier{position:relative;width:104px;height:112px;border-radius:24px;background:var(--surface);border:1px solid var(--line);display:grid;place-items:center;text-align:center}
+.tier small{position:absolute;top:12px;left:0;right:0;font-size:11px;font-weight:800;letter-spacing:.14em;color:var(--text-2)}
+.tier b{font:400 64px/1 var(--display);margin-top:16px;color:var(--free)}
+.tier.up b{animation:bump 520ms var(--spring)}
+.xp{padding-bottom:4px}
+.xp-row{display:flex;justify-content:space-between;align-items:baseline;font-size:13px;color:var(--text-2)}
+.xp-row strong{font-size:20px;font-weight:800;color:var(--text);font-variant-numeric:tabular-nums}
+.bar{height:14px;border-radius:var(--r-pill);background:var(--surface-2);border:1px solid var(--line);margin:10px 0 10px;overflow:hidden}
+.bar i{display:block;height:100%;width:64%;border-radius:inherit;background:linear-gradient(90deg,#5fcf9c,var(--free));transition:width 620ms var(--ease-out)}
+.clock{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--text-2);font-variant-numeric:tabular-nums}
+.clock svg{width:16px;height:16px}
+.gain{position:absolute;right:20px;top:-6px;font-weight:800;color:var(--free);opacity:0}
+.gain.on{animation:gain 900ms var(--ease-out)}
+@keyframes gain{0%{opacity:0;transform:translateY(8px)}25%{opacity:1}100%{opacity:0;transform:translateY(-14px)}}
+.track-wrap{margin-top:26px;position:relative}
+.lanes{display:flex;justify-content:space-between;padding:0 20px 10px;font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+.lanes span{display:inline-flex;align-items:center;gap:6px}
+.lanes span:last-child{color:var(--text-2);letter-spacing:.06em}.lf{padding-top:0}
+.lanes .p{color:var(--prem)}.lanes .f{color:var(--free)}
+.lanes svg{width:14px;height:14px}
+.rail{overflow-x:auto;overflow-y:hidden;scroll-snap-type:x proximity;scrollbar-width:none;padding:6px 20px 12px}
+.rail::-webkit-scrollbar{display:none}
+.cols{display:flex;width:max-content}
+.col{width:var(--col);display:grid;grid-template-rows:var(--cell-h) 44px var(--cell-h);justify-items:center;scroll-snap-align:center;position:relative}
+.node{position:relative;width:100%;display:grid;place-items:center}
+.node::before{content:"";position:absolute;left:0;right:0;top:50%;height:4px;margin-top:-2px;background:var(--line)}
+.col.done .node::before{background:var(--free)}
+.col.now .node::before{background:linear-gradient(90deg,var(--free) 50%,var(--line) 50%)}
+.node b{position:relative;min-width:30px;height:26px;padding:0 6px;border-radius:var(--r-pill);display:grid;place-items:center;background:var(--surface-2);border:1px solid var(--line);font:400 13px/1 var(--display);color:var(--text-2)}
+.col.done .node b{background:var(--free);border-color:var(--free);color:var(--free-ink)}
+.col.now .node b{height:32px;min-width:40px;font-size:17px;background:var(--text);border-color:var(--text);color:var(--bg)}
+.cell{position:relative;width:80px;height:100%;border-radius:var(--r-cell);background:var(--surface);border:1px solid var(--line);display:flex;flex-direction:column;align-items:center;padding:10px 6px 8px;text-align:center;font-size:12px;font-weight:600;line-height:1.2;color:var(--text-2)}
+.cell.prem{background:#2a2a1a;border-color:#4a4426}
+.cell svg.ic{width:34px;height:34px;flex:none;margin-bottom:8px}
+.cell.free svg.ic{color:var(--free)}.cell.prem svg.ic{color:var(--prem)}
+.cell .lock{position:absolute;top:6px;right:6px;width:20px;height:20px;border-radius:50%;background:#3d3820;display:grid;place-items:center;color:var(--locked)}
+.cell .lock svg{width:12px;height:12px}
+.cell.locked{color:var(--locked)}
+.cell.locked svg.ic{color:#a8925a}
+.cell.got{color:var(--text-3)}
+.cell.got svg.ic{opacity:.45}
+.cell .ok{position:absolute;top:6px;right:6px;width:20px;height:20px;border-radius:50%;background:var(--free);color:var(--free-ink);display:grid;place-items:center}
+.cell .ok svg{width:12px;height:12px}
+.cell .nm{display:block;width:68px}
+.claim{position:absolute;inset:-1px;border-radius:var(--r-cell);display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:8px}
+.claim span{height:26px;padding:0 12px;border-radius:var(--r-pill);display:grid;place-items:center;font-size:12px;font-weight:800;letter-spacing:.02em}
+.cell.can{color:var(--text)}
+.cell.can .nm{margin-bottom:28px}
+.cell.free.can{border-color:var(--free);box-shadow:0 0 0 1px var(--free),0 0 22px rgba(139,227,185,.35);animation:glow 2.4s var(--ease) infinite}
+.cell.prem.can{border-color:var(--prem);box-shadow:0 0 0 1px var(--prem),0 0 22px rgba(255,194,75,.35);animation:glow 2.4s var(--ease) infinite}
+.cell.free.can .claim span{background:var(--free);color:var(--free-ink)}
+.cell.prem.can .claim span{background:var(--prem);color:var(--prem-ink)}
+.claim:active span{transform:scale(.94)}
+@keyframes glow{50%{box-shadow:0 0 0 1px currentColor,0 0 8px rgba(139,227,185,.15)}}
+.cell.prem.can{animation-name:glowp}
+@keyframes glowp{50%{box-shadow:0 0 0 1px var(--prem),0 0 8px rgba(255,194,75,.12)}}
+.next{margin:6px 20px 0;padding:14px 16px;border-radius:18px;background:var(--surface);border:1px solid var(--line);display:flex;gap:12px;align-items:center;font-size:13px;color:var(--text-2)}
+.next strong{display:block;color:var(--text);font-size:14px;font-weight:700}
+.next svg{width:22px;height:22px;color:var(--free);flex:none}
+.foot{margin-top:auto;padding:0 20px}
+.buy{width:100%;height:56px;border-radius:var(--r-pill);background:var(--prem);color:var(--prem-ink);font-size:16px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:10px;transition:transform 160ms var(--ease)}
+.buy svg{width:20px;height:20px}
+.buy:active{transform:scale(.97)}
+.buy[aria-disabled=true]{background:var(--surface-2);color:var(--prem);border:1px solid #4a4426}
+.note{text-align:center;font-size:12px;color:var(--text-2);margin:10px 0 0}
+.fly{position:fixed;width:38px;height:38px;z-index:20;pointer-events:none}
+.scrim{position:fixed;inset:0;background:rgba(4,14,11,.66);opacity:0;visibility:hidden;transition:opacity 280ms var(--ease),visibility 0s 280ms;z-index:30}
+.sheet{position:fixed;left:0;right:0;bottom:0;max-width:430px;margin:0 auto;background:#f6f1e4;color:#1d2a24;border-radius:28px 28px 0 0;padding:12px 22px 34px;transform:translateY(100%);visibility:hidden;transition:transform 380ms var(--sheet),visibility 0s 380ms;z-index:31}
+.open .scrim{opacity:1;visibility:visible;transition:opacity 280ms var(--ease)}
+.open .sheet{transform:none;visibility:visible;transition:transform 420ms var(--sheet)}
+.grab{width:40px;height:5px;border-radius:3px;background:#c9c2b0;margin:0 auto 16px}
+.sheet h2{font:400 24px/1.1 var(--display);margin:0}
+.price{font-size:14px;color:#4b5a52;margin:6px 0 16px}
+.price b{color:#1d2a24}
+.sheet ul{list-style:none;margin:0 0 14px;padding:0;border-top:1px solid #ddd5c2}
+.sheet li{display:flex;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px solid #ddd5c2;font-size:14px}
+.sheet li span:last-child{font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+.fine{font-size:12.5px;line-height:1.45;color:#4b5a52;margin:0 0 18px}
+.sheet .row{display:grid;grid-template-columns:1fr 1.6fr;gap:10px}
+.sheet .row button{height:52px;border-radius:var(--r-pill);font-weight:800;font-size:15px}
+.ghost{background:#e7e0cf;color:#1d2a24}
+.pay{background:#1d2a24;color:#f6f1e4}
+.sheet :focus-visible{outline-color:#1d2a24}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition-duration:1ms!important}
+  .cell.free.can,.cell.prem.can{animation:none!important}
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="kite" viewBox="0 0 24 24"><path d="M12 2 20 9l-8 9-8-9z" fill="currentColor" opacity=".25"/><path d="M12 2 20 9l-8 9-8-9zM4 9h16M12 2v16M12 18c0 2 2 2 2 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+  <symbol id="coin" viewBox="0 0 24 24"><ellipse cx="12" cy="7" rx="7" ry="3" fill="currentColor" opacity=".25"/><path d="M5 7c0 1.7 3.1 3 7 3s7-1.3 7-3-3.1-3-7-3-7 1.3-7 3zm0 0v5c0 1.7 3.1 3 7 3s7-1.3 7-3V7M5 12v5c0 1.7 3.1 3 7 3s7-1.3 7-3v-5" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+  <symbol id="trail" viewBox="0 0 24 24"><path d="M3 18c4-1 5-6 9-6s4 4 9 2M3 13c3-1 4-5 7-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="20" cy="6" r="2.5" fill="currentColor"/></symbol>
+  <symbol id="glider" viewBox="0 0 24 24"><path d="M2 14 12 6l10 8-10-3z" fill="currentColor" opacity=".25"/><path d="M2 14 12 6l10 8-10-3zM12 11v8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+  <symbol id="emote" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="currentColor" opacity=".25"/><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8 14c1 1.6 2.4 2.4 4 2.4s3-.8 4-2.4M9 9.5h.01M15 9.5h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2" fill="currentColor"/><path d="M8 11V8a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" stroke-width="2.4"/></symbol>
+  <symbol id="check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+</svg>
+<div class="app" id="app">
+  <header>
+    <div><div class="eyebrow">Kitecrest · Season 4</div><h1>Monsoon Run</h1></div>
+    <button class="bag" id="bag" aria-label="Satchel, 3 unopened items"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 9h14l-1 11H6z" fill="currentColor" opacity=".3"/><path d="M5 9h14l-1 11H6zM9 9V7a3 3 0 0 1 6 0v2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg><span id="bagN">3</span></button>
+  </header>
+  <section class="hero" aria-label="Season progress">
+    <div class="tier" id="tierBox"><small>TIER</small><b id="tierN">12</b></div>
+    <div class="xp" style="position:relative">
+      <span class="gain" id="gain" aria-hidden="true">+120 XP</span>
+      <div class="xp-row"><strong id="xpN">640 / 1,000</strong><span>XP</span></div>
+      <div class="bar" role="progressbar" aria-label="XP to next tier" aria-valuemin="0" aria-valuemax="1000" aria-valuenow="640" id="bar"><i id="fill"></i></div>
+      <div class="xp-row"><span id="toNext">360 XP to tier 13</span></div>
+      <div class="clock" style="margin-top:8px"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 7v5l3 2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span>Season ends in <span id="cd">18d 06:41:12</span></span></div>
+    </div>
+  </section>
+  <section class="track-wrap" aria-label="Season track, tiers 1 to 30">
+    <div class="lanes"><span class="p"><svg aria-hidden="true"><use href="#lock"/></svg>Premium lane</span><span>Tiers 1–30</span></div>
+    <div class="rail" id="rail"><div class="cols" id="cols"></div></div>
+    <div class="lanes lf"><span class="f"><svg aria-hidden="true"><use href="#check"/></svg>Free lane</span><span>Swipe for more tiers</span></div>
+  </section>
+  <div class="next" id="next"></div>
+  <div class="foot">
+    <button class="buy" id="buy" aria-haspopup="dialog"><svg aria-hidden="true"><use href="#lock"/></svg><span id="buyT">Unlock premium · €9.99</span></button>
+    <p class="note" id="note">One-time purchase for Season 4. Free rewards stay free.</p>
+  </div>
+  <div class="scrim" id="scrim"></div>
+  <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="shT">
+    <div class="grab" aria-hidden="true"></div>
+    <h2 id="shT">Season 4 premium lane</h2>
+    <p class="price"><b>€9.99</b> once, incl. VAT. Not a subscription.</p>
+    <ul>
+      <li><span>Kite skins, incl. Monsoon Dragon at tier 30</span><span>6</span></li>
+      <li><span>String trails</span><span>6</span></li>
+      <li><span>Glider frames, Heron and Gull</span><span>2</span></li>
+      <li><span>Gale coins, 100 at 16 tiers</span><span>1,600</span></li>
+      <li><span>Rewards already reached, claimable now</span><span>12</span></li>
+    </ul>
+    <p class="fine">No XP boosts and no gameplay advantage. Everything is cosmetic. The season ends 24 Nov 2026; unclaimed premium rewards go to your satchel.</p>
+    <div class="row"><button class="ghost" id="later">Not now</button><button class="pay" id="pay">Pay €9.99</button></div>
+  </div>
+  <p class="sr" aria-live="polite" id="live"></p>
+</div>
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const EM = { 4: 'Wave', 8: 'Spin', 12: 'Cheer', 16: 'Bow', 24: 'Salute', 28: 'Shrug' };
+  const FK = { 10: 'Crane', 20: 'Lantern', 30: 'Tidewing' };
+  const PK = { 5: 'Koi', 10: 'Saffron', 15: 'Night Owl', 20: 'Paper Moon', 25: 'Twin Tail', 30: 'Monsoon Dragon' };
+  const TR = { 3: 'Ember', 8: 'Drizzle', 13: 'Sparks', 18: 'Ribbon', 23: 'Comet', 28: 'Tidal' };
+  const free = (t) => FK[t] ? ['kite', FK[t] + ' kite'] : EM[t] ? ['emote', EM[t] + ' emote'] : ['coin', '50 coins'];
+  const prem = (t) => t === 12 ? ['glider', 'Heron glider'] : t === 24 ? ['glider', 'Gull glider'] : PK[t] ? ['kite', PK[t] + ' kite'] : TR[t] ? ['trail', TR[t] + ' trail'] : ['coin', '100 coins'];
+  const S = { tier: 12, xp: 640, bag: 3, premium: false, got: { f: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]), p: new Set() } };
+  const cols = $('cols'), rail = $('rail');
+  const cell = (lane, t) => {
+    const [ic, nm] = lane === 'f' ? free(t) : prem(t);
+    const got = S.got[lane].has(t), reached = t <= S.tier, locked = lane === 'p' && !S.premium;
+    const can = reached && !got && !locked;
+    let cls = 'cell ' + (lane === 'f' ? 'free' : 'prem') + (got ? ' got' : can ? ' can' : locked ? ' locked' : '');
+    let badge = got ? '<span class="ok" aria-hidden="true"><svg><use href="#check"/></svg></span>' : locked ? '<span class="lock" aria-hidden="true"><svg><use href="#lock"/></svg></span>' : '';
+    const state = got ? 'claimed' : can ? 'ready to claim' : locked ? 'locked, premium' : 'reached at tier ' + t;
+    return `<div class="${cls}" role="group" aria-label="Tier ${t} ${lane === 'f' ? 'free' : 'premium'}: ${nm}, ${state}">${badge}<svg class="ic" aria-hidden="true"><use href="#${ic}"/></svg><span class="nm">${nm}</span>` +
+      (can ? `<button class="claim" data-l="${lane}" data-t="${t}" aria-label="Claim ${nm}, tier ${t}"><span>Claim</span></button>` : '') + '</div>';
+  };
+  const render = () => {
+    let h = '';
+    for (let t = 1; t <= 30; t++) {
+      h += `<div class="col${t < S.tier ? ' done' : t === S.tier ? ' now' : ''}">${cell('p', t)}<div class="node"><b>${t}</b></div>${cell('f', t)}</div>`;
+    }
+    cols.innerHTML = h;
+    const n = S.tier + 1, [, fn] = free(n), [, pn] = prem(n);
+    $('next').innerHTML = `<svg aria-hidden="true"><use href="#kite"/></svg><div><strong>Tier ${n} next</strong>${fn} free · ${pn} premium</div>`;
+  };
+  const xpUI = () => {
+    $('fill').style.width = (S.xp / 10) + '%';
+    $('xpN').textContent = S.xp.toLocaleString('en-GB') + ' / 1,000';
+    $('toNext').textContent = (1000 - S.xp).toLocaleString('en-GB') + ' XP to tier ' + (S.tier + 1);
+    $('bar').setAttribute('aria-valuenow', S.xp);
+  };
+  const bump = (el, c) => { el.classList.remove(c); void el.offsetWidth; el.classList.add(c); };
+  const bag = $('bag');
+  const addBag = () => {
+    S.bag++; $('bagN').textContent = S.bag; bag.setAttribute('aria-label', 'Satchel, ' + S.bag + ' unopened items');
+    if (!reduce) bump(bag, 'bump');
+  };
+  const fly = (from) => {
+    const a = from.getBoundingClientRect(), b = bag.querySelector('svg').getBoundingClientRect();
+    if (reduce) { addBag(); return; }
+    const f = from.cloneNode(true); f.classList.add('fly'); f.style.left = a.left + 'px'; f.style.top = a.top + 'px';
+    f.style.color = getComputedStyle(from).color; document.body.appendChild(f);
+    const dx = b.left - a.left - 7, dy = b.top - a.top - 7;
+    const an = f.animate([
+      { transform: 'translate(0,0) scale(1)' },
+      { transform: `translate(${dx * .35}px,${dy * .35 - 70}px) scale(1.35)`, offset: .4 },
+      { transform: `translate(${dx}px,${dy}px) scale(.6)`, opacity: .85 }
+    ], { duration: 680, easing: 'cubic-bezier(.5,0,.3,1)' });
+    an.onfinish = () => { f.remove(); addBag(); };
+  };
+  rail.addEventListener('click', (e) => {
+    const btn = e.target.closest('.claim'); if (!btn) return;
+    const lane = btn.dataset.l, t = +btn.dataset.t, [, nm] = lane === 'f' ? free(t) : prem(t);
+    fly(btn.parentElement.querySelector('svg.ic'));
+    S.got[lane].add(t);
+    let msg = nm + ' claimed.';
+    if (lane === 'f') {
+      S.xp += 120; if (!reduce) bump($('gain'), 'on');
+      if (S.xp >= 1000) { S.xp -= 1000; S.tier++; $('tierN').textContent = S.tier; bump($('tierBox'), 'up'); msg += ' Tier ' + S.tier + ' reached.'; }
+      xpUI();
+    }
+    render();
+    $('live').textContent = msg;
+    const nxt = cols.querySelector(`.claim[data-l="${lane}"]`) || cols.querySelector('.claim');
+    if (nxt) {
+      nxt.focus({ preventScroll: true });
+      const c = nxt.closest('.col'), x = c.offsetLeft - rail.scrollLeft;
+      if (x < 0 || x + 92 > rail.clientWidth) rail.scrollTo({ left: c.offsetLeft - 120, behavior: reduce ? 'auto' : 'smooth' });
+    } else { rail.setAttribute('tabindex', '-1'); rail.focus({ preventScroll: true }); }
+  });
+  const app = $('app'), sheet = $('sheet'); let opener = null;
+  const open = () => { if (S.premium) return; opener = document.activeElement; app.classList.add('open'); setTimeout(() => $('pay').focus(), 60); };
+  const close = () => { app.classList.remove('open'); (opener || $('buy')).focus(); };
+  $('buy').onclick = open; $('later').onclick = close; $('scrim').onclick = close;
+  sheet.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') close();
+    if (e.key === 'Tab') { const f = [$('later'), $('pay')], i = f.indexOf(document.activeElement); if (e.shiftKey ? i <= 0 : i === 1) { e.preventDefault(); f[e.shiftKey ? 1 : 0].focus(); } }
+  });
+  $('pay').onclick = () => {
+    S.premium = true; render(); close();
+    $('buy').setAttribute('aria-disabled', 'true'); $('buyT').textContent = 'Premium unlocked';
+    $('buy').querySelector('use').setAttribute('href', '#check');
+    $('note').textContent = 'Thank you. Premium rewards land in your satchel.';
+    $('live').textContent = 'Premium lane unlocked. 12 rewards ready to claim.';
+  };
+  let left = ((18 * 24 + 6) * 60 + 41) * 60 + 12;
+  const pad = (n) => String(n).padStart(2, '0');
+  const tick = () => {
+    left = Math.max(0, left - 1);
+    const d = Math.floor(left / 86400), h = Math.floor(left % 86400 / 3600), m = Math.floor(left % 3600 / 60), s = left % 60;
+    $('cd').textContent = `${d}d ${pad(h)}:${pad(m)}:${pad(s)}`;
+    setTimeout(tick, 1000);
+  };
+  render(); xpUI(); setTimeout(tick, 1000);
+  rail.scrollLeft = (S.tier - 3) * 92 - 8;
+})();
+</script>
+</body>
+</html>

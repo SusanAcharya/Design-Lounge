@@ -1,0 +1,191 @@
+<!-- Design Lounge piece: motion-feedback-ladder · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tallow · Send to Ama</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700&family=Epilogue:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#101418;--surface:#1a2026;--surface-2:#232b33;--line:#2e3740;--ink:#eef1ec;--ink-2:#a3aca8;
+  --cream:#f2ebdd;--cream-ink:#14181c;--ok:#46d39a;--ok-ink:#06261a;--err:#ff6b5e;--err-deep:#3a1716;--tint:#f6c9a8;
+  --display:"Unbounded",system-ui,sans-serif;--sans:"Epilogue",system-ui,sans-serif;
+  --ease:cubic-bezier(.2,.7,.2,1);--out:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:15px/1.45 var(--sans);color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+:focus-visible{outline:3px solid var(--cream);outline-offset:3px;border-radius:14px}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.ico{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.app{max-width:430px;min-height:100%;margin:0 auto;padding:58px 20px 34px;display:flex;flex-direction:column}
+.nav{display:flex;align-items:center;justify-content:space-between;height:44px}
+.nav b{font:600 15px var(--sans)}
+.round{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:var(--surface);border:1px solid var(--line)}
+
+.who{display:flex;align-items:center;gap:12px;margin-top:22px}
+.av{width:52px;height:52px;border-radius:50%;background:var(--tint);color:#2a1608;display:grid;place-items:center;font:700 16px var(--display)}
+.who p{margin:0;font-weight:600;font-size:17px}
+.who small{display:block;font-weight:400;font-size:14px;color:var(--ink-2)}
+.amt{margin:26px 0 0;font:600 68px/1 var(--display);letter-spacing:-.04em;font-variant-numeric:tabular-nums;transition:color 300ms var(--ease)}
+.amt sup{font-size:.4em;vertical-align:1.05em;margin-right:4px;letter-spacing:0}
+.amt span{font-size:.5em;letter-spacing:-.02em}
+.note{display:inline-flex;align-items:center;gap:8px;margin-top:14px;padding:8px 12px;border-radius:12px;background:var(--surface);font-size:14px;color:var(--ink);align-self:flex-start}
+.from{margin-top:16px;display:flex;justify-content:space-between;padding:14px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);font-size:14px}
+.from span{color:var(--ink-2)}
+
+.ladder{margin-top:20px;background:var(--surface);border-radius:20px;padding:14px 14px 12px;border:1px solid var(--line)}
+.lh{display:flex;justify-content:space-between;align-items:baseline;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);padding:0 2px}
+.lh em{font-style:normal;letter-spacing:0;text-transform:none;font-weight:500}
+.rungs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:10px}
+.rung{border-radius:14px;padding:10px 10px 9px;background:var(--surface-2);border:1px solid transparent;transition:background 240ms var(--ease),border-color 240ms var(--ease)}
+.rung b{display:block;font:600 13px var(--display);letter-spacing:-.01em}
+.rung small{display:block;font-size:11.5px;letter-spacing:-.01em;color:var(--ink-2);margin-top:2px;white-space:nowrap}
+.wave{display:flex;align-items:center;gap:3px;height:22px;margin-bottom:8px}
+.wave i{display:block;width:5px;border-radius:2px;background:#5b6670;transform-origin:center}
+.wave i.gap{background:none;width:6px}
+.rung.on{border-color:currentColor}
+.rung.on .wave i{background:currentColor;animation:bar 340ms var(--out) both}
+.rung.on .wave i:nth-child(2){animation-delay:40ms}.rung.on .wave i:nth-child(3){animation-delay:80ms}.rung.on .wave i:nth-child(4){animation-delay:120ms}.rung.on .wave i:nth-child(5){animation-delay:160ms}.rung.on .wave i:nth-child(6){animation-delay:200ms}.rung.on .wave i:nth-child(7){animation-delay:240ms}
+@keyframes bar{0%{transform:scaleY(.2)}50%{transform:scaleY(1.35)}100%{transform:scaleY(1)}}
+.r-tick.on{color:var(--cream);background:#2b2a26}.r-thud.on{color:var(--ok);background:#14291f}.r-buzz.on{color:var(--err);background:var(--err-deep)}
+.r-tick.on b,.r-thud.on b,.r-buzz.on b{color:inherit}
+
+.sim{display:flex;align-items:center;justify-content:space-between;margin-top:14px;gap:12px}
+.sim>span{font-size:14px;color:var(--ink-2)}
+.seg{display:grid;grid-template-columns:1fr 1fr;background:var(--surface);border:1px solid #5b6670;border-radius:14px;padding:3px;width:200px}
+.seg button{height:40px;border-radius:11px;font-weight:600;font-size:14px;color:var(--ink-2)}
+.seg button[aria-pressed=true]{background:var(--surface-2);color:var(--ink);box-shadow:inset 0 0 0 1px #4a545e}
+
+.dock{margin-top:auto;padding-top:18px;position:relative}
+.msg{height:22px;margin:0 0 10px;font-size:14px;font-weight:500;display:flex;align-items:center;justify-content:center;gap:6px;color:var(--ink-2)}
+.msg.err{color:var(--err)}.msg.ok{color:var(--ok)}
+.msg .ico{width:16px;height:16px}
+.go{position:relative;width:100%;height:64px;border-radius:22px;background:var(--cream);color:var(--cream-ink);font:600 17px var(--display);letter-spacing:-.01em;display:flex;align-items:center;justify-content:center;gap:10px;transition:transform 80ms var(--ease),background 260ms var(--ease),box-shadow 200ms var(--ease);will-change:transform}
+#lbl{display:inline-flex;align-items:center;gap:10px}
+.go.press{transform:scale(.97)}
+.go .ico{width:22px;height:22px;stroke-width:2.4}
+.go.busy{background:#d9d2c4}
+.spin{width:20px;height:20px;border-radius:50%;border:2.5px solid rgba(20,24,28,.25);border-top-color:var(--cream-ink);animation:sp 700ms linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.go.ok{background:var(--ok);color:var(--ok-ink);animation:thud 520ms var(--out)}
+@keyframes thud{0%{transform:scale(1)}22%{transform:scale(1.045)}48%{transform:scale(.985)}72%{transform:scale(1.008)}100%{transform:scale(1)}}
+.go.ok .chk{stroke-dasharray:24;stroke-dashoffset:24;animation:draw 360ms 120ms var(--out) forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.bw{position:relative}
+.ring{position:absolute;left:50%;top:0;width:64px;height:64px;margin-left:-32px;border-radius:50%;border:2px solid var(--ok);opacity:0;pointer-events:none}
+.ring.go-ring{animation:ring 640ms var(--out)}
+@keyframes ring{0%{transform:scale(.6);opacity:.9}100%{transform:scale(5.6);opacity:0}}
+.go.err{background:var(--cream);box-shadow:0 0 0 2px var(--err),0 0 0 7px rgba(255,107,94,.18);animation:buzz 420ms cubic-bezier(.36,.07,.19,.97)}
+@keyframes buzz{0%,100%{transform:translateX(0)}14%{transform:translateX(-10px)}28%{transform:translateX(9px)}42%{transform:translateX(-7px)}57%{transform:translateX(5px)}71%{transform:translateX(-3px)}85%{transform:translateX(1px)}}
+.amt.err{color:#ffb3ab}.amt.ok{color:var(--ok)}
+.again{display:block;margin:8px auto 0;height:40px;padding:0 14px;font-weight:600;font-size:14px;color:var(--ink);text-decoration:underline;text-underline-offset:4px;visibility:hidden}
+.again.on{visibility:visible}
+@media (prefers-reduced-motion:reduce){
+  .go,.go.press{transition:background 200ms var(--ease)}.go.press{transform:none;background:#e4dccd}
+  .go.ok,.go.err,.ring.go-ring,.rung.on .wave i{animation:none}
+  .go.ok .chk{stroke-dashoffset:0;animation:none}
+  .spin{animation-duration:1400ms}
+}
+</style>
+</head>
+<body>
+<main class="app">
+  <div class="nav">
+    <button class="round" aria-label="Back"><svg class="ico" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>
+    <b>Send money</b>
+    <button class="round" aria-label="More options"><svg class="ico" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></svg></button>
+  </div>
+
+  <div class="who"><span class="av" aria-hidden="true">AO</span><p>Ama Owusu<small>@ama.owusu · Lisbon</small></p></div>
+  <p class="amt" id="amt" aria-label="48 euros 50"><sup>€</sup>48<span>.50</span></p>
+  <span class="note"><svg class="ico" viewBox="0 0 24 24" style="width:16px;height:16px"><path d="M4 20h4L19 9l-4-4L4 16v4z"/></svg>Pottery class, Thu 12 Nov</span>
+  <div class="from"><span>From</span><b>Everyday ·· 4471 · €1,284.10</b></div>
+
+  <section class="ladder" aria-label="Feedback tiers">
+    <div class="lh">Feedback ladder <em id="hap">Haptics checking</em></div>
+    <div class="rungs">
+      <div class="rung r-tick" id="tick"><div class="wave" aria-hidden="true"><i style="height:10px"></i></div><b>Tick</b><small>press · 8ms</small></div>
+      <div class="rung r-thud" id="thud"><div class="wave" aria-hidden="true"><i style="height:12px"></i><i class="gap"></i><i style="height:22px"></i><i style="height:18px"></i></div><b>Thud</b><small>sent · 12·40·28</small></div>
+      <div class="rung r-buzz" id="buzz"><div class="wave" aria-hidden="true"><i style="height:16px"></i><i class="gap"></i><i style="height:16px"></i><i class="gap"></i><i style="height:16px"></i></div><b>Buzz</b><small>declined · 3×30</small></div>
+    </div>
+  </section>
+
+  <div class="sim"><span id="simL">Bank reply</span>
+    <div class="seg" role="group" aria-labelledby="simL"><button id="sOk" aria-pressed="true">Approve</button><button id="sErr" aria-pressed="false">Decline</button></div>
+  </div>
+
+  <div class="dock">
+    <p class="msg" id="msg" aria-live="polite">Arrives in seconds · no fee</p>
+    <div class="bw"><span class="ring" id="ring" aria-hidden="true"></span>
+    <button class="go" id="go"><span id="lbl">Send €48.50</span></button></div>
+    <button class="again" id="again">Send another</button>
+  </div>
+</main>
+
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const go = $('go'), lbl = $('lbl'), msg = $('msg'), amt = $('amt'), ring = $('ring'), again = $('again');
+  const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const canBuzz = typeof navigator.vibrate === 'function';
+  $('hap').textContent = canBuzz ? 'Haptics on' : 'Haptics shown, not felt';
+  const PAT = { tick: 8, thud: [12, 40, 28], buzz: [30, 40, 30, 40, 30] };
+  const feel = (k) => {
+    try { if (canBuzz) navigator.vibrate(PAT[k]); } catch (e) { /* blocked in frames */ }
+    const r = $(k); r.classList.remove('on'); r.offsetWidth; r.classList.add('on');
+  };
+  const ICON = {
+    ok: '<svg class="ico" viewBox="0 0 24 24"><path class="chk" d="M5 12.5l4.5 4.5L19 7.5"/></svg>',
+    err: '<svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5M12 16.5h.01"/></svg>',
+  };
+  let fail = false, state = 'idle', t = 0;
+  const pick = (f) => { fail = f; $('sOk').setAttribute('aria-pressed', !f); $('sErr').setAttribute('aria-pressed', f); };
+  $('sOk').onclick = () => pick(false); $('sErr').onclick = () => pick(true);
+
+  const reset = () => {
+    clearTimeout(t); state = 'idle';
+    go.className = 'go'; amt.className = 'amt'; ring.className = 'ring';
+    lbl.innerHTML = 'Send €48.50'; msg.className = 'msg'; msg.textContent = 'Arrives in seconds · no fee';
+    again.classList.remove('on'); ['tick', 'thud', 'buzz'].forEach((k) => $(k).classList.remove('on'));
+  };
+  const press = () => {
+    if (state === 'busy') return;
+    if (state !== 'idle') reset();
+    go.classList.add('press'); feel('tick');
+  };
+  const release = () => {
+    if (!go.classList.contains('press')) return;
+    go.classList.remove('press');
+    state = 'busy'; go.classList.add('busy'); go.setAttribute('aria-busy', 'true');
+    lbl.innerHTML = '<span class="spin" aria-hidden="true"></span>Sending'; msg.textContent = 'Checking with your bank';
+    t = setTimeout(fail ? declined : sent, 900);
+  };
+  const sent = () => {
+    state = 'done'; go.removeAttribute('aria-busy');
+    go.className = 'go ok'; amt.className = 'amt ok';
+    lbl.innerHTML = ICON.ok + 'Sent to Ama';
+    msg.className = 'msg ok'; msg.textContent = '€48.50 sent at 19:42 · ref TLW-8812';
+    if (!RM) { ring.className = 'ring'; ring.offsetWidth; ring.className = 'ring go-ring'; }
+    feel('thud'); again.textContent = 'Send another'; again.classList.add('on');
+  };
+  const declined = () => {
+    state = 'failed'; go.removeAttribute('aria-busy');
+    go.className = 'go'; go.offsetWidth; go.className = 'go err'; amt.className = 'amt err';
+    lbl.innerHTML = (RM ? ICON.err : '') + 'Try again';
+    msg.className = 'msg err'; msg.innerHTML = ICON.err + 'Declined by your bank. Nothing was sent.';
+    feel('buzz'); again.textContent = 'Use another card'; again.classList.add('on');
+  };
+  go.addEventListener('pointerdown', (e) => { if (e.button === 0) press(); });
+  go.addEventListener('pointerup', release);
+  go.addEventListener('pointerleave', () => { if (go.classList.contains('press') && state === 'idle') { go.classList.remove('press'); } });
+  go.addEventListener('keydown', (e) => { if ((e.key === 'Enter' || e.key === ' ') && !e.repeat) { e.preventDefault(); press(); } });
+  go.addEventListener('keyup', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); release(); } });
+  again.addEventListener('click', () => { reset(); go.focus(); });
+})();
+</script>
+</body>
+</html>

@@ -3,7 +3,7 @@ title: "Cozy farm HUD"
 summary: "A farming-sim HUD over a painterly SVG field: a stitched day clock with a moving sun, an energy bar, a wooden hotbar, and a quest note pinned like paper."
 platform: web
 type: screen
-category: widgets
+category: games
 tags: [game, hud, farming, hotbar, quest, cozy]
 styles: [soft, playful, organic]
 motion: subtle

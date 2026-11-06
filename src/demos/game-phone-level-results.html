@@ -1,0 +1,184 @@
+<!-- Design Lounge piece: game-phone-level-results · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Moonmill · Level 23 cleared</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --oven:#9C3520; --oven-ray:#B2452A; --oven-deep:#6E2416; --ink:#3A1E14; --dough:#FFF6E6; --dough-2:#F5E4C6;
+  --butter:#FFC83D; --butter-lip:#B7801A; --sub:#7A4B36; --jam:#C2264B; --wheat:#E3A33A; --crust:#C9773A; --track:#E9D3AE;
+  --font:"Fredoka",ui-rounded,system-ui,sans-serif;
+  --ease:cubic-bezier(.2,.7,.2,1); --out:cubic-bezier(.16,1,.3,1); --pop:cubic-bezier(.34,1.56,.64,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--oven);color:var(--ink);font:500 15px/1.3 var(--font);overflow:hidden}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none;padding:0}
+:focus-visible{outline:3px solid var(--dough);outline-offset:3px;box-shadow:0 0 0 6px var(--ink)}
+.rays{position:fixed;left:50%;top:190px;width:1400px;height:1400px;margin:-700px 0 0 -700px;border-radius:50%;background:repeating-conic-gradient(var(--oven-ray) 0 10deg,var(--oven) 10deg 20deg);-webkit-mask:radial-gradient(closest-side,#000 20%,transparent 62%);mask:radial-gradient(closest-side,#000 20%,transparent 62%);animation:spin 60s linear infinite}
+.stage{position:relative;height:100%;max-width:390px;margin:0 auto;display:flex;flex-direction:column;padding:54px 20px 34px}
+.stage.freeze *,.stage.freeze{animation-play-state:paused!important}
+.stage.shake{animation:shake .16s steps(4) 1}
+.top{display:flex;justify-content:space-between;align-items:center;height:48px;margin-top:6px}
+.world{background:var(--oven-deep);color:var(--dough);border-radius:999px;padding:7px 14px 6px;font:600 13px/1 var(--font);letter-spacing:.06em;white-space:nowrap}
+.replay{width:44px;height:44px;border-radius:50%;background:var(--oven-deep);color:var(--dough);display:grid;place-items:center}
+.replay svg{width:22px;height:22px}
+.stars{position:relative;height:124px;margin-top:4px;display:flex;justify-content:center;align-items:flex-end;gap:2px}
+.slot{position:relative;width:86px;height:86px}
+.slot.mid{width:110px;height:110px;margin-bottom:22px}
+.slot>svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.slot .empty{fill:var(--oven-deep)}
+.slot .full{fill:var(--butter);stroke:var(--ink);stroke-width:2.2;stroke-linejoin:round;opacity:0;transform-origin:50% 60%}
+.slot .shine{fill:#FFF1C2}
+.slot.on .full{animation:stamp .42s linear both}
+.slot:first-child{transform:rotate(-10deg)}.slot:last-child{transform:rotate(10deg)}
+.burst{position:absolute;left:50%;top:55%;width:0;height:0;pointer-events:none}
+.burst i{position:absolute;width:10px;height:10px;margin:-5px;background:var(--butter);border:2px solid var(--ink);transform:rotate(var(--a)) translateY(0) rotate(45deg) scale(0);opacity:0}
+.slot.on .burst i{animation:spark .55s var(--out) .17s both}
+.ribbon{position:relative;align-self:center;margin-top:2px;background:var(--butter);border:3px solid var(--ink);border-radius:10px;padding:9px 26px 7px;font:700 22px/1 var(--font);white-space:nowrap;transform-origin:50% 50%;box-shadow:0 4px 0 var(--ink)}
+.ribbon::before,.ribbon::after{content:"";position:absolute;top:10px;width:22px;height:30px;background:#E0A520;border:3px solid var(--ink);z-index:-1}
+.ribbon::before{left:-16px;clip-path:polygon(0 0,100% 0,100% 100%,0 100%,30% 50%)}
+.ribbon::after{right:-16px;clip-path:polygon(0 0,100% 0,70% 50%,100% 100%,0 100%)}
+.card{position:relative;margin-top:20px;background:var(--dough);border:4px solid var(--ink);border-radius:24px;padding:18px 18px 16px;box-shadow:0 6px 0 var(--ink)}
+.lbl{font:600 12px/1 var(--font);letter-spacing:.16em;text-transform:uppercase;color:var(--sub)}
+.score{font:700 60px/1 var(--font);letter-spacing:-.01em;font-variant-numeric:tabular-nums;margin:6px 0 0}
+.prev{font:500 14px/1.2 var(--font);color:var(--sub);margin-top:4px}
+.best{position:absolute;right:-12px;top:18px;background:var(--jam);color:#fff;font:700 15px/1 var(--font);padding:9px 14px 7px 16px;border:3px solid var(--ink);border-radius:8px 0 0 8px;transform:rotate(4deg) scale(0);opacity:0;white-space:nowrap}
+.best.on{animation:slam .5s var(--pop) both}
+.rule{height:0;border-top:2px dashed #D8BE95;margin:14px -2px 12px}
+.items{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.item{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;background:var(--dough-2);border-radius:14px;padding:10px 4px 9px;opacity:0;transform:translateY(8px)}
+.item.on{opacity:1;transform:none;transition:opacity .25s var(--ease),transform .35s var(--pop)}
+.item svg{width:34px;height:34px;flex:none}
+.item b{display:block;font:700 22px/1 var(--font);margin-top:2px;font-variant-numeric:tabular-nums}
+.item span{display:block;font:500 12px/1.1 var(--font);color:var(--sub);white-space:nowrap}
+.bar-h{display:flex;justify-content:space-between;align-items:baseline;margin:14px 0 6px}
+.bar-h b{font:700 14px/1 var(--font);font-variant-numeric:tabular-nums}
+.bar{position:relative;height:18px;border-radius:9px;background:var(--track);border:2px solid var(--ink);overflow:hidden;display:flex}
+.bar i{display:block;height:100%;width:0;transition:width .5s var(--out)}
+.bar .base{background:var(--crust);width:38%;transition:none}
+.bar .c{background:#E08A3C}.bar .j{background:var(--jam)}.bar .w{background:var(--wheat)}
+.bar i+i{box-shadow:inset 2px 0 0 var(--ink)}
+.acts{margin-top:auto;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.sec{height:50px;border-radius:16px;background:var(--oven-deep);color:var(--dough);display:flex;align-items:center;justify-content:center;gap:8px;font:600 16px/1 var(--font);opacity:0;transform:translateY(10px)}
+.sec svg{width:20px;height:20px}
+.next{grid-column:1/-1;height:64px;border-radius:20px;background:var(--butter);border:3px solid var(--ink);box-shadow:0 6px 0 var(--ink);display:flex;align-items:center;justify-content:center;gap:10px;font:700 24px/1 var(--font);opacity:0;transform:translateY(40px) scale(.9)}
+.next svg{width:24px;height:24px}
+.next:active{transform:translateY(4px);box-shadow:0 2px 0 var(--ink)}
+.on.sec{opacity:1;transform:none;transition:opacity .3s var(--ease),transform .3s var(--ease)}
+.on.next{opacity:1;transform:none;transition:opacity .2s var(--ease),transform .5s var(--pop)}
+.on.next:active{transform:translateY(4px)}
+.sec:not(.on),.next:not(.on){visibility:hidden}
+.ribbon{animation:unfurl .5s var(--pop) both}
+.card{animation:rise .5s var(--out) both}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes stamp{0%{opacity:0;transform:scale(2.6) rotate(-18deg)}30%{opacity:1}40%{transform:scale(1.28,.74) rotate(0)}62%{transform:scale(.9,1.12)}80%{transform:scale(1.04,.97)}100%{opacity:1;transform:scale(1)}}
+@keyframes spark{0%{opacity:1;transform:rotate(var(--a)) translateY(-10px) rotate(45deg) scale(1)}100%{opacity:0;transform:rotate(var(--a)) translateY(-64px) rotate(45deg) scale(.3)}}
+@keyframes shake{25%{transform:translate(3px,-2px)}50%{transform:translate(-3px,2px)}75%{transform:translate(2px,1px)}}
+@keyframes slam{0%{opacity:0;transform:rotate(-8deg) scale(2)}100%{opacity:1;transform:rotate(4deg) scale(1)}}
+@keyframes unfurl{0%{transform:scaleX(0)}}
+@keyframes rise{0%{opacity:0;transform:translateY(40px)}}
+@media (prefers-reduced-motion:reduce){
+  .rays{animation:none}
+  .slot.on .full{animation:fade .3s ease-out both}
+  .slot.on .burst i{animation:none}
+  .stage.shake{animation:none}
+  .best.on{animation:fade .3s ease-out both;transform:rotate(4deg)}
+  .ribbon,.card{animation:fade .3s ease-out both}
+  .next,.sec,.item{transform:none}
+}
+@keyframes fade{0%{opacity:0}100%{opacity:1}}
+</style>
+</head>
+<body>
+<div class="rays" aria-hidden="true"></div>
+<main class="stage" id="stage" aria-labelledby="ttl">
+  <div class="top">
+    <span class="world">Moonmill · Crust Quarter</span>
+    <button class="replay" id="replay" aria-label="Replay results"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 1 0 2.4-5.7"/><path d="M4 4v4.6h4.6"/></svg></button>
+  </div>
+  <div class="stars" id="stars" role="img" aria-label="3 of 3 stars"></div>
+  <h1 class="ribbon" id="ttl">Level 23 baked!</h1>
+  <section class="card" aria-label="Results">
+    <div class="lbl">Score</div>
+    <div class="score" id="score" aria-live="off">0</div>
+    <div class="prev">Previous best 41,900</div>
+    <div class="best" id="best" role="status">New best +6,360</div>
+    <div class="rule"></div>
+    <div class="lbl">Collected</div>
+    <div class="items" id="items" style="margin-top:10px">
+      <div class="item"><svg viewBox="0 0 30 30"><path d="M3 20 C6 9 24 9 27 20 C22 17 19 22 15 22 C11 22 8 17 3 20Z" fill="#E08A3C" stroke="#3A1E14" stroke-width="2" stroke-linejoin="round"/><path d="M11 13 L13 20 M19 13 L17 20" stroke="#3A1E14" stroke-width="1.8" stroke-linecap="round"/></svg><div><b data-n="24">0</b><span>Croissants</span></div></div>
+      <div class="item"><svg viewBox="0 0 30 30"><rect x="7" y="4" width="16" height="5" rx="1.5" fill="#F5E4C6" stroke="#3A1E14" stroke-width="2"/><path d="M8 9 H22 V23 a3 3 0 0 1 -3 3 H11 a3 3 0 0 1 -3 -3Z" fill="#C2264B" stroke="#3A1E14" stroke-width="2"/><rect x="11" y="14" width="8" height="6" rx="1" fill="#FFF6E6"/></svg><div><b data-n="9">0</b><span>Jam jars</span></div></div>
+      <div class="item"><svg viewBox="0 0 30 30"><path d="M15 27 V9" stroke="#3A1E14" stroke-width="2" stroke-linecap="round"/><g fill="#E3A33A" stroke="#3A1E14" stroke-width="1.8"><ellipse cx="15" cy="6" rx="3" ry="4"/><ellipse cx="11" cy="12" rx="3" ry="4" transform="rotate(-30 11 12)"/><ellipse cx="19" cy="12" rx="3" ry="4" transform="rotate(30 19 12)"/><ellipse cx="11" cy="19" rx="3" ry="4" transform="rotate(-30 11 19)"/><ellipse cx="19" cy="19" rx="3" ry="4" transform="rotate(30 19 19)"/></g></svg><div><b data-n="3">0</b><span>Gold wheat</span></div></div>
+    </div>
+    <div class="bar-h"><span class="lbl">Oven upgrade</span><b><span id="crumbs">380</span> / 1,000 crumbs</b></div>
+    <div class="bar" role="progressbar" aria-label="Oven upgrade" aria-valuemin="0" aria-valuemax="1000" aria-valuenow="380" id="bar"><i class="base"></i><i class="c"></i><i class="j"></i><i class="w"></i></div>
+  </section>
+  <div class="acts">
+    <button class="sec" id="retry"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 1 0 2.4-5.7"/><path d="M4 4v4.6h4.6"/></svg>Retry</button>
+    <button class="sec" id="map"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2z"/><path d="M9 4v14M15 6v14"/></svg>Map</button>
+    <button class="next" id="next">Next level<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+  </div>
+</main>
+<script>
+(() => {
+  const RM = matchMedia('(prefers-reduced-motion: reduce)').matches, $ = (id) => document.getElementById(id);
+  const stage = $('stage'), starsEl = $('stars');
+  const STAR = 'M50 6 L62 36 L94 38 L69 59 L78 91 L50 73 L22 91 L31 59 L6 38 L38 36Z';
+  starsEl.innerHTML = [0, 1, 2].map((k) => `<div class="slot${k === 1 ? ' mid' : ''}"><svg viewBox="0 0 100 100" aria-hidden="true"><path class="empty" d="${STAR}"/><g class="full"><path d="${STAR}"/><path class="shine" d="M38 40 L45 25 L49 37Z" stroke="none"/></g></svg><span class="burst">${[...Array(8)].map((_, i) => `<i style="--a:${i * 45 + 22}deg"></i>`).join('')}</span></div>`).join('');
+  const slots = [...starsEl.children], items = [...document.querySelectorAll('.item')], segs = [...document.querySelectorAll('.bar i:not(.base)')];
+  const ADD = [240, 180, 150], BASE = 380;
+  let timers = [], raf = [];
+  const at = (ms, fn) => timers.push(setTimeout(fn, RM ? Math.min(ms, ms * .5) : ms));
+  function count(el, to, ms, fmt, done) {
+    const t0 = performance.now();
+    const step = (t) => {
+      if (stage.classList.contains('freeze')) { raf.push(requestAnimationFrame(step)); return; }
+      const k = Math.min(1, (t - t0) / ms), e = 1 - Math.pow(1 - k, 3);
+      el.textContent = fmt(Math.round(to * e)); if (k < 1) raf.push(requestAnimationFrame(step)); else if (done) done();
+    };
+    raf.push(requestAnimationFrame(step));
+  }
+  const nf = (n) => n.toLocaleString('en-GB');
+  function hit() {
+    if (RM) return;
+    stage.classList.add('freeze');
+    setTimeout(() => { stage.classList.remove('freeze'); stage.classList.remove('shake'); void stage.offsetWidth; stage.classList.add('shake'); }, 64);
+  }
+  function reset() {
+    timers.forEach(clearTimeout); raf.forEach(cancelAnimationFrame); timers = []; raf = [];
+    stage.classList.remove('freeze', 'shake');
+    slots.forEach((s) => s.classList.remove('on'));
+    items.forEach((it) => { it.classList.remove('on'); it.querySelector('b').textContent = '0'; });
+    segs.forEach((s) => (s.style.width = '0'));
+    ['best', 'retry', 'map', 'next'].forEach((id) => $(id).classList.remove('on'));
+    $('score').textContent = '0'; $('crumbs').textContent = nf(BASE); $('bar').setAttribute('aria-valuenow', BASE);
+    for (const el of [document.querySelector('.ribbon'), document.querySelector('.card')]) { el.style.animation = 'none'; void el.offsetWidth; el.style.animation = ''; }
+  }
+  function run() {
+    reset();
+    slots.forEach((s, k) => at(520 + k * 360, () => { s.classList.add('on'); setTimeout(hit, RM ? 0 : 168); }));
+    at(1640, () => count($('score'), 48260, RM ? 300 : 1100, nf));
+    at(2820, () => $('best').classList.add('on'));
+    let crumbs = BASE;
+    items.forEach((it, k) => at(3160 + k * 420, () => {
+      it.classList.add('on'); const b = it.querySelector('b');
+      count(b, +b.dataset.n, 360, String);
+      crumbs += ADD[k]; segs[k].style.width = (ADD[k] / 10) + '%';
+      count($('crumbs'), crumbs, 420, (v) => nf(Math.max(v, crumbs - ADD[k])));
+      $('bar').setAttribute('aria-valuenow', crumbs);
+    }));
+    at(4500, () => $('next').classList.add('on'));
+    at(4760, () => { $('retry').classList.add('on'); $('map').classList.add('on'); });
+  }
+  $('replay').onclick = run; $('retry').onclick = run;
+  $('next').onclick = () => { $('ttl').textContent = 'Level 24 up next'; setTimeout(() => { $('ttl').textContent = 'Level 23 baked!'; }, 1600); };
+  $('map').onclick = () => { $('ttl').textContent = 'Back to the map'; setTimeout(() => { $('ttl').textContent = 'Level 23 baked!'; }, 1600); };
+  run();
+})();
+</script>
+</body>
+</html>
