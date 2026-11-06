@@ -22,7 +22,7 @@ const PHONE = new Set(['mobile-web', 'mobile-app', 'pwa']);
             {poster.src && (
               <img
                 src={poster.src}
-                alt=""
+                alt={`${it.label}: ${it.sample?.data.title ?? "sample piece"}`}
                 width={phone ? 390 : 640}
                 height={phone ? 844 : 480}
                 decoding="async"

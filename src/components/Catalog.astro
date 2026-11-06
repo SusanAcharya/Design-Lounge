@@ -272,7 +272,7 @@ const WAYS_IN = [
       el.style.setProperty('--d', `${Math.min(i, 12) * 30}ms`);
       const eager = i === 0 ? ' loading="eager" fetchpriority="high"' : ' loading="lazy"';
       const plate = p.poster
-        ? `<img src="${p.poster}" alt="" ${p.tall ? 'class="tall" width="390" height="844"' : 'width="640" height="480"'}${eager} decoding="async">`
+        ? `<img src="${p.poster}" alt="Preview of ${p.title.replace(/"/g, "&quot;")}" ${p.tall ? 'class="tall" width="390" height="844"' : 'width="640" height="480"'}${eager} decoding="async">`
         : `<span class="swatch" aria-hidden="true">${p.palette.map((c) => `<i style="background:${c}"></i>`).join('')}</span>`;
       el.innerHTML = `<div class="stage"><div class="plate"${p.poster ? '' : ` style="background:${p.palette[0] || ''}"`}>${plate}</div><a class="cover" href="/p/${p.id}" tabindex="-1" aria-label="Open ${p.title.replace(/"/g, '&quot;')}"></a></div><div class="body"><div class="meta"><span class="n num">Nº ${p.n}</span><span class="n">${p.typeLabel} · ${p.platformLabel}</span></div><h3 class="title"><a href="/p/${p.id}"></a></h3><p class="summary"></p><button class="brief-copy" type="button" data-copy-brief-url="/p/${p.id}.md" data-done-label="Copied">Copy brief</button></div>`;
       el.querySelector('.title a')!.textContent = p.title;

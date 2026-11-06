@@ -56,7 +56,7 @@ let idx = 0;
                 <a class="cat" href={`/sections/${i.c}`}>
                   <span class="thumb" aria-hidden="true">
                     {i.img
-                      ? <img src={i.img.src} alt="" class:list={[{ tall: i.img.tall }]} width={i.img.tall ? 390 : 640} height={i.img.tall ? 844 : 480} loading={eager ? 'eager' : 'lazy'} decoding="async" />
+                      ? <img src={i.img.src} alt={`${i.meta.label} example`} class:list={[{ tall: i.img.tall }]} width={i.img.tall ? 390 : 640} height={i.img.tall ? 844 : 480} loading={eager ? 'eager' : 'lazy'} decoding="async" />
                       : <span class="none"></span>}
                   </span>
                   <span class="row">

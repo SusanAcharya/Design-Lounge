@@ -110,7 +110,7 @@ const posterSize = poster ? imageSize(poster) : null;
       </>
     )}
     <i class="lf-glass" aria-hidden="true"></i>
-    {poster && <img class="lf-poster-img" src={poster} width={posterSize?.width} height={posterSize?.height} alt="" aria-hidden="true" loading={eager ? "eager" : "lazy"} fetchpriority={eager ? "high" : undefined} decoding="async" />}
+    {poster && <img class="lf-poster-img" src={poster} width={posterSize?.width} height={posterSize?.height} alt={`${title} preview`} aria-hidden="true" loading={eager ? "eager" : "lazy"} fetchpriority={eager ? "high" : undefined} decoding="async" />}
     <iframe title={`Live preview: ${title}`} sandbox="allow-scripts allow-downloads" loading={eager ? 'eager' : 'lazy'} tabindex={interactive ? undefined : -1} inert={interactive ? undefined : true}></iframe>
   </div>
 </lounge-frame>
