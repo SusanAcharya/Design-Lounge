@@ -24,8 +24,11 @@ button{font:inherit;color:inherit;border:0;background:none;padding:0;cursor:poin
 .app{position:relative;z-index:1;height:100%;max-width:430px;margin:0 auto;display:flex;flex-direction:column}
 header{padding:58px 18px 0;position:relative}
 .kick{display:flex;justify-content:space-between;font:700 11px/1 var(--font);font-stretch:100%;letter-spacing:.14em;text-transform:uppercase}
-.mast{position:relative;isolation:isolate;margin:8px 0 0;font:900 92px/.8 var(--font);font-stretch:62%;letter-spacing:-.01em;text-transform:uppercase;color:var(--over)}
-.mast::after{content:attr(data-ink);position:absolute;left:0;top:0;z-index:-1;color:var(--pink);transform:translate(calc(var(--reg-x)*2),calc(var(--reg-y)*2));pointer-events:none}
+.mast{margin:8px 0 0;line-height:0}
+.mast svg{display:block;width:100%;max-width:340px;height:auto;overflow:visible}
+.mast text{font:900 92px var(--font);font-stretch:62%}
+.mast .ink-n{fill:var(--over)}
+.mast .ink-p{fill:var(--pink);mix-blend-mode:multiply;transform:translate(calc(var(--reg-x) - 1.5px),calc(var(--reg-y) + 1px))} /* the pink plate overprints, misregistered; SVG keeps the pair one drawn title */
 .city{display:flex;align-items:center;gap:8px}.regm{width:22px;height:22px;margin:-6px 0}
 .sub{margin:8px 0 0;font-weight:600;font-size:14px;font-stretch:88%;display:flex;gap:10px;align-items:center}
 .sub b{font-weight:800;background:var(--blue);color:var(--paper);padding:3px 7px 2px;letter-spacing:.06em;font-size:11px}
@@ -107,7 +110,7 @@ header{padding:58px 18px 0;position:relative}
 <div class="app" id="app">
   <header>
     <div class="kick"><span class="city"><svg class="regm" viewBox="0 0 22 22" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="#00838A"/><circle cx="13" cy="10" r="7" fill="#FF48B0" style="mix-blend-mode:multiply"/><path d="M11 0v22M0 11h22" stroke="#1F2350" stroke-width="1.2"/></svg>Bristol</span><span>Week 45 · Free</span></div>
-    <h1 class="mast" data-ink="Handbill">Handbill</h1>
+    <h1 class="mast"><svg viewBox="0 0 340 76" role="img" aria-label="Handbill"><text class="ink-p" x="3" y="68" textLength="332" lengthAdjust="spacingAndGlyphs">HANDBILL</text><text class="ink-n" x="0" y="70" textLength="332" lengthAdjust="spacingAndGlyphs">HANDBILL</text></svg></h1>
     <p class="sub"><b>GIGS</b>Mon 2 to Sun 8 November · 21 listings</p>
   </header>
   <nav class="week" aria-label="Days this week" id="week"></nav>

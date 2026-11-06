@@ -36,7 +36,7 @@ The weekly listings screen of Handbill, a free gig guide for Bristol, built as i
 └──────────────────────────────────────┘
 ```
 
-- `header`: kicker `div` with a registration mark `svg`, `h1.mast` with `data-ink` for the pink `::after` copy, `p.sub`.
+- `header`: kicker `div` with a registration mark `svg`, `h1.mast` holding one `svg` with the pink and navy `text` plates, `p.sub`.
 - `nav.week[aria-label]` with seven `button.day[aria-pressed]`, labels like "Fri 6 November, 3 listings".
 - `main.list[aria-live=polite]`: `.dayhead` and `article.card` items; each card has `h3.act`, `button.save[aria-pressed]`, an `aria-hidden` print `svg` and stamp `svg`.
 - `button.tray[aria-haspopup=dialog]` → `section.sheet[role=dialog][aria-modal]` with `ol` of saved gigs.
@@ -110,7 +110,7 @@ The weekly listings screen of Handbill, a free gig guide for Bristol, built as i
 ## Reference behaviour
 
 1. First frame: week 45, Friday 6 November selected ("Friday 6 Nov · Tonight", 3 listings). Salt Lick is already saved and carries the stamp; Ana Petrov (Saturday) is also saved, so the tray reads "This week · Salt Lick, Ana Petrov" with a count of 2.
-2. Masthead: "HANDBILL" at 92px, Archivo 900, width 62%, in `--over`; an exact pink copy prints underneath at (+3px, −2px) as a `::after` from `data-ink`, so the letters read as solid navy with a pink fringe on the top-right edge. The copy goes under, not over with `multiply`: a darkened overlap behind the title fails contrast.
+2. Masthead: "HANDBILL" at 92px, Archivo 900, width 62%, in `--over`; drawn as one SVG title (`role="img"`, `aria-label="Handbill"`, both plates set with `textLength` so they match exactly). The pink plate overprints at (+3px, −2px) with `multiply`, so the letters print as a dark core with a pink fringe on the top-right edge. Keeping both plates in one drawn title means the overprint never sits behind live text.
 3. Week strip: seven day buttons, Mon 2 to Sun 8. Each shows the day (11px caps), date (22px, width 75%) and one teal pip per listing. The selected day gets a pink disc rotated −8° (multiply) and a blue 2px ring that is misregistered by (1.5px, −1px); both scale in from 0 over 320ms expo out, the ring 40ms later.
 4. Tapping a day re-renders the list: the header updates, cards drop in (opacity 0 → 1, translateY 14px → 0, rotate −1° → 0, 420ms, staggered 70ms), and every card's pink print layer slides back from (5px, −3px) to its resting misregistration over 520ms, as if the drum just turned.
 5. Arrow Left / Right on a focused day moves the selection and wraps.
@@ -181,9 +181,10 @@ One family, Archivo, used across its width axis. Narrow widths do the shouting; 
 .art .p { mix-blend-mode: multiply; transform: translate(var(--reg-x), var(--reg-y)); }
 .reg .art .p { animation: reg 520ms cubic-bezier(.16,1,.3,1); }
 @keyframes reg { from { transform: translate(5px, -3px); } }
-.mast { position: relative; isolation: isolate; }
-.mast::after { content: attr(data-ink); position: absolute; inset: 0 auto auto 0; z-index: -1;
-  color: var(--pink); transform: translate(3px, -2px); }
+.mast svg { display: block; width: 100%; max-width: 340px; height: auto; overflow: visible; }
+.mast text { font: 900 92px var(--font); font-stretch: 62%; }
+.mast .ink-n { fill: var(--over); }
+.mast .ink-p { fill: var(--pink); mix-blend-mode: multiply; } /* set 3px right, 2px up */
 ```
 
 **Hand-cut cards without clipping focus rings.** Put the cut on pseudo-elements, not the card, so the Save button's outline is never clipped:
