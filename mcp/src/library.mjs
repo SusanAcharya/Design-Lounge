@@ -29,6 +29,8 @@ export const terms = (s) => [...new Set(words(s).flatMap((w) => [w, ...w.split('
 
 /** Score how well a query's terms hit weighted text fields. A whole-word hit counts, a prefix hit counts half. */
 function score(queryTerms, fields) {
+  // A query past 32 terms adds nothing to the ranking but cost, so the rest are dropped.
+  if (queryTerms.length > 32) queryTerms = queryTerms.slice(0, 32);
   let total = 0;
   for (const [text, weight] of fields) {
     const have = new Set(terms(text));
@@ -99,10 +101,12 @@ export class Library {
 
   /* ---------- recipes ---------- */
   recipe(id) {
+    // Only a plain recipe id reaches the disk: no dots or slashes, so no path outside starts/, and misses are not cached.
+    if (typeof id !== 'string' || !/^[a-z0-9-]{1,64}$/.test(id)) return null;
     if (this._starts.has(id)) return this._starts.get(id);
     const file = path.join(this.lib, 'starts', `${id}.json`);
     const r = fs.existsSync(file) ? readJson(file) : null;
-    this._starts.set(id, r);
+    if (r) this._starts.set(id, r);
     return r;
   }
   recipes() { return this.map.starts; }

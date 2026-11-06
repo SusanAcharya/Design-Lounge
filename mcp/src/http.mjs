@@ -9,11 +9,12 @@ guardNetwork(true);
 
 const LIMIT = Number(process.env.DESIGN_LOUNGE_RATE || 60); // requests per IP per minute, per instance
 const hits = new Map();
-function limited(ip) {
+const MAX_BATCH = 10; // JSON-RPC messages in one POST
+function limited(ip, n = 1) {
   const now = Date.now();
   const h = hits.get(ip);
-  if (!h || now > h.reset) { hits.set(ip, { n: 1, reset: now + 60_000 }); return false; }
-  h.n++;
+  if (!h || now > h.reset) { hits.set(ip, { n, reset: now + 60_000 }); return n > LIMIT; }
+  h.n += n;
   if (hits.size > 5000) for (const [k, v] of hits) if (now > v.reset) hits.delete(k);
   return h.n > LIMIT;
 }
@@ -47,7 +48,16 @@ export async function handle(request) {
   if (request.method === 'OPTIONS') return withCors(new Response(null, { status: 204 }));
   if (request.method === 'GET' && !/text\/event-stream/.test(request.headers.get('accept') || '')) return about();
   const ip = (request.headers.get('x-forwarded-for') || '').split(',')[0].trim() || request.headers.get('x-real-ip') || 'unknown';
-  if (limited(ip)) return json({ jsonrpc: '2.0', error: { code: -32000, message: `Too many requests. The hosted server allows ${LIMIT} a minute. For unlimited use, run it locally: npx -y design-lounge-mcp@latest` }, id: null }, 429, { 'retry-after': '60' });
+  // A batch counts every message in it against the limit, so one POST cannot carry a hundred tool calls.
+  let calls = 1;
+  if (request.method === 'POST') {
+    const body = await request.clone().json().catch(() => null);
+    if (Array.isArray(body)) {
+      if (body.length > MAX_BATCH) return json({ jsonrpc: '2.0', error: { code: -32600, message: `A batch may hold at most ${MAX_BATCH} messages.` }, id: null }, 400);
+      calls = Math.max(1, body.length);
+    }
+  }
+  if (limited(ip, calls)) return json({ jsonrpc: '2.0', error: { code: -32000, message: `Too many requests. The hosted server allows ${LIMIT} a minute. For unlimited use, run it locally: npx -y design-lounge-mcp@latest` }, id: null }, 429, { 'retry-after': '60' });
   if (request.method !== 'POST') return json({ jsonrpc: '2.0', error: { code: -32000, message: 'This endpoint is stateless: POST each request.' }, id: null }, 405, { allow: 'GET, POST, OPTIONS' });
 
   const server = createServer({ hosted: true });

@@ -17,16 +17,18 @@ const MAX_BYTES = 3_000_000;
 let guarded = false;
 export const guardNetwork = (on) => { guarded = Boolean(on); };
 
+// Every range that is not the public internet, for both families. BlockList matches an address however it is
+// written, so ::ffff:7f00:1 is caught as 127.0.0.1, and NAT64 and 6to4 prefixes that wrap a private IPv4 are refused.
+// Two lists, because a BlockList with ::ffff:0:0/96 in it matches every IPv4 address.
+const PRIVATE4 = new net.BlockList();
+const PRIVATE6 = new net.BlockList();
+for (const [net4, bits] of [['0.0.0.0', 8], ['10.0.0.0', 8], ['100.64.0.0', 10], ['127.0.0.0', 8], ['169.254.0.0', 16], ['172.16.0.0', 12], ['192.0.0.0', 24], ['192.0.2.0', 24], ['192.168.0.0', 16], ['198.18.0.0', 15], ['198.51.100.0', 24], ['203.0.113.0', 24], ['224.0.0.0', 3]]) PRIVATE4.addSubnet(net4, bits, 'ipv4');
+for (const [net6, bits] of [['::', 128], ['::1', 128], ['::ffff:0:0', 96], ['64:ff9b::', 96], ['64:ff9b:1::', 48], ['100::', 64], ['2001:db8::', 32], ['2002::', 16], ['fc00::', 7], ['fe80::', 10], ['fec0::', 10], ['ff00::', 8]]) PRIVATE6.addSubnet(net6, bits, 'ipv6');
+
 function privateAddress(ip) {
-  if (net.isIPv4(ip)) {
-    const [a, b] = ip.split('.').map(Number);
-    return a === 0 || a === 10 || a === 127 || (a === 100 && b >= 64 && b <= 127) || (a === 169 && b === 254)
-      || (a === 172 && b >= 16 && b <= 31) || (a === 192 && b === 168) || (a === 192 && b === 0) || (a === 198 && (b === 18 || b === 19)) || a >= 224;
-  }
-  const v6 = ip.toLowerCase();
-  const mapped = v6.match(/^::ffff:(\d+\.\d+\.\d+\.\d+)$/);
-  if (mapped) return privateAddress(mapped[1]);
-  return v6 === '::' || v6 === '::1' || /^f[cd]/.test(v6) || /^fe[89ab]/.test(v6) || /^ff/.test(v6);
+  if (net.isIPv4(ip)) return PRIVATE4.check(ip, 'ipv4');
+  if (net.isIPv6(ip)) return PRIVATE6.check(ip, 'ipv6');
+  return true;
 }
 
 export async function checkPublicUrl(raw) {

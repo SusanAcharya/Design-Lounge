@@ -14,9 +14,13 @@ const TYPES = { '.html': 'text/html; charset=utf-8', '.css': 'text/css', '.js': 
 /** Serve a folder on 127.0.0.1, the way a static host would: / is index.html, /about is about.html or about/index.html. */
 function serve(root) {
   const server = http.createServer((req, res) => {
-    const url = decodeURIComponent(new URL(req.url, 'http://x').pathname);
-    let file = path.join(root, url);
-    if (!file.startsWith(root)) { res.writeHead(403); return res.end(); }
+    let url;
+    try { url = decodeURIComponent(new URL(req.url, 'http://x').pathname); } catch { res.writeHead(400); return res.end(); }
+    // Resolve after decoding, then require the root itself or a path under it, so %2F..%2F and a sibling folder
+    // that shares the root's name (site-old next to site) are both refused. Dotfiles (.env, .git) are never served; .well-known is.
+    let file = path.resolve(root, '.' + path.sep + url);
+    const base = path.resolve(root);
+    if ((file !== base && !file.startsWith(base + path.sep)) || file.slice(base.length).split(path.sep).some((seg) => seg.startsWith('.') && seg !== '.well-known')) { res.writeHead(403); return res.end(); }
     const tries = [file, path.join(file, 'index.html'), `${file}.html`];
     file = tries.find((f) => fs.existsSync(f) && fs.statSync(f).isFile());
     if (!file) { res.writeHead(404); return res.end('not found'); }
