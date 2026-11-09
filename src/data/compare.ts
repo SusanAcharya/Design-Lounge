@@ -2,7 +2,7 @@
 // CHECKED; a fact that could not be confirmed there is left out rather than guessed. Each row says what the
 // other product does better too, because a comparison that only flatters is not one.
 
-export const CHECKED = '2026-11-03';
+export const CHECKED = 'between 3 and 9 November 2026';
 
 export type Mark = 'yes' | 'no' | 'part';
 
@@ -57,6 +57,14 @@ export const RIVALS: Rival[] = [
     price: 'Free',
     marks: { pieces: 'part', direction: 'no', review: 'no', search: 'no', mcp: 'yes', skill: 'yes' },
     better: 'Real, accessible components installed into your codebase. The Lounge sits happily on top of it.',
+  },
+  {
+    name: 'Arc UI',
+    href: 'https://uiarc.dev/docs/ai',
+    kind: 'Animated React components and blocks',
+    price: 'Free tier; Pro from $149 a year',
+    marks: { pieces: 'yes', direction: 'part', review: 'part', search: 'no', mcp: 'yes', skill: 'yes' },
+    better: 'Tested React source installed with the shadcn CLI, so a dialog or a kanban block behaves the same every time. 141 product-UI blocks.',
   },
   {
     name: 'Impeccable',
