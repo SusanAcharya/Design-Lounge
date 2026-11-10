@@ -11,7 +11,7 @@ import { RECIPES } from '../data/motion';
 import { STARTS } from '../data/starts';
 import { AUTHOR } from '../lib/pieces';
 import { EXAMPLES, PAIRS, SOLO, exampleUrl } from '../data/examples';
-import { CALLS, tokensOf, typicalTokens, benchSummary } from '../data/benchmark';
+import { CALLS, tokensOf, typicalTokens, benchSummary, SHOWCASE, SUBJECTS, REVIEWS, BENCH_META } from '../data/benchmark';
 import { ROWS, LOUNGE, RIVALS, CHECKED } from '../data/compare';
 import mcp from '../../mcp/package.json';
 
@@ -58,6 +58,16 @@ const installModes = [
 const cost = (tool: string) => tokensOf(CALLS.find((c) => c.tool === tool)!.chars);
 const k = (n: number) => `${(n / 1000).toFixed(1).replace(/\.0$/, '')}k`;
 const bench = benchSummary();
+const show = SUBJECTS.find((s) => s.id === SHOWCASE.subject)!;
+const showModel = BENCH_META.model.replace(/\s*\(.*\)$/, '');
+const showSides = (['without', 'with'] as const).map((arm) => ({
+  arm,
+  label: arm === 'with' ? 'With Design Lounge' : `${showModel} alone`,
+  fails: REVIEWS.find((r) => r.subject === show.id && r.arm === arm)!.fails,
+  notes: SHOWCASE[arm],
+  href: `/built/bench/${show.id}-${arm}/index.html`,
+  alt: `${show.title} landing page, first screen, built ${arm === 'with' ? 'with Design Lounge' : `by ${showModel} alone`}`,
+}));
 const flow = [
   { step: 'Ask', tools: ['start_design'], tokens: cost('start_design'), text: 'Say what you are making in plain words. It reads them and returns the plan: the product kind, the rules that must hold, and the calls to make next.' },
   { step: 'Lock a direction', tools: ['get_recipe', 'get_theme', 'get_pairing'], tokens: cost('get_recipe') + cost('get_theme') + cost('get_pairing'), text: 'One recipe, one palette as CSS tokens, one type pairing with sizes. Your agent stops inventing a purple gradient and a font.' },
@@ -74,7 +84,7 @@ const faq = [
   { q: 'How many tokens does the Design Lounge MCP use?', a: `About ${k(typicalTokens())} tokens for a whole direction: the plan from start_design (about ${k(cost('start_design'))}), a recipe, a theme and a pairing (about ${k(cost('get_recipe') + cost('get_theme') + cost('get_pairing'))} together), three piece briefs (about ${k(cost('get_piece'))} each) and one review. The tool list itself is about ${k(cost('tools/list'))}. The Benchmark page has the builds it was measured on.` },
   { q: 'Should I use the MCP server or the skill?', a: 'The MCP server, if your agent supports MCP. It installs the skill too, and adds tools that show your agent a picture of each piece, search the library, and review the page it built. The skill alone is a folder of files your agent reads, for agents without MCP.' },
   { q: 'Which agents does it work with?', a: 'Claude Code, Cursor, Codex, VS Code, Windsurf and Claude Desktop through the npm package design-lounge-mcp. Claude.ai, ChatGPT and other clients that take a remote connector can use https://www.designlounge.live/api/mcp. Agents without MCP can install the skill with npx skills add SusanAcharya/Design-Lounge.' },
-  { q: 'Does it work with React, Flutter or SwiftUI?', a: 'Yes. A brief describes the design in numbers, not in one framework, and the demo is plain HTML. Your agent rebuilds it in your stack: React, Vue, Svelte, Astro, React Native, Flutter, SwiftUI or Compose. It sits well on top of a component library such as shadcn/ui.' },
+  { q: 'Does it work with React, Flutter or SwiftUI?', a: 'Yes. Every demo is plain HTML, CSS and vanilla JavaScript, with no framework, packages or versions that could clash with your project. A brief describes the design in numbers, not in one framework, so your agent rebuilds it in your stack: React, Vue, Svelte, Astro, React Native, Flutter, SwiftUI or Compose. It sits well on top of a component library such as shadcn/ui.' },
   { q: 'How is it different from shadcn/ui, Arc UI, Mobbin or 21st.dev?', a: 'Those give your agent components to install or screenshots to look at. Design Lounge gives it a direction: a palette, a type pairing and a page recipe that agree, live pieces with numeric briefs, and a review of the finished page for design, SEO, AEO and GEO. It works alongside them. The comparison on this page shows what each one covers.' },
   { q: 'What does the review check?', a: 'It checks design, SEO, AEO and GEO in one pass, and lists fails first. review_page fails the usual signs of AI-made design (gradient text, an icon over a title over a sentence three times, numbered eyebrows, glass everywhere, invented fonts), checks that the page keeps its locked kit, and scores SEO, AEO and GEO: titles, descriptions, headings, structured data, answers that a search or AI engine can quote. The local server also screenshots the page and runs accessibility checks.' },
   { q: 'Does the hosted MCP see my code?', a: 'Only what your agent sends it. Most tools take a few words and return library data. review_page on the hosted endpoint reads a public URL or the HTML you pass. Run the npm package locally if you would rather keep it on your machine: the library and thumbnails are bundled, nothing is sent to Design Lounge, and there is no tracking.' },
@@ -131,9 +141,25 @@ const faq = [
 
   <section class="proof wrap" aria-labelledby="proof-h">
     <header class="proof-head">
-      <h2 class="h4" id="proof-h">Same model, same prompts, with and without the Lounge</h2>
+      <h2 class="display h3" id="proof-h">One prompt, two builds.</h2>
       <a class="textlink" href="/benchmark">See every build <span aria-hidden="true">→</span></a>
     </header>
+    <p class="pair-prompt"><span class="mono" aria-hidden="true">&gt;</span> {show.prompt}</p>
+    <div class="pair">
+      {showSides.map((s) => (
+        <figure class={`pair-side ${s.arm}`}>
+          <a class="pair-shot" href={s.href} target="_blank" rel="noopener">
+            <img src={`/built/bench/${show.id}-${s.arm}/cover.jpg`} alt={s.alt} width="1280" height="800" loading="lazy" decoding="async" />
+          </a>
+          <figcaption>
+            <p class="pair-label"><span>{s.label}</span><span class={`pair-fails num${s.fails ? '' : ' ok'}`}>{s.fails} review {s.fails === 1 ? 'fail' : 'fails'}</span></p>
+            <ul class="pair-notes">{s.notes.map((n) => <li>{n}</li>)}</ul>
+            <a class="pair-open" href={s.href} target="_blank" rel="noopener">Open the build <span aria-hidden="true">↗</span></a>
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+    <p class="figs-cap">Across all {SUBJECTS.length} prompts, a landing page, a bakery site and a dashboard</p>
     <dl class="figs">
       <div>
         <dt>Review fails, same prompts</dt>
@@ -427,7 +453,24 @@ const faq = [
   /* measured */
   .proof { padding-block: clamp(28px, 4vw, 48px) clamp(48px, 6vw, 80px); }
   .proof-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 18px; }
-  .proof-head .h4 { font-size: 15px; font-weight: 500; color: var(--ink-2); letter-spacing: 0; }
+  .pair-prompt { display: flex; gap: 10px; max-width: 72ch; margin: 0 0 clamp(18px, 2.4vw, 28px); font-size: 15px; line-height: 1.5; color: var(--ink-2); }
+  .pair-prompt .mono { color: var(--accent-text); }
+  .pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(16px, 2.4vw, 32px); margin: 0 0 clamp(36px, 4.5vw, 56px); }
+  .pair-side { margin: 0; display: flex; flex-direction: column; gap: 14px; }
+  .pair-shot { display: block; border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden; background: var(--paper-2); transition: border-color var(--t-med), transform var(--t-med) var(--ease-out); }
+  .pair-side.with .pair-shot { border-color: var(--ink); }
+  .pair-shot:hover { border-color: var(--ink); transform: translateY(-2px); }
+  .pair-shot img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; }
+  .pair-label { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin: 0; padding-bottom: 10px; border-bottom: 1px solid var(--line); font-size: 15px; font-weight: 600; letter-spacing: -0.01em; color: var(--ink); }
+  .pair-fails { font-size: 13.5px; font-weight: 500; color: var(--ink-2); white-space: nowrap; }
+  .pair-fails.ok { color: var(--ink); font-weight: 600; }
+  .pair-notes { display: flex; flex-direction: column; gap: 7px; margin: 0; padding: 0; list-style: none; }
+  .pair-notes li { position: relative; padding-left: 16px; font-size: 14.5px; line-height: 1.45; color: var(--ink-2); }
+  .pair-notes li::before { content: ""; position: absolute; left: 0; top: 0.62em; width: 6px; height: 1px; background: var(--ink-3); }
+  .pair-side.with .pair-notes li::before { background: var(--accent); }
+  .pair-open { align-self: flex-start; font-size: 13.5px; color: var(--ink-2); border-bottom: 1px solid var(--line-2); min-height: 24px; }
+  .pair-open:hover { color: var(--accent-text); border-color: var(--accent); }
+  .figs-cap { margin: 0 0 10px; font-size: 13px; color: var(--ink-3); }
   .figs { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); margin: 0; border-top: 1px solid var(--ink); }
   .figs > div { display: flex; flex-direction: column; gap: 10px; padding: 18px 24px 4px 0; }
   .figs > div + div { padding-left: 24px; border-left: 1px solid var(--line); }
@@ -654,6 +697,7 @@ const faq = [
     .steps, .fgroup ul, .built-row, .pair-row { grid-template-columns: minmax(0, 1fr); }
     .flow { grid-template-columns: minmax(0, 1fr); }
     .proof-head { flex-direction: column; gap: 6px; }
+    .pair { grid-template-columns: minmax(0, 1fr); }
     .figs > div + div { padding-left: 0; border-left: 0; border-top: 1px solid var(--line); }
     .built-head { flex-direction: column; align-items: flex-start; }
     .agent-cap { flex-direction: column; gap: 4px; }

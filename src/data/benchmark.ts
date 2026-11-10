@@ -65,6 +65,25 @@ export const VERDICTS: Verdict[] = [
   { subject: 'fleet', winner: 'without', with: 40, without: 39, why: 'The more distinctive board: a needs-help column first, with pointed actions such as "Send Van 04, 2.4 km" and "Retry tracker", condensed display type and stop-by-stop progress on every van.' },
 ];
 
+/** The homepage before-and-after. Every line comes from review_page on the two builds (rerun 2026-11-10, same
+ *  results as REVIEWS) or from reading the page itself: the invented facts are in ledgerly-without/index.html,
+ *  and the with build's DESIGN.md lists certifications under Missing. */
+export const SHOWCASE = {
+  subject: 'ledgerly',
+  without: [
+    '41 text elements below readable contrast',
+    'Invents an FCA licence, SOC 2 and 99.98% uptime',
+    'No share card, so a shared link shows no title or image',
+    'Eight tiny tracked labels and three filled buttons on the first screen',
+  ],
+  with: [
+    'Every line of text readable',
+    'Leaves certifications out and lists them as missing, instead of making them up',
+    'One locked direction: Ledger paper, with the Harbour Ledger palette and Lettera type',
+    'The hero is the product: an invoice you can edit, with a change log',
+  ],
+};
+
 const avg = (xs: number[]) => (xs.length ? xs.reduce((a, b) => a + b, 0) / xs.length : 0);
 
 export function benchSummary() {
