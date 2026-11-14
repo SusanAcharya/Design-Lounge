@@ -61,3 +61,32 @@ test('the network guard refuses private addresses and odd URLs', async () => {
   }
   assert.equal(await checkPublicUrl('https://www.designlounge.live/'), 'https://www.designlounge.live/');
 });
+
+test('the Cloudflare endpoint (reviews: false) lists only the library and never names a tool it lacks', async () => {
+  const { createServer } = await import('../src/tools.mjs');
+  const { WebStandardStreamableHTTPServerTransport } = await import('@modelcontextprotocol/sdk/server/webStandardStreamableHttp.js');
+  const call = async (msg) => {
+    const server = createServer({ hosted: true, reviews: false });
+    const tr = new WebStandardStreamableHTTPServerTransport({ sessionIdGenerator: undefined, enableJsonResponse: true });
+    await server.connect(tr);
+    const res = await tr.handleRequest(new Request('http://x/', { method: 'POST', headers: { 'content-type': 'application/json', accept: 'application/json, text/event-stream' }, body: JSON.stringify(msg) }));
+    const out = await res.json();
+    await tr.close(); await server.close();
+    return out;
+  };
+  const init = await call({ jsonrpc: '2.0', id: 1, method: 'initialize', params: { protocolVersion: '2025-06-18', capabilities: {}, clientInfo: { name: 't', version: '0' } } });
+  const names = (await call({ jsonrpc: '2.0', id: 2, method: 'tools/list' })).result.tools.map((t) => t.name);
+  for (const n of ['start_design', 'get_recipe', 'pick_direction', 'get_theme', 'get_pairing', 'get_piece', 'search_pieces', 'read_guide']) assert.ok(names.includes(n), n);
+  const absent = ['review_page', 'audit_slop', 'audit_search', 'suggest_schema', 'record_pick', 'match_reference', 'install_skill', 'install_browser'];
+  for (const n of absent) assert.ok(!names.includes(n), `${n} must not be on the Cloudflare endpoint`);
+  const prompts = (await call({ jsonrpc: '2.0', id: 3, method: 'prompts/list' })).result.prompts.map((p) => p.name);
+  assert.deepEqual(prompts, ['design']);
+  // What the agent reads must not send it to a tool it cannot call.
+  const said = (text) => absent.filter((n) => new RegExp(`\\b${n}\\b`).test(text.replace(/[^.]*local server[^.]*\./g, '')));
+  assert.deepEqual(said(init.result.instructions), [], 'instructions');
+  for (const request of ['a landing page for an invoicing app', 'make my bakery site look like https://example.com', 'redesign my portfolio, it looks AI made', 'a mobile game for kids']) {
+    const out = await call({ jsonrpc: '2.0', id: 4, method: 'tools/call', params: { name: 'start_design', arguments: { request } } });
+    const plan = JSON.parse(out.result.content[0].text);
+    assert.deepEqual(said(`${plan.flow}. ${plan.steps.join(' ')}`), [], request);
+  }
+});

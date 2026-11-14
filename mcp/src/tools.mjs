@@ -26,20 +26,22 @@ export const { version: VERSION } = JSON.parse(fs.readFileSync(new URL('../packa
 
 /**
  * Build the server. hosted: true is the public endpoint, with no access to the person's machine.
+ * reviews: false leaves out the page reviews (review_page, audit_slop, audit_search, suggest_schema), which read
+ * other sites and cost the most CPU. The Cloudflare endpoint runs without them; the local server always has them.
  * skillLine says where the local server installed the skill.
  */
-export function createServer({ hosted = false, skillLine = '' } = {}) {
-  const INSTRUCTIONS = `Design Lounge is the design library of Susan Acharya (${lib.site}): ${about(lib.counts.pieces)} piece briefs, ${about(lib.counts.themes)} themes, ${about(lib.counts.pairings)} type pairings, ${about(lib.counts.starts)} recipes with directions, icons, and Sanzo Wada's colour combinations. It also reviews pages for AI giveaways and for SEO, AEO, and GEO.
-
-For any website, app, screen, or UI: call start_design first with their words. Then lock a recipe direction with get_recipe and pick_direction, and build from get_theme, get_pairing, get_family, and get_piece. Do not invent a palette, a type pairing, a radius, or a component language. Their words win over every default.
-
-After you build or change a page, call review_page on the ${hosted ? 'URL (or its HTML)' : 'file or URL'}. Fix every fail${hosted ? '' : ', look at the frames it attaches,'} and run it again.${hosted ? '' : ' Before you finish a website, record_pick with status "finished".'}
-
-When they show a site or a screenshot they like: match_reference first, then build from the kit it names. Match the feel, never copy the site.
-
-To clean up an existing page: review_page (or audit_slop for design only, audit_search for search only), then fix in the order it lists. read_guide gives any section of the method.
-
-${hosted ? `This is the hosted server. It cannot read files on the person's machine, keep their history, or take screenshots. For those, and to install the skill, they can run it locally: npx -y design-lounge-mcp@latest.` : skillLine} ${hosted ? 'start_design returns the rules that must hold, and read_guide serves the rest of the method.' : 'If your client loads skills, it is already in your context: follow it. If not, start_design returns the rules that must hold, and read_guide serves the rest.'}`;
+export function createServer({ hosted = false, reviews = true, skillLine = '' } = {}) {
+  const LOCAL = 'npx -y design-lounge-mcp@latest';
+  const INSTRUCTIONS = [
+    `Design Lounge is the design library of Susan Acharya (${lib.site}): ${about(lib.counts.pieces)} piece briefs, ${about(lib.counts.themes)} themes, ${about(lib.counts.pairings)} type pairings, ${about(lib.counts.starts)} recipes with directions, icons, and Sanzo Wada's colour combinations. ${reviews ? 'It also reviews pages for AI giveaways and for SEO, AEO, and GEO.' : `Its page reviews, for AI giveaways and for SEO, AEO, and GEO, run in the local server (${LOCAL}).`}`,
+    `For any website, app, screen, or UI: call start_design first with their words. Then lock a recipe direction with get_recipe and pick_direction, and build from get_theme, get_pairing, get_family, and get_piece. Do not invent a palette, a type pairing, a radius, or a component language. Their words win over every default.`,
+    reviews
+      ? `After you build or change a page, call review_page on the ${hosted ? 'URL (or its HTML)' : 'file or URL'}. Fix every fail${hosted ? '' : ', look at the frames it attaches,'} and run it again.${hosted ? '' : ' Before you finish a website, record_pick with status "finished".'}`
+      : `After you build, check the page against the rules start_design returned. This server has no review_page: to review a page for AI giveaways and for SEO, AEO, and GEO, run the local server (${LOCAL}).`,
+    hosted ? null : `When they show a site or a screenshot they like: match_reference first, then build from the kit it names. Match the feel, never copy the site.`,
+    reviews ? `To clean up an existing page: review_page (or audit_slop for design only, audit_search for search only), then fix in the order it lists. read_guide gives any section of the method.` : `read_guide gives any section of the method.`,
+    `${hosted ? `This is the hosted server. It cannot read files on the person's machine, keep their history, or take screenshots. For those, and to install the skill, they can run it locally: ${LOCAL}.` : skillLine} ${hosted ? 'start_design returns the rules that must hold, and read_guide serves the rest of the method.' : 'If your client loads skills, it is already in your context: follow it. If not, start_design returns the rules that must hold, and read_guide serves the rest.'}`,
+  ].filter(Boolean).join('\n\n');
 
   const server = new McpServer({ name: 'design-lounge', version: VERSION }, { instructions: INSTRUCTIONS });
 
@@ -83,22 +85,28 @@ ${hosted ? `This is the hosted server. It cannot read files on the person's mach
       .replace('<everyday | finished | spectacle>', `${read.ambition}`)
       .replace('<Kit | Show, Free | Show, locked>', read.mode);
     const isApp = /app short path|Piece flow|Library flow/.test(read.flow);
+    // Steps never name a tool this server does not have. The hosted server has no record_pick or match_reference,
+    // and the Cloudflare one has no reviews either.
+    const reviewStep = (local) => reviews ? local : `Check the page against the rules below, line by line. review_page (AI giveaways, SEO, AEO, GEO) is in the local server: ${LOCAL}.`;
+    const absent = [hosted && 'match_reference', hosted && 'record_pick', !reviews && 'review_page'].filter(Boolean);
+    const named = absent.filter((t) => read.flow.includes(t));
+    if (named.length) read.flow += ` (${named.join(' and ')} ${named.length > 1 ? 'are' : 'is'} in the local server only: ${LOCAL}. Here, ${named.includes('match_reference') ? 'describe the reference in words and use search_pieces' : 'check the page against the rules below'}.)`;
     const steps = isApp && !/app short path/.test(read.flow) ? [
       'Lock a theme and pairing first if the project has none (browse_library what=themes/pairings with a mood, then get_theme, get_pairing).',
       'search_pieces for the job, then get_piece for the brief. The brief is the spec for structure, counts, motion, and states.',
       'Translate its paint onto the locked tokens (read_guide practice.md "Adapting a brief"). One primary per view.',
-      'review_page on the result. Fix every fail.',
+      reviewStep('review_page on the result. Fix every fail.'),
     ] : [
       project?.designMd?.hasBrief ? `DESIGN.md already has a Brief (${project.designMd.file}). Reuse it.` : 'Fill the brief below and put it at the top of DESIGN.md under ## Brief. Never invent facts: list them under Missing.',
-      `Write three words for the subject's world (materials, tools, place). get_recipe for the best recipe below, keep the directions whose mood names that world, then pick_direction with those as \`fitting\`${read.signals.calm.length ? ' and calm: true' : ''} and the product name. record_pick status "claimed" right away.`,
+      `Write three words for the subject's world (materials, tools, place). get_recipe for the best recipe below, keep the directions whose mood names that world, then pick_direction with those as \`fitting\`${read.signals.calm.length ? ' and calm: true' : ''} and the product name.${hosted ? ' Keep the pick in your own history and pass it as history next time.' : ' record_pick status "claimed" right away.'}`,
       read.styles.length ? `Write the Named aesthetic line from the styles.md row for "${read.styles[0].said}" (read_guide styles.md).` : null,
       isApp ? 'read_guide flows.md "An app, the short path" and app.md "The one screen". Write the four lines.' : 'read_guide website.md "Write the idea": write Idea, Signature, and Avoiding (the default look you will not make). Then Hero shape and Frame.',
       isApp ? null : 'check_pick with the hero, work, footer, shape, and frame you chose. If it fails, take the next direction.',
       'get_theme, get_pairing, get_family for the locked direction. Copy the CSS as is. get_piece for every piece you build: header, hero, work, footer, phone bar.',
       read.mode.startsWith('Show') ? 'read_guide show.md: the centrepiece and the rendering bar.' : null,
       'Build with their facts only. A sentence still true with another product\'s name in it gets rewritten.',
-      'review_page on the built file. Open the screenshots. Fix every fail, make one correction (read_guide practice.md "One correction"), review again.',
-      isApp ? null : 'record_pick status "finished" with work, footer, shape, and frame. End with the closing block in SKILL.md "The reply".',
+      reviewStep('review_page on the built file. Open the screenshots. Fix every fail, make one correction (read_guide practice.md "One correction"), review again.'),
+      isApp ? null : `${hosted ? '' : 'record_pick status "finished" with work, footer, shape, and frame. '}End with the closing block in SKILL.md "The reply".`,
     ].filter(Boolean);
     const ask = [];
     if (!read.signals.justBuild) {
@@ -332,7 +340,7 @@ ${hosted ? `This is the hosted server. It cannot read files on the person's mach
     return loadPage(args);
   }
 
-  server.registerTool('review_page', {
+  if (reviews) server.registerTool('review_page', {
     title: 'Review a page',
     description: 'The all-in-one check for a built page: AI giveaways and kit drift (the Look fails), SEO, AEO, GEO, and, when Chromium is available, a rendered pass at 1280×800 and 390×844 with axe accessibility, measured labels, faces, primaries, tap targets, and saved screenshots. Returns scores, fails first, each with its evidence and fix.',
     inputSchema: {
@@ -371,7 +379,7 @@ ${hosted ? `This is the hosted server. It cannot read files on the person's mach
     return text(formatReport({ label: page.label, kit, findings, facts, render: frames.length ? render : render && { ...render, images: [] } }), frames);
   });
 
-  server.registerTool('audit_slop', {
+  if (reviews) server.registerTool('audit_slop', {
     title: 'Find AI giveaways',
     description: 'Design only: the tells of a generated page (stock copy, em dashes, buzzwords, icon-card trios, gradients, the indigo palette, emoji icons, numbered eyebrows, placeholder copy, made-up numbers) and drift from the locked kit (faces, colours, radius, shadow). Static by default; render=true adds the measured checks.',
     inputSchema: { ...target, kit: kitShape, render: z.boolean().optional(), out_dir: z.string().optional() },
@@ -386,7 +394,7 @@ ${hosted ? `This is the hosted server. It cannot read files on the person's mach
     return text(formatReport({ label: page.label, kit, findings, render, only: ['design'] }), (render?.images || []).map((i) => imageContent(i.data, 'image/jpeg')));
   });
 
-  server.registerTool('audit_search', {
+  if (reviews) server.registerTool('audit_search', {
     title: 'Check SEO, AEO, and GEO',
     description: 'Whether search engines can index the page and show it well (SEO), answer engines can lift a direct answer (AEO), and AI engines can reach it, read it without JavaScript, and name the entity (GEO): title, description, headings, alt, share card and its 1200×630 image, canonical, robots.txt for search and AI crawlers, sitemap, JSON-LD, question headings with short answers, server-rendered text.',
     inputSchema: { ...target },
@@ -398,7 +406,7 @@ ${hosted ? `This is the hosted server. It cannot read files on the person's mach
     return text(formatReport({ label: page.label, findings, facts, only: ['seo', 'aeo', 'geo'] }));
   });
 
-  server.registerTool('suggest_schema', {
+  if (reviews) server.registerTool('suggest_schema', {
     title: 'Suggest JSON-LD',
     description: 'JSON-LD for the page built only from facts on it: the entity (Organization, LocalBusiness subtypes, Person, Product, SoftwareApplication) with name, url, description, image, phone, email, address, sameAs; and FAQPage from its own questions. Lists the fields it could not find. Never invents ratings, reviews, or prices.',
     inputSchema: {
@@ -497,10 +505,10 @@ ${hosted ? `This is the hosted server. It cannot read files on the person's mach
     description: 'Design a site, app, or screen from the Lounge library, then review it',
     argsSchema: { request: z.string().describe('What to make, in your words'), folder: z.string().optional() },
   }, ({ request, folder }) => ({
-    messages: [{ role: 'user', content: { type: 'text', text: `${request}\n\nUse the Design Lounge tools. Start with start_design (request word for word${folder ? `, project_path ${folder}` : ''}), follow its steps, and finish with review_page on what you built. Fix every fail before you reply. ${lib.guideSection('SKILL.md', 'The reply') ? 'End with the closing block from read_guide SKILL.md "The reply".' : ''}` } }],
+    messages: [{ role: 'user', content: { type: 'text', text: `${request}\n\nUse the Design Lounge tools. Start with start_design (request word for word${folder ? `, project_path ${folder}` : ''}), follow its steps${reviews ? ', and finish with review_page on what you built. Fix every fail before you reply.' : ', and check the page against the rules it returns before you reply.'} ${lib.guideSection('SKILL.md', 'The reply') ? 'End with the closing block from read_guide SKILL.md "The reply".' : ''}` } }],
   }));
 
-  server.registerPrompt('review', {
+  if (reviews) server.registerPrompt('review', {
     title: 'Review a page',
     description: 'AI giveaways, kit drift, SEO, AEO, GEO, and accessibility, then fix',
     argsSchema: { target: z.string().describe('A file path or URL') },
@@ -508,7 +516,7 @@ ${hosted ? `This is the hosted server. It cannot read files on the person's mach
     messages: [{ role: 'user', content: { type: 'text', text: `Run review_page on ${t}. Open the screenshots it saves. Fix every fail in the order it lists, keeping their brand, URLs, nav labels, and form fields. Then run it again and tell me what changed and what is still open.` } }],
   }));
 
-  server.registerPrompt('deslop', {
+  if (reviews) server.registerPrompt('deslop', {
     title: 'Remove AI giveaways',
     description: 'Strip the tells of a generated page and rewrite the copy with real facts',
     argsSchema: { target: z.string().describe('A file path or URL') },

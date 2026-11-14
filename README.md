@@ -26,7 +26,7 @@ Cursor, Windsurf, Claude Desktop, and other clients take this in their MCP setti
 
 Reload the client once after the first start, so it picks up the skill. For screenshots, ask your agent to run `install_browser` once. VS Code, Codex, every tool, and what the server writes and fetches are in [mcp/README.md](mcp/README.md).
 
-The hosted endpoint for Claude.ai, ChatGPT, and other clients that cannot run a local program (`https://www.designlounge.live/api/mcp`) is paused while it moves to a new host. Use the npm package meanwhile.
+For Claude.ai, ChatGPT, and other clients that cannot run a local program, there is a hosted endpoint: `https://www.designlounge.live/api/mcp`. Add it as a custom connector. It has the library tools (start_design, recipes, themes, pairings, piece briefs); page reviews, screenshots, history and the skill install need the local server.
 
 ## Or install the skill alone
 

@@ -1,10 +1,12 @@
 // Cloudflare Workers with static assets. The site is the built dist/ folder, served as files, and costs no Worker
-// requests. Only /api/mcp and /mcp run the Worker (cf/worker.js), which answers that the hosted MCP is paused.
+// requests. Only /api/mcp and /mcp run the Worker (cf/worker.js → cf/mcp.js), the hosted MCP.
 // public/_headers and public/_redirects are copied into dist/ and apply to the files.
+// `pnpm build` must run first: it builds dist/ and cf/library.gen.js (cf/build-library.mjs).
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "designlounge",
   "compatibility_date": "2026-09-01",
+  "compatibility_flags": ["nodejs_compat"],
   "main": "cf/worker.js",
   "assets": {
     "directory": "./dist",
@@ -12,5 +14,21 @@
     "html_handling": "auto-trailing-slash",
     "not_found_handling": "404-page",
     "run_worker_first": ["/api/mcp", "/mcp"]
-  }
+  },
+  // The MCP server reads the skill folder with node:fs and can open a browser for screenshots. In the Worker the
+  // skill lives in memory (cf/fs-shim.js) and there is no browser (cf/stub.js).
+  "alias": {
+    "node:fs": "./cf/fs-shim.js",
+    "fs": "./cf/fs-shim.js",
+    "playwright": "./cf/stub.js",
+    "node:child_process": "./cf/stub.js"
+  },
+  // The server finds its files relative to import.meta.url, which a bundled Worker does not have. Give it one.
+  "define": { "import.meta.url": "\"file:///bundle/worker.js\"" },
+  "vars": { "DESIGN_LOUNGE_SKILL": "/skill" },
+  // 60 MCP calls a minute per IP, counted across Cloudflare's network.
+  "ratelimits": [
+    { "name": "MCP_RATE", "namespace_id": "1001", "simple": { "limit": 60, "period": 60 } }
+  ],
+  "observability": { "enabled": true }
 }

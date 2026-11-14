@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "node scripts/check-build.mjs && astro build --force",
+    "build": "node scripts/check-build.mjs && astro build --force && node cf/build-library.mjs",
     "check:build": "node scripts/check-build.mjs",
     "preview": "astro preview",
     "thumbs": "node scripts/thumbs.mjs",

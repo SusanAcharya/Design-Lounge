@@ -27,16 +27,25 @@ const words = (s) => String(s || '').toLowerCase().match(/[a-z0-9]+(?:-[a-z0-9]+
 const STOP = new Set(['a', 'an', 'the', 'and', 'or', 'for', 'of', 'to', 'in', 'on', 'with', 'my', 'our', 'me', 'i', 'we', 'is', 'it', 'that', 'this', 'make', 'build', 'create', 'design', 'want', 'need', 'please', 'site', 'website', 'page', 'some', 'cool', 'nice', 'modern', 'clean', 'simple']);
 export const terms = (s) => [...new Set(words(s).flatMap((w) => [w, ...w.split('-')]).filter((w) => w.length > 1 && !STOP.has(w)))];
 
+// The words of each library field, split once. Fields come from the library, not from queries, so the cache is
+// bounded by the library's size. Re-splitting every piece on every search cost about 12 ms a call.
+const fieldTerms = new Map();
+function termsOf(text) {
+  let hit = fieldTerms.get(text);
+  if (!hit) { const list = terms(text); hit = { list, set: new Set(list) }; fieldTerms.set(text, hit); }
+  return hit;
+}
+
 /** Score how well a query's terms hit weighted text fields. A whole-word hit counts, a prefix hit counts half. */
 function score(queryTerms, fields) {
   // A query past 32 terms adds nothing to the ranking but cost, so the rest are dropped.
   if (queryTerms.length > 32) queryTerms = queryTerms.slice(0, 32);
   let total = 0;
   for (const [text, weight] of fields) {
-    const have = new Set(terms(text));
+    const have = termsOf(String(text || ''));
     for (const t of queryTerms) {
-      if (have.has(t)) total += weight;
-      else if (t.length > 3 && [...have].some((h) => h.startsWith(t) || t.startsWith(h) && h.length > 3)) total += weight / 2;
+      if (have.set.has(t)) total += weight;
+      else if (t.length > 3 && have.list.some((h) => h.startsWith(t) || t.startsWith(h) && h.length > 3)) total += weight / 2;
     }
   }
   return total;

@@ -18,3 +18,5 @@
 
 /_astro/*
   Cache-Control: public, max-age=31536000, immutable
+/_mcp/*
+  X-Robots-Tag: noindex, nofollow
