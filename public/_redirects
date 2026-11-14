@@ -1,0 +1,3 @@
+# Cloudflare Pages redirects. These match vercel.json.
+/c             /sections             301
+/c/:category   /sections/:category   301

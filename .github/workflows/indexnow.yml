@@ -1,6 +1,6 @@
 name: IndexNow
 
-# After a push to main, wait for Vercel to serve the new build, then tell Bing and the other IndexNow engines
+# After a push to main, wait for Cloudflare Pages to serve the new build, then tell Bing and the other IndexNow engines
 # which pages changed. The key file in public/ proves the site is ours.
 on:
   push:

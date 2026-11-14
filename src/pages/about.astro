@@ -15,7 +15,6 @@ const n = about(pieces.length);
 const origin = (Astro.site ?? new URL('https://www.designlounge.live')).toString().replace(/\/$/, '');
 const repo = 'https://github.com/SusanAcharya/Design-Lounge';
 const skillCmd = 'npx skills add SusanAcharya/Design-Lounge';
-const endpoint = 'https://www.designlounge.live/api/mcp';
 
 const intro = `Design Lounge is a free UI design library and skill for AI coding agents, made by ${AUTHOR.name}, a ${AUTHOR.role.toLowerCase()} in ${AUTHOR.city}, Nepal. It gives an agent ${n} live, documented designs and one shared system of type, colour, icons and motion, so the interface it builds looks designed rather than generated.`;
 
@@ -30,7 +29,7 @@ const rules = [
 const ways = [
   { k: 'Skill', v: 'Installs into Claude Code, Cursor, Codex and other agents that read skills.', code: skillCmd },
   { k: 'MCP server', v: 'design-lounge-mcp on npm, also listed on the official MCP Registry. Installing it installs the skill too.', href: 'https://www.npmjs.com/package/design-lounge-mcp', label: 'npm' },
-  { k: 'Hosted MCP', v: 'For clients that cannot run a local program, such as Claude.ai and ChatGPT connectors.', code: endpoint },
+  { k: 'Hosted MCP', v: 'For Claude.ai and ChatGPT connectors. Paused while it moves to a new host; the npm package works everywhere else.' },
   { k: 'Source', v: 'The library, the skill and the server, with issues, on GitHub.', href: repo, label: 'GitHub' },
 ];
 

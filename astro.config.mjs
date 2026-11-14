@@ -45,22 +45,8 @@ const absoluteBuiltAssets = () => ({
   },
 });
 
-// Astro 6 reports the home page's pathname as /index.html under build.format 'file'. Vercel Analytics reads it from
-// the data-pathname attribute its component writes, so put the home page back to "/" and keep its page views in one row.
-const homeAnalyticsPath = () => ({
-  name: 'home-analytics-path',
-  hooks: {
-    'astro:build:done': ({ dir }) => {
-      const file = path.join(fileURLToPath(dir), 'index.html');
-      if (!fs.existsSync(file)) return;
-      const html = fs.readFileSync(file, 'utf8');
-      fs.writeFileSync(file, html.replace('data-pathname="/index.html"', 'data-pathname="/"'));
-    },
-  },
-});
-
 export default defineConfig({
-  integrations: [absoluteBuiltAssets(), homeAnalyticsPath()],
+  integrations: [absoluteBuiltAssets()],
   site: 'https://www.designlounge.live',
   output: 'static',
   devToolbar: { enabled: false },
