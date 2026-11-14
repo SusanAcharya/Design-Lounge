@@ -1,0 +1,16 @@
+// Cloudflare Workers with static assets. The site is the built dist/ folder, served as files, and costs no Worker
+// requests. Only /api/mcp and /mcp run the Worker (cf/worker.js), which answers that the hosted MCP is paused.
+// public/_headers and public/_redirects are copied into dist/ and apply to the files.
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "designlounge",
+  "compatibility_date": "2026-09-01",
+  "main": "cf/worker.js",
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page",
+    "run_worker_first": ["/api/mcp", "/mcp"]
+  }
+}
