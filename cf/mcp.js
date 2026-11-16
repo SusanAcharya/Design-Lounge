@@ -12,9 +12,6 @@ import { WebStandardStreamableHTTPServerTransport } from '@modelcontextprotocol/
 import { createServer, lib, VERSION } from '../mcp/src/tools.mjs';
 import { putBrief, hasBrief } from './fs-shim.js';
 
-// Parse the piece index now, while the Worker starts, not inside the first request's CPU budget.
-lib.index;
-
 const LOCAL = 'npx -y design-lounge-mcp@latest';
 const MAX_BODY = 64 * 1024;
 const MAX_BATCH = 10;
@@ -79,6 +76,44 @@ async function loadBriefs(messages, env) {
   }
 }
 
+/** One stateless MCP exchange: a fresh server and transport per request, as the SDK expects. */
+async function serve(request) {
+  const server = createServer({ hosted: true, reviews: false });
+  const transport = new WebStandardStreamableHTTPServerTransport({ sessionIdGenerator: undefined, enableJsonResponse: true });
+  await server.connect(transport);
+  try { return await transport.handleRequest(request); }
+  finally { transport.close().catch(() => {}); server.close().catch(() => {}); }
+}
+
+// Warm up while the Worker starts. Cloudflare starts a fresh copy in each city that gets traffic, and the first call
+// in a copy pays for parsing the library, building caches and compiling code: 8–35 ms instead of 1–3 ms, over the
+// free plan's 10 ms a request. Startup has its own budget, so rehearse each tool once here. Only in-memory calls:
+// nothing that fetches (get_piece is called with a slug that does not exist). A failure here only skips the warm-up.
+const call = (id, name, args) => ({ jsonrpc: '2.0', id, method: 'tools/call', params: { name, arguments: args } });
+const WARM_UP = [
+  { jsonrpc: '2.0', id: 1, method: 'initialize', params: { protocolVersion: '2025-06-18', capabilities: {}, clientInfo: { name: 'warm-up', version: '1' } } },
+  { jsonrpc: '2.0', id: 2, method: 'tools/list' }, { jsonrpc: '2.0', id: 3, method: 'prompts/list' }, { jsonrpc: '2.0', id: 4, method: 'resources/list' },
+  call(5, 'start_design', { request: 'a landing page for an invoicing app' }), call(6, 'get_recipe', { id: 'saas' }),
+  call(7, 'pick_direction', { recipe: 'saas', fitting: ['ledger-paper'], name: 'Warm' }),
+  call(8, 'check_pick', { recipe: 'saas', direction: 'ledger-paper', hero: 'fintech-invoice-builder' }),
+  call(9, 'get_theme', { id: 'harbour-ledger' }), call(10, 'get_pairing', { id: 'lettera' }), call(11, 'get_family', { id: 'editorial' }),
+  call(12, 'search_pieces', { query: 'pricing table' }), call(13, 'browse_library', { what: 'themes' }), call(14, 'get_icons', { names: ['search'] }),
+  call(15, 'search_wada', { query: 'blue' }), call(16, 'read_guide', { file: 'website.md' }), call(17, 'name_number', { name: 'Warm', count: 1 }),
+  call(18, 'get_piece', { id: 'no-such-piece' }),
+];
+// The SDK's HTTP transport makes a random stream id per request, which Cloudflare forbids at startup, so the warm-up
+// calls the server's request handlers directly (the same ones the transport dispatches to) and skips the transport.
+async function warmUp() {
+  lib.index;
+  const server = createServer({ hosted: true, reviews: false }).server;
+  const extra = (id) => ({ signal: new AbortController().signal, requestId: id, sendNotification: async () => {}, sendRequest: async () => { throw new Error('warm-up'); } });
+  for (const m of WARM_UP) {
+    const handler = server._requestHandlers?.get(m.method);
+    if (handler) JSON.stringify(await handler(m, extra(m.id)));
+  }
+}
+try { await warmUp(); } catch {}
+
 export async function handleMcp(request, env) {
   if (request.method === 'OPTIONS') return withCors(new Response(null, { status: 204 }));
   if (request.method === 'GET' && !/text\/event-stream/.test(request.headers.get('accept') || '')) return about();
@@ -104,16 +139,7 @@ export async function handleMcp(request, env) {
   sameSiteFetch(env);
   try { await loadBriefs(messages, env); } catch { return rpcError('A piece brief could not be loaded. Try again in a moment.', 503, { 'retry-after': '5' }); }
 
-  const server = createServer({ hosted: true, reviews: false });
-  const transport = new WebStandardStreamableHTTPServerTransport({ sessionIdGenerator: undefined, enableJsonResponse: true });
-  await server.connect(transport);
-  try {
-    const headers = new Headers(request.headers);
-    headers.delete('content-length');
-    const forward = new Request(request.url, { method: 'POST', headers, body: raw });
-    return withCors(await transport.handleRequest(forward));
-  } finally {
-    transport.close().catch(() => {});
-    server.close().catch(() => {});
-  }
+  const headers = new Headers(request.headers);
+  headers.delete('content-length');
+  return withCors(await serve(new Request(request.url, { method: 'POST', headers, body: raw })));
 }
