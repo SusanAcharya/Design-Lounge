@@ -77,6 +77,13 @@ const steps = [
   { step: 'Ask in plain words', text: 'Say what you are making, such as “a site for my bakery”. It works out the kind of product and the rules the page must keep.' },
   { step: 'It designs, builds and checks', text: 'Your agent locks one palette, one font pairing and one page plan, builds each part from a live piece, then reviews the page and fixes what fails.' },
 ];
+// The hero wall: real pieces, four columns, chosen for range (type-led, illustrated, product, dark, editorial).
+const wallCols = [
+  ['hero-bauhaus-composition', 'landing-fashion-atelier', 'hero-engraved-moonrise-plate', 'app-icon-colour-wall', 'portfolio-architect-index', 'cta-giant-email-band'],
+  ['hero-3d-product-turn', 'collage-hero', 'hero-kinetic-scroll-type', 'restaurant-menu-page', 'sunset-grid-hero', 'editorial-landing-hero'],
+  ['moonlit-ridge-hero', 'hero-swiss-grid-wordmark', 'cartoon-sticker-landing', 'product-configurator-material', 'case-file-horizontal-scroll', 'hero-search-marketplace'],
+  ['hero-editorial-name-rotator', 'playable-product-hero', 'gym-membership-home', 'taped-photo-grid', 'hero-machined-part-breakout', 'brutalist-studio-home'],
+].map((col) => col.filter((id) => byId.has(id)));
 const markText = { yes: 'Yes', no: 'No', part: 'In part' } as const;
 const faq = [
   { q: 'What is Design Lounge?', a: `Design Lounge is a free UI design skill for AI coding agents, plus a library of ${about(all.length)} design ideas: website sections, app screens, components and motion. Each one has a live demo and a written brief that an agent can build from.` },
@@ -95,53 +102,66 @@ const faq = [
 ];
 ---
 <Base rail={false} fullTitle="Design Lounge: a UI design skill and design ideas for AI agents" description={`A free UI design skill for Cursor, Claude Code and Codex, with ${about(all.length)} live design ideas: sections, app screens, palettes, font pairings and motion.`} faq={faq}>
-  <section class="hero wrap">
-    <a class="hero-pill reveal" href="/agents">
-      <span class="pill-dot" aria-hidden="true"></span>
-      Free for Claude Code, Cursor, Codex and ChatGPT
-      <span aria-hidden="true">→</span>
-    </a>
-    <h1 class="display hero-h reveal" style="--d:60ms">Give your AI agent <i>design taste.</i></h1>
-    <p class="hero-lede reveal" style="--d:120ms">AI-built sites tend to look the same. Design Lounge hands your agent the choices a designer would make, from a library of {about(all.length)} live designs, so what it builds looks finished.</p>
-    <div class="hero-cta reveal" style="--d:180ms">
-      <div class="install" data-install>
-        <div class="modes" role="group" aria-label="Install as">
-          {installModes.map((m, i) => <button type="button" data-mode={m.key} aria-pressed={i === 0 ? 'true' : 'false'}>{m.label}</button>)}
-        </div>
-        <span class="cmd big">
-          <span class="prompt mono" aria-hidden="true">$</span>
-          <code id="hero-cmd" data-cmds={JSON.stringify(Object.fromEntries(installModes.map((m) => [m.key, m.cmd])))}>{installModes[0].cmd}</code>
-          <button class="copy" type="button" data-copy="#hero-cmd"><span data-label>Copy</span></button>
-        </span>
-        {installModes.map((m, i) => <p class="cmd-note" data-note={m.key} hidden={i !== 0}>{m.note}{m.link && <> <a href={m.link.href}>{m.link.label} →</a></>}</p>)}
+  <section class="hero" aria-labelledby="hero-h">
+    <div class="wall" role="img" aria-label={`A wall of ${about(all.length)} designs from the library: product pages, editorial sites, games, menus and dashboards`}>
+      <div class="wall-plane">
+        {wallCols.map((col, c) => (
+          <div class={`wall-col c${c}`}>
+            {[...col, ...col].map((id, i) => (
+              <img src={`/thumbs/${id}.webp`} alt="" width="640" height="400" loading={i < 3 ? 'eager' : 'lazy'} decoding="async" />
+            ))}
+          </div>
+        ))}
       </div>
-      <a class="textlink" href="/browse">Browse {about(all.length)} designs <span aria-hidden="true">→</span></a>
+    </div>
+    <div class="wrap hero-in">
+      <div class="hero-text">
+        <h1 class="display hero-h reveal" id="hero-h">Give your AI agent <i>design taste.</i></h1>
+        <p class="hero-lede reveal" style="--d:80ms">{about(all.length)} live designs your agent builds from, so what it ships looks made on purpose.</p>
+        <div class="install reveal" style="--d:160ms" data-install>
+          <div class="modes" role="group" aria-label="Install as">
+            {installModes.map((m, i) => <button type="button" data-mode={m.key} aria-pressed={i === 0 ? 'true' : 'false'}>{m.label}</button>)}
+          </div>
+          <span class="cmd">
+            <span class="prompt mono" aria-hidden="true">$</span>
+            <code id="hero-cmd" data-cmds={JSON.stringify(Object.fromEntries(installModes.map((m) => [m.key, m.cmd])))}>{installModes[0].cmd}</code>
+            <button class="copy" type="button" data-copy="#hero-cmd"><span data-label>Copy</span></button>
+          </span>
+          {installModes.map((m, i) => <p class="cmd-note" data-note={m.key} hidden={i !== 0}>{m.note}{m.link && <> <a href={m.link.href}>{m.link.label} →</a></>}</p>)}
+        </div>
+        <a class="textlink reveal" style="--d:220ms" href="/browse">Browse the library <span aria-hidden="true">→</span></a>
+      </div>
     </div>
   </section>
 
-  <section class="ba wrap" aria-labelledby="ba-h">
-    <h2 class="sr-only" id="ba-h">One prompt, two builds</h2>
-    <div class="ba-frame reveal" style="--d:240ms">
-      <p class="ba-bar"><span class="ba-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="ba-kicker">Same prompt, same model</span><span class="ba-quote">“{show.prompt}”</span></p>
-      <div class="ba-stage" data-ba style="--pos: 50%">
-        <img class="ba-img" src={`/built/bench/${show.id}-without/cover.jpg`} alt={showSides[0].alt} width="1280" height="800" decoding="async" fetchpriority="high" />
-        <div class="ba-with">
-          <img class="ba-img" src={`/built/bench/${show.id}-with/cover.jpg`} alt={showSides[1].alt} width="1280" height="800" decoding="async" fetchpriority="high" />
+  <section class="ba wrap" id="see" aria-labelledby="ba-h">
+    <div class="ba-grid">
+      <div class="ba-copy">
+        <h2 class="display h2" id="ba-h">One prompt, <i>two builds.</i></h2>
+        <p class="ba-lede">The same request to the same model, once alone and once with Design Lounge. Drag the line to compare.</p>
+        <blockquote class="ba-quote">“{show.prompt}”</blockquote>
+        <div class="ba-sides">
+          {showSides.map((s) => (
+            <div class={`ba-side ${s.arm}`}>
+              <p class="ba-side-h"><span>{s.label}</span><span class="num">{s.fails} review {s.fails === 1 ? 'fail' : 'fails'}</span></p>
+              <ul>{s.notes.slice(0, 2).map((n) => <li>{n}</li>)}</ul>
+              <a class="ba-open" href={s.href} target="_blank" rel="noopener">Open this build <span aria-hidden="true">↗</span></a>
+            </div>
+          ))}
         </div>
-        <span class="ba-tag left"><b>{showSides[0].label}</b><span class="num">{showSides[0].fails} review {showSides[0].fails === 1 ? 'fail' : 'fails'}</span></span>
-        <span class="ba-tag right"><b>{showSides[1].label}</b><span class="num">{showSides[1].fails} review {showSides[1].fails === 1 ? 'fail' : 'fails'}</span></span>
-        <span class="ba-handle" aria-hidden="true"><span>‹ ›</span></span>
-        <input class="ba-range" type="range" min="0" max="100" value="50" step="1" aria-label="Drag to compare the build without Design Lounge (left) and with it (right)" />
       </div>
-    </div>
-    <div class="ba-notes">
-      {showSides.map((s) => (
-        <div class={`ba-side ${s.arm}`}>
-          <p class="ba-side-h">{s.label}</p>
-          <ul>{s.notes.slice(0, 3).map((n) => <li>{n}</li>)}</ul>
-          <a class="ba-open" href={s.href} target="_blank" rel="noopener">Open this build <span aria-hidden="true">↗</span></a>
+      <div class="ba-frame">
+        <div class="ba-stage" data-ba style="--pos: 50%">
+          <img class="ba-img" src={`/built/bench/${show.id}-without/cover.jpg`} alt={showSides[0].alt} width="1280" height="800" loading="lazy" decoding="async" />
+          <div class="ba-with">
+            <img class="ba-img" src={`/built/bench/${show.id}-with/cover.jpg`} alt={showSides[1].alt} width="1280" height="800" loading="lazy" decoding="async" />
+          </div>
+          <span class="ba-tag left">{showSides[0].label}</span>
+          <span class="ba-tag right">With Design Lounge</span>
+          <span class="ba-handle" aria-hidden="true"><span>‹ ›</span></span>
+          <input class="ba-range" type="range" min="0" max="100" value="50" step="1" aria-label="Drag to compare the build without Design Lounge (left) and with it (right)" />
         </div>
-      ))}
+      </div>
     </div>
     <dl class="figs">
       <div><dt class="fig num">{bench.failsWith} vs {bench.failsWithout}</dt><dd>Review fails across all {bench.builds} builds, with the Lounge and without it</dd></div>
@@ -379,76 +399,91 @@ const faq = [
 </script>
 
 <style>
-  /* hero: one claim, one sentence, the install */
-  .hero { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 18px; padding: clamp(32px, 4.2vw, 60px) 0 clamp(28px, 3vw, 40px); }
-  .hero-pill { display: inline-flex; align-items: center; gap: 10px; height: 34px; padding: 0 14px 0 12px; border: 1px solid var(--line-2); border-radius: 999px; background: var(--paper); font-size: 13.5px; color: var(--ink-2); transition: border-color var(--t-fast), color var(--t-fast); }
-  .hero-pill:hover { border-color: var(--ink); color: var(--ink); }
-  .hero-pill > span:last-child { color: var(--ink-3); transition: transform var(--t-med) var(--ease-out); }
-  .hero-pill:hover > span:last-child { transform: translateX(2px); }
-  .pill-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
-  .hero-h { font-size: clamp(44px, 6vw, 86px); line-height: 0.98; max-width: 13ch; }
-  .hero-lede { max-width: 62ch; font-size: clamp(17px, 1.45vw, 20px); line-height: 1.55; color: var(--ink-2); text-wrap: pretty; }
-  .hero-cta { display: flex; flex-direction: column; align-items: center; gap: 16px; margin-top: 4px; width: 100%; }
+  /* hero: the claim and the install on the left, a slow wall of real pieces on the right */
+  .hero { position: relative; overflow: hidden; min-height: min(calc(100dvh - var(--header-h)), 860px); display: flex; align-items: center; border-bottom: 1px solid var(--line); }
+  .hero-in { position: relative; z-index: 1; padding-block: clamp(48px, 7vw, 96px); }
+  .hero-text { display: flex; flex-direction: column; align-items: flex-start; gap: 28px; max-width: 660px; }
+  .hero-text .install { max-width: 560px; }
+  .hero-h { font-size: clamp(44px, 5.3vw, 76px); line-height: 0.98; letter-spacing: -0.045em; }
+  .hero-lede { max-width: 40ch; font-size: clamp(17px, 1.35vw, 19px); line-height: 1.55; color: var(--ink-2); text-wrap: pretty; }
+  .hero-links { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 26px; }
+
+  .wall { position: absolute; top: 0; bottom: 0; left: 46%; right: 0; pointer-events: none;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 22%), linear-gradient(180deg, transparent 0, #000 14%, #000 86%, transparent 100%);
+    -webkit-mask-composite: source-in; mask-image: linear-gradient(90deg, transparent 0, #000 22%), linear-gradient(180deg, transparent 0, #000 14%, #000 86%, transparent 100%); mask-composite: intersect; }
+  .wall-plane { position: absolute; top: -30%; bottom: -30%; left: 4%; width: 118%; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px;
+    transform: perspective(2200px) rotateX(22deg) rotateY(-18deg) rotateZ(9deg); transform-origin: 30% 50%; }
+  .wall-col { display: flex; flex-direction: column; gap: 16px; animation: wall-up 90s linear infinite; will-change: transform; }
+  .wall-col.c1 { animation-name: wall-down; animation-duration: 110s; }
+  .wall-col.c2 { animation-duration: 100s; }
+  .wall-col.c3 { animation-name: wall-down; animation-duration: 120s; }
+  .wall-col img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; border-radius: 10px; border: 1px solid var(--line); background: var(--paper-2); box-shadow: 0 1px 0 rgba(24, 24, 27, .04), 0 18px 36px -24px rgba(24, 24, 27, .35); }
+  @keyframes wall-up { from { transform: translateY(0); } to { transform: translateY(calc(-50% - 8px)); } }
+  @keyframes wall-down { from { transform: translateY(calc(-50% - 8px)); } to { transform: translateY(0); } }
+  @media (prefers-reduced-motion: reduce) { .wall-col { animation: none; } }
+
   .textlink { font-size: 15px; font-weight: 500; color: var(--ink); border-bottom: 1px solid var(--line-2); padding-bottom: 2px; transition: color var(--t-fast), border-color var(--t-fast); }
   .textlink:hover { color: var(--accent-text); border-color: var(--accent); }
+  .textlink.quiet { color: var(--ink-2); border-color: transparent; }
+  .textlink.quiet:hover { color: var(--ink); border-color: var(--line-2); }
   .textlink span { display: inline-block; transition: transform var(--t-med) var(--ease-out); }
   .textlink:hover span { transform: translateX(3px); }
+  .textlink.quiet:hover span { transform: translateY(2px); }
 
-  .cmd { display: flex; align-items: center; gap: 10px; width: 100%; min-width: 0; padding: 7px 7px 7px 16px; border: 1px solid var(--line-2); border-radius: 12px; background: var(--paper); box-shadow: 0 1px 2px rgba(24, 24, 27, .04), 0 8px 24px -16px rgba(24, 24, 27, .18); }
-  .cmd code { flex: 1; min-width: 0; font-family: var(--mono); font-size: 14px; line-height: 1.45; color: var(--ink); text-align: left; white-space: normal; overflow-wrap: anywhere; }
+  /* install: two text tabs over one command */
+  .install { display: flex; flex-direction: column; align-items: stretch; gap: 10px; width: 100%; max-width: 540px; min-width: 0; }
+  .modes { display: flex; gap: 20px; }
+  .modes button { position: relative; padding: 2px 0 6px; font-size: 13.5px; font-weight: 500; color: var(--ink-3); transition: color var(--t-fast); }
+  .modes button:hover { color: var(--ink); }
+  .modes button[aria-pressed='true'] { color: var(--ink); }
+  .modes button[aria-pressed='true']::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1.5px; background: var(--accent); }
+  .cmd { display: flex; align-items: center; gap: 10px; width: 100%; min-width: 0; padding: 7px 7px 7px 16px; border: 1px solid var(--line-2); border-radius: 12px; background: var(--paper); box-shadow: 0 1px 2px rgba(24, 24, 27, .04), 0 10px 28px -18px rgba(24, 24, 27, .22); }
+  .cmd code { flex: 1; min-width: 0; font-family: var(--mono); font-size: 13.5px; line-height: 1.45; color: var(--ink); text-align: left; white-space: normal; overflow-wrap: anywhere; }
   .cmd .prompt { color: var(--accent-text); font-size: 14px; }
-  .cmd .copy { flex: none; height: 38px; padding: 0 16px; border-radius: 8px; font-size: 14px; font-weight: 500; background: var(--paper); color: var(--ink); border: 1px solid var(--line-2); transition: border-color var(--t-fast), color var(--t-fast), transform var(--t-fast); }
+  .cmd .copy { flex: none; height: 38px; padding: 0 16px; border-radius: 8px; font-size: 14px; font-weight: 500; background: var(--paper); color: var(--ink); border: 1px solid var(--line-2); transition: border-color var(--t-fast), transform var(--t-fast); }
   .cmd .copy:hover { border-color: var(--ink); }
   .cmd .copy:active { transform: scale(.97); }
-  .cmd .copy[data-done] { background: var(--accent); color: var(--accent-ink); }
-  .install { display: flex; flex-direction: column; align-items: center; gap: 10px; width: 100%; max-width: 600px; min-width: 0; }
-  .modes { display: inline-flex; gap: 2px; padding: 3px; border: 1px solid var(--line-2); border-radius: 10px; background: var(--paper-2); }
-  .modes button { height: 30px; padding: 0 12px; border-radius: 7px; font-size: 13px; font-weight: 500; color: var(--ink-2); transition: background-color var(--t-fast), color var(--t-fast); }
-  .modes button:hover { color: var(--ink); }
-  .modes button[aria-pressed='true'] { background: var(--paper); color: var(--ink); box-shadow: 0 1px 2px rgba(24, 24, 27, .08), 0 0 0 1px var(--line); }
+  .cmd .copy[data-done] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
   .install .cmd-note { font-size: 13px; color: var(--ink-3); }
   .install .cmd-note a { color: var(--ink-2); text-decoration: underline; text-underline-offset: 3px; }
   .install .cmd-note a:hover { color: var(--accent-text); }
 
   /* before and after */
-  .ba { padding-bottom: clamp(72px, 9vw, 128px); }
-  .ba > * { max-width: 1180px; margin-inline: auto; }
-  .ba-kicker { flex: none; font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent-text); }
-  .ba-quote { min-width: 0; font-size: 13px; line-height: 1.45; color: var(--ink-2); }
-  .ba-frame { border: 1px solid var(--line-2); border-radius: 18px; overflow: hidden; background: var(--paper); box-shadow: 0 1px 0 rgba(24, 24, 27, .04), 0 40px 80px -48px rgba(24, 24, 27, .45); }
-  .ba-bar { display: flex; align-items: center; gap: 14px; min-height: 44px; padding: 10px 16px; border-bottom: 1px solid var(--line); background: var(--paper-2); }
-  .ba-dots { flex: none; display: flex; gap: 6px; }
-  .ba-dots i { width: 9px; height: 9px; border-radius: 50%; background: var(--line-2); }
-  .ba-stage { position: relative; aspect-ratio: 16 / 10; overflow: hidden; background: var(--paper-2); touch-action: pan-y; user-select: none; }
+  .ba { padding-block: clamp(72px, 9vw, 128px); scroll-margin-top: var(--header-h); }
+  .ba-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(32px, 5vw, 80px); align-items: center; margin-bottom: clamp(56px, 7vw, 96px); }
+  .ba-copy { display: flex; flex-direction: column; gap: 18px; }
+  .ba-copy .h2 { max-width: 12ch; }
+  .ba-lede { font-size: 17px; line-height: 1.55; color: var(--ink-2); max-width: 40ch; }
+  .ba-quote { margin: 0; padding-left: 14px; border-left: 2px solid var(--accent); font-size: 14.5px; line-height: 1.55; color: var(--ink-2); max-width: 46ch; }
+  .ba-sides { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; margin-top: 6px; }
+  .ba-side { display: flex; flex-direction: column; gap: 10px; }
+  .ba-side-h { display: flex; flex-direction: column; gap: 2px; padding-bottom: 10px; border-bottom: 1px solid var(--line); font-size: 14px; font-weight: 600; letter-spacing: -0.01em; }
+  .ba-side-h .num { font-weight: 500; color: var(--ink-3); }
+  .ba-side.with .ba-side-h { border-bottom-color: var(--ink); }
+  .ba-side.with .ba-side-h .num { color: var(--accent-text); }
+  .ba-side ul { display: flex; flex-direction: column; gap: 6px; }
+  .ba-side li { position: relative; padding-left: 14px; font-size: 13.5px; line-height: 1.45; color: var(--ink-2); }
+  .ba-side li::before { content: ""; position: absolute; left: 0; top: 0.62em; width: 6px; height: 1px; background: var(--ink-3); }
+  .ba-side.with li::before { background: var(--accent); }
+  .ba-open { align-self: flex-start; font-size: 13px; color: var(--ink-2); border-bottom: 1px solid var(--line-2); }
+  .ba-open:hover { color: var(--accent-text); border-color: var(--accent); }
+  .ba-frame { border: 1px solid var(--line-2); border-radius: 16px; overflow: hidden; background: var(--paper-2); box-shadow: 0 1px 0 rgba(24, 24, 27, .04), 0 32px 64px -40px rgba(24, 24, 27, .45); }
+  .ba-stage { position: relative; aspect-ratio: 16 / 10; overflow: hidden; touch-action: pan-y; user-select: none; }
   .ba-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; pointer-events: none; }
   .ba-with { position: absolute; inset: 0; clip-path: inset(0 0 0 var(--pos)); }
   .ba-handle { position: absolute; top: 0; bottom: 0; left: var(--pos); width: 2px; margin-left: -1px; background: var(--paper); box-shadow: 0 0 0 1px rgba(24, 24, 27, .12); pointer-events: none; }
-  .ba-handle span { position: absolute; top: 50%; left: 50%; display: grid; place-items: center; width: 44px; height: 44px; margin: -22px 0 0 -22px; border-radius: 50%; background: var(--paper); color: var(--ink); font-size: 15px; letter-spacing: 0.1em; box-shadow: 0 2px 10px rgba(24, 24, 27, .25), 0 0 0 1px rgba(24, 24, 27, .08); transition: transform var(--t-fast) var(--ease-out); }
-  .ba-stage[data-active] .ba-handle span, .ba-range:focus-visible ~ .ba-handle span { transform: scale(1.08); }
-  .ba-range:focus-visible + .ba-handle span, .ba-stage:has(.ba-range:focus-visible) .ba-handle span { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .ba-handle span { position: absolute; top: 50%; left: 50%; display: grid; place-items: center; width: 42px; height: 42px; margin: -21px 0 0 -21px; border-radius: 50%; background: var(--paper); color: var(--ink); font-size: 14px; letter-spacing: 0.1em; box-shadow: 0 2px 10px rgba(24, 24, 27, .25), 0 0 0 1px rgba(24, 24, 27, .08); transition: transform var(--t-fast) var(--ease-out); }
+  .ba-stage[data-active] .ba-handle span { transform: scale(1.08); }
+  .ba-stage:has(.ba-range:focus-visible) .ba-handle span { outline: 2px solid var(--accent); outline-offset: 2px; }
   .ba-range { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: ew-resize; }
-  .ba-tag { position: absolute; bottom: 16px; display: flex; flex-direction: column; gap: 2px; padding: 8px 12px; border-radius: 10px; background: rgba(12, 12, 14, .78); color: #fafaf9; font-size: 12.5px; line-height: 1.3; backdrop-filter: blur(6px); pointer-events: none; }
-  .ba-tag b { font-weight: 600; }
-  .ba-tag .num { color: rgba(250, 250, 249, .72); }
-  .ba-tag.left { left: 16px; }
-  .ba-tag.right { right: 16px; text-align: right; }
-  .ba-tag.right .num { color: #ffb48c; }
-
-  .ba-notes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(20px, 3vw, 48px); margin-block: clamp(24px, 3vw, 36px) clamp(48px, 6vw, 80px); }
-  .ba-side { display: flex; flex-direction: column; gap: 12px; }
-  .ba-side-h { padding-bottom: 10px; border-bottom: 1px solid var(--line); font-size: 15px; font-weight: 600; letter-spacing: -0.01em; }
-  .ba-side.with .ba-side-h { border-bottom-color: var(--ink); }
-  .ba-side ul { display: flex; flex-direction: column; gap: 7px; }
-  .ba-side li { position: relative; padding-left: 16px; font-size: 14.5px; line-height: 1.45; color: var(--ink-2); }
-  .ba-side li::before { content: ""; position: absolute; left: 0; top: 0.62em; width: 6px; height: 1px; background: var(--ink-3); }
-  .ba-side.with li::before { background: var(--accent); }
-  .ba-open { align-self: flex-start; font-size: 13.5px; color: var(--ink-2); border-bottom: 1px solid var(--line-2); }
-  .ba-open:hover { color: var(--accent-text); border-color: var(--accent); }
+  .ba-tag { position: absolute; bottom: 12px; padding: 5px 9px; border-radius: 7px; background: rgba(12, 12, 14, .8); color: #fafaf9; font-size: 12px; font-weight: 500; pointer-events: none; }
+  .ba-tag.left { left: 12px; }
+  .ba-tag.right { right: 12px; }
 
   .figs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 0; border-top: 1px solid var(--ink); }
   .figs > div { display: flex; flex-direction: column; gap: 10px; padding: 22px 24px 0 0; }
   .figs > div + div { padding-left: 24px; border-left: 1px solid var(--line); }
-  .fig { font-size: clamp(38px, 4.4vw, 60px); font-weight: 600; letter-spacing: -0.045em; line-height: 1; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .fig { font-size: clamp(36px, 4vw, 56px); font-weight: 600; letter-spacing: -0.045em; line-height: 1; color: var(--ink); font-variant-numeric: tabular-nums; }
   .figs dd { margin: 0; font-size: 14px; line-height: 1.5; color: var(--ink-2); max-width: 28ch; }
   .figs-more { padding-top: 28px; }
 
@@ -578,6 +613,14 @@ const faq = [
     .figs > div:nth-child(n + 3) { border-top: 1px solid var(--line); margin-top: 22px; }
   }
   @media (max-width: 960px) {
+    .hero { flex-direction: column; align-items: stretch; min-height: 0; }
+    .hero-in { padding-bottom: 8px; }
+    .wall { position: relative; left: auto; right: auto; height: 340px; margin-top: 8px;
+      -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 18%, #000 82%, transparent 100%); mask-image: linear-gradient(180deg, transparent 0, #000 18%, #000 82%, transparent 100%); }
+    .wall-plane { top: -60%; bottom: -60%; left: -10%; width: 120%; }
+    .ba-grid { grid-template-columns: minmax(0, 1fr); }
+    .ba-copy .h2 { max-width: none; }
+    .ba-frame { order: -1; }
     .agent-grid { grid-template-columns: minmax(0, 1fr); }
     .agent-stage { min-height: 0; }
     .built-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -589,15 +632,17 @@ const faq = [
     .c-screens { grid-row: auto; }
     .c-styles { flex-direction: column; align-items: flex-start; }
     .style-words { justify-content: flex-start; max-width: none; }
-    .flow, .ba-notes, .built-grid { grid-template-columns: minmax(0, 1fr); }
+    .flow, .built-grid { grid-template-columns: minmax(0, 1fr); }
     .built-head { flex-direction: column; align-items: flex-start; }
     .built-head .textlinks { align-items: flex-start; }
     .agent-cap { flex-direction: column; gap: 4px; }
     .cmd code { font-size: 13px; }
-    .ba-stage { aspect-ratio: 4 / 3.4; }
-    .ba-tag { bottom: 10px; padding: 6px 9px; font-size: 11.5px; }
-    .ba-tag.left { left: 10px; }
-    .ba-tag.right { right: 10px; }
+    .wall { height: 260px; }
+    .wall-plane { gap: 10px; }
+    .wall-col { gap: 10px; }
+    .ba-tag { bottom: 8px; padding: 4px 8px; font-size: 11px; }
+    .ba-tag.left { left: 8px; }
+    .ba-tag.right { right: 8px; }
   }
   @media (max-width: 560px) {
     .figs > div { padding-right: 12px; }
@@ -605,9 +650,6 @@ const faq = [
     .figs > div:nth-child(3) { padding-left: 0; }
     .fig { font-size: 34px; }
     .figs dd { font-size: 13px; }
-    .hero-pill { height: auto; min-height: 34px; padding-block: 6px; font-size: 12.5px; text-align: left; }
-    .ba-bar { flex-wrap: wrap; gap: 6px 12px; }
-    .hero { text-align: left; align-items: flex-start; }
-    .hero-cta, .install { align-items: flex-start; }
+    .ba-sides { grid-template-columns: minmax(0, 1fr); }
   }
 </style>
