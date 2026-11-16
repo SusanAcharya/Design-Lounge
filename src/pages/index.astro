@@ -1,7 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
 import DeviceFrame from '../components/DeviceFrame.astro';
-import AgentTerminal from '../components/AgentTerminal.astro';
 import { getPieces, CATEGORY_META, about } from '../lib/pieces';
 import { PAIRINGS } from '../data/type';
 import { THEMES } from '../data/themes';
@@ -23,9 +22,6 @@ const heroWeb = pick('web') ?? newest[0];
 const heroPhone = pick('mobile-app') ?? pick('pwa') ?? pick('mobile-web');
 const heroTablet = pick('tablet');
 
-const saas = STARTS.find((s) => s.id === 'saas');
-const lime = saas?.directions.find((d) => d.id === 'lime-engine');
-const agentHero = byId.get(lime?.hero ?? 'hero-split-ui-stack') ?? byId.get('hero-split-ui-stack');
 
 const typeCount = (t: string) => all.filter((p) => p.data.type === t).length;
 const catCount = (c: string) => all.filter((p) => p.data.category === c).length;
@@ -47,11 +43,6 @@ const system = [
 const homeBuilt = ['meridian-no-7', 'late-light', 'key-01', 'thulo-dhunga', 'aadhi-raat', 'halden-chambers'].map((id) => SOLO.find((e) => e.id === id)).filter((e) => e !== undefined);
 const installCmd = 'npx skills add SusanAcharya/Design-Lounge';
 const mcpCmd = 'claude mcp add -s user design-lounge -- npx -y design-lounge-mcp@latest';
-// The two ways in, for the switch above each install box. The MCP server is first: it is the skill plus tools.
-const installModes = [
-  { key: 'mcp', label: 'MCP server', cmd: mcpCmd, note: 'For Claude Code. It installs the skill too.', link: { href: '/agents', label: 'Cursor, Codex, ChatGPT' } },
-  { key: 'skill', label: 'Skill', cmd: installCmd, note: 'Files your agent reads. Needs Node 22.20 or newer.', link: null },
-];
 const cost = (tool: string) => tokensOf(CALLS.find((c) => c.tool === tool)!.chars);
 const k = (n: number) => `${(n / 1000).toFixed(1).replace(/\.0$/, '')}k`;
 const bench = benchSummary();
@@ -65,18 +56,6 @@ const showSides = (['without', 'with'] as const).map((arm) => ({
   href: `/built/bench/${show.id}-${arm}/index.html`,
   alt: `${show.title} landing page, first screen, built ${arm === 'with' ? 'with Design Lounge' : `by ${showModel} alone`}`,
 }));
-const flow = [
-  { step: 'Ask', tools: ['start_design'], tokens: cost('start_design'), text: 'Say what you are making in plain words. It reads them and returns the plan: the product kind, the rules that must hold, and the calls to make next.' },
-  { step: 'Lock a direction', tools: ['get_recipe', 'get_theme', 'get_pairing'], tokens: cost('get_recipe') + cost('get_theme') + cost('get_pairing'), text: 'One recipe, one palette as CSS tokens, one type pairing with sizes. Your agent stops inventing a purple gradient and a font.' },
-  { step: 'Build from briefs', tools: ['get_piece'], tokens: cost('get_piece'), each: true, text: 'Each section comes from a live piece and its numeric brief: sizes, states, timing, the acceptance checks.' },
-  { step: 'Review', tools: ['review_page'], tokens: cost('review_page'), text: 'It opens the page and fails what looks machine-made, then checks SEO, AEO and GEO. Your agent fixes the list and runs it again.' },
-];
-// How it works, in plain words. The tool names and token costs live in the FAQ and on /agents.
-const steps = [
-  { step: 'Add it once', text: 'One command in Claude Code, Cursor or Codex, or a connector in Claude.ai and ChatGPT. Free, with no account.' },
-  { step: 'Ask in plain words', text: 'Say what you are making, such as “a site for my bakery”. It works out the kind of product and the rules the page must keep.' },
-  { step: 'It designs, builds and checks', text: 'Your agent locks one palette, one font pairing and one page plan, builds each part from a live piece, then reviews the page and fixes what fails.' },
-];
 // The hero wall: real pieces, four columns, chosen for range (type-led, illustrated, product, dark, editorial).
 const wallCols = [
   ['hero-bauhaus-composition', 'landing-fashion-atelier', 'hero-engraved-moonrise-plate', 'app-icon-colour-wall', 'portfolio-architect-index', 'cta-giant-email-band'],
@@ -118,16 +97,13 @@ const faq = [
       <div class="hero-text">
         <h1 class="display hero-h reveal" id="hero-h">Give your AI agent <i>design taste.</i></h1>
         <p class="hero-lede reveal" style="--d:80ms">{about(all.length)} live designs your agent builds from, so what it ships looks made on purpose.</p>
-        <div class="install reveal" style="--d:160ms" data-install>
-          <div class="modes" role="group" aria-label="Install as">
-            {installModes.map((m, i) => <button type="button" data-mode={m.key} aria-pressed={i === 0 ? 'true' : 'false'}>{m.label}</button>)}
-          </div>
+        <div class="install reveal" style="--d:160ms">
           <span class="cmd">
             <span class="prompt mono" aria-hidden="true">$</span>
-            <code id="hero-cmd" data-cmds={JSON.stringify(Object.fromEntries(installModes.map((m) => [m.key, m.cmd])))}>{installModes[0].cmd}</code>
+            <code id="hero-cmd">{mcpCmd}</code>
             <button class="copy" type="button" data-copy="#hero-cmd"><span data-label>Copy</span></button>
           </span>
-          {installModes.map((m, i) => <p class="cmd-note" data-note={m.key} hidden={i !== 0}>{m.note}{m.link && <> <a href={m.link.href}>{m.link.label} →</a></>}</p>)}
+          <p class="cmd-note">For Claude Code, and it installs the skill too. <a href="/agents">Cursor, Codex and ChatGPT</a>, or <a href="/agents#skill">the skill alone</a>.</p>
         </div>
         <a class="textlink reveal" style="--d:220ms" href="/browse">Browse the library <span aria-hidden="true">→</span></a>
       </div>
@@ -137,8 +113,8 @@ const faq = [
   <section class="ba wrap" id="see" aria-labelledby="ba-h">
     <div class="ba-grid">
       <div class="ba-copy">
-        <h2 class="display h2" id="ba-h">One prompt, <i>two builds.</i></h2>
-        <p class="ba-lede">The same request to the same model, once alone and once with Design Lounge. Drag the line to compare.</p>
+        <h2 class="display h2" id="ba-h">One prompt, two builds.</h2>
+        <p class="ba-lede">The same request to the same model. With Design Lounge, the agent locked one palette, one font pairing and one page plan, built each part from a live piece, then checked its own page. Drag the line to compare.</p>
         <blockquote class="ba-quote">“{show.prompt}”</blockquote>
         <div class="ba-sides">
           {showSides.map((s) => (
@@ -172,40 +148,10 @@ const faq = [
     <p class="figs-more"><a class="textlink" href="/benchmark">How these were measured <span aria-hidden="true">→</span></a></p>
   </section>
 
-  <section class="skill wrap" id="agent" aria-labelledby="agent-h">
-    <header class="block-head">
-      <p class="eyebrow">How it works</p>
-      <h2 class="display h2" id="agent-h">Say what you're making. It picks the rest.</h2>
-    </header>
-    <ol class="flow">
-      {steps.map((f) => (
-        <li>
-          <b>{f.step}</b>
-          <span class="flow-text">{f.text}</span>
-        </li>
-      ))}
-    </ol>
-    <div class="agent-grid">
-      <AgentTerminal pieces={about(all.length)} pairings={about(PAIRINGS.length)} themes={about(THEMES.length)} />
-      <div class="agent-result">
-        <div class="agent-stage">
-          {agentHero && <DeviceFrame slug={agentHero.id} platform={agentHero.data.platform} title={agentHero.data.title} interactive />}
-        </div>
-        {agentHero && (
-          <p class="agent-cap">
-            <span>The result: {agentHero.data.title}</span>
-            <a href={`/p/${agentHero.id}`}>Open piece <span aria-hidden="true">→</span></a>
-          </p>
-        )}
-      </div>
-    </div>
-  </section>
-
   <section class="built wrap" aria-labelledby="built-h">
     <header class="built-head">
       <div>
-        <p class="eyebrow">Examples</p>
-        <h2 class="display h2" id="built-h">Six sites, <i>one prompt each.</i></h2>
+        <h2 class="display h2" id="built-h">Six sites, one prompt each.</h2>
         <p class="lede">Each one built by a coding agent with Design Lounge, in one go. Open any of them and use it.</p>
       </div>
       <span class="textlinks">
@@ -227,7 +173,6 @@ const faq = [
 
   <section class="lib wrap" aria-labelledby="lib-h">
     <header class="block-head">
-      <p class="eyebrow">The library</p>
       <h2 class="display h2" id="lib-h">{about(all.length)} designs your agent can build from.</h2>
       <p class="lede">Every piece runs live and comes with a written brief: sizes, colours, timing and states. Free to use in your own products.</p>
     </header>
@@ -286,7 +231,6 @@ const faq = [
 
   <section class="cmp wrap" aria-labelledby="cmp-h">
     <header class="block-head">
-      <p class="eyebrow">How it compares</p>
       <h2 class="display h2" id="cmp-h">A direction and a review, in one free MCP.</h2>
       <p class="lede">Other tools hand your agent components to install or screenshots to look at. Design Lounge gives it a palette, a pairing and pieces that agree, then reviews what it built. It works on top of the components you already use: shadcn/ui, Arc UI, or your own.</p>
     </header>
@@ -315,7 +259,7 @@ const faq = [
         </tbody>
       </table>
     </div>
-    <p class="cmp-note mono">Checked {CHECKED} on each product's own pages. Something out of date? <a href="https://github.com/SusanAcharya/Design-Lounge/issues" rel="noopener">Open an issue</a>.</p>
+    <p class="cmp-note">Checked {CHECKED} on each product's own pages. Something out of date? <a href="https://github.com/SusanAcharya/Design-Lounge/issues" rel="noopener">Open an issue</a>.</p>
   </section>
 
   <section class="faq wrap" aria-labelledby="faq-h">
@@ -333,39 +277,9 @@ const faq = [
     </div>
   </section>
 
-  <section class="bio wrap" aria-labelledby="bio-h">
-    <p class="eyebrow">Made by</p>
-    <h2 class="display h3" id="bio-h"><a href="/about">{AUTHOR.name}</a></h2>
-    <p class="bio-text">{AUTHOR.role} in {AUTHOR.city}, Nepal. He builds products end to end and made Design Lounge so AI agents stop shipping the same generic page. Every piece is an original build with an invented brand. Many study the craft of public sites, credited on the <a href="/sources">Sources</a> page.</p>
-    <p class="bio-links">
-      <a href="/about">About the Lounge</a>
-      {AUTHOR.links.map((l) => <a href={l.href} target="_blank" rel="noopener me">{l.label} ↗</a>)}
-    </p>
-  </section>
-
 </Base>
 
 <script>
-  // The install switch: one choice for every install box on the page, remembered for the next visit.
-  const boxes = [...document.querySelectorAll<HTMLElement>('[data-install]')];
-  const choose = (mode: string) => {
-    for (const box of boxes) {
-      const code = box.querySelector<HTMLElement>('code[data-cmds]');
-      const cmds = JSON.parse(code?.dataset.cmds || '{}');
-      if (!cmds[mode]) continue;
-      code!.textContent = cmds[mode];
-      box.querySelectorAll<HTMLButtonElement>('[data-mode]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.mode === mode)));
-      box.querySelectorAll<HTMLElement>('[data-note]').forEach((n) => { n.hidden = n.dataset.note !== mode; });
-    }
-  };
-  let saved = null;
-  try { saved = localStorage.getItem('dl-install'); } catch {}
-  if (saved) choose(saved);
-  for (const box of boxes) box.querySelectorAll<HTMLButtonElement>('[data-mode]').forEach((b) => b.addEventListener('click', () => {
-    choose(b.dataset.mode!);
-    try { localStorage.setItem('dl-install', b.dataset.mode!); } catch {}
-  }));
-
   // Before and after: the range input drives the split. The first time the stage comes into view it sweeps once
   // to show that it moves, unless the visitor prefers less motion or has already touched it.
   for (const stage of document.querySelectorAll<HTMLElement>('[data-ba]')) {
@@ -430,13 +344,8 @@ const faq = [
   .textlink:hover span { transform: translateX(3px); }
   .textlink.quiet:hover span { transform: translateY(2px); }
 
-  /* install: two text tabs over one command */
+  /* install: one command */
   .install { display: flex; flex-direction: column; align-items: stretch; gap: 10px; width: 100%; max-width: 540px; min-width: 0; }
-  .modes { display: flex; gap: 20px; }
-  .modes button { position: relative; padding: 2px 0 6px; font-size: 13.5px; font-weight: 500; color: var(--ink-3); transition: color var(--t-fast); }
-  .modes button:hover { color: var(--ink); }
-  .modes button[aria-pressed='true'] { color: var(--ink); }
-  .modes button[aria-pressed='true']::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1.5px; background: var(--accent); }
   .cmd { display: flex; align-items: center; gap: 10px; width: 100%; min-width: 0; padding: 7px 7px 7px 16px; border: 1px solid var(--line-2); border-radius: 12px; background: var(--paper); box-shadow: 0 1px 2px rgba(24, 24, 27, .04), 0 10px 28px -18px rgba(24, 24, 27, .22); }
   .cmd code { flex: 1; min-width: 0; font-family: var(--mono); font-size: 13.5px; line-height: 1.45; color: var(--ink); text-align: left; white-space: normal; overflow-wrap: anywhere; }
   .cmd .prompt { color: var(--accent-text); font-size: 14px; }
@@ -444,7 +353,7 @@ const faq = [
   .cmd .copy:hover { border-color: var(--ink); }
   .cmd .copy:active { transform: scale(.97); }
   .cmd .copy[data-done] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
-  .install .cmd-note { font-size: 13px; color: var(--ink-3); }
+  .install .cmd-note { font-size: 15px; line-height: 1.5; color: var(--ink-2); }
   .install .cmd-note a { color: var(--ink-2); text-decoration: underline; text-underline-offset: 3px; }
   .install .cmd-note a:hover { color: var(--accent-text); }
 
@@ -453,19 +362,19 @@ const faq = [
   .ba-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(32px, 5vw, 80px); align-items: center; margin-bottom: clamp(56px, 7vw, 96px); }
   .ba-copy { display: flex; flex-direction: column; gap: 18px; }
   .ba-copy .h2 { max-width: 12ch; }
-  .ba-lede { font-size: 17px; line-height: 1.55; color: var(--ink-2); max-width: 40ch; }
-  .ba-quote { margin: 0; padding-left: 14px; border-left: 2px solid var(--accent); font-size: 14.5px; line-height: 1.55; color: var(--ink-2); max-width: 46ch; }
+  .ba-lede { font-size: 18px; line-height: 1.55; color: var(--ink-2); max-width: 40ch; }
+  .ba-quote { margin: 0; padding-left: 14px; border-left: 2px solid var(--accent); font-size: 17px; line-height: 1.55; color: var(--ink-2); max-width: 46ch; }
   .ba-sides { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; margin-top: 6px; }
   .ba-side { display: flex; flex-direction: column; gap: 10px; }
-  .ba-side-h { display: flex; flex-direction: column; gap: 2px; padding-bottom: 10px; border-bottom: 1px solid var(--line); font-size: 14px; font-weight: 600; letter-spacing: -0.01em; }
+  .ba-side-h { display: flex; flex-direction: column; gap: 2px; padding-bottom: 10px; border-bottom: 1px solid var(--line); font-size: 16px; font-weight: 600; letter-spacing: -0.01em; }
   .ba-side-h .num { font-weight: 500; color: var(--ink-3); }
   .ba-side.with .ba-side-h { border-bottom-color: var(--ink); }
   .ba-side.with .ba-side-h .num { color: var(--accent-text); }
   .ba-side ul { display: flex; flex-direction: column; gap: 6px; }
-  .ba-side li { position: relative; padding-left: 14px; font-size: 13.5px; line-height: 1.45; color: var(--ink-2); }
+  .ba-side li { position: relative; padding-left: 14px; font-size: 16px; line-height: 1.45; color: var(--ink-2); }
   .ba-side li::before { content: ""; position: absolute; left: 0; top: 0.62em; width: 6px; height: 1px; background: var(--ink-3); }
   .ba-side.with li::before { background: var(--accent); }
-  .ba-open { align-self: flex-start; font-size: 13px; color: var(--ink-2); border-bottom: 1px solid var(--line-2); }
+  .ba-open { align-self: flex-start; font-size: 15px; color: var(--ink-2); border-bottom: 1px solid var(--line-2); }
   .ba-open:hover { color: var(--accent-text); border-color: var(--accent); }
   .ba-frame { border: 1px solid var(--line-2); border-radius: 16px; overflow: hidden; background: var(--paper-2); box-shadow: 0 1px 0 rgba(24, 24, 27, .04), 0 32px 64px -40px rgba(24, 24, 27, .45); }
   .ba-stage { position: relative; aspect-ratio: 16 / 10; overflow: hidden; touch-action: pan-y; user-select: none; }
@@ -484,32 +393,17 @@ const faq = [
   .figs > div { display: flex; flex-direction: column; gap: 10px; padding: 22px 24px 0 0; }
   .figs > div + div { padding-left: 24px; border-left: 1px solid var(--line); }
   .fig { font-size: clamp(36px, 4vw, 56px); font-weight: 600; letter-spacing: -0.045em; line-height: 1; color: var(--ink); font-variant-numeric: tabular-nums; }
-  .figs dd { margin: 0; font-size: 14px; line-height: 1.5; color: var(--ink-2); max-width: 28ch; }
+  .figs dd { margin: 0; font-size: 16px; line-height: 1.5; color: var(--ink-2); max-width: 28ch; }
   .figs-more { padding-top: 28px; }
 
   /* shared block head */
   .block-head { display: flex; flex-direction: column; gap: 14px; max-width: 760px; margin-bottom: clamp(32px, 4vw, 52px); }
   .block-head .h2 { max-width: 20ch; }
 
-  /* how it works */
-  .skill { padding-block: clamp(72px, 9vw, 128px); border-top: 1px solid var(--line); }
-  .flow { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px 40px; margin-bottom: clamp(32px, 4vw, 48px); }
-  .flow li { display: flex; flex-direction: column; gap: 8px; padding-top: 16px; border-top: 2px solid var(--line-2); }
-  .flow li:first-child { border-top-color: var(--ink); }
-  .flow b { font-size: 18px; font-weight: 600; letter-spacing: -0.02em; }
-  .flow-text { color: var(--ink-2); font-size: 15px; line-height: 1.55; max-width: 38ch; }
-  .agent-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(16px, 2vw, 24px); align-items: stretch; }
-  .agent-result { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
-  .agent-stage { position: relative; flex: 1; min-height: 420px; aspect-ratio: 1280 / 900; border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--paper-2) radial-gradient(var(--line-2) 1px, transparent 1.2px) center / 16px 16px; overflow: hidden; }
-  .agent-stage :global(lounge-frame) { position: absolute; inset: 22px; }
-  .agent-cap { display: flex; justify-content: space-between; gap: 12px; font-size: 13.5px; color: var(--ink-2); }
-  .agent-cap a { color: var(--ink); font-weight: 500; }
-  .agent-cap a:hover { color: var(--accent-text); }
 
   /* examples */
   .built { padding-block: clamp(72px, 9vw, 128px); border-top: 1px solid var(--line); }
   .built-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: clamp(28px, 3.5vw, 44px); }
-  .built-head .eyebrow { margin-bottom: 12px; }
   .built-head .lede { margin-top: 14px; max-width: 46ch; }
   .built-head .textlinks { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; white-space: nowrap; }
   .built-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(14px, 1.6vw, 22px); }
@@ -519,8 +413,8 @@ const faq = [
   .built-card:hover .built-shot { border-color: var(--line-2); transform: translateY(-3px); box-shadow: var(--shadow); }
   .built-card:hover .built-shot img { transform: scale(1.015); }
   .built-cap { display: flex; flex-direction: column; gap: 4px; }
-  .built-cap b { font-size: 16px; font-weight: 600; letter-spacing: -0.015em; }
-  .built-cap span { font-size: 13.5px; line-height: 1.5; color: var(--ink-3); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .built-cap b { font-size: 17px; font-weight: 600; letter-spacing: -0.015em; }
+  .built-cap span { font-size: 16px; line-height: 1.5; color: var(--ink-3); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 
   /* library bento */
   .lib { padding-block: clamp(72px, 9vw, 128px); border-top: 1px solid var(--line); }
@@ -529,7 +423,7 @@ const faq = [
   a.cell:hover { border-color: var(--line-2); transform: translateY(-3px); box-shadow: var(--shadow); }
   a.cell:active { transform: translateY(-1px) scale(.995); }
   .cell-text { display: flex; flex-direction: column; gap: 6px; position: relative; z-index: 1; }
-  .cell-text p { color: var(--ink-2); font-size: 14.5px; line-height: 1.5; max-width: 34ch; }
+  .cell-text p { color: var(--ink-2); font-size: 16px; line-height: 1.5; max-width: 34ch; }
   .cell-n { margin-left: 4px; font-family: var(--mono); font-size: 13px; font-weight: 400; letter-spacing: 0; color: var(--ink-3); }
   .cell-h { font-size: 20px; font-weight: 600; letter-spacing: -0.025em; line-height: 1.2; }
   .cell-stage { position: relative; flex: 1; min-height: 160px; margin: 0 -22px -22px; border-top: 1px solid var(--line); background: var(--paper-2) radial-gradient(var(--line-2) 1px, transparent 1.2px) center / 16px 16px; }
@@ -565,10 +459,10 @@ const faq = [
   .cmp .block-head .h2 { max-width: 22ch; }
   .cmp-scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--paper); }
   .cmp-scroll:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-  .cmp-table { width: 100%; min-width: 920px; border-collapse: collapse; font-size: 13.5px; }
+  .cmp-table { width: 100%; min-width: 960px; border-collapse: collapse; font-size: 15px; }
   .cmp-table th, .cmp-table td { padding: 12px 14px; text-align: left; vertical-align: middle; border-bottom: 1px solid var(--line); }
   .cmp-table tbody tr:last-child > * { border-bottom: 0; }
-  .cmp-table thead th { font-size: 13px; font-weight: 600; color: var(--ink); white-space: nowrap; background: var(--paper-2); }
+  .cmp-table thead th { font-size: 14px; font-weight: 600; color: var(--ink); white-space: nowrap; background: var(--paper-2); }
   .cmp-table thead a:hover { color: var(--accent-text); }
   .cmp-table tbody th { font-weight: 400; color: var(--ink-2); min-width: 210px; }
   .cmp-table .us { background: var(--accent-soft); }
@@ -579,8 +473,8 @@ const faq = [
   .mk.yes::before { background: var(--ink); border-color: var(--ink); }
   .mk.part::before { box-shadow: inset 4px 0 0 var(--ink-2); border-color: var(--ink-2); }
   .mk.no { color: var(--ink-3); }
-  .cmp-table .price td { font-size: 12.5px; color: var(--ink-2); }
-  .cmp-note { margin-top: 18px; font-size: 12px; color: var(--ink-3); }
+  .cmp-table .price td { font-size: 14px; color: var(--ink-2); }
+  .cmp-note { margin-top: 18px; font-size: 14px; color: var(--ink-2); }
   .cmp-note a { color: var(--ink-2); text-decoration: underline; text-underline-offset: 3px; }
 
   /* faq + bio */
@@ -592,15 +486,7 @@ const faq = [
   .faq-item summary::-webkit-details-marker { display: none; }
   .faq-item summary::after { content: "+"; font-family: var(--mono); color: var(--ink-3); transition: transform var(--t-med) var(--ease-out); }
   .faq-item[open] summary::after { transform: rotate(45deg); }
-  .faq-item p { padding: 0 0 20px; max-width: 62ch; color: var(--ink-2); font-size: 16px; line-height: 1.6; }
-  .bio { display: flex; flex-direction: column; gap: 12px; padding-block: clamp(48px, 6vw, 88px); border-top: 1px solid var(--line); }
-  .bio .h3 a { color: var(--ink); }
-  .bio .h3 a:hover { color: var(--accent-text); }
-  .bio-text { max-width: 60ch; color: var(--ink-2); font-size: 17px; line-height: 1.6; }
-  .bio-text a { text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--ink-3); }
-  .bio-links { display: flex; flex-wrap: wrap; gap: 8px 20px; font-size: 14px; }
-  .bio-links a { color: var(--ink-2); border-bottom: 1px solid var(--line-2); }
-  .bio-links a:hover { color: var(--ink); }
+  .faq-item p { padding: 0 0 20px; max-width: 62ch; color: var(--ink-2); font-size: 17px; line-height: 1.6; }
 
   @media (max-width: 1100px) {
     .bento { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: none; }
@@ -621,8 +507,6 @@ const faq = [
     .ba-grid { grid-template-columns: minmax(0, 1fr); }
     .ba-copy .h2 { max-width: none; }
     .ba-frame { order: -1; }
-    .agent-grid { grid-template-columns: minmax(0, 1fr); }
-    .agent-stage { min-height: 0; }
     .built-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .faq { grid-template-columns: 1fr; }
     .faq-head { position: static; }
@@ -632,10 +516,9 @@ const faq = [
     .c-screens { grid-row: auto; }
     .c-styles { flex-direction: column; align-items: flex-start; }
     .style-words { justify-content: flex-start; max-width: none; }
-    .flow, .built-grid { grid-template-columns: minmax(0, 1fr); }
+    .built-grid { grid-template-columns: minmax(0, 1fr); }
     .built-head { flex-direction: column; align-items: flex-start; }
     .built-head .textlinks { align-items: flex-start; }
-    .agent-cap { flex-direction: column; gap: 4px; }
     .cmd code { font-size: 13px; }
     .wall { height: 260px; }
     .wall-plane { gap: 10px; }

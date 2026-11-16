@@ -34,6 +34,8 @@
   --accent-on-ink: #f09462;
   --accent-ink: #fffaf6;
   --accent-soft: #fbe6da;
+  --band: #c2410c;
+  --band-ink: #ffffff;
   --selection: #f8d5c1;
   --shadow: 0 1px 0 rgba(24, 24, 27, 0.04), 0 12px 32px -14px rgba(24, 24, 27, 0.22);
 
@@ -70,6 +72,8 @@
   --accent-on-ink: #9a3412;
   --accent-ink: #1a0b03;
   --accent-soft: #3a1d10;
+  --band: #ec7a45;
+  --band-ink: #1a0b03;
   --selection: #5a2a14;
   --shadow: 0 1px 0 rgba(0, 0, 0, 0.3), 0 16px 40px -16px rgba(0, 0, 0, 0.7);
   color-scheme: dark;
