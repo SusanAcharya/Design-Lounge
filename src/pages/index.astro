@@ -1,7 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
 import DeviceFrame from '../components/DeviceFrame.astro';
-import Showcase from '../components/Showcase.astro';
 import AgentTerminal from '../components/AgentTerminal.astro';
 import { getPieces, CATEGORY_META, about } from '../lib/pieces';
 import { PAIRINGS } from '../data/type';
@@ -44,10 +43,8 @@ const system = [
   { n: ICONS.length, label: 'Icons', href: '/icons' },
   { n: RECIPES.length, label: 'Motion recipes', href: '/motion' },
 ];
-// The two sites the homepage shows under Built from one prompt.
-const homeBuilt = ['meridian-no-7', 'key-01'].map((id) => SOLO.find((e) => e.id === id)).filter((e) => e !== undefined);
-const pair = PAIRS[0];
-const pairSides = pair ? [pair.a, pair.b].map((id) => EXAMPLES.find((e) => e.id === id)).filter((e) => e !== undefined) : [];
+// The sites the homepage shows under Built from one prompt: one of each kind of look.
+const homeBuilt = ['meridian-no-7', 'late-light', 'key-01', 'thulo-dhunga', 'aadhi-raat', 'halden-chambers'].map((id) => SOLO.find((e) => e.id === id)).filter((e) => e !== undefined);
 const installCmd = 'npx skills add SusanAcharya/Design-Lounge';
 const mcpCmd = 'claude mcp add -s user design-lounge -- npx -y design-lounge-mcp@latest';
 // The two ways in, for the switch above each install box. The MCP server is first: it is the skill plus tools.
@@ -74,6 +71,12 @@ const flow = [
   { step: 'Build from briefs', tools: ['get_piece'], tokens: cost('get_piece'), each: true, text: 'Each section comes from a live piece and its numeric brief: sizes, states, timing, the acceptance checks.' },
   { step: 'Review', tools: ['review_page'], tokens: cost('review_page'), text: 'It opens the page and fails what looks machine-made, then checks SEO, AEO and GEO. Your agent fixes the list and runs it again.' },
 ];
+// How it works, in plain words. The tool names and token costs live in the FAQ and on /agents.
+const steps = [
+  { step: 'Add it once', text: 'One command in Claude Code, Cursor or Codex, or a connector in Claude.ai and ChatGPT. Free, with no account.' },
+  { step: 'Ask in plain words', text: 'Say what you are making, such as “a site for my bakery”. It works out the kind of product and the rules the page must keep.' },
+  { step: 'It designs, builds and checks', text: 'Your agent locks one palette, one font pairing and one page plan, builds each part from a live piece, then reviews the page and fixes what fails.' },
+];
 const markText = { yes: 'Yes', no: 'No', part: 'In part' } as const;
 const faq = [
   { q: 'What is Design Lounge?', a: `Design Lounge is a free UI design skill for AI coding agents, plus a library of ${about(all.length)} design ideas: website sections, app screens, components and motion. Each one has a live demo and a written brief that an agent can build from.` },
@@ -86,104 +89,127 @@ const faq = [
   { q: 'Which agents does it work with?', a: 'Claude Code, Cursor, Codex, VS Code, Windsurf and Claude Desktop through the npm package design-lounge-mcp. Claude.ai, ChatGPT and other clients that take a remote connector can use https://www.designlounge.live/api/mcp, which has the library tools; page reviews run in the npm package. Agents without MCP can install the skill with npx skills add SusanAcharya/Design-Lounge.' },
   { q: 'Does it work with React, Flutter or SwiftUI?', a: 'Yes. Every demo is plain HTML, CSS and vanilla JavaScript, with no framework, packages or versions that could clash with your project. A brief describes the design in numbers, not in one framework, so your agent rebuilds it in your stack: React, Vue, Svelte, Astro, React Native, Flutter, SwiftUI or Compose. It sits well on top of a component library such as shadcn/ui.' },
   { q: 'How is it different from shadcn/ui, Arc UI, Mobbin or 21st.dev?', a: 'Those give your agent components to install or screenshots to look at. Design Lounge gives it a direction: a palette, a type pairing and a page recipe that agree, live pieces with numeric briefs, and a review of the finished page for design, SEO, AEO and GEO. It works alongside them. The comparison on this page shows what each one covers.' },
-  { q: 'What does the review check?', a: 'It checks design, SEO, AEO and GEO in one pass, and lists fails first. review_page fails the usual signs of AI-made design (gradient text, an icon over a title over a sentence three times, numbered eyebrows, glass everywhere, invented fonts), checks that the page keeps its locked kit, and scores SEO, AEO and GEO: titles, descriptions, headings, structured data, answers that a search or AI engine can quote. The local server also screenshots the page and runs accessibility checks.' },
+  { q: 'What does the review check?', a: 'It checks a built page for design, SEO, AEO and GEO in one pass, and lists the fails first. On design, review_page fails the usual signs of AI-made pages: gradient text, an icon over a title over a sentence three times, numbered eyebrows, glass everywhere, invented fonts. It checks that the page keeps its locked kit. On search, it scores titles, descriptions, headings, structured data, and answers that a search or AI engine can quote. The local server also screenshots the page and runs accessibility checks.' },
   { q: 'Does the MCP server see my code?', a: 'No. The npm package runs on your machine and bundles the library and thumbnails, so nothing is sent to Design Lounge and there is no tracking. review_page reads only the file or URL your agent gives it. The hosted connector receives only the words your agent sends it, such as a request or a piece name, and does not store them.' },
   { q: 'Who made Design Lounge?', a: `${AUTHOR.name}, a ${AUTHOR.role.toLowerCase()} based in ${AUTHOR.city}, Nepal.` },
 ];
 ---
 <Base rail={false} fullTitle="Design Lounge: a UI design skill and design ideas for AI agents" description={`A free UI design skill for Cursor, Claude Code and Codex, with ${about(all.length)} live design ideas: sections, app screens, palettes, font pairings and motion.`} faq={faq}>
   <section class="hero wrap">
-    <div class="hero-text">
-      <h1 class="display h1 reveal">Give your AI agent <i>design taste.</i></h1>
-      <p class="lede reveal" style="--d:80ms">A free UI design skill and a library of {about(all.length)} live design ideas. Your agent picks real type, colour and motion, then builds.</p>
-      <div class="hero-cta reveal" style="--d:160ms">
-        <div class="install" data-install>
-          <div class="modes" role="group" aria-label="Install as">
-            {installModes.map((m, i) => <button type="button" data-mode={m.key} aria-pressed={i === 0 ? 'true' : 'false'}>{m.label}</button>)}
-          </div>
-          <span class="cmd big">
-            <span class="prompt mono" aria-hidden="true">$</span>
-            <code id="hero-cmd" data-cmds={JSON.stringify(Object.fromEntries(installModes.map((m) => [m.key, m.cmd])))}>{installModes[0].cmd}</code>
-            <button class="copy" type="button" data-copy="#hero-cmd"><span data-label>Copy</span></button>
-          </span>
-          {installModes.map((m, i) => <p class="cmd-note" data-note={m.key} hidden={i !== 0}>{m.note}{m.link && <> <a href={m.link.href}>{m.link.label} →</a></>}</p>)}
+    <a class="hero-pill reveal" href="/agents">
+      <span class="pill-dot" aria-hidden="true"></span>
+      Free for Claude Code, Cursor, Codex and ChatGPT
+      <span aria-hidden="true">→</span>
+    </a>
+    <h1 class="display hero-h reveal" style="--d:60ms">Give your AI agent <i>design taste.</i></h1>
+    <p class="hero-lede reveal" style="--d:120ms">AI-built sites tend to look the same. Design Lounge hands your agent the choices a designer would make, from a library of {about(all.length)} live designs, so what it builds looks finished.</p>
+    <div class="hero-cta reveal" style="--d:180ms">
+      <div class="install" data-install>
+        <div class="modes" role="group" aria-label="Install as">
+          {installModes.map((m, i) => <button type="button" data-mode={m.key} aria-pressed={i === 0 ? 'true' : 'false'}>{m.label}</button>)}
         </div>
-        <a class="textlink" href="/browse">Browse the library <span aria-hidden="true">→</span></a>
+        <span class="cmd big">
+          <span class="prompt mono" aria-hidden="true">$</span>
+          <code id="hero-cmd" data-cmds={JSON.stringify(Object.fromEntries(installModes.map((m) => [m.key, m.cmd])))}>{installModes[0].cmd}</code>
+          <button class="copy" type="button" data-copy="#hero-cmd"><span data-label>Copy</span></button>
+        </span>
+        {installModes.map((m, i) => <p class="cmd-note" data-note={m.key} hidden={i !== 0}>{m.note}{m.link && <> <a href={m.link.href}>{m.link.label} →</a></>}</p>)}
       </div>
-      <ul class="trust reveal" style="--d:240ms" aria-label="At a glance">
-        <li>Free, no account</li>
-        <li><a href="https://www.npmjs.com/package/design-lounge-mcp" rel="noopener">design-lounge-mcp v{mcp.version}</a></li>
-        <li><a href="https://registry.modelcontextprotocol.io/v0/servers?search=design-lounge" rel="noopener">On the MCP Registry</a></li>
-        <li><a href="https://github.com/SusanAcharya/Design-Lounge" rel="noopener">Source on GitHub</a></li>
-      </ul>
-    </div>
-    <div class="hero-wall" aria-label="Featured pieces">
-      {heroWeb && (
-        <a class="wall-item web" href={`/p/${heroWeb.id}`}>
-          <span class="sr-only">{heroWeb.data.title}</span>
-          <DeviceFrame slug={heroWeb.id} platform={heroWeb.data.platform} title={heroWeb.data.title} eager />
-        </a>
-      )}
-      {heroPhone && (
-        <a class="wall-item phone" href={`/p/${heroPhone.id}`}>
-          <span class="sr-only">{heroPhone.data.title}</span>
-          <DeviceFrame slug={heroPhone.id} platform={heroPhone.data.platform} title={heroPhone.data.title} eager />
-        </a>
-      )}
-      {heroTablet && (
-        <a class="wall-item tablet" href={`/p/${heroTablet.id}`}>
-          <span class="sr-only">{heroTablet.data.title}</span>
-          <DeviceFrame slug={heroTablet.id} platform={heroTablet.data.platform} title={heroTablet.data.title} />
-        </a>
-      )}
+      <a class="textlink" href="/browse">Browse {about(all.length)} designs <span aria-hidden="true">→</span></a>
     </div>
   </section>
 
-  <section class="proof wrap" aria-labelledby="proof-h">
-    <header class="proof-head">
-      <h2 class="display h3" id="proof-h">One prompt, two builds.</h2>
-      <a class="textlink" href="/benchmark">See every build <span aria-hidden="true">→</span></a>
-    </header>
-    <p class="pair-prompt"><span class="mono" aria-hidden="true">&gt;</span> {show.prompt}</p>
-    <div class="pair">
+  <section class="ba wrap" aria-labelledby="ba-h">
+    <h2 class="sr-only" id="ba-h">One prompt, two builds</h2>
+    <div class="ba-frame reveal" style="--d:240ms">
+      <p class="ba-bar"><span class="ba-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="ba-kicker">Same prompt, same model</span><span class="ba-quote">“{show.prompt}”</span></p>
+      <div class="ba-stage" data-ba style="--pos: 50%">
+        <img class="ba-img" src={`/built/bench/${show.id}-without/cover.jpg`} alt={showSides[0].alt} width="1280" height="800" decoding="async" fetchpriority="high" />
+        <div class="ba-with">
+          <img class="ba-img" src={`/built/bench/${show.id}-with/cover.jpg`} alt={showSides[1].alt} width="1280" height="800" decoding="async" fetchpriority="high" />
+        </div>
+        <span class="ba-tag left"><b>{showSides[0].label}</b><span class="num">{showSides[0].fails} review {showSides[0].fails === 1 ? 'fail' : 'fails'}</span></span>
+        <span class="ba-tag right"><b>{showSides[1].label}</b><span class="num">{showSides[1].fails} review {showSides[1].fails === 1 ? 'fail' : 'fails'}</span></span>
+        <span class="ba-handle" aria-hidden="true"><span>‹ ›</span></span>
+        <input class="ba-range" type="range" min="0" max="100" value="50" step="1" aria-label="Drag to compare the build without Design Lounge (left) and with it (right)" />
+      </div>
+    </div>
+    <div class="ba-notes">
       {showSides.map((s) => (
-        <figure class={`pair-side ${s.arm}`}>
-          <a class="pair-shot" href={s.href} target="_blank" rel="noopener">
-            <img src={`/built/bench/${show.id}-${s.arm}/cover.jpg`} alt={s.alt} width="1280" height="800" loading="lazy" decoding="async" />
-          </a>
-          <figcaption>
-            <p class="pair-label"><span>{s.label}</span><span class={`pair-fails num${s.fails ? '' : ' ok'}`}>{s.fails} review {s.fails === 1 ? 'fail' : 'fails'}</span></p>
-            <ul class="pair-notes">{s.notes.map((n) => <li>{n}</li>)}</ul>
-            <a class="pair-open" href={s.href} target="_blank" rel="noopener">Open the build <span aria-hidden="true">↗</span></a>
-          </figcaption>
-        </figure>
+        <div class={`ba-side ${s.arm}`}>
+          <p class="ba-side-h">{s.label}</p>
+          <ul>{s.notes.slice(0, 3).map((n) => <li>{n}</li>)}</ul>
+          <a class="ba-open" href={s.href} target="_blank" rel="noopener">Open this build <span aria-hidden="true">↗</span></a>
+        </div>
       ))}
     </div>
-    <p class="figs-cap">Across all {SUBJECTS.length} prompts, a landing page, a bakery site and a dashboard</p>
     <dl class="figs">
-      <div>
-        <dt>Review fails, same prompts</dt>
-        <dd><span class="fig num">{bench.failsWith} vs {bench.failsWithout}</span><span class="fig-note">Across {bench.builds} builds with the Lounge MCP and the same {bench.builds} without it: design, accessibility, SEO, AEO and GEO.</span></dd>
-      </div>
-      <div>
-        <dt>Text below readable contrast</dt>
-        <dd><span class="fig num">{bench.contrastWith} vs {bench.contrastWithout}</span><span class="fig-note">Elements under WCAG AA. Every build with the Lounge passed on every line.</span></dd>
-      </div>
-      <div>
-        <dt>Accessibility score</dt>
-        <dd><span class="fig num">{bench.a11yWith}</span><span class="fig-note">On every build with the Lounge, measured with axe in Chromium. {bench.a11yWithout} on average without it.</span></dd>
-      </div>
-      <div>
-        <dt>Blind design rating</dt>
-        <dd><span class="fig num">{bench.judgeHigher} of {bench.judged}</span><span class="fig-note">An AI reviewer rated each pair from screenshots alone, not knowing which used the Lounge. The Lounge build scored higher every time: {bench.judgeWith} to {bench.judgeWithout} out of {bench.judgeMax}.</span></dd>
-      </div>
+      <div><dt class="fig num">{bench.failsWith} vs {bench.failsWithout}</dt><dd>Review fails across all {bench.builds} builds, with the Lounge and without it</dd></div>
+      <div><dt class="fig num">{bench.contrastWith} vs {bench.contrastWithout}</dt><dd>Lines of text too faint to read</dd></div>
+      <div><dt class="fig num">{bench.a11yWith}</dt><dd>Accessibility score on every Lounge build, against {bench.a11yWithout} without</dd></div>
+      <div><dt class="fig num">{bench.judgeHigher} of {bench.judged}</dt><dd>Pairs where a blind design rating scored the Lounge build higher</dd></div>
     </dl>
+    <p class="figs-more"><a class="textlink" href="/benchmark">How these were measured <span aria-hidden="true">→</span></a></p>
+  </section>
+
+  <section class="skill wrap" id="agent" aria-labelledby="agent-h">
+    <header class="block-head">
+      <p class="eyebrow">How it works</p>
+      <h2 class="display h2" id="agent-h">Say what you're making. It picks the rest.</h2>
+    </header>
+    <ol class="flow">
+      {steps.map((f) => (
+        <li>
+          <b>{f.step}</b>
+          <span class="flow-text">{f.text}</span>
+        </li>
+      ))}
+    </ol>
+    <div class="agent-grid">
+      <AgentTerminal pieces={about(all.length)} pairings={about(PAIRINGS.length)} themes={about(THEMES.length)} />
+      <div class="agent-result">
+        <div class="agent-stage">
+          {agentHero && <DeviceFrame slug={agentHero.id} platform={agentHero.data.platform} title={agentHero.data.title} interactive />}
+        </div>
+        {agentHero && (
+          <p class="agent-cap">
+            <span>The result: {agentHero.data.title}</span>
+            <a href={`/p/${agentHero.id}`}>Open piece <span aria-hidden="true">→</span></a>
+          </p>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <section class="built wrap" aria-labelledby="built-h">
+    <header class="built-head">
+      <div>
+        <p class="eyebrow">Examples</p>
+        <h2 class="display h2" id="built-h">Six sites, <i>one prompt each.</i></h2>
+        <p class="lede">Each one built by a coding agent with Design Lounge, in one go. Open any of them and use it.</p>
+      </div>
+      <span class="textlinks">
+        <a class="textlink" href="/examples">All {EXAMPLES.length} sites <span aria-hidden="true">→</span></a>
+        <a class="textlink" href="/examples/compare">Same prompt, different style <span aria-hidden="true">→</span></a>
+      </span>
+    </header>
+    <ol class="built-grid">
+      {homeBuilt.map((e) => (
+        <li>
+          <a href={exampleUrl(e)} class="built-card">
+            <span class="built-shot"><img src={`/built/${e.id}/cover.jpg`} alt={`${e.title}, built by an agent with Design Lounge`} width="1280" height="800" loading="lazy" decoding="async" /></span>
+            <span class="built-cap"><b>{e.title}</b><span>“{e.prompt}”</span></span>
+          </a>
+        </li>
+      ))}
+    </ol>
   </section>
 
   <section class="lib wrap" aria-labelledby="lib-h">
     <header class="block-head">
-      <h2 class="display h2" id="lib-h">A library your agent can actually use.</h2>
-      <p class="lede">Every piece runs live, comes with a written brief, and is free to use in your products.</p>
+      <p class="eyebrow">The library</p>
+      <h2 class="display h2" id="lib-h">{about(all.length)} designs your agent can build from.</h2>
+      <p class="lede">Every piece runs live and comes with a written brief: sizes, colours, timing and states. Free to use in your own products.</p>
     </header>
     <div class="bento">
       <a class="cell c-sections" href="/browse?type=section">
@@ -238,82 +264,6 @@ const faq = [
     </div>
   </section>
 
-  <section class="skill wrap" id="agent" aria-labelledby="agent-h">
-    <header class="block-head">
-      <p class="eyebrow">How it works</p>
-      <h2 class="display h2" id="agent-h">Say what you're making. It picks the rest.</h2>
-      <p class="lede">The MCP server turns one sentence into a locked direction and a checked page, in four kinds of call. Each one costs a few thousand tokens, measured on the live server.</p>
-    </header>
-    <ol class="flow">
-      {flow.map((f) => (
-        <li>
-          <b>{f.step}</b>
-          <span class="flow-tools">{f.tools.map((t) => <code>{t}</code>)}</span>
-          <span class="flow-text">{f.text}</span>
-          <span class="flow-cost mono">≈ {k(f.tokens)} tokens{f.each ? ' each' : ''}</span>
-        </li>
-      ))}
-    </ol>
-    <div class="agent-grid">
-      <AgentTerminal pieces={about(all.length)} pairings={about(PAIRINGS.length)} themes={about(THEMES.length)} />
-      <div class="agent-result">
-        <div class="agent-stage">
-          {agentHero && <DeviceFrame slug={agentHero.id} platform={agentHero.data.platform} title={agentHero.data.title} interactive />}
-        </div>
-        {agentHero && (
-          <p class="agent-cap">
-            <span>The result: {agentHero.data.title}</span>
-            <a href={`/p/${agentHero.id}`}>Open piece <span aria-hidden="true">→</span></a>
-          </p>
-        )}
-      </div>
-    </div>
-  </section>
-
-  <section class="built wrap" aria-labelledby="built-h">
-    <header class="built-head">
-      <div>
-        <p class="eyebrow">Examples</p>
-        <h2 class="display h2" id="built-h">Built from one prompt.</h2>
-      </div>
-      <a class="textlink" href="/examples">All {EXAMPLES.length} sites <span aria-hidden="true">→</span></a>
-    </header>
-    <ol class="built-row">
-      {homeBuilt.map((e) => (
-        <li>
-          <a href={exampleUrl(e)} class="built-card">
-            <img src={`/built/${e.id}/cover.jpg`} alt={`${e.title}, built by an agent with the skill`} width="1280" height="800" loading="lazy" />
-            <span class="built-cap"><b>{e.title}</b><span>{e.prompt}</span></span>
-          </a>
-        </li>
-      ))}
-    </ol>
-  </section>
-
-  {pair && pairSides.length === 2 && (
-    <section class="pairs wrap" aria-labelledby="pairs-h">
-      <header class="built-head">
-        <div>
-          <p class="eyebrow">Range</p>
-          <h2 class="display h2" id="pairs-h">Same product, <i>different style.</i></h2>
-          <p class="lede">Both by Design Lounge. One prompt, built twice, on two directions.</p>
-        </div>
-        <span class="textlinks"><a class="textlink" href="/examples/compare">Compare all {PAIRS.length} <span aria-hidden="true">→</span></a><a class="textlink" href="/examples/proof">With and without the skill <span aria-hidden="true">→</span></a></span>
-      </header>
-      <p class="pair-prompt"><span class="mono" aria-hidden="true">&gt;</span> {pair.prompt}</p>
-      <ol class="pair-row">
-        {pairSides.map((e, j) => (
-          <li>
-            <a href={exampleUrl(e)} class="built-card">
-              <img src={`/built/${e.id}/cover.jpg`} alt={`${pair.title}, style ${j === 0 ? 'A' : 'B'}`} width="1280" height="800" loading="lazy" />
-              <span class="built-cap"><b>Style {j === 0 ? 'A' : 'B'}</b><span>{e.what}</span></span>
-            </a>
-          </li>
-        ))}
-      </ol>
-    </section>
-  )}
-
   <section class="cmp wrap" aria-labelledby="cmp-h">
     <header class="block-head">
       <p class="eyebrow">How it compares</p>
@@ -348,50 +298,6 @@ const faq = [
     <p class="cmp-note mono">Checked {CHECKED} on each product's own pages. Something out of date? <a href="https://github.com/SusanAcharya/Design-Lounge/issues" rel="noopener">Open an issue</a>.</p>
   </section>
 
-  <section class="feats wrap" aria-labelledby="feats-h">
-    <header class="feats-head">
-      <h2 class="display h2" id="feats-h">More than a gallery.</h2>
-      <p class="lede">Every piece is something you can take. Around them sit the tools that tie a product together.</p>
-      <a class="btn" href="/agents">How it works</a>
-    </header>
-    <div class="feats-body">
-      <div class="fgroup">
-        <h3 class="fgroup-h">In every piece</h3>
-        <ul>
-          <li><b>Live demo</b><span>Every control works, inside a real browser, phone or tablet frame.</span></li>
-          <li><b>Brief</b><span>A written spec your agent builds from. One click to copy.</span></li>
-          <li><b>Source</b><span>The HTML, credited and free to use in your own products.</span></li>
-        </ul>
-      </div>
-      <div class="fgroup">
-        <h3 class="fgroup-h">Around the pieces</h3>
-        <ul>
-          <li><a href="/start"><b>Start</b><span>Pick what you're making. Get a theme, a pairing and the pieces that fit.</span></a></li>
-          <li><a href="/kit"><b>Kit</b><span>Compose a kind, a palette, a pairing and an icon family into one brief.</span></a></li>
-          <li><a href="/system"><b>System</b><span>{about(PAIRINGS.length)} type pairings, {about(THEMES.length)} themes, icons and motion recipes.</span></a></li>
-          <li><button type="button" data-open-palette><b>Search</b><span>Press <kbd>⌘K</kbd> anywhere to jump to any piece.</span></button></li>
-          <li><a href="/llms.txt"><b>For agents</b><span>An llms.txt and a JSON catalogue, so tools can read the library directly.</span></a></li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <Showcase
-    id="phones"
-    kicker="Phone apps"
-    more={{ href: '/browse?platform=mobile-app', label: 'All phone screens' }}
-    slugs={[
-      { slug: 'phone-wallet-cards', label: 'Wallet cards' },
-      { slug: 'phone-workout-timer', label: 'Workout timer' },
-      { slug: 'phone-lesson-quiz', label: 'Lesson quiz' },
-      { slug: 'phone-feed-posts', label: 'Social feed' },
-      { slug: 'phone-order-tracking', label: 'Order tracking' },
-    ]}
-  >
-    <Fragment slot="title">Tap through a few right here.</Fragment>
-    Real app screens at 390 × 844. Lift a card, run the timer, answer the quiz. Each ships with the brief your agent builds from.
-  </Showcase>
-
   <section class="faq wrap" aria-labelledby="faq-h">
     <div class="faq-head">
       <h2 class="display h2" id="faq-h">Questions</h2>
@@ -420,7 +326,7 @@ const faq = [
 </Base>
 
 <script>
-  // The install switch: one choice for both boxes on the page, remembered for the next visit.
+  // The install switch: one choice for every install box on the page, remembered for the next visit.
   const boxes = [...document.querySelectorAll<HTMLElement>('[data-install]')];
   const choose = (mode: string) => {
     for (const box of boxes) {
@@ -439,122 +345,63 @@ const faq = [
     choose(b.dataset.mode!);
     try { localStorage.setItem('dl-install', b.dataset.mode!); } catch {}
   }));
+
+  // Before and after: the range input drives the split. The first time the stage comes into view it sweeps once
+  // to show that it moves, unless the visitor prefers less motion or has already touched it.
+  for (const stage of document.querySelectorAll<HTMLElement>('[data-ba]')) {
+    const range = stage.querySelector<HTMLInputElement>('.ba-range')!;
+    const set = (v: number) => { stage.style.setProperty('--pos', `${v}%`); range.value = String(v); };
+    let touched = false;
+    range.addEventListener('input', () => { touched = true; set(Number(range.value)); });
+    range.addEventListener('pointerdown', () => { touched = true; stage.dataset.active = ''; });
+    window.addEventListener('pointerup', () => { delete stage.dataset.active; });
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        if (!entries.some((e) => e.isIntersecting)) return;
+        io.disconnect();
+        const keys = [[0, 50], [700, 30], [1500, 68], [2200, 50]];
+        const t0 = performance.now();
+        const ease = (x: number) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
+        const tick = (now: number) => {
+          if (touched) return;
+          const t = now - t0;
+          const i = keys.findIndex(([at]) => at > t);
+          if (i === -1) { set(50); return; }
+          const [a0, v0] = keys[i - 1], [a1, v1] = keys[i];
+          set(v0 + (v1 - v0) * ease((t - a0) / (a1 - a0)));
+          requestAnimationFrame(tick);
+        };
+        setTimeout(() => requestAnimationFrame(tick), 600);
+      }, { threshold: 0.5 });
+      io.observe(stage);
+    }
+  }
 </script>
 
 <style>
-
-  /* hero trust line */
-  .trust { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 4px; font-size: 13px; color: var(--ink-3); }
-  .trust li { display: inline-flex; align-items: center; gap: 18px; }
-  .trust li + li::before { content: ""; width: 3px; height: 3px; border-radius: 50%; background: var(--ink-3); margin-left: -10px; margin-right: -8px; }
-  .trust a { color: var(--ink-2); border-bottom: 1px solid var(--line-2); }
-  .trust a:hover { color: var(--accent-text); border-color: var(--accent); }
-
-  /* measured */
-  .proof { padding-block: clamp(28px, 4vw, 48px) clamp(48px, 6vw, 80px); }
-  .proof-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 18px; }
-  .pair-prompt { display: flex; gap: 10px; max-width: 72ch; margin: 0 0 clamp(18px, 2.4vw, 28px); font-size: 15px; line-height: 1.5; color: var(--ink-2); }
-  .pair-prompt .mono { color: var(--accent-text); }
-  .pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(16px, 2.4vw, 32px); margin: 0 0 clamp(36px, 4.5vw, 56px); }
-  .pair-side { margin: 0; display: flex; flex-direction: column; gap: 14px; }
-  .pair-shot { display: block; border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden; background: var(--paper-2); transition: border-color var(--t-med), transform var(--t-med) var(--ease-out); }
-  .pair-side.with .pair-shot { border-color: var(--ink); }
-  .pair-shot:hover { border-color: var(--ink); transform: translateY(-2px); }
-  .pair-shot img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; }
-  .pair-label { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin: 0; padding-bottom: 10px; border-bottom: 1px solid var(--line); font-size: 15px; font-weight: 600; letter-spacing: -0.01em; color: var(--ink); }
-  .pair-fails { font-size: 13.5px; font-weight: 500; color: var(--ink-2); white-space: nowrap; }
-  .pair-fails.ok { color: var(--ink); font-weight: 600; }
-  .pair-notes { display: flex; flex-direction: column; gap: 7px; margin: 0; padding: 0; list-style: none; }
-  .pair-notes li { position: relative; padding-left: 16px; font-size: 14.5px; line-height: 1.45; color: var(--ink-2); }
-  .pair-notes li::before { content: ""; position: absolute; left: 0; top: 0.62em; width: 6px; height: 1px; background: var(--ink-3); }
-  .pair-side.with .pair-notes li::before { background: var(--accent); }
-  .pair-open { align-self: flex-start; font-size: 13.5px; color: var(--ink-2); border-bottom: 1px solid var(--line-2); min-height: 24px; }
-  .pair-open:hover { color: var(--accent-text); border-color: var(--accent); }
-  .figs-cap { margin: 0 0 10px; font-size: 13px; color: var(--ink-3); }
-  .figs { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); margin: 0; border-top: 1px solid var(--ink); }
-  .figs > div { display: flex; flex-direction: column; gap: 10px; padding: 18px 24px 4px 0; }
-  .figs > div + div { padding-left: 24px; border-left: 1px solid var(--line); }
-  .figs dt { font-size: 13px; color: var(--ink-3); }
-  .figs dd { margin: 0; display: flex; flex-direction: column; gap: 8px; }
-  .fig { font-size: clamp(40px, 4.6vw, 60px); font-weight: 600; letter-spacing: -0.045em; line-height: 1; color: var(--ink); font-variant-numeric: tabular-nums; }
-  .fig-note { font-size: 13.5px; line-height: 1.5; color: var(--ink-2); max-width: 30ch; }
-
-  /* how it works */
-  .flow { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px 28px; margin-bottom: clamp(28px, 3.5vw, 44px); counter-reset: none; }
-  .flow li { display: flex; flex-direction: column; gap: 8px; padding-top: 14px; border-top: 2px solid var(--line-2); }
-  .flow li:first-child { border-top-color: var(--ink); }
-  .flow b { font-size: 16px; font-weight: 600; letter-spacing: -0.015em; }
-  .flow-tools { display: flex; flex-wrap: wrap; gap: 4px; }
-  .flow-tools code { font-family: var(--mono); font-size: 12px; padding: 2px 7px; border-radius: 6px; background: var(--paper-2); border: 1px solid var(--line); color: var(--ink); }
-  .flow-text { color: var(--ink-2); font-size: 14.5px; line-height: 1.5; }
-  .flow-cost { margin-top: auto; font-size: 12px; color: var(--accent-text); }
-
-  /* compare */
-  .cmp { padding-block: clamp(64px, 8vw, 120px); border-top: 1px solid var(--line); }
-  .cmp .block-head .h2 { max-width: 22ch; }
-  .cmp-scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--paper); }
-  .cmp-scroll:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-  .cmp-table { width: 100%; min-width: 920px; border-collapse: collapse; font-size: 13.5px; }
-  .cmp-table th, .cmp-table td { padding: 12px 14px; text-align: left; vertical-align: middle; border-bottom: 1px solid var(--line); }
-  .cmp-table tbody tr:last-child > * { border-bottom: 0; }
-  .cmp-table thead th { font-size: 13px; font-weight: 600; color: var(--ink); white-space: nowrap; background: var(--paper-2); }
-  .cmp-table thead a:hover { color: var(--accent-text); }
-  .cmp-table tbody th { font-weight: 400; color: var(--ink-2); min-width: 210px; }
-  .cmp-table .us { background: var(--accent-soft); }
-  .cmp-table thead .us { color: var(--accent-text); background: var(--accent-soft); }
-  .mk { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; color: var(--ink-2); }
-  .mk::before { content: ""; width: 8px; height: 8px; border-radius: 50%; border: 1.5px solid var(--ink-3); }
-  .mk.yes { color: var(--ink); }
-  .mk.yes::before { background: var(--ink); border-color: var(--ink); }
-  .mk.part::before { box-shadow: inset 4px 0 0 var(--ink-2); border-color: var(--ink-2); }
-  .mk.no { color: var(--ink-3); }
-  .cmp-table .price td { font-size: 12.5px; color: var(--ink-2); }
-  .cmp-note { margin-top: 18px; font-size: 12px; color: var(--ink-3); }
-  .cmp-note a { color: var(--ink-2); text-decoration: underline; text-underline-offset: 3px; }
-
-  /* faq + bio */
-  .faq { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr); gap: clamp(24px, 4vw, 64px); padding-block: clamp(64px, 8vw, 120px); border-top: 1px solid var(--line); }
-  .faq-head { display: flex; flex-direction: column; gap: 12px; position: sticky; top: calc(var(--header-h) + 32px); align-self: start; }
-  .faq-list { border-top: 1px solid var(--line); }
-  .faq-item { border-bottom: 1px solid var(--line); }
-  .faq-item summary { cursor: pointer; list-style: none; display: flex; justify-content: space-between; gap: 16px; padding: 18px 0; font-size: 17px; font-weight: 500; color: var(--ink); }
-  .faq-item summary::-webkit-details-marker { display: none; }
-  .faq-item summary::after { content: "+"; font-family: var(--mono); color: var(--ink-3); transition: transform var(--t-med) var(--ease-out); }
-  .faq-item[open] summary::after { transform: rotate(45deg); }
-  .faq-item p { padding: 0 0 20px; max-width: 62ch; color: var(--ink-2); font-size: 16px; line-height: 1.6; }
-  .bio { display: flex; flex-direction: column; gap: 12px; padding-block: clamp(48px, 6vw, 88px); border-top: 1px solid var(--line); }
-  .bio .h3 a { color: var(--ink); }
-  .bio .h3 a:hover { color: var(--accent-text); }
-  .bio-text { max-width: 60ch; color: var(--ink-2); font-size: 17px; line-height: 1.6; }
-  .bio-text a { text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--ink-3); }
-  .bio-links { display: flex; flex-wrap: wrap; gap: 8px 20px; font-size: 14px; }
-  .bio-links a { color: var(--ink-2); border-bottom: 1px solid var(--line-2); }
-  .bio-links a:hover { color: var(--ink); }
-  @media (max-width: 860px) { .faq { grid-template-columns: 1fr; } .faq-head { position: static; } }
-
-  /* hero */
-  .hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(32px, 4vw, 64px); align-items: center; padding: clamp(40px, 5vw, 72px) 0 clamp(48px, 6vw, 96px); min-height: min(calc(100dvh - var(--header-h)), 820px); }
-  .hero-text { display: flex; flex-direction: column; gap: 22px; min-width: 0; }
-  .hero .h1 { font-size: clamp(40px, 4.4vw, 66px); line-height: 1.04; max-width: 15ch; }
-  .hero .lede { max-width: 42ch; }
-  .hero-cta { display: flex; flex-direction: column; align-items: flex-start; gap: 16px; margin-top: 6px; }
+  /* hero: one claim, one sentence, the install */
+  .hero { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 18px; padding: clamp(32px, 4.2vw, 60px) 0 clamp(28px, 3vw, 40px); }
+  .hero-pill { display: inline-flex; align-items: center; gap: 10px; height: 34px; padding: 0 14px 0 12px; border: 1px solid var(--line-2); border-radius: 999px; background: var(--paper); font-size: 13.5px; color: var(--ink-2); transition: border-color var(--t-fast), color var(--t-fast); }
+  .hero-pill:hover { border-color: var(--ink); color: var(--ink); }
+  .hero-pill > span:last-child { color: var(--ink-3); transition: transform var(--t-med) var(--ease-out); }
+  .hero-pill:hover > span:last-child { transform: translateX(2px); }
+  .pill-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+  .hero-h { font-size: clamp(44px, 6vw, 86px); line-height: 0.98; max-width: 13ch; }
+  .hero-lede { max-width: 62ch; font-size: clamp(17px, 1.45vw, 20px); line-height: 1.55; color: var(--ink-2); text-wrap: pretty; }
+  .hero-cta { display: flex; flex-direction: column; align-items: center; gap: 16px; margin-top: 4px; width: 100%; }
   .textlink { font-size: 15px; font-weight: 500; color: var(--ink); border-bottom: 1px solid var(--line-2); padding-bottom: 2px; transition: color var(--t-fast), border-color var(--t-fast); }
   .textlink:hover { color: var(--accent-text); border-color: var(--accent); }
   .textlink span { display: inline-block; transition: transform var(--t-med) var(--ease-out); }
   .textlink:hover span { transform: translateX(3px); }
 
-  .cmd { display: flex; align-items: center; gap: 10px; width: 100%; max-width: 520px; min-width: 0; padding: 7px 7px 7px 16px; border: 1px solid var(--line-2); border-radius: 12px; background: var(--paper); box-shadow: 0 1px 2px rgba(24, 24, 27, .04); }
-  .cmd code { flex: 1; min-width: 0; overflow-x: auto; white-space: nowrap; font-family: var(--mono); font-size: 14px; color: var(--ink); scrollbar-width: none; }
+  .cmd { display: flex; align-items: center; gap: 10px; width: 100%; min-width: 0; padding: 7px 7px 7px 16px; border: 1px solid var(--line-2); border-radius: 12px; background: var(--paper); box-shadow: 0 1px 2px rgba(24, 24, 27, .04), 0 8px 24px -16px rgba(24, 24, 27, .18); }
+  .cmd code { flex: 1; min-width: 0; font-family: var(--mono); font-size: 14px; line-height: 1.45; color: var(--ink); text-align: left; white-space: normal; overflow-wrap: anywhere; }
   .cmd .prompt { color: var(--accent-text); font-size: 14px; }
-  .cmd .copy { flex: none; height: 38px; padding: 0 16px; border-radius: 8px; font-size: 14px; font-weight: 500; background: var(--ink); color: var(--paper); transition: opacity var(--t-fast), transform var(--t-fast); }
-  .cmd .copy:hover { opacity: .86; }
+  .cmd .copy { flex: none; height: 38px; padding: 0 16px; border-radius: 8px; font-size: 14px; font-weight: 500; background: var(--paper); color: var(--ink); border: 1px solid var(--line-2); transition: border-color var(--t-fast), color var(--t-fast), transform var(--t-fast); }
+  .cmd .copy:hover { border-color: var(--ink); }
   .cmd .copy:active { transform: scale(.97); }
   .cmd .copy[data-done] { background: var(--accent); color: var(--accent-ink); }
-
-  /* install: MCP server or skill */
-  .install { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; width: 100%; max-width: 560px; min-width: 0; }
-  .install .cmd { max-width: none; }
-  .install .cmd code { white-space: normal; line-height: 1.45; text-align: left; }
+  .install { display: flex; flex-direction: column; align-items: center; gap: 10px; width: 100%; max-width: 600px; min-width: 0; }
   .modes { display: inline-flex; gap: 2px; padding: 3px; border: 1px solid var(--line-2); border-radius: 10px; background: var(--paper-2); }
   .modes button { height: 30px; padding: 0 12px; border-radius: 7px; font-size: 13px; font-weight: 500; color: var(--ink-2); transition: background-color var(--t-fast), color var(--t-fast); }
   .modes button:hover { color: var(--ink); }
@@ -563,21 +410,85 @@ const faq = [
   .install .cmd-note a { color: var(--ink-2); text-decoration: underline; text-underline-offset: 3px; }
   .install .cmd-note a:hover { color: var(--accent-text); }
 
-  .hero-wall { position: relative; aspect-ratio: 1 / 0.92; }
-  .wall-item { position: absolute; border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--paper-2); overflow: hidden; transition: transform var(--t-slow) var(--ease-out), border-color var(--t-med), box-shadow var(--t-med); }
-  .wall-item :global(lounge-frame) { position: absolute; inset: 12px; }
-  .wall-item:hover { border-color: var(--line-2); box-shadow: var(--shadow); z-index: 5; transform: translateY(-6px); }
-  .wall-item.web { left: 0; top: 0; width: 78%; aspect-ratio: 16 / 10.5; }
-  .wall-item.phone { right: 0; top: 14%; width: 27%; aspect-ratio: 9 / 19; }
-  .wall-item.phone :global(lounge-frame) { inset: 6px; }
-  .wall-item.tablet { left: 12%; top: 56%; width: 54%; aspect-ratio: 16 / 11.3; }
+  /* before and after */
+  .ba { padding-bottom: clamp(72px, 9vw, 128px); }
+  .ba > * { max-width: 1180px; margin-inline: auto; }
+  .ba-kicker { flex: none; font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent-text); }
+  .ba-quote { min-width: 0; font-size: 13px; line-height: 1.45; color: var(--ink-2); }
+  .ba-frame { border: 1px solid var(--line-2); border-radius: 18px; overflow: hidden; background: var(--paper); box-shadow: 0 1px 0 rgba(24, 24, 27, .04), 0 40px 80px -48px rgba(24, 24, 27, .45); }
+  .ba-bar { display: flex; align-items: center; gap: 14px; min-height: 44px; padding: 10px 16px; border-bottom: 1px solid var(--line); background: var(--paper-2); }
+  .ba-dots { flex: none; display: flex; gap: 6px; }
+  .ba-dots i { width: 9px; height: 9px; border-radius: 50%; background: var(--line-2); }
+  .ba-stage { position: relative; aspect-ratio: 16 / 10; overflow: hidden; background: var(--paper-2); touch-action: pan-y; user-select: none; }
+  .ba-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; pointer-events: none; }
+  .ba-with { position: absolute; inset: 0; clip-path: inset(0 0 0 var(--pos)); }
+  .ba-handle { position: absolute; top: 0; bottom: 0; left: var(--pos); width: 2px; margin-left: -1px; background: var(--paper); box-shadow: 0 0 0 1px rgba(24, 24, 27, .12); pointer-events: none; }
+  .ba-handle span { position: absolute; top: 50%; left: 50%; display: grid; place-items: center; width: 44px; height: 44px; margin: -22px 0 0 -22px; border-radius: 50%; background: var(--paper); color: var(--ink); font-size: 15px; letter-spacing: 0.1em; box-shadow: 0 2px 10px rgba(24, 24, 27, .25), 0 0 0 1px rgba(24, 24, 27, .08); transition: transform var(--t-fast) var(--ease-out); }
+  .ba-stage[data-active] .ba-handle span, .ba-range:focus-visible ~ .ba-handle span { transform: scale(1.08); }
+  .ba-range:focus-visible + .ba-handle span, .ba-stage:has(.ba-range:focus-visible) .ba-handle span { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .ba-range { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: ew-resize; }
+  .ba-tag { position: absolute; bottom: 16px; display: flex; flex-direction: column; gap: 2px; padding: 8px 12px; border-radius: 10px; background: rgba(12, 12, 14, .78); color: #fafaf9; font-size: 12.5px; line-height: 1.3; backdrop-filter: blur(6px); pointer-events: none; }
+  .ba-tag b { font-weight: 600; }
+  .ba-tag .num { color: rgba(250, 250, 249, .72); }
+  .ba-tag.left { left: 16px; }
+  .ba-tag.right { right: 16px; text-align: right; }
+  .ba-tag.right .num { color: #ffb48c; }
+
+  .ba-notes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(20px, 3vw, 48px); margin-block: clamp(24px, 3vw, 36px) clamp(48px, 6vw, 80px); }
+  .ba-side { display: flex; flex-direction: column; gap: 12px; }
+  .ba-side-h { padding-bottom: 10px; border-bottom: 1px solid var(--line); font-size: 15px; font-weight: 600; letter-spacing: -0.01em; }
+  .ba-side.with .ba-side-h { border-bottom-color: var(--ink); }
+  .ba-side ul { display: flex; flex-direction: column; gap: 7px; }
+  .ba-side li { position: relative; padding-left: 16px; font-size: 14.5px; line-height: 1.45; color: var(--ink-2); }
+  .ba-side li::before { content: ""; position: absolute; left: 0; top: 0.62em; width: 6px; height: 1px; background: var(--ink-3); }
+  .ba-side.with li::before { background: var(--accent); }
+  .ba-open { align-self: flex-start; font-size: 13.5px; color: var(--ink-2); border-bottom: 1px solid var(--line-2); }
+  .ba-open:hover { color: var(--accent-text); border-color: var(--accent); }
+
+  .figs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 0; border-top: 1px solid var(--ink); }
+  .figs > div { display: flex; flex-direction: column; gap: 10px; padding: 22px 24px 0 0; }
+  .figs > div + div { padding-left: 24px; border-left: 1px solid var(--line); }
+  .fig { font-size: clamp(38px, 4.4vw, 60px); font-weight: 600; letter-spacing: -0.045em; line-height: 1; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .figs dd { margin: 0; font-size: 14px; line-height: 1.5; color: var(--ink-2); max-width: 28ch; }
+  .figs-more { padding-top: 28px; }
 
   /* shared block head */
   .block-head { display: flex; flex-direction: column; gap: 14px; max-width: 760px; margin-bottom: clamp(32px, 4vw, 52px); }
   .block-head .h2 { max-width: 20ch; }
 
+  /* how it works */
+  .skill { padding-block: clamp(72px, 9vw, 128px); border-top: 1px solid var(--line); }
+  .flow { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px 40px; margin-bottom: clamp(32px, 4vw, 48px); }
+  .flow li { display: flex; flex-direction: column; gap: 8px; padding-top: 16px; border-top: 2px solid var(--line-2); }
+  .flow li:first-child { border-top-color: var(--ink); }
+  .flow b { font-size: 18px; font-weight: 600; letter-spacing: -0.02em; }
+  .flow-text { color: var(--ink-2); font-size: 15px; line-height: 1.55; max-width: 38ch; }
+  .agent-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(16px, 2vw, 24px); align-items: stretch; }
+  .agent-result { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+  .agent-stage { position: relative; flex: 1; min-height: 420px; aspect-ratio: 1280 / 900; border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--paper-2) radial-gradient(var(--line-2) 1px, transparent 1.2px) center / 16px 16px; overflow: hidden; }
+  .agent-stage :global(lounge-frame) { position: absolute; inset: 22px; }
+  .agent-cap { display: flex; justify-content: space-between; gap: 12px; font-size: 13.5px; color: var(--ink-2); }
+  .agent-cap a { color: var(--ink); font-weight: 500; }
+  .agent-cap a:hover { color: var(--accent-text); }
+
+  /* examples */
+  .built { padding-block: clamp(72px, 9vw, 128px); border-top: 1px solid var(--line); }
+  .built-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: clamp(28px, 3.5vw, 44px); }
+  .built-head .eyebrow { margin-bottom: 12px; }
+  .built-head .lede { margin-top: 14px; max-width: 46ch; }
+  .built-head .textlinks { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; white-space: nowrap; }
+  .built-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(14px, 1.6vw, 22px); }
+  .built-card { display: flex; flex-direction: column; gap: 14px; height: 100%; }
+  .built-shot { display: block; border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden; background: var(--paper-2); transition: border-color var(--t-med) var(--ease), transform var(--t-med) var(--ease-out), box-shadow var(--t-med) var(--ease); }
+  .built-shot img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; transition: transform var(--t-slow) var(--ease-out); }
+  .built-card:hover .built-shot { border-color: var(--line-2); transform: translateY(-3px); box-shadow: var(--shadow); }
+  .built-card:hover .built-shot img { transform: scale(1.015); }
+  .built-cap { display: flex; flex-direction: column; gap: 4px; }
+  .built-cap b { font-size: 16px; font-weight: 600; letter-spacing: -0.015em; }
+  .built-cap span { font-size: 13.5px; line-height: 1.5; color: var(--ink-3); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
   /* library bento */
-  .lib { padding-block: clamp(64px, 8vw, 120px); border-top: 1px solid var(--line); }
+  .lib { padding-block: clamp(72px, 9vw, 128px); border-top: 1px solid var(--line); }
   .bento { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-template-rows: repeat(2, minmax(220px, auto)) auto; gap: 12px; }
   .cell { position: relative; display: flex; flex-direction: column; gap: 16px; min-width: 0; padding: 22px; border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--paper); overflow: hidden; transition: border-color var(--t-med) var(--ease), transform var(--t-med) var(--ease-out), box-shadow var(--t-med) var(--ease); }
   a.cell:hover { border-color: var(--line-2); transform: translateY(-3px); box-shadow: var(--shadow); }
@@ -590,7 +501,6 @@ const faq = [
   .cell-stage :global(lounge-frame) { position: absolute; inset: 20px 20px 0; }
   .cell-stage.phone :global(lounge-frame) { inset: 18px 22% -40% 22%; }
   .cell-stage.small :global(lounge-frame) { inset: 14px 14px 0; }
-
   .c-sections { grid-column: 1 / 3; grid-row: 1 / 3; }
   .c-sections .cell-stage { min-height: 320px; }
   .c-screens { grid-column: 3; grid-row: 1 / 3; }
@@ -615,65 +525,47 @@ const faq = [
   .sys a:hover { color: var(--paper); }
   .sys .cell-n { margin-left: 0; font-size: 22px; font-family: var(--sans); font-weight: 600; letter-spacing: -0.03em; color: var(--paper); }
 
-  /* skill */
-  .skill { padding-block: clamp(64px, 8vw, 120px); border-top: 1px solid var(--line); }
-  .steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px 40px; margin-bottom: clamp(28px, 3.5vw, 44px); }
-  .steps li { display: flex; flex-direction: column; gap: 4px; padding-top: 14px; border-top: 2px solid var(--ink); }
-  .steps li + li { border-top-color: var(--line-2); }
-  .steps b { font-size: 16px; font-weight: 600; letter-spacing: -0.015em; }
-  .steps span { color: var(--ink-2); font-size: 14.5px; line-height: 1.5; max-width: 36ch; }
-  .agent-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(16px, 2vw, 24px); align-items: stretch; }
-  .agent-result { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
-  .agent-stage { position: relative; flex: 1; min-height: 420px; aspect-ratio: 1280 / 900; border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--paper-2) radial-gradient(var(--line-2) 1px, transparent 1.2px) center / 16px 16px; overflow: hidden; }
-  .agent-stage :global(lounge-frame) { position: absolute; inset: 22px; }
-  .agent-cap { display: flex; justify-content: space-between; gap: 12px; font-size: 13.5px; color: var(--ink-2); }
-  .agent-cap a { color: var(--ink); font-weight: 500; }
-  .agent-cap a:hover { color: var(--accent-text); }
+  /* compare */
+  .cmp { padding-block: clamp(72px, 9vw, 128px); border-top: 1px solid var(--line); }
+  .cmp .block-head .h2 { max-width: 22ch; }
+  .cmp-scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--paper); }
+  .cmp-scroll:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .cmp-table { width: 100%; min-width: 920px; border-collapse: collapse; font-size: 13.5px; }
+  .cmp-table th, .cmp-table td { padding: 12px 14px; text-align: left; vertical-align: middle; border-bottom: 1px solid var(--line); }
+  .cmp-table tbody tr:last-child > * { border-bottom: 0; }
+  .cmp-table thead th { font-size: 13px; font-weight: 600; color: var(--ink); white-space: nowrap; background: var(--paper-2); }
+  .cmp-table thead a:hover { color: var(--accent-text); }
+  .cmp-table tbody th { font-weight: 400; color: var(--ink-2); min-width: 210px; }
+  .cmp-table .us { background: var(--accent-soft); }
+  .cmp-table thead .us { color: var(--accent-text); background: var(--accent-soft); }
+  .mk { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; color: var(--ink-2); }
+  .mk::before { content: ""; width: 8px; height: 8px; border-radius: 50%; border: 1.5px solid var(--ink-3); }
+  .mk.yes { color: var(--ink); }
+  .mk.yes::before { background: var(--ink); border-color: var(--ink); }
+  .mk.part::before { box-shadow: inset 4px 0 0 var(--ink-2); border-color: var(--ink-2); }
+  .mk.no { color: var(--ink-3); }
+  .cmp-table .price td { font-size: 12.5px; color: var(--ink-2); }
+  .cmp-note { margin-top: 18px; font-size: 12px; color: var(--ink-3); }
+  .cmp-note a { color: var(--ink-2); text-decoration: underline; text-underline-offset: 3px; }
 
-  /* examples */
-  .built { padding-block: clamp(64px, 8vw, 120px); border-top: 1px solid var(--line); }
-  .built-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; margin-bottom: clamp(24px, 3vw, 40px); }
-  .built-head .textlink { margin-top: 30px; white-space: nowrap; }
-  .built-head .textlinks { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
-  .built-head .textlinks .textlink { margin-top: 0; }
-  .built-head .textlinks { margin-top: 30px; }
-  .built-head .eyebrow { margin-bottom: 10px; }
-  .built-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-  .built-card { display: flex; flex-direction: column; height: 100%; border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden; background: var(--paper); transition: border-color var(--t-med) var(--ease), transform var(--t-med) var(--ease-out), box-shadow var(--t-med) var(--ease); }
-  .built-card:hover { border-color: var(--line-2); transform: translateY(-3px); box-shadow: var(--shadow); }
-  .built-card img { display: block; width: 100%; aspect-ratio: 16 / 10; height: auto; object-fit: cover; object-position: top; border-bottom: 1px solid var(--line); }
-  .built-cap { display: flex; flex-direction: column; gap: 4px; padding: 14px 16px 16px; }
-  .built-cap b { font-size: 16px; font-weight: 600; letter-spacing: -0.015em; }
-  .built-cap span { font-family: var(--mono); font-size: 12px; line-height: 1.5; color: var(--ink-3); }
-  .pairs { padding-block: clamp(64px, 8vw, 120px); border-top: 1px solid var(--line); }
-  .pairs .lede { margin-top: 10px; }
-  .pair-prompt { max-width: 72ch; margin-bottom: 16px; font-family: var(--mono); font-size: 14px; line-height: 1.55; padding: 12px 14px; background: var(--paper-2); border: 1px solid var(--line); border-radius: var(--r); }
-  .pair-prompt .mono { color: var(--accent-text); margin-right: 4px; }
-  .pair-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-
-  /* features */
-  .feats { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); gap: clamp(32px, 6vw, 96px); padding-block: clamp(64px, 8vw, 120px); border-top: 1px solid var(--line); }
-  .feats-head { position: sticky; top: calc(var(--header-h) + 32px); align-self: start; display: flex; flex-direction: column; align-items: flex-start; gap: 16px; }
-  .feats-head .lede { max-width: 36ch; }
-  .feats-head .btn { margin-top: 8px; }
-  .feats-body { display: flex; flex-direction: column; gap: clamp(36px, 4vw, 56px); }
-  .fgroup-h { font-size: 14px; font-weight: 500; color: var(--ink-3); margin-bottom: 14px; }
-  .fgroup ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
-  .fgroup li > :is(a, button), .fgroup li:not(:has(a, button)) { display: flex; flex-direction: column; gap: 6px; width: 100%; height: 100%; padding: 18px 20px; text-align: left; border-radius: var(--r-lg); background: var(--paper-2); }
-  .fgroup li > :is(a, button) { transition: background-color var(--t-med) var(--ease), transform var(--t-med) var(--ease-out); }
-  .fgroup li > :is(a, button):hover { background: var(--paper-3); transform: translateY(-2px); }
-  .fgroup li > :is(a, button):active { transform: scale(.99); }
-  .fgroup b { font-size: 16px; font-weight: 600; letter-spacing: -0.015em; }
-  .fgroup span { color: var(--ink-2); font-size: 14.5px; line-height: 1.5; }
-  .fgroup li > :is(a, button) b::after { content: " →"; color: var(--ink-3); transition: color var(--t-fast); }
-  .fgroup li > :is(a, button):hover b::after { color: var(--accent-text); }
-
-  .feats + :global(.sc) { border-top: 1px solid var(--line); padding-block: clamp(64px, 8vw, 120px); }
-
-  /* close */
-  .close { display: flex; flex-direction: column; align-items: center; gap: 22px; text-align: center; padding-block: clamp(72px, 9vw, 140px); border-top: 1px solid var(--line); }
-  .close .h2 { max-width: 18ch; }
-  .close .install { align-items: center; margin-top: 6px; }
+  /* faq + bio */
+  .faq { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr); gap: clamp(24px, 4vw, 64px); padding-block: clamp(72px, 9vw, 128px); border-top: 1px solid var(--line); }
+  .faq-head { display: flex; flex-direction: column; gap: 12px; position: sticky; top: calc(var(--header-h) + 32px); align-self: start; }
+  .faq-list { border-top: 1px solid var(--line); }
+  .faq-item { border-bottom: 1px solid var(--line); }
+  .faq-item summary { cursor: pointer; list-style: none; display: flex; justify-content: space-between; gap: 16px; padding: 18px 0; font-size: 17px; font-weight: 500; color: var(--ink); }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item summary::after { content: "+"; font-family: var(--mono); color: var(--ink-3); transition: transform var(--t-med) var(--ease-out); }
+  .faq-item[open] summary::after { transform: rotate(45deg); }
+  .faq-item p { padding: 0 0 20px; max-width: 62ch; color: var(--ink-2); font-size: 16px; line-height: 1.6; }
+  .bio { display: flex; flex-direction: column; gap: 12px; padding-block: clamp(48px, 6vw, 88px); border-top: 1px solid var(--line); }
+  .bio .h3 a { color: var(--ink); }
+  .bio .h3 a:hover { color: var(--accent-text); }
+  .bio-text { max-width: 60ch; color: var(--ink-2); font-size: 17px; line-height: 1.6; }
+  .bio-text a { text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--ink-3); }
+  .bio-links { display: flex; flex-wrap: wrap; gap: 8px 20px; font-size: 14px; }
+  .bio-links a { color: var(--ink-2); border-bottom: 1px solid var(--line-2); }
+  .bio-links a:hover { color: var(--ink); }
 
   @media (max-width: 1100px) {
     .bento { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: none; }
@@ -681,30 +573,41 @@ const faq = [
     .c-screens, .c-motion, .c-components, .c-more, .c-system { grid-column: auto; grid-row: auto; }
     .c-screens { grid-row: span 2; }
     .c-styles { grid-column: 1 / -1; grid-row: auto; }
+    .figs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .figs > div:nth-child(3) { padding-left: 0; border-left: 0; }
+    .figs > div:nth-child(n + 3) { border-top: 1px solid var(--line); margin-top: 22px; }
   }
   @media (max-width: 960px) {
-    .flow { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .hero { grid-template-columns: minmax(0, 1fr); min-height: 0; }
-    .agent-grid, .feats { grid-template-columns: minmax(0, 1fr); }
-    .feats-head { position: static; }
+    .agent-grid { grid-template-columns: minmax(0, 1fr); }
     .agent-stage { min-height: 0; }
+    .built-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .faq { grid-template-columns: 1fr; }
+    .faq-head { position: static; }
   }
   @media (max-width: 760px) {
     .bento { grid-template-columns: minmax(0, 1fr); }
     .c-screens { grid-row: auto; }
     .c-styles { flex-direction: column; align-items: flex-start; }
     .style-words { justify-content: flex-start; max-width: none; }
-    .steps, .fgroup ul, .built-row, .pair-row { grid-template-columns: minmax(0, 1fr); }
-    .flow { grid-template-columns: minmax(0, 1fr); }
-    .proof-head { flex-direction: column; gap: 6px; }
-    .pair { grid-template-columns: minmax(0, 1fr); }
-    .figs > div + div { padding-left: 0; border-left: 0; border-top: 1px solid var(--line); }
+    .flow, .ba-notes, .built-grid { grid-template-columns: minmax(0, 1fr); }
     .built-head { flex-direction: column; align-items: flex-start; }
+    .built-head .textlinks { align-items: flex-start; }
     .agent-cap { flex-direction: column; gap: 4px; }
-    .cmd code { font-size: 13px; white-space: normal; overflow-wrap: anywhere; line-height: 1.45; }
-    .wall-item.tablet { display: none; }
-    .wall-item.web { width: 76%; }
-    .wall-item.phone { width: 34%; top: 18%; }
-    .hero-wall { aspect-ratio: 4 / 3; }
+    .cmd code { font-size: 13px; }
+    .ba-stage { aspect-ratio: 4 / 3.4; }
+    .ba-tag { bottom: 10px; padding: 6px 9px; font-size: 11.5px; }
+    .ba-tag.left { left: 10px; }
+    .ba-tag.right { right: 10px; }
+  }
+  @media (max-width: 560px) {
+    .figs > div { padding-right: 12px; }
+    .figs > div + div { padding-left: 12px; }
+    .figs > div:nth-child(3) { padding-left: 0; }
+    .fig { font-size: 34px; }
+    .figs dd { font-size: 13px; }
+    .hero-pill { height: auto; min-height: 34px; padding-block: 6px; font-size: 12.5px; text-align: left; }
+    .ba-bar { flex-wrap: wrap; gap: 6px 12px; }
+    .hero { text-align: left; align-items: flex-start; }
+    .hero-cta, .install { align-items: flex-start; }
   }
 </style>
