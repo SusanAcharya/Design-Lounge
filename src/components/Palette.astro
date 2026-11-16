@@ -142,7 +142,7 @@ import { TYPE_META, PLATFORM_META, SECTION_NAV, CATEGORY_META } from '../lib/pie
   .pal-field input { flex: 1; height: 100%; border: 0; background: none; font-size: 16px; outline: none; }
   .pal-field input::placeholder { color: var(--ink-3); }
   .pal-list { max-height: 52vh; overflow: auto; padding: 6px; }
-  .pal-item { display: grid; grid-template-columns: 64px 1fr auto; grid-template-areas: "k t p" "k s p"; column-gap: 12px; padding: 9px 10px; border-radius: 6px; cursor: pointer; align-items: center; }
+  .pal-item { display: grid; grid-template-columns: 64px 1fr auto; grid-template-areas: "k t p" "k s p"; column-gap: 12px; padding: 9px 10px; border-radius: var(--r); cursor: pointer; align-items: center; }
   .pal-item.active { background: var(--paper-2); }
   .pal-item .k { grid-area: k; font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); }
   .pal-item .t { grid-area: t; font-family: var(--display); font-size: 17px; letter-spacing: -0.01em; font-variation-settings: "opsz" 18; }

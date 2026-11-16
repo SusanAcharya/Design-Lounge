@@ -388,8 +388,12 @@ export function auditSlop(page, kit, lib) {
       const shadows = rules.filter((r) => r.decls.some(([p, v]) => p === 'box-shadow' && !/^(?:none|0 0 0 \d+px|inset 0 0 0 \d+px)/.test(v) && !/var\(--(?:ring|focus)/.test(v)) && !/:focus/.test(r.selector));
       if (shadows.length) add('fail', 'kit', 'off-shadow', `Shadows on the ${fam.name} family, whose shadow is none`, shadows.map(sel), 'Use the hairline border instead.', 'practice.md › Look');
     }
-  } else if (uniq(radii.map(({ v }) => v)).length > 5) {
-    add('warn', 'kit', 'radius-drift', `${uniq(radii.map(({ v }) => v)).length} different corner radii`, uniq(radii.map(({ v }) => v)).slice(0, 6), 'Lock a family (get_families). One radius for controls, one for cards.', 'SKILL.md › When numbers disagree');
+  } else {
+    // With no family locked, count the radii written as numbers, as the family check above does: a token such as
+    // var(--r) is a decision made once on :root, and 0, 50% and pills are shapes, not steps on a scale.
+    const shapes = new Set(['0', '0px', '50%', '100%', '999px', '9999px', 'inherit', '100vmax', '1000px']);
+    const written = uniq(radii.map(({ v }) => v.replace(/!important/, '').trim()).filter((v) => !/var\(/.test(v) && v.split(/\s+/).some((part) => /\d/.test(part) && !shapes.has(part))));
+    if (written.length > 5) add('warn', 'kit', 'radius-drift', `${written.length} different corner radii`, written.slice(0, 6), 'Lock a family (get_families). One radius for controls, one for cards.', 'SKILL.md › When numbers disagree');
   }
 
   /* ----- one primary, static guess ----- */

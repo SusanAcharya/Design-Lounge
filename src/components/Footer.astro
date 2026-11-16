@@ -225,10 +225,10 @@ const newest = [...pieces].reverse().slice(0, 5).map((p) => ({ id: p.id, title: 
   .end h2 { font-size: clamp(38px, 5.2vw, 76px); line-height: 0.98; letter-spacing: -0.04em; max-width: 12ch; color: var(--band-ink); }
   .end-text p { margin-top: 18px; max-width: 44ch; color: var(--band-ink); font-size: 18px; line-height: 1.55; }
   .end-cmd { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
-  .ecmd { display: flex; align-items: center; gap: 10px; min-width: 0; padding: 7px 7px 7px 16px; border: 0; border-radius: 12px; background: var(--paper); box-shadow: 0 18px 40px -24px rgba(0, 0, 0, .45); }
+  .ecmd { display: flex; align-items: center; gap: 10px; min-width: 0; padding: 7px 7px 7px 16px; border: 0; border-radius: var(--r-md); background: var(--paper); box-shadow: 0 18px 40px -24px rgba(0, 0, 0, .45); }
   .ecmd code { flex: 1; min-width: 0; font-family: var(--mono); font-size: 14px; line-height: 1.45; color: var(--ink); overflow-wrap: anywhere; }
   .ecmd .acc { color: var(--accent-text); font-size: 14px; }
-  .ecmd .copy { flex: none; height: 38px; padding: 0 16px; border-radius: 8px; font-size: 14px; font-weight: 500; background: var(--paper); color: var(--ink); border: 1px solid var(--line-2); transition: border-color var(--t-fast); }
+  .ecmd .copy { flex: none; height: 38px; padding: 0 16px; border-radius: var(--r); font-size: 14px; font-weight: 500; background: var(--paper); color: var(--ink); border: 1px solid var(--line-2); transition: border-color var(--t-fast); }
   .ecmd .copy:hover { border-color: var(--ink); }
   .ecmd .copy[data-done] { background: var(--accent); color: var(--accent-ink); }
   .end-note { font-size: 15px; line-height: 1.5; color: var(--band-ink); }
@@ -240,18 +240,18 @@ const newest = [...pieces].reverse().slice(0, 5).map((p) => ({ id: p.id, title: 
   .ftr-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 40px 56px; }
   .tw { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
   .hint { font-size: 13.5px; line-height: 1.5; color: var(--ink-2); max-width: 56ch; }
-  .hint kbd, .ftr :global(kbd) { font-family: var(--mono); font-size: 12px; padding: 1px 6px; border: 1px solid var(--line-2); border-radius: 5px; background: var(--paper-2); color: var(--ink); }
+  .hint kbd, .ftr :global(kbd) { font-family: var(--mono); font-size: 12px; padding: 1px 6px; border: 1px solid var(--line-2); border-radius: var(--r-xs); background: var(--paper-2); color: var(--ink); }
 
   /* the terminal keeps its own dark ground in both themes */
   .term {
-    --t-bg: #141416; --t-bar: #1C1C1F; --t-ink: #EDEDEF; --t-ink2: #B4B4BB; --t-ink3: #8E8E96; --t-line: #2C2C31; --t-acc: #FF8A4C; --t-warn: #F2C36B;
-    border-radius: 10px; background: var(--t-bg); color: var(--t-ink); border: 1px solid #000; overflow: hidden; font-family: var(--mono); font-size: 13.5px; line-height: 1.6;
+    --t-bg: #141416; --t-bar: #1C1C1F; --t-ink: #EDEDEF; --t-ink2: #B4B4BB; --t-ink3: #8E8E96; --t-line: #2C2C31; --t-acc: #FF8A4C; --t-warn: #F2C36B; --t-edge: #000; --t-dot: #3A3A40;
+    border-radius: var(--r-md); background: var(--t-bg); color: var(--t-ink); border: 1px solid var(--t-edge); overflow: hidden; font-family: var(--mono); font-size: 13.5px; line-height: 1.6;
   }
   .bar { display: flex; align-items: center; gap: 7px; height: 36px; padding: 0 14px; background: var(--t-bar); border-bottom: 1px solid var(--t-line); color: var(--t-ink3); font-size: 12px; }
-  .bar i { width: 10px; height: 10px; border-radius: 50%; background: #3A3A40; }
+  .bar i { width: 10px; height: 10px; border-radius: 50%; background: var(--t-dot); }
   .bar span:first-of-type { margin-left: 8px; }
   .bar .sz { margin-left: auto; }
-  .screen { height: 340px; overflow-y: auto; padding: 14px 16px 16px; scrollbar-width: thin; scrollbar-color: #3A3A40 transparent; }
+  .screen { height: 340px; overflow-y: auto; padding: 14px 16px 16px; scrollbar-width: thin; scrollbar-color: var(--t-dot) transparent; }
   .log :global(p) { margin: 0; color: var(--t-ink2); overflow-wrap: anywhere; }
   .log :global(p.echo) { color: var(--t-ink); margin-top: 10px; }
   .log :global(p.echo)::before { content: "lounge ~ $ "; color: var(--t-acc); }
@@ -263,11 +263,11 @@ const newest = [...pieces].reverse().slice(0, 5).map((p) => ({ id: p.id, title: 
   .log :global(a:hover) { color: var(--t-acc); text-decoration-color: var(--t-acc); }
   .log :global(.run) { justify-self: start; padding: 0; font: inherit; color: var(--t-acc); background: none; cursor: pointer; text-align: left; }
   .log :global(.run:hover) { text-decoration: underline; text-underline-offset: 3px; }
-  .term :global(:focus-visible) { outline: 2px solid var(--t-acc); outline-offset: 1px; border-radius: 4px; }
+  .term :global(:focus-visible) { outline: 2px solid var(--t-acc); outline-offset: 1px; border-radius: var(--r-xs); }
   .line { display: flex; align-items: center; gap: 8px; margin-top: 10px; }
   .ps { color: var(--t-acc); white-space: nowrap; }
   .field { position: relative; flex: 1; min-width: 0; }
-  .field input { width: 100%; height: 28px; padding: 0 8px; font: inherit; color: var(--t-ink); background: transparent; border: 1px solid var(--t-ink3); border-radius: 6px; caret-color: transparent; }
+  .field input { width: 100%; height: 28px; padding: 0 8px; font: inherit; color: var(--t-ink); background: transparent; border: 1px solid var(--t-ink3); border-radius: var(--r); caret-color: transparent; }
   .field input:focus { outline: none; border-color: var(--t-acc); }
   .cur { position: absolute; top: 4px; left: 9px; width: 1ch; height: 1.3em; background: var(--t-acc); pointer-events: none; animation: blink 1100ms steps(1) 2.4s infinite; }
   @keyframes blink { 50% { opacity: 0; } }
@@ -282,7 +282,7 @@ const newest = [...pieces].reverse().slice(0, 5).map((p) => ({ id: p.id, title: 
   .meta { border-top: 1px solid var(--line); }
   .meta a { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 12px; min-height: 46px; padding: 8px 0; border-bottom: 1px solid var(--line); font-size: 14px; color: var(--ink); }
   .meta a:hover .k { color: var(--accent-text); }
-  .meta .tag { min-width: 52px; text-align: center; font-size: 11.5px; padding: 2px 8px; border: 1px solid var(--line-2); border-radius: 6px; color: var(--ink-2); }
+  .meta .tag { min-width: 52px; text-align: center; font-size: 11.5px; padding: 2px 8px; border: 1px solid var(--line-2); border-radius: var(--r); color: var(--ink-2); }
   .meta .dot { justify-self: center; width: 52px; height: 8px; display: grid; place-items: center; }
   .meta .dot::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
   .meta .v { font-size: 12px; color: var(--ink-3); }
@@ -302,6 +302,11 @@ const newest = [...pieces].reverse().slice(0, 5).map((p) => ({ id: p.id, title: 
     .who { margin-left: 0; }
   }
   @media (max-width: 640px) {
+    .tw { display: none; }
+    .ecmd .copy { height: 44px; }
+    .cols li { padding: 0; }
+    .cols h3 { display: flex; align-items: center; min-height: 44px; margin-bottom: 0; }
+    .cols h3 a, .cols li a, .legal a, .who a { display: inline-flex; align-items: center; min-height: 44px; }
     .term { font-size: 12.5px; }
     .screen { height: 260px; padding: 12px; }
     .log :global(p.pair) { grid-template-columns: auto minmax(0, 1fr); gap: 0 10px; margin-bottom: 4px; }

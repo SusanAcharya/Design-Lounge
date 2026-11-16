@@ -95,11 +95,12 @@ function measure(frame) {
   let h1Lines = null;
   if (h1 && visible(h1)) { const s = getComputedStyle(h1); const lh = parseFloat(s.lineHeight) || parseFloat(s.fontSize) * 1.15; h1Lines = Math.round(h1.getBoundingClientRect().height / lh); }
 
-  const pictures = [...document.querySelectorAll('img, svg, canvas, video, picture, iframe, [style*="background-image"]')].filter((el) => {
-    if (!visible(el)) return false;
-    const r = el.getBoundingClientRect();
-    return inFirst(r) && r.width * r.height >= vw * vh * 0.06;
-  }).length;
+  const shown = (r) => Math.max(0, Math.min(r.right, vw) - Math.max(r.left, 0)) * Math.max(0, Math.min(r.bottom, vh) - Math.max(r.top, 0));
+  const media = [...document.querySelectorAll('img, svg, canvas, video, picture, iframe, [style*="background-image"]')].filter((el) => visible(el) && inFirst(el.getBoundingClientRect()));
+  let pictures = media.filter((el) => { const r = el.getBoundingClientRect(); return r.width * r.height >= vw * vh * 0.06; }).length;
+  // A wall of smaller images (a gallery, a mosaic of screens) is a picture of the work too, when together they
+  // cover a fifth of the first screen. Icons stay out: each image has to be at least 0.5% of the screen.
+  if (!pictures && media.reduce((n, el) => { const r = el.getBoundingClientRect(); return r.width * r.height >= vw * vh * 0.005 ? n + shown(r) : n; }, 0) >= vw * vh * 0.2) pictures = 1;
   const paras = [...document.querySelectorAll('p')].filter((p) => visible(p) && p.innerText.trim().length >= 60).map((p) => parseFloat(getComputedStyle(p).fontSize)).sort((a, b) => a - b);
   const words = (document.body.innerText.match(/[\p{L}\p{N}][\p{L}\p{N}'’-]*/gu) || []).length;
 

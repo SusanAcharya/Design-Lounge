@@ -129,6 +129,21 @@ test('kit drift: faces, colours, and shadow against the locked kit', async () =>
   for (const id of ['off-pairing', 'off-theme', 'off-shadow', 'off-radius']) assert.ok(found.includes(id), `expected ${id}`);
 });
 
+test('radius drift counts the radii written as numbers, not tokens or shapes', async () => {
+    const drift = `<html><head><style>
+      .a { border-radius: 3px; } .b { border-radius: 5px; } .c { border-radius: 7px; }
+      .d { border-radius: 9px; } .e { border-radius: 11px; } .f { border-radius: 13px 13px 0 0; }
+    </style></head><body></body></html>`;
+    assert.ok(ids(auditSlop(await loadPage({ html: drift }), resolveKit(lib, await loadPage({ html: drift })), lib)).includes('radius-drift'));
+    const scale = `<html><head><style>
+      :root { --r-xs: 4px; --r: 8px; --r-md: 12px; --r-lg: 14px; --frame: 58px; --screen: 55px; }
+      .a { border-radius: var(--r-xs); } .b { border-radius: var(--r); } .c { border-radius: var(--r-md); }
+      .d { border-radius: var(--r-lg); } .e { border-radius: var(--frame); } .f { border-radius: var(--screen) var(--screen) 0 0; }
+      .pill { border-radius: 999px; } .dot { border-radius: 50%; } .flat { border-radius: 0; }
+    </style></head><body></body></html>`;
+    assert.ok(!ids(auditSlop(await loadPage({ html: scale }), resolveKit(lib, await loadPage({ html: scale })), lib)).includes('radius-drift'));
+});
+
 test('technique gradients are not the gradient look', async () => {
   const html = `<html><head><style>
     .u { background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat; }
